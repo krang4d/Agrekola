@@ -1,10 +1,11 @@
-#ifndef E154_H
+﻿#ifndef E154_H
 #define E154_H
 
 #include "windows.h"
 #include <QLibrary>
+#include <string.h>
 
-typedef int (WINAPI *pGetDllVersion)(void);
+typedef DWORD (WINAPI *pGetDllVersion)(void);
 typedef LPVOID (WINAPI *pCreateInstance)(char *);
 
 class E154
@@ -22,8 +23,8 @@ public:
 
 private:
     // идентификатор модуля DLL
-    //HINSTANCE
-    const char *name = "LUSBAPI";
+    //HINSTANCE hDLL
+    std::string name;
     QLibrary *hDll;
 };
 

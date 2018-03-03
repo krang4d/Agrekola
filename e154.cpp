@@ -1,12 +1,15 @@
-#include "e154.h"
+﻿#include "e154.h"
 
 //typedef DWORD WINAPI (*GetVer)();
 
 class Error{};
 
+#define QT
+
 E154::E154()
 {
-    hDll = new QLibrary(name);
+    name = "LUSBAPI";
+    hDll = new QLibrary(name.c_str());
     if(!hDll->isLoaded()) {throw Error();}
 }
 
