@@ -1,3 +1,6 @@
 lib/
 *.user*
+debug/
+*stash
+Makefile*
 

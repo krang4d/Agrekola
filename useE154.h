@@ -4,6 +4,7 @@
 #include "LoadDll.h"
 #include "lib\Lusbapi.h"
 #include <string>
+#include <list>
 
 #define MaxVirtualSoltsQuantity 127
 
@@ -23,6 +24,7 @@ public:
     string GetVertion(void);
     string OpenDevice();
     string GetUserMessages() const;
+    string GetUsbSpeed();
 
 protected:
 	void initAPIInstance();
@@ -39,7 +41,8 @@ protected:
 	const double AdcRate;						// частота работы АЦП в кГц
 	const WORD InputRangeIndex;					// индекс входного диапазона напряжения
 
-    string user_msg;							// последнее выведенное сообщение
+    std::list<string> user_msg;
+    //string user_msg;							// последнее выведенное сообщение
     string log_msg;							// служебная информация
 };
 

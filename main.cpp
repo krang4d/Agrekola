@@ -12,6 +12,7 @@ int main(int argc, char *argv[])
     w->setText("Console example for ADC Synchro Stream \n");
     useE154 *agrecola = new useE154();
     w->setText(QString(agrecola->GetVertion().c_str())); //"myGetDllVersion-->ERRORE!\n");
+    w->setText(QString(agrecola->GetUsbSpeed().c_str()));
 
 //    }
 //    else w->setText("myGetDllVersion-->OK\n");
