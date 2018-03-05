@@ -10,8 +10,8 @@
 
 using std::string;
 
-enum position {
-	ON, OFF
+enum {
+	OFF, ON 
 }
 
 enum channel {
@@ -33,10 +33,10 @@ public:
     string OpenDevice();
     string GetUserMessages() const;
     string GetUsbSpeed();
-    string GetInformation() const;
-    void SetChannel(channel ch, position pos) {
+    string GetInformation();
+    void SetChannel(channel ch, int pos) {
     	swith(ch){
-    		if(pos == chennel::ON){
+    		if(pos == ON){
 	    		case CH1: { TtlOut |= (1<<0); pModule->TTL_OUT(TtlOut); break; }
 	    		case CH2: { TtlOut |= (1<<1); pModule->TTL_OUT(TtlOut); break; }
 	    		case CH3: { TtlOut |= (1<<2); pModule->TTL_OUT(TtlOut); break; }
@@ -65,6 +65,7 @@ protected:
 		if(pModule->ENABLE_TTL_OUT(1)) pModule->TTL_OUT(0); else throw Errore_E154("Ошибка включения линий TTL");
 		//if(pModule->ENABLE_TTL_IN(1)) pModule->TTL_IN(0); else throw Errore_E154("Ошибка включения TTL_IN");
 	}
+	double AdcSample();			 				//простое измерение АЦП
 	void ReleaseAPIInstance();					//(char *ErrorString, bool AbortionFlag);
     TLoadDll *pLoadDll;							// указатель на класс динамической загрузки DLL
 	DWORD DllVersion;							// версия библиотеки
@@ -73,7 +74,15 @@ protected:
 	char ModuleName[7];							// название модуля
 	BYTE UsbSpeed;								// скорость работы шины USB
 	MODULE_DESCRIPTION_E154 ModuleDescription;	// структура с полной информацией о модуле
+
 	ADC_PARS_E154 ap;							// структура параметров работы АЦП модуля
+
+	// отсчёты АЦП
+	SHORT AdcSample1, AdcSample2;
+	// индекс входного диапазона напряжения
+	//const WORD InputRangeIndex = ADC_INPUT_RANGE_10000mV_E154;
+	const WORD InputRangeIndex = ADC_INPUT_RANGE_5000mV_E154;
+
 	const double AdcRate;						// частота работы АЦП в кГц
 	const WORD InputRangeIndex;					// индекс входного диапазона напряжения
 

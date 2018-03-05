@@ -8,6 +8,8 @@ useE154::useE154(void) : AdcRate(100), InputRangeIndex(ADC_INPUT_RANGE_5000mV_E1
 	initAPIInstance();
 	initModuleHandler();
 	OpenDevice();
+    initPorts();
+    initADC();
 }
 
 useE154::~useE154(void)
@@ -16,6 +18,14 @@ useE154::~useE154(void)
 }
 //typedef DWORD (WINAPI *pGetDllVersion)(void);
 //typedef LPVOID (WINAPI *pCreateInstance)(char *);
+double AdcSample(){
+    SHORT AdcSample;
+    double AdcVolt;
+    if(!pModule->ADC_SAMPLE(&AdcSample, (WORD)(0x00  | (InputRangeIndex << 6)))) { trow Errore_E154("\n\n  ADC_SAMPLE(, 0) --> Bad\n");  break; }
+    if(!pModule->ProcessOnePoint(AdcSample, &AdcVolt, (WORD)(0x00  | (InputRangeIndex << 6)), TRUE, TRUE))
+       { throw Errore_E154("\n\n  PreocessOnePoint() --> Bad\n");  break; }
+   return AdcVolt;
+}
 
 void useE154::initAPIInstance()
 {
@@ -86,10 +96,16 @@ string useE154::GetUsbSpeed()
     return "USB is in " + speed + ".\n\r";
 }
 
+string useE154::GetInformation()
+{
+    pModule->GET_MODULE_DESCRIPTION(&ModuleDescription);
+    return ModuleDescription.Module.CompanyName;
+    // получим информацию из ППЗУ модуля
+    //if(!pModule->GET_MODULE_DESCRIPTION(&ModuleDescription)) Errore_E154("Не удалось получить дискриптор модуля!");
+}
+
 string useE154::GetUserMessages() const
 {
     return user_msg.back();
 }
 
-// получим информацию из ППЗУ модуля
-//if(!pModule->GET_MODULE_DESCRIPTION(&ModuleDescription)) Errore_E154("Не удалось получить дискриптор модуля!");
