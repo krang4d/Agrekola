@@ -63,7 +63,6 @@ protected:
 	void initModuleHandler();
 	void initPorts() {
 		if(pModule->ENABLE_TTL_OUT(1)) pModule->TTL_OUT(0); else throw Errore_E154("Ошибка включения линий TTL");
-		//if(pModule->ENABLE_TTL_IN(1)) pModule->TTL_IN(0); else throw Errore_E154("Ошибка включения TTL_IN");
 	}
 	double AdcSample();			 				//простое измерение АЦП
 	void ReleaseAPIInstance();					//(char *ErrorString, bool AbortionFlag);
@@ -80,7 +79,6 @@ protected:
 	// отсчёты АЦП
 	SHORT AdcSample1, AdcSample2;
 	// индекс входного диапазона напряжения
-	//const WORD InputRangeIndex = ADC_INPUT_RANGE_10000mV_E154;
 	const WORD InputRangeIndex = ADC_INPUT_RANGE_5000mV_E154;
 
 	const double AdcRate;						// частота работы АЦП в кГц
@@ -92,4 +90,3 @@ protected:
     //string user_msg;							// последнее выведенное сообщение
     string log_msg;							// служебная информация
 };
-

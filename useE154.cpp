@@ -98,10 +98,17 @@ string useE154::GetUsbSpeed()
 
 string useE154::GetInformation()
 {
-    pModule->GET_MODULE_DESCRIPTION(&ModuleDescription);
-    return ModuleDescription.Module.CompanyName;
+    string str;
     // получим информацию из ППЗУ модуля
-    //if(!pModule->GET_MODULE_DESCRIPTION(&ModuleDescription)) Errore_E154("Не удалось получить дискриптор модуля!");
+    if(!pModule->GET_MODULE_DESCRIPTION(&ModuleDescription)) Errore_E154("Не удалось получить дискриптор модуля!");
+    // отобразим параметры модуля на экране монитора
+    return str = std::to_string(" \n\n") +\
+                 std::to_string(" Module E-154 (S/N %s) is ready ... \n", ModuleDescription.Module.SerialNumber) +\
+                 std::to_string("   Module Info:\n") +\
+                 std::to_string("     Module  Revision   is '%c'\n", ModuleDescription.Module.Revision) +\
+                 std::to_string("     AVR Driver Version is %s (%s)\n", ModuleDescription.Mcu.Version.Version, ModuleDescription.Mcu.Version.Date) +\
+                 std::to_string("   Adc parameters:\n") +\
+                 std::to_string("     Input Range  = %6.2f Volt\n", ADC_INPUT_RANGES_E154[InputRangeIndex]);
 }
 
 string useE154::GetUserMessages() const
