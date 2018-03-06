@@ -29,7 +29,7 @@ class TLoadDll
 		// получение идентификатора библиотеки
 #ifdef QT
         QLibrary* GetDllHinstance(void);
-#elif
+#else
 		HINSTANCE WINAPI GetDllHinstance(void);
 #endif
 

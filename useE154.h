@@ -12,11 +12,11 @@ using std::string;
 
 enum {
 	OFF, ON 
-}
+};
 
-enum channel {
-	CH1, CH2 , CH3, Ch4, PP, L
-}
+enum channel{
+    CH1, CH2 , CH3, CH4, PP, L
+};
 
 struct Errore_E154
 {
@@ -35,36 +35,37 @@ public:
     string GetUsbSpeed();
     string GetInformation();
     void SetChannel(channel ch, int pos) {
-    	swith(ch){
-    		if(pos == ON){
-	    		case CH1: { TtlOut |= (1<<0); pModule->TTL_OUT(TtlOut); break; }
-	    		case CH2: { TtlOut |= (1<<1); pModule->TTL_OUT(TtlOut); break; }
-	    		case CH3: { TtlOut |= (1<<2); pModule->TTL_OUT(TtlOut); break; }
-	    		case CH4: { TtlOut |= (1<<3); pModule->TTL_OUT(TtlOut); break; }
-	    		case  PP: { TtlOut |= (1<<4); pModule->TTL_OUT(TtlOut); break; }
-	    		case   L: { TtlOut |= (1<<5); pModule->TTL_OUT(TtlOut); break; }
-	    			default throw Errore_E154("Неправильно выбран TTL канал");
-	    	}else{
-				case CH1: { TtlOut &= ~(1<<0); pModule->TTL_OUT(TtlOut); break; }
-	    		case CH2: { TtlOut &= ~(1<<1); pModule->TTL_OUT(TtlOut); break; }
-	    		case CH3: { TtlOut &= ~(1<<2); pModule->TTL_OUT(TtlOut); break; }
-	    		case CH4: { TtlOut &= ~(1<<3); pModule->TTL_OUT(TtlOut); break; }
-	    		case  PP: { TtlOut &= ~(1<<4); pModule->TTL_OUT(TtlOut); break; }
-	    		case   L: { TtlOut &= ~(1<<5); pModule->TTL_OUT(TtlOut); break; }
-	    			default throw Errore_E154("Неправильно выбран TTL канал");
-	    	}
-    	}
-
+         if(pos == ON){
+            switch(ch){
+                    case CH1: { TtlOut |= (1<<0); pModule->TTL_OUT(TtlOut); break; }
+                    case CH2: { TtlOut |= (1<<1); pModule->TTL_OUT(TtlOut); break; }
+                    case CH3: { TtlOut |= (1<<2); pModule->TTL_OUT(TtlOut); break; }
+                    case CH4: { TtlOut |= (1<<3); pModule->TTL_OUT(TtlOut); break; }
+                    case  PP: { TtlOut |= (1<<4); pModule->TTL_OUT(TtlOut); break; }
+                    case   L: { TtlOut |= (1<<5); pModule->TTL_OUT(TtlOut); break; }
+                        default: throw Errore_E154("Неправильно выбран TTL канал");
+             }
+         }
+         else{
+             switch(ch){
+                    case CH1: { TtlOut &= ~(1<<0); pModule->TTL_OUT(TtlOut); break; }
+                    case CH2: { TtlOut &= ~(1<<1); pModule->TTL_OUT(TtlOut); break; }
+                    case CH3: { TtlOut &= ~(1<<2); pModule->TTL_OUT(TtlOut); break; }
+                    case CH4: { TtlOut &= ~(1<<3); pModule->TTL_OUT(TtlOut); break; }
+                    case  PP: { TtlOut &= ~(1<<4); pModule->TTL_OUT(TtlOut); break; }
+                    case   L: { TtlOut &= ~(1<<5); pModule->TTL_OUT(TtlOut); break; }
+                        default: throw Errore_E154("Неправильно выбран TTL канал");
+                }
+            }
     }
-    bool GetTDStatus() { pModule->TTL_IN(&TtlIN); if(TtlIN & (1<<0)) return TRUE else return FALSE }  
-
+    bool GetTDStatus() { pModule->TTL_IN(&TtlIN); if(TtlIN & (1<<0)) return TRUE; else return FALSE; }
+    double AdcSample();			 				//простое измерение АЦП
 protected:
 	void initAPIInstance();
 	void initModuleHandler();
 	void initPorts() {
-		if(pModule->ENABLE_TTL_OUT(1)) pModule->TTL_OUT(0); else throw Errore_E154("Ошибка включения линий TTL");
+		if(pModule->ENABLE_TTL_OUT(1)) pModule->TTL_OUT(0); else throw Errore_E154("Ошибка включения линий TTL"); //инициализация всех выводов TTL
 	}
-	double AdcSample();			 				//простое измерение АЦП
 	void ReleaseAPIInstance();					//(char *ErrorString, bool AbortionFlag);
     TLoadDll *pLoadDll;							// указатель на класс динамической загрузки DLL
 	DWORD DllVersion;							// версия библиотеки
@@ -78,11 +79,10 @@ protected:
 
 	// отсчёты АЦП
 	SHORT AdcSample1, AdcSample2;
+
 	// индекс входного диапазона напряжения
 	const WORD InputRangeIndex = ADC_INPUT_RANGE_5000mV_E154;
-
 	const double AdcRate;						// частота работы АЦП в кГц
-	const WORD InputRangeIndex;					// индекс входного диапазона напряжения
 
 	WORD TtlOut;	//Состояние выходных портов 
 	WORD TtlIN;		//Состояние входных портов

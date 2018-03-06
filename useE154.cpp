@@ -9,7 +9,7 @@ useE154::useE154(void) : AdcRate(100), InputRangeIndex(ADC_INPUT_RANGE_5000mV_E1
 	initModuleHandler();
 	OpenDevice();
     initPorts();
-    initADC();
+    //initADC();
 }
 
 useE154::~useE154(void)
@@ -18,12 +18,12 @@ useE154::~useE154(void)
 }
 //typedef DWORD (WINAPI *pGetDllVersion)(void);
 //typedef LPVOID (WINAPI *pCreateInstance)(char *);
-double AdcSample(){
+double useE154::AdcSample(){
     SHORT AdcSample;
     double AdcVolt;
-    if(!pModule->ADC_SAMPLE(&AdcSample, (WORD)(0x00  | (InputRangeIndex << 6)))) { trow Errore_E154("\n\n  ADC_SAMPLE(, 0) --> Bad\n");  break; }
+    if(!pModule->ADC_SAMPLE(&AdcSample, (WORD)(0x00  | (InputRangeIndex << 6)))) { throw Errore_E154("\n\n  ADC_SAMPLE(, 0) --> Bad\n");}
     if(!pModule->ProcessOnePoint(AdcSample, &AdcVolt, (WORD)(0x00  | (InputRangeIndex << 6)), TRUE, TRUE))
-       { throw Errore_E154("\n\n  PreocessOnePoint() --> Bad\n");  break; }
+       { throw Errore_E154("\n\n  PreocessOnePoint() --> Bad\n"); }
    return AdcVolt;
 }
 
@@ -102,13 +102,15 @@ string useE154::GetInformation()
     // получим информацию из ППЗУ модуля
     if(!pModule->GET_MODULE_DESCRIPTION(&ModuleDescription)) Errore_E154("Не удалось получить дискриптор модуля!");
     // отобразим параметры модуля на экране монитора
-    return str = std::to_string(" \n\n") +\
-                 std::to_string(" Module E-154 (S/N %s) is ready ... \n", ModuleDescription.Module.SerialNumber) +\
-                 std::to_string("   Module Info:\n") +\
-                 std::to_string("     Module  Revision   is '%c'\n", ModuleDescription.Module.Revision) +\
-                 std::to_string("     AVR Driver Version is %s (%s)\n", ModuleDescription.Mcu.Version.Version, ModuleDescription.Mcu.Version.Date) +\
-                 std::to_string("   Adc parameters:\n") +\
-                 std::to_string("     Input Range  = %6.2f Volt\n", ADC_INPUT_RANGES_E154[InputRangeIndex]);
+/*    str = " \r\n\r\n" + " Module E-154 (S/N " + std::to_string(ModuleDescription.Module.SerialNumber) + ") is ready ... \r\n" +
+                 " Module Info:\n" +
+                 " Module  Revision   is " + std::to_string(ModuleDescription.Module.Revision) + " \r\n" +
+                 " AVR Driver Version is " + std::to_string(ModuleDescription.Mcu.Version.Version) +
+                 "(" + std::to_string(ModuleDescription.Mcu.Version.Date) + ")"\+ "\r\n" +
+                 "   Adc parameters:\r\n" +
+  */             "     Input Range  = " + std::to_string(ADC_INPUT_RANGES_E154[InputRangeIndex]) + "Volt\r\n";
+    str = "     Input Range  = " + std::to_string(ADC_INPUT_RANGES_E154[InputRangeIndex]) + "Volt\r\n";
+    return str;
 }
 
 string useE154::GetUserMessages() const
