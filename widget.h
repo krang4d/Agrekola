@@ -2,6 +2,7 @@
 #define WIDGET_H
 #include <QString>
 #include <QWidget>
+#include "useE154.h"
 
 namespace Ui {
 class Widget;
@@ -14,11 +15,16 @@ class Widget : public QWidget
 public:
     explicit Widget(QWidget *parent = 0);
     void setText(QString str);
+    void setAgrekila(useE154 *agr);
     ~Widget();
+
+private slots:
+    void on_btnMes_clicked();
 
 private:
     Ui::Widget *ui;
     QString text;
+    useE154 *Agrecola;
 };
 
 #endif // WIDGET_H

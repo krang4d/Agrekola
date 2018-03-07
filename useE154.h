@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 //#include "LoadDll.h"
+#include <QWidget>
 #include "LoadDll.h"
 #include "lib\Lusbapi.h"
 #include <string>
@@ -24,10 +25,14 @@ struct Errore_E154
     Errore_E154(const string &m) : err_msg(m) {}
 };
 
-class useE154
+class useE154 : public QWidget
 {
+     Q_OBJECT
+
+signals:
+    void ValueCome(double volt);
 public:
-	useE154(void);
+    useE154(QWidget *parent = 0);
 	~useE154(void);
     string GetVertion(void);
     string OpenDevice();
@@ -58,7 +63,7 @@ public:
                 }
             }
     }
-    bool GetTDStatus() { pModule->TTL_IN(&TtlIN); if(TtlIN & (1<<0)) return TRUE; else return FALSE; }
+    bool GetStatusTD() { pModule->TTL_IN(&TtlIN); if(TtlIN & (1<<0)) return TRUE; else return FALSE; }
     double AdcSample();			 				//простое измерение АЦП
 protected:
 	void initAPIInstance();

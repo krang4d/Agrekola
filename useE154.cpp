@@ -1,7 +1,7 @@
 ﻿//#include "StdAfx.h"
 #include "useE154.h"
 
-useE154::useE154(void) : AdcRate(100), InputRangeIndex(ADC_INPUT_RANGE_5000mV_E154)
+useE154::useE154(QWidget *parent) : AdcRate(100), InputRangeIndex(ADC_INPUT_RANGE_5000mV_E154)
 {
     pLoadDll = new TLoadDll();
     if(!pLoadDll) throw Errore_E154("Ошибка загрузи библиотеки Dll Load_Dll()!");
@@ -24,6 +24,7 @@ double useE154::AdcSample(){
     if(!pModule->ADC_SAMPLE(&AdcSample, (WORD)(0x00  | (InputRangeIndex << 6)))) { throw Errore_E154("\n\n  ADC_SAMPLE(, 0) --> Bad\n");}
     if(!pModule->ProcessOnePoint(AdcSample, &AdcVolt, (WORD)(0x00  | (InputRangeIndex << 6)), TRUE, TRUE))
        { throw Errore_E154("\n\n  PreocessOnePoint() --> Bad\n"); }
+    //emit ValueCome(AdcVolt);
    return AdcVolt;
 }
 
@@ -99,7 +100,9 @@ string useE154::GetUsbSpeed()
 string useE154::GetInformation()
 {
     string str;
-    // получим информацию из ППЗУ модуля
+    int *bs = new int[16];
+    bs =  (int*)ModuleDescription.Module.SerialNumber;
+     // получим информацию из ППЗУ модуля
     if(!pModule->GET_MODULE_DESCRIPTION(&ModuleDescription)) Errore_E154("Не удалось получить дискриптор модуля!");
     // отобразим параметры модуля на экране монитора
 /*    str = " \r\n\r\n" + " Module E-154 (S/N " + std::to_string(ModuleDescription.Module.SerialNumber) + ") is ready ... \r\n" +
@@ -109,7 +112,8 @@ string useE154::GetInformation()
                  "(" + std::to_string(ModuleDescription.Mcu.Version.Date) + ")"\+ "\r\n" +
                  "   Adc parameters:\r\n" +
   */             "     Input Range  = " + std::to_string(ADC_INPUT_RANGES_E154[InputRangeIndex]) + "Volt\r\n";
-    str = "     Input Range  = " + std::to_string(ADC_INPUT_RANGES_E154[InputRangeIndex]) + "Volt\r\n";
+    str = "     Input Range  = " + std::to_string(ADC_INPUT_RANGES_E154[InputRangeIndex]) + "Volt\r\n" +
+          " \r\n\r\n" + " Module E-154 (S/N " + (char)ModuleDescription.Module.SerialNumber[0] + ") is ready ... \r\n";
     return str;
 }
 
@@ -117,4 +121,3 @@ string useE154::GetUserMessages() const
 {
     return user_msg.back();
 }
-

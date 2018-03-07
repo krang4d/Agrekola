@@ -2,6 +2,7 @@
 #include <QApplication>
 #include <QString>
 #include "useE154.h"
+#include <QMessageBox>
 
 void setUserMessage(Widget *w, string str){
     w->setText(QString(str.c_str()));
@@ -16,19 +17,22 @@ int main(int argc, char *argv[])
     w->setText("Console example for ADC Synchro Stream \n");
     try{
         useE154 *agrecola = new useE154();
+        w->setAgrekila(agrecola);
         setUserMessage(w, agrecola->GetVertion()); //"myGetDllVersion-->ERRORE!\n");
         setUserMessage(w, agrecola->GetUsbSpeed());
         setUserMessage(w, agrecola->GetInformation());
-        for(int i = 0; i < 100; i++)
-            setUserMessage(w, std::to_string(agrecola->AdcSample()) + "\r\n");
+        if(agrecola->GetStatusTD()){
+            setUserMessage(w, "Прибор вошел в режиме тепловой готовности\r\n");
+        } else setUserMessage(w, "Прибор <style color:red>не вошел</style> в режиме тепловой готовности\r\n");
     }
     catch(Errore_E154 &e){
         w->setText(QString(e.err_msg.c_str()));
+        QMessageBox err(QMessageBox::Warning, "Ошибка", QString(e.err_msg.c_str()), QMessageBox::Ok);
+        err.exec();
     }
     catch(...){
         w->setText(QString("Неизвестная ошибка"));
     }
-
 //    }
 //    else w->setText("myGetDllVersion-->OK\n");
 
