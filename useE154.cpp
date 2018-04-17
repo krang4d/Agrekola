@@ -1,15 +1,20 @@
 ﻿//#include "StdAfx.h"
 #include "useE154.h"
 
+// кол-во получаемых отсчетов
+DWORD DataStep = 256*1024;
+// буфер данных
+SHORT *ReadBuffer;
+
 useE154::useE154(QWidget *parent) : AdcRate(100), InputRangeIndex(ADC_INPUT_RANGE_5000mV_E154)
 {
     pLoadDll = new TLoadDll();
     if(!pLoadDll) throw Errore_E154("Ошибка загрузи библиотеки Dll Load_Dll()!");
-	initAPIInstance();
+    initAPIInstance();
 	initModuleHandler();
 	OpenDevice();
     initPorts();
-    //initADC();
+    initADC();
 }
 
 useE154::~useE154(void)
@@ -54,6 +59,8 @@ void useE154::ReleaseAPIInstance() //(char *ErrorString, bool AbortionFlag)
     }
     // освободим библиотеку
     if(pLoadDll) { delete pLoadDll; pLoadDll = NULL; }
+
+    if(!ReadBuffer) {delete[] ReadBuffer; ReadBuffer = NULL;}
     // если нужно - аварийно завершаем программу
     //if(AbortionFlag) exit(0x1);
 }
@@ -83,9 +90,39 @@ string useE154::OpenDevice()
 	// проверим, что это 'E-154'
     if(strcmp(ModuleName, "E154")) Errore_E154("Устройство 'E-154' успешно открыто.");
     return "Устройство 'E-154' открыто в виртуальном слоте №" + std::to_string(i) + ".\n\r" ;
-	//user_msg.Format(_T("%sУстройство 'E-154' обнаружено.\n\r"), user_msg);
+    //user_msg.Format(_T("%sУстройство 'E-154' обнаружено.\n\r"), user_msg);
 }
-	/*****************************************************/
+
+std::string useE154::initADC()
+{
+    pModule->STOP_ADC();
+    if(!pModule->GET_ADC_PARS(&ap)) throw Errore_E154("Ошибка получния параметров АЦП!\n");
+    ap.ClkSource = INT_ADC_CLOCK_E154;                      // внутренний запуск АЦП
+    ap.EnableClkOutput = ADC_CLOCK_TRANS_DISABLED_E154; 	// без трансляции тактовых импульсо АЦП
+    ap.InputMode = NO_SYNC_E154;                            // без синхронизации ввода данных
+    ap.ChannelsQuantity = 0x4;                // кол-во активных каналов
+    // формируем управляющую таблицу
+    for(int i = 0x0; i < ap.ChannelsQuantity; i++) ap.ControlTable[i] = (WORD)(i | (ADC_INPUT_RANGE_5000mV_E154 << 0x6));
+    ap.AdcRate = 100.0;								// частота работы АЦП в кГц
+    ap.InterKadrDelay = 0.0;							// межкадровая задержка в мс
+    // передадим требуемые параметры работы АЦП в модуль
+    if(!pModule->SET_ADC_PARS(&ap)) throw Errore_E154("Ошибка установки параметрв АЦП!\n");
+
+    // выделим память под буфер
+    ReadBuffer = new SHORT[DataStep];
+    if(!ReadBuffer) throw Errore_E154("Ошибка выделения памяти под буфер фанных\n");
+
+    // формируем структуру IoReq
+    IoReq.Buffer = ReadBuffer;					// буфер данных
+    IoReq.NumberOfWordsToPass = DataStep;       // кол-во собираемых данных
+    IoReq.NumberOfWordsPassed = 0x0;
+    IoReq.Overlapped = NULL;					// синхронный вариант запроса
+    IoReq.TimeOut = DataStep/ap.AdcRate + 1000;	// таймаут синхронного сбора данных
+
+
+    return std::string("initADC()/n");
+}
+
 string useE154::GetUsbSpeed()
 {
     if(!pModule->GetUsbSpeed(&UsbSpeed)) Errore_E154("Не удалось получить скорость работы интерфейса USB!"); //получаем скорость работы шины USB

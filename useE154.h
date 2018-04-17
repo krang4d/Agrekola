@@ -1,6 +1,5 @@
 ﻿#pragma once
 
-//#include "LoadDll.h"
 #include <QWidget>
 #include "LoadDll.h"
 #include "lib\Lusbapi.h"
@@ -31,11 +30,13 @@ class useE154 : public QWidget
 
 signals:
     void ValueCome(double volt);
+
 public:
     useE154(QWidget *parent = 0);
 	~useE154(void);
     string GetVertion(void);
     string OpenDevice();
+    string initADC();
     string GetUserMessages() const;
     string GetUsbSpeed();
     string GetInformation();
@@ -65,6 +66,7 @@ public:
     }
     bool GetStatusTD() { pModule->TTL_IN(&TtlIN); if(TtlIN & (1<<0)) return TRUE; else return FALSE; }
     double AdcSample();			 				//простое измерение АЦП
+
 protected:
 	void initAPIInstance();
 	void initModuleHandler();
@@ -79,8 +81,8 @@ protected:
 	char ModuleName[7];							// название модуля
 	BYTE UsbSpeed;								// скорость работы шины USB
 	MODULE_DESCRIPTION_E154 ModuleDescription;	// структура с полной информацией о модуле
-
-	ADC_PARS_E154 ap;							// структура параметров работы АЦП модуля
+    IO_REQUEST_LUSBAPI IoReq;                   // структура с параметрами запроса на ввод/вывод данных
+    ADC_PARS_E154 ap;							// структура параметров работы АЦП модуля
 
 	// отсчёты АЦП
 	SHORT AdcSample1, AdcSample2;
