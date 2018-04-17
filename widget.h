@@ -20,6 +20,7 @@ public:
 
 private slots:
     void on_btnMes_clicked();
+    void on_btnTest_clicked();
 
 private:
     Ui::Widget *ui;

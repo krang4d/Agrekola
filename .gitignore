@@ -1,5 +1,7 @@
 *.user*
 debug/
+build/
 *stash
 Makefile*
+ui_widget.h
 

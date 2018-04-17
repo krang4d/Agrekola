@@ -1,5 +1,6 @@
 ﻿#include "widget.h"
 #include "ui_widget.h"
+#include <QScrollBar>
 
 Widget::Widget(QWidget *parent) :
     QWidget(parent),
@@ -28,8 +29,16 @@ Widget::~Widget()
 void Widget::on_btnMes_clicked()
 {
     string str = std::to_string(Agrecola->AdcSample()) + "\r\n";
-    for(int i = 0; i < 10; i++){
-        setText(QString(str.c_str()));
-        Sleep(1000);
-    }
+    setText(QString(str.c_str()));
+    QScrollBar *vb = ui->textEdit->verticalScrollBar();
+    int max = vb->maximum();
+    vb->setValue(max);
+//    for(int i = 0; i < 10; i++){
+//        //Sleep(1000);
+//    }
+}
+
+void Widget::on_btnTest_clicked()
+{
+
 }

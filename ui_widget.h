@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'widget.ui'
 **
-** Created by: Qt User Interface Compiler version 5.10.0
+** Created by: Qt User Interface Compiler version 5.6.3
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -14,6 +14,7 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QHeaderView>
+#include <QtWidgets/QPushButton>
 #include <QtWidgets/QTextEdit>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
@@ -25,12 +26,14 @@ class Ui_Widget
 public:
     QVBoxLayout *verticalLayout;
     QTextEdit *textEdit;
+    QPushButton *btnMes;
+    QPushButton *btnTest;
 
     void setupUi(QWidget *Widget)
     {
         if (Widget->objectName().isEmpty())
             Widget->setObjectName(QStringLiteral("Widget"));
-        Widget->resize(600, 300);
+        Widget->resize(600, 282);
         verticalLayout = new QVBoxLayout(Widget);
         verticalLayout->setSpacing(6);
         verticalLayout->setContentsMargins(11, 11, 11, 11);
@@ -45,6 +48,16 @@ public:
 
         verticalLayout->addWidget(textEdit);
 
+        btnMes = new QPushButton(Widget);
+        btnMes->setObjectName(QStringLiteral("btnMes"));
+
+        verticalLayout->addWidget(btnMes);
+
+        btnTest = new QPushButton(Widget);
+        btnTest->setObjectName(QStringLiteral("btnTest"));
+
+        verticalLayout->addWidget(btnTest);
+
 
         retranslateUi(Widget);
 
@@ -53,7 +66,9 @@ public:
 
     void retranslateUi(QWidget *Widget)
     {
-        Widget->setWindowTitle(QApplication::translate("Widget", "Widget", nullptr));
+        Widget->setWindowTitle(QApplication::translate("Widget", "Widget", Q_NULLPTR));
+        btnMes->setText(QApplication::translate("Widget", "\320\237\321\200\320\276\320\262\320\265\321\201\321\202\320\270 \320\270\320\267\320\274\320\265\321\200\320\265\320\275\320\270\320\265", Q_NULLPTR));
+        btnTest->setText(QApplication::translate("Widget", "\320\242\320\265\321\201\321\202", Q_NULLPTR));
     } // retranslateUi
 
 };
