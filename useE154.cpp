@@ -30,7 +30,42 @@ double useE154::AdcSample(){
     if(!pModule->ProcessOnePoint(AdcSample, &AdcVolt, (WORD)(0x00  | (InputRangeIndex << 6)), TRUE, TRUE))
        { throw Errore_E154("\n\n  PreocessOnePoint() --> Bad\n"); }
     //emit ValueCome(AdcVolt);
-   return AdcVolt;
+    return AdcVolt;
+}
+
+void useE154::AdcKADR()
+{
+    SHORT AdcBuffer[4];
+    pModule->STOP_ADC();
+    pModule->GET_MODULE_DESCRIPTION(&ModuleDescription);
+    // получим текущие параметры работы АЦП
+    if(!pModule->GET_ADC_PARS(&ap)) throw Errore_E154("GET_ADC_PARS() --> Bad\n");
+    if(!pModule->ADC_KADR(AdcBuffer)) throw Errore_E154("ADC_KADR() --> Bad\n");
+    if(!pModule->ProcessArray(AdcBuffer, volts_array, 4, TRUE, TRUE)) throw Errore_E154("ProcessArray() --> Bad\n");
+    emit ValueCome();
+}
+
+void useE154::AdcSynchro()
+{
+    pModule->STOP_ADC();
+    // выделим память под буфер
+    ReadBuffer = new SHORT[DataStep];
+    if(!ReadBuffer) throw Errore_E154("Ошибка выделения памяти под буфер фанных\n");
+
+    // формируем структуру IoReq
+    IoReq.Buffer = ReadBuffer;					// буфер данных
+    IoReq.NumberOfWordsToPass = DataStep;       // кол-во собираемых данных
+    IoReq.NumberOfWordsPassed = 0x0;
+    IoReq.Overlapped = NULL;					// синхронный вариант запроса
+    IoReq.TimeOut = DataStep/ap.AdcRate + 1000;	// таймаут синхронного сбора данных
+
+    pModule->GET_MODULE_DESCRIPTION(&ModuleDescription);
+    if(!pModule->START_ADC()) throw Errore_E154("Ошибка при запуске АЦП AdcSynchro()!\n");
+    if(!pModule->ReadData(&IoReq)) throw Errore_E154("Ошибка при чтении данных AdcSynchro()!\n");
+    DWORD Size = IoReq.NumberOfWordsPassed;
+    double Destination[Size];
+    SHORT *AdcData = IoReq.Buffer;
+    if(!pModule->ProcessArray(AdcData, Destination, Size, TRUE, TRUE)) throw Errore_E154("Ошибка преобразования кода АЦП ProcessArray()\n");
 }
 
 void useE154::initAPIInstance()
@@ -45,6 +80,29 @@ void useE154::initModuleHandler()
 {
     ModuleHandle = pModule->GetModuleHandle();
     if(ModuleHandle == INVALID_HANDLE_VALUE) Errore_E154("GetModuleHandle() --> Bad\n");
+}
+
+void useE154::initPorts()
+{
+    if(pModule->ENABLE_TTL_OUT(1)) pModule->TTL_OUT(0); else throw Errore_E154("Ошибка включения линий TTL");
+}
+
+std::string useE154::initADC()
+{
+    pModule->STOP_ADC();
+    if(!pModule->GET_ADC_PARS(&ap)) throw Errore_E154("Ошибка получния параметров АЦП!\n");
+    ap.ClkSource = INT_ADC_CLOCK_E154;                      // внутренний запуск АЦП
+    ap.EnableClkOutput = ADC_CLOCK_TRANS_DISABLED_E154; 	// без трансляции тактовых импульсо АЦП
+    ap.InputMode = NO_SYNC_E154;                            // без синхронизации ввода данных
+    ap.ChannelsQuantity = 0x4;                // кол-во активных каналов
+    // формируем управляющую таблицу
+    for(int i = 0x0; i < ap.ChannelsQuantity; i++) ap.ControlTable[i] = (WORD)(i | (ADC_INPUT_RANGE_5000mV_E154 << 0x6));
+    ap.AdcRate = 100.0;								// частота работы АЦП в кГц
+    ap.InterKadrDelay = 0.0;							// межкадровая задержка в мс
+    // передадим требуемые параметры работы АЦП в модуль
+    if(!pModule->SET_ADC_PARS(&ap)) throw Errore_E154("Ошибка установки параметрв АЦП!\n");
+
+    return std::string("initADC()/n");
 }
 
 void useE154::ReleaseAPIInstance() //(char *ErrorString, bool AbortionFlag)
@@ -65,7 +123,7 @@ void useE154::ReleaseAPIInstance() //(char *ErrorString, bool AbortionFlag)
     //if(AbortionFlag) exit(0x1);
 }
 
-string useE154::GetVertion(void)
+string useE154::GetVersion(void)
 {
 	pGetDllVersion GetDllVersion = (pGetDllVersion)pLoadDll->CallGetDllVersion();
     if(!GetDllVersion) throw Errore_E154("Ошибка выделения памяти в функции Get_Version()!");
@@ -91,36 +149,6 @@ string useE154::OpenDevice()
     if(strcmp(ModuleName, "E154")) Errore_E154("Устройство 'E-154' успешно открыто.");
     return "Устройство 'E-154' открыто в виртуальном слоте №" + std::to_string(i) + ".\n\r" ;
     //user_msg.Format(_T("%sУстройство 'E-154' обнаружено.\n\r"), user_msg);
-}
-
-std::string useE154::initADC()
-{
-    pModule->STOP_ADC();
-    if(!pModule->GET_ADC_PARS(&ap)) throw Errore_E154("Ошибка получния параметров АЦП!\n");
-    ap.ClkSource = INT_ADC_CLOCK_E154;                      // внутренний запуск АЦП
-    ap.EnableClkOutput = ADC_CLOCK_TRANS_DISABLED_E154; 	// без трансляции тактовых импульсо АЦП
-    ap.InputMode = NO_SYNC_E154;                            // без синхронизации ввода данных
-    ap.ChannelsQuantity = 0x4;                // кол-во активных каналов
-    // формируем управляющую таблицу
-    for(int i = 0x0; i < ap.ChannelsQuantity; i++) ap.ControlTable[i] = (WORD)(i | (ADC_INPUT_RANGE_5000mV_E154 << 0x6));
-    ap.AdcRate = 100.0;								// частота работы АЦП в кГц
-    ap.InterKadrDelay = 0.0;							// межкадровая задержка в мс
-    // передадим требуемые параметры работы АЦП в модуль
-    if(!pModule->SET_ADC_PARS(&ap)) throw Errore_E154("Ошибка установки параметрв АЦП!\n");
-
-    // выделим память под буфер
-    ReadBuffer = new SHORT[DataStep];
-    if(!ReadBuffer) throw Errore_E154("Ошибка выделения памяти под буфер фанных\n");
-
-    // формируем структуру IoReq
-    IoReq.Buffer = ReadBuffer;					// буфер данных
-    IoReq.NumberOfWordsToPass = DataStep;       // кол-во собираемых данных
-    IoReq.NumberOfWordsPassed = 0x0;
-    IoReq.Overlapped = NULL;					// синхронный вариант запроса
-    IoReq.TimeOut = DataStep/ap.AdcRate + 1000;	// таймаут синхронного сбора данных
-
-
-    return std::string("initADC()/n");
 }
 
 string useE154::GetUsbSpeed()
@@ -152,6 +180,37 @@ string useE154::GetInformation()
     str = "     Input Range  = " + std::to_string(ADC_INPUT_RANGES_E154[InputRangeIndex]) + "Volt\r\n" +
           " \r\n\r\n" + " Module E-154 (S/N " + (char)ModuleDescription.Module.SerialNumber[0] + ") is ready ... \r\n";
     return str;
+}
+
+void useE154::SetChannel(channel ch, int pos)
+{
+    if(pos == ON){
+    switch(ch){
+            case CH1: { TtlOut |= (1<<0); pModule->TTL_OUT(TtlOut); break; }
+            case CH2: { TtlOut |= (1<<1); pModule->TTL_OUT(TtlOut); break; }
+            case CH3: { TtlOut |= (1<<2); pModule->TTL_OUT(TtlOut); break; }
+            case CH4: { TtlOut |= (1<<3); pModule->TTL_OUT(TtlOut); break; }
+            case  PP: { TtlOut |= (1<<4); pModule->TTL_OUT(TtlOut); break; }
+            case   L: { TtlOut |= (1<<5); pModule->TTL_OUT(TtlOut); break; }
+                default: throw Errore_E154("Неправильно выбран TTL канал");
+     }
+    }
+    else{
+     switch(ch){
+            case CH1: { TtlOut &= ~(1<<0); pModule->TTL_OUT(TtlOut); break; }
+            case CH2: { TtlOut &= ~(1<<1); pModule->TTL_OUT(TtlOut); break; }
+            case CH3: { TtlOut &= ~(1<<2); pModule->TTL_OUT(TtlOut); break; }
+            case CH4: { TtlOut &= ~(1<<3); pModule->TTL_OUT(TtlOut); break; }
+            case  PP: { TtlOut &= ~(1<<4); pModule->TTL_OUT(TtlOut); break; }
+            case   L: { TtlOut &= ~(1<<5); pModule->TTL_OUT(TtlOut); break; }
+                default: throw Errore_E154("Неправильно выбран TTL канал");
+        }
+    }
+}
+
+bool useE154::GetStatusTD()
+{
+    pModule->TTL_IN(&TtlIN); if(TtlIN & (1<<0)) return TRUE; else return FALSE;
 }
 
 string useE154::GetUserMessages() const

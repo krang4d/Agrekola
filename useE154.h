@@ -29,51 +29,32 @@ class useE154 : public QWidget
      Q_OBJECT
 
 signals:
-    void ValueCome(double volt);
+    void ValueCome();
 
 public:
     useE154(QWidget *parent = 0);
 	~useE154(void);
-    string GetVertion(void);
     string OpenDevice();
-    string initADC();
+    string GetVersion(void);
     string GetUserMessages() const;
     string GetUsbSpeed();
     string GetInformation();
-    void SetChannel(channel ch, int pos) {
-         if(pos == ON){
-            switch(ch){
-                    case CH1: { TtlOut |= (1<<0); pModule->TTL_OUT(TtlOut); break; }
-                    case CH2: { TtlOut |= (1<<1); pModule->TTL_OUT(TtlOut); break; }
-                    case CH3: { TtlOut |= (1<<2); pModule->TTL_OUT(TtlOut); break; }
-                    case CH4: { TtlOut |= (1<<3); pModule->TTL_OUT(TtlOut); break; }
-                    case  PP: { TtlOut |= (1<<4); pModule->TTL_OUT(TtlOut); break; }
-                    case   L: { TtlOut |= (1<<5); pModule->TTL_OUT(TtlOut); break; }
-                        default: throw Errore_E154("Неправильно выбран TTL канал");
-             }
-         }
-         else{
-             switch(ch){
-                    case CH1: { TtlOut &= ~(1<<0); pModule->TTL_OUT(TtlOut); break; }
-                    case CH2: { TtlOut &= ~(1<<1); pModule->TTL_OUT(TtlOut); break; }
-                    case CH3: { TtlOut &= ~(1<<2); pModule->TTL_OUT(TtlOut); break; }
-                    case CH4: { TtlOut &= ~(1<<3); pModule->TTL_OUT(TtlOut); break; }
-                    case  PP: { TtlOut &= ~(1<<4); pModule->TTL_OUT(TtlOut); break; }
-                    case   L: { TtlOut &= ~(1<<5); pModule->TTL_OUT(TtlOut); break; }
-                        default: throw Errore_E154("Неправильно выбран TTL канал");
-                }
-            }
-    }
-    bool GetStatusTD() { pModule->TTL_IN(&TtlIN); if(TtlIN & (1<<0)) return TRUE; else return FALSE; }
+    void SetChannel(channel ch, int pos);
+    bool GetStatusTD();
     double AdcSample();			 				//простое измерение АЦП
+    void AdcKADR();
+    void AdcSynchro();                          //измерение в синхронном режиме
+
+    double volts_array[16];
 
 protected:
 	void initAPIInstance();
 	void initModuleHandler();
-	void initPorts() {
-		if(pModule->ENABLE_TTL_OUT(1)) pModule->TTL_OUT(0); else throw Errore_E154("Ошибка включения линий TTL"); //инициализация всех выводов TTL
-	}
+    void initPorts();                           //инициализация всех выводов TTL
+    string initADC();
 	void ReleaseAPIInstance();					//(char *ErrorString, bool AbortionFlag);
+
+private:
     TLoadDll *pLoadDll;							// указатель на класс динамической загрузки DLL
 	DWORD DllVersion;							// версия библиотеки
 	ILE154 *pModule;							// указатель на интерфейс модуля

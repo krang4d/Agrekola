@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
     try{
         useE154 *agrecola = new useE154();
         w->setAgrekila(agrecola);
-        setUserMessage(w, agrecola->GetVertion()); //"myGetDllVersion-->ERRORE!\n");
+        setUserMessage(w, agrecola->GetVersion()); //"myGetDllVersion-->ERRORE!\n");
         setUserMessage(w, agrecola->GetUsbSpeed());
         setUserMessage(w, agrecola->GetInformation());
         if(agrecola->GetStatusTD()){
