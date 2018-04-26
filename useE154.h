@@ -2,9 +2,10 @@
 
 #include <QWidget>
 #include "LoadDll.h"
-#include "lib\Lusbapi.h"
+#include "Lusbapi.h"
 #include <string>
 #include <list>
+#include <QList>
 
 #define MaxVirtualSoltsQuantity 127
 
@@ -29,7 +30,7 @@ class useE154 : public QWidget
      Q_OBJECT
 
 signals:
-    void ValueCome();
+    void ValueCome(std::list<double>*);
 
 public:
     useE154(QWidget *parent = 0);
@@ -41,11 +42,12 @@ public:
     string GetInformation();
     void SetChannel(channel ch, int pos);
     bool GetStatusTD();
-    double AdcSample();			 				//простое измерение АЦП
+    double AdcSample(channel ch);               //простое одноканальное измерение АЦП
     void AdcKADR();
     void AdcSynchro();                          //измерение в синхронном режиме
 
     double volts_array[16];
+    std::list<double> AdcSampleList;
 
 protected:
 	void initAPIInstance();
@@ -56,7 +58,6 @@ protected:
 
 private:
     TLoadDll *pLoadDll;							// указатель на класс динамической загрузки DLL
-	DWORD DllVersion;							// версия библиотеки
 	ILE154 *pModule;							// указатель на интерфейс модуля
 	HANDLE ModuleHandle;						// дескриптор устройства
 	char ModuleName[7];							// название модуля
@@ -68,13 +69,15 @@ private:
 	// отсчёты АЦП
 	SHORT AdcSample1, AdcSample2;
 
-	// индекс входного диапазона напряжения
-	const WORD InputRangeIndex = ADC_INPUT_RANGE_5000mV_E154;
-	const double AdcRate;						// частота работы АЦП в кГц
+    std::list<SHORT> Adc1BufferList;
+    std::list<SHORT> Adc2BufferList;
+    std::list<SHORT> Adc3BufferList;
+    std::list<SHORT> Adc4BufferList;
 
 	WORD TtlOut;	//Состояние выходных портов 
 	WORD TtlIN;		//Состояние входных портов
     std::list<string> user_msg;
-    //string user_msg;							// последнее выведенное сообщение
+    //std::list<AdcBuffer> VoltList;
+    //string user_msg;                      // последнее выведенное сообщение
     string log_msg;							// служебная информация
 };

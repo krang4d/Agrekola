@@ -1,7 +1,11 @@
-ui_widget.h
 *.user*
 debug/
 build/
 *stash
 Makefile*
-
+*.autosave
+/ui_widget.h
+chartdir/
+libapi/
+object_script.widgetTest.Debug
+object_script.widgetTest.Release

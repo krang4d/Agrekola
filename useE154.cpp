@@ -6,7 +6,7 @@ DWORD DataStep = 256*1024;
 // буфер данных
 SHORT *ReadBuffer;
 
-useE154::useE154(QWidget *parent) : AdcRate(100), InputRangeIndex(ADC_INPUT_RANGE_5000mV_E154)
+useE154::useE154(QWidget *parent)
 {
     pLoadDll = new TLoadDll();
     if(!pLoadDll) throw Errore_E154("Ошибка загрузи библиотеки Dll Load_Dll()!");
@@ -21,14 +21,17 @@ useE154::~useE154(void)
 {
 	ReleaseAPIInstance();
 }
-//typedef DWORD (WINAPI *pGetDllVersion)(void);
-//typedef LPVOID (WINAPI *pCreateInstance)(char *);
-double useE154::AdcSample(){
+
+ double useE154::AdcSample(channel ch)
+{
     SHORT AdcSample;
+    std::list<SHORT> AdcSampleList;
     double AdcVolt;
-    if(!pModule->ADC_SAMPLE(&AdcSample, (WORD)(0x00  | (InputRangeIndex << 6)))) { throw Errore_E154("\n\n  ADC_SAMPLE(, 0) --> Bad\n");}
-    if(!pModule->ProcessOnePoint(AdcSample, &AdcVolt, (WORD)(0x00  | (InputRangeIndex << 6)), TRUE, TRUE))
-       { throw Errore_E154("\n\n  PreocessOnePoint() --> Bad\n"); }
+    for(int i; i<10; i++)
+    {
+        if(!pModule->ADC_SAMPLE(&AdcSample, (WORD)(ch  | (ADC_INPUT_RANGE_5000mV_E154 << 6)))) { throw Errore_E154("\n\n  ADC_SAMPLE(, 0) --> Bad\n");}
+        if(!pModule->ProcessOnePoint(AdcSample, &AdcVolt, (WORD)(0x00  | (ADC_INPUT_RANGE_5000mV_E154 << 6)), TRUE, TRUE)) { throw Errore_E154("\n\n  PreocessOnePoint() --> Bad\n"); }
+    }
     //emit ValueCome(AdcVolt);
     return AdcVolt;
 }
@@ -36,13 +39,24 @@ double useE154::AdcSample(){
 void useE154::AdcKADR()
 {
     SHORT AdcBuffer[4];
+    //std::list<SHORT>::iterator it;
     pModule->STOP_ADC();
     pModule->GET_MODULE_DESCRIPTION(&ModuleDescription);
     // получим текущие параметры работы АЦП
     if(!pModule->GET_ADC_PARS(&ap)) throw Errore_E154("GET_ADC_PARS() --> Bad\n");
     if(!pModule->ADC_KADR(AdcBuffer)) throw Errore_E154("ADC_KADR() --> Bad\n");
     if(!pModule->ProcessArray(AdcBuffer, volts_array, 4, TRUE, TRUE)) throw Errore_E154("ProcessArray() --> Bad\n");
-    emit ValueCome();
+    Adc1BufferList.push_back(AdcBuffer[0]);
+    Adc2BufferList.push_back(AdcBuffer[1]);
+    Adc3BufferList.push_back(AdcBuffer[2]);
+    Adc4BufferList.push_back(AdcBuffer[3]);
+
+    AdcSampleList.push_back(AdcBuffer[0]);
+    AdcSampleList.push_back(AdcBuffer[1]);
+    AdcSampleList.push_back(AdcBuffer[2]);
+    AdcSampleList.push_back(AdcBuffer[3]);
+
+    emit ValueCome(&AdcSampleList);
 }
 
 void useE154::AdcSynchro()
@@ -68,6 +82,7 @@ void useE154::AdcSynchro()
     if(!pModule->ProcessArray(AdcData, Destination, Size, TRUE, TRUE)) throw Errore_E154("Ошибка преобразования кода АЦП ProcessArray()\n");
 }
 
+//typedef LPVOID (WINAPI *pCreateInstance)(char *);
 void useE154::initAPIInstance()
 {
     pCreateInstance CreateInstance = (pCreateInstance)pLoadDll->CallCreateLInstance();
@@ -82,6 +97,18 @@ void useE154::initModuleHandler()
     if(ModuleHandle == INVALID_HANDLE_VALUE) Errore_E154("GetModuleHandle() --> Bad\n");
 }
 
+//typedef DWORD (WINAPI *pGetDllVersion)(void);
+string useE154::GetVersion(void)
+{
+    pGetDllVersion GetDllVersion = (pGetDllVersion)pLoadDll->CallGetDllVersion();
+    if(!GetDllVersion) throw Errore_E154("Ошибка выделения памяти в функции Get_Version()!");
+//sprintf(String, " Lusbapi.dll Version Error!!!\n   Current: %1u.%1u. Required: %1u.%1u",
+//						DllVersion >> 0x10, DllVersion & 0xFFFF,
+//						CURRENT_VERSION_LUSBAPI >> 0x10, CURRENT_VERSION_LUSBAPI & 0xFFFF);
+    DWORD DllVersion = GetDllVersion();
+    return "Lusbapi.dll version is v" + std::to_string(DllVersion >> 0x10) + "." + std::to_string(DllVersion & 0xFFFF) + "\n";
+}
+
 void useE154::initPorts()
 {
     if(pModule->ENABLE_TTL_OUT(1)) pModule->TTL_OUT(0); else throw Errore_E154("Ошибка включения линий TTL");
@@ -94,11 +121,11 @@ std::string useE154::initADC()
     ap.ClkSource = INT_ADC_CLOCK_E154;                      // внутренний запуск АЦП
     ap.EnableClkOutput = ADC_CLOCK_TRANS_DISABLED_E154; 	// без трансляции тактовых импульсо АЦП
     ap.InputMode = NO_SYNC_E154;                            // без синхронизации ввода данных
-    ap.ChannelsQuantity = 0x4;                // кол-во активных каналов
+    ap.ChannelsQuantity = 0x4;                              // кол-во активных каналов
     // формируем управляющую таблицу
     for(int i = 0x0; i < ap.ChannelsQuantity; i++) ap.ControlTable[i] = (WORD)(i | (ADC_INPUT_RANGE_5000mV_E154 << 0x6));
-    ap.AdcRate = 100.0;								// частота работы АЦП в кГц
-    ap.InterKadrDelay = 0.0;							// межкадровая задержка в мс
+    ap.AdcRate = 100.0;                                     // частота работы АЦП в кГц
+    ap.InterKadrDelay = 0.0;                                // межкадровая задержка в мс
     // передадим требуемые параметры работы АЦП в модуль
     if(!pModule->SET_ADC_PARS(&ap)) throw Errore_E154("Ошибка установки параметрв АЦП!\n");
 
@@ -121,17 +148,6 @@ void useE154::ReleaseAPIInstance() //(char *ErrorString, bool AbortionFlag)
     if(!ReadBuffer) {delete[] ReadBuffer; ReadBuffer = NULL;}
     // если нужно - аварийно завершаем программу
     //if(AbortionFlag) exit(0x1);
-}
-
-string useE154::GetVersion(void)
-{
-	pGetDllVersion GetDllVersion = (pGetDllVersion)pLoadDll->CallGetDllVersion();
-    if(!GetDllVersion) throw Errore_E154("Ошибка выделения памяти в функции Get_Version()!");
-//sprintf(String, " Lusbapi.dll Version Error!!!\n   Current: %1u.%1u. Required: %1u.%1u",
-//						DllVersion >> 0x10, DllVersion & 0xFFFF,
-//						CURRENT_VERSION_LUSBAPI >> 0x10, CURRENT_VERSION_LUSBAPI & 0xFFFF);
-	DllVersion = GetDllVersion();
-    return "Lusbapi.dll v" + std::to_string(DllVersion >> 0x10) + "," + std::to_string(DllVersion & 0xFFFF) + "\r\n";
 }
 
 string useE154::OpenDevice()
@@ -159,27 +175,17 @@ string useE154::GetUsbSpeed()
     {
         speed = "High-Speed Mode (480 Mbit/s)";
     } else speed = "Full-Speed Mode (12 Mbit/s)";
-    return "USB is in " + speed + ".\n\r";
+    return "USB is in " + speed + "\n";
 }
 
 string useE154::GetInformation()
 {
     string str;
-    int *bs = new int[16];
-    bs =  (int*)ModuleDescription.Module.SerialNumber;
+    char str1[16];
+    strcpy(str1, (char*)ModuleDescription.Module.SerialNumber);
      // получим информацию из ППЗУ модуля
-    if(!pModule->GET_MODULE_DESCRIPTION(&ModuleDescription)) Errore_E154("Не удалось получить дискриптор модуля!");
-    // отобразим параметры модуля на экране монитора
-/*    str = " \r\n\r\n" + " Module E-154 (S/N " + std::to_string(ModuleDescription.Module.SerialNumber) + ") is ready ... \r\n" +
-                 " Module Info:\n" +
-                 " Module  Revision   is " + std::to_string(ModuleDescription.Module.Revision) + " \r\n" +
-                 " AVR Driver Version is " + std::to_string(ModuleDescription.Mcu.Version.Version) +
-                 "(" + std::to_string(ModuleDescription.Mcu.Version.Date) + ")"\+ "\r\n" +
-                 "   Adc parameters:\r\n" +
-  */             "     Input Range  = " + std::to_string(ADC_INPUT_RANGES_E154[InputRangeIndex]) + "Volt\r\n";
-    str = "     Input Range  = " + std::to_string(ADC_INPUT_RANGES_E154[InputRangeIndex]) + "Volt\r\n" +
-          " \r\n\r\n" + " Module E-154 (S/N " + (char)ModuleDescription.Module.SerialNumber[0] + ") is ready ... \r\n";
-    return str;
+    if(!pModule->GET_MODULE_DESCRIPTION(&ModuleDescription)) throw Errore_E154("Не удалось получить дискриптор модуля!");
+    return "Module E-154 (S/N ) is ready ...\n";
 }
 
 void useE154::SetChannel(channel ch, int pos)

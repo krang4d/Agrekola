@@ -10,10 +10,8 @@
     #ifdef QT
         #include <QLibrary>
     #endif
-
 typedef DWORD (WINAPI *pGetDllVersion)(void);
 typedef LPVOID (WINAPI *pCreateInstance)(char *);
-
 class TLoadDll
 {
 	public:
@@ -21,7 +19,6 @@ class TLoadDll
         TLoadDll();
 		// деструктор
 		~TLoadDll();
-
 		// получение адреса функции интерфейса модуля
 		LPVOID WINAPI CallCreateLInstance(void);
 		// получение адреса функции версии DLL
@@ -32,7 +29,6 @@ class TLoadDll
 #else
 		HINSTANCE WINAPI GetDllHinstance(void);
 #endif
-
 	private:
 		// идентификатор модуля DLL
     #ifdef QT
@@ -42,8 +38,5 @@ class TLoadDll
             HINSTANCE hDll;
             std::string name;
     #endif
-
 };
-
 #endif
-
