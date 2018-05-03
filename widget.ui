@@ -7,43 +7,78 @@
     <x>0</x>
     <y>0</y>
     <width>1027</width>
-    <height>437</height>
+    <height>567</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Widget</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
-   <item>
-    <widget class="QTextEdit" name="textEdit">
-     <property name="font">
-      <font>
-       <family>Times New Roman</family>
-       <pointsize>14</pointsize>
-      </font>
-     </property>
-     <property name="readOnly">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QPushButton" name="btnMes">
-     <property name="text">
-      <string>Провести измерение</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QPushButton" name="btnTest">
-     <property name="text">
-      <string>Тест</string>
-     </property>
-    </widget>
-   </item>
-  </layout>
+  <widget class="QWidget" name="layoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>1011</width>
+     <height>281</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QTextEdit" name="textEdit">
+      <property name="font">
+       <font>
+        <family>Times New Roman</family>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="AdcSample">
+      <property name="text">
+       <string>AdcSample</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="AdcKadr">
+      <property name="text">
+       <string>AdcKadr</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="AdcSynchro">
+      <property name="text">
+       <string>AdcSynchro</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="RealtimeDemo" name="plotRt" native="true">
+   <property name="geometry">
+    <rect>
+     <x>19</x>
+     <y>309</y>
+     <width>991</width>
+     <height>241</height>
+    </rect>
+   </property>
+  </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>RealtimeDemo</class>
+   <extends>QWidget</extends>
+   <header location="global">realtimedemo.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

@@ -3,6 +3,7 @@
 #include <QString>
 #include <QWidget>
 #include "useE154.h"
+#include "chartdir/realtimedemo.h"
 
 namespace Ui {
 class Widget;
@@ -16,11 +17,13 @@ public:
     explicit Widget(QWidget *parent = 0);
     void setText(QString str);
     void setAgrekila(useE154 *agr);
+    void setPlot();
     ~Widget();
 
 private slots:
-    void on_btnMes_clicked();
-    void on_btnTest_clicked();
+    void on_AdcSample_clicked();
+    void on_AdcKadr_clicked();
+    void on_AdcSynchro_clicked();
 
 private:
     Ui::Widget *ui;

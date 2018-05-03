@@ -2,7 +2,7 @@
 #include "useE154.h"
 
 // кол-во получаемых отсчетов
-DWORD DataStep = 256*1024;
+DWORD DataStep = 100;
 // буфер данных
 SHORT *ReadBuffer;
 
@@ -24,15 +24,13 @@ useE154::~useE154(void)
 
  double useE154::AdcSample(channel ch)
 {
+    pModule->STOP_ADC();
     SHORT AdcSample;
-    std::list<SHORT> AdcSampleList;
     double AdcVolt;
-    for(int i; i<10; i++)
-    {
-        if(!pModule->ADC_SAMPLE(&AdcSample, (WORD)(ch  | (ADC_INPUT_RANGE_5000mV_E154 << 6)))) { throw Errore_E154("\n\n  ADC_SAMPLE(, 0) --> Bad\n");}
-        if(!pModule->ProcessOnePoint(AdcSample, &AdcVolt, (WORD)(0x00  | (ADC_INPUT_RANGE_5000mV_E154 << 6)), TRUE, TRUE)) { throw Errore_E154("\n\n  PreocessOnePoint() --> Bad\n"); }
-    }
-    //emit ValueCome(AdcVolt);
+    if(!pModule->ADC_SAMPLE(&AdcSample, (WORD)(ch  | (ADC_INPUT_RANGE_5000mV_E154 << 6)))) { throw Errore_E154("\n\n  ADC_SAMPLE(, 0) --> Bad\n");}
+    if(!pModule->ProcessOnePoint(AdcSample, &AdcVolt, (WORD)(ch  | (ADC_INPUT_RANGE_5000mV_E154 << 6)), TRUE, TRUE)) { throw Errore_E154("\n\n  PreocessOnePoint() --> Bad\n"); }
+    AdcSampleList.push_back(AdcVolt);
+    pModule->STOP_ADC();
     return AdcVolt;
 }
 
@@ -55,11 +53,11 @@ void useE154::AdcKADR()
     AdcSampleList.push_back(AdcBuffer[1]);
     AdcSampleList.push_back(AdcBuffer[2]);
     AdcSampleList.push_back(AdcBuffer[3]);
-
+    pModule->STOP_ADC();
     emit ValueCome(&AdcSampleList);
 }
 
-void useE154::AdcSynchro()
+std::string useE154::AdcSynchro()
 {
     pModule->STOP_ADC();
     // выделим память под буфер
@@ -80,6 +78,24 @@ void useE154::AdcSynchro()
     double Destination[Size];
     SHORT *AdcData = IoReq.Buffer;
     if(!pModule->ProcessArray(AdcData, Destination, Size, TRUE, TRUE)) throw Errore_E154("Ошибка преобразования кода АЦП ProcessArray()\n");
+    //int s = static_cast<int>(Size);
+    readDataString += "useE154::AdcSynchro() size:" + std::to_string(static_cast<int>(Size)) + "\n";
+    readDataString += "Sample[0]= " + std::to_string(Destination[0]) + "\n";
+    readDataString += "Sample[" + std::to_string(Size-1) + "]" + std::to_string(Destination[Size-1]) + "\n";
+    for(DWORD i=0; i<Size; i++)
+    {
+        std::string str = std::to_string(Destination[i]);
+        readDataString += "№" + std::to_string(i) + "val:" + str + "\t";
+        //ReadDataList.push_back(str);
+    }
+return readDataString;
+//    for(int j; j<(Size/4); j++)
+//    {
+//        for(int i = 0; i<4; i++)
+//        {
+//            ReadBuffer[((j*4)+i)];
+//        }
+//    }
 }
 
 //typedef LPVOID (WINAPI *pCreateInstance)(char *);

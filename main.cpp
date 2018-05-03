@@ -15,11 +15,11 @@ void setUserMessage(Widget *w, string str)
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    RealtimeDemo *demo = new RealtimeDemo();
+    //RealtimeDemo *demo = new RealtimeDemo();
     useE154 *agrecola = new useE154();
     Widget *w = new Widget();
-    QObject::connect(agrecola, SIGNAL(ValueCome(std::list<double>*)), demo, SLOT(getData(std::list<double>*)) );
-    demo->show();
+    //QObject::connect(agrecola, SIGNAL(ValueCome(std::list<double>*)), demo, SLOT(getData(std::list<double>*)) );
+    //demo->show();
     w->show();
     w->setText("Module E-154\n");
     w->setText("Console example for ADC Synchro Stream \n");
@@ -29,6 +29,7 @@ int main(int argc, char *argv[])
         setUserMessage(w, agrecola->GetVersion());
         setUserMessage(w, agrecola->GetUsbSpeed());
         setUserMessage(w, agrecola->GetInformation());
+        setUserMessage(w, agrecola->AdcSynchro());
         if(agrecola->GetStatusTD()){
             setUserMessage(w, "Прибор вышел в режиме тепловой готовности\r\n");
         } else setUserMessage(w, "Прибор <style color:red>не вышел</style> в режиме тепловой готовности\r\n");

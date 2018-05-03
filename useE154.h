@@ -6,6 +6,7 @@
 #include <string>
 #include <list>
 #include <QList>
+#include <QDebug>
 
 #define MaxVirtualSoltsQuantity 127
 
@@ -16,7 +17,7 @@ enum {
 };
 
 enum channel{
-    CH1, CH2 , CH3, CH4, PP, L
+    CH1 = 0x00, CH2 = 0x01 , CH3 = 0x02, CH4 = 0x03, PP = 0x04, L = 0x05
 };
 
 struct Errore_E154
@@ -42,12 +43,12 @@ public:
     string GetInformation();
     void SetChannel(channel ch, int pos);
     bool GetStatusTD();
-    double AdcSample(channel ch);               //простое одноканальное измерение АЦП
-    void AdcKADR();
-    void AdcSynchro();                          //измерение в синхронном режиме
 
+    /*Функции поп сбору данных */
+    double AdcSample(channel ch);        //простое одноканальное измерение АЦП канала ch, n раз
+    void AdcKADR();                             //покадровое измерение
+    std::string AdcSynchro();                          //измерение в синхронном режиме
     double volts_array[16];
-    std::list<double> AdcSampleList;
 
 protected:
 	void initAPIInstance();
@@ -66,14 +67,19 @@ private:
     IO_REQUEST_LUSBAPI IoReq;                   // структура с параметрами запроса на ввод/вывод данных
     ADC_PARS_E154 ap;							// структура параметров работы АЦП модуля
 
-	// отсчёты АЦП
-	SHORT AdcSample1, AdcSample2;
 
+	// отсчёты АЦП
+    //SHORT AdcSample1, AdcSample2;
+    /*Buffer for AdcSample*/
+    std::list<double> AdcSampleList;
+    /*Buffer for AdcKADR()*/
     std::list<SHORT> Adc1BufferList;
     std::list<SHORT> Adc2BufferList;
     std::list<SHORT> Adc3BufferList;
     std::list<SHORT> Adc4BufferList;
-
+    /*Buffer for AdcSynchro()*/
+    std::list<double> ReadDataList;
+    std::string readDataString;
 	WORD TtlOut;	//Состояние выходных портов 
 	WORD TtlIN;		//Состояние входных портов
     std::list<string> user_msg;
