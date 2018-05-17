@@ -3,25 +3,28 @@
 
 #include <string>
 #include "LoadDll.h"
-#include "Lusbapi.h"
+#include "lib/Lusbapi.h"
 
-class LoadEModule : public TLoadDll
+class LoadE154 : public LoadDll
 {
 public:
-    LoadEModule();
-    virtual ~LoadEModule();
-    ILE154* GetEModuleAPI();
+    LoadE154();
+    virtual ~LoadE154();
+
+    ILE154* GetAPI();
     std::string GetVersion();
 
+
 protected:
-    void InitAPIInstance();
-    //void InitModuleHandler();
-    void ReleaseAPIInstance();
+    void IniAPI();
+    void ReleaseAPI();
+    void IniHandler();
     std::string OpenDevice();
 
 private:
-    PCHAR ModuleName = "e154";
+    HANDLE ModuleHandle;						// дескриптор устройства
     ILE154 *pModule;							// указатель на интерфейс модуля
+    PCHAR mname;
 };
 
 #endif // LOADEMODULE_H

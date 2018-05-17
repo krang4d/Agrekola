@@ -1,4 +1,4 @@
-#ifndef __LusbapiH__
+п»ї#ifndef __LusbapiH__
 #define __LusbapiH__
 
 	// --------------------------------------------------------------------------
@@ -7,22 +7,22 @@
 	#include <windows.h>
 	#include "LusbapiTypes.h"
 
-	// версия библиотеки
-	#define 	VERSION_MAJOR_LUSBAPI 			(0x3)		// только одна цифра
-	#define 	VERSION_MINOR_LUSBAPI 			(0x4)		// только одна цифра
+	// РІРµСЂСЃРёСЏ Р±РёР±Р»РёРѕС‚РµРєРё
+	#define 	VERSION_MAJOR_LUSBAPI 			(0x3)		// С‚РѕР»СЊРєРѕ РѕРґРЅР° С†РёС„СЂР°
+	#define 	VERSION_MINOR_LUSBAPI 			(0x4)		// С‚РѕР»СЊРєРѕ РѕРґРЅР° С†РёС„СЂР°
 	#define 	CURRENT_VERSION_LUSBAPI			((VERSION_MAJOR_LUSBAPI << 0x10) | VERSION_MINOR_LUSBAPI)
 
 	#define InitLDevice(Slot) OpenLDevice(Slot)
 
-	// экспортирукемые функции
+	// СЌРєСЃРїРѕСЂС‚РёСЂСѓРєРµРјС‹Рµ С„СѓРЅРєС†РёРё
 	extern "C" DWORD WINAPI GetDllVersion(void);
 	extern "C" LPVOID WINAPI CreateLInstance(PCHAR const DeviceName);
 
-	// возможные индексы скорости работы модуля на шине USB
+	// РІРѕР·РјРѕР¶РЅС‹Рµ РёРЅРґРµРєСЃС‹ СЃРєРѕСЂРѕСЃС‚Рё СЂР°Р±РѕС‚С‹ РјРѕРґСѓР»СЏ РЅР° С€РёРЅРµ USB
 	enum { USB11_LUSBAPI, USB20_LUSBAPI, INVALID_USB_SPEED_LUSBAPI };
-	// полное отсутствме каких-либо модификиций модуля
+	// РїРѕР»РЅРѕРµ РѕС‚СЃСѓС‚СЃС‚РІРјРµ РєР°РєРёС…-Р»РёР±Рѕ РјРѕРґРёС„РёРєРёС†РёР№ РјРѕРґСѓР»СЏ
 	enum { NO_MODULE_MODIFICATION_LUSBAPI = -1 };
-	// максимально возможное кол-во опрашиваемых виртуальных слотов
+	// РјР°РєСЃРёРјР°Р»СЊРЅРѕ РІРѕР·РјРѕР¶РЅРѕРµ РєРѕР»-РІРѕ РѕРїСЂР°С€РёРІР°РµРјС‹С… РІРёСЂС‚СѓР°Р»СЊРЅС‹С… СЃР»РѕС‚РѕРІ
 	const WORD MAX_VIRTUAL_SLOTS_QUANTITY_LUSBAPI = 127;
 
 
@@ -31,19 +31,19 @@
 	// ==========================================================================
 	struct ILUSBBASE
 	{
-		// функции общего назначения для работы с USB устройствами
+		// С„СѓРЅРєС†РёРё РѕР±С‰РµРіРѕ РЅР°Р·РЅР°С‡РµРЅРёСЏ РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ USB СѓСЃС‚СЂРѕР№СЃС‚РІР°РјРё
 		virtual BOOL WINAPI OpenLDevice(WORD VirtualSlot) = 0;
 		virtual BOOL WINAPI CloseLDevice(void) = 0;
 		virtual BOOL WINAPI ReleaseLInstance(void) = 0;
-		// получение дескриптора устройства USB
+		// РїРѕР»СѓС‡РµРЅРёРµ РґРµСЃРєСЂРёРїС‚РѕСЂР° СѓСЃС‚СЂРѕР№СЃС‚РІР° USB
 		virtual HANDLE WINAPI GetModuleHandle(void) = 0;
-		// получение названия используемого модуля
+		// РїРѕР»СѓС‡РµРЅРёРµ РЅР°Р·РІР°РЅРёСЏ РёСЃРїРѕР»СЊР·СѓРµРјРѕРіРѕ РјРѕРґСѓР»СЏ
 		virtual BOOL WINAPI GetModuleName(PCHAR const ModuleName) = 0;
-		// получение текущей скорости работы шины USB
+		// РїРѕР»СѓС‡РµРЅРёРµ С‚РµРєСѓС‰РµР№ СЃРєРѕСЂРѕСЃС‚Рё СЂР°Р±РѕС‚С‹ С€РёРЅС‹ USB
 		virtual BOOL WINAPI GetUsbSpeed(BYTE * const UsbSpeed) = 0;
-		// управления режимом низкого электропотребления модуля
+		// СѓРїСЂР°РІР»РµРЅРёСЏ СЂРµР¶РёРјРѕРј РЅРёР·РєРѕРіРѕ СЌР»РµРєС‚СЂРѕРїРѕС‚СЂРµР±Р»РµРЅРёСЏ РјРѕРґСѓР»СЏ
 		virtual BOOL WINAPI LowPowerMode(BOOL LowPowerFlag) = 0;
-		// функция выдачи строки с последней ошибкой
+		// С„СѓРЅРєС†РёСЏ РІС‹РґР°С‡Рё СЃС‚СЂРѕРєРё СЃ РїРѕСЃР»РµРґРЅРµР№ РѕС€РёР±РєРѕР№
 		virtual BOOL WINAPI GetLastErrorInfo(LAST_ERROR_INFO_LUSBAPI * const LastErrorInfo) = 0;
 	};
 
@@ -51,94 +51,94 @@
 
 
 	// ==========================================================================
-	// *************************** Модуль E14-140 *******************************
+	// *************************** РњРѕРґСѓР»СЊ E14-140 *******************************
 	// ==========================================================================
-	// доступные индексы диапазонов входного напряжения модуля E14-140
+	// РґРѕСЃС‚СѓРїРЅС‹Рµ РёРЅРґРµРєСЃС‹ РґРёР°РїР°Р·РѕРЅРѕРІ РІС…РѕРґРЅРѕРіРѕ РЅР°РїСЂСЏР¶РµРЅРёСЏ РјРѕРґСѓР»СЏ E14-140
 	enum {	ADC_INPUT_RANGE_10000mV_E140, ADC_INPUT_RANGE_2500mV_E140, ADC_INPUT_RANGE_625mV_E140, ADC_INPUT_RANGE_156mV_E140, INVALID_ADC_INPUT_RANGE_E140 };
-	// доступные индексы источника тактовых импульсов для АЦП
+	// РґРѕСЃС‚СѓРїРЅС‹Рµ РёРЅРґРµРєСЃС‹ РёСЃС‚РѕС‡РЅРёРєР° С‚Р°РєС‚РѕРІС‹С… РёРјРїСѓР»СЊСЃРѕРІ РґР»СЏ РђР¦Рџ
 	enum {	INT_ADC_CLOCK_E140, EXT_ADC_CLOCK_E140, INVALID_ADC_CLOCK_E140 };
-	// доступные индексы управления трансляцией тактовых импульсов АЦП
-	// на линию SYN внешнего цифрового разъёма (только при внутреннем
-	// источнике тактовых импульсоц АЦП)
+	// РґРѕСЃС‚СѓРїРЅС‹Рµ РёРЅРґРµРєСЃС‹ СѓРїСЂР°РІР»РµРЅРёСЏ С‚СЂР°РЅСЃР»СЏС†РёРµР№ С‚Р°РєС‚РѕРІС‹С… РёРјРїСѓР»СЊСЃРѕРІ РђР¦Рџ
+	// РЅР° Р»РёРЅРёСЋ SYN РІРЅРµС€РЅРµРіРѕ С†РёС„СЂРѕРІРѕРіРѕ СЂР°Р·СЉС‘РјР° (С‚РѕР»СЊРєРѕ РїСЂРё РІРЅСѓС‚СЂРµРЅРЅРµРј
+	// РёСЃС‚РѕС‡РЅРёРєРµ С‚Р°РєС‚РѕРІС‹С… РёРјРїСѓР»СЊСЃРѕС† РђР¦Рџ)
 	enum {	ADC_CLOCK_TRANS_DISABLED_E140, ADC_CLOCK_TRANS_ENABLED_E140, INVALID_ADC_CLOCK_TRANS_E140 };
-	// возможные типы синхронизации модуля E14-140
+	// РІРѕР·РјРѕР¶РЅС‹Рµ С‚РёРїС‹ СЃРёРЅС…СЂРѕРЅРёР·Р°С†РёРё РјРѕРґСѓР»СЏ E14-140
 	enum { 	NO_SYNC_E140, TTL_START_SYNC_E140, TTL_KADR_SYNC_E140, ANALOG_SYNC_E140, INVALID_SYNC_E140 };
-	// возможные опции наличия микросхемы ЦАП
+	// РІРѕР·РјРѕР¶РЅС‹Рµ РѕРїС†РёРё РЅР°Р»РёС‡РёСЏ РјРёРєСЂРѕСЃС…РµРјС‹ Р¦РђРџ
 	enum {	DAC_INACCESSIBLED_E140, DAC_ACCESSIBLED_E140, INVALID_DAC_OPTION_E140 };
-	// доступные индексы ревизий модуля E14-140
+	// РґРѕСЃС‚СѓРїРЅС‹Рµ РёРЅРґРµРєСЃС‹ СЂРµРІРёР·РёР№ РјРѕРґСѓР»СЏ E14-140
 	enum {	REVISION_A_E140, REVISION_B_E140, INVALID_REVISION_E140 };
-	// доступные индексы синхронизации потоковой работы ЦАП и АЦП
+	// РґРѕСЃС‚СѓРїРЅС‹Рµ РёРЅРґРµРєСЃС‹ СЃРёРЅС…СЂРѕРЅРёР·Р°С†РёРё РїРѕС‚РѕРєРѕРІРѕР№ СЂР°Р±РѕС‚С‹ Р¦РђРџ Рё РђР¦Рџ
 	enum {	DIS_ADC_DAC_SYNC_E140, ENA_ADC_DAC_SYNC_E140, INVALID_ADC_DAC_SYNC_E140 };
-	// доступные индексы режимов остановки потокового ЦАП
+	// РґРѕСЃС‚СѓРїРЅС‹Рµ РёРЅРґРµРєСЃС‹ СЂРµР¶РёРјРѕРІ РѕСЃС‚Р°РЅРѕРІРєРё РїРѕС‚РѕРєРѕРІРѕРіРѕ Р¦РђРџ
 	enum {	NORMAL_DAC_ON_STOP_E140, ZERO_DAC_ON_STOP_E140, INVALID_DAC_ON_STOP_E140 };
 
-	// константы для работы с модулем
+	// РєРѕРЅСЃС‚Р°РЅС‚С‹ РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ РјРѕРґСѓР»РµРј
 	enum 	{
 				MAX_CONTROL_TABLE_LENGTH_E140 = 128,
 				ADC_INPUT_RANGES_QUANTITY_E140 = INVALID_ADC_INPUT_RANGE_E140,
 				ADC_CALIBR_COEFS_QUANTITY_E140 = ADC_INPUT_RANGES_QUANTITY_E140,
 				DAC_CHANNELS_QUANTITY_E140 = 0x2, DAC_CALIBR_COEFS_QUANTITY_E140 = DAC_CHANNELS_QUANTITY_E140,
-				TTL_LINES_QUANTITY_E140 = 0x10,	  		// кол-во цифровых линий
-				USER_FLASH_SIZE_E140 = 0x200,   			// размер области пользовательского ППЗУ в байтах
-				REVISIONS_QUANTITY_E140 = INVALID_REVISION_E140,		// кол-во ревизий (модификаций) модуля
+				TTL_LINES_QUANTITY_E140 = 0x10,	  		// РєРѕР»-РІРѕ С†РёС„СЂРѕРІС‹С… Р»РёРЅРёР№
+				USER_FLASH_SIZE_E140 = 0x200,   			// СЂР°Р·РјРµСЂ РѕР±Р»Р°СЃС‚Рё РїРѕР»СЊР·РѕРІР°С‚РµР»СЊСЃРєРѕРіРѕ РџРџР—РЈ РІ Р±Р°Р№С‚Р°С…
+				REVISIONS_QUANTITY_E140 = INVALID_REVISION_E140,		// РєРѕР»-РІРѕ СЂРµРІРёР·РёР№ (РјРѕРґРёС„РёРєР°С†РёР№) РјРѕРґСѓР»СЏ
 			};
-	// диапазоны входного напряжения АЦП в В
+	// РґРёР°РїР°Р·РѕРЅС‹ РІС…РѕРґРЅРѕРіРѕ РЅР°РїСЂСЏР¶РµРЅРёСЏ РђР¦Рџ РІ Р’
 	const double ADC_INPUT_RANGES_E140[ADC_INPUT_RANGES_QUANTITY_E140] =
 	{
 		10.0, 10.0/4.0, 10.0/16.0, 10.0/64.0
 	};
-	// диапазоны выходного напряжения ЦАП в В
+	// РґРёР°РїР°Р·РѕРЅС‹ РІС‹С…РѕРґРЅРѕРіРѕ РЅР°РїСЂСЏР¶РµРЅРёСЏ Р¦РђРџ РІ Р’
 	const double DAC_OUTPUT_RANGE_E140 = 5.0;
-	// доступные ревизии модуля
+	// РґРѕСЃС‚СѓРїРЅС‹Рµ СЂРµРІРёР·РёРё РјРѕРґСѓР»СЏ
 	const BYTE REVISIONS_E140[REVISIONS_QUANTITY_E140] = { 'A', 'B' };
 
 	#pragma pack(1)
-	// структура с информацией об модуле E14-140
+	// СЃС‚СЂСѓРєС‚СѓСЂР° СЃ РёРЅС„РѕСЂРјР°С†РёРµР№ РѕР± РјРѕРґСѓР»Рµ E14-140
 	struct MODULE_DESCRIPTION_E140
 	{
-		MODULE_INFO_LUSBAPI     Module;		// общая информация о модуле
-		INTERFACE_INFO_LUSBAPI  Interface;	// информация об используемом интерфейсе
-		MCU_INFO_LUSBAPI<VERSION_INFO_LUSBAPI>		Mcu;	// информация о микроконтроллере
-		ADC_INFO_LUSBAPI        Adc;			// информация о АЦП
-		DAC_INFO_LUSBAPI        Dac;			// информация о ЦАП
-		DIGITAL_IO_INFO_LUSBAPI DigitalIo;	// информация о цифровом вводе-выводе
+		MODULE_INFO_LUSBAPI     Module;		// РѕР±С‰Р°СЏ РёРЅС„РѕСЂРјР°С†РёСЏ Рѕ РјРѕРґСѓР»Рµ
+		INTERFACE_INFO_LUSBAPI  Interface;	// РёРЅС„РѕСЂРјР°С†РёСЏ РѕР± РёСЃРїРѕР»СЊР·СѓРµРјРѕРј РёРЅС‚РµСЂС„РµР№СЃРµ
+		MCU_INFO_LUSBAPI<VERSION_INFO_LUSBAPI>		Mcu;	// РёРЅС„РѕСЂРјР°С†РёСЏ Рѕ РјРёРєСЂРѕРєРѕРЅС‚СЂРѕР»Р»РµСЂРµ
+		ADC_INFO_LUSBAPI        Adc;			// РёРЅС„РѕСЂРјР°С†РёСЏ Рѕ РђР¦Рџ
+		DAC_INFO_LUSBAPI        Dac;			// РёРЅС„РѕСЂРјР°С†РёСЏ Рѕ Р¦РђРџ
+		DIGITAL_IO_INFO_LUSBAPI DigitalIo;	// РёРЅС„РѕСЂРјР°С†РёСЏ Рѕ С†РёС„СЂРѕРІРѕРј РІРІРѕРґРµ-РІС‹РІРѕРґРµ
 	};
-	// структура пользовательского ППЗУ модуля E14-140
+	// СЃС‚СЂСѓРєС‚СѓСЂР° РїРѕР»СЊР·РѕРІР°С‚РµР»СЊСЃРєРѕРіРѕ РџРџР—РЈ РјРѕРґСѓР»СЏ E14-140
 	struct USER_FLASH_E140
 	{
 		BYTE Buffer[USER_FLASH_SIZE_E140];
 	};
-	// структура, задающая режим работы АЦП для модуля E14-140
+	// СЃС‚СЂСѓРєС‚СѓСЂР°, Р·Р°РґР°СЋС‰Р°СЏ СЂРµР¶РёРј СЂР°Р±РѕС‚С‹ РђР¦Рџ РґР»СЏ РјРѕРґСѓР»СЏ E14-140
 	struct ADC_PARS_E140
 	{
-		WORD ClkSource;							// источник тактовых импульсов для запуска АПП
-		WORD EnableClkOutput;					// разрешение трансляции тактовых импульсов запуска АЦП
-		WORD InputMode;							// режим ввода даных с АЦП
-		WORD SynchroAdType;						// тип аналоговой синхронизации
-		WORD SynchroAdMode; 						// режим аналоговой сихронизации
-		WORD SynchroAdChannel;  				// канал АЦП при аналоговой синхронизации
-		SHORT SynchroAdPorog; 					// порог срабатывания АЦП при аналоговой синхронизации
-		WORD ChannelsQuantity;					// число активных каналов
-		WORD ControlTable[128];					// управляющая таблица с активными каналами
-		double AdcRate;							// частота работы АЦП в кГц
-		double InterKadrDelay;					// межкадровая задержка в мс
-		double KadrRate;							// частота кадра в кГц
+		WORD ClkSource;							// РёСЃС‚РѕС‡РЅРёРє С‚Р°РєС‚РѕРІС‹С… РёРјРїСѓР»СЊСЃРѕРІ РґР»СЏ Р·Р°РїСѓСЃРєР° РђРџРџ
+		WORD EnableClkOutput;					// СЂР°Р·СЂРµС€РµРЅРёРµ С‚СЂР°РЅСЃР»СЏС†РёРё С‚Р°РєС‚РѕРІС‹С… РёРјРїСѓР»СЊСЃРѕРІ Р·Р°РїСѓСЃРєР° РђР¦Рџ
+		WORD InputMode;							// СЂРµР¶РёРј РІРІРѕРґР° РґР°РЅС‹С… СЃ РђР¦Рџ
+		WORD SynchroAdType;						// С‚РёРї Р°РЅР°Р»РѕРіРѕРІРѕР№ СЃРёРЅС…СЂРѕРЅРёР·Р°С†РёРё
+		WORD SynchroAdMode; 						// СЂРµР¶РёРј Р°РЅР°Р»РѕРіРѕРІРѕР№ СЃРёС…СЂРѕРЅРёР·Р°С†РёРё
+		WORD SynchroAdChannel;  				// РєР°РЅР°Р» РђР¦Рџ РїСЂРё Р°РЅР°Р»РѕРіРѕРІРѕР№ СЃРёРЅС…СЂРѕРЅРёР·Р°С†РёРё
+		SHORT SynchroAdPorog; 					// РїРѕСЂРѕРі СЃСЂР°Р±Р°С‚С‹РІР°РЅРёСЏ РђР¦Рџ РїСЂРё Р°РЅР°Р»РѕРіРѕРІРѕР№ СЃРёРЅС…СЂРѕРЅРёР·Р°С†РёРё
+		WORD ChannelsQuantity;					// С‡РёСЃР»Рѕ Р°РєС‚РёРІРЅС‹С… РєР°РЅР°Р»РѕРІ
+		WORD ControlTable[128];					// СѓРїСЂР°РІР»СЏСЋС‰Р°СЏ С‚Р°Р±Р»РёС†Р° СЃ Р°РєС‚РёРІРЅС‹РјРё РєР°РЅР°Р»Р°РјРё
+		double AdcRate;							// С‡Р°СЃС‚РѕС‚Р° СЂР°Р±РѕС‚С‹ РђР¦Рџ РІ РєР“С†
+		double InterKadrDelay;					// РјРµР¶РєР°РґСЂРѕРІР°СЏ Р·Р°РґРµСЂР¶РєР° РІ РјСЃ
+		double KadrRate;							// С‡Р°СЃС‚РѕС‚Р° РєР°РґСЂР° РІ РєР“С†
 	};
-	// структура, задающая режим потоковой работы ЦАП для модуля E14-140
+	// СЃС‚СЂСѓРєС‚СѓСЂР°, Р·Р°РґР°СЋС‰Р°СЏ СЂРµР¶РёРј РїРѕС‚РѕРєРѕРІРѕР№ СЂР°Р±РѕС‚С‹ Р¦РђРџ РґР»СЏ РјРѕРґСѓР»СЏ E14-140
 	struct DAC_PARS_E140
 	{
-		BYTE SyncWithADC;							// 0 = обычный пуск ЦАП; !0 = синхронизировать с пуском АЦП
-		BYTE SetZeroOnStop;						// !0 = при остановке потокового вывода установить на выходе ЦАП 0 В
-		double DacRate;							// частота работы ЦАП в кГц
+		BYTE SyncWithADC;							// 0 = РѕР±С‹С‡РЅС‹Р№ РїСѓСЃРє Р¦РђРџ; !0 = СЃРёРЅС…СЂРѕРЅРёР·РёСЂРѕРІР°С‚СЊ СЃ РїСѓСЃРєРѕРј РђР¦Рџ
+		BYTE SetZeroOnStop;						// !0 = РїСЂРё РѕСЃС‚Р°РЅРѕРІРєРµ РїРѕС‚РѕРєРѕРІРѕРіРѕ РІС‹РІРѕРґР° СѓСЃС‚Р°РЅРѕРІРёС‚СЊ РЅР° РІС‹С…РѕРґРµ Р¦РђРџ 0 Р’
+		double DacRate;							// С‡Р°СЃС‚РѕС‚Р° СЂР°Р±РѕС‚С‹ Р¦РђРџ РІ РєР“С†
 	};
 	#pragma pack()
 
 	//-----------------------------------------------------------------------------
-	// интерфейс для модуля E14-140
+	// РёРЅС‚РµСЂС„РµР№СЃ РґР»СЏ РјРѕРґСѓР»СЏ E14-140
 	//-----------------------------------------------------------------------------
 	struct ILE140 : public ILUSBBASE
 	{
-		// функции для работы с АЦП
+		// С„СѓРЅРєС†РёРё РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ РђР¦Рџ
 		virtual BOOL WINAPI GET_ADC_PARS(ADC_PARS_E140 * const AdcPars) = 0;
 		virtual BOOL WINAPI SET_ADC_PARS(ADC_PARS_E140 * const AdcPars) = 0;
 		virtual BOOL WINAPI START_ADC(void) = 0;
@@ -147,7 +147,7 @@
 		virtual BOOL WINAPI ADC_SAMPLE(SHORT * const AdcData, WORD AdcChannel) = 0;
 		virtual BOOL WINAPI ReadData(IO_REQUEST_LUSBAPI * const ReadRequest) = 0;
 
-		// функции для работы с ЦАП
+		// С„СѓРЅРєС†РёРё РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ Р¦РђРџ
 		virtual BOOL WINAPI GET_DAC_PARS(DAC_PARS_E140 * const DacPars) = 0;
 		virtual BOOL WINAPI SET_DAC_PARS(DAC_PARS_E140 * const DacPars) = 0;
 		virtual BOOL WINAPI START_DAC(void) = 0;
@@ -156,21 +156,21 @@
 		virtual BOOL WINAPI DAC_SAMPLE(SHORT * const DacData, WORD DacChannel) = 0;
 		virtual BOOL WINAPI DAC_SAMPLES(SHORT * const DacData1, SHORT * const DacData2) = 0;
 
-		// функции для работы с ТТЛ линиями
+		// С„СѓРЅРєС†РёРё РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ РўРўР› Р»РёРЅРёСЏРјРё
 		virtual BOOL WINAPI ENABLE_TTL_OUT(BOOL EnableTtlOut) = 0;
 		virtual BOOL WINAPI TTL_IN(WORD * const TtlIn) = 0;
 		virtual BOOL WINAPI TTL_OUT(WORD TtlOut) = 0;
 
-		// функции для работы с пользовательской информацией ППЗУ
+		// С„СѓРЅРєС†РёРё РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ РїРѕР»СЊР·РѕРІР°С‚РµР»СЊСЃРєРѕР№ РёРЅС„РѕСЂРјР°С†РёРµР№ РџРџР—РЈ
 		virtual BOOL WINAPI ENABLE_FLASH_WRITE(BOOL IsUserFlashWriteEnabled) = 0;
 		virtual BOOL WINAPI READ_FLASH_ARRAY(USER_FLASH_E140 * const UserFlash) = 0;
 		virtual BOOL WINAPI WRITE_FLASH_ARRAY(USER_FLASH_E140 * const UserFlash) = 0;
 
-		// функции для работы со служебной информацией ППЗУ
+		// С„СѓРЅРєС†РёРё РґР»СЏ СЂР°Р±РѕС‚С‹ СЃРѕ СЃР»СѓР¶РµР±РЅРѕР№ РёРЅС„РѕСЂРјР°С†РёРµР№ РџРџР—РЈ
 		virtual BOOL WINAPI GET_MODULE_DESCRIPTION(MODULE_DESCRIPTION_E140 * const ModuleDescription) = 0;
 		virtual BOOL WINAPI SAVE_MODULE_DESCRIPTION(MODULE_DESCRIPTION_E140 * const ModuleDescription) = 0;
 
-		// функции для прямого досупа к микроконтроллеру
+		// С„СѓРЅРєС†РёРё РґР»СЏ РїСЂСЏРјРѕРіРѕ РґРѕСЃСѓРїР° Рє РјРёРєСЂРѕРєРѕРЅС‚СЂРѕР»Р»РµСЂСѓ
 		virtual BOOL WINAPI GetArray(BYTE * const Buffer, WORD Size, WORD Address) = 0;
 		virtual BOOL WINAPI PutArray(BYTE * const Buffer, WORD Size, WORD Address) = 0;
 	};
@@ -180,79 +180,79 @@
 
 
 	// ==========================================================================
-	// *************************** Модуль E-154 *******************************
+	// *************************** РњРѕРґСѓР»СЊ E-154 *******************************
 	// ==========================================================================
-	// доступные индексы диапазонов входного напряжения модуля E-154
+	// РґРѕСЃС‚СѓРїРЅС‹Рµ РёРЅРґРµРєСЃС‹ РґРёР°РїР°Р·РѕРЅРѕРІ РІС…РѕРґРЅРѕРіРѕ РЅР°РїСЂСЏР¶РµРЅРёСЏ РјРѕРґСѓР»СЏ E-154
 	enum {	ADC_INPUT_RANGE_5000mV_E154, ADC_INPUT_RANGE_1600mV_E154, ADC_INPUT_RANGE_500mV_E154, ADC_INPUT_RANGE_160mV_E154, INVALID_ADC_INPUT_RANGE_E154 };
-	// доступные индексы источника тактовых импульсов для АЦП, сохранены для совместимости с E14-140
+	// РґРѕСЃС‚СѓРїРЅС‹Рµ РёРЅРґРµРєСЃС‹ РёСЃС‚РѕС‡РЅРёРєР° С‚Р°РєС‚РѕРІС‹С… РёРјРїСѓР»СЊСЃРѕРІ РґР»СЏ РђР¦Рџ, СЃРѕС…СЂР°РЅРµРЅС‹ РґР»СЏ СЃРѕРІРјРµСЃС‚РёРјРѕСЃС‚Рё СЃ E14-140
 	enum {	INT_ADC_CLOCK_E154, EXT_ADC_CLOCK_E154, INVALID_ADC_CLOCK_E154 };
-	// доступные индексы управления трансляцией тактовых импульсов АЦП
-	// на линию SYN внешнего цифрового разъёма (только при внутреннем
-	// источнике тактовых импульсоц АЦП),   сохранены для совместимости с E14-140
+	// РґРѕСЃС‚СѓРїРЅС‹Рµ РёРЅРґРµРєСЃС‹ СѓРїСЂР°РІР»РµРЅРёСЏ С‚СЂР°РЅСЃР»СЏС†РёРµР№ С‚Р°РєС‚РѕРІС‹С… РёРјРїСѓР»СЊСЃРѕРІ РђР¦Рџ
+	// РЅР° Р»РёРЅРёСЋ SYN РІРЅРµС€РЅРµРіРѕ С†РёС„СЂРѕРІРѕРіРѕ СЂР°Р·СЉС‘РјР° (С‚РѕР»СЊРєРѕ РїСЂРё РІРЅСѓС‚СЂРµРЅРЅРµРј
+	// РёСЃС‚РѕС‡РЅРёРєРµ С‚Р°РєС‚РѕРІС‹С… РёРјРїСѓР»СЊСЃРѕС† РђР¦Рџ),   СЃРѕС…СЂР°РЅРµРЅС‹ РґР»СЏ СЃРѕРІРјРµСЃС‚РёРјРѕСЃС‚Рё СЃ E14-140
 	enum {	ADC_CLOCK_TRANS_DISABLED_E154, ADC_CLOCK_TRANS_ENABLED_E154, INVALID_ADC_CLOCK_TRANS_E154 };
-	// возможные типы синхронизации модуля E-154
+	// РІРѕР·РјРѕР¶РЅС‹Рµ С‚РёРїС‹ СЃРёРЅС…СЂРѕРЅРёР·Р°С†РёРё РјРѕРґСѓР»СЏ E-154
 	enum { 	NO_SYNC_E154, TTL_START_SYNC_E154, TTL_KADR_SYNC_E154, ANALOG_SYNC_E154, INVALID_SYNC_E154 };
-	// возможные опции наличия микросхемы ЦАП
+	// РІРѕР·РјРѕР¶РЅС‹Рµ РѕРїС†РёРё РЅР°Р»РёС‡РёСЏ РјРёРєСЂРѕСЃС…РµРјС‹ Р¦РђРџ
 	enum {	DAC_INACCESSIBLED_E154, DAC_ACCESSIBLED_E154, INVALID_DAC_OPTION_E154 };
-	// доступные индексы ревизий модуля E-154
+	// РґРѕСЃС‚СѓРїРЅС‹Рµ РёРЅРґРµРєСЃС‹ СЂРµРІРёР·РёР№ РјРѕРґСѓР»СЏ E-154
 	enum {	REVISION_A_E154, INVALID_REVISION_E154 };
 
-	// константы для работы с модулем
+	// РєРѕРЅСЃС‚Р°РЅС‚С‹ РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ РјРѕРґСѓР»РµРј
 	enum 	{
 				MAX_CONTROL_TABLE_LENGTH_E154 = 16,
 				ADC_INPUT_RANGES_QUANTITY_E154 = INVALID_ADC_INPUT_RANGE_E154,
 				ADC_CALIBR_COEFS_QUANTITY_E154 = ADC_INPUT_RANGES_QUANTITY_E154,
 				DAC_CHANNELS_QUANTITY_E154 = 0x1, DAC_CALIBR_COEFS_QUANTITY_E154 = DAC_CHANNELS_QUANTITY_E154,
-				TTL_LINES_QUANTITY_E154 = 0x08,	  		// кол-во цифровых линий
-				USER_FLASH_SIZE_E154 = 0x80,   			// размер области пользовательского ППЗУ в байтах
-				REVISIONS_QUANTITY_E154 = INVALID_REVISION_E154,		// кол-во ревизий (модификаций) модуля
+				TTL_LINES_QUANTITY_E154 = 0x08,	  		// РєРѕР»-РІРѕ С†РёС„СЂРѕРІС‹С… Р»РёРЅРёР№
+				USER_FLASH_SIZE_E154 = 0x80,   			// СЂР°Р·РјРµСЂ РѕР±Р»Р°СЃС‚Рё РїРѕР»СЊР·РѕРІР°С‚РµР»СЊСЃРєРѕРіРѕ РџРџР—РЈ РІ Р±Р°Р№С‚Р°С…
+				REVISIONS_QUANTITY_E154 = INVALID_REVISION_E154,		// РєРѕР»-РІРѕ СЂРµРІРёР·РёР№ (РјРѕРґРёС„РёРєР°С†РёР№) РјРѕРґСѓР»СЏ
 			};
-	// диапазоны входного напряжения АЦП в В
+	// РґРёР°РїР°Р·РѕРЅС‹ РІС…РѕРґРЅРѕРіРѕ РЅР°РїСЂСЏР¶РµРЅРёСЏ РђР¦Рџ РІ Р’
 	const double ADC_INPUT_RANGES_E154[ADC_INPUT_RANGES_QUANTITY_E154] =
 	{
 		5.0, 1.6, 0.5, 0.16
 	};
-	// диапазоны выходного напряжения ЦАП в В
+	// РґРёР°РїР°Р·РѕРЅС‹ РІС‹С…РѕРґРЅРѕРіРѕ РЅР°РїСЂСЏР¶РµРЅРёСЏ Р¦РђРџ РІ Р’
 	const double DAC_OUTPUT_RANGE_E154 = 5.0;
-	// доступные ревизии модуля
+	// РґРѕСЃС‚СѓРїРЅС‹Рµ СЂРµРІРёР·РёРё РјРѕРґСѓР»СЏ
 	const BYTE REVISIONS_E154[REVISIONS_QUANTITY_E154] = { 'A' };
 
 	#pragma pack(1)
-	// структура с информацией об модуле E-154
+	// СЃС‚СЂСѓРєС‚СѓСЂР° СЃ РёРЅС„РѕСЂРјР°С†РёРµР№ РѕР± РјРѕРґСѓР»Рµ E-154
 	struct MODULE_DESCRIPTION_E154
 	{
-		MODULE_INFO_LUSBAPI     Module;		// общая информация о модуле
-		INTERFACE_INFO_LUSBAPI  Interface;	// информация об используемом интерфейсе
-		MCU_INFO_LUSBAPI<VERSION_INFO_LUSBAPI>		Mcu;	// информация о микроконтроллере
-		ADC_INFO_LUSBAPI        Adc;			// информация о АЦП
-		DAC_INFO_LUSBAPI        Dac;			// информация о ЦАП
-		DIGITAL_IO_INFO_LUSBAPI DigitalIo;	// информация о цифровом вводе-выводе
+		MODULE_INFO_LUSBAPI     Module;		// РѕР±С‰Р°СЏ РёРЅС„РѕСЂРјР°С†РёСЏ Рѕ РјРѕРґСѓР»Рµ
+		INTERFACE_INFO_LUSBAPI  Interface;	// РёРЅС„РѕСЂРјР°С†РёСЏ РѕР± РёСЃРїРѕР»СЊР·СѓРµРјРѕРј РёРЅС‚РµСЂС„РµР№СЃРµ
+		MCU_INFO_LUSBAPI<VERSION_INFO_LUSBAPI>		Mcu;	// РёРЅС„РѕСЂРјР°С†РёСЏ Рѕ РјРёРєСЂРѕРєРѕРЅС‚СЂРѕР»Р»РµСЂРµ
+		ADC_INFO_LUSBAPI        Adc;			// РёРЅС„РѕСЂРјР°С†РёСЏ Рѕ РђР¦Рџ
+		DAC_INFO_LUSBAPI        Dac;			// РёРЅС„РѕСЂРјР°С†РёСЏ Рѕ Р¦РђРџ
+		DIGITAL_IO_INFO_LUSBAPI DigitalIo;	// РёРЅС„РѕСЂРјР°С†РёСЏ Рѕ С†РёС„СЂРѕРІРѕРј РІРІРѕРґРµ-РІС‹РІРѕРґРµ
 	};
-	// структура, задающая режим работы АЦП для модуля E14-154
+	// СЃС‚СЂСѓРєС‚СѓСЂР°, Р·Р°РґР°СЋС‰Р°СЏ СЂРµР¶РёРј СЂР°Р±РѕС‚С‹ РђР¦Рџ РґР»СЏ РјРѕРґСѓР»СЏ E14-154
 	struct ADC_PARS_E154
 	{
-		WORD ClkSource;							// источник тактовых импульсов для запуска АПП
-		WORD EnableClkOutput;					// разрешение трансляции тактовых импульсов запуска АЦП
-		WORD InputMode;							// режим ввода даных с АЦП
-		WORD SynchroAdType;						// тип аналоговой синхронизации
-		WORD SynchroAdMode; 						// режим аналоговой сихронизации
-		WORD SynchroAdChannel;  				// канал АЦП при аналоговой синхронизации
-		SHORT SynchroAdPorog; 					// порог срабатывания АЦП при аналоговой синхронизации
-		WORD ChannelsQuantity;					// число активных каналов
-		WORD ControlTable[16];					// управляющая таблица с активными каналами
-		double AdcRate;	  			  			// частота работы АЦП в кГц
-		double InterKadrDelay;		  			// межкадровая задержка в мс
-		double KadrRate;							// частота кадра в кГц
+		WORD ClkSource;							// РёСЃС‚РѕС‡РЅРёРє С‚Р°РєС‚РѕРІС‹С… РёРјРїСѓР»СЊСЃРѕРІ РґР»СЏ Р·Р°РїСѓСЃРєР° РђРџРџ
+		WORD EnableClkOutput;					// СЂР°Р·СЂРµС€РµРЅРёРµ С‚СЂР°РЅСЃР»СЏС†РёРё С‚Р°РєС‚РѕРІС‹С… РёРјРїСѓР»СЊСЃРѕРІ Р·Р°РїСѓСЃРєР° РђР¦Рџ
+		WORD InputMode;							// СЂРµР¶РёРј РІРІРѕРґР° РґР°РЅС‹С… СЃ РђР¦Рџ
+		WORD SynchroAdType;						// С‚РёРї Р°РЅР°Р»РѕРіРѕРІРѕР№ СЃРёРЅС…СЂРѕРЅРёР·Р°С†РёРё
+		WORD SynchroAdMode; 						// СЂРµР¶РёРј Р°РЅР°Р»РѕРіРѕРІРѕР№ СЃРёС…СЂРѕРЅРёР·Р°С†РёРё
+		WORD SynchroAdChannel;  				// РєР°РЅР°Р» РђР¦Рџ РїСЂРё Р°РЅР°Р»РѕРіРѕРІРѕР№ СЃРёРЅС…СЂРѕРЅРёР·Р°С†РёРё
+		SHORT SynchroAdPorog; 					// РїРѕСЂРѕРі СЃСЂР°Р±Р°С‚С‹РІР°РЅРёСЏ РђР¦Рџ РїСЂРё Р°РЅР°Р»РѕРіРѕРІРѕР№ СЃРёРЅС…СЂРѕРЅРёР·Р°С†РёРё
+		WORD ChannelsQuantity;					// С‡РёСЃР»Рѕ Р°РєС‚РёРІРЅС‹С… РєР°РЅР°Р»РѕРІ
+		WORD ControlTable[16];					// СѓРїСЂР°РІР»СЏСЋС‰Р°СЏ С‚Р°Р±Р»РёС†Р° СЃ Р°РєС‚РёРІРЅС‹РјРё РєР°РЅР°Р»Р°РјРё
+		double AdcRate;	  			  			// С‡Р°СЃС‚РѕС‚Р° СЂР°Р±РѕС‚С‹ РђР¦Рџ РІ РєР“С†
+		double InterKadrDelay;		  			// РјРµР¶РєР°РґСЂРѕРІР°СЏ Р·Р°РґРµСЂР¶РєР° РІ РјСЃ
+		double KadrRate;							// С‡Р°СЃС‚РѕС‚Р° РєР°РґСЂР° РІ РєР“С†
 	};
 
 	#pragma pack()
 
 	//-----------------------------------------------------------------------------
-	// интерфейс для модуля E14-154
+	// РёРЅС‚РµСЂС„РµР№СЃ РґР»СЏ РјРѕРґСѓР»СЏ E14-154
 	//-----------------------------------------------------------------------------
 	struct ILE154 : public ILUSBBASE
 	{
-		// функции для работы с АЦП
+		// С„СѓРЅРєС†РёРё РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ РђР¦Рџ
 		virtual BOOL WINAPI GET_ADC_PARS(ADC_PARS_E154 * const AdcPars) = 0;
 		virtual BOOL WINAPI SET_ADC_PARS(ADC_PARS_E154 * const AdcPars) = 0;
 		virtual BOOL WINAPI START_ADC(void) = 0;
@@ -264,25 +264,25 @@
 		virtual BOOL WINAPI ProcessOnePoint(SHORT src, double *dest, DWORD channel, BOOL calibr, BOOL volt) = 0;
 		virtual BOOL WINAPI FIFO_STATUS(DWORD *FifoOverflowFlag, double *FifoMaxPercentLoad, DWORD *FifoSize, DWORD *MaxFifoBytesUsed) = 0;
 
-		// функции для работы с ЦАП
+		// С„СѓРЅРєС†РёРё РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ Р¦РђРџ
 		virtual BOOL WINAPI DAC_SAMPLE(SHORT * const DacData, WORD DacChannel) = 0;
 		virtual BOOL WINAPI DAC_SAMPLE_VOLT(double  const DacData, BOOL calibr) = 0;
 
-		// функции для работы с ТТЛ линиями
+		// С„СѓРЅРєС†РёРё РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ РўРўР› Р»РёРЅРёСЏРјРё
 		virtual BOOL WINAPI ENABLE_TTL_OUT(BOOL EnableTtlOut) = 0;
 		virtual BOOL WINAPI TTL_IN(WORD * const TtlIn) = 0;
 		virtual BOOL WINAPI TTL_OUT(WORD TtlOut) = 0;
 
-		// функции для работы с пользовательской информацией ППЗУ
+		// С„СѓРЅРєС†РёРё РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ РїРѕР»СЊР·РѕРІР°С‚РµР»СЊСЃРєРѕР№ РёРЅС„РѕСЂРјР°С†РёРµР№ РџРџР—РЈ
 		virtual BOOL WINAPI ENABLE_FLASH_WRITE(BOOL IsUserFlashWriteEnabled) = 0;
 		virtual BOOL WINAPI READ_FLASH_ARRAY(BYTE * const UserFlash) = 0;
 		virtual BOOL WINAPI WRITE_FLASH_ARRAY(BYTE * const UserFlash) = 0;
 
-		// функции для работы со служебной информацией ППЗУ
+		// С„СѓРЅРєС†РёРё РґР»СЏ СЂР°Р±РѕС‚С‹ СЃРѕ СЃР»СѓР¶РµР±РЅРѕР№ РёРЅС„РѕСЂРјР°С†РёРµР№ РџРџР—РЈ
 		virtual BOOL WINAPI GET_MODULE_DESCRIPTION(MODULE_DESCRIPTION_E154 * const ModuleDescription) = 0;
 		virtual BOOL WINAPI SAVE_MODULE_DESCRIPTION(MODULE_DESCRIPTION_E154 * const ModuleDescription) = 0;
 
-		// функции для прямого досупа к микроконтроллеру
+		// С„СѓРЅРєС†РёРё РґР»СЏ РїСЂСЏРјРѕРіРѕ РґРѕСЃСѓРїР° Рє РјРёРєСЂРѕРєРѕРЅС‚СЂРѕР»Р»РµСЂСѓ
 		virtual BOOL WINAPI GetArray(BYTE * const Buffer, WORD Size, WORD Address) = 0;
 		virtual BOOL WINAPI PutArray(BYTE * const Buffer, WORD Size, WORD Address) = 0;
 	};
@@ -291,26 +291,26 @@
 
 
 	// ==========================================================================
-	// *************************** Модуль E14-440 *******************************
+	// *************************** РњРѕРґСѓР»СЊ E14-440 *******************************
 	// ==========================================================================
-	// доступные состояния сброса модуля E14-440
+	// РґРѕСЃС‚СѓРїРЅС‹Рµ СЃРѕСЃС‚РѕСЏРЅРёСЏ СЃР±СЂРѕСЃР° РјРѕРґСѓР»СЏ E14-440
 	enum {	INIT_E440, RESET_E440, INVALID_RESET_TYPE_E440 };
-	// доступные индексы источника тактовых импульсов для АЦП
+	// РґРѕСЃС‚СѓРїРЅС‹Рµ РёРЅРґРµРєСЃС‹ РёСЃС‚РѕС‡РЅРёРєР° С‚Р°РєС‚РѕРІС‹С… РёРјРїСѓР»СЊСЃРѕРІ РґР»СЏ РђР¦Рџ
 	enum	{	INT_ADC_CLOCK_E440, INT_ADC_CLOCK_WITH_TRANS_E440, EXT_ADC_CLOCK_E440, INVALID_ADC_CLOCK_E440 };
-	// доступные индексы диапазонов входного напряжения модуля E14-440
+	// РґРѕСЃС‚СѓРїРЅС‹Рµ РёРЅРґРµРєСЃС‹ РґРёР°РїР°Р·РѕРЅРѕРІ РІС…РѕРґРЅРѕРіРѕ РЅР°РїСЂСЏР¶РµРЅРёСЏ РјРѕРґСѓР»СЏ E14-440
 	enum {	ADC_INPUT_RANGE_10000mV_E440, ADC_INPUT_RANGE_2500mV_E440, ADC_INPUT_RANGE_625mV_E440, ADC_INPUT_RANGE_156mV_E440, INVALID_ADC_INPUT_RANGE_E440 };
-	// возможные типы синхронизации модуля E14-440
+	// РІРѕР·РјРѕР¶РЅС‹Рµ С‚РёРїС‹ СЃРёРЅС…СЂРѕРЅРёР·Р°С†РёРё РјРѕРґСѓР»СЏ E14-440
 	enum {	NO_SYNC_E440, TTL_START_SYNC_E440, TTL_KADR_SYNC_E440, ANALOG_SYNC_E440, INVALID_SYNC_E440 };
-	// возможные опции наличия микросхемы ЦАП
+	// РІРѕР·РјРѕР¶РЅС‹Рµ РѕРїС†РёРё РЅР°Р»РёС‡РёСЏ РјРёРєСЂРѕСЃС…РµРјС‹ Р¦РђРџ
 	enum {	DAC_INACCESSIBLED_E440, DAC_ACCESSIBLED_E440, INVALID_DAC_OPTION_E440 };
-	// возможные типы DSP (сейчас только ADSP-2185)
+	// РІРѕР·РјРѕР¶РЅС‹Рµ С‚РёРїС‹ DSP (СЃРµР№С‡Р°СЃ С‚РѕР»СЊРєРѕ ADSP-2185)
 	enum {	ADSP2184_E440, ADSP2185_E440, ADSP2186_E440, INVALID_DSP_TYPE_E440 };
-	// возможные тактовые частоты модудя (сейчас только 24000 кГц)
+	// РІРѕР·РјРѕР¶РЅС‹Рµ С‚Р°РєС‚РѕРІС‹Рµ С‡Р°СЃС‚РѕС‚С‹ РјРѕРґСѓРґСЏ (СЃРµР№С‡Р°СЃ С‚РѕР»СЊРєРѕ 24000 РєР“С†)
 	enum {	F14745_E440, F16667_E440, F20000_E440, F24000_E440, INVALID_QUARTZ_FREQ_E440 };
-	// доступные индексы ревизий модуля E14-440
+	// РґРѕСЃС‚СѓРїРЅС‹Рµ РёРЅРґРµРєСЃС‹ СЂРµРІРёР·РёР№ РјРѕРґСѓР»СЏ E14-440
 	enum	{	REVISION_A_E440, REVISION_B_E440, REVISION_C_E440, REVISION_D_E440, REVISION_E_E440, REVISION_F_E440, INVALID_REVISION_E440 };
 
-	// константы для работы с модулем
+	// РєРѕРЅСЃС‚Р°РЅС‚С‹ РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ РјРѕРґСѓР»РµРј
 	enum 	{
 				MAX_CONTROL_TABLE_LENGTH_E440 = 128,
 				ADC_INPUT_RANGES_QUANTITY_E440 = INVALID_ADC_INPUT_RANGE_E440,
@@ -318,66 +318,66 @@
 				MAX_ADC_FIFO_SIZE_E440 = 0x3000,			// 12288
 				DAC_CHANNELS_QUANTITY_E440 = 0x2, DAC_CALIBR_COEFS_QUANTITY_E440 = DAC_CHANNELS_QUANTITY_E440,
 				MAX_DAC_FIFO_SIZE_E440 = 0x0FC0,			// 4032
-				TTL_LINES_QUANTITY_E440 = 0x10, 			// кол-во цифровых линий
-				REVISIONS_QUANTITY_E440 = INVALID_REVISION_E440,		// кол-во ревизий (модификаций) модуля
+				TTL_LINES_QUANTITY_E440 = 0x10, 			// РєРѕР»-РІРѕ С†РёС„СЂРѕРІС‹С… Р»РёРЅРёР№
+				REVISIONS_QUANTITY_E440 = INVALID_REVISION_E440,		// РєРѕР»-РІРѕ СЂРµРІРёР·РёР№ (РјРѕРґРёС„РёРєР°С†РёР№) РјРѕРґСѓР»СЏ
 			};
-	// диапазоны входного напряжения АЦП в В
+	// РґРёР°РїР°Р·РѕРЅС‹ РІС…РѕРґРЅРѕРіРѕ РЅР°РїСЂСЏР¶РµРЅРёСЏ РђР¦Рџ РІ Р’
 	const double ADC_INPUT_RANGES_E440[ADC_INPUT_RANGES_QUANTITY_E440] =
 	{
 		10.0, 10.0/4.0, 10.0/16.0, 10.0/64.0
 	};
-	// диапазоны выходного напряжения ЦАП в В
+	// РґРёР°РїР°Р·РѕРЅС‹ РІС‹С…РѕРґРЅРѕРіРѕ РЅР°РїСЂСЏР¶РµРЅРёСЏ Р¦РђРџ РІ Р’
 	const double DAC_OUTPUT_RANGE_E440 = 5.0;
-	// доступные ревизии модуля
+	// РґРѕСЃС‚СѓРїРЅС‹Рµ СЂРµРІРёР·РёРё РјРѕРґСѓР»СЏ
 	const BYTE REVISIONS_E440[REVISIONS_QUANTITY_E440] = { 'A', 'B', 'C', 'D', 'E', 'F' };
 
 	#pragma pack(1)
-	// структура с информацией об модуле E14-440
+	// СЃС‚СЂСѓРєС‚СѓСЂР° СЃ РёРЅС„РѕСЂРјР°С†РёРµР№ РѕР± РјРѕРґСѓР»Рµ E14-440
 	struct MODULE_DESCRIPTION_E440
 	{
-		MODULE_INFO_LUSBAPI     Module;		// общая информация о модуле
-		INTERFACE_INFO_LUSBAPI  Interface;	// информация об используемом интерфейсе
-		MCU_INFO_LUSBAPI<VERSION_INFO_LUSBAPI>		Mcu;	// информация о микроконтроллере
-		DSP_INFO_LUSBAPI        Dsp;			// информация о DSP
-		ADC_INFO_LUSBAPI        Adc;			// информация о АЦП
-		DAC_INFO_LUSBAPI        Dac;			// информация о ЦАП
-		DIGITAL_IO_INFO_LUSBAPI DigitalIo;	// информация о цифровом вводе-выводе
+		MODULE_INFO_LUSBAPI     Module;		// РѕР±С‰Р°СЏ РёРЅС„РѕСЂРјР°С†РёСЏ Рѕ РјРѕРґСѓР»Рµ
+		INTERFACE_INFO_LUSBAPI  Interface;	// РёРЅС„РѕСЂРјР°С†РёСЏ РѕР± РёСЃРїРѕР»СЊР·СѓРµРјРѕРј РёРЅС‚РµСЂС„РµР№СЃРµ
+		MCU_INFO_LUSBAPI<VERSION_INFO_LUSBAPI>		Mcu;	// РёРЅС„РѕСЂРјР°С†РёСЏ Рѕ РјРёРєСЂРѕРєРѕРЅС‚СЂРѕР»Р»РµСЂРµ
+		DSP_INFO_LUSBAPI        Dsp;			// РёРЅС„РѕСЂРјР°С†РёСЏ Рѕ DSP
+		ADC_INFO_LUSBAPI        Adc;			// РёРЅС„РѕСЂРјР°С†РёСЏ Рѕ РђР¦Рџ
+		DAC_INFO_LUSBAPI        Dac;			// РёРЅС„РѕСЂРјР°С†РёСЏ Рѕ Р¦РђРџ
+		DIGITAL_IO_INFO_LUSBAPI DigitalIo;	// РёРЅС„РѕСЂРјР°С†РёСЏ Рѕ С†РёС„СЂРѕРІРѕРј РІРІРѕРґРµ-РІС‹РІРѕРґРµ
 	};
-	// структура, задающая режим работы АЦП для модуля E-440
+	// СЃС‚СЂСѓРєС‚СѓСЂР°, Р·Р°РґР°СЋС‰Р°СЏ СЂРµР¶РёРј СЂР°Р±РѕС‚С‹ РђР¦Рџ РґР»СЏ РјРѕРґСѓР»СЏ E-440
 	struct ADC_PARS_E440
 	{
-		BOOL IsAdcEnabled;		 			// статус работы АЦП (только при чтении)
-		BOOL IsCorrectionEnabled;			// управление разрешением корректировкой данных на уровне драйвера DSP
-		WORD AdcClockSource;					// источник тактовых импульсов запуска АЦП: внутренние или внешние
-		WORD InputMode;						// режим ввода даных с АЦП
-		WORD SynchroAdType;					// тип аналоговой синхронизации
-		WORD SynchroAdMode; 					// режим аналоговой сихронизации
-		WORD SynchroAdChannel;  			// канал АЦП при аналоговой синхронизации
-		SHORT SynchroAdPorog; 				// порог срабатывания АЦП при аналоговой синхронизации
-		WORD ChannelsQuantity;				// число активных каналов
-		WORD ControlTable[MAX_CONTROL_TABLE_LENGTH_E440];		// управляющая таблица с активными каналами
-		double AdcRate;	  			  		// частота работы АЦП в кГц
-		double InterKadrDelay;		  		// Межкадровая задержка в мс
-		double KadrRate;					// частота кадра в кГц
-		WORD AdcFifoBaseAddress;			// базовый адрес FIFO буфера АЦП
-		WORD AdcFifoLength;					// длина FIFO буфера АЦП
-		double AdcOffsetCoefs[ADC_CALIBR_COEFS_QUANTITY_E440];	// смещение	АЦП: 4диапазона
-		double AdcScaleCoefs[ADC_CALIBR_COEFS_QUANTITY_E440];		// масштаб АЦП	: 4диапазона
+		BOOL IsAdcEnabled;		 			// СЃС‚Р°С‚СѓСЃ СЂР°Р±РѕС‚С‹ РђР¦Рџ (С‚РѕР»СЊРєРѕ РїСЂРё С‡С‚РµРЅРёРё)
+		BOOL IsCorrectionEnabled;			// СѓРїСЂР°РІР»РµРЅРёРµ СЂР°Р·СЂРµС€РµРЅРёРµРј РєРѕСЂСЂРµРєС‚РёСЂРѕРІРєРѕР№ РґР°РЅРЅС‹С… РЅР° СѓСЂРѕРІРЅРµ РґСЂР°Р№РІРµСЂР° DSP
+		WORD AdcClockSource;					// РёСЃС‚РѕС‡РЅРёРє С‚Р°РєС‚РѕРІС‹С… РёРјРїСѓР»СЊСЃРѕРІ Р·Р°РїСѓСЃРєР° РђР¦Рџ: РІРЅСѓС‚СЂРµРЅРЅРёРµ РёР»Рё РІРЅРµС€РЅРёРµ
+		WORD InputMode;						// СЂРµР¶РёРј РІРІРѕРґР° РґР°РЅС‹С… СЃ РђР¦Рџ
+		WORD SynchroAdType;					// С‚РёРї Р°РЅР°Р»РѕРіРѕРІРѕР№ СЃРёРЅС…СЂРѕРЅРёР·Р°С†РёРё
+		WORD SynchroAdMode; 					// СЂРµР¶РёРј Р°РЅР°Р»РѕРіРѕРІРѕР№ СЃРёС…СЂРѕРЅРёР·Р°С†РёРё
+		WORD SynchroAdChannel;  			// РєР°РЅР°Р» РђР¦Рџ РїСЂРё Р°РЅР°Р»РѕРіРѕРІРѕР№ СЃРёРЅС…СЂРѕРЅРёР·Р°С†РёРё
+		SHORT SynchroAdPorog; 				// РїРѕСЂРѕРі СЃСЂР°Р±Р°С‚С‹РІР°РЅРёСЏ РђР¦Рџ РїСЂРё Р°РЅР°Р»РѕРіРѕРІРѕР№ СЃРёРЅС…СЂРѕРЅРёР·Р°С†РёРё
+		WORD ChannelsQuantity;				// С‡РёСЃР»Рѕ Р°РєС‚РёРІРЅС‹С… РєР°РЅР°Р»РѕРІ
+		WORD ControlTable[MAX_CONTROL_TABLE_LENGTH_E440];		// СѓРїСЂР°РІР»СЏСЋС‰Р°СЏ С‚Р°Р±Р»РёС†Р° СЃ Р°РєС‚РёРІРЅС‹РјРё РєР°РЅР°Р»Р°РјРё
+		double AdcRate;	  			  		// С‡Р°СЃС‚РѕС‚Р° СЂР°Р±РѕС‚С‹ РђР¦Рџ РІ РєР“С†
+		double InterKadrDelay;		  		// РњРµР¶РєР°РґСЂРѕРІР°СЏ Р·Р°РґРµСЂР¶РєР° РІ РјСЃ
+		double KadrRate;					// С‡Р°СЃС‚РѕС‚Р° РєР°РґСЂР° РІ РєР“С†
+		WORD AdcFifoBaseAddress;			// Р±Р°Р·РѕРІС‹Р№ Р°РґСЂРµСЃ FIFO Р±СѓС„РµСЂР° РђР¦Рџ
+		WORD AdcFifoLength;					// РґР»РёРЅР° FIFO Р±СѓС„РµСЂР° РђР¦Рџ
+		double AdcOffsetCoefs[ADC_CALIBR_COEFS_QUANTITY_E440];	// СЃРјРµС‰РµРЅРёРµ	РђР¦Рџ: 4РґРёР°РїР°Р·РѕРЅР°
+		double AdcScaleCoefs[ADC_CALIBR_COEFS_QUANTITY_E440];		// РјР°СЃС€С‚Р°Р± РђР¦Рџ	: 4РґРёР°РїР°Р·РѕРЅР°
 	};
 
-	// структура, задающая режим работы ЦАП для модуля E-440
+	// СЃС‚СЂСѓРєС‚СѓСЂР°, Р·Р°РґР°СЋС‰Р°СЏ СЂРµР¶РёРј СЂР°Р±РѕС‚С‹ Р¦РђРџ РґР»СЏ РјРѕРґСѓР»СЏ E-440
 	struct DAC_PARS_E440
 	{
-		BOOL DacEnabled;						// разрешение/запрещение работы ЦАП
-		double DacRate;	  			  		// частота работы ЦАП в кГц
-		WORD DacFifoBaseAddress;			// базовый адрес FIFO буфера ЦАП
-		WORD DacFifoLength;					// длина FIFO буфера ЦАП
+		BOOL DacEnabled;						// СЂР°Р·СЂРµС€РµРЅРёРµ/Р·Р°РїСЂРµС‰РµРЅРёРµ СЂР°Р±РѕС‚С‹ Р¦РђРџ
+		double DacRate;	  			  		// С‡Р°СЃС‚РѕС‚Р° СЂР°Р±РѕС‚С‹ Р¦РђРџ РІ РєР“С†
+		WORD DacFifoBaseAddress;			// Р±Р°Р·РѕРІС‹Р№ Р°РґСЂРµСЃ FIFO Р±СѓС„РµСЂР° Р¦РђРџ
+		WORD DacFifoLength;					// РґР»РёРЅР° FIFO Р±СѓС„РµСЂР° Р¦РђРџ
 	};
 	#pragma pack()
 
-	// адрес начала сегмента блока данных в памяти программ драйвера DSP
+	// Р°РґСЂРµСЃ РЅР°С‡Р°Р»Р° СЃРµРіРјРµРЅС‚Р° Р±Р»РѕРєР° РґР°РЅРЅС‹С… РІ РїР°РјСЏС‚Рё РїСЂРѕРіСЂР°РјРј РґСЂР°Р№РІРµСЂР° DSP
 	const WORD DataBaseAddress_E440 = 0x30;
-	// переменные штатного LBIOS для модуля E14-440 (раполагаются в памяти программ DSP)
+	// РїРµСЂРµРјРµРЅРЅС‹Рµ С€С‚Р°С‚РЅРѕРіРѕ LBIOS РґР»СЏ РјРѕРґСѓР»СЏ E14-440 (СЂР°РїРѕР»Р°РіР°СЋС‚СЃСЏ РІ РїР°РјСЏС‚Рё РїСЂРѕРіСЂР°РјРј DSP)
 	#define 	  	L_PROGRAM_BASE_ADDRESS_E440				(DataBaseAddress_E440 + 0x0)
 	#define 	  	L_READY_E440 									(DataBaseAddress_E440 + 0x1)
 	#define	  	L_TMODE1_E440 									(DataBaseAddress_E440 + 0x2)
@@ -430,17 +430,17 @@
 	#define		L_DSP_INFO_STUCTURE_E440					(0x200)
 
 	//-----------------------------------------------------------------------------
-	// интерфейс модуля E14-440
+	// РёРЅС‚РµСЂС„РµР№СЃ РјРѕРґСѓР»СЏ E14-440
 	//-----------------------------------------------------------------------------
 	struct ILE440 : public ILUSBBASE
 	{
-		// функции работы с DSP
+		// С„СѓРЅРєС†РёРё СЂР°Р±РѕС‚С‹ СЃ DSP
 		virtual BOOL WINAPI RESET_MODULE(BYTE ResetFlag = INIT_E440) = 0;
 		virtual BOOL WINAPI LOAD_MODULE(PCHAR const FileName = NULL) = 0;
 		virtual BOOL WINAPI TEST_MODULE(void) = 0;
 		virtual BOOL WINAPI SEND_COMMAND(WORD Command) = 0;
 
-		// функции для работы с АЦП
+		// С„СѓРЅРєС†РёРё РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ РђР¦Рџ
 		virtual BOOL WINAPI GET_ADC_PARS(ADC_PARS_E440 * const AdcPars) = 0;
 		virtual BOOL WINAPI SET_ADC_PARS(ADC_PARS_E440 * const AdcPars) = 0;
 		virtual BOOL WINAPI START_ADC(void) = 0;
@@ -449,7 +449,7 @@
 		virtual BOOL WINAPI ADC_SAMPLE(SHORT * const AdcData, WORD AdcChannel) = 0;
 		virtual BOOL WINAPI ReadData(IO_REQUEST_LUSBAPI * const ReadRequest) = 0;
 
-		// функции для работы с ЦАП
+		// С„СѓРЅРєС†РёРё РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ Р¦РђРџ
 		virtual BOOL WINAPI GET_DAC_PARS(DAC_PARS_E440 * const DacPars) = 0;
 		virtual BOOL WINAPI SET_DAC_PARS(DAC_PARS_E440 * const DacPars) = 0;
 		virtual BOOL WINAPI START_DAC(void) = 0;
@@ -457,21 +457,21 @@
 		virtual BOOL WINAPI WriteData(IO_REQUEST_LUSBAPI * const WriteRequest) = 0;
 		virtual BOOL WINAPI DAC_SAMPLE(SHORT * const DacData, WORD DacChannel) = 0;
 
-		// функции для работы с цифровыми линиями
+		// С„СѓРЅРєС†РёРё РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ С†РёС„СЂРѕРІС‹РјРё Р»РёРЅРёСЏРјРё
 		virtual BOOL WINAPI ENABLE_TTL_OUT(BOOL EnableTtlOut) = 0;
 		virtual BOOL WINAPI TTL_IN(WORD * const TtlIn) = 0;
 		virtual BOOL WINAPI TTL_OUT(WORD TtlOut) = 0;
 
-		// функции для работы пользовательским ППЗУ модуля
+		// С„СѓРЅРєС†РёРё РґР»СЏ СЂР°Р±РѕС‚С‹ РїРѕР»СЊР·РѕРІР°С‚РµР»СЊСЃРєРёРј РџРџР—РЈ РјРѕРґСѓР»СЏ
 		virtual BOOL WINAPI ENABLE_FLASH_WRITE(BOOL EnableFlashWrite) = 0;
 		virtual BOOL WINAPI READ_FLASH_WORD(WORD FlashAddress, SHORT * const FlashWord) = 0;
 		virtual BOOL WINAPI WRITE_FLASH_WORD(WORD FlashAddress, SHORT FlashWord) = 0;
 
-		// функции для работы со служебной информацией из ППЗУ
+		// С„СѓРЅРєС†РёРё РґР»СЏ СЂР°Р±РѕС‚С‹ СЃРѕ СЃР»СѓР¶РµР±РЅРѕР№ РёРЅС„РѕСЂРјР°С†РёРµР№ РёР· РџРџР—РЈ
 		virtual BOOL WINAPI GET_MODULE_DESCRIPTION(MODULE_DESCRIPTION_E440 * const ModuleDescription) = 0;
 		virtual BOOL WINAPI SAVE_MODULE_DESCRIPTION(MODULE_DESCRIPTION_E440 * const ModuleDescription) = 0;
 
-		// функции для работы с памятью DSP
+		// С„СѓРЅРєС†РёРё РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ РїР°РјСЏС‚СЊСЋ DSP
 		virtual BOOL WINAPI PUT_LBIOS_WORD(WORD Address, SHORT Data) = 0;
 		virtual BOOL WINAPI GET_LBIOS_WORD(WORD Address, SHORT * const Data) = 0;
 		virtual BOOL WINAPI PUT_DM_WORD(WORD Address, SHORT Data) = 0;
@@ -483,7 +483,7 @@
 		virtual BOOL WINAPI PUT_PM_ARRAY(WORD BaseAddress, WORD NPoints, long * const Data) = 0;
 		virtual BOOL WINAPI GET_PM_ARRAY(WORD BaseAddress, WORD NPoints, long * const Data) = 0;
 
-		// функции для работы с загрузочным ППЗУ модуля
+		// С„СѓРЅРєС†РёРё РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ Р·Р°РіСЂСѓР·РѕС‡РЅС‹Рј РџРџР—РЈ РјРѕРґСѓР»СЏ
 		virtual BOOL WINAPI ERASE_BOOT_FLASH(void) = 0;
 		virtual BOOL WINAPI PUT_ARRAY_BOOT_FLASH(DWORD BaseAddress, DWORD NBytes, BYTE *Data) = 0;
 		virtual BOOL WINAPI GET_ARRAY_BOOT_FLASH(DWORD BaseAddress, DWORD NBytes, BYTE *Data) = 0;
@@ -493,149 +493,149 @@
 
 
 	// ==========================================================================
-	// *************************** Модуль E20-10 ********************************
+	// *************************** РњРѕРґСѓР»СЊ E20-10 ********************************
 	// ==========================================================================
-	// доступные индексы источника сигнала старта сбора данных
+	// РґРѕСЃС‚СѓРїРЅС‹Рµ РёРЅРґРµРєСЃС‹ РёСЃС‚РѕС‡РЅРёРєР° СЃРёРіРЅР°Р»Р° СЃС‚Р°СЂС‚Р° СЃР±РѕСЂР° РґР°РЅРЅС‹С…
 	enum {
 				INT_ADC_START_E2010, INT_ADC_START_WITH_TRANS_E2010,
 				EXT_ADC_START_ON_RISING_EDGE_E2010, EXT_ADC_START_ON_FALLING_EDGE_E2010,
-//				EXT_ADC_START_ON_HIGH_LEVEL_E2010, EXT_ADC_START_ON_LOW_LEVEL_E2010,		// для Rev.B и выше (пока нет)
+//				EXT_ADC_START_ON_HIGH_LEVEL_E2010, EXT_ADC_START_ON_LOW_LEVEL_E2010,		// РґР»СЏ Rev.B Рё РІС‹С€Рµ (РїРѕРєР° РЅРµС‚)
 				INVALID_ADC_START_E2010
 			};
-	// доступные индексы источника тактовых импульсов для запуска АЦП
+	// РґРѕСЃС‚СѓРїРЅС‹Рµ РёРЅРґРµРєСЃС‹ РёСЃС‚РѕС‡РЅРёРєР° С‚Р°РєС‚РѕРІС‹С… РёРјРїСѓР»СЊСЃРѕРІ РґР»СЏ Р·Р°РїСѓСЃРєР° РђР¦Рџ
 	enum {	INT_ADC_CLOCK_E2010, INT_ADC_CLOCK_WITH_TRANS_E2010, EXT_ADC_CLOCK_ON_RISING_EDGE_E2010, EXT_ADC_CLOCK_ON_FALLING_EDGE_E2010, INVALID_ADC_CLOCK_E2010 };
-	// возможные типы аналоговой синхронизации ввода данных (для Rev.B и выше)
+	// РІРѕР·РјРѕР¶РЅС‹Рµ С‚РёРїС‹ Р°РЅР°Р»РѕРіРѕРІРѕР№ СЃРёРЅС…СЂРѕРЅРёР·Р°С†РёРё РІРІРѕРґР° РґР°РЅРЅС‹С… (РґР»СЏ Rev.B Рё РІС‹С€Рµ)
 	enum {
-				NO_ANALOG_SYNCHRO_E2010,			// отсутствие аналоговой синхронизации
-				ANALOG_SYNCHRO_ON_RISING_CROSSING_E2010, ANALOG_SYNCHRO_ON_FALLING_CROSSING_E2010,	// аналоговая синхронизация по переходу
-				ANALOG_SYNCHRO_ON_HIGH_LEVEL_E2010, ANALOG_SYNCHRO_ON_LOW_LEVEL_E2010,		// аналоговая синхронизация по уровню
+				NO_ANALOG_SYNCHRO_E2010,			// РѕС‚СЃСѓС‚СЃС‚РІРёРµ Р°РЅР°Р»РѕРіРѕРІРѕР№ СЃРёРЅС…СЂРѕРЅРёР·Р°С†РёРё
+				ANALOG_SYNCHRO_ON_RISING_CROSSING_E2010, ANALOG_SYNCHRO_ON_FALLING_CROSSING_E2010,	// Р°РЅР°Р»РѕРіРѕРІР°СЏ СЃРёРЅС…СЂРѕРЅРёР·Р°С†РёСЏ РїРѕ РїРµСЂРµС…РѕРґСѓ
+				ANALOG_SYNCHRO_ON_HIGH_LEVEL_E2010, ANALOG_SYNCHRO_ON_LOW_LEVEL_E2010,		// Р°РЅР°Р»РѕРіРѕРІР°СЏ СЃРёРЅС…СЂРѕРЅРёР·Р°С†РёСЏ РїРѕ СѓСЂРѕРІРЅСЋ
 				INVALID_ANALOG_SYNCHRO_E2010
 			};
-	// доступные индексы диапазонов входного напряжения модуля E20-10
+	// РґРѕСЃС‚СѓРїРЅС‹Рµ РёРЅРґРµРєСЃС‹ РґРёР°РїР°Р·РѕРЅРѕРІ РІС…РѕРґРЅРѕРіРѕ РЅР°РїСЂСЏР¶РµРЅРёСЏ РјРѕРґСѓР»СЏ E20-10
 	enum {	ADC_INPUT_RANGE_3000mV_E2010, ADC_INPUT_RANGE_1000mV_E2010, ADC_INPUT_RANGE_300mV_E2010, INVALID_ADC_INPUT_RANGE_E2010 };
-	// возможные типы подключения входного тракта модуля E20-10
+	// РІРѕР·РјРѕР¶РЅС‹Рµ С‚РёРїС‹ РїРѕРґРєР»СЋС‡РµРЅРёСЏ РІС…РѕРґРЅРѕРіРѕ С‚СЂР°РєС‚Р° РјРѕРґСѓР»СЏ E20-10
 	enum {	ADC_INPUT_ZERO_E2010, ADC_INPUT_SIGNAL_E2010, INVALID_ADC_INPUT_E2010 };
-	// возможные индексы для управления входным током смещения модуля E20-10 (для Rev.B и выше)
+	// РІРѕР·РјРѕР¶РЅС‹Рµ РёРЅРґРµРєСЃС‹ РґР»СЏ СѓРїСЂР°РІР»РµРЅРёСЏ РІС…РѕРґРЅС‹Рј С‚РѕРєРѕРј СЃРјРµС‰РµРЅРёСЏ РјРѕРґСѓР»СЏ E20-10 (РґР»СЏ Rev.B Рё РІС‹С€Рµ)
 	enum {	INPUT_CURRENT_OFF_E2010, INPUT_CURRENT_ON_E2010, INVALID_INPUT_CURRENT_E2010 };
-	// возможные режимы фиксации факта перегрузки входных каналов при сборе данных (только для Rev.A)
+	// РІРѕР·РјРѕР¶РЅС‹Рµ СЂРµР¶РёРјС‹ С„РёРєСЃР°С†РёРё С„Р°РєС‚Р° РїРµСЂРµРіСЂСѓР·РєРё РІС…РѕРґРЅС‹С… РєР°РЅР°Р»РѕРІ РїСЂРё СЃР±РѕСЂРµ РґР°РЅРЅС‹С… (С‚РѕР»СЊРєРѕ РґР»СЏ Rev.A)
 	enum {	CLIPPING_OVERLOAD_E2010, MARKER_OVERLOAD_E2010, INVALID_OVERLOAD_E2010 };
-	// доступные номера битов ошибок при выполнении сбора данных с АЦП
+	// РґРѕСЃС‚СѓРїРЅС‹Рµ РЅРѕРјРµСЂР° Р±РёС‚РѕРІ РѕС€РёР±РѕРє РїСЂРё РІС‹РїРѕР»РЅРµРЅРёРё СЃР±РѕСЂР° РґР°РЅРЅС‹С… СЃ РђР¦Рџ
 	enum {
-				// битовое поле BufferOverrun структуры DATA_STATE_E2010
-				BUFFER_OVERRUN_E2010 = 0x0,		// переполнение внутреннего буфера модуля
-				// битовое поле ChannelsOverFlow структуры DATA_STATE_E2010 (для Rev.B и выше)
-				OVERFLOW_OF_CHANNEL_1_E2010 = 0x0, OVERFLOW_OF_CHANNEL_2_E2010,	// биты локальных признаков переполнения разрядной сетки соответствующего канала
-				OVERFLOW_OF_CHANNEL_3_E2010, OVERFLOW_OF_CHANNEL_4_E2010,			// за время выполнения одного запроса сбора данных ReadData()
-				OVERFLOW_E2010 = 0x7					// бит глобального признака факта переполнения разрядной сетки модуля за всё время сбора данных от момента START_ADC() до STOP_ADC()
+				// Р±РёС‚РѕРІРѕРµ РїРѕР»Рµ BufferOverrun СЃС‚СЂСѓРєС‚СѓСЂС‹ DATA_STATE_E2010
+				BUFFER_OVERRUN_E2010 = 0x0,		// РїРµСЂРµРїРѕР»РЅРµРЅРёРµ РІРЅСѓС‚СЂРµРЅРЅРµРіРѕ Р±СѓС„РµСЂР° РјРѕРґСѓР»СЏ
+				// Р±РёС‚РѕРІРѕРµ РїРѕР»Рµ ChannelsOverFlow СЃС‚СЂСѓРєС‚СѓСЂС‹ DATA_STATE_E2010 (РґР»СЏ Rev.B Рё РІС‹С€Рµ)
+				OVERFLOW_OF_CHANNEL_1_E2010 = 0x0, OVERFLOW_OF_CHANNEL_2_E2010,	// Р±РёС‚С‹ Р»РѕРєР°Р»СЊРЅС‹С… РїСЂРёР·РЅР°РєРѕРІ РїРµСЂРµРїРѕР»РЅРµРЅРёСЏ СЂР°Р·СЂСЏРґРЅРѕР№ СЃРµС‚РєРё СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰РµРіРѕ РєР°РЅР°Р»Р°
+				OVERFLOW_OF_CHANNEL_3_E2010, OVERFLOW_OF_CHANNEL_4_E2010,			// Р·Р° РІСЂРµРјСЏ РІС‹РїРѕР»РЅРµРЅРёСЏ РѕРґРЅРѕРіРѕ Р·Р°РїСЂРѕСЃР° СЃР±РѕСЂР° РґР°РЅРЅС‹С… ReadData()
+				OVERFLOW_E2010 = 0x7					// Р±РёС‚ РіР»РѕР±Р°Р»СЊРЅРѕРіРѕ РїСЂРёР·РЅР°РєР° С„Р°РєС‚Р° РїРµСЂРµРїРѕР»РЅРµРЅРёСЏ СЂР°Р·СЂСЏРґРЅРѕР№ СЃРµС‚РєРё РјРѕРґСѓР»СЏ Р·Р° РІСЃС‘ РІСЂРµРјСЏ СЃР±РѕСЂР° РґР°РЅРЅС‹С… РѕС‚ РјРѕРјРµРЅС‚Р° START_ADC() РґРѕ STOP_ADC()
 			};
-	// возможные опции наличия микросхемы ЦАП для модуля E20-10
+	// РІРѕР·РјРѕР¶РЅС‹Рµ РѕРїС†РёРё РЅР°Р»РёС‡РёСЏ РјРёРєСЂРѕСЃС…РµРјС‹ Р¦РђРџ РґР»СЏ РјРѕРґСѓР»СЏ E20-10
 	enum {	DAC_INACCESSIBLED_E2010, DAC_ACCESSIBLED_E2010, INVALID_DAC_OPTION_E2010 };
-	// доступные индексы ревизий модуля E20-10
+	// РґРѕСЃС‚СѓРїРЅС‹Рµ РёРЅРґРµРєСЃС‹ СЂРµРІРёР·РёР№ РјРѕРґСѓР»СЏ E20-10
 	enum {	REVISION_A_E2010, REVISION_B_E2010, INVALID_REVISION_E2010 };
-	// доступные индексы модификиций модуля E20-10
-	enum {	BASE_MODIFICATION_E2010, 			// полоса входных частот 1.25 МГц
-				F5_MODIFICATION_E2010, 				// полоса входных частот 5.00 МГц
+	// РґРѕСЃС‚СѓРїРЅС‹Рµ РёРЅРґРµРєСЃС‹ РјРѕРґРёС„РёРєРёС†РёР№ РјРѕРґСѓР»СЏ E20-10
+	enum {	BASE_MODIFICATION_E2010, 			// РїРѕР»РѕСЃР° РІС…РѕРґРЅС‹С… С‡Р°СЃС‚РѕС‚ 1.25 РњР“С†
+				F5_MODIFICATION_E2010, 				// РїРѕР»РѕСЃР° РІС…РѕРґРЅС‹С… С‡Р°СЃС‚РѕС‚ 5.00 РњР“С†
 				INVALID_MODIFICATION_E2010 };
 
-	// доступные битовые константы для задания тестовых режимов работы модуля E20-10
+	// РґРѕСЃС‚СѓРїРЅС‹Рµ Р±РёС‚РѕРІС‹Рµ РєРѕРЅСЃС‚Р°РЅС‚С‹ РґР»СЏ Р·Р°РґР°РЅРёСЏ С‚РµСЃС‚РѕРІС‹С… СЂРµР¶РёРјРѕРІ СЂР°Р±РѕС‚С‹ РјРѕРґСѓР»СЏ E20-10
 	enum { NO_TEST_MODE_E2010, TEST_MODE_1_E2010 };
 
-	// константы для работы с модулем
+	// РєРѕРЅСЃС‚Р°РЅС‚С‹ РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ РјРѕРґСѓР»РµРј
 	enum 	{
 				ADC_CHANNELS_QUANTITY_E2010 = 0x4, MAX_CONTROL_TABLE_LENGTH_E2010 = 256,
 				ADC_INPUT_RANGES_QUANTITY_E2010 = INVALID_ADC_INPUT_RANGE_E2010,
 				ADC_INPUT_TYPES_QUANTITY_E2010 = INVALID_ADC_INPUT_E2010,
 				ADC_CALIBR_COEFS_QUANTITY_E2010 = ADC_CHANNELS_QUANTITY_E2010 * ADC_INPUT_RANGES_QUANTITY_E2010,
 				DAC_CHANNELS_QUANTITY_E2010 = 0x2, DAC_CALIBR_COEFS_QUANTITY_E2010 = DAC_CHANNELS_QUANTITY_E2010,
-				TTL_LINES_QUANTITY_E2010 = 0x10,		// кол-во входных и выходных цифровых линий
-				USER_FLASH_SIZE_E2010 = 0x200,  		// размер области пользовательского ППЗУ в байтах
-				REVISIONS_QUANTITY_E2010 = INVALID_REVISION_E2010,				// кол-во ревизий модуля
-				MODIFICATIONS_QUANTITY_E2010 = INVALID_MODIFICATION_E2010,	// кол-во вариантов исполнения (модификаций) модуля
-				ADC_PLUS_OVERLOAD_MARKER_E2010 = 0x5FFF,	// признак 'плюс' перегрузки отсчёта с АЦП (только для Rev.A)
-				ADC_MINUS_OVERLOAD_MARKER_E2010 = 0xA000	// признак 'минус' перегрузки отсчёта с АЦП (только для Rev.A)
+				TTL_LINES_QUANTITY_E2010 = 0x10,		// РєРѕР»-РІРѕ РІС…РѕРґРЅС‹С… Рё РІС‹С…РѕРґРЅС‹С… С†РёС„СЂРѕРІС‹С… Р»РёРЅРёР№
+				USER_FLASH_SIZE_E2010 = 0x200,  		// СЂР°Р·РјРµСЂ РѕР±Р»Р°СЃС‚Рё РїРѕР»СЊР·РѕРІР°С‚РµР»СЊСЃРєРѕРіРѕ РџРџР—РЈ РІ Р±Р°Р№С‚Р°С…
+				REVISIONS_QUANTITY_E2010 = INVALID_REVISION_E2010,				// РєРѕР»-РІРѕ СЂРµРІРёР·РёР№ РјРѕРґСѓР»СЏ
+				MODIFICATIONS_QUANTITY_E2010 = INVALID_MODIFICATION_E2010,	// РєРѕР»-РІРѕ РІР°СЂРёР°РЅС‚РѕРІ РёСЃРїРѕР»РЅРµРЅРёСЏ (РјРѕРґРёС„РёРєР°С†РёР№) РјРѕРґСѓР»СЏ
+				ADC_PLUS_OVERLOAD_MARKER_E2010 = 0x5FFF,	// РїСЂРёР·РЅР°Рє 'РїР»СЋСЃ' РїРµСЂРµРіСЂСѓР·РєРё РѕС‚СЃС‡С‘С‚Р° СЃ РђР¦Рџ (С‚РѕР»СЊРєРѕ РґР»СЏ Rev.A)
+				ADC_MINUS_OVERLOAD_MARKER_E2010 = 0xA000	// РїСЂРёР·РЅР°Рє 'РјРёРЅСѓСЃ' РїРµСЂРµРіСЂСѓР·РєРё РѕС‚СЃС‡С‘С‚Р° СЃ РђР¦Рџ (С‚РѕР»СЊРєРѕ РґР»СЏ Rev.A)
 			};
 
-	// диапазоны входного напряжения АЦП в В
+	// РґРёР°РїР°Р·РѕРЅС‹ РІС…РѕРґРЅРѕРіРѕ РЅР°РїСЂСЏР¶РµРЅРёСЏ РђР¦Рџ РІ Р’
 	const double ADC_INPUT_RANGES_E2010[ADC_INPUT_RANGES_QUANTITY_E2010] =
 	{
 		3.0, 1.0, 0.3
 	};
-	// диапазон выходного напряжения ЦАП в В
+	// РґРёР°РїР°Р·РѕРЅ РІС‹С…РѕРґРЅРѕРіРѕ РЅР°РїСЂСЏР¶РµРЅРёСЏ Р¦РђРџ РІ Р’
 	const double DAC_OUTPUT_RANGE_E2010 = 5.0;
-	// доступные ревизии модуля
+	// РґРѕСЃС‚СѓРїРЅС‹Рµ СЂРµРІРёР·РёРё РјРѕРґСѓР»СЏ
 	const BYTE REVISIONS_E2010[REVISIONS_QUANTITY_E2010] = { 'A', 'B' };
-	// доступные исполнения модуля
+	// РґРѕСЃС‚СѓРїРЅС‹Рµ РёСЃРїРѕР»РЅРµРЅРёСЏ РјРѕРґСѓР»СЏ
 	const char * const MODIFICATIONS_E2010[MODIFICATIONS_QUANTITY_E2010] = { "BASE", "F5" };
 
 	#pragma pack(1)
-	// структура с общей информацией об модуле E20-10
+	// СЃС‚СЂСѓРєС‚СѓСЂР° СЃ РѕР±С‰РµР№ РёРЅС„РѕСЂРјР°С†РёРµР№ РѕР± РјРѕРґСѓР»Рµ E20-10
 	struct MODULE_DESCRIPTION_E2010
 	{
-		MODULE_INFO_LUSBAPI     Module;		// общая информация о модуле
-		INTERFACE_INFO_LUSBAPI  Interface;	// информация об интерфейсе
-		MCU_INFO_LUSBAPI<MCU_VERSION_INFO_LUSBAPI>	Mcu;	// информация о микроконтроллере
-		PLD_INFO_LUSBAPI        Pld;			// информация о ПЛИС
-		ADC_INFO_LUSBAPI        Adc;			// информация о АЦП
-		DAC_INFO_LUSBAPI        Dac;			// информация о ЦАП
-		DIGITAL_IO_INFO_LUSBAPI DigitalIo;	// информация о цифровом вводе-выводе
+		MODULE_INFO_LUSBAPI     Module;		// РѕР±С‰Р°СЏ РёРЅС„РѕСЂРјР°С†РёСЏ Рѕ РјРѕРґСѓР»Рµ
+		INTERFACE_INFO_LUSBAPI  Interface;	// РёРЅС„РѕСЂРјР°С†РёСЏ РѕР± РёРЅС‚РµСЂС„РµР№СЃРµ
+		MCU_INFO_LUSBAPI<MCU_VERSION_INFO_LUSBAPI>	Mcu;	// РёРЅС„РѕСЂРјР°С†РёСЏ Рѕ РјРёРєСЂРѕРєРѕРЅС‚СЂРѕР»Р»РµСЂРµ
+		PLD_INFO_LUSBAPI        Pld;			// РёРЅС„РѕСЂРјР°С†РёСЏ Рѕ РџР›РРЎ
+		ADC_INFO_LUSBAPI        Adc;			// РёРЅС„РѕСЂРјР°С†РёСЏ Рѕ РђР¦Рџ
+		DAC_INFO_LUSBAPI        Dac;			// РёРЅС„РѕСЂРјР°С†РёСЏ Рѕ Р¦РђРџ
+		DIGITAL_IO_INFO_LUSBAPI DigitalIo;	// РёРЅС„РѕСЂРјР°С†РёСЏ Рѕ С†РёС„СЂРѕРІРѕРј РІРІРѕРґРµ-РІС‹РІРѕРґРµ
 	};
-	// структура пользовательского ППЗУ
+	// СЃС‚СЂСѓРєС‚СѓСЂР° РїРѕР»СЊР·РѕРІР°С‚РµР»СЊСЃРєРѕРіРѕ РџРџР—РЈ
 	struct USER_FLASH_E2010
 	{
 		BYTE Buffer[USER_FLASH_SIZE_E2010];
 	};
-	// структура с параметрами синхронизации ввода данных с АЦП
+	// СЃС‚СЂСѓРєС‚СѓСЂР° СЃ РїР°СЂР°РјРµС‚СЂР°РјРё СЃРёРЅС…СЂРѕРЅРёР·Р°С†РёРё РІРІРѕРґР° РґР°РЅРЅС‹С… СЃ РђР¦Рџ
 	struct SYNCHRO_PARS_E2010
 	{
-		WORD	StartSource;				  	// тип и источник сигнала начала сбора данных с АЦП (внутренний или внешний и т.д.)
-		DWORD StartDelay; 					// задержка старта сбора данных в кадрах отсчётов c АЦП (для Rev.B и выше)
-		WORD	SynhroSource;					// источник тактовых импульсов запуска АЦП (внутренние или внешние и т.д.)
-		DWORD StopAfterNKadrs;				// останов сбора данных после задаваемого здесь кол-ва собранных кадров отсчётов АЦП (для Rev.B и выше)
-		WORD	SynchroAdMode;   				// режим аналоговой сихронизации: переход или уровень (для Rev.B и выше)
-		WORD	SynchroAdChannel;				// физический канал АЦП для аналоговой синхронизации (для Rev.B и выше)
-		SHORT SynchroAdPorog;  				// порог срабатывания при аналоговой синхронизации (для Rev.B и выше)
-		BYTE	IsBlockDataMarkerEnabled;	// маркирование начала блока данных (удобно, например, при аналоговой синхронизации ввода по уровню) (для Rev.B и выше)
+		WORD	StartSource;				  	// С‚РёРї Рё РёСЃС‚РѕС‡РЅРёРє СЃРёРіРЅР°Р»Р° РЅР°С‡Р°Р»Р° СЃР±РѕСЂР° РґР°РЅРЅС‹С… СЃ РђР¦Рџ (РІРЅСѓС‚СЂРµРЅРЅРёР№ РёР»Рё РІРЅРµС€РЅРёР№ Рё С‚.Рґ.)
+		DWORD StartDelay; 					// Р·Р°РґРµСЂР¶РєР° СЃС‚Р°СЂС‚Р° СЃР±РѕСЂР° РґР°РЅРЅС‹С… РІ РєР°РґСЂР°С… РѕС‚СЃС‡С‘С‚РѕРІ c РђР¦Рџ (РґР»СЏ Rev.B Рё РІС‹С€Рµ)
+		WORD	SynhroSource;					// РёСЃС‚РѕС‡РЅРёРє С‚Р°РєС‚РѕРІС‹С… РёРјРїСѓР»СЊСЃРѕРІ Р·Р°РїСѓСЃРєР° РђР¦Рџ (РІРЅСѓС‚СЂРµРЅРЅРёРµ РёР»Рё РІРЅРµС€РЅРёРµ Рё С‚.Рґ.)
+		DWORD StopAfterNKadrs;				// РѕСЃС‚Р°РЅРѕРІ СЃР±РѕСЂР° РґР°РЅРЅС‹С… РїРѕСЃР»Рµ Р·Р°РґР°РІР°РµРјРѕРіРѕ Р·РґРµСЃСЊ РєРѕР»-РІР° СЃРѕР±СЂР°РЅРЅС‹С… РєР°РґСЂРѕРІ РѕС‚СЃС‡С‘С‚РѕРІ РђР¦Рџ (РґР»СЏ Rev.B Рё РІС‹С€Рµ)
+		WORD	SynchroAdMode;   				// СЂРµР¶РёРј Р°РЅР°Р»РѕРіРѕРІРѕР№ СЃРёС…СЂРѕРЅРёР·Р°С†РёРё: РїРµСЂРµС…РѕРґ РёР»Рё СѓСЂРѕРІРµРЅСЊ (РґР»СЏ Rev.B Рё РІС‹С€Рµ)
+		WORD	SynchroAdChannel;				// С„РёР·РёС‡РµСЃРєРёР№ РєР°РЅР°Р» РђР¦Рџ РґР»СЏ Р°РЅР°Р»РѕРіРѕРІРѕР№ СЃРёРЅС…СЂРѕРЅРёР·Р°С†РёРё (РґР»СЏ Rev.B Рё РІС‹С€Рµ)
+		SHORT SynchroAdPorog;  				// РїРѕСЂРѕРі СЃСЂР°Р±Р°С‚С‹РІР°РЅРёСЏ РїСЂРё Р°РЅР°Р»РѕРіРѕРІРѕР№ СЃРёРЅС…СЂРѕРЅРёР·Р°С†РёРё (РґР»СЏ Rev.B Рё РІС‹С€Рµ)
+		BYTE	IsBlockDataMarkerEnabled;	// РјР°СЂРєРёСЂРѕРІР°РЅРёРµ РЅР°С‡Р°Р»Р° Р±Р»РѕРєР° РґР°РЅРЅС‹С… (СѓРґРѕР±РЅРѕ, РЅР°РїСЂРёРјРµСЂ, РїСЂРё Р°РЅР°Р»РѕРіРѕРІРѕР№ СЃРёРЅС…СЂРѕРЅРёР·Р°С†РёРё РІРІРѕРґР° РїРѕ СѓСЂРѕРІРЅСЋ) (РґР»СЏ Rev.B Рё РІС‹С€Рµ)
 	};
-	// структура с параметрами работы АЦП
+	// СЃС‚СЂСѓРєС‚СѓСЂР° СЃ РїР°СЂР°РјРµС‚СЂР°РјРё СЂР°Р±РѕС‚С‹ РђР¦Рџ
 	struct ADC_PARS_E2010
 	{
-		BOOL IsAdcCorrectionEnabled;		// управление разрешением автоматической корректировкой получаемых данных на уровне модуля (для Rev.B и выше)
-		WORD OverloadMode;					// режим фиксации факта перегрузки входных каналов модуля (только для Rev.A)
-		WORD InputCurrentControl;			// управление входным током смещения (для Rev.B и выше)
-		SYNCHRO_PARS_E2010 SynchroPars;	// параметры синхронизации ввода данных с АЦП
-		WORD ChannelsQuantity;				// кол-во активных каналов (размер кадра отсчётов)
-		WORD ControlTable[MAX_CONTROL_TABLE_LENGTH_E2010];	// управляющая таблица с активными логическими каналами
-		WORD InputRange[ADC_CHANNELS_QUANTITY_E2010]; 	// индексы диапазонов входного напряжения физических каналов: 3.0В, 1.0В или 0.3В
-		WORD InputSwitch[ADC_CHANNELS_QUANTITY_E2010];	// индексы типа подключения физических каналов: земля или сигнал
-		double AdcRate;						// частота работы АЦП в кГц
-		double InterKadrDelay;				// межкадровая задержка в мс
-		double KadrRate;						// частота кадра в кГц
-		double AdcOffsetCoefs[ADC_INPUT_RANGES_QUANTITY_E2010][ADC_CHANNELS_QUANTITY_E2010];	// массив коэффициентов для корректировки смещение отсчётов АЦП: (3 диапазона)*(4 канала) (для Rev.B и выше)
-		double AdcScaleCoefs[ADC_INPUT_RANGES_QUANTITY_E2010][ADC_CHANNELS_QUANTITY_E2010];		// массив коэффициентов для корректировки масштаба отсчётов АЦП: (3 диапазона)*(4 канала) (для Rev.B и выше)
+		BOOL IsAdcCorrectionEnabled;		// СѓРїСЂР°РІР»РµРЅРёРµ СЂР°Р·СЂРµС€РµРЅРёРµРј Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРѕР№ РєРѕСЂСЂРµРєС‚РёСЂРѕРІРєРѕР№ РїРѕР»СѓС‡Р°РµРјС‹С… РґР°РЅРЅС‹С… РЅР° СѓСЂРѕРІРЅРµ РјРѕРґСѓР»СЏ (РґР»СЏ Rev.B Рё РІС‹С€Рµ)
+		WORD OverloadMode;					// СЂРµР¶РёРј С„РёРєСЃР°С†РёРё С„Р°РєС‚Р° РїРµСЂРµРіСЂСѓР·РєРё РІС…РѕРґРЅС‹С… РєР°РЅР°Р»РѕРІ РјРѕРґСѓР»СЏ (С‚РѕР»СЊРєРѕ РґР»СЏ Rev.A)
+		WORD InputCurrentControl;			// СѓРїСЂР°РІР»РµРЅРёРµ РІС…РѕРґРЅС‹Рј С‚РѕРєРѕРј СЃРјРµС‰РµРЅРёСЏ (РґР»СЏ Rev.B Рё РІС‹С€Рµ)
+		SYNCHRO_PARS_E2010 SynchroPars;	// РїР°СЂР°РјРµС‚СЂС‹ СЃРёРЅС…СЂРѕРЅРёР·Р°С†РёРё РІРІРѕРґР° РґР°РЅРЅС‹С… СЃ РђР¦Рџ
+		WORD ChannelsQuantity;				// РєРѕР»-РІРѕ Р°РєС‚РёРІРЅС‹С… РєР°РЅР°Р»РѕРІ (СЂР°Р·РјРµСЂ РєР°РґСЂР° РѕС‚СЃС‡С‘С‚РѕРІ)
+		WORD ControlTable[MAX_CONTROL_TABLE_LENGTH_E2010];	// СѓРїСЂР°РІР»СЏСЋС‰Р°СЏ С‚Р°Р±Р»РёС†Р° СЃ Р°РєС‚РёРІРЅС‹РјРё Р»РѕРіРёС‡РµСЃРєРёРјРё РєР°РЅР°Р»Р°РјРё
+		WORD InputRange[ADC_CHANNELS_QUANTITY_E2010]; 	// РёРЅРґРµРєСЃС‹ РґРёР°РїР°Р·РѕРЅРѕРІ РІС…РѕРґРЅРѕРіРѕ РЅР°РїСЂСЏР¶РµРЅРёСЏ С„РёР·РёС‡РµСЃРєРёС… РєР°РЅР°Р»РѕРІ: 3.0Р’, 1.0Р’ РёР»Рё 0.3Р’
+		WORD InputSwitch[ADC_CHANNELS_QUANTITY_E2010];	// РёРЅРґРµРєСЃС‹ С‚РёРїР° РїРѕРґРєР»СЋС‡РµРЅРёСЏ С„РёР·РёС‡РµСЃРєРёС… РєР°РЅР°Р»РѕРІ: Р·РµРјР»СЏ РёР»Рё СЃРёРіРЅР°Р»
+		double AdcRate;						// С‡Р°СЃС‚РѕС‚Р° СЂР°Р±РѕС‚С‹ РђР¦Рџ РІ РєР“С†
+		double InterKadrDelay;				// РјРµР¶РєР°РґСЂРѕРІР°СЏ Р·Р°РґРµСЂР¶РєР° РІ РјСЃ
+		double KadrRate;						// С‡Р°СЃС‚РѕС‚Р° РєР°РґСЂР° РІ РєР“С†
+		double AdcOffsetCoefs[ADC_INPUT_RANGES_QUANTITY_E2010][ADC_CHANNELS_QUANTITY_E2010];	// РјР°СЃСЃРёРІ РєРѕСЌС„С„РёС†РёРµРЅС‚РѕРІ РґР»СЏ РєРѕСЂСЂРµРєС‚РёСЂРѕРІРєРё СЃРјРµС‰РµРЅРёРµ РѕС‚СЃС‡С‘С‚РѕРІ РђР¦Рџ: (3 РґРёР°РїР°Р·РѕРЅР°)*(4 РєР°РЅР°Р»Р°) (РґР»СЏ Rev.B Рё РІС‹С€Рµ)
+		double AdcScaleCoefs[ADC_INPUT_RANGES_QUANTITY_E2010][ADC_CHANNELS_QUANTITY_E2010];		// РјР°СЃСЃРёРІ РєРѕСЌС„С„РёС†РёРµРЅС‚РѕРІ РґР»СЏ РєРѕСЂСЂРµРєС‚РёСЂРѕРІРєРё РјР°СЃС€С‚Р°Р±Р° РѕС‚СЃС‡С‘С‚РѕРІ РђР¦Рџ: (3 РґРёР°РїР°Р·РѕРЅР°)*(4 РєР°РЅР°Р»Р°) (РґР»СЏ Rev.B Рё РІС‹С€Рµ)
 	};
-	// структура с информацией о текущем состоянии процесса сбора данных
+	// СЃС‚СЂСѓРєС‚СѓСЂР° СЃ РёРЅС„РѕСЂРјР°С†РёРµР№ Рѕ С‚РµРєСѓС‰РµРј СЃРѕСЃС‚РѕСЏРЅРёРё РїСЂРѕС†РµСЃСЃР° СЃР±РѕСЂР° РґР°РЅРЅС‹С…
 	struct DATA_STATE_E2010
 	{
-		BYTE ChannelsOverFlow;			// битовые признаки перегрузки входных аналоговых каналов (для Rev.B и выше)
-		BYTE BufferOverrun;				// битовые признаки переполнения внутреннего буфера модуля
-		DWORD CurBufferFilling;			// заполненность внутреннего буфера модуля Rev.B и выше, в отсчётах
-		DWORD MaxOfBufferFilling;		// за время сбора максимальная заполненность внутреннего буфера модуля Rev.B и выше, в отсчётах
-		DWORD BufferSize;					// размер внутреннего буфера модуля Rev.B и выше, в отсчётах
-		double CurBufferFillingPercent;		// текущая степень заполнения внутреннего буфера модуля Rev.B и выше, в %
-		double MaxOfBufferFillingPercent;	// за время сбора максимальная степень заполнения внутреннего буфера модуля Rev.B и выше, в %
+		BYTE ChannelsOverFlow;			// Р±РёС‚РѕРІС‹Рµ РїСЂРёР·РЅР°РєРё РїРµСЂРµРіСЂСѓР·РєРё РІС…РѕРґРЅС‹С… Р°РЅР°Р»РѕРіРѕРІС‹С… РєР°РЅР°Р»РѕРІ (РґР»СЏ Rev.B Рё РІС‹С€Рµ)
+		BYTE BufferOverrun;				// Р±РёС‚РѕРІС‹Рµ РїСЂРёР·РЅР°РєРё РїРµСЂРµРїРѕР»РЅРµРЅРёСЏ РІРЅСѓС‚СЂРµРЅРЅРµРіРѕ Р±СѓС„РµСЂР° РјРѕРґСѓР»СЏ
+		DWORD CurBufferFilling;			// Р·Р°РїРѕР»РЅРµРЅРЅРѕСЃС‚СЊ РІРЅСѓС‚СЂРµРЅРЅРµРіРѕ Р±СѓС„РµСЂР° РјРѕРґСѓР»СЏ Rev.B Рё РІС‹С€Рµ, РІ РѕС‚СЃС‡С‘С‚Р°С…
+		DWORD MaxOfBufferFilling;		// Р·Р° РІСЂРµРјСЏ СЃР±РѕСЂР° РјР°РєСЃРёРјР°Р»СЊРЅР°СЏ Р·Р°РїРѕР»РЅРµРЅРЅРѕСЃС‚СЊ РІРЅСѓС‚СЂРµРЅРЅРµРіРѕ Р±СѓС„РµСЂР° РјРѕРґСѓР»СЏ Rev.B Рё РІС‹С€Рµ, РІ РѕС‚СЃС‡С‘С‚Р°С…
+		DWORD BufferSize;					// СЂР°Р·РјРµСЂ РІРЅСѓС‚СЂРµРЅРЅРµРіРѕ Р±СѓС„РµСЂР° РјРѕРґСѓР»СЏ Rev.B Рё РІС‹С€Рµ, РІ РѕС‚СЃС‡С‘С‚Р°С…
+		double CurBufferFillingPercent;		// С‚РµРєСѓС‰Р°СЏ СЃС‚РµРїРµРЅСЊ Р·Р°РїРѕР»РЅРµРЅРёСЏ РІРЅСѓС‚СЂРµРЅРЅРµРіРѕ Р±СѓС„РµСЂР° РјРѕРґСѓР»СЏ Rev.B Рё РІС‹С€Рµ, РІ %
+		double MaxOfBufferFillingPercent;	// Р·Р° РІСЂРµРјСЏ СЃР±РѕСЂР° РјР°РєСЃРёРјР°Р»СЊРЅР°СЏ СЃС‚РµРїРµРЅСЊ Р·Р°РїРѕР»РЅРµРЅРёСЏ РІРЅСѓС‚СЂРµРЅРЅРµРіРѕ Р±СѓС„РµСЂР° РјРѕРґСѓР»СЏ Rev.B Рё РІС‹С€Рµ, РІ %
 	};
 	#pragma pack()
 
 	//-----------------------------------------------------------------------------
-	// интерфейс модуля E20-10
+	// РёРЅС‚РµСЂС„РµР№СЃ РјРѕРґСѓР»СЏ E20-10
 	//-----------------------------------------------------------------------------
 	struct ILE2010 : public ILUSBBASE
 	{
-		// загрузка ПЛИС модуля
+		// Р·Р°РіСЂСѓР·РєР° РџР›РРЎ РјРѕРґСѓР»СЏ
 		virtual BOOL WINAPI LOAD_MODULE(PCHAR const FileName = NULL) = 0;
 		virtual BOOL WINAPI TEST_MODULE(WORD TestModeMask = 0x0) = 0;
 
-		// работа с АЦП
+		// СЂР°Р±РѕС‚Р° СЃ РђР¦Рџ
 		virtual BOOL WINAPI GET_ADC_PARS(ADC_PARS_E2010 * const AdcPars) = 0;
 		virtual BOOL WINAPI SET_ADC_PARS(ADC_PARS_E2010 * const AdcPars) = 0;
 		virtual BOOL WINAPI START_ADC(void) = 0;
@@ -643,20 +643,20 @@
 		virtual BOOL WINAPI GET_DATA_STATE(DATA_STATE_E2010 * const DataState) = 0;
 		virtual BOOL WINAPI ReadData(IO_REQUEST_LUSBAPI * const ReadRequest) = 0;
 
-		// однократная синхронная работа с ЦАП
+		// РѕРґРЅРѕРєСЂР°С‚РЅР°СЏ СЃРёРЅС…СЂРѕРЅРЅР°СЏ СЂР°Р±РѕС‚Р° СЃ Р¦РђРџ
 		virtual BOOL WINAPI DAC_SAMPLE(SHORT * const DacData, WORD DacChannel) = 0;
 
-		// работа с цифровыми линиями
+		// СЂР°Р±РѕС‚Р° СЃ С†РёС„СЂРѕРІС‹РјРё Р»РёРЅРёСЏРјРё
 		virtual BOOL WINAPI ENABLE_TTL_OUT(BOOL EnableTtlOut) = 0;
 		virtual BOOL WINAPI TTL_IN (WORD * const TtlIn) = 0;
 		virtual BOOL WINAPI TTL_OUT(WORD TtlOut) = 0;
 
-		// функции для работы с пользовательской информацией ППЗУ
+		// С„СѓРЅРєС†РёРё РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ РїРѕР»СЊР·РѕРІР°С‚РµР»СЊСЃРєРѕР№ РёРЅС„РѕСЂРјР°С†РёРµР№ РџРџР—РЈ
 		virtual BOOL WINAPI ENABLE_FLASH_WRITE(BOOL IsUserFlashWriteEnabled) = 0;
 		virtual BOOL WINAPI READ_FLASH_ARRAY(USER_FLASH_E2010 * const UserFlash) = 0;
 		virtual BOOL WINAPI WRITE_FLASH_ARRAY(USER_FLASH_E2010 * const UserFlash) = 0;
 
-		// информация о модуле
+		// РёРЅС„РѕСЂРјР°С†РёСЏ Рѕ РјРѕРґСѓР»Рµ
 		virtual BOOL WINAPI GET_MODULE_DESCRIPTION(MODULE_DESCRIPTION_E2010 * const ModuleDescription) = 0;
 		virtual BOOL WINAPI SAVE_MODULE_DESCRIPTION(MODULE_DESCRIPTION_E2010 * const ModuleDescription) = 0;
 	};
@@ -666,25 +666,25 @@
 
 
 	// ==========================================================================
-	// **************************** Модуль E-310 ********************************
+	// **************************** РњРѕРґСѓР»СЊ E-310 ********************************
 	// ==========================================================================
 
-	// -============= генератор ==============-
-	// типы циклического автосканирования по частоте для генератора
+	// -============= РіРµРЅРµСЂР°С‚РѕСЂ ==============-
+	// С‚РёРїС‹ С†РёРєР»РёС‡РµСЃРєРѕРіРѕ Р°РІС‚РѕСЃРєР°РЅРёСЂРѕРІР°РЅРёСЏ РїРѕ С‡Р°СЃС‚РѕС‚Рµ РґР»СЏ РіРµРЅРµСЂР°С‚РѕСЂР°
 	enum CYCLIC_AUTO_SCAN_TYPES_E310
 	{
 		NO_CYCLIC_AUTOSCAN_E310,
 		CYCLIC_PILA_AUTO_SCAN_E310, CYCLIC_TRIANGLE_AUTO_SCAN_E310,
 		INVALID_CYCLIC_AUTOSCAN_TYPE_E310
 	};
-	// типы приращений частоты генератора
+	// С‚РёРїС‹ РїСЂРёСЂР°С‰РµРЅРёР№ С‡Р°СЃС‚РѕС‚С‹ РіРµРЅРµСЂР°С‚РѕСЂР°
 	enum INCREMENT_INTERVAL_TYPES_E310
 	{
 		WAVEFORM_CYCLE_INCREMENT_INTERVAL_E310,
 		CLOCK_PERIOD_INCREMENT_INTERVAL_E310,
 		INVALID_INCREMENT_INTERVAL_TYPE_E310
 	};
-	// доступные индексы умножителя приращений частоты генератора
+	// РґРѕСЃС‚СѓРїРЅС‹Рµ РёРЅРґРµРєСЃС‹ СѓРјРЅРѕР¶РёС‚РµР»СЏ РїСЂРёСЂР°С‰РµРЅРёР№ С‡Р°СЃС‚РѕС‚С‹ РіРµРЅРµСЂР°С‚РѕСЂР°
 	enum INCREMENT_INTERVAL_MULTIPLIERS_INDEXES_E310
 	{
 		INCREMENT_INTERVAL_MULTIPLIERS_001_E310,
@@ -693,37 +693,37 @@
 		INCREMENT_INTERVAL_MULTIPLIERS_500_E310,
 		INVALID_INCREMENT_INTERVAL_MULTIPLIER_E310
 	};
-	// доступные индексы источника тактирующих импульсов для генератора
+	// РґРѕСЃС‚СѓРїРЅС‹Рµ РёРЅРґРµРєСЃС‹ РёСЃС‚РѕС‡РЅРёРєР° С‚Р°РєС‚РёСЂСѓСЋС‰РёС… РёРјРїСѓР»СЊСЃРѕРІ РґР»СЏ РіРµРЅРµСЂР°С‚РѕСЂР°
 	enum MASTER_CLOCK_SOURCES_E310
 	{
 		INTERNAL_MASTER_CLOCK_E310, EXTERNAL_MASTER_CLOCK_E310, INVALID_MASTER_CLOCK_SOURCE_E310
 	};
-	// возможные типы инкрементации частоты генератора
+	// РІРѕР·РјРѕР¶РЅС‹Рµ С‚РёРїС‹ РёРЅРєСЂРµРјРµРЅС‚Р°С†РёРё С‡Р°СЃС‚РѕС‚С‹ РіРµРЅРµСЂР°С‚РѕСЂР°
 	enum INCREMENT_TYPES_E310
 	{
 		AUTO_INCREMENT_E310, CTRL_LINE_INCREMENT_E310, INVALID_INCREMENT_TYPE_E310
 	};
-	// возможные типы линии CTRL
+	// РІРѕР·РјРѕР¶РЅС‹Рµ С‚РёРїС‹ Р»РёРЅРёРё CTRL
 	enum CTRL_LINE_TYPES_E310
 	{
 		INTERNAL_CTRL_LINE_E310, EXTERNAL_CTRL_LINE_E310, INVALID_CTRL_LINE_TYPE_E310
 	};
-	// возможные типы линии INTERRUPT
+	// РІРѕР·РјРѕР¶РЅС‹Рµ С‚РёРїС‹ Р»РёРЅРёРё INTERRUPT
 	enum INTERRUPT_LINE_TYPES_E310
 	{
 		INTERNAL_INTERRUPT_LINE_E310, EXTERNAL_INTERRUPT_LINE_E310, INVALID_INTERRUPT_LINE_TYPE_E310
 	};
-	// возможные типы формирования выходного синхросигнала на линии "SYNCOUT"
+	// РІРѕР·РјРѕР¶РЅС‹Рµ С‚РёРїС‹ С„РѕСЂРјРёСЂРѕРІР°РЅРёСЏ РІС‹С…РѕРґРЅРѕРіРѕ СЃРёРЅС…СЂРѕСЃРёРіРЅР°Р»Р° РЅР° Р»РёРЅРёРё "SYNCOUT"
 	enum SYNCOUT_TYPES_E310
 	{
 		SYNCOUT_ON_EACH_INCREMENT_E310, SYNCOUT_AT_END_OF_SCAN_E310, INVALID_SYNCOUT_TYPES_E310
 	};
-	// доступные типы аналоговых выходных сигналов
+	// РґРѕСЃС‚СѓРїРЅС‹Рµ С‚РёРїС‹ Р°РЅР°Р»РѕРіРѕРІС‹С… РІС‹С…РѕРґРЅС‹С… СЃРёРіРЅР°Р»РѕРІ
 	enum ANALOG_OUTPUT_TYPES_E310
 	{
 		TRIANGULAR_ANALOG_OUTPUT_E310, SINUSOIDAL_ANALOG_OUTPUT_E310, INVALID_ANALOG_OUTPUT_TYPE_E310
 	};
-	// доступные индексы усиления выходного тракта генератора
+	// РґРѕСЃС‚СѓРїРЅС‹Рµ РёРЅРґРµРєСЃС‹ СѓСЃРёР»РµРЅРёСЏ РІС‹С…РѕРґРЅРѕРіРѕ С‚СЂР°РєС‚Р° РіРµРЅРµСЂР°С‚РѕСЂР°
 	enum ANALOG_OUTPUT_GAINS_INDEXES_E310
 	{
 		ANALOG_OUTPUT_GAIN_PLUS_10_DB_E310, ANALOG_OUTPUT_GAIN_PLUS_06_DB_E310,
@@ -737,7 +737,7 @@
 		INVALID_ANALOG_OUTPUT_GAINS_INDEX_E310,
 		ANALOG_OUTPUT_GAINS_QUANTITY_E310 = INVALID_ANALOG_OUTPUT_GAINS_INDEX_E310
 	};
-	// доступные индексы смещения на выходе 10 Ом
+	// РґРѕСЃС‚СѓРїРЅС‹Рµ РёРЅРґРµРєСЃС‹ СЃРјРµС‰РµРЅРёСЏ РЅР° РІС‹С…РѕРґРµ 10 РћРј
 	enum OUTPUT_10_OHM_OFFSET_SOURCES_E310
 	{
 		INTERNAL_OUTPUT_10_OHM_OFFSET_E310,
@@ -746,18 +746,18 @@
 	};
 	// -======================================-
 
-	// -============= частотомер FM ==============-
-	// доступные индексы делителя входного сигнала FM
+	// -============= С‡Р°СЃС‚РѕС‚РѕРјРµСЂ FM ==============-
+	// РґРѕСЃС‚СѓРїРЅС‹Рµ РёРЅРґРµРєСЃС‹ РґРµР»РёС‚РµР»СЏ РІС…РѕРґРЅРѕРіРѕ СЃРёРіРЅР°Р»Р° FM
 	enum FM_MODES_E310
 	{
 		PERIOD_MODE_FM_E310, GATE_MODE_FM_E310, CAPTURE_MODE_FM_E310, INVALID_FM_MODE_E310
 	};
-	// возможные индексы делители входного сигнала измерителя частоты FM
+	// РІРѕР·РјРѕР¶РЅС‹Рµ РёРЅРґРµРєСЃС‹ РґРµР»РёС‚РµР»Рё РІС…РѕРґРЅРѕРіРѕ СЃРёРіРЅР°Р»Р° РёР·РјРµСЂРёС‚РµР»СЏ С‡Р°СЃС‚РѕС‚С‹ FM
 	enum INPUT_DIVIDER_FM_E310
 	{
 		INPUT_DIVIDER_8_FM_E310, INPUT_DIVIDER_1_FM_E310, INVALID_INPUT_DIVIDER_FM_E310
 	};
-	// доступные индексы делителя базовой частоты FM
+	// РґРѕСЃС‚СѓРїРЅС‹Рµ РёРЅРґРµРєСЃС‹ РґРµР»РёС‚РµР»СЏ Р±Р°Р·РѕРІРѕР№ С‡Р°СЃС‚РѕС‚С‹ FM
 	enum BASE_CLOCK_DIV_INDEXES_FM_E310
 	{
 		BASE_CLOCK_DIV_01_INDEX_FM_E310, BASE_CLOCK_DIV_02_INDEX_FM_E310,
@@ -768,13 +768,13 @@
 	};
 	// -==========================================-
 
-	// -============= А Ц П ==============-
-	// доступные источники запуска АЦП
+	// -============= Рђ Р¦ Рџ ==============-
+	// РґРѕСЃС‚СѓРїРЅС‹Рµ РёСЃС‚РѕС‡РЅРёРєРё Р·Р°РїСѓСЃРєР° РђР¦Рџ
 	enum ADC_START_SOURCES_E310
 	{
 		INTERNAL_ADC_START_E310, EXTERNAL_ADC_START_E310, INVALID_ADC_START_SOURCES_E310
 	};
-	// доступные номера бит для битовой маски каналов АЦП
+	// РґРѕСЃС‚СѓРїРЅС‹Рµ РЅРѕРјРµСЂР° Р±РёС‚ РґР»СЏ Р±РёС‚РѕРІРѕР№ РјР°СЃРєРё РєР°РЅР°Р»РѕРІ РђР¦Рџ
 	enum ADC_CHANNEL_BIT_NUMBERS_E310
 	{
 		ADC_CHANNEL_1_E310, ADC_CHANNEL_2_E310, ADC_CHANNEL_3_E310, ADC_CHANNEL_4_E310, 
@@ -783,169 +783,169 @@
 	};
 	// -==================================-
 
-	// размер области пользовательского ППЗУ в байтах
+	// СЂР°Р·РјРµСЂ РѕР±Р»Р°СЃС‚Рё РїРѕР»СЊР·РѕРІР°С‚РµР»СЊСЃРєРѕРіРѕ РџРџР—РЈ РІ Р±Р°Р№С‚Р°С…
 	enum {	USER_FLASH_SIZE_E310 = 0x200 };
-	// доступные индексы ревизий модуля E-310
+	// РґРѕСЃС‚СѓРїРЅС‹Рµ РёРЅРґРµРєСЃС‹ СЂРµРІРёР·РёР№ РјРѕРґСѓР»СЏ E-310
 	enum {	REVISION_A_E310, /*REVISION_B_E310,*/ INVALID_REVISION_E310, REVISIONS_QUANTITY_E310 = INVALID_REVISION_E310, };
 
-	// доступные ревизии модуля
+	// РґРѕСЃС‚СѓРїРЅС‹Рµ СЂРµРІРёР·РёРё РјРѕРґСѓР»СЏ
 	const BYTE REVISIONS_E310[REVISIONS_QUANTITY_E310] = { 'A'/*, 'B'*/ };
 
 	#pragma pack(1)
-	// структура с общей информацией об модуле E-310
+	// СЃС‚СЂСѓРєС‚СѓСЂР° СЃ РѕР±С‰РµР№ РёРЅС„РѕСЂРјР°С†РёРµР№ РѕР± РјРѕРґСѓР»Рµ E-310
 	struct MODULE_DESCRIPTION_E310
 	{
-		MODULE_INFO_LUSBAPI		Module;		// общая информация о модуле
-		INTERFACE_INFO_LUSBAPI	Interface;	// информация об интерфейсе
-		MCU_INFO_LUSBAPI<MCU_VERSION_INFO_LUSBAPI>	Mcu;	// информация о микроконтроллере
-		ADC_INFO_LUSBAPI			Adc;			// информация о АЦП
-		DAC_INFO_LUSBAPI        Dac;			// информация о ЦАП
-		DIGITAL_IO_INFO_LUSBAPI DigitalIo;	// информация о цифровом вводе-выводе
+		MODULE_INFO_LUSBAPI		Module;		// РѕР±С‰Р°СЏ РёРЅС„РѕСЂРјР°С†РёСЏ Рѕ РјРѕРґСѓР»Рµ
+		INTERFACE_INFO_LUSBAPI	Interface;	// РёРЅС„РѕСЂРјР°С†РёСЏ РѕР± РёРЅС‚РµСЂС„РµР№СЃРµ
+		MCU_INFO_LUSBAPI<MCU_VERSION_INFO_LUSBAPI>	Mcu;	// РёРЅС„РѕСЂРјР°С†РёСЏ Рѕ РјРёРєСЂРѕРєРѕРЅС‚СЂРѕР»Р»РµСЂРµ
+		ADC_INFO_LUSBAPI			Adc;			// РёРЅС„РѕСЂРјР°С†РёСЏ Рѕ РђР¦Рџ
+		DAC_INFO_LUSBAPI        Dac;			// РёРЅС„РѕСЂРјР°С†РёСЏ Рѕ Р¦РђРџ
+		DIGITAL_IO_INFO_LUSBAPI DigitalIo;	// РёРЅС„РѕСЂРјР°С†РёСЏ Рѕ С†РёС„СЂРѕРІРѕРј РІРІРѕРґРµ-РІС‹РІРѕРґРµ
 	};
 
-	// структура пользовательского ППЗУ
+	// СЃС‚СЂСѓРєС‚СѓСЂР° РїРѕР»СЊР·РѕРІР°С‚РµР»СЊСЃРєРѕРіРѕ РџРџР—РЈ
 	struct USER_FLASH_E310
 	{
 		BYTE Buffer[USER_FLASH_SIZE_E310];
 	};
 
-	// структура с параметрами частотного приращения
+	// СЃС‚СЂСѓРєС‚СѓСЂР° СЃ РїР°СЂР°РјРµС‚СЂР°РјРё С‡Р°СЃС‚РѕС‚РЅРѕРіРѕ РїСЂРёСЂР°С‰РµРЅРёСЏ
 	struct INCREMENT_INTRERVAL_PARS_E310
 	{
-		BYTE	 BaseIntervalType;		// [in-out]	тип базового интервала приращения, который может быть кратен: периоду MCLK или периоду выходного сигнала
-		BYTE	 MultiplierIndex;			// [in-out]	индекс умножителя для базового интервала приращения (тип INCREMENT_INTERVAL_MULTIPLIERS_INDEXES_E310)
-		double MultiplierValue;			// [out]		величина умножителя для базового интервала приращения: 1, 5, 100 или 500
-		WORD	 BaseIntervalsNumber;	// [in-out]	кол-во базовых интервалов в интервале приращения
-		double Duration; 					// [out] 	общая длительность приращения в мс (только для интервала приращений по MCLK, иначе 0
+		BYTE	 BaseIntervalType;		// [in-out]	С‚РёРї Р±Р°Р·РѕРІРѕРіРѕ РёРЅС‚РµСЂРІР°Р»Р° РїСЂРёСЂР°С‰РµРЅРёСЏ, РєРѕС‚РѕСЂС‹Р№ РјРѕР¶РµС‚ Р±С‹С‚СЊ РєСЂР°С‚РµРЅ: РїРµСЂРёРѕРґСѓ MCLK РёР»Рё РїРµСЂРёРѕРґСѓ РІС‹С…РѕРґРЅРѕРіРѕ СЃРёРіРЅР°Р»Р°
+		BYTE	 MultiplierIndex;			// [in-out]	РёРЅРґРµРєСЃ СѓРјРЅРѕР¶РёС‚РµР»СЏ РґР»СЏ Р±Р°Р·РѕРІРѕРіРѕ РёРЅС‚РµСЂРІР°Р»Р° РїСЂРёСЂР°С‰РµРЅРёСЏ (С‚РёРї INCREMENT_INTERVAL_MULTIPLIERS_INDEXES_E310)
+		double MultiplierValue;			// [out]		РІРµР»РёС‡РёРЅР° СѓРјРЅРѕР¶РёС‚РµР»СЏ РґР»СЏ Р±Р°Р·РѕРІРѕРіРѕ РёРЅС‚РµСЂРІР°Р»Р° РїСЂРёСЂР°С‰РµРЅРёСЏ: 1, 5, 100 РёР»Рё 500
+		WORD	 BaseIntervalsNumber;	// [in-out]	РєРѕР»-РІРѕ Р±Р°Р·РѕРІС‹С… РёРЅС‚РµСЂРІР°Р»РѕРІ РІ РёРЅС‚РµСЂРІР°Р»Рµ РїСЂРёСЂР°С‰РµРЅРёСЏ
+		double Duration; 					// [out] 	РѕР±С‰Р°СЏ РґР»РёС‚РµР»СЊРЅРѕСЃС‚СЊ РїСЂРёСЂР°С‰РµРЅРёСЏ РІ РјСЃ (С‚РѕР»СЊРєРѕ РґР»СЏ РёРЅС‚РµСЂРІР°Р»Р° РїСЂРёСЂР°С‰РµРЅРёР№ РїРѕ MCLK, РёРЅР°С‡Рµ 0
 	};
 
-	// структура с параметрами аналоговых выходов генератора
+	// СЃС‚СЂСѓРєС‚СѓСЂР° СЃ РїР°СЂР°РјРµС‚СЂР°РјРё Р°РЅР°Р»РѕРіРѕРІС‹С… РІС‹С…РѕРґРѕРІ РіРµРЅРµСЂР°С‚РѕСЂР°
 	struct ANALOG_OUTPUTS_PARS_E310
 	{
-		BYTE	 SignalType;				// [in-out]	тип аналогового сигнала на выходах 10 и 50 Ом: синусоидальный или треугольный
-		BYTE	 GainIndex;					// [in-out]	индекс усиления выходного тракта генератора (тип ANALOG_OUTPUT_GAINS_INDEXES_E310)
-		double GaindB;						// [out]		усиление выходного тракта генератора в дБ
-		double Output10OhmInV;			// [out]		амплитуда сигнала на выходе 10 Ом в В
-		double Output10OhmIndB;			// [out]		амплитуда сигнала на выходе 10 Ом в дБ
-		double Output10OhmOffset;		// [in-out]	величина внутреннего смещения на выходе 10 Ом в В
-		BYTE	 Output10OhmOffsetSource;//[in-out]	тип смещения на выходе 10 Ом: внутреннее или внешнее
-		double Output50OhmInV;			// [out]		амплитуда сигнала на выходе 50 Ом в В
-		double Output50OhmIndB;			// [out]		амплитуда сигнала на выходе 50 Ом в дБ
+		BYTE	 SignalType;				// [in-out]	С‚РёРї Р°РЅР°Р»РѕРіРѕРІРѕРіРѕ СЃРёРіРЅР°Р»Р° РЅР° РІС‹С…РѕРґР°С… 10 Рё 50 РћРј: СЃРёРЅСѓСЃРѕРёРґР°Р»СЊРЅС‹Р№ РёР»Рё С‚СЂРµСѓРіРѕР»СЊРЅС‹Р№
+		BYTE	 GainIndex;					// [in-out]	РёРЅРґРµРєСЃ СѓСЃРёР»РµРЅРёСЏ РІС‹С…РѕРґРЅРѕРіРѕ С‚СЂР°РєС‚Р° РіРµРЅРµСЂР°С‚РѕСЂР° (С‚РёРї ANALOG_OUTPUT_GAINS_INDEXES_E310)
+		double GaindB;						// [out]		СѓСЃРёР»РµРЅРёРµ РІС‹С…РѕРґРЅРѕРіРѕ С‚СЂР°РєС‚Р° РіРµРЅРµСЂР°С‚РѕСЂР° РІ РґР‘
+		double Output10OhmInV;			// [out]		Р°РјРїР»РёС‚СѓРґР° СЃРёРіРЅР°Р»Р° РЅР° РІС‹С…РѕРґРµ 10 РћРј РІ Р’
+		double Output10OhmIndB;			// [out]		Р°РјРїР»РёС‚СѓРґР° СЃРёРіРЅР°Р»Р° РЅР° РІС‹С…РѕРґРµ 10 РћРј РІ РґР‘
+		double Output10OhmOffset;		// [in-out]	РІРµР»РёС‡РёРЅР° РІРЅСѓС‚СЂРµРЅРЅРµРіРѕ СЃРјРµС‰РµРЅРёСЏ РЅР° РІС‹С…РѕРґРµ 10 РћРј РІ Р’
+		BYTE	 Output10OhmOffsetSource;//[in-out]	С‚РёРї СЃРјРµС‰РµРЅРёСЏ РЅР° РІС‹С…РѕРґРµ 10 РћРј: РІРЅСѓС‚СЂРµРЅРЅРµРµ РёР»Рё РІРЅРµС€РЅРµРµ
+		double Output50OhmInV;			// [out]		Р°РјРїР»РёС‚СѓРґР° СЃРёРіРЅР°Р»Р° РЅР° РІС‹С…РѕРґРµ 50 РћРј РІ Р’
+		double Output50OhmIndB;			// [out]		Р°РјРїР»РёС‚СѓРґР° СЃРёРіРЅР°Р»Р° РЅР° РІС‹С…РѕРґРµ 50 РћРј РІ РґР‘
 	};
 
-	// структура с параметрами работы генератора
+	// СЃС‚СЂСѓРєС‚СѓСЂР° СЃ РїР°СЂР°РјРµС‚СЂР°РјРё СЂР°Р±РѕС‚С‹ РіРµРЅРµСЂР°С‚РѕСЂР°
 	struct GENERATOR_PARS_E310
 	{
-		BOOL	 GeneratorEna;				// [in]		текущее состояние работы генератора
-		double StartFrequency;			// [in-out]	начальная частота в кГц
-		double FinalFrequency;			// [out]		конечная частота в кГц
-		double FrequencyIncrements;	// [in-out]	частота приращения в кГц
-		WORD	 NumberOfIncrements;		// [in-out]	кол-во приращений частоты сканирования
-		INCREMENT_INTRERVAL_PARS_E310 IncrementIntervalPars;	// [in-out] параметры частотного приращения
-		double MasterClock;				// [in-out]	частота тактирующего сигнала генератора в кГц
-		BYTE	 MasterClockSource;		// [in-out]	источник тактирующего сигнала генератора: внутренний или внешний
-		BYTE	 CyclicAutoScanType;		// [in-out]	тип циклического автосканирования выходного сигнала: нет циклического сканирования, 'пила' или 'треугольник'
-		BYTE	 IncrementType;			// [in-out]	тип инкрементации частоты генератора: внутренняя (автоматическая) или с помощью управляющей линии "CTRL"
-		BYTE	 CtrlLineType;				// [in-out]	тип линии "CTRL" для (управления инкрементацией частоты)/старта генератора: внутренняя (от MCU) или внешняя
-		BYTE	 InterrupLineType;		// [in-out]	тип линии "INTERRUPT" для останова работы генератора: внутренняя (от MCU) или внешняя
-		BOOL	 SquareWaveOutputEna;	// [in-out]	разрешение сигнала генератора на цифровом выходе "Меандр"
-		BOOL	 SynchroOutEna;			// [in-out]	разрешение синхросигнала генератора на выходной линии "SYNCOUT"
-		BYTE	 SynchroOutType;			// [in-out]	тип формирования синхросигнала генератора: при каждом приращении частоты или только по окончании сканирования
-		ANALOG_OUTPUTS_PARS_E310 AnalogOutputsPars;	//	[in-out] параметры работы аналоговых выходов
+		BOOL	 GeneratorEna;				// [in]		С‚РµРєСѓС‰РµРµ СЃРѕСЃС‚РѕСЏРЅРёРµ СЂР°Р±РѕС‚С‹ РіРµРЅРµСЂР°С‚РѕСЂР°
+		double StartFrequency;			// [in-out]	РЅР°С‡Р°Р»СЊРЅР°СЏ С‡Р°СЃС‚РѕС‚Р° РІ РєР“С†
+		double FinalFrequency;			// [out]		РєРѕРЅРµС‡РЅР°СЏ С‡Р°СЃС‚РѕС‚Р° РІ РєР“С†
+		double FrequencyIncrements;	// [in-out]	С‡Р°СЃС‚РѕС‚Р° РїСЂРёСЂР°С‰РµРЅРёСЏ РІ РєР“С†
+		WORD	 NumberOfIncrements;		// [in-out]	РєРѕР»-РІРѕ РїСЂРёСЂР°С‰РµРЅРёР№ С‡Р°СЃС‚РѕС‚С‹ СЃРєР°РЅРёСЂРѕРІР°РЅРёСЏ
+		INCREMENT_INTRERVAL_PARS_E310 IncrementIntervalPars;	// [in-out] РїР°СЂР°РјРµС‚СЂС‹ С‡Р°СЃС‚РѕС‚РЅРѕРіРѕ РїСЂРёСЂР°С‰РµРЅРёСЏ
+		double MasterClock;				// [in-out]	С‡Р°СЃС‚РѕС‚Р° С‚Р°РєС‚РёСЂСѓСЋС‰РµРіРѕ СЃРёРіРЅР°Р»Р° РіРµРЅРµСЂР°С‚РѕСЂР° РІ РєР“С†
+		BYTE	 MasterClockSource;		// [in-out]	РёСЃС‚РѕС‡РЅРёРє С‚Р°РєС‚РёСЂСѓСЋС‰РµРіРѕ СЃРёРіРЅР°Р»Р° РіРµРЅРµСЂР°С‚РѕСЂР°: РІРЅСѓС‚СЂРµРЅРЅРёР№ РёР»Рё РІРЅРµС€РЅРёР№
+		BYTE	 CyclicAutoScanType;		// [in-out]	С‚РёРї С†РёРєР»РёС‡РµСЃРєРѕРіРѕ Р°РІС‚РѕСЃРєР°РЅРёСЂРѕРІР°РЅРёСЏ РІС‹С…РѕРґРЅРѕРіРѕ СЃРёРіРЅР°Р»Р°: РЅРµС‚ С†РёРєР»РёС‡РµСЃРєРѕРіРѕ СЃРєР°РЅРёСЂРѕРІР°РЅРёСЏ, 'РїРёР»Р°' РёР»Рё 'С‚СЂРµСѓРіРѕР»СЊРЅРёРє'
+		BYTE	 IncrementType;			// [in-out]	С‚РёРї РёРЅРєСЂРµРјРµРЅС‚Р°С†РёРё С‡Р°СЃС‚РѕС‚С‹ РіРµРЅРµСЂР°С‚РѕСЂР°: РІРЅСѓС‚СЂРµРЅРЅСЏСЏ (Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєР°СЏ) РёР»Рё СЃ РїРѕРјРѕС‰СЊСЋ СѓРїСЂР°РІР»СЏСЋС‰РµР№ Р»РёРЅРёРё "CTRL"
+		BYTE	 CtrlLineType;				// [in-out]	С‚РёРї Р»РёРЅРёРё "CTRL" РґР»СЏ (СѓРїСЂР°РІР»РµРЅРёСЏ РёРЅРєСЂРµРјРµРЅС‚Р°С†РёРµР№ С‡Р°СЃС‚РѕС‚С‹)/СЃС‚Р°СЂС‚Р° РіРµРЅРµСЂР°С‚РѕСЂР°: РІРЅСѓС‚СЂРµРЅРЅСЏСЏ (РѕС‚ MCU) РёР»Рё РІРЅРµС€РЅСЏСЏ
+		BYTE	 InterrupLineType;		// [in-out]	С‚РёРї Р»РёРЅРёРё "INTERRUPT" РґР»СЏ РѕСЃС‚Р°РЅРѕРІР° СЂР°Р±РѕС‚С‹ РіРµРЅРµСЂР°С‚РѕСЂР°: РІРЅСѓС‚СЂРµРЅРЅСЏСЏ (РѕС‚ MCU) РёР»Рё РІРЅРµС€РЅСЏСЏ
+		BOOL	 SquareWaveOutputEna;	// [in-out]	СЂР°Р·СЂРµС€РµРЅРёРµ СЃРёРіРЅР°Р»Р° РіРµРЅРµСЂР°С‚РѕСЂР° РЅР° С†РёС„СЂРѕРІРѕРј РІС‹С…РѕРґРµ "РњРµР°РЅРґСЂ"
+		BOOL	 SynchroOutEna;			// [in-out]	СЂР°Р·СЂРµС€РµРЅРёРµ СЃРёРЅС…СЂРѕСЃРёРіРЅР°Р»Р° РіРµРЅРµСЂР°С‚РѕСЂР° РЅР° РІС‹С…РѕРґРЅРѕР№ Р»РёРЅРёРё "SYNCOUT"
+		BYTE	 SynchroOutType;			// [in-out]	С‚РёРї С„РѕСЂРјРёСЂРѕРІР°РЅРёСЏ СЃРёРЅС…СЂРѕСЃРёРіРЅР°Р»Р° РіРµРЅРµСЂР°С‚РѕСЂР°: РїСЂРё РєР°Р¶РґРѕРј РїСЂРёСЂР°С‰РµРЅРёРё С‡Р°СЃС‚РѕС‚С‹ РёР»Рё С‚РѕР»СЊРєРѕ РїРѕ РѕРєРѕРЅС‡Р°РЅРёРё СЃРєР°РЅРёСЂРѕРІР°РЅРёСЏ
+		ANALOG_OUTPUTS_PARS_E310 AnalogOutputsPars;	//	[in-out] РїР°СЂР°РјРµС‚СЂС‹ СЂР°Р±РѕС‚С‹ Р°РЅР°Р»РѕРіРѕРІС‹С… РІС‹С…РѕРґРѕРІ
 	};
 
-	// структура с параметрами работы измерителя частоты (FM)
+	// СЃС‚СЂСѓРєС‚СѓСЂР° СЃ РїР°СЂР°РјРµС‚СЂР°РјРё СЂР°Р±РѕС‚С‹ РёР·РјРµСЂРёС‚РµР»СЏ С‡Р°СЃС‚РѕС‚С‹ (FM)
 	struct FM_PARS_E310
 	{
-		BOOL	 FmEna;					   // [out]		текущее состояние работы измерителя частоты
-		BYTE	 Mode;						// [in-out]	режим работы измерителя частоты
-		BYTE	 InputDivider;				// [in-out]	управление входным частоты делителем 1/8 (тип INPUT_DIVIDER_FM_E310)
-		BYTE	 BaseClockRateDivIndex;	// [in-out]	индекс делителя базовой тактовой частоты (тип BASE_CLOCK_DIV_INDEXES_FM_E310)
-		DWORD  ClockRate;					// [out]		рабочая тактовая частота счётчика FM в Гц
-		DWORD  BaseClockRate;			// [const]	базовая тактовая частота счётчика FM 25 000 000 Гц
-		double Offset;						// [in-out]	смещение порога измерителя частоты в В
+		BOOL	 FmEna;					   // [out]		С‚РµРєСѓС‰РµРµ СЃРѕСЃС‚РѕСЏРЅРёРµ СЂР°Р±РѕС‚С‹ РёР·РјРµСЂРёС‚РµР»СЏ С‡Р°СЃС‚РѕС‚С‹
+		BYTE	 Mode;						// [in-out]	СЂРµР¶РёРј СЂР°Р±РѕС‚С‹ РёР·РјРµСЂРёС‚РµР»СЏ С‡Р°СЃС‚РѕС‚С‹
+		BYTE	 InputDivider;				// [in-out]	СѓРїСЂР°РІР»РµРЅРёРµ РІС…РѕРґРЅС‹Рј С‡Р°СЃС‚РѕС‚С‹ РґРµР»РёС‚РµР»РµРј 1/8 (С‚РёРї INPUT_DIVIDER_FM_E310)
+		BYTE	 BaseClockRateDivIndex;	// [in-out]	РёРЅРґРµРєСЃ РґРµР»РёС‚РµР»СЏ Р±Р°Р·РѕРІРѕР№ С‚Р°РєС‚РѕРІРѕР№ С‡Р°СЃС‚РѕС‚С‹ (С‚РёРї BASE_CLOCK_DIV_INDEXES_FM_E310)
+		DWORD  ClockRate;					// [out]		СЂР°Р±РѕС‡Р°СЏ С‚Р°РєС‚РѕРІР°СЏ С‡Р°СЃС‚РѕС‚Р° СЃС‡С‘С‚С‡РёРєР° FM РІ Р“С†
+		DWORD  BaseClockRate;			// [const]	Р±Р°Р·РѕРІР°СЏ С‚Р°РєС‚РѕРІР°СЏ С‡Р°СЃС‚РѕС‚Р° СЃС‡С‘С‚С‡РёРєР° FM 25 000 000 Р“С†
+		double Offset;						// [in-out]	СЃРјРµС‰РµРЅРёРµ РїРѕСЂРѕРіР° РёР·РјРµСЂРёС‚РµР»СЏ С‡Р°СЃС‚РѕС‚С‹ РІ Р’
 	};
 
-	// структура с информацией о частоте измеряемого сигнала
+	// СЃС‚СЂСѓРєС‚СѓСЂР° СЃ РёРЅС„РѕСЂРјР°С†РёРµР№ Рѕ С‡Р°СЃС‚РѕС‚Рµ РёР·РјРµСЂСЏРµРјРѕРіРѕ СЃРёРіРЅР°Р»Р°
 	struct FM_SAMPLE_E310
 	{
-		BOOL	 IsActual;					// [out]	признак действительности получeнных данных
-		double Frequency;					// [out]	частота измеряемого сигнала в кГц
-		double Period;						// [out]	период измеряемого сигнала в мс
-		double DutyCycle;					// [out]	скважность измеряемого сигнала в мс
+		BOOL	 IsActual;					// [out]	РїСЂРёР·РЅР°Рє РґРµР№СЃС‚РІРёС‚РµР»СЊРЅРѕСЃС‚Рё РїРѕР»СѓС‡eРЅРЅС‹С… РґР°РЅРЅС‹С…
+		double Frequency;					// [out]	С‡Р°СЃС‚РѕС‚Р° РёР·РјРµСЂСЏРµРјРѕРіРѕ СЃРёРіРЅР°Р»Р° РІ РєР“С†
+		double Period;						// [out]	РїРµСЂРёРѕРґ РёР·РјРµСЂСЏРµРјРѕРіРѕ СЃРёРіРЅР°Р»Р° РІ РјСЃ
+		double DutyCycle;					// [out]	СЃРєРІР°Р¶РЅРѕСЃС‚СЊ РёР·РјРµСЂСЏРµРјРѕРіРѕ СЃРёРіРЅР°Р»Р° РІ РјСЃ
 	};
 
-	// структура для работы с АЦП
+	// СЃС‚СЂСѓРєС‚СѓСЂР° РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ РђР¦Рџ
 	struct ADC_PARS_E310
 	{
-		BYTE	 AdcStartSource;	  		// [in-out]	источник сигнала запуска АЦП: внутренний или внешний
-		BYTE	 ChannelsMask;				// [in-out]	битовая маска активных каналов (младшие 4 бита)
-		double InputRange;				// [out]		входной диапазон АЦП в В
+		BYTE	 AdcStartSource;	  		// [in-out]	РёСЃС‚РѕС‡РЅРёРє СЃРёРіРЅР°Р»Р° Р·Р°РїСѓСЃРєР° РђР¦Рџ: РІРЅСѓС‚СЂРµРЅРЅРёР№ РёР»Рё РІРЅРµС€РЅРёР№
+		BYTE	 ChannelsMask;				// [in-out]	Р±РёС‚РѕРІР°СЏ РјР°СЃРєР° Р°РєС‚РёРІРЅС‹С… РєР°РЅР°Р»РѕРІ (РјР»Р°РґС€РёРµ 4 Р±РёС‚Р°)
+		double InputRange;				// [out]		РІС…РѕРґРЅРѕР№ РґРёР°РїР°Р·РѕРЅ РђР¦Рџ РІ Р’
 	};
 
-	// структура с отсчётами АЦП
+	// СЃС‚СЂСѓРєС‚СѓСЂР° СЃ РѕС‚СЃС‡С‘С‚Р°РјРё РђР¦Рџ
 	struct ADC_DATA_E310
 	{
-		SHORT 	DataInCode[ADC_CHANNEL_QUANTITY_E310];		// [out] массив данных с АЦП в кодах
-		double	DataInV[ADC_CHANNEL_QUANTITY_E310];			// [out] массив данных с АЦП в В
+		SHORT 	DataInCode[ADC_CHANNEL_QUANTITY_E310];		// [out] РјР°СЃСЃРёРІ РґР°РЅРЅС‹С… СЃ РђР¦Рџ РІ РєРѕРґР°С…
+		double	DataInV[ADC_CHANNEL_QUANTITY_E310];			// [out] РјР°СЃСЃРёРІ РґР°РЅРЅС‹С… СЃ РђР¦Рџ РІ Р’
 	};
 	#pragma pack()
 
 	//-----------------------------------------------------------------------------
-	// интерфейс модуля E-310
+	// РёРЅС‚РµСЂС„РµР№СЃ РјРѕРґСѓР»СЏ E-310
 	//-----------------------------------------------------------------------------
 	struct ILE310 : public ILUSBBASE
 	{
-		// ---------------- функции для работы с генератором ----------------------------
-		// функция чтения параметров работы генератора
+		// ---------------- С„СѓРЅРєС†РёРё РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ РіРµРЅРµСЂР°С‚РѕСЂРѕРј ----------------------------
+		// С„СѓРЅРєС†РёСЏ С‡С‚РµРЅРёСЏ РїР°СЂР°РјРµС‚СЂРѕРІ СЂР°Р±РѕС‚С‹ РіРµРЅРµСЂР°С‚РѕСЂР°
 		virtual BOOL WINAPI GET_GENERATOR_PARS(GENERATOR_PARS_E310 * const GenPars) = 0;
-		// функция установки gараметров работы генератора
+		// С„СѓРЅРєС†РёСЏ СѓСЃС‚Р°РЅРѕРІРєРё gР°СЂР°РјРµС‚СЂРѕРІ СЂР°Р±РѕС‚С‹ РіРµРЅРµСЂР°С‚РѕСЂР°
 		virtual BOOL WINAPI SET_GENERATOR_PARS(GENERATOR_PARS_E310 * const GenPars) = 0;
-		// старт работы генератора
+		// СЃС‚Р°СЂС‚ СЂР°Р±РѕС‚С‹ РіРµРЅРµСЂР°С‚РѕСЂР°
 		virtual BOOL WINAPI START_GENERATOR(void) = 0;
-		// останов работы генератора
+		// РѕСЃС‚Р°РЅРѕРІ СЂР°Р±РѕС‚С‹ РіРµРЅРµСЂР°С‚РѕСЂР°
 		virtual BOOL WINAPI STOP_GENERATOR(void) = 0;
 
-		// ---------- функции для работы с частотометром (FM) -------------------
-		// получение текущих параметров работы частотометра (FM)
+		// ---------- С„СѓРЅРєС†РёРё РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ С‡Р°СЃС‚РѕС‚РѕРјРµС‚СЂРѕРј (FM) -------------------
+		// РїРѕР»СѓС‡РµРЅРёРµ С‚РµРєСѓС‰РёС… РїР°СЂР°РјРµС‚СЂРѕРІ СЂР°Р±РѕС‚С‹ С‡Р°СЃС‚РѕС‚РѕРјРµС‚СЂР° (FM)
 		virtual BOOL WINAPI GET_FM_PARS(FM_PARS_E310 * const FmPars) = 0;
-		// установка требуемых параметров работы частотометра (FM)
+		// СѓСЃС‚Р°РЅРѕРІРєР° С‚СЂРµР±СѓРµРјС‹С… РїР°СЂР°РјРµС‚СЂРѕРІ СЂР°Р±РѕС‚С‹ С‡Р°СЃС‚РѕС‚РѕРјРµС‚СЂР° (FM)
 		virtual BOOL WINAPI SET_FM_PARS(FM_PARS_E310 * const FmPars) = 0;
-		// старт работы частотометра (FM)
+		// СЃС‚Р°СЂС‚ СЂР°Р±РѕС‚С‹ С‡Р°СЃС‚РѕС‚РѕРјРµС‚СЂР° (FM)
 		virtual BOOL WINAPI START_FM(void) = 0;
-		// останов работы частотометра (FM)
+		// РѕСЃС‚Р°РЅРѕРІ СЂР°Р±РѕС‚С‹ С‡Р°СЃС‚РѕС‚РѕРјРµС‚СЂР° (FM)
 		virtual BOOL WINAPI STOP_FM(void) = 0;
-		// считывание отсчета измерения частоты
+		// СЃС‡РёС‚С‹РІР°РЅРёРµ РѕС‚СЃС‡РµС‚Р° РёР·РјРµСЂРµРЅРёСЏ С‡Р°СЃС‚РѕС‚С‹
 		virtual BOOL WINAPI FM_SAMPLE(FM_SAMPLE_E310 * const FmSample) = 0;
 
-		// ------------------ функции для работы АЦП ---------------------------
-		// получение текущих параметров работы АЦП
+		// ------------------ С„СѓРЅРєС†РёРё РґР»СЏ СЂР°Р±РѕС‚С‹ РђР¦Рџ ---------------------------
+		// РїРѕР»СѓС‡РµРЅРёРµ С‚РµРєСѓС‰РёС… РїР°СЂР°РјРµС‚СЂРѕРІ СЂР°Р±РѕС‚С‹ РђР¦Рџ
 		virtual BOOL WINAPI GET_ADC_PARS(ADC_PARS_E310 * const AdcPars) = 0;
-		// установка требуемых параметров работы АЦП
+		// СѓСЃС‚Р°РЅРѕРІРєР° С‚СЂРµР±СѓРµРјС‹С… РїР°СЂР°РјРµС‚СЂРѕРІ СЂР°Р±РѕС‚С‹ РђР¦Рџ
 		virtual BOOL WINAPI SET_ADC_PARS(ADC_PARS_E310 * const AdcPars) = 0;
-		// считывание массива отсчетов с АЦП
+		// СЃС‡РёС‚С‹РІР°РЅРёРµ РјР°СЃСЃРёРІР° РѕС‚СЃС‡РµС‚РѕРІ СЃ РђР¦Рџ
 		virtual BOOL WINAPI GET_ADC_DATA(ADC_DATA_E310 * const AdcData) = 0;
 
-		// ---------- функции для работы с цифровыми линиями -------------------
-		// конфигурирование цифровых линий: вход или выход
+		// ---------- С„СѓРЅРєС†РёРё РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ С†РёС„СЂРѕРІС‹РјРё Р»РёРЅРёСЏРјРё -------------------
+		// РєРѕРЅС„РёРіСѓСЂРёСЂРѕРІР°РЅРёРµ С†РёС„СЂРѕРІС‹С… Р»РёРЅРёР№: РІС…РѕРґ РёР»Рё РІС‹С…РѕРґ
 		virtual BOOL WINAPI CONFIG_TTL_LINES(WORD Pattern, BOOL AddTtlLinesEna = FALSE) = 0;
-		// чтение состояний цифровых входных линий
+		// С‡С‚РµРЅРёРµ СЃРѕСЃС‚РѕСЏРЅРёР№ С†РёС„СЂРѕРІС‹С… РІС…РѕРґРЅС‹С… Р»РёРЅРёР№
 		virtual BOOL WINAPI TTL_IN (WORD * const TtlIn) = 0;
-		// установка состояний цифровых выходных линий
+		// СѓСЃС‚Р°РЅРѕРІРєР° СЃРѕСЃС‚РѕСЏРЅРёР№ С†РёС„СЂРѕРІС‹С… РІС‹С…РѕРґРЅС‹С… Р»РёРЅРёР№
 		virtual BOOL WINAPI TTL_OUT(WORD * const TtlOut) = 0;
 
-		// ------- функции для работы с пользовательской информацией ППЗУ  -------
-		// разрешение/запрещение режима записи в пользовательскую область ППЗУ
+		// ------- С„СѓРЅРєС†РёРё РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ РїРѕР»СЊР·РѕРІР°С‚РµР»СЊСЃРєРѕР№ РёРЅС„РѕСЂРјР°С†РёРµР№ РџРџР—РЈ  -------
+		// СЂР°Р·СЂРµС€РµРЅРёРµ/Р·Р°РїСЂРµС‰РµРЅРёРµ СЂРµР¶РёРјР° Р·Р°РїРёСЃРё РІ РїРѕР»СЊР·РѕРІР°С‚РµР»СЊСЃРєСѓСЋ РѕР±Р»Р°СЃС‚СЊ РџРџР—РЈ
 		virtual BOOL WINAPI ENABLE_FLASH_WRITE(BOOL IsUserFlashWriteEnabled) = 0;
-		// чтенние пользовательской области ППЗУ
+		// С‡С‚РµРЅРЅРёРµ РїРѕР»СЊР·РѕРІР°С‚РµР»СЊСЃРєРѕР№ РѕР±Р»Р°СЃС‚Рё РџРџР—РЈ
 		virtual BOOL WINAPI READ_FLASH_ARRAY(USER_FLASH_E310 * const UserFlash) = 0;
-		// запись пользовательской области ППЗУ
+		// Р·Р°РїРёСЃСЊ РїРѕР»СЊР·РѕРІР°С‚РµР»СЊСЃРєРѕР№ РѕР±Р»Р°СЃС‚Рё РџРџР—РЈ
 		virtual BOOL WINAPI WRITE_FLASH_ARRAY(USER_FLASH_E310 * const UserFlash) = 0;
 
-		// ------- функции для работы со служебной информацией из ППЗУ -----------
-		// получим служебную информацию о модуле из ППЗУ
+		// ------- С„СѓРЅРєС†РёРё РґР»СЏ СЂР°Р±РѕС‚С‹ СЃРѕ СЃР»СѓР¶РµР±РЅРѕР№ РёРЅС„РѕСЂРјР°С†РёРµР№ РёР· РџРџР—РЈ -----------
+		// РїРѕР»СѓС‡РёРј СЃР»СѓР¶РµР±РЅСѓСЋ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ РјРѕРґСѓР»Рµ РёР· РџРџР—РЈ
 		virtual BOOL WINAPI GET_MODULE_DESCRIPTION(MODULE_DESCRIPTION_E310 * const md) = 0;
-		// запишем служебную информацию о модуле в ППЗУ
+		// Р·Р°РїРёС€РµРј СЃР»СѓР¶РµР±РЅСѓСЋ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ РјРѕРґСѓР»Рµ РІ РџРџР—РЈ
 		virtual BOOL WINAPI SAVE_MODULE_DESCRIPTION(MODULE_DESCRIPTION_E310 * const md) = 0;
 	};
 

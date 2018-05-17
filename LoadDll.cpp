@@ -5,7 +5,7 @@ class CantLoadDllError{};
 //------------------------------------------------------------------------
 // коструктор
 //------------------------------------------------------------------------
-TLoadDll::TLoadDll() // PCHAR
+LoadDll::LoadDll() // PCHAR
 {
 #ifdef QT
     if(!QLibrary::isLibrary(name)) throw NoLibraryFileDllError();
@@ -21,7 +21,7 @@ TLoadDll::TLoadDll() // PCHAR
 //------------------------------------------------------------------------
 // деструктор
 //------------------------------------------------------------------------
-TLoadDll::~TLoadDll()
+LoadDll::~LoadDll()
 {
 #ifdef QT
     if(hDll->isLoaded()) hDll->unload();
@@ -34,7 +34,7 @@ TLoadDll::~TLoadDll()
 //------------------------------------------------------------------------
 // получение адреса функции возвращающей указатель на интерфейс модуля
 //------------------------------------------------------------------------
-LPVOID WINAPI TLoadDll::CallCreateLInstance(void)
+LPVOID WINAPI LoadDll::CallCreateLInstance(void)
 {
    if(hDll == NULL) return NULL;
 #ifdef QT
@@ -47,7 +47,7 @@ LPVOID WINAPI TLoadDll::CallCreateLInstance(void)
 //------------------------------------------------------------------------
 // получение адреса функции возвращающей версию DLL
 //------------------------------------------------------------------------
-LPVOID WINAPI TLoadDll::CallGetDllVersion(void)
+LPVOID WINAPI LoadDll::CallGetDllVersion(void)
 {
     if(hDll == NULL) return NULL;
 #ifdef QT
@@ -61,12 +61,12 @@ LPVOID WINAPI TLoadDll::CallGetDllVersion(void)
 // получение идентификатора библиотеки
 //------------------------------------------------------------------------
 #ifdef QT
-QLibrary* TLoadDll::GetDllHinstance(void)
+QLibrary* LoadDll::GetDllHinstance(void)
 {
     return hDll;
 }
 #else
-HINSTANCE WINAPI TLoadDll::GetDllHinstance(void)
+HINSTANCE WINAPI LoadDll::GetDllHinstance(void)
 {
 	return hDll;
 }

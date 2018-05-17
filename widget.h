@@ -15,7 +15,7 @@ class Widget : public QWidget
 public:
     explicit Widget(QWidget *parent = 0);
     void setText(QString str);
-    void setAgrekila(useE154 *agr);
+    void setAgrekila(UseE154 *agr);
     ~Widget();
 
 private slots:
@@ -25,7 +25,7 @@ private slots:
 private:
     Ui::Widget *ui;
     QString text;
-    useE154 *Agrecola;
+    UseE154 *Agrecola;
 };
 
 #endif // WIDGET_H

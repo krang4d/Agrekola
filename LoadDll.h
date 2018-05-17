@@ -14,13 +14,13 @@
 typedef DWORD (WINAPI *pGetDllVersion)(void);
 typedef LPVOID (WINAPI *pCreateInstance)(char *);
 
-class TLoadDll
+class LoadDll
 {
 	public:
 		// коструктор
-        TLoadDll();
+        LoadDll();
 		// деструктор
-		~TLoadDll();
+        ~LoadDll();
 
 		// получение адреса функции интерфейса модуля
 		LPVOID WINAPI CallCreateLInstance(void);

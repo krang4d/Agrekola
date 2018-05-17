@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
     w->setText("Module E-154\n");
     w->setText("Console example for ADC Synchro Stream \n");
     try{
-        useE154 *agrecola = new useE154();
+        UseE154 *agrecola = new UseE154();
         w->setAgrekila(agrecola);
         //setUserMessage(w, agrecola->GetVersion()); //"myGetDllVersion-->ERRORE!\n");
         setUserMessage(w, agrecola->GetUsbSpeed());
@@ -33,13 +33,5 @@ int main(int argc, char *argv[])
     catch(...){
         w->setText(QString("Неизвестная ошибка"));
     }
-//    }
-//    else w->setText("myGetDllVersion-->OK\n");
-
-//    if((DllVersion = myGetDllVersion()) != CURRENT_VERSION_LUSBAPI)
-//    {
-//         w->setText(QString("Lusbapi.dll Version Error!!!\n"));
-//    }
-//    else w->setText(QString("Lusbapi.dll Version --> OK\n"));
     return a.exec();
 }

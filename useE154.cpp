@@ -1,36 +1,29 @@
 ﻿//#include "StdAfx.h"
 #include "useE154.h"
 
+
 // кол-во получаемых отсчетов
 DWORD DataStep = 256*1024;
 // буфер данных
 SHORT *ReadBuffer;
 
-useE154::useE154(QWidget *parent) : AdcRate(100), InputRangeIndex(ADC_INPUT_RANGE_5000mV_E154)
+UseE154::UseE154(QWidget *parent) : AdcRate(100), InputRangeIndex(ADC_INPUT_RANGE_5000mV_E154)
 {
-<<<<<<< Updated upstream
-    pLoadDll = new TLoadDll();
-    if(!pLoadDll) throw Errore_E154("Ошибка загрузи библиотеки Dll Load_Dll()!");
-    initAPIInstance();
-	initModuleHandler();
-	OpenDevice();
-=======
-    eModule = new LoadEModule();
-    pModule = eModule->GetEModuleAPI();
+    eModule = new LoadE154();
+    pModule = eModule->GetAPI();
     if(!pModule) throw Errore_E154("Ошибка загрузи библиотеки Dll Load_Dll()!");
     //OpenDevice();
->>>>>>> Stashed changes
-    initPorts();
-    initADC();
+    IniPorts();
+    IniADC();
 }
 
-useE154::~useE154(void)
+UseE154::~UseE154(void)
 {
-	ReleaseAPIInstance();
+    delete eModule;
 }
 //typedef DWORD (WINAPI *pGetDllVersion)(void);
 //typedef LPVOID (WINAPI *pCreateInstance)(char *);
-double useE154::AdcSample(){
+double UseE154::AdcSample(){
     SHORT AdcSample;
     double AdcVolt;
     if(!pModule->ADC_SAMPLE(&AdcSample, (WORD)(0x00  | (InputRangeIndex << 6)))) { throw Errore_E154("\n\n  ADC_SAMPLE(, 0) --> Bad\n");}
@@ -40,7 +33,7 @@ double useE154::AdcSample(){
     return AdcVolt;
 }
 
-void useE154::AdcKADR()
+void UseE154::AdcKADR()
 {
     SHORT AdcBuffer[4];
     pModule->STOP_ADC();
@@ -52,7 +45,7 @@ void useE154::AdcKADR()
     emit ValueCome();
 }
 
-void useE154::AdcSynchro()
+void UseE154::AdcSynchro()
 {
     pModule->STOP_ADC();
     // выделим память под буфер
@@ -75,26 +68,12 @@ void useE154::AdcSynchro()
     if(!pModule->ProcessArray(AdcData, Destination, Size, TRUE, TRUE)) throw Errore_E154("Ошибка преобразования кода АЦП ProcessArray()\n");
 }
 
-void useE154::initAPIInstance()
-{
-    pCreateInstance CreateInstance = (pCreateInstance)pLoadDll->CallCreateLInstance();
-    if(!CreateInstance) throw Errore_E154("Ошибка выделения памяти в функции SetAPIInstance()!");
-    pModule = static_cast<ILE154 *>(CreateInstance("e154"));
-    if(!pModule) throw Errore_E154("Ошибка выделения памяти для интерфейса CreateInstance(\"e154\")!");
-}
-
-void useE154::initModuleHandler()
-{
-    ModuleHandle = pModule->GetModuleHandle();
-    if(ModuleHandle == INVALID_HANDLE_VALUE) Errore_E154("GetModuleHandle() --> Bad\n");
-}
-
-void useE154::initPorts()
+void UseE154::IniPorts()
 {
     if(pModule->ENABLE_TTL_OUT(1)) pModule->TTL_OUT(0); else throw Errore_E154("Ошибка включения линий TTL");
 }
 
-std::string useE154::initADC()
+std::string UseE154::IniADC()
 {
     pModule->STOP_ADC();
     if(!pModule->GET_ADC_PARS(&ap)) throw Errore_E154("Ошибка получния параметров АЦП!\n");
@@ -111,56 +90,7 @@ std::string useE154::initADC()
     return std::string("initADC()/n");
 }
 
-<<<<<<< Updated upstream
-void useE154::ReleaseAPIInstance() //(char *ErrorString, bool AbortionFlag)
-{	// подчищаем интерфейс модуля
-    if(pModule)
-    {
-        // освободим интерфейс модуля
-        if(!pModule->ReleaseLInstance()) throw Errore_E154("Ошибка при освобождении интерфейса ReleaseLInstance()!");
-        //else printf(" ReleaseLInstance() --> OK\n");
-        // обнулим указатель на интерфейс модуля
-        pModule = NULL;
-    }
-    // освободим библиотеку
-    if(pLoadDll) { delete pLoadDll; pLoadDll = NULL; }
-
-    if(!ReadBuffer) {delete[] ReadBuffer; ReadBuffer = NULL;}
-    // если нужно - аварийно завершаем программу
-    //if(AbortionFlag) exit(0x1);
-}
-
-string useE154::GetVersion(void)
-{
-	pGetDllVersion GetDllVersion = (pGetDllVersion)pLoadDll->CallGetDllVersion();
-    if(!GetDllVersion) throw Errore_E154("Ошибка выделения памяти в функции Get_Version()!");
-//sprintf(String, " Lusbapi.dll Version Error!!!\n   Current: %1u.%1u. Required: %1u.%1u",
-//						DllVersion >> 0x10, DllVersion & 0xFFFF,
-//						CURRENT_VERSION_LUSBAPI >> 0x10, CURRENT_VERSION_LUSBAPI & 0xFFFF);
-	DllVersion = GetDllVersion();
-    return "Lusbapi.dll v" + std::to_string(DllVersion >> 0x10) + "," + std::to_string(DllVersion & 0xFFFF) + "\r\n";
-}
-
-string useE154::OpenDevice()
-{
-	WORD i;
-	// попробуем обнаружить модуль E-154 в первых 256 виртуальных слотах
-	for(i = 0x0; i < MaxVirtualSoltsQuantity; i++) if(pModule->OpenLDevice(i)) break;
-	// что-нибудь обнаружили?
-    if(i == MaxVirtualSoltsQuantity) throw Errore_E154("Ненайдено ни одного устройства E-154!"); //AbortProgram(" Can't find any module E-154 in first 127 virtual slots!\n");
-																									//else printf(" OpenLDevice(%u) --> OK\n", i);
-	// прочитаем название модуля в обнаруженном виртуальном слоте
-    if(!pModule->GetModuleName(ModuleName)) Errore_E154("Не удалось получить название подключенного модуля!");
-
-	// проверим, что это 'E-154'
-    if(strcmp(ModuleName, "E154")) Errore_E154("Устройство 'E-154' успешно открыто.");
-    return "Устройство 'E-154' открыто в виртуальном слоте №" + std::to_string(i) + ".\n\r" ;
-    //user_msg.Format(_T("%sУстройство 'E-154' обнаружено.\n\r"), user_msg);
-}
-
-=======
->>>>>>> Stashed changes
-string useE154::GetUsbSpeed()
+string UseE154::GetUsbSpeed()
 {
     if(!pModule->GetUsbSpeed(&UsbSpeed)) Errore_E154("Не удалось получить скорость работы интерфейса USB!"); //получаем скорость работы шины USB
     string speed;
@@ -171,7 +101,7 @@ string useE154::GetUsbSpeed()
     return "USB is in " + speed + ".\n\r";
 }
 
-string useE154::GetInformation()
+string UseE154::GetInformation()
 {
     string str;
     int *bs = new int[16];
@@ -191,7 +121,7 @@ string useE154::GetInformation()
     return str;
 }
 
-void useE154::SetChannel(channel ch, int pos)
+void UseE154::SetChannel(channel ch, int pos)
 {
     if(pos == ON){
     switch(ch){
@@ -217,12 +147,12 @@ void useE154::SetChannel(channel ch, int pos)
     }
 }
 
-bool useE154::GetStatusTD()
+bool UseE154::GetStatusTD()
 {
     pModule->TTL_IN(&TtlIN); if(TtlIN & (1<<0)) return TRUE; else return FALSE;
 }
 
-string useE154::GetUserMessages() const
+string UseE154::GetUserMessages() const
 {
     return user_msg.back();
 }

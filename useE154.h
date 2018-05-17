@@ -5,11 +5,12 @@
 #include "lib\Lusbapi.h"
 #include <string>
 #include <list>
+#include "loademodule.h"
 
 using std::string;
 
 enum {
-	OFF, ON 
+    OFF, ON
 };
 
 enum channel{
@@ -22,7 +23,7 @@ struct Errore_E154
     Errore_E154(const string &m) : err_msg(m) {}
 };
 
-class useE154 : public QWidget
+class UseE154 : public QWidget
 {
      Q_OBJECT
 
@@ -30,9 +31,8 @@ signals:
     void ValueCome();
 
 public:
-    useE154(QWidget *parent = 0);
-	~useE154(void);
-    string OpenDevice();
+    UseE154(QWidget *parent = 0);
+    ~UseE154(void);
     string GetUserMessages() const;
     string GetUsbSpeed();
     string GetInformation();
@@ -45,32 +45,29 @@ public:
     double volts_array[16];
 
 protected:
-	void initAPIInstance();
-	void initModuleHandler();
-    void initPorts();                           //инициализация всех выводов TTL
-    string initADC();
-	void ReleaseAPIInstance();					//(char *ErrorString, bool AbortionFlag);
+    void IniPorts();                           //инициализация всех выводов TTL
+    string IniADC();
 
 private:
-    TLoadDll *pLoadDll;							// указатель на класс динамической загрузки DLL
-	DWORD DllVersion;							// версия библиотеки
-	ILE154 *pModule;							// указатель на интерфейс модуля
-	HANDLE ModuleHandle;						// дескриптор устройства
-	char ModuleName[7];							// название модуля
-	BYTE UsbSpeed;								// скорость работы шины USB
-	MODULE_DESCRIPTION_E154 ModuleDescription;	// структура с полной информацией о модуле
+    LoadE154 *eModule;
+    DWORD DllVersion;							// версия библиотеки
+    ILE154 *pModule;							// указатель на интерфейс модуля
+
+    char ModuleName[7];							// название модуля
+    BYTE UsbSpeed;								// скорость работы шины USB
+    MODULE_DESCRIPTION_E154 ModuleDescription;	// структура с полной информацией о модуле
     IO_REQUEST_LUSBAPI IoReq;                   // структура с параметрами запроса на ввод/вывод данных
     ADC_PARS_E154 ap;							// структура параметров работы АЦП модуля
 
-	// отсчёты АЦП
-	SHORT AdcSample1, AdcSample2;
+    // отсчёты АЦП
+    SHORT AdcSample1, AdcSample2;
 
-	// индекс входного диапазона напряжения
-	const WORD InputRangeIndex = ADC_INPUT_RANGE_5000mV_E154;
-	const double AdcRate;						// частота работы АЦП в кГц
+    // индекс входного диапазона напряжения
+    const WORD InputRangeIndex = ADC_INPUT_RANGE_5000mV_E154;
+    double const AdcRate;						// частота работы АЦП в кГц
 
-	WORD TtlOut;	//Состояние выходных портов 
-	WORD TtlIN;		//Состояние входных портов
+    WORD TtlOut;	//Состояние выходных портов
+    WORD TtlIN;		//Состояние входных портов
     std::list<string> user_msg;
     //string user_msg;							// последнее выведенное сообщение
     string log_msg;							// служебная информация

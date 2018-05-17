@@ -1,4 +1,4 @@
-//------------------------------------------------------------------------------
+п»ї//------------------------------------------------------------------------------
 #ifndef __LusbapiTypesH__
 #define __LusbapiTypesH__
 //------------------------------------------------------------------------------
@@ -21,134 +21,134 @@
 		#define DAC_CALIBR_COEFS_QUANTITY_LUSBAPI		(128)
 	#endif
 
-	// выравнивание структур
+	// РІС‹СЂР°РІРЅРёРІР°РЅРёРµ СЃС‚СЂСѓРєС‚СѓСЂ
 	#pragma pack(1)
 
-	// структура с параметрами запроса на ввод/вывод данных
+	// СЃС‚СЂСѓРєС‚СѓСЂР° СЃ РїР°СЂР°РјРµС‚СЂР°РјРё Р·Р°РїСЂРѕСЃР° РЅР° РІРІРѕРґ/РІС‹РІРѕРґ РґР°РЅРЅС‹С…
 	struct IO_REQUEST_LUSBAPI
 	{
-		SHORT * Buffer;							// указатель на буфер данных
-		DWORD   NumberOfWordsToPass;			// кол-во отсчётов, которые требуется передать
-		DWORD   NumberOfWordsPassed;			// реальное кол-во переданных отсчётов
-		OVERLAPPED * Overlapped;				// для асинхроннного запроса - указатель на структура типа OVERLAPPED
-		DWORD   TimeOut;							// для синхронного запроса - таймаут в мс
+		SHORT * Buffer;							// СѓРєР°Р·Р°С‚РµР»СЊ РЅР° Р±СѓС„РµСЂ РґР°РЅРЅС‹С…
+		DWORD   NumberOfWordsToPass;			// РєРѕР»-РІРѕ РѕС‚СЃС‡С‘С‚РѕРІ, РєРѕС‚РѕСЂС‹Рµ С‚СЂРµР±СѓРµС‚СЃСЏ РїРµСЂРµРґР°С‚СЊ
+		DWORD   NumberOfWordsPassed;			// СЂРµР°Р»СЊРЅРѕРµ РєРѕР»-РІРѕ РїРµСЂРµРґР°РЅРЅС‹С… РѕС‚СЃС‡С‘С‚РѕРІ
+		OVERLAPPED * Overlapped;				// РґР»СЏ Р°СЃРёРЅС…СЂРѕРЅРЅРЅРѕРіРѕ Р·Р°РїСЂРѕСЃР° - СѓРєР°Р·Р°С‚РµР»СЊ РЅР° СЃС‚СЂСѓРєС‚СѓСЂР° С‚РёРїР° OVERLAPPED
+		DWORD   TimeOut;							// РґР»СЏ СЃРёРЅС…СЂРѕРЅРЅРѕРіРѕ Р·Р°РїСЂРѕСЃР° - С‚Р°Р№РјР°СѓС‚ РІ РјСЃ
 	};
 
-	// структура с информацией об последней ошибке выполнения библиотеки
+	// СЃС‚СЂСѓРєС‚СѓСЂР° СЃ РёРЅС„РѕСЂРјР°С†РёРµР№ РѕР± РїРѕСЃР»РµРґРЅРµР№ РѕС€РёР±РєРµ РІС‹РїРѕР»РЅРµРЅРёСЏ Р±РёР±Р»РёРѕС‚РµРєРё
 	struct LAST_ERROR_INFO_LUSBAPI
 	{
-		BYTE	ErrorString[256];					// строка с кратким описанием последней ошибки
-		DWORD	ErrorNumber;	  					// номер последней ошибки
+		BYTE	ErrorString[256];					// СЃС‚СЂРѕРєР° СЃ РєСЂР°С‚РєРёРј РѕРїРёСЃР°РЅРёРµРј РїРѕСЃР»РµРґРЅРµР№ РѕС€РёР±РєРё
+		DWORD	ErrorNumber;	  					// РЅРѕРјРµСЂ РїРѕСЃР»РµРґРЅРµР№ РѕС€РёР±РєРё
 	};
 
-	// информация о ПО, работающем в испольнительном устройстве: MCU, DSP, PLD и т.д.
+	// РёРЅС„РѕСЂРјР°С†РёСЏ Рѕ РџРћ, СЂР°Р±РѕС‚Р°СЋС‰РµРј РІ РёСЃРїРѕР»СЊРЅРёС‚РµР»СЊРЅРѕРј СѓСЃС‚СЂРѕР№СЃС‚РІРµ: MCU, DSP, PLD Рё С‚.Рґ.
 	struct VERSION_INFO_LUSBAPI
 	{
-		BYTE 	Version[10];					  	// версия ПО для испольнительного устройства
-		BYTE 	Date[14];						  	// дата сборки ПО
-		BYTE 	Manufacturer[NAME_LINE_LENGTH_LUSBAPI]; 	// производитель ПО
-		BYTE 	Author[NAME_LINE_LENGTH_LUSBAPI];		 	// автор ПО
-		BYTE	Comment[COMMENT_LINE_LENGTH_LUSBAPI];		// строка комментария
+		BYTE 	Version[10];					  	// РІРµСЂСЃРёСЏ РџРћ РґР»СЏ РёСЃРїРѕР»СЊРЅРёС‚РµР»СЊРЅРѕРіРѕ СѓСЃС‚СЂРѕР№СЃС‚РІР°
+		BYTE 	Date[14];						  	// РґР°С‚Р° СЃР±РѕСЂРєРё РџРћ
+		BYTE 	Manufacturer[NAME_LINE_LENGTH_LUSBAPI]; 	// РїСЂРѕРёР·РІРѕРґРёС‚РµР»СЊ РџРћ
+		BYTE 	Author[NAME_LINE_LENGTH_LUSBAPI];		 	// Р°РІС‚РѕСЂ РџРћ
+		BYTE	Comment[COMMENT_LINE_LENGTH_LUSBAPI];		// СЃС‚СЂРѕРєР° РєРѕРјРјРµРЅС‚Р°СЂРёСЏ
 	};
 
-	// информация о ПО MCU, которая включает в себя информацию о прошивках
-	// как основной программы, так и загрузчика
+	// РёРЅС„РѕСЂРјР°С†РёСЏ Рѕ РџРћ MCU, РєРѕС‚РѕСЂР°СЏ РІРєР»СЋС‡Р°РµС‚ РІ СЃРµР±СЏ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ РїСЂРѕС€РёРІРєР°С…
+	// РєР°Рє РѕСЃРЅРѕРІРЅРѕР№ РїСЂРѕРіСЂР°РјРјС‹, С‚Р°Рє Рё Р·Р°РіСЂСѓР·С‡РёРєР°
 	struct MCU_VERSION_INFO_LUSBAPI
 	{
-		VERSION_INFO_LUSBAPI FwVersion;						// информация о версии прошивки основной программы 'Приложение'(Application) микроконтроллера
-		VERSION_INFO_LUSBAPI BlVersion;						// информация о версии прошивки 'Загрузчика'(BootLoader) микроконтроллера
+		VERSION_INFO_LUSBAPI FwVersion;						// РёРЅС„РѕСЂРјР°С†РёСЏ Рѕ РІРµСЂСЃРёРё РїСЂРѕС€РёРІРєРё РѕСЃРЅРѕРІРЅРѕР№ РїСЂРѕРіСЂР°РјРјС‹ 'РџСЂРёР»РѕР¶РµРЅРёРµ'(Application) РјРёРєСЂРѕРєРѕРЅС‚СЂРѕР»Р»РµСЂР°
+		VERSION_INFO_LUSBAPI BlVersion;						// РёРЅС„РѕСЂРјР°С†РёСЏ Рѕ РІРµСЂСЃРёРё РїСЂРѕС€РёРІРєРё 'Р—Р°РіСЂСѓР·С‡РёРєР°'(BootLoader) РјРёРєСЂРѕРєРѕРЅС‚СЂРѕР»Р»РµСЂР°
 	};
 
-	// общая информация о модуле (штатный вариант)
+	// РѕР±С‰Р°СЏ РёРЅС„РѕСЂРјР°С†РёСЏ Рѕ РјРѕРґСѓР»Рµ (С€С‚Р°С‚РЅС‹Р№ РІР°СЂРёР°РЅС‚)
 	struct MODULE_INFO_LUSBAPI
 	{
-		BYTE	CompanyName[NAME_LINE_LENGTH_LUSBAPI];		// название фирмы-изготовителя изделия
-		BYTE	DeviceName[NAME_LINE_LENGTH_LUSBAPI]; 		// название изделия
-		BYTE	SerialNumber[SERIAL_NUMBER_STRING_LENGTH_LUSBAPI];	// серийный номер изделия
-		BYTE	Revision;											// ревизия изделия (латинская литера)
-		BYTE	Modification;										// исполнение модуля (число);
-		BYTE	Comment[COMMENT_LINE_LENGTH_LUSBAPI];		// строка комментария
+		BYTE	CompanyName[NAME_LINE_LENGTH_LUSBAPI];		// РЅР°Р·РІР°РЅРёРµ С„РёСЂРјС‹-РёР·РіРѕС‚РѕРІРёС‚РµР»СЏ РёР·РґРµР»РёСЏ
+		BYTE	DeviceName[NAME_LINE_LENGTH_LUSBAPI]; 		// РЅР°Р·РІР°РЅРёРµ РёР·РґРµР»РёСЏ
+		BYTE	SerialNumber[SERIAL_NUMBER_STRING_LENGTH_LUSBAPI];	// СЃРµСЂРёР№РЅС‹Р№ РЅРѕРјРµСЂ РёР·РґРµР»РёСЏ
+		BYTE	Revision;											// СЂРµРІРёР·РёСЏ РёР·РґРµР»РёСЏ (Р»Р°С‚РёРЅСЃРєР°СЏ Р»РёС‚РµСЂР°)
+		BYTE	Modification;										// РёСЃРїРѕР»РЅРµРЅРёРµ РјРѕРґСѓР»СЏ (С‡РёСЃР»Рѕ);
+		BYTE	Comment[COMMENT_LINE_LENGTH_LUSBAPI];		// СЃС‚СЂРѕРєР° РєРѕРјРјРµРЅС‚Р°СЂРёСЏ
 	};
 
-	// общая информация о модуле (с дополнительным полем Modification)
+	// РѕР±С‰Р°СЏ РёРЅС„РѕСЂРјР°С†РёСЏ Рѕ РјРѕРґСѓР»Рµ (СЃ РґРѕРїРѕР»РЅРёС‚РµР»СЊРЅС‹Рј РїРѕР»РµРј Modification)
 /*	struct MODULE_INFO_M_LUSBAPI
 	{
-		BYTE	CompanyName[NAME_LINE_LENGTH_LUSBAPI];		// название фирмы-изготовителя изделия
-		BYTE	DeviceName[NAME_LINE_LENGTH_LUSBAPI]; 		// название изделия
-		BYTE	SerialNumber[16];									// серийный номер изделия
-		BYTE	Revision;											// ревизия изделия (латинская литера)
-		BYTE	Modification;										// исполнение модуля (число);
-		BYTE	Comment[COMMENT_LINE_LENGTH_LUSBAPI];		// строка комментария
+		BYTE	CompanyName[NAME_LINE_LENGTH_LUSBAPI];		// РЅР°Р·РІР°РЅРёРµ С„РёСЂРјС‹-РёР·РіРѕС‚РѕРІРёС‚РµР»СЏ РёР·РґРµР»РёСЏ
+		BYTE	DeviceName[NAME_LINE_LENGTH_LUSBAPI]; 		// РЅР°Р·РІР°РЅРёРµ РёР·РґРµР»РёСЏ
+		BYTE	SerialNumber[16];									// СЃРµСЂРёР№РЅС‹Р№ РЅРѕРјРµСЂ РёР·РґРµР»РёСЏ
+		BYTE	Revision;											// СЂРµРІРёР·РёСЏ РёР·РґРµР»РёСЏ (Р»Р°С‚РёРЅСЃРєР°СЏ Р»РёС‚РµСЂР°)
+		BYTE	Modification;										// РёСЃРїРѕР»РЅРµРЅРёРµ РјРѕРґСѓР»СЏ (С‡РёСЃР»Рѕ);
+		BYTE	Comment[COMMENT_LINE_LENGTH_LUSBAPI];		// СЃС‚СЂРѕРєР° РєРѕРјРјРµРЅС‚Р°СЂРёСЏ
 	};*/
 
-	// информация о DSP
+	// РёРЅС„РѕСЂРјР°С†РёСЏ Рѕ DSP
 	struct DSP_INFO_LUSBAPI
 	{
-		BOOL	Active;												// флаг достоверности остальных полей структуры
-		BYTE	Name[NAME_LINE_LENGTH_LUSBAPI];				// название DSP
-		double	ClockRate;										// тактовая частота работы DSP в кГц
-		VERSION_INFO_LUSBAPI Version;							// информация о драйвере DSP
-		BYTE	Comment[COMMENT_LINE_LENGTH_LUSBAPI];		// строка комментария
+		BOOL	Active;												// С„Р»Р°Рі РґРѕСЃС‚РѕРІРµСЂРЅРѕСЃС‚Рё РѕСЃС‚Р°Р»СЊРЅС‹С… РїРѕР»РµР№ СЃС‚СЂСѓРєС‚СѓСЂС‹
+		BYTE	Name[NAME_LINE_LENGTH_LUSBAPI];				// РЅР°Р·РІР°РЅРёРµ DSP
+		double	ClockRate;										// С‚Р°РєС‚РѕРІР°СЏ С‡Р°СЃС‚РѕС‚Р° СЂР°Р±РѕС‚С‹ DSP РІ РєР“С†
+		VERSION_INFO_LUSBAPI Version;							// РёРЅС„РѕСЂРјР°С†РёСЏ Рѕ РґСЂР°Р№РІРµСЂРµ DSP
+		BYTE	Comment[COMMENT_LINE_LENGTH_LUSBAPI];		// СЃС‚СЂРѕРєР° РєРѕРјРјРµРЅС‚Р°СЂРёСЏ
 	};
 
-	// информация о микроконтроллере
+	// РёРЅС„РѕСЂРјР°С†РёСЏ Рѕ РјРёРєСЂРѕРєРѕРЅС‚СЂРѕР»Р»РµСЂРµ
 	template <class VersionType>
 	struct MCU_INFO_LUSBAPI
 	{
-		BOOL	Active;												// флаг достоверности остальных полей структуры
-		BYTE	Name[NAME_LINE_LENGTH_LUSBAPI];				// название микроконтроллера
-		double	ClockRate;										// тактовая частота работы микроконтроллера в кГц
-//		VERSION_INFO_LUSBAPI Version;							// информация о версии прошивки микроконтроллера
-		VersionType Version;										// информация о версии как самой прошивки микроконтроллера, так, возможно, и прошивки 'Загрузчика'
-		BYTE	Comment[COMMENT_LINE_LENGTH_LUSBAPI];		// строка комментария
+		BOOL	Active;												// С„Р»Р°Рі РґРѕСЃС‚РѕРІРµСЂРЅРѕСЃС‚Рё РѕСЃС‚Р°Р»СЊРЅС‹С… РїРѕР»РµР№ СЃС‚СЂСѓРєС‚СѓСЂС‹
+		BYTE	Name[NAME_LINE_LENGTH_LUSBAPI];				// РЅР°Р·РІР°РЅРёРµ РјРёРєСЂРѕРєРѕРЅС‚СЂРѕР»Р»РµСЂР°
+		double	ClockRate;										// С‚Р°РєС‚РѕРІР°СЏ С‡Р°СЃС‚РѕС‚Р° СЂР°Р±РѕС‚С‹ РјРёРєСЂРѕРєРѕРЅС‚СЂРѕР»Р»РµСЂР° РІ РєР“С†
+//		VERSION_INFO_LUSBAPI Version;							// РёРЅС„РѕСЂРјР°С†РёСЏ Рѕ РІРµСЂСЃРёРё РїСЂРѕС€РёРІРєРё РјРёРєСЂРѕРєРѕРЅС‚СЂРѕР»Р»РµСЂР°
+		VersionType Version;										// РёРЅС„РѕСЂРјР°С†РёСЏ Рѕ РІРµСЂСЃРёРё РєР°Рє СЃР°РјРѕР№ РїСЂРѕС€РёРІРєРё РјРёРєСЂРѕРєРѕРЅС‚СЂРѕР»Р»РµСЂР°, С‚Р°Рє, РІРѕР·РјРѕР¶РЅРѕ, Рё РїСЂРѕС€РёРІРєРё 'Р—Р°РіСЂСѓР·С‡РёРєР°'
+		BYTE	Comment[COMMENT_LINE_LENGTH_LUSBAPI];		// СЃС‚СЂРѕРєР° РєРѕРјРјРµРЅС‚Р°СЂРёСЏ
 	};
 
-	// информация о ПЛИС (PLD)
+	// РёРЅС„РѕСЂРјР°С†РёСЏ Рѕ РџР›РРЎ (PLD)
 	struct PLD_INFO_LUSBAPI										// PLD - Programmable Logic Device
 	{
-		BOOL	Active;												// флаг достоверности остальных полей структуры
-		BYTE	Name[NAME_LINE_LENGTH_LUSBAPI];		  		// название ПЛИС
-		double ClockRate;											// тактовая чатота работы ПЛИС в кГц
-		VERSION_INFO_LUSBAPI Version;							// информация о версии прошивки ПЛИС
-		BYTE	Comment[COMMENT_LINE_LENGTH_LUSBAPI];		// строка комментария
+		BOOL	Active;												// С„Р»Р°Рі РґРѕСЃС‚РѕРІРµСЂРЅРѕСЃС‚Рё РѕСЃС‚Р°Р»СЊРЅС‹С… РїРѕР»РµР№ СЃС‚СЂСѓРєС‚СѓСЂС‹
+		BYTE	Name[NAME_LINE_LENGTH_LUSBAPI];		  		// РЅР°Р·РІР°РЅРёРµ РџР›РРЎ
+		double ClockRate;											// С‚Р°РєС‚РѕРІР°СЏ С‡Р°С‚РѕС‚Р° СЂР°Р±РѕС‚С‹ РџР›РРЎ РІ РєР“С†
+		VERSION_INFO_LUSBAPI Version;							// РёРЅС„РѕСЂРјР°С†РёСЏ Рѕ РІРµСЂСЃРёРё РїСЂРѕС€РёРІРєРё РџР›РРЎ
+		BYTE	Comment[COMMENT_LINE_LENGTH_LUSBAPI];		// СЃС‚СЂРѕРєР° РєРѕРјРјРµРЅС‚Р°СЂРёСЏ
 	};
 
-	// информация о АЦП
+	// РёРЅС„РѕСЂРјР°С†РёСЏ Рѕ РђР¦Рџ
 	struct ADC_INFO_LUSBAPI
 	{
-		BOOL	Active;												// флаг достоверности остальных полей структуры
-		BYTE	Name[NAME_LINE_LENGTH_LUSBAPI];				// название микросхемы АЦП
-		double	OffsetCalibration[ADC_CALIBR_COEFS_QUANTITY_LUSBAPI];	// корректировочные коэффициенты смещения нуля
-		double	ScaleCalibration[ADC_CALIBR_COEFS_QUANTITY_LUSBAPI];		// корректировочные коэффициенты масштаба
-		BYTE	Comment[COMMENT_LINE_LENGTH_LUSBAPI];		// строка комментария
+		BOOL	Active;												// С„Р»Р°Рі РґРѕСЃС‚РѕРІРµСЂРЅРѕСЃС‚Рё РѕСЃС‚Р°Р»СЊРЅС‹С… РїРѕР»РµР№ СЃС‚СЂСѓРєС‚СѓСЂС‹
+		BYTE	Name[NAME_LINE_LENGTH_LUSBAPI];				// РЅР°Р·РІР°РЅРёРµ РјРёРєСЂРѕСЃС…РµРјС‹ РђР¦Рџ
+		double	OffsetCalibration[ADC_CALIBR_COEFS_QUANTITY_LUSBAPI];	// РєРѕСЂСЂРµРєС‚РёСЂРѕРІРѕС‡РЅС‹Рµ РєРѕСЌС„С„РёС†РёРµРЅС‚С‹ СЃРјРµС‰РµРЅРёСЏ РЅСѓР»СЏ
+		double	ScaleCalibration[ADC_CALIBR_COEFS_QUANTITY_LUSBAPI];		// РєРѕСЂСЂРµРєС‚РёСЂРѕРІРѕС‡РЅС‹Рµ РєРѕСЌС„С„РёС†РёРµРЅС‚С‹ РјР°СЃС€С‚Р°Р±Р°
+		BYTE	Comment[COMMENT_LINE_LENGTH_LUSBAPI];		// СЃС‚СЂРѕРєР° РєРѕРјРјРµРЅС‚Р°СЂРёСЏ
 	};
 
-	// информация о ЦАП
+	// РёРЅС„РѕСЂРјР°С†РёСЏ Рѕ Р¦РђРџ
 	struct DAC_INFO_LUSBAPI
 	{
-		BOOL	Active;												// флаг достоверности остальных полей структуры
-		BYTE	Name[NAME_LINE_LENGTH_LUSBAPI];				// название микросхемы ЦАП
-		double	OffsetCalibration[DAC_CALIBR_COEFS_QUANTITY_LUSBAPI];	// корректировочные коэффициенты
-		double	ScaleCalibration[DAC_CALIBR_COEFS_QUANTITY_LUSBAPI];		// корректировочные коэффициенты
-		BYTE	Comment[COMMENT_LINE_LENGTH_LUSBAPI];		// строка комментария
+		BOOL	Active;												// С„Р»Р°Рі РґРѕСЃС‚РѕРІРµСЂРЅРѕСЃС‚Рё РѕСЃС‚Р°Р»СЊРЅС‹С… РїРѕР»РµР№ СЃС‚СЂСѓРєС‚СѓСЂС‹
+		BYTE	Name[NAME_LINE_LENGTH_LUSBAPI];				// РЅР°Р·РІР°РЅРёРµ РјРёРєСЂРѕСЃС…РµРјС‹ Р¦РђРџ
+		double	OffsetCalibration[DAC_CALIBR_COEFS_QUANTITY_LUSBAPI];	// РєРѕСЂСЂРµРєС‚РёСЂРѕРІРѕС‡РЅС‹Рµ РєРѕСЌС„С„РёС†РёРµРЅС‚С‹
+		double	ScaleCalibration[DAC_CALIBR_COEFS_QUANTITY_LUSBAPI];		// РєРѕСЂСЂРµРєС‚РёСЂРѕРІРѕС‡РЅС‹Рµ РєРѕСЌС„С„РёС†РёРµРЅС‚С‹
+		BYTE	Comment[COMMENT_LINE_LENGTH_LUSBAPI];		// СЃС‚СЂРѕРєР° РєРѕРјРјРµРЅС‚Р°СЂРёСЏ
 	};
 
-	// информация о цифрового ввода-вывода
+	// РёРЅС„РѕСЂРјР°С†РёСЏ Рѕ С†РёС„СЂРѕРІРѕРіРѕ РІРІРѕРґР°-РІС‹РІРѕРґР°
 	struct DIGITAL_IO_INFO_LUSBAPI
 	{
-		BOOL	Active;												// флаг достоверности остальных полей структуры
-		BYTE	Name[NAME_LINE_LENGTH_LUSBAPI];				// название цифровой микросхемы
-		WORD	InLinesQuantity;	 								// кол-во входных линий
-		WORD	OutLinesQuantity; 								// кол-во выходных линий
-		BYTE	Comment[COMMENT_LINE_LENGTH_LUSBAPI];		// строка комментария
+		BOOL	Active;												// С„Р»Р°Рі РґРѕСЃС‚РѕРІРµСЂРЅРѕСЃС‚Рё РѕСЃС‚Р°Р»СЊРЅС‹С… РїРѕР»РµР№ СЃС‚СЂСѓРєС‚СѓСЂС‹
+		BYTE	Name[NAME_LINE_LENGTH_LUSBAPI];				// РЅР°Р·РІР°РЅРёРµ С†РёС„СЂРѕРІРѕР№ РјРёРєСЂРѕСЃС…РµРјС‹
+		WORD	InLinesQuantity;	 								// РєРѕР»-РІРѕ РІС…РѕРґРЅС‹С… Р»РёРЅРёР№
+		WORD	OutLinesQuantity; 								// РєРѕР»-РІРѕ РІС‹С…РѕРґРЅС‹С… Р»РёРЅРёР№
+		BYTE	Comment[COMMENT_LINE_LENGTH_LUSBAPI];		// СЃС‚СЂРѕРєР° РєРѕРјРјРµРЅС‚Р°СЂРёСЏ
 	};
 
-	// информация о используемого интерфейса для доступа к модулю
+	// РёРЅС„РѕСЂРјР°С†РёСЏ Рѕ РёСЃРїРѕР»СЊР·СѓРµРјРѕРіРѕ РёРЅС‚РµСЂС„РµР№СЃР° РґР»СЏ РґРѕСЃС‚СѓРїР° Рє РјРѕРґСѓР»СЋ
 	struct INTERFACE_INFO_LUSBAPI
 	{
-		BOOL	Active;												// флаг достоверности остальных полей структуры
-		BYTE	Name[NAME_LINE_LENGTH_LUSBAPI];			 	// название
-		BYTE	Comment[COMMENT_LINE_LENGTH_LUSBAPI];		// строка комментария
+		BOOL	Active;												// С„Р»Р°Рі РґРѕСЃС‚РѕРІРµСЂРЅРѕСЃС‚Рё РѕСЃС‚Р°Р»СЊРЅС‹С… РїРѕР»РµР№ СЃС‚СЂСѓРєС‚СѓСЂС‹
+		BYTE	Name[NAME_LINE_LENGTH_LUSBAPI];			 	// РЅР°Р·РІР°РЅРёРµ
+		BYTE	Comment[COMMENT_LINE_LENGTH_LUSBAPI];		// СЃС‚СЂРѕРєР° РєРѕРјРјРµРЅС‚Р°СЂРёСЏ
 	};
 	//
 	#pragma pack()
