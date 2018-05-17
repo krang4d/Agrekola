@@ -5,3 +5,5 @@ build/
 *stash
 Makefile*
 
+/*.Debug
+/*.Release

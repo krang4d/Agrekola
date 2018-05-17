@@ -8,11 +8,18 @@ SHORT *ReadBuffer;
 
 useE154::useE154(QWidget *parent) : AdcRate(100), InputRangeIndex(ADC_INPUT_RANGE_5000mV_E154)
 {
+<<<<<<< Updated upstream
     pLoadDll = new TLoadDll();
     if(!pLoadDll) throw Errore_E154("Ошибка загрузи библиотеки Dll Load_Dll()!");
     initAPIInstance();
 	initModuleHandler();
 	OpenDevice();
+=======
+    eModule = new LoadEModule();
+    pModule = eModule->GetEModuleAPI();
+    if(!pModule) throw Errore_E154("Ошибка загрузи библиотеки Dll Load_Dll()!");
+    //OpenDevice();
+>>>>>>> Stashed changes
     initPorts();
     initADC();
 }
@@ -101,10 +108,10 @@ std::string useE154::initADC()
     ap.InterKadrDelay = 0.0;							// межкадровая задержка в мс
     // передадим требуемые параметры работы АЦП в модуль
     if(!pModule->SET_ADC_PARS(&ap)) throw Errore_E154("Ошибка установки параметрв АЦП!\n");
-
     return std::string("initADC()/n");
 }
 
+<<<<<<< Updated upstream
 void useE154::ReleaseAPIInstance() //(char *ErrorString, bool AbortionFlag)
 {	// подчищаем интерфейс модуля
     if(pModule)
@@ -151,6 +158,8 @@ string useE154::OpenDevice()
     //user_msg.Format(_T("%sУстройство 'E-154' обнаружено.\n\r"), user_msg);
 }
 
+=======
+>>>>>>> Stashed changes
 string useE154::GetUsbSpeed()
 {
     if(!pModule->GetUsbSpeed(&UsbSpeed)) Errore_E154("Не удалось получить скорость работы интерфейса USB!"); //получаем скорость работы шины USB

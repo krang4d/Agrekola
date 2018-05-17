@@ -15,10 +15,12 @@ TEMPLATE =  app
 SOURCES +=  main.cpp\
             widget.cpp \
     useE154.cpp \
-    LoadDll.cpp
+    LoadDll.cpp \
+    loademodule.cpp
 
 HEADERS  += widget.h \
     useE154.h \
-    LoadDll.h
+    LoadDll.h \
+    loademodule.h
 
 FORMS    += widget.ui

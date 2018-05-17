@@ -6,8 +6,6 @@
 #include <string>
 #include <list>
 
-#define MaxVirtualSoltsQuantity 127
-
 using std::string;
 
 enum {
@@ -35,7 +33,6 @@ public:
     useE154(QWidget *parent = 0);
 	~useE154(void);
     string OpenDevice();
-    string GetVersion(void);
     string GetUserMessages() const;
     string GetUsbSpeed();
     string GetInformation();
