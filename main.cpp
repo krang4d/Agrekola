@@ -19,8 +19,8 @@ int main(int argc, char *argv[])
         UseE154 *agrecola = new UseE154();
         w->setAgrekila(agrecola);
         //setUserMessage(w, agrecola->GetVersion()); //"myGetDllVersion-->ERRORE!\n");
-        setUserMessage(w, agrecola->GetUsbSpeed());
-        setUserMessage(w, agrecola->GetInformation());
+        //setUserMessage(w, agrecola->GetUsbSpeed());
+        //setUserMessage(w, agrecola->GetInformation());
         if(agrecola->GetStatusTD()){
             setUserMessage(w, "Прибор вошел в режиме тепловой готовности\r\n");
         } else setUserMessage(w, "Прибор <style color:red>не вошел</style> в режиме тепловой готовности\r\n");

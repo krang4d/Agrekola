@@ -13,7 +13,8 @@ public:
 
     ILE154* GetAPI();
     std::string GetVersion();
-
+    std::string GetUsbSpeed();
+    std::string GetInformation();
 
 protected:
     void IniAPI();
@@ -24,7 +25,9 @@ protected:
 private:
     HANDLE ModuleHandle;						// дескриптор устройства
     ILE154 *pModule;							// указатель на интерфейс модуля
+    BYTE UsbSpeed;								// скорость работы шины USB
     PCHAR mname;
+    MODULE_DESCRIPTION_E154 ModuleDescription;	// структура с полной информацией о модуле
 };
 
 #endif // LOADEMODULE_H

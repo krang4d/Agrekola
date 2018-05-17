@@ -60,10 +60,42 @@ std::string LoadE154::OpenDevice()
     if(i == MaxVirtualSoltsQuantity) throw LoadE154_Error{}; //AbortProgram(" Can't find any module E-154 in first 127 virtual slots!\n");
                                                                                                     //else printf(" OpenLDevice(%u) --> OK\n", i);
     // прочитаем название модуля в обнаруженном виртуальном слоте
-    //if(!pModule->GetModuleName(mname)) throw LoadE154_Error{};
-
+    mname = new char[8];
+    if(!pModule->GetModuleName(mname)) throw LoadE154_Error{};
+    delete[] mname;
     // проверим, что это 'E-154'b
-    //if(strcmp(mname, "E154")) throw LoadE154_Error{};
+    if(strcmp(mname, "E154")) throw LoadE154_Error{};
     return "Устройство 'E-154' открыто в виртуальном слоте №" + std::to_string(i) + ".\n\r" ;
     //user_msg.Format(_T("%sУстройство 'E-154' обнаружено.\n\r"), user_msg);
+}
+
+std::string LoadE154::GetUsbSpeed()
+{
+    if(!pModule->GetUsbSpeed(&UsbSpeed)) LoadE154_Error{};//Errore_E154("Не удалось получить скорость работы интерфейса USB!"); //получаем скорость работы шины USB
+    std::string speed;
+    if(UsbSpeed)
+    {
+        speed = "High-Speed Mode (480 Mbit/s)";
+    } else speed = "Full-Speed Mode (12 Mbit/s)";
+    return "USB is in " + speed + ".\n\r";
+}
+
+std::string LoadE154::GetInformation()
+{
+    std::string str;
+    int *bs = new int[16];
+    bs =  (int*)ModuleDescription.Module.SerialNumber;
+     // получим информацию из ППЗУ модуля
+    if(!pModule->GET_MODULE_DESCRIPTION(&ModuleDescription)) LoadE154_Error{};//Errore_E154("Не удалось получить дискриптор модуля!");
+    // отобразим параметры модуля на экране монитора
+/*    str = " \r\n\r\n" + " Module E-154 (S/N " + std::to_string(ModuleDescription.Module.SerialNumber) + ") is ready ... \r\n" +
+                 " Module Info:\n" +
+                 " Module  Revision   is " + std::to_string(ModuleDescription.Module.Revision) + " \r\n" +
+                 " AVR Driver Version is " + std::to_string(ModuleDescription.Mcu.Version.Version) +
+                 "(" + std::to_string(ModuleDescription.Mcu.Version.Date) + ")"\+ "\r\n" +
+                 "   Adc parameters:\r\n" +
+  */             "     Input Range  = " + std::to_string(ADC_INPUT_RANGES_E154[ADC_INPUT_RANGE_5000mV_E154]) + "Volt\r\n";
+    str = "     Input Range  = " + std::to_string(ADC_INPUT_RANGES_E154[ADC_INPUT_RANGE_5000mV_E154]) + "Volt\r\n" +
+          " \r\n\r\n" + " Module E-154 (S/N " + (char)ModuleDescription.Module.SerialNumber[0] + ") is ready ... \r\n";
+    return str;
 }

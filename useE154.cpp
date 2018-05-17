@@ -90,37 +90,6 @@ std::string UseE154::IniADC()
     return std::string("initADC()/n");
 }
 
-string UseE154::GetUsbSpeed()
-{
-    if(!pModule->GetUsbSpeed(&UsbSpeed)) Errore_E154("Не удалось получить скорость работы интерфейса USB!"); //получаем скорость работы шины USB
-    string speed;
-    if(UsbSpeed)
-    {
-        speed = "High-Speed Mode (480 Mbit/s)";
-    } else speed = "Full-Speed Mode (12 Mbit/s)";
-    return "USB is in " + speed + ".\n\r";
-}
-
-string UseE154::GetInformation()
-{
-    string str;
-    int *bs = new int[16];
-    bs =  (int*)ModuleDescription.Module.SerialNumber;
-     // получим информацию из ППЗУ модуля
-    if(!pModule->GET_MODULE_DESCRIPTION(&ModuleDescription)) Errore_E154("Не удалось получить дискриптор модуля!");
-    // отобразим параметры модуля на экране монитора
-/*    str = " \r\n\r\n" + " Module E-154 (S/N " + std::to_string(ModuleDescription.Module.SerialNumber) + ") is ready ... \r\n" +
-                 " Module Info:\n" +
-                 " Module  Revision   is " + std::to_string(ModuleDescription.Module.Revision) + " \r\n" +
-                 " AVR Driver Version is " + std::to_string(ModuleDescription.Mcu.Version.Version) +
-                 "(" + std::to_string(ModuleDescription.Mcu.Version.Date) + ")"\+ "\r\n" +
-                 "   Adc parameters:\r\n" +
-  */             "     Input Range  = " + std::to_string(ADC_INPUT_RANGES_E154[InputRangeIndex]) + "Volt\r\n";
-    str = "     Input Range  = " + std::to_string(ADC_INPUT_RANGES_E154[InputRangeIndex]) + "Volt\r\n" +
-          " \r\n\r\n" + " Module E-154 (S/N " + (char)ModuleDescription.Module.SerialNumber[0] + ") is ready ... \r\n";
-    return str;
-}
-
 void UseE154::SetChannel(channel ch, int pos)
 {
     if(pos == ON){

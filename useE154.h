@@ -34,8 +34,6 @@ public:
     UseE154(QWidget *parent = 0);
     ~UseE154(void);
     string GetUserMessages() const;
-    string GetUsbSpeed();
-    string GetInformation();
     void SetChannel(channel ch, int pos);
     bool GetStatusTD();
     double AdcSample();			 				//простое измерение АЦП
@@ -54,7 +52,6 @@ private:
     ILE154 *pModule;							// указатель на интерфейс модуля
 
     char ModuleName[7];							// название модуля
-    BYTE UsbSpeed;								// скорость работы шины USB
     MODULE_DESCRIPTION_E154 ModuleDescription;	// структура с полной информацией о модуле
     IO_REQUEST_LUSBAPI IoReq;                   // структура с параметрами запроса на ввод/вывод данных
     ADC_PARS_E154 ap;							// структура параметров работы АЦП модуля
