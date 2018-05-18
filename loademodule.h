@@ -5,6 +5,12 @@
 #include "LoadDll.h"
 #include "lib/Lusbapi.h"
 
+struct Errore_E154
+{
+    std::string err_msg;
+    Errore_E154(const std::string &m) : err_msg(m) {}
+};
+
 class LoadE154 : public LoadDll
 {
 public:

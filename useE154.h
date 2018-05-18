@@ -17,12 +17,6 @@ enum channel{
     CH1, CH2 , CH3, CH4, PP, L
 };
 
-struct Errore_E154
-{
-    string err_msg;
-    Errore_E154(const string &m) : err_msg(m) {}
-};
-
 class UseE154 : public QWidget
 {
      Q_OBJECT
