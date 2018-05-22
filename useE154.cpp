@@ -86,16 +86,8 @@ std::string useE154::AdcSynchro()
     {
         std::string str = std::to_string(Destination[i]);
         readDataString += "№" + std::to_string(i) + "val:" + str + "\t";
-        //ReadDataList.push_back(str);
     }
 return readDataString;
-//    for(int j; j<(Size/4); j++)
-//    {
-//        for(int i = 0; i<4; i++)
-//        {
-//            ReadBuffer[((j*4)+i)];
-//        }
-//    }
 }
 
 //typedef LPVOID (WINAPI *pCreateInstance)(char *);

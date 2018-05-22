@@ -56,4 +56,7 @@ void Widget::on_AdcKadr_clicked()
 void Widget::on_AdcSynchro_clicked()
 {
     setText(QString(Agrecola->AdcSynchro().c_str()));
+    QScrollBar *vb = ui->textEdit->verticalScrollBar();
+    int max = vb->maximum();
+    vb->setValue(max);
 }

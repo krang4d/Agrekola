@@ -11,7 +11,6 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET   =    widgetTest
 TEMPLATE =  app
 
-
 SOURCES +=  main.cpp\
             widget.cpp \
     useE154.cpp \
