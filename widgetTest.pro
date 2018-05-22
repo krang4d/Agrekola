@@ -16,11 +16,17 @@ SOURCES +=  main.cpp\
             widget.cpp \
     useE154.cpp \
     LoadDll.cpp \
-    loademodule.cpp
+    loademodule.cpp \
+    choisedialog.cpp \
+    agr1.cpp
 
 HEADERS  += widget.h \
     useE154.h \
     LoadDll.h \
-    loademodule.h
+    loademodule.h \
+    choisedialog.h \
+    agr1.h
 
-FORMS    += widget.ui
+FORMS    += widget.ui \
+    choisedialog.ui \
+    agr1.ui

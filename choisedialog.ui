@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ChoiseDialog</class>
+ <widget class="QDialog" name="ChoiseDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>453</width>
+    <height>303</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Выбор режима</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="1" column="0" rowspan="2">
+    <widget class="QGroupBox" name="groupKoagulometr">
+     <property name="title">
+      <string>Коагулометр</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <widget class="QPushButton" name="ko1Button">
+        <property name="text">
+         <string>Время свертывания</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="ko2Button">
+        <property name="text">
+         <string>АЧТВ</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="ko3Button">
+        <property name="text">
+         <string>Фибриноген</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="ko4Button">
+        <property name="text">
+         <string>Тромбин</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="ko5Button">
+        <property name="text">
+         <string>Протромбиновый комплекс</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QGroupBox" name="groupAgregometr">
+     <property name="title">
+      <string>Агрегомтр</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QPushButton" name="agr1Button">
+        <property name="text">
+         <string>Определение параметров
+ агрегации</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="agr2Button">
+        <property name="text">
+         <string>Определение активности
+фактора виллебранда</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="QPushButton" name="testButton">
+     <property name="text">
+      <string>Тест</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="2">
+    <widget class="QPushButton" name="exitButton">
+     <property name="text">
+      <string>Выход</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1" rowspan="2" colspan="2">
+    <widget class="Agr1" name="widget" native="true"/>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>Agr1</class>
+   <extends>QWidget</extends>
+   <header>agr1.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <tabstops>
+  <tabstop>agr1Button</tabstop>
+  <tabstop>agr2Button</tabstop>
+  <tabstop>ko1Button</tabstop>
+  <tabstop>ko2Button</tabstop>
+  <tabstop>ko3Button</tabstop>
+  <tabstop>ko4Button</tabstop>
+  <tabstop>ko5Button</tabstop>
+  <tabstop>testButton</tabstop>
+  <tabstop>exitButton</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>

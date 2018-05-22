@@ -3,6 +3,7 @@
 #include <QString>
 #include "useE154.h"
 #include <QMessageBox>
+#include "choisedialog.h"
 
 void setUserMessage(Widget *w, string str){
     w->setText(QString(str.c_str()));
@@ -15,6 +16,8 @@ int main(int argc, char *argv[])
     w->show();
     w->setText("Module E-154\n");
     w->setText("Console example for ADC Synchro Stream \n");
+    ChoiseDialog *mainwin = new ChoiseDialog();
+    mainwin->show();
     try{
         UseE154 *agrecola = new UseE154();
         w->setAgrekila(agrecola);
