@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>453</width>
+    <width>345</width>
     <height>303</height>
    </rect>
   </property>
@@ -14,6 +14,76 @@
    <string>Выбор режима</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
+   <item row="2" column="1">
+    <widget class="QPushButton" name="testButton">
+     <property name="text">
+      <string>Тест</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1" rowspan="2" colspan="2">
+    <widget class="QStackedWidget" name="stackedWidget">
+     <property name="currentIndex">
+      <number>7</number>
+     </property>
+     <widget class="QWidget" name="page">
+      <widget class="QLabel" name="label">
+       <property name="geometry">
+        <rect>
+         <x>7</x>
+         <y>10</y>
+         <width>141</width>
+         <height>241</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Режим не выбран</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </widget>
+     <widget class="Agr1" name="page_2">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="Agr2" name="page_3">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="Ko1" name="page_4">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="Ko2" name="page_5">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="Ko3" name="page_6">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="Ko4" name="page_7">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="Ko5" name="page_8"/>
+    </widget>
+   </item>
+   <item row="2" column="2">
+    <widget class="QPushButton" name="exitButton">
+     <property name="text">
+      <string>Выход</string>
+     </property>
+    </widget>
+   </item>
    <item row="1" column="0" rowspan="2">
     <widget class="QGroupBox" name="groupKoagulometr">
      <property name="title">
@@ -83,23 +153,6 @@
      </layout>
     </widget>
    </item>
-   <item row="2" column="1">
-    <widget class="QPushButton" name="testButton">
-     <property name="text">
-      <string>Тест</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="2">
-    <widget class="QPushButton" name="exitButton">
-     <property name="text">
-      <string>Выход</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="1" rowspan="2" colspan="2">
-    <widget class="Agr1" name="widget" native="true"/>
-   </item>
   </layout>
  </widget>
  <customwidgets>
@@ -107,6 +160,42 @@
    <class>Agr1</class>
    <extends>QWidget</extends>
    <header>agr1.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>Agr2</class>
+   <extends>QWidget</extends>
+   <header>agr2.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>Ko1</class>
+   <extends>QWidget</extends>
+   <header>ko1.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>Ko2</class>
+   <extends>QWidget</extends>
+   <header>ko2.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>Ko3</class>
+   <extends>QWidget</extends>
+   <header>ko3.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>Ko4</class>
+   <extends>QWidget</extends>
+   <header>ko4.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>Ko5</class>
+   <extends>QWidget</extends>
+   <header>ko5.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
@@ -122,5 +211,38 @@
   <tabstop>exitButton</tabstop>
  </tabstops>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>exitButton</sender>
+   <signal>clicked()</signal>
+   <receiver>ChoiseDialog</receiver>
+   <slot>exec()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>310</x>
+     <y>292</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>341</x>
+     <y>253</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>testButton</sender>
+   <signal>clicked()</signal>
+   <receiver>ChoiseDialog</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>212</x>
+     <y>274</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>178</x>
+     <y>254</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

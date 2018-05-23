@@ -15,7 +15,35 @@ ChoiseDialog::~ChoiseDialog()
 
 void ChoiseDialog::on_agr1Button_clicked()
 {
-//    agr1 = new Agr1;
-//    ui->widget = agr1;
-//    agr1->show();
+    ui->stackedWidget->setCurrentIndex(1);
+}
+
+void ChoiseDialog::on_agr2Button_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(2);
+}
+
+void ChoiseDialog::on_ko1Button_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(3);
+}
+
+void ChoiseDialog::on_ko2Button_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(4);
+}
+
+void ChoiseDialog::on_ko3Button_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(5);
+}
+
+void ChoiseDialog::on_ko4Button_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(6);
+}
+
+void ChoiseDialog::on_ko5Button_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(7);
 }

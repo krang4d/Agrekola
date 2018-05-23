@@ -18,15 +18,33 @@ SOURCES +=  main.cpp\
     LoadDll.cpp \
     loademodule.cpp \
     choisedialog.cpp \
-    agr1.cpp
+    agr1.cpp \
+    agr2.cpp \
+    ko1.cpp \
+    ko2.cpp \
+    ko3.cpp \
+    ko4.cpp \
+    ko5.cpp
 
 HEADERS  += widget.h \
     useE154.h \
     LoadDll.h \
     loademodule.h \
     choisedialog.h \
-    agr1.h
+    agr1.h \
+    agr2.h \
+    ko1.h \
+    ko2.h \
+    ko3.h \
+    ko4.h \
+    ko5.h
 
 FORMS    += widget.ui \
     choisedialog.ui \
-    agr1.ui
+    agr1.ui \
+    agr2.ui \
+    ko1.ui \
+    ko2.ui \
+    ko3.ui \
+    ko4.ui \
+    ko5.ui
