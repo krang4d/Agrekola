@@ -15,6 +15,12 @@ public:
     explicit Agr1(QWidget *parent = 0);
     ~Agr1();
 
+private slots:
+    void on_startButton_clicked();
+
+signals:
+    void measurement();
+
 private:
     Ui::Agr1 *ui;
 };

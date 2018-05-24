@@ -12,3 +12,8 @@ Ko5::~Ko5()
 {
     delete ui;
 }
+
+void Ko5::on_pushButton_clicked()
+{
+    emit measurement();
+}

@@ -15,6 +15,12 @@ public:
     explicit Ko3(QWidget *parent = 0);
     ~Ko3();
 
+private slots:
+    void on_pushButton_clicked();
+
+signals:
+    void measurement();
+
 private:
     Ui::Ko3 *ui;
 };

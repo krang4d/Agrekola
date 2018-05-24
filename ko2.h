@@ -15,6 +15,12 @@ public:
     explicit Ko2(QWidget *parent = 0);
     ~Ko2();
 
+private slots:
+    void on_pushButton_clicked();
+
+signals:
+    void measurement();
+
 private:
     Ui::Ko2 *ui;
 };

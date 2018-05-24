@@ -12,3 +12,8 @@ Agr2::~Agr2()
 {
     delete ui;
 }
+
+void Agr2::on_pushButton_clicked()
+{
+    emit measurement();
+}

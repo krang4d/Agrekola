@@ -15,6 +15,12 @@ public:
     explicit Ko4(QWidget *parent = 0);
     ~Ko4();
 
+private slots:
+    void on_pushButton_clicked();
+
+signals:
+    void measurement();
+
 private:
     Ui::Ko4 *ui;
 };

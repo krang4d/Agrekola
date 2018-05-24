@@ -12,3 +12,8 @@ Ko4::~Ko4()
 {
     delete ui;
 }
+
+void Ko4::on_pushButton_clicked()
+{
+    emit measurement();
+}

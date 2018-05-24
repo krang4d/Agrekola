@@ -15,6 +15,12 @@ public:
     explicit Agr2(QWidget *parent = 0);
     ~Agr2();
 
+private slots:
+    void on_pushButton_clicked();
+
+signals:
+    void measurement();
+
 private:
     Ui::Agr2 *ui;
 };

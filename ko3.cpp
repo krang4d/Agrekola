@@ -12,3 +12,8 @@ Ko3::~Ko3()
 {
     delete ui;
 }
+
+void Ko3::on_pushButton_clicked()
+{
+    emit measurement();
+}

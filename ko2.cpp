@@ -12,3 +12,8 @@ Ko2::~Ko2()
 {
     delete ui;
 }
+
+void Ko2::on_pushButton_clicked()
+{
+    emit measurement();
+}

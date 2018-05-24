@@ -24,7 +24,7 @@
    <item row="0" column="1" rowspan="2" colspan="2">
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>7</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="page">
       <widget class="QLabel" name="label">
@@ -216,7 +216,7 @@
    <sender>exitButton</sender>
    <signal>clicked()</signal>
    <receiver>ChoiseDialog</receiver>
-   <slot>exec()</slot>
+   <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>310</x>
