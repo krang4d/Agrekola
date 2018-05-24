@@ -2,6 +2,9 @@
 #define MEASUREMENT_H
 
 #include <QWidget>
+#include <QTimer>
+#include "QTime"
+#include "QDateTime"
 
 namespace Ui {
 class Measurement;
@@ -15,9 +18,14 @@ public:
     explicit Measurement(QWidget *parent = 0, int i = 0);
     ~Measurement();
 
+public slots:
+    void updatetime();
+
 private:
     Ui::Measurement *ui;
     int index;
+    QTimer *timer;
+    QDateTime dt;
 };
 
 #endif // MEASUREMENT_H

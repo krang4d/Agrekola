@@ -13,32 +13,6 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QLabel" name="label">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>30</y>
-     <width>47</width>
-     <height>13</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Дата</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_2">
-   <property name="geometry">
-    <rect>
-     <x>110</x>
-     <y>30</y>
-     <width>47</width>
-     <height>13</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Время</string>
-   </property>
-  </widget>
   <widget class="QLabel" name="label_3">
    <property name="geometry">
     <rect>
@@ -161,7 +135,7 @@ p, li { white-space: pre-wrap; }
     </rect>
    </property>
    <property name="title">
-    <string notr="true">Тип испытаний</string>
+    <string notr="true">Пробы</string>
    </property>
    <property name="flat">
     <bool>false</bool>
@@ -173,14 +147,14 @@ p, li { white-space: pre-wrap; }
     <item>
      <widget class="QRadioButton" name="radioButton">
       <property name="text">
-       <string>Парный пробы</string>
+       <string>Парные</string>
       </property>
      </widget>
     </item>
     <item>
      <widget class="QRadioButton" name="radioButton_2">
       <property name="text">
-       <string>Одинарные пробы</string>
+       <string>Одинарные</string>
       </property>
      </widget>
     </item>
@@ -195,7 +169,7 @@ p, li { white-space: pre-wrap; }
      <height>141</height>
     </rect>
    </property>
-   <layout class="QHBoxLayout" name="horizontalLayout_2">
+   <layout class="QHBoxLayout" name="horizontalLayout_graph">
     <item>
      <widget class="QGroupBox" name="groupBox_ch1">
       <property name="title">
@@ -270,19 +244,19 @@ p, li { white-space: pre-wrap; }
      <height>22</height>
     </rect>
    </property>
-   <layout class="QHBoxLayout" name="horizontalLayout_4">
+   <layout class="QHBoxLayout" name="horizontalLayout_incube">
     <item>
-     <widget class="QLabel" name="label_4">
+     <widget class="QLabel" name="label_incube">
       <property name="text">
        <string>Время инкубации, сек</string>
       </property>
       <property name="buddy">
-       <cstring>lineEdit_5</cstring>
+       <cstring>lineEdit_incube</cstring>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QLineEdit" name="lineEdit_5"/>
+     <widget class="QLineEdit" name="lineEdit_incube"/>
     </item>
    </layout>
   </widget>
@@ -295,30 +269,30 @@ p, li { white-space: pre-wrap; }
      <height>61</height>
     </rect>
    </property>
-   <layout class="QGridLayout" name="gridLayout">
+   <layout class="QGridLayout" name="gridLayout_button">
     <item row="0" column="1">
-     <widget class="QPushButton" name="pushButton_3">
+     <widget class="QPushButton" name="pushButton_Next">
       <property name="text">
        <string>Далее</string>
       </property>
      </widget>
     </item>
     <item row="1" column="1">
-     <widget class="QPushButton" name="pushButton_4">
+     <widget class="QPushButton" name="pushButton_Print">
       <property name="text">
        <string>Печать</string>
       </property>
      </widget>
     </item>
     <item row="0" column="0">
-     <widget class="QPushButton" name="pushButton_2">
+     <widget class="QPushButton" name="pushButton_viewGraph">
       <property name="text">
        <string>Просмотр графиков</string>
       </property>
      </widget>
     </item>
     <item row="1" column="0">
-     <widget class="QPushButton" name="pushButton">
+     <widget class="QPushButton" name="pushButton_viewLevel">
       <property name="text">
        <string>Просмотр уровней</string>
       </property>
@@ -393,12 +367,50 @@ p, li { white-space: pre-wrap; }
     <string>TextLabel</string>
    </property>
   </widget>
+  <widget class="QWidget" name="">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>30</y>
+     <width>208</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout_datetime">
+    <item>
+     <widget class="QLabel" name="label_date">
+      <property name="minimumSize">
+       <size>
+        <width>100</width>
+        <height>20</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>Дата</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_time">
+      <property name="minimumSize">
+       <size>
+        <width>100</width>
+        <height>20</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>Время</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
   <zorder>layoutWidget</zorder>
   <zorder>layoutWidget</zorder>
   <zorder>layoutWidget</zorder>
   <zorder>layoutWidget</zorder>
-  <zorder>label</zorder>
-  <zorder>label_2</zorder>
+  <zorder>label_date</zorder>
+  <zorder>label_time</zorder>
   <zorder>label_3</zorder>
   <zorder>groupBox_ch</zorder>
   <zorder>textBrowser</zorder>
