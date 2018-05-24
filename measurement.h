@@ -3,7 +3,6 @@
 
 #include <QWidget>
 #include <QTimer>
-#include "QTime"
 #include "QDateTime"
 
 namespace Ui {
@@ -22,8 +21,8 @@ public slots:
     void updatetime();
 
 private:
-    Ui::Measurement *ui;
     int index;
+    Ui::Measurement *ui;
     QTimer *timer;
     QDateTime dt;
 };

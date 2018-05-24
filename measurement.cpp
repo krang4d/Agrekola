@@ -16,9 +16,9 @@ Measurement::Measurement(QWidget *parent, int i) :
 
 Measurement::~Measurement()
 {
-    delete ui;
     timer->stop();
     delete timer;
+    delete ui;
 }
 
 void Measurement::updatetime()

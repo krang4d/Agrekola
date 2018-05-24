@@ -9,7 +9,9 @@
 #include "ko3.h"
 #include "ko4.h"
 #include "ko5.h"
+#include "testkoagr.h"
 #include "measurement.h"
+
 
 ChoiseDialog::ChoiseDialog(QWidget *parent) :
     QDialog(parent),
@@ -41,11 +43,11 @@ ChoiseDialog::~ChoiseDialog()
 void ChoiseDialog::accept()
 {
     int i = ui->stackedWidget->currentIndex();
-    QMessageBox err(QMessageBox::Warning, "aceept", QString("i =") + QString(std::to_string(i).c_str()), QMessageBox::Ok);
-    err.exec();
+    QMessageBox msg_accept(QMessageBox::Warning, "accept", QString("i =") + QString(std::to_string(i).c_str()), QMessageBox::Ok);
+    msg_accept.exec();
     Measurement *m  = new Measurement(NULL, i);
     m->show();
-    //QDialog::accept();
+    QDialog::accept();
 }
 
 void ChoiseDialog::on_agr1Button_clicked()
@@ -83,3 +85,10 @@ void ChoiseDialog::on_ko5Button_clicked()
     ui->stackedWidget->setCurrentIndex(7);
 }
 
+void ChoiseDialog::on_testButton_clicked()
+{
+    TestKoAgr *test = new TestKoAgr(this);
+    test->exec();
+    //QMessageBox test(QMessageBox::Warning, "test", QString("test"), QMessageBox::Ok);
+    //test.exec();
+}

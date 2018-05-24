@@ -38,7 +38,7 @@ void Widget::on_btnMes_clicked()
 void Widget::on_btnTest_clicked()
 {
     Agrecola->AdcKADR();
-    string str = "ADC[1] = " + std::to_string(Agrecola->volts_array[0]) + "   ADC2 = " + std::to_string(Agrecola->volts_array[1]) +\
+    string str = "ADC1 = " + std::to_string(Agrecola->volts_array[0]) + "   ADC2 = " + std::to_string(Agrecola->volts_array[1]) +\
             "   ADC3 = " + std::to_string(Agrecola->volts_array[2]) + "   ADC3 = " + std::to_string(Agrecola->volts_array[2]) +"\r\n";
     setText(QString(str.c_str()));
     QScrollBar *vb = ui->textEdit->verticalScrollBar();

@@ -228,21 +228,5 @@
     </hint>
    </hints>
   </connection>
-  <connection>
-   <sender>testButton</sender>
-   <signal>clicked()</signal>
-   <receiver>ChoiseDialog</receiver>
-   <slot>accept()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>212</x>
-     <y>274</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>178</x>
-     <y>254</y>
-    </hint>
-   </hints>
-  </connection>
  </connections>
 </ui>

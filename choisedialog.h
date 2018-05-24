@@ -39,6 +39,8 @@ private slots:
 
     void on_ko5Button_clicked();
 
+    void on_testButton_clicked();
+
 private:
     Ui::ChoiseDialog *ui;
 };

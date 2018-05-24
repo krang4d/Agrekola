@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>TestKoAgr</class>
+ <widget class="QDialog" name="TestKoAgr">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>241</width>
+    <height>190</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QPushButton" name="pushButton_onlaser">
+     <property name="text">
+      <string>Лазеры вкл.</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="pushButton_offlaser">
+     <property name="text">
+      <string>Лазеры выкл.</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="pushButton_onmotor">
+     <property name="text">
+      <string>Двигатели вкл.</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="pushButton_offmotor">
+     <property name="text">
+      <string>Двигатели выкл.</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="pushButton_poll">
+     <property name="text">
+      <string>Опрос</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="pushButton_back">
+     <property name="text">
+      <string>Назад</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>pushButton_back</tabstop>
+  <tabstop>pushButton_poll</tabstop>
+  <tabstop>pushButton_offmotor</tabstop>
+  <tabstop>pushButton_onmotor</tabstop>
+  <tabstop>pushButton_offlaser</tabstop>
+  <tabstop>pushButton_onlaser</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>
