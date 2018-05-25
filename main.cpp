@@ -10,8 +10,6 @@ void setUserMessage(Widget *w, string str)
     w->setText(QString(str.c_str()));
 }
 
-
-
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);

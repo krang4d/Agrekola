@@ -1,11 +1,6 @@
 ﻿//#include "StdAfx.h"
 #include "useE154.h"
 
-// кол-во получаемых отсчетов
-DWORD DataStep = 100;
-// буфер данных
-SHORT *ReadBuffer;
-
 useE154::useE154(QWidget *parent)
 {
     pLoadDll = new TLoadDll();
@@ -59,9 +54,11 @@ void useE154::AdcKADR()
 
 std::string useE154::AdcSynchro()
 {
-    pModule->STOP_ADC();
+    // кол-во получаемых отсчетов
+    DWORD DataStep = 100;
     // выделим память под буфер
-    ReadBuffer = new SHORT[DataStep];
+    SHORT *ReadBuffer = new SHORT[DataStep];
+    pModule->STOP_ADC();
     if(!ReadBuffer) throw Errore_E154("Ошибка выделения памяти под буфер фанных\n");
 
     // формируем структуру IoReq
@@ -87,6 +84,7 @@ std::string useE154::AdcSynchro()
         std::string str = std::to_string(Destination[i]);
         readDataString += "№" + std::to_string(i) + "val:" + str + "\t";
     }
+    if(!ReadBuffer) {delete[] ReadBuffer; ReadBuffer = NULL;}
 return readDataString;
 }
 
@@ -152,8 +150,6 @@ void useE154::ReleaseAPIInstance() //(char *ErrorString, bool AbortionFlag)
     }
     // освободим библиотеку
     if(pLoadDll) { delete pLoadDll; pLoadDll = NULL; }
-
-    if(!ReadBuffer) {delete[] ReadBuffer; ReadBuffer = NULL;}
     // если нужно - аварийно завершаем программу
     //if(AbortionFlag) exit(0x1);
 }
