@@ -2,8 +2,8 @@
 #include <QApplication>
 #include <QString>
 #include "useE154.h"
+#include "mainwindow.h"
 #include <QMessageBox>
-#include "choisedialog.h"
 
 void setUserMessage(Widget *w, string str){
     w->setText(QString(str.c_str()));
@@ -12,15 +12,16 @@ void setUserMessage(Widget *w, string str){
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    Widget *w = new Widget();
+    MainWindow *w = new MainWindow;
+    //Widget *w = new Widget();
     w->show();
-    w->setText("Module E-154\n");
-    w->setText("Console example for ADC Synchro Stream \n");
+    //w->centralWidget()->setText("Module E-154\n");
+    //w->setText("Console example for ADC Synchro Stream \n");
     ChoiseDialog *choiseDlg = new ChoiseDialog();
     choiseDlg->show();
     try{
         UseE154 *agrecola = new UseE154();
-        w->setAgrekila(agrecola);
+        //w->setAgrekola(agrecola);
         //setUserMessage(w, agrecola->GetVersion()); //"myGetDllVersion-->ERRORE!\n");
         //setUserMessage(w, agrecola->GetUsbSpeed());
         //setUserMessage(w, agrecola->GetInformation());

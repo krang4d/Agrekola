@@ -2,6 +2,7 @@
 #define CHOISEDIALOG_H
 
 #include <QDialog>
+#include "measurement.h"
 //#include "agr1.h"
 //#include "agr2.h"
 //#include "ko1.h"
@@ -43,6 +44,7 @@ private slots:
 
 private:
     Ui::ChoiseDialog *ui;
+    Measurement *m;
 };
 
 #endif // CHOISEDIALOG_H

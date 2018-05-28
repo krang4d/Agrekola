@@ -28,7 +28,8 @@ SOURCES +=  main.cpp\
     selectcalibrationagr1.cpp \
     selectinductor.cpp \
     measurement.cpp \
-    testkoagr.cpp
+    testkoagr.cpp \
+    mainwindow.cpp
 
 HEADERS  += widget.h \
     useE154.h \
@@ -45,7 +46,8 @@ HEADERS  += widget.h \
     selectcalibrationagr1.h \
     selectinductor.h \
     measurement.h \
-    testkoagr.h
+    testkoagr.h \
+    mainwindow.h
 
 FORMS    += widget.ui \
     choisedialog.ui \
@@ -59,4 +61,5 @@ FORMS    += widget.ui \
     selectcalibrationagr1.ui \
     selectinductor.ui \
     measurement.ui \
-    testkoagr.ui
+    testkoagr.ui \
+    mainwindow.ui

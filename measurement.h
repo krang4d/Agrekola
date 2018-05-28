@@ -14,11 +14,14 @@ class Measurement : public QWidget
     Q_OBJECT
 
 public:
-    explicit Measurement(QWidget *parent = 0, int i = 0);
+    explicit Measurement( int i = 0, QWidget *parent = 0);
     ~Measurement();
 
 public slots:
     void updatetime();
+
+private slots:
+    void on_pushButton_return_clicked();
 
 private:
     int index;

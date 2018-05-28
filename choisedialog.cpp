@@ -10,8 +10,6 @@
 #include "ko4.h"
 #include "ko5.h"
 #include "testkoagr.h"
-#include "measurement.h"
-
 
 ChoiseDialog::ChoiseDialog(QWidget *parent) :
     QDialog(parent),
@@ -37,6 +35,7 @@ ChoiseDialog::ChoiseDialog(QWidget *parent) :
 
 ChoiseDialog::~ChoiseDialog()
 {
+    delete m;
     delete ui;
 }
 
@@ -45,7 +44,7 @@ void ChoiseDialog::accept()
     int i = ui->stackedWidget->currentIndex();
     QMessageBox msg_accept(QMessageBox::Warning, "accept", QString("i =") + QString(std::to_string(i).c_str()), QMessageBox::Ok);
     msg_accept.exec();
-    Measurement *m  = new Measurement(NULL, i);
+    m  = new Measurement(i);
     m->show();
     QDialog::accept();
 }

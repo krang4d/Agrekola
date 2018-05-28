@@ -16,7 +16,7 @@ void Widget::setText(QString str)
     ui->textEdit->setText(text);
 }
 
-void Widget::setAgrekila(UseE154 *agr)
+void Widget::setAgrekola(UseE154 *agr)
 {
     Agrecola = agr;
 }
