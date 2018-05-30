@@ -2,6 +2,8 @@
 #include "ui_choisedialog.h"
 #include "QMessageBox"
 
+//windows include
+#include "measurement.h"
 #include "agr1.h"
 #include "agr2.h"
 #include "ko1.h"
@@ -16,6 +18,7 @@ ChoiseDialog::ChoiseDialog(QWidget *parent) :
     ui(new Ui::ChoiseDialog)
 {
     ui->setupUi(this);
+
     Agr1 *agr1 = static_cast<Agr1 *>(ui->stackedWidget->widget(1));
     Agr2 *agr2 = static_cast<Agr2 *>(ui->stackedWidget->widget(2));
 
@@ -36,7 +39,7 @@ ChoiseDialog::ChoiseDialog(QWidget *parent) :
 
 ChoiseDialog::~ChoiseDialog()
 {
-    delete m;
+    delete measurement;
     delete ui;
 }
 
@@ -45,8 +48,9 @@ void ChoiseDialog::accept()
     int i = ui->stackedWidget->currentIndex();
     QMessageBox msg_accept(QMessageBox::Warning, "accept", QString("i =") + QString(std::to_string(i).c_str()), QMessageBox::Ok);
     msg_accept.exec();
-    m  = new Measurement(i);
-    m->show();
+    if(!measurement) {delete measurement; measurement = NULL;}
+    measurement  = new Measurement(i,this);
+    measurement->show();
     QDialog::accept();
 }
 

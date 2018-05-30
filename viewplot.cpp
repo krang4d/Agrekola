@@ -2,7 +2,7 @@
 #include "ui_viewplot.h"
 
 ViewPlot::ViewPlot(QWidget *parent) :
-    QWidget(parent),
+    p(parent),
     ui(new Ui::ViewPlot)
 {
     ui->setupUi(this);
@@ -11,4 +11,10 @@ ViewPlot::ViewPlot(QWidget *parent) :
 ViewPlot::~ViewPlot()
 {
     delete ui;
+}
+
+void ViewPlot::on_pushButton_back_clicked()
+{
+    p->show();
+    this->hide();
 }

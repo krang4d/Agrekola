@@ -1,10 +1,9 @@
 #include "measurement.h"
-#include "choisedialog.h"
 #include "ui_measurement.h"
 
 Measurement::Measurement(int i, QWidget *parent) :
     index(i),
-    QWidget(parent),
+    p(parent),
     ui(new Ui::Measurement)
 {
     ui->setupUi(this);
@@ -31,9 +30,15 @@ void Measurement::updatetime()
 
 void Measurement::on_pushButton_return_clicked()
 {
-    ChoiseDialog *ch = new ChoiseDialog;
     //QWidget *p = static_cast<QWidget*>(this->parent());
     //p->show();
-    ch->show();
+    p->show();
+    this->hide();
+}
+
+void Measurement::on_pushButton_viewGraph_clicked()
+{
+    ViewPlot *vp = new ViewPlot(this);
+    vp->show();
     this->hide();
 }

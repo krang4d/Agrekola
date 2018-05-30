@@ -2,13 +2,6 @@
 #define CHOISEDIALOG_H
 
 #include <QDialog>
-#include "measurement.h"
-//#include "agr1.h"
-//#include "agr2.h"
-//#include "ko1.h"
-//#include "ko2.h"
-//#include "ko3.h"
-//#include "ko4.h"
 
 namespace Ui {
 class ChoiseDialog;
@@ -44,7 +37,7 @@ private slots:
 
 private:
     Ui::ChoiseDialog *ui;
-    Measurement *m;
+    QWidget *measurement;
 };
 
 #endif // CHOISEDIALOG_H

@@ -15,8 +15,12 @@ public:
     explicit ViewPlot(QWidget *parent = 0);
     ~ViewPlot();
 
+private slots:
+    void on_pushButton_back_clicked();
+
 private:
     Ui::ViewPlot *ui;
+    QWidget *p;
 };
 
 #endif // VIEWPLOT_H
