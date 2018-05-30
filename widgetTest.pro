@@ -30,7 +30,8 @@ SOURCES +=  main.cpp\
     measurement.cpp \
     testkoagr.cpp \
     mainwindow.cpp \
-    param.cpp
+    param.cpp \
+    viewplot.cpp
 
 HEADERS  += widget.h \
     useE154.h \
@@ -49,7 +50,8 @@ HEADERS  += widget.h \
     measurement.h \
     testkoagr.h \
     mainwindow.h \
-    param.h
+    param.h \
+    viewplot.h
 
 FORMS    += widget.ui \
     choisedialog.ui \
@@ -65,4 +67,5 @@ FORMS    += widget.ui \
     measurement.ui \
     testkoagr.ui \
     mainwindow.ui \
-    param.ui
+    param.ui \
+    viewplot.ui

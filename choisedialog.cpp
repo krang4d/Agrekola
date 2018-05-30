@@ -18,6 +18,7 @@ ChoiseDialog::ChoiseDialog(QWidget *parent) :
     ui->setupUi(this);
     Agr1 *agr1 = static_cast<Agr1 *>(ui->stackedWidget->widget(1));
     Agr2 *agr2 = static_cast<Agr2 *>(ui->stackedWidget->widget(2));
+
     Ko1 *ko1 = static_cast<Ko1 *>(ui->stackedWidget->widget(3));
     Ko2 *ko2 = static_cast<Ko2 *>(ui->stackedWidget->widget(4));
     Ko3 *ko3 = static_cast<Ko3 *>(ui->stackedWidget->widget(5));
