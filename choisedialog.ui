@@ -146,7 +146,7 @@
        <widget class="QPushButton" name="agr2Button">
         <property name="text">
          <string>Определение активности
-фактора виллебранда</string>
+фактора Виллебранда</string>
         </property>
        </widget>
       </item>

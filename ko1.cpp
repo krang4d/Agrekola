@@ -13,7 +13,7 @@ Ko1::~Ko1()
     delete ui;
 }
 
-void Ko1::on_pushButton_clicked()
+void Ko1::on_startButton_clicked()
 {
     emit measurement();
 }

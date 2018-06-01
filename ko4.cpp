@@ -13,7 +13,17 @@ Ko4::~Ko4()
     delete ui;
 }
 
-void Ko4::on_pushButton_clicked()
+void Ko4::on_startButton_clicked()
 {
     emit measurement();
+}
+
+void Ko4::on_calibr1Button_clicked()
+{
+    emit calibration();
+}
+
+void Ko4::on_calibr2Button_clicked()
+{
+    emit calibration();
 }

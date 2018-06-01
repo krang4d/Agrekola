@@ -4,9 +4,6 @@
 #include <QWidget>
 #include <QTimer>
 #include "QDateTime"
-//windows include
-#include "choisedialog.h"
-#include "viewplot.h"
 
 namespace Ui {
 class Measurement;
@@ -24,15 +21,15 @@ public slots:
 
 private slots:
     void on_pushButton_return_clicked();
-
     void on_pushButton_viewGraph_clicked();
 
 private:
     int index;
+    QWidget *p;
     Ui::Measurement *ui;
     QTimer *timer;
     QDateTime dt;
-    QWidget *p;
+    QWidget *viewplot;
 };
 
 #endif // MEASUREMENT_H

@@ -13,7 +13,17 @@ Ko5::~Ko5()
     delete ui;
 }
 
-void Ko5::on_pushButton_clicked()
+void Ko5::on_startButton_clicked()
 {
     emit measurement();
+}
+
+void Ko5::on_calibr1Button_clicked()
+{
+    emit calibration();
+}
+
+void Ko5::on_calibr2Button_clicked()
+{
+    emit calibration();
 }

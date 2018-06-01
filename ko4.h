@@ -16,10 +16,13 @@ public:
     ~Ko4();
 
 private slots:
-    void on_pushButton_clicked();
+    void on_startButton_clicked();
+    void on_calibr1Button_clicked();
+    void on_calibr2Button_clicked();
 
 signals:
     void measurement();
+    void calibration();
 
 private:
     Ui::Ko4 *ui;

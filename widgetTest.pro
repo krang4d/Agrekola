@@ -31,7 +31,8 @@ SOURCES +=  main.cpp\
     testkoagr.cpp \
     mainwindow.cpp \
     param.cpp \
-    viewplot.cpp
+    viewplot.cpp \
+    kalibragr2.cpp
 
 HEADERS  += widget.h \
     useE154.h \
@@ -51,7 +52,8 @@ HEADERS  += widget.h \
     testkoagr.h \
     mainwindow.h \
     param.h \
-    viewplot.h
+    viewplot.h \
+    kalibragr2.h
 
 FORMS    += widget.ui \
     choisedialog.ui \
@@ -68,4 +70,5 @@ FORMS    += widget.ui \
     testkoagr.ui \
     mainwindow.ui \
     param.ui \
-    viewplot.ui
+    viewplot.ui \
+    kalibragr2.ui

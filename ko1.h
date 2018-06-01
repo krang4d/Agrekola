@@ -16,7 +16,7 @@ public:
     ~Ko1();
 
 private slots:
-    void on_pushButton_clicked();
+    void on_startButton_clicked();
 
 signals:
     void measurement();

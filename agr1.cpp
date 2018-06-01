@@ -17,3 +17,8 @@ void Agr1::on_startButton_clicked()
 {
     emit measurement();
 }
+
+void Agr1::on_kolibrButton_clicked()
+{
+    emit calibration();
+}

@@ -12,9 +12,9 @@ void setUserMessage(Widget *w, string str){
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    MainWindow *w = new MainWindow;
+    //MainWindow *w = new MainWindow;
     //Widget *w = new Widget();
-    w->show();
+    //w->show();
     //w->centralWidget()->setText("Module E-154\n");
     //w->setText("Console example for ADC Synchro Stream \n");
     ChoiseDialog *choiseDlg = new ChoiseDialog();

@@ -17,9 +17,11 @@ public:
 
 private slots:
     void on_startButton_clicked();
+    void on_kolibrButton_clicked();
 
 signals:
     void measurement();
+    void calibration();
 
 private:
     Ui::Agr1 *ui;

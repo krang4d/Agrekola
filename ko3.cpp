@@ -13,7 +13,17 @@ Ko3::~Ko3()
     delete ui;
 }
 
-void Ko3::on_pushButton_clicked()
+void Ko3::on_startButton_clicked()
 {
     emit measurement();
+}
+
+void Ko3::on_calibr1Button_clicked()
+{
+    emit calibration();
+}
+
+void Ko3::on_calibr2Button_clicked()
+{
+    emit calibration();
 }

@@ -2,6 +2,9 @@
 #define AGR2_H
 
 #include <QWidget>
+#include "kalibragr2.h"
+#include "selectcalibrationagr1.h"
+#include "selectinductor.h"
 
 namespace Ui {
 class Agr2;
@@ -16,13 +19,18 @@ public:
     ~Agr2();
 
 private slots:
-    void on_pushButton_clicked();
+    void on_startButton_clicked();
+    void on_calibrButton_clicked();
 
 signals:
     void measurement();
+    void calibration();
 
 private:
     Ui::Agr2 *ui;
+    KalibrAgr2 *kalibragr2;
+    SelectCalibrationAgr1 *selcalibrAgr1;
+    SelectInductor *selInductor;
 };
 
 #endif // AGR2_H

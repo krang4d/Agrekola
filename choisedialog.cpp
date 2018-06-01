@@ -2,31 +2,22 @@
 #include "ui_choisedialog.h"
 #include "QMessageBox"
 
-//windows include
-#include "measurement.h"
-#include "agr1.h"
-#include "agr2.h"
-#include "ko1.h"
-#include "ko2.h"
-#include "ko3.h"
-#include "ko4.h"
-#include "ko5.h"
-#include "testkoagr.h"
-
 ChoiseDialog::ChoiseDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ChoiseDialog)
 {
     ui->setupUi(this);
 
-    Agr1 *agr1 = static_cast<Agr1 *>(ui->stackedWidget->widget(1));
-    Agr2 *agr2 = static_cast<Agr2 *>(ui->stackedWidget->widget(2));
+    agr1 = static_cast<Agr1 *>(ui->stackedWidget->widget(1));
+    agr2 = static_cast<Agr2 *>(ui->stackedWidget->widget(2));
 
-    Ko1 *ko1 = static_cast<Ko1 *>(ui->stackedWidget->widget(3));
-    Ko2 *ko2 = static_cast<Ko2 *>(ui->stackedWidget->widget(4));
-    Ko3 *ko3 = static_cast<Ko3 *>(ui->stackedWidget->widget(5));
-    Ko4 *ko4 = static_cast<Ko4 *>(ui->stackedWidget->widget(6));
-    Ko5 *ko5 = static_cast<Ko5 *>(ui->stackedWidget->widget(7));
+    ko1 = static_cast<Ko1 *>(ui->stackedWidget->widget(3));
+    ko2 = static_cast<Ko2 *>(ui->stackedWidget->widget(4));
+    ko3 = static_cast<Ko3 *>(ui->stackedWidget->widget(5));
+    ko4 = static_cast<Ko4 *>(ui->stackedWidget->widget(6));
+    ko5 = static_cast<Ko5 *>(ui->stackedWidget->widget(7));
+
+    test = new TestKoAgr(this);
 
     connect(agr1, SIGNAL(measurement()), SLOT(accept()));
     connect(agr2, SIGNAL(measurement()), SLOT(accept()));
@@ -35,11 +26,26 @@ ChoiseDialog::ChoiseDialog(QWidget *parent) :
     connect(ko3, SIGNAL(measurement()), SLOT(accept()));
     connect(ko4, SIGNAL(measurement()), SLOT(accept()));
     connect(ko5, SIGNAL(measurement()), SLOT(accept()));
+
+    connect(agr1, SIGNAL(calibration()), SLOT(calibration()));
+    connect(agr2, SIGNAL(calibration()), SLOT(calibration()));
+    connect(ko2, SIGNAL(calibration()), SLOT(calibration()));
+    connect(ko3, SIGNAL(calibration()), SLOT(calibration()));
+    connect(ko5, SIGNAL(calibration()), SLOT(calibration()));
+    connect(ko4, SIGNAL(calibration()), SLOT(calibration()));
 }
 
 ChoiseDialog::~ChoiseDialog()
 {
+    delete test;
     delete measurement;
+    delete agr1;
+    delete agr2;
+    delete ko1;
+    delete ko2;
+    delete ko3;
+    delete ko4;
+    delete ko5;
     delete ui;
 }
 
@@ -48,10 +54,11 @@ void ChoiseDialog::accept()
     int i = ui->stackedWidget->currentIndex();
     QMessageBox msg_accept(QMessageBox::Warning, "accept", QString("i =") + QString(std::to_string(i).c_str()), QMessageBox::Ok);
     msg_accept.exec();
-    if(!measurement) {delete measurement; measurement = NULL;}
+    //if(measurement) {delete measurement;}
     measurement  = new Measurement(i,this);
     measurement->show();
-    QDialog::accept();
+    hide();
+    //QDialog::accept();
 }
 
 void ChoiseDialog::on_agr1Button_clicked()
@@ -95,4 +102,12 @@ void ChoiseDialog::on_testButton_clicked()
     test->exec();
     //QMessageBox test(QMessageBox::Warning, "test", QString("test"), QMessageBox::Ok);
     //test.exec();
+}
+
+void ChoiseDialog::calibration()
+{
+    int i = ui->stackedWidget->currentIndex();
+    QMessageBox test(QMessageBox::Warning, "calibration", QString("calibration #") + QString(std::to_string(i).c_str()), QMessageBox::Ok);
+    test.exec();
+    //if(i == 2) kalibragr2->show();
 }
