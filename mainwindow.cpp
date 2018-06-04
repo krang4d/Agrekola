@@ -8,15 +8,13 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     cw = new Widget;
     ch = new ChoiseDialog;
-    setCentralWidget(cw);
+    m = new Measurement;
+    vg = new ViewGraph(this);
+    setCentralWidget(m);
 }
 
 MainWindow::~MainWindow()
 {
+    delete vg;
     delete ui;
-}
-
-void MainWindow::on_action_triggered()
-{
-    ch->show();
 }

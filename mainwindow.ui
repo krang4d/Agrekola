@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>701</width>
+    <height>389</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,7 +19,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>701</width>
      <height>21</height>
     </rect>
    </property>
@@ -27,14 +27,74 @@
     <property name="title">
      <string>Файл</string>
     </property>
-    <addaction name="action"/>
+    <addaction name="start"/>
+    <addaction name="abort"/>
+   </widget>
+   <widget class="QMenu" name="menu_2">
+    <property name="title">
+     <string>Графики</string>
+    </property>
+    <widget class="QMenu" name="menu_3">
+     <property name="title">
+      <string>Просмотр</string>
+     </property>
+     <addaction name="action_1"/>
+     <addaction name="action_2"/>
+     <addaction name="action_3"/>
+     <addaction name="action_4"/>
+     <addaction name="action_5"/>
+    </widget>
+    <addaction name="menu_3"/>
+    <addaction name="action_6"/>
+   </widget>
+   <widget class="QMenu" name="menu_5">
+    <property name="title">
+     <string>О программе</string>
+    </property>
    </widget>
    <addaction name="menu"/>
+   <addaction name="menu_2"/>
+   <addaction name="menu_5"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
-  <action name="action">
+  <action name="start">
    <property name="text">
-    <string>Меню</string>
+    <string>Начать</string>
+   </property>
+  </action>
+  <action name="abort">
+   <property name="text">
+    <string>Препвать</string>
+   </property>
+  </action>
+  <action name="action_1">
+   <property name="text">
+    <string>Канал 1</string>
+   </property>
+  </action>
+  <action name="action_2">
+   <property name="text">
+    <string>Канал 2</string>
+   </property>
+  </action>
+  <action name="action_3">
+   <property name="text">
+    <string>Канал 3</string>
+   </property>
+  </action>
+  <action name="action_4">
+   <property name="text">
+    <string>Канал 4</string>
+   </property>
+  </action>
+  <action name="action_5">
+   <property name="text">
+    <string>Все</string>
+   </property>
+  </action>
+  <action name="action_6">
+   <property name="text">
+    <string>Просмотр уровней</string>
    </property>
   </action>
  </widget>

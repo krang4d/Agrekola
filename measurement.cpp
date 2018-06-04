@@ -1,8 +1,5 @@
 #include "measurement.h"
 #include "ui_measurement.h"
-//windows include
-#include "choisedialog.h"
-#include "viewgraph.h"
 
 Measurement::Measurement(int i, QWidget *parent) :
     index(i),
@@ -10,7 +7,6 @@ Measurement::Measurement(int i, QWidget *parent) :
     ui(new Ui::Measurement)
 {
     ui->setupUi(this);
-    viewgraph = new ViewGraph(this);
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), SLOT(updatetime()));
     timer->start(1000);
@@ -61,17 +57,3 @@ void Measurement::updatetime()
     ui->label_date->setText("Дата: " + dt.toString("dd.MM.yyyy"));
 }
 
-void Measurement::on_pushButton_return_clicked()
-{
-    //QWidget *p = static_cast<QWidget*>(this->parent());
-    //p->show();
-    p->show();
-    this->hide();
-}
-
-void Measurement::on_pushButton_viewGraph_clicked()
-{
-    //if(viewplot) {delete viewplot; viewplot = NULL;}
-    viewgraph->show();
-    this->hide();
-}

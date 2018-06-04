@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include "widget.h"
 #include "choisedialog.h"
+#include "measurement.h"
+#include "viewgraph.h"
 
 namespace Ui {
 class MainWindow;
@@ -17,13 +19,12 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-private slots:
-    void on_action_triggered();
-
 private:
     Ui::MainWindow *ui;
     Widget *cw;
     ChoiseDialog *ch;
+    Measurement *m;
+    ViewGraph *vg;
 };
 
 #endif // MAINWINDOW_H
