@@ -4,6 +4,9 @@
 #include <QWidget>
 #include <QTimer>
 #include "QDateTime"
+//windows include
+#include "choisedialog.h"
+#include "viewgraph.h"
 
 namespace Ui {
 class Measurement;
@@ -29,7 +32,7 @@ private:
     Ui::Measurement *ui;
     QTimer *timer;
     QDateTime dt;
-    QWidget *viewplot;
+    ViewGraph *viewgraph;
 };
 
 #endif // MEASUREMENT_H

@@ -2,7 +2,7 @@
 #include "ui_measurement.h"
 //windows include
 #include "choisedialog.h"
-#include "viewplot.h"
+#include "viewgraph.h"
 
 Measurement::Measurement(int i, QWidget *parent) :
     index(i),
@@ -10,6 +10,7 @@ Measurement::Measurement(int i, QWidget *parent) :
     ui(new Ui::Measurement)
 {
     ui->setupUi(this);
+    viewgraph = new ViewGraph(this);
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), SLOT(updatetime()));
     timer->start(1000);
@@ -70,8 +71,7 @@ void Measurement::on_pushButton_return_clicked()
 
 void Measurement::on_pushButton_viewGraph_clicked()
 {
-    if(viewplot) {delete viewplot; viewplot = NULL;}
-    viewplot = new ViewPlot(this);
-    viewplot->show();
+    //if(viewplot) {delete viewplot; viewplot = NULL;}
+    viewgraph->show();
     this->hide();
 }

@@ -11,8 +11,9 @@
 #include "ko3.h"
 #include "ko4.h"
 #include "ko5.h"
-#include "measurement.h"
 #include "testkoagr.h"
+
+class Measurement;
 
 namespace Ui {
 class ChoiseDialog;
@@ -24,6 +25,7 @@ class ChoiseDialog : public QDialog
 
 public:
     explicit ChoiseDialog(QWidget *parent = 0);
+
     ~ChoiseDialog();
 
 private slots:
@@ -39,12 +41,13 @@ private slots:
     void calibration();
 
 private:
+
     Ui::ChoiseDialog *ui;
     TestKoAgr *test;
-    Measurement *measurement;
+
     Agr1 *agr1;
     Agr2 *agr2;
-
+    Measurement *measurement;
     Ko1 *ko1;
     Ko2 *ko2;
     Ko3 *ko3;

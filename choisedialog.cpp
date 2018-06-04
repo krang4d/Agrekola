@@ -1,6 +1,7 @@
 #include "choisedialog.h"
 #include "ui_choisedialog.h"
 #include "QMessageBox"
+#include "measurement.h"
 
 ChoiseDialog::ChoiseDialog(QWidget *parent) :
     QDialog(parent),
