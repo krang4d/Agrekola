@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>921</width>
-    <height>675</height>
+    <height>644</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -59,7 +59,17 @@
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="lineEdit_5"/>
+         <widget class="QLineEdit" name="lineEdit_Ch1">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="readOnly">
+           <bool>true</bool>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>
@@ -74,7 +84,14 @@
          <widget class="QWidget" name="widget_ch4" native="true"/>
         </item>
         <item>
-         <widget class="QLineEdit" name="lineEdit_8"/>
+         <widget class="QLineEdit" name="lineEdit_Ch4">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="readOnly">
+           <bool>true</bool>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>
@@ -89,7 +106,14 @@
          <widget class="QWidget" name="widget_ch3" native="true"/>
         </item>
         <item>
-         <widget class="QLineEdit" name="lineEdit_7"/>
+         <widget class="QLineEdit" name="lineEdit_Ch3">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="readOnly">
+           <bool>true</bool>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>
@@ -104,7 +128,14 @@
          <widget class="QWidget" name="widget_ch2" native="true"/>
         </item>
         <item>
-         <widget class="QLineEdit" name="lineEdit_6"/>
+         <widget class="QLineEdit" name="lineEdit_Ch2">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="readOnly">
+           <bool>true</bool>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>
@@ -116,7 +147,7 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="3">
+     <item row="0" column="3">
       <widget class="QLabel" name="label_3">
        <property name="text">
         <string>Температура &lt; 37</string>

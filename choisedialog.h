@@ -12,9 +12,10 @@
 #include "ko4.h"
 #include "ko5.h"
 #include "testkoagr.h"
+#include "mainwindow.h"
 
 class Measurement;
-
+class MainWindow;
 namespace Ui {
 class ChoiseDialog;
 }
@@ -45,6 +46,7 @@ private:
     Ui::ChoiseDialog *ui;
     TestKoAgr *test;
 
+    MainWindow *mw;
     Agr1 *agr1;
     Agr2 *agr2;
     Measurement *measurement;

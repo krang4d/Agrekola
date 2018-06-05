@@ -35,12 +35,18 @@
        <property name="text">
         <string>Измерение</string>
        </property>
+       <property name="shortcut">
+        <string>Return</string>
+       </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="calibrButton">
        <property name="text">
         <string>Калибровка</string>
+       </property>
+       <property name="shortcut">
+        <string>Ctrl+Return</string>
        </property>
       </widget>
      </item>

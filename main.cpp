@@ -17,10 +17,10 @@ int main(int argc, char *argv[])
     //w->show();
     //w->centralWidget()->setText("Module E-154\n");
     //w->setText("Console example for ADC Synchro Stream \n");
-    //ChoiseDialog *choiseDlg = new ChoiseDialog();
-    //choiseDlg->show();
-    MainWindow *mw = new MainWindow;
-    mw->show();
+    ChoiseDialog *choiseDlg = new ChoiseDialog();
+    choiseDlg->show();
+    //MainWindow *mw = new MainWindow;
+    //mw->show();
     try{
         UseE154 *agrecola = new UseE154();
         //w->setAgrekola(agrecola);

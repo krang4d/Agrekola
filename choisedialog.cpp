@@ -19,6 +19,7 @@ ChoiseDialog::ChoiseDialog(QWidget *parent) :
     ko5 = static_cast<Ko5 *>(ui->stackedWidget->widget(7));
 
     test = new TestKoAgr(this);
+    mw = new MainWindow;
 
     connect(agr1, SIGNAL(measurement()), SLOT(accept()));
     connect(agr2, SIGNAL(measurement()), SLOT(accept()));
@@ -50,14 +51,29 @@ ChoiseDialog::~ChoiseDialog()
     delete ui;
 }
 
+void ChoiseDialog::on_testButton_clicked()
+{
+    TestKoAgr *test = new TestKoAgr(this);
+    test->exec();
+}
+
+void ChoiseDialog::calibration()
+{
+    int i = ui->stackedWidget->currentIndex();
+    QMessageBox test(QMessageBox::Warning, "calibration", QString("calibration #") + QString(std::to_string(i).c_str()), QMessageBox::Ok);
+    test.exec();
+    //if(i == 2) kalibragr2->show();
+}
+
 void ChoiseDialog::accept()
 {
     int i = ui->stackedWidget->currentIndex();
     QMessageBox msg_accept(QMessageBox::Warning, "accept", QString("i =") + QString(std::to_string(i).c_str()), QMessageBox::Ok);
     msg_accept.exec();
     //if(measurement) {delete measurement;}
-    measurement  = new Measurement(i,this);
-    measurement->show();
+    //measurement  = new Measurement(i,this);
+    //measurement->show();
+    mw->show();
     hide();
     //QDialog::accept();
 }
@@ -95,20 +111,4 @@ void ChoiseDialog::on_ko4Button_clicked()
 void ChoiseDialog::on_ko5Button_clicked()
 {
     ui->stackedWidget->setCurrentIndex(7);
-}
-
-void ChoiseDialog::on_testButton_clicked()
-{
-    TestKoAgr *test = new TestKoAgr(this);
-    test->exec();
-    //QMessageBox test(QMessageBox::Warning, "test", QString("test"), QMessageBox::Ok);
-    //test.exec();
-}
-
-void ChoiseDialog::calibration()
-{
-    int i = ui->stackedWidget->currentIndex();
-    QMessageBox test(QMessageBox::Warning, "calibration", QString("calibration #") + QString(std::to_string(i).c_str()), QMessageBox::Ok);
-    test.exec();
-    //if(i == 2) kalibragr2->show();
 }

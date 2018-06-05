@@ -21,10 +21,7 @@ public:
 
 private:
     Ui::MainWindow *ui;
-    Widget *cw;
-    ChoiseDialog *ch;
     Measurement *m;
-    ViewGraph *vg;
 };
 
 #endif // MAINWINDOW_H
