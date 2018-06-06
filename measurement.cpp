@@ -1,9 +1,8 @@
 #include "measurement.h"
 #include "ui_measurement.h"
 
-Measurement::Measurement(int i, QWidget *parent) :
-    index(i),
-    p(parent),
+Measurement::Measurement(QWidget *parent) :
+    QWidget(parent),
     ui(new Ui::Measurement)
 {
     ui->setupUi(this);
@@ -11,36 +10,6 @@ Measurement::Measurement(int i, QWidget *parent) :
     connect(timer, SIGNAL(timeout()), SLOT(updatetime()));
     timer->start(1000);
     dt = QDateTime::currentDateTime();
-    if(i == 1)
-    {
-        setWindowTitle(QString("Определение параметров агрегации"));
-    }
-    else if(i == 2)
-    {
-        setWindowTitle(QString("Определение активности фактора Виллебранда"));
-    }
-    else if(i == 3)
-    {
-        setWindowTitle(QString("Время свертывания"));
-    }
-    else if(i == 4)
-    {
-        setWindowTitle(QString("АЧТВ"));
-    }
-    else if(i == 5)
-    {
-        setWindowTitle(QString("Фибриноген"));
-        ui->textBrowser->setText("Установите в каналы кюветы с пробами и мешалками, укажите используемые каналы, выберите парные или одиночные пробы и введите номера проб. Для парных выберайте каналы 1 и 2, либо 3 и 4, номера проб в них должны быть одинаковыми. Измените, если нужно время инкубации затем нажмите кнопку Старт.");
-    }
-    else if(i == 6)
-    {
-        setWindowTitle(QString("Тромбин"));
-    }
-    else if(i == 7)
-    {
-        setWindowTitle(QString("Протромбиновый комплекс"));
-    }
-    //ui->label_type->setText(QString(std::to_string(i).c_str()));
 }
 
 Measurement::~Measurement()
@@ -48,6 +17,11 @@ Measurement::~Measurement()
     timer->stop();
     delete timer;
     delete ui;
+}
+
+void Measurement::setUserMessage(QString s)
+{
+    ui->textBrowser->setText(s);
 }
 
 void Measurement::updatetime()

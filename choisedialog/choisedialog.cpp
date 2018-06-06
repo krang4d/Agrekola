@@ -1,7 +1,8 @@
 #include "choisedialog.h"
 #include "ui_choisedialog.h"
+
+#include "mainwindow.h"
 #include "QMessageBox"
-#include "measurement.h"
 
 ChoiseDialog::ChoiseDialog(QWidget *parent) :
     QDialog(parent),
@@ -19,10 +20,10 @@ ChoiseDialog::ChoiseDialog(QWidget *parent) :
     ko5 = static_cast<Ko5 *>(ui->stackedWidget->widget(7));
 
     test = new TestKoAgr(this);
-    mw = new MainWindow;
+    mw = new MainWindow(this);
 
     connect(agr1, SIGNAL(measurement()), SLOT(accept()));
-    connect(agr2, SIGNAL(measurement()), SLOT(accept()));
+    //connect(agr2, SIGNAL(measurement()), SLOT(accept()));
     connect(ko1, SIGNAL(measurement()), SLOT(accept()));
     connect(ko2, SIGNAL(measurement()), SLOT(accept()));
     connect(ko3, SIGNAL(measurement()), SLOT(accept()));
@@ -30,17 +31,21 @@ ChoiseDialog::ChoiseDialog(QWidget *parent) :
     connect(ko5, SIGNAL(measurement()), SLOT(accept()));
 
     connect(agr1, SIGNAL(calibration()), SLOT(calibration()));
-    connect(agr2, SIGNAL(calibration()), SLOT(calibration()));
+    //connect(agr2, SIGNAL(calibration()), SLOT(calibration()));
     connect(ko2, SIGNAL(calibration()), SLOT(calibration()));
     connect(ko3, SIGNAL(calibration()), SLOT(calibration()));
     connect(ko5, SIGNAL(calibration()), SLOT(calibration()));
     connect(ko4, SIGNAL(calibration()), SLOT(calibration()));
 }
 
+int ChoiseDialog::getTypeOfWidget() const
+{
+    return ui->stackedWidget->currentIndex();
+}
+
 ChoiseDialog::~ChoiseDialog()
 {
     delete test;
-    delete measurement;
     delete agr1;
     delete agr2;
     delete ko1;
@@ -67,15 +72,10 @@ void ChoiseDialog::calibration()
 
 void ChoiseDialog::accept()
 {
-    int i = ui->stackedWidget->currentIndex();
-    QMessageBox msg_accept(QMessageBox::Warning, "accept", QString("i =") + QString(std::to_string(i).c_str()), QMessageBox::Ok);
-    msg_accept.exec();
-    //if(measurement) {delete measurement;}
-    //measurement  = new Measurement(i,this);
-    //measurement->show();
-    mw->show();
+    //QMessageBox msg_accept(QMessageBox::Warning, "accept", QString("i =") + QString(std::to_string(i).c_str()), QMessageBox::Ok);
+    //msg_accept.exec();
+    mw->newShow();
     hide();
-    //QDialog::accept();
 }
 
 void ChoiseDialog::on_agr1Button_clicked()

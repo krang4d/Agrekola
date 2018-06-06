@@ -2,7 +2,7 @@
 #include "ui_viewgraph.h"
 
 ViewGraph::ViewGraph(QWidget *parent) :
-    p(parent),
+    QWidget(parent),
     ui(new Ui::ViewGraph)
 {
     ui->setupUi(this);
@@ -16,5 +16,6 @@ ViewGraph::~ViewGraph()
 void ViewGraph::on_pushButton_back_clicked()
 {
     hide();
-    p->show();
+    parentWidget()->show();
+    //p->show();
 }

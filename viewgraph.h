@@ -21,7 +21,6 @@ private slots:
     void on_pushButton_back_clicked();
 
 private:
-    QWidget *p;
     Ui::ViewGraph *ui;
 };
 

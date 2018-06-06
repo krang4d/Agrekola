@@ -12,10 +12,9 @@
 #include "ko4.h"
 #include "ko5.h"
 #include "testkoagr.h"
-#include "mainwindow.h"
 
-class Measurement;
 class MainWindow;
+
 namespace Ui {
 class ChoiseDialog;
 }
@@ -26,6 +25,7 @@ class ChoiseDialog : public QDialog
 
 public:
     explicit ChoiseDialog(QWidget *parent = 0);
+    int getTypeOfWidget() const;
 
     ~ChoiseDialog();
 
@@ -49,7 +49,6 @@ private:
     MainWindow *mw;
     Agr1 *agr1;
     Agr2 *agr2;
-    Measurement *measurement;
     Ko1 *ko1;
     Ko2 *ko2;
     Ko3 *ko3;

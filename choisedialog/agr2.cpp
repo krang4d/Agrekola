@@ -22,7 +22,6 @@ Agr2::~Agr2()
 void Agr2::on_startButton_clicked()
 {
     selcalibrAgr1->show();
-    selInductor->show();
     emit measurement();
 }
 

@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QTimer>
+#include <QString>
 #include "QDateTime"
 
 namespace Ui {
@@ -14,14 +15,14 @@ class Measurement : public QWidget
     Q_OBJECT
 
 public:
-    explicit Measurement( int i = 0, QWidget *parent = 0);
+    explicit Measurement(QWidget *parent = 0);
     ~Measurement();
+    void setUserMessage(QString);
+
 public slots:
     void updatetime();
 
 private:
-    int index;
-    QWidget *p;
     Ui::Measurement *ui;
     QTimer *timer;
     QDateTime dt;
