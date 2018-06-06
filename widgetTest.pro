@@ -34,7 +34,8 @@ SOURCES +=  main.cpp\
     choisedialog/ko2.cpp \
     choisedialog/ko3.cpp \
     choisedialog/ko4.cpp \
-    choisedialog/ko5.cpp
+    choisedialog/ko5.cpp \
+    startmeasurment.cpp
 
 HEADERS  += widget.h \
     useE154.h \
@@ -56,7 +57,8 @@ HEADERS  += widget.h \
     choisedialog/ko2.h \
     choisedialog/ko3.h \
     choisedialog/ko4.h \
-    choisedialog/ko5.h
+    choisedialog/ko5.h \
+    startmeasurment.h
 
 FORMS    += widget.ui \
     selectcalibrationagr1.ui \
@@ -75,4 +77,5 @@ FORMS    += widget.ui \
     choisedialog/ko2.ui \
     choisedialog/ko3.ui \
     choisedialog/ko4.ui \
-    choisedialog/ko5.ui
+    choisedialog/ko5.ui \
+    startmeasurment.ui

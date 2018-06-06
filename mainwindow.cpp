@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "choisedialog.h"
-
+#include "startmeasurment.h"
 #include <QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -53,4 +53,11 @@ void MainWindow::newShow()
     }
     //ui->label_type->setText(QString(std::to_string(i).c_str()));
     show();
+}
+
+void MainWindow::on_action_start_triggered()
+{
+    StartMeasurment *st = new StartMeasurment;
+    st->setWindowModality(Qt::ApplicationModal);
+    st->show();
 }

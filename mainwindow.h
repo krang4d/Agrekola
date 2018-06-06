@@ -21,6 +21,9 @@ public:
 
     void newShow();
 
+private slots:
+    void on_action_start_triggered();
+
 private:
     Ui::MainWindow *ui;
     Measurement *m;
