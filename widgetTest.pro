@@ -11,20 +11,13 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET   =    widgetTest
 TEMPLATE =  app
 
+INCLUDEPATH += ./choisedialog
 
 SOURCES +=  main.cpp\
             widget.cpp \
     useE154.cpp \
     LoadDll.cpp \
     loademodule.cpp \
-    choisedialog.cpp \
-    agr1.cpp \
-    agr2.cpp \
-    ko1.cpp \
-    ko2.cpp \
-    ko3.cpp \
-    ko4.cpp \
-    ko5.cpp \
     selectcalibrationagr1.cpp \
     selectinductor.cpp \
     measurement.cpp \
@@ -33,20 +26,20 @@ SOURCES +=  main.cpp\
     param.cpp \
     viewplot.cpp \
     kalibragr2.cpp \
-    viewgraph.cpp
+    viewgraph.cpp \
+    choisedialog/agr1.cpp \
+    choisedialog/agr2.cpp \
+    choisedialog/choisedialog.cpp \
+    choisedialog/ko1.cpp \
+    choisedialog/ko2.cpp \
+    choisedialog/ko3.cpp \
+    choisedialog/ko4.cpp \
+    choisedialog/ko5.cpp
 
 HEADERS  += widget.h \
     useE154.h \
     LoadDll.h \
     loademodule.h \
-    choisedialog.h \
-    agr1.h \
-    agr2.h \
-    ko1.h \
-    ko2.h \
-    ko3.h \
-    ko4.h \
-    ko5.h \
     selectcalibrationagr1.h \
     selectinductor.h \
     measurement.h \
@@ -55,17 +48,17 @@ HEADERS  += widget.h \
     param.h \
     viewplot.h \
     kalibragr2.h \
-    viewgraph.h
+    viewgraph.h \
+    choisedialog/agr1.h \
+    choisedialog/agr2.h \
+    choisedialog/choisedialog.h \
+    choisedialog/ko1.h \
+    choisedialog/ko2.h \
+    choisedialog/ko3.h \
+    choisedialog/ko4.h \
+    choisedialog/ko5.h
 
 FORMS    += widget.ui \
-    choisedialog.ui \
-    agr1.ui \
-    agr2.ui \
-    ko1.ui \
-    ko2.ui \
-    ko3.ui \
-    ko4.ui \
-    ko5.ui \
     selectcalibrationagr1.ui \
     selectinductor.ui \
     measurement.ui \
@@ -74,4 +67,12 @@ FORMS    += widget.ui \
     param.ui \
     viewplot.ui \
     kalibragr2.ui \
-    viewgraph.ui
+    viewgraph.ui \
+    choisedialog/agr1.ui \
+    choisedialog/agr2.ui \
+    choisedialog/choisedialog.ui \
+    choisedialog/ko1.ui \
+    choisedialog/ko2.ui \
+    choisedialog/ko3.ui \
+    choisedialog/ko4.ui \
+    choisedialog/ko5.ui
