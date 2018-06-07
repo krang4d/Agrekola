@@ -15,6 +15,10 @@ public:
     explicit SelectInductor(QWidget *parent = 0);
     ~SelectInductor();
 
+private slots:
+    void on_radioButton_other_toggled(bool checked);
+    void on_pushButton_ok_clicked();
+
 private:
     Ui::SelectInductor *ui;
 };

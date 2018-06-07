@@ -1,7 +1,5 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "choisedialog.h"
-#include "startmeasurment.h"
 #include <QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -10,12 +8,15 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     m = new Measurement;
+    st = new StartMeasurment;
     setCentralWidget(m);
+    connect(st, SIGNAL(startMeasurment()), m, SLOT(getData()));
 }
 
 MainWindow::~MainWindow()
 {
     delete m;
+    delete st;
     delete ui;
 }
 
@@ -57,7 +58,12 @@ void MainWindow::newShow()
 
 void MainWindow::on_action_start_triggered()
 {
-    StartMeasurment *st = new StartMeasurment;
-    st->setWindowModality(Qt::ApplicationModal);
+    //StartMeasurment *st = new StartMeasurment;
+    //st->setWindowModality(Qt::ApplicationModal);
     st->show();
+}
+
+void MainWindow::on_action_menu_triggered()
+{
+    hide();
 }

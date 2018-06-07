@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>282</width>
+    <width>229</width>
     <height>240</height>
    </rect>
   </property>
@@ -28,6 +28,9 @@
            <widget class="QRadioButton" name="radioButton_colla">
             <property name="text">
              <string>Коллаген</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -54,6 +57,9 @@
           </item>
           <item>
            <widget class="QRadioButton" name="radioButton_other">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
             <property name="text">
              <string>Другой</string>
             </property>
@@ -61,39 +67,6 @@
           </item>
          </layout>
         </widget>
-       </item>
-       <item>
-        <layout class="QFormLayout" name="formLayout">
-         <item row="0" column="0">
-          <widget class="QLabel" name="label_time">
-           <property name="text">
-            <string>Время записи
-агрегатограмм,
-мин</string>
-           </property>
-           <property name="buddy">
-            <cstring>lineEdit_time</cstring>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="QLineEdit" name="lineEdit_time"/>
-         </item>
-         <item row="1" column="0">
-          <widget class="QLabel" name="label_period">
-           <property name="text">
-            <string>Интервал между
-точками, сек</string>
-           </property>
-           <property name="buddy">
-            <cstring>lineEdit_period</cstring>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
-          <widget class="QLineEdit" name="lineEdit_period"/>
-         </item>
-        </layout>
        </item>
       </layout>
      </item>
@@ -112,7 +85,11 @@
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="lineEdit_other"/>
+        <widget class="QLineEdit" name="lineEdit_other">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+        </widget>
        </item>
       </layout>
      </item>
@@ -128,22 +105,5 @@
   </layout>
  </widget>
  <resources/>
- <connections>
-  <connection>
-   <sender>pushButton_ok</sender>
-   <signal>clicked()</signal>
-   <receiver>SelectInductor</receiver>
-   <slot>accept()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>78</x>
-     <y>214</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>5</x>
-     <y>215</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>

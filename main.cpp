@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
     //MainWindow *mw = new MainWindow;
     //mw->show();
     try{
-        UseE154 *agrecola = new UseE154();
+        //UseE154 *agrecola = new UseE154();
         //w->setAgrekola(agrecola);
         //setUserMessage(w, agrecola->GetVersion()); //"myGetDllVersion-->ERRORE!\n");
         //setUserMessage(w, agrecola->GetUsbSpeed());

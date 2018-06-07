@@ -53,7 +53,7 @@ void StartMeasurment::on_pushButton_next_clicked()
 void StartMeasurment::on_radioButton_single_toggled(bool checked)
 {
     single = checked;
-    QMessageBox mb;
-    mb.setInformativeText("rb_single pressed");
-    mb.exec();
+//    QMessageBox mb;
+//    mb.setInformativeText("rb_single pressed");
+//    mb.exec();
 }
