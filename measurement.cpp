@@ -1,6 +1,8 @@
 #include "measurement.h"
 #include "ui_measurement.h"
 
+#include <QScrollBar>
+
 Measurement::Measurement(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Measurement)
@@ -21,19 +23,14 @@ Measurement::~Measurement()
 
 void Measurement::setUserMessage(QString s)
 {
-    ui->textBrowser->setText(s);
-}
-
-void Measurement::setFreq(double f)
-{
-    freq = f;
-    setUserMessage(QString("Интервал между точками: %1").arg(freq));
-}
-
-void Measurement::setTime(int t)
-{
-    time = t;
-    setUserMessage(QString("Время записи: %1").arg(time));
+    QString text;
+    list_usrmsg.push_back(QString(tr("%1, время \"%2\"")).arg(s).arg(dt.toString("hh:mm:ss")));
+    for(int i = 0; i < list_usrmsg.length(); i++) {
+        text += QString(tr("%1\n").arg(list_usrmsg.at(i)));
+    }
+    ui->textBrowser->setText(text);
+    QScrollBar *vb = ui->textBrowser->verticalScrollBar();
+    vb->setValue(vb->maximum());
 }
 
 void Measurement::updatetime()
@@ -45,6 +42,6 @@ void Measurement::updatetime()
 
 void Measurement::getData()
 {
-    setUserMessage(tr("signal come startMeasurment()"));
+    //parentWidget()->
+    setUserMessage(tr("signal come \"startMeasurment()\""));
 }
-

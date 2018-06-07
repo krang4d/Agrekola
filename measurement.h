@@ -5,6 +5,8 @@
 #include <QTimer>
 #include <QString>
 #include "QDateTime"
+#include <QList>
+#include <QListView>
 
 namespace Ui {
 class Measurement;
@@ -18,8 +20,6 @@ public:
     explicit Measurement(QWidget *parent = 0);
     ~Measurement();
     void setUserMessage(QString);
-    void setFreq(double);
-    void setTime(int);
 
 public slots:
     void updatetime();
@@ -29,10 +29,7 @@ private:
     Ui::Measurement *ui;
     QTimer *timer;
     QDateTime dt;
-
-    //параметры измерения//
-    double freq; //интервал между точками
-    int time;    //время записи
+    QList<QString> list_usrmsg;
 };
 
 #endif // MEASUREMENT_H

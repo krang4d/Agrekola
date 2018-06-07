@@ -10,6 +10,12 @@
     <height>326</height>
    </rect>
   </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
   <property name="windowTitle">
    <string>Параметры измерения</string>
   </property>
@@ -31,25 +37,22 @@
      <property name="checkable">
       <bool>false</bool>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout_8">
+     <layout class="QVBoxLayout" name="verticalLayout_3">
       <item>
-       <widget class="QSplitter" name="splitter">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
+       <widget class="QRadioButton" name="radioButton_double">
+        <property name="text">
+         <string>Парные пробы</string>
         </property>
-        <widget class="QRadioButton" name="radioButton_double">
-         <property name="text">
-          <string>Парные пробы</string>
-         </property>
-        </widget>
-        <widget class="QRadioButton" name="radioButton_single">
-         <property name="text">
-          <string>Одинарные пробы</string>
-         </property>
-         <property name="checked">
-          <bool>true</bool>
-         </property>
-        </widget>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="radioButton_single">
+        <property name="text">
+         <string>Одинарные пробы</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
        </widget>
       </item>
      </layout>
