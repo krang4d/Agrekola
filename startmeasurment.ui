@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>186</width>
-    <height>326</height>
+    <width>250</width>
+    <height>321</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -200,14 +200,25 @@
     </layout>
    </item>
    <item>
-    <widget class="QPushButton" name="pushButton_next">
-     <property name="text">
-      <string>Продолжить</string>
-     </property>
-     <property name="shortcut">
-      <string>Return</string>
-     </property>
-    </widget>
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <item>
+      <widget class="QPushButton" name="pushButton_next">
+       <property name="text">
+        <string>Продолжить</string>
+       </property>
+       <property name="shortcut">
+        <string>Return</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_cancel">
+       <property name="text">
+        <string>Отмена</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>
@@ -224,7 +235,6 @@
   <tabstop>radioButton_single</tabstop>
   <tabstop>lineEdit_frequency</tabstop>
   <tabstop>lineEdit_time</tabstop>
-  <tabstop>pushButton_next</tabstop>
  </tabstops>
  <resources/>
  <connections/>

@@ -41,22 +41,22 @@ bool StartMeasurment::isChannel_4()
     return channel_4;
 }
 
-QString StartMeasurment::getNum_1()
+int StartMeasurment::getNum_1()
 {
     return num_1;
 }
 
-QString StartMeasurment::getNum_2()
+int StartMeasurment::getNum_2()
 {
     return num_2;
 }
 
-QString StartMeasurment::getNum_3()
+int StartMeasurment::getNum_3()
 {
     return num_3;
 }
 
-QString StartMeasurment::getNum_4()
+int StartMeasurment::getNum_4()
 {
     return num_4;
 }
@@ -96,23 +96,35 @@ void StartMeasurment::on_pushButton_next_clicked()
     channel_2 = ui->checkBox_ch2->isChecked();
     channel_3 = ui->checkBox_ch3->isChecked();
     channel_4 = ui->checkBox_ch4->isChecked();
-    num_1 = ui->lineEdit_ch1->text();
-    num_2 = ui->lineEdit_ch2->text();
-    num_3 = ui->lineEdit_ch3->text();
-    num_4 = ui->lineEdit_ch4->text();
+    num_1 = ui->lineEdit_ch1->text().toInt();
+    num_2 = ui->lineEdit_ch2->text().toInt();
+    num_3 = ui->lineEdit_ch3->text().toInt();
+    num_4 = ui->lineEdit_ch4->text().toInt();
     freq = ui->lineEdit_frequency->text().toDouble();       //интервал между точками
     time = ui->lineEdit_time->text().toInt();               //время записи
-    if(!ui->lineEdit_ch1->text().isEmpty() && !ui->lineEdit_ch2->text().isEmpty() &&
-            !ui->lineEdit_ch3->text().isEmpty() && !ui->lineEdit_ch4->text().isEmpty())
+
+    QMessageBox mb;
+    mb.setIcon(QMessageBox::Information);
+    mb.setInformativeText("Выберите канал измерения!");
+    if(!ui->checkBox_ch1->isChecked() && !ui->checkBox_ch2->isChecked() &&\
+            !ui->checkBox_ch3->isChecked() && !ui->checkBox_ch4->isChecked())
+    {
+        mb.exec();
+        return;
+    }
+    mb.setInformativeText("Введите номера всех проб!");
+    if(ui->checkBox_ch1->isChecked() && ui->lineEdit_ch1->text().isEmpty())
+        mb.exec();
+    else if(ui->checkBox_ch2->isChecked() && ui->lineEdit_ch2->text().isEmpty())
+        mb.exec();
+    else if(ui->checkBox_ch3->isChecked() && ui->lineEdit_ch3->text().isEmpty())
+        mb.exec();
+    else if(ui->checkBox_ch4->isChecked() && ui->lineEdit_ch4->text().isEmpty())
+        mb.exec();
+    else
     {
         emit startMeasurment();
         hide();
-    }
-    else{
-        QMessageBox mb;
-        mb.setIcon(QMessageBox::Information);
-        mb.setInformativeText("Введите номера всех проб.");
-        mb.exec();
     }
 }
 
@@ -122,4 +134,9 @@ void StartMeasurment::on_radioButton_single_toggled(bool checked)
 //    QMessageBox mb;
 //    mb.setInformativeText("rb_single pressed");
 //    mb.exec();
+}
+
+void StartMeasurment::on_pushButton_cancel_clicked()
+{
+    hide();
 }
