@@ -12,8 +12,7 @@ Widget::Widget(QWidget *parent) :
 
 void Widget::setText(QString str)
 {
-    text += str;
-    ui->textEdit->setText(text);
+    ui->textEdit->append(str);
 }
 
 void Widget::setAgrekila(useE154 *agr)

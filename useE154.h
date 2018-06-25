@@ -26,6 +26,13 @@ struct Errore_E154
     Errore_E154(const string &m) : err_msg(m) {}
 };
 
+struct DoubleData
+{
+    DoubleData(double *d, int i) : data(d), size(i) {}
+    double *data;
+    int size;
+};
+
 class useE154 : public QWidget
 {
      Q_OBJECT
@@ -44,10 +51,11 @@ public:
     void SetChannel(channel ch, int pos);
     bool GetStatusTD();
 
-    /*Функции поп сбору данных */
-    double AdcSample(channel ch);        //простое одноканальное измерение АЦП канала ch, n раз
-    void AdcKADR();                             //покадровое измерение
-    std::string AdcSynchro();                          //измерение в синхронном режиме
+    /*Функции по сбору данных */
+    double AdcSample(channel ch);   //простое одноканальное измерение АЦП канала ch, n раз
+    void AdcKADR();                 //покадровое измерение
+    std::string AdcSynchro();       //измерение в синхронном режиме возвращает строку данных
+    DoubleData AdcSynchroDouble();
     double volts_array[16];
 
 protected:
@@ -66,7 +74,7 @@ private:
 	MODULE_DESCRIPTION_E154 ModuleDescription;	// структура с полной информацией о модуле
     IO_REQUEST_LUSBAPI IoReq;                   // структура с параметрами запроса на ввод/вывод данных
     ADC_PARS_E154 ap;							// структура параметров работы АЦП модуля
-
+    double *pDestination;
 
 	// отсчёты АЦП
     //SHORT AdcSample1, AdcSample2;
@@ -79,7 +87,6 @@ private:
     std::list<SHORT> Adc4BufferList;
     /*Buffer for AdcSynchro()*/
     std::list<double> ReadDataList;
-    std::string readDataString;
 	WORD TtlOut;	//Состояние выходных портов 
 	WORD TtlIN;		//Состояние входных портов
     std::list<string> user_msg;

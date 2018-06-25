@@ -1,5 +1,4 @@
-﻿//#include "StdAfx.h"
-#include "useE154.h"
+﻿#include "useE154.h"
 
 useE154::useE154(QWidget *parent)
 {
@@ -14,6 +13,7 @@ useE154::useE154(QWidget *parent)
 
 useE154::~useE154(void)
 {
+    delete[] pDestination;
 	ReleaseAPIInstance();
 }
 
@@ -54,6 +54,22 @@ void useE154::AdcKADR()
 
 std::string useE154::AdcSynchro()
 {
+    DoubleData Destination = AdcSynchroDouble();
+    int Size = Destination.size;
+    std::string readDataString;
+    readDataString += "useE154::AdcSynchro() size:" + std::to_string(Size) + "\n";
+    readDataString += "Sample[0]= " + std::to_string(Destination.data[0]) + "\n";
+    readDataString += "Sample[" + std::to_string(Size-1) + "]" + std::to_string(Destination.data[Size-1]) + "\n";
+    for(DWORD i=0; i<Size; i++)
+    {
+        std::string str = std::to_string(Destination.data[i]);
+        readDataString += "№" + std::to_string(i) + "val:" + str + "\t";
+    }
+    //if(!ReadBuffer) {delete[] ReadBuffer; ReadBuffer = NULL;}
+return readDataString;
+}
+DoubleData useE154::AdcSynchroDouble()
+{
     // кол-во получаемых отсчетов
     DWORD DataStep = 100;
     // выделим память под буфер
@@ -72,20 +88,14 @@ std::string useE154::AdcSynchro()
     if(!pModule->START_ADC()) throw Errore_E154("Ошибка при запуске АЦП AdcSynchro()!\n");
     if(!pModule->ReadData(&IoReq)) throw Errore_E154("Ошибка при чтении данных AdcSynchro()!\n");
     DWORD Size = IoReq.NumberOfWordsPassed;
-    double Destination[Size];
+
+    if(!pDestination) {delete pDestination; pDestination = NULL;}
+    pDestination = new double[Size];
+    DoubleData data(pDestination, Size);
     SHORT *AdcData = IoReq.Buffer;
-    if(!pModule->ProcessArray(AdcData, Destination, Size, TRUE, TRUE)) throw Errore_E154("Ошибка преобразования кода АЦП ProcessArray()\n");
-    //int s = static_cast<int>(Size);
-    readDataString += "useE154::AdcSynchro() size:" + std::to_string(static_cast<int>(Size)) + "\n";
-    readDataString += "Sample[0]= " + std::to_string(Destination[0]) + "\n";
-    readDataString += "Sample[" + std::to_string(Size-1) + "]" + std::to_string(Destination[Size-1]) + "\n";
-    for(DWORD i=0; i<Size; i++)
-    {
-        std::string str = std::to_string(Destination[i]);
-        readDataString += "№" + std::to_string(i) + "val:" + str + "\t";
-    }
+    if(!pModule->ProcessArray(AdcData, pDestination, Size, TRUE, TRUE)) throw Errore_E154("Ошибка преобразования кода АЦП ProcessArray()\n");
     if(!ReadBuffer) {delete[] ReadBuffer; ReadBuffer = NULL;}
-return readDataString;
+    return data;
 }
 
 //typedef LPVOID (WINAPI *pCreateInstance)(char *);
