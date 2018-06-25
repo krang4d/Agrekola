@@ -7,9 +7,14 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    setAttribute(Qt::WA_DeleteOnClose);
     m = new Measurement;
     st = new StartMeasurment;
     setCentralWidget(m);
+    ch = qobject_cast<ChoiseDialog *>(parentWidget());
+    if (!ch){
+        QMessageBox test(QMessageBox::Critical, "qobject_cast", QString("qobject_cast in MainWindow::newShow()"), QMessageBox::Ok); test.exec();
+    }
     connect(st, SIGNAL(startMeasurment()), m, SLOT(getData()));
 }
 
@@ -22,12 +27,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::newShow()
 {
-    int i;
-    if (ChoiseDialog *ch = qobject_cast<ChoiseDialog *>(parentWidget()))
-        i = ch->getTypeOfWidget();
-    else{
-        QMessageBox test(QMessageBox::Critical, "qobject_cast", QString("qobject_cast in MainWindow::newShow()"), QMessageBox::Ok); test.exec();
-    }
+    int i = ch->getTypeOfWidget();
     //else  {QMessageBox test(QMessageBox::Warning, "qobject_cast", QString("qobject_cast"), QMessageBox::Ok); test.exec();}
 
     if(i == 1){
@@ -66,4 +66,7 @@ void MainWindow::on_action_start_triggered()
 void MainWindow::on_action_menu_triggered()
 {
     hide();
+    ch->show();
+    close();
+    //this->~MainWindow();
 }

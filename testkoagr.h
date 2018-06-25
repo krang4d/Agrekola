@@ -19,6 +19,16 @@ private slots:
 
     void on_pushButton_back_clicked();
 
+    void on_pushButton_onlaser_clicked();
+
+    void on_pushButton_offlaser_clicked();
+
+    void on_pushButton_onmotor_clicked();
+
+    void on_pushButton_offmotor_clicked();
+
+    void on_pushButton_poll_clicked();
+
 private:
     Ui::TestKoAgr *ui;
 };

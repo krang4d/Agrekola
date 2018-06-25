@@ -20,7 +20,6 @@ ChoiseDialog::ChoiseDialog(QWidget *parent) :
     ko5 = static_cast<Ko5 *>(ui->stackedWidget->widget(7));
 
     test = new TestKoAgr(this);
-    mw = new MainWindow(this);
 
     connect(agr1, SIGNAL(measurement()), SLOT(accept()));
     //connect(agr2, SIGNAL(measurement()), SLOT(accept()));
@@ -74,6 +73,7 @@ void ChoiseDialog::accept()
 {
     //QMessageBox msg_accept(QMessageBox::Warning, "accept", QString("i =") + QString(std::to_string(i).c_str()), QMessageBox::Ok);
     //msg_accept.exec();
+    mw = new MainWindow(this);
     mw->newShow();
     hide();
 }

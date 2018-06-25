@@ -30,6 +30,7 @@ private:
     Ui::MainWindow *ui;
     Measurement *m;
     StartMeasurment *st;
+    ChoiseDialog *ch;
 };
 
 #endif // MAINWINDOW_H

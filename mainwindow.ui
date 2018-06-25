@@ -61,7 +61,6 @@
      <string>Калибровка</string>
     </property>
     <addaction name="action_calibr1"/>
-    <addaction name="action_calibr2"/>
     <addaction name="action_propety"/>
    </widget>
    <addaction name="menu"/>
@@ -118,17 +117,12 @@
   </action>
   <action name="action_propety">
    <property name="text">
-    <string>Параметры</string>
+    <string>Параметры калибровки</string>
    </property>
   </action>
   <action name="action_calibr1">
    <property name="text">
-    <string>Калибровка 1</string>
-   </property>
-  </action>
-  <action name="action_calibr2">
-   <property name="text">
-    <string>Калибровка 2</string>
+    <string>Откалибровать</string>
    </property>
   </action>
   <action name="action_print">

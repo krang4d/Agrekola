@@ -47,13 +47,13 @@ private:
     TestKoAgr *test;
 
     MainWindow *mw;
-    Agr1 *agr1;
-    Agr2 *agr2;
-    Ko1 *ko1;
-    Ko2 *ko2;
-    Ko3 *ko3;
-    Ko4 *ko4;
-    Ko5 *ko5;
+    Agr1 *agr1; //Определение параметров агрегации
+    Agr2 *agr2; //Определение активности фактора Виллебранда
+    Ko1 *ko1;   //Время свертывания
+    Ko2 *ko2;   //АЧТВ
+    Ko3 *ko3;   //Фибриноген
+    Ko4 *ko4;   //Тромбин
+    Ko5 *ko5;   //Протромбиновый комплекс
 };
 
 #endif // CHOISEDIALOG_H

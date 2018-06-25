@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>220</width>
-    <height>123</height>
+    <width>174</width>
+    <height>94</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -42,20 +42,10 @@
      <item>
       <widget class="QPushButton" name="calibr1Button">
        <property name="text">
-        <string>Калибровка 1</string>
+        <string>Калибровка</string>
        </property>
        <property name="shortcut">
         <string>Ctrl+Return</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="calibr2Button">
-       <property name="text">
-        <string>Калибровка 2</string>
-       </property>
-       <property name="shortcut">
-        <string>Ctrl+Shift+Return</string>
        </property>
       </widget>
      </item>
