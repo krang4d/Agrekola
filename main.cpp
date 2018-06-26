@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
     w->setText("Console example for ADC Synchro Stream \n");
     try{
         //agrecola = new useE154();
-        w->setAgrekila(agrecola);
+        w->setAgrekola(agrecola);
         setUserMessage(w, agrecola->GetVersion());
         setUserMessage(w, agrecola->GetUsbSpeed());
         setUserMessage(w, agrecola->GetInformation());

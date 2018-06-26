@@ -62,7 +62,8 @@ std::string useE154::AdcSynchro()
     readDataString += "Sample[" + std::to_string(Size-1) + "]" + std::to_string(Destination.data[Size-1]) + "\n";
     for(DWORD i=0; i<Size; i++)
     {
-        std::string str = std::to_string(Destination.data[i]);
+        vec_data.append(Destination.data[i]);
+        std::string str = std::to_string(vec_data[i]);
         readDataString += "№" + std::to_string(i) + "val:" + str + "\t";
     }
     //if(!ReadBuffer) {delete[] ReadBuffer; ReadBuffer = NULL;}

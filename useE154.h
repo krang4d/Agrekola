@@ -57,6 +57,7 @@ public:
     std::string AdcSynchro();       //измерение в синхронном режиме возвращает строку данных
     DoubleData AdcSynchroDouble();
     double volts_array[16];
+    QVector<double> vec_data;
 
 protected:
 	void initAPIInstance();
@@ -87,6 +88,7 @@ private:
     std::list<SHORT> Adc4BufferList;
     /*Buffer for AdcSynchro()*/
     std::list<double> ReadDataList;
+
 	WORD TtlOut;	//Состояние выходных портов 
 	WORD TtlIN;		//Состояние входных портов
     std::list<string> user_msg;
