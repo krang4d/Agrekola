@@ -3,7 +3,6 @@
 #include <QString>
 #include "useE154.h"
 #include <QMessageBox>
-#include "chartdir/realtimedemo.h"
 
 void setUserMessage(Widget *w, string str)
 {

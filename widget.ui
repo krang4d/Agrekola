@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1027</width>
-    <height>567</height>
+    <height>555</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -59,13 +59,13 @@
     </item>
    </layout>
   </widget>
-  <widget class="QFrame" name="frame_CustomPlot">
+  <widget class="QFrame" name="frame">
    <property name="geometry">
     <rect>
-     <x>19</x>
+     <x>9</x>
      <y>439</y>
-     <width>1001</width>
-     <height>111</height>
+     <width>1011</width>
+     <height>101</height>
     </rect>
    </property>
    <property name="frameShape">

@@ -3,7 +3,6 @@
 #include <QString>
 #include <QWidget>
 #include "useE154.h"
-#include "chartdir/realtimedemo.h"
 
 namespace Ui {
 class Widget;

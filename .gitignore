@@ -6,3 +6,8 @@ Makefile*
 *.autosave
 object_script.widgetTest.Debug
 object_script.widgetTest.Release
+QCustomPlot/GPL.txt
+QCustomPlot/changelog.txt
+QCustomPlot/documentation/
+QCustomPlot/examples/
+rcfiles/
