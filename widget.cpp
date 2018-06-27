@@ -8,6 +8,7 @@ Widget::Widget(QWidget *parent) :
     ui(new Ui::Widget)
 {
     ui->setupUi(this);
+    setWindowTitle("Программы сбора данных с АЦП по 4 каналам");
     customPlot1 = ui->frame_1;
     customPlot2 = ui->frame_2;
     customPlot3 = ui->frame_3;
@@ -63,6 +64,11 @@ void Widget::setupRealtimeData()
     customPlot->yAxis->setTickLabelFont(font);
     customPlot->legend->setFont(font);
     */
+    customPlot1->setOpenGl(true);
+    customPlot2->setOpenGl(true);
+    customPlot3->setOpenGl(true);
+    customPlot4->setOpenGl(true);
+
     QSharedPointer<QCPAxisTickerTime> timeTicker(new QCPAxisTickerTime);
     timeTicker->setTimeFormat("%m:%s");
 
@@ -124,7 +130,7 @@ Widget::~Widget()
 
 void Widget::on_AdcSample_clicked()
 {
-    double data = Agrecola->AdcSample(CH2);
+    double data = Agrecola->AdcSample(useE154::CH2);
     setText(QString(std::to_string(data).c_str()) + "\n");
     QScrollBar *vb = ui->textEdit->verticalScrollBar();
     int max = vb->maximum();
@@ -162,10 +168,10 @@ void Widget::realtimeDataSlot()
     if (key-lastPointKey > 0.002) // at most add point every 2 ms
     {
       // add data to lines:
-      double a1 = Agrecola->AdcSample(CH1);
-      double a2 = Agrecola->AdcSample(CH2);
-      double a3 = Agrecola->AdcSample(CH3);
-      double a4 = Agrecola->AdcSample(CH4);
+      double a1 = Agrecola->AdcSample(useE154::CH1);
+      double a2 = Agrecola->AdcSample(useE154::CH2);
+      double a3 = Agrecola->AdcSample(useE154::CH3);
+      double a4 = Agrecola->AdcSample(useE154::CH4);
       customPlot1->graph(0)->addData(key, a1); //qSin(key)+qrand()/(double)RAND_MAX*1*qSin(key/0.3843));
       customPlot2->graph(0)->addData(key, a2); //qCos(key)+qrand()/(double)RAND_MAX*0.5*qSin(key/0.4364));
       customPlot3->graph(0)->addData(key, a3); //qCos(key)+qrand()/(double)RAND_MAX*0.5*qSin(key/0.4364));
@@ -199,5 +205,53 @@ void Widget::realtimeDataSlot()
                         .arg(customPlot1->graph(0)->data()->size()+customPlot2->graph(0)->data()->size() + customPlot3->graph(0)->data()->size() + customPlot4->graph(0)->data()->size()));
         lastFpsKey = key;
         frameCount = 0;
+    }
+}
+
+void Widget::on_checkBox_1_stateChanged(int arg1)
+{
+    if(arg1){
+        setText("on_checkBox_1");
+        Agrecola->SetChannel(useE154::CH1, useE154::ON);
+    }
+    else{
+        setText("off_checkBox_1");
+        Agrecola->SetChannel(useE154::CH1, useE154::OFF);
+    }
+}
+
+void Widget::on_checkBox_2_stateChanged(int arg1)
+{
+    if(arg1){
+        setText("on_checkBox_2");
+        Agrecola->SetChannel(useE154::CH2, useE154::ON);
+    }
+    else{
+        setText("off_checkBox_2");
+        Agrecola->SetChannel(useE154::CH2, useE154::OFF);
+    }
+}
+
+void Widget::on_checkBox_3_stateChanged(int arg1)
+{
+    if(arg1){
+        setText("on_checkBox_3");
+        Agrecola->SetChannel(useE154::CH3, useE154::ON);
+    }
+    else{
+        setText("off_checkBox_3");
+        Agrecola->SetChannel(useE154::CH3, useE154::OFF);
+    }
+}
+
+void Widget::on_checkBox_4_stateChanged(int arg1)
+{
+    if(arg1){
+        setText("on_checkBox_4");
+        Agrecola->SetChannel(useE154::CH4, useE154::ON);
+    }
+    else{
+        setText("off_checkBox_4");
+        Agrecola->SetChannel(useE154::CH4, useE154::OFF);
     }
 }

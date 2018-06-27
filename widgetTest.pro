@@ -54,6 +54,8 @@ QMAKE_POST_LINK = copy /Y libapi\\Lusbapi.dll $(DESTDIR)
 #INCLUDEPATH += $$PWD/chartdir/lib32
 #DEPENDPATH += $$PWD/chartdir/lib32
 
+DEFINES += QCUSTOMPLOT_USE_OPENGL
+
 DISTFILES += \
     libapi/Lusbapi.dll \
     rcfiles/pause.png \

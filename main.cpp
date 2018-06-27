@@ -28,7 +28,7 @@ int main(int argc, char *argv[])
         setUserMessage(w, agrecola->GetInformation());
         setUserMessage(w, agrecola->AdcSynchro());
         if(agrecola->GetStatusTD()){
-            setUserMessage(w, "Прибор вышел в режиме тепловой готовности\r\n");
+            setUserMessage(w, "Прибор вошел в режиме тепловой готовности\r\n");
         } else setUserMessage(w, "Прибор <style color:red>не вышел</style> в режиме тепловой готовности\r\n");
     }
     catch(Errore_E154 &e){

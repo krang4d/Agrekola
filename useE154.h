@@ -12,14 +12,6 @@
 
 using std::string;
 
-enum {
-	OFF, ON 
-};
-
-enum channel{
-    CH1 = 0x00, CH2 = 0x01 , CH3 = 0x02, CH4 = 0x03, PP = 0x04, L = 0x05
-};
-
 struct Errore_E154
 {
     string err_msg;
@@ -36,6 +28,15 @@ struct DoubleData
 class useE154 : public QWidget
 {
      Q_OBJECT
+
+public:
+    enum {
+        OFF, ON
+    };
+
+    enum channel{
+        CH1 = 0x00, CH2 = 0x01 , CH3 = 0x02, CH4 = 0x03, PP = 0x04, L = 0x05
+    };
 
 signals:
     void ValueCome(std::list<double>*);
