@@ -8,7 +8,10 @@ Widget::Widget(QWidget *parent) :
     ui(new Ui::Widget)
 {
     ui->setupUi(this);
-    customPlot = ui->frame;
+    customPlot1 = ui->frame_1;
+    customPlot2 = ui->frame_2;
+    customPlot3 = ui->frame_3;
+    customPlot4 = ui->frame_4;
     setupRealtimeData();
 }
 
@@ -29,7 +32,7 @@ void Widget::setupQuadraticPlot(QVector<double> data)
         QMessageBox::warning(this, tr("My Application"),
                              tr("Нет данных для вывода графика.\n"));
     }
-    customPlot->addGraph();
+    customPlot1->addGraph();
     QVector<double> x;
     double average;
     for(int i = 0; i < data.count(); i++)
@@ -39,14 +42,14 @@ void Widget::setupQuadraticPlot(QVector<double> data)
     }
     average /= data.length();
     ui->label_average->setText(QString("%1").arg(average));
-    customPlot->graph(0)->setData(x, data);
+    customPlot1->graph(0)->setData(x, data);
     // give the axes some labels:
-    customPlot->xAxis->setLabel("x");
-    customPlot->yAxis->setLabel("y");
+    customPlot1->xAxis->setLabel("x");
+    customPlot1->yAxis->setLabel("y");
     // set axes ranges, so we see all data:
-    customPlot->xAxis->setRange(0, data.length());
-    customPlot->yAxis->setRange(-5, 5);
-    customPlot->replot();
+    customPlot1->xAxis->setRange(0, data.length());
+    customPlot1->yAxis->setRange(-5, 5);
+    customPlot1->replot();
 }
 
 void Widget::setupRealtimeData()
@@ -60,20 +63,53 @@ void Widget::setupRealtimeData()
     customPlot->yAxis->setTickLabelFont(font);
     customPlot->legend->setFont(font);
     */
-    customPlot->addGraph(); // blue line
-    customPlot->graph(0)->setPen(QPen(QColor(40, 110, 255)));
-    customPlot->addGraph(); // red line
-    customPlot->graph(1)->setPen(QPen(QColor(255, 110, 40)));
-
     QSharedPointer<QCPAxisTickerTime> timeTicker(new QCPAxisTickerTime);
-    timeTicker->setTimeFormat("%h:%m:%s");
-    customPlot->xAxis->setTicker(timeTicker);
-    customPlot->axisRect()->setupFullAxesBox();
-    customPlot->yAxis->setRange(-6, 6);
+    timeTicker->setTimeFormat("%m:%s");
+
+    customPlot1->addGraph();
+    customPlot1->graph(0)->setPen(QPen(QColor(10, 110, 40)));
+    customPlot1->xAxis->setTicker(timeTicker);
+    customPlot1->axisRect()->setupFullAxesBox();
+    customPlot1->xAxis->setLabel("Время, с");
+    customPlot1->yAxis->setLabel("Напряжение, В");
+    customPlot1->yAxis->setRange(-5.5, 5.5);
 
     // make left and bottom axes transfer their ranges to right and top axes:
-    connect(customPlot->xAxis, SIGNAL(rangeChanged(QCPRange)), customPlot->xAxis2, SLOT(setRange(QCPRange)));
-    connect(customPlot->yAxis, SIGNAL(rangeChanged(QCPRange)), customPlot->yAxis2, SLOT(setRange(QCPRange)));
+    connect(customPlot1->xAxis, SIGNAL(rangeChanged(QCPRange)), customPlot1->xAxis2, SLOT(setRange(QCPRange)));
+    connect(customPlot1->yAxis, SIGNAL(rangeChanged(QCPRange)), customPlot1->yAxis2, SLOT(setRange(QCPRange)));
+
+    customPlot2->addGraph();
+    customPlot2->graph(0)->setPen(QPen(QColor(255, 110, 40)));
+    customPlot2->xAxis->setTicker(timeTicker);
+    customPlot2->axisRect()->setupFullAxesBox();
+    customPlot2->xAxis->setLabel("Время, с");
+    customPlot2->yAxis->setLabel("Напряжение, В");
+    customPlot2->yAxis->setRange(-5.5, 5.5);
+
+    connect(customPlot2->xAxis, SIGNAL(rangeChanged(QCPRange)), customPlot2->xAxis2, SLOT(setRange(QCPRange)));
+    connect(customPlot2->yAxis, SIGNAL(rangeChanged(QCPRange)), customPlot2->yAxis2, SLOT(setRange(QCPRange)));
+
+    customPlot3->addGraph();
+    customPlot3->graph(0)->setPen(QPen(QColor(255, 110, 200)));
+    customPlot3->xAxis->setTicker(timeTicker);
+    customPlot3->axisRect()->setupFullAxesBox();
+    customPlot3->xAxis->setLabel("Время, с");
+    customPlot3->yAxis->setLabel("Напряжение, В");
+    customPlot3->yAxis->setRange(-5.5, 5.5);
+
+    connect(customPlot3->xAxis, SIGNAL(rangeChanged(QCPRange)), customPlot3->xAxis2, SLOT(setRange(QCPRange)));
+    connect(customPlot3->yAxis, SIGNAL(rangeChanged(QCPRange)), customPlot3->yAxis2, SLOT(setRange(QCPRange)));
+
+    customPlot4->addGraph();
+    customPlot4->graph(0)->setPen(QPen(QColor(255, 200, 40)));
+    customPlot4->xAxis->setTicker(timeTicker);
+    customPlot4->axisRect()->setupFullAxesBox();
+    customPlot4->xAxis->setLabel("Время, с");
+    customPlot4->yAxis->setLabel("Напряжение, В");
+    customPlot4->yAxis->setRange(-5.5, 5.5);
+
+    connect(customPlot4->xAxis, SIGNAL(rangeChanged(QCPRange)), customPlot4->xAxis2, SLOT(setRange(QCPRange)));
+    connect(customPlot4->yAxis, SIGNAL(rangeChanged(QCPRange)), customPlot4->yAxis2, SLOT(setRange(QCPRange)));
 
     // setup a timer that repeatedly calls MainWindow::realtimeDataSlot:
     connect(&dataTimer, SIGNAL(timeout()), this, SLOT(realtimeDataSlot()));
@@ -126,31 +162,42 @@ void Widget::realtimeDataSlot()
     if (key-lastPointKey > 0.002) // at most add point every 2 ms
     {
       // add data to lines:
-      double a = Agrecola->AdcSample(CH1);
-      double b = Agrecola->AdcSample(CH2);
-      customPlot->graph(0)->addData(key, a); //qSin(key)+qrand()/(double)RAND_MAX*1*qSin(key/0.3843));
-      customPlot->graph(1)->addData(key, b); //qCos(key)+qrand()/(double)RAND_MAX*0.5*qSin(key/0.4364));
-      // rescale value (vertical) axis to fit the current data:
+      double a1 = Agrecola->AdcSample(CH1);
+      double a2 = Agrecola->AdcSample(CH2);
+      double a3 = Agrecola->AdcSample(CH3);
+      double a4 = Agrecola->AdcSample(CH4);
+      customPlot1->graph(0)->addData(key, a1); //qSin(key)+qrand()/(double)RAND_MAX*1*qSin(key/0.3843));
+      customPlot2->graph(0)->addData(key, a2); //qCos(key)+qrand()/(double)RAND_MAX*0.5*qSin(key/0.4364));
+      customPlot3->graph(0)->addData(key, a3); //qCos(key)+qrand()/(double)RAND_MAX*0.5*qSin(key/0.4364));
+      customPlot4->graph(0)->addData(key, a4); //qCos(key)+qrand()/(double)RAND_MAX*0.5*qSin(key/0.4364));
+      //rescale value (vertical) axis to fit the current data:
       //ui->customPlot->graph(0)->rescaleValueAxis();
       //ui->customPlot->graph(1)->rescaleValueAxis(true);
       lastPointKey = key;
     }
     // make key axis range scroll with the data (at a constant range size of 8):
-    customPlot->xAxis->setRange(key, 8, Qt::AlignRight);
-    customPlot->replot();
+    customPlot1->xAxis->setRange(key, 8, Qt::AlignRight);
+    customPlot1->replot();
+
+    customPlot2->xAxis->setRange(key, 8, Qt::AlignRight);
+    customPlot2->replot();
+
+    customPlot3->xAxis->setRange(key, 8, Qt::AlignRight);
+    customPlot3->replot();
+
+    customPlot4->xAxis->setRange(key, 8, Qt::AlignRight);
+    customPlot4->replot();
 
     // calculate frames per second:
     static double lastFpsKey;
     static int frameCount;
     ++frameCount;
-//    if (key-lastFpsKey > 2) // average fps over 2 seconds
-//    {
-//      ui->statusBar->showMessage(
-//            QString("%1 FPS, Total Data points: %2")
-//            .arg(frameCount/(key-lastFpsKey), 0, 'f', 0)
-//            .arg(ui->customPlot->graph(0)->data()->size()+ui->customPlot->graph(1)->data()->size())
-//            , 0);
-//      lastFpsKey = key;
-//      frameCount = 0;
-//    }
+    if (key-lastFpsKey > 2) // average fps over 2 seconds
+    {
+        ui->label_fps->setText(QString("%1 FPS, Total Data points: %2")
+                        .arg(frameCount/(key-lastFpsKey), 0, 'f', 0)
+                        .arg(customPlot1->graph(0)->data()->size()+customPlot2->graph(0)->data()->size() + customPlot3->graph(0)->data()->size() + customPlot4->graph(0)->data()->size()));
+        lastFpsKey = key;
+        frameCount = 0;
+    }
 }

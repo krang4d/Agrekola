@@ -33,7 +33,10 @@ private:
     QString text;
     useE154 *Agrecola;
     QTimer dataTimer;
-    QCustomPlot *customPlot;
+    QCustomPlot *customPlot1;
+    QCustomPlot *customPlot2;
+    QCustomPlot *customPlot3;
+    QCustomPlot *customPlot4;
 };
 
 #endif // WIDGET_H
