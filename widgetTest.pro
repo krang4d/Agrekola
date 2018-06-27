@@ -79,3 +79,6 @@ FORMS    += widget.ui \
     choisedialog/ko4.ui \
     choisedialog/ko5.ui \
     startmeasurment.ui
+
+RESOURCES += \
+    rcfile.qrc

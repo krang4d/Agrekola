@@ -143,7 +143,7 @@
      <item row="1" column="2">
       <widget class="QLabel" name="label_incube">
        <property name="text">
-        <string>Время инкубации, 180 сек</string>
+        <string>Время инкубации, --- сек</string>
        </property>
       </widget>
      </item>

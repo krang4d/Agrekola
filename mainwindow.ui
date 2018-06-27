@@ -83,8 +83,15 @@
    <addaction name="action_start"/>
   </widget>
   <action name="action_start">
+   <property name="icon">
+    <iconset resource="rcfile.qrc">
+     <normaloff>:/rcfiles/play.png</normaloff>:/rcfiles/play.png</iconset>
+   </property>
    <property name="text">
     <string>Начать</string>
+   </property>
+   <property name="shortcut">
+    <string>Return</string>
    </property>
   </action>
   <action name="action_all">
@@ -136,6 +143,8 @@
    </property>
   </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="rcfile.qrc"/>
+ </resources>
  <connections/>
 </ui>
