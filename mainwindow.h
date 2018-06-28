@@ -2,7 +2,6 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "widget.h"
 #include "choisedialog.h"
 #include "measurement.h"
 #include "viewgraph.h"

@@ -14,10 +14,6 @@ TEMPLATE =  app
 INCLUDEPATH += ./choisedialog
 
 SOURCES +=  main.cpp\
-            widget.cpp \
-    useE154.cpp \
-    LoadDll.cpp \
-    loademodule.cpp \
     selectcalibrationagr1.cpp \
     selectinductor.cpp \
     measurement.cpp \
@@ -37,11 +33,7 @@ SOURCES +=  main.cpp\
     choisedialog/ko5.cpp \
     startmeasurment.cpp
 
-HEADERS  += widget.h \
-    useE154.h \
-    LoadDll.h \
-    loademodule.h \
-    selectcalibrationagr1.h \
+HEADERS  += selectcalibrationagr1.h \
     selectinductor.h \
     measurement.h \
     testkoagr.h \
@@ -60,8 +52,7 @@ HEADERS  += widget.h \
     choisedialog/ko5.h \
     startmeasurment.h
 
-FORMS    += widget.ui \
-    selectcalibrationagr1.ui \
+FORMS    += selectcalibrationagr1.ui \
     selectinductor.ui \
     measurement.ui \
     testkoagr.ui \
