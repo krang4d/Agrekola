@@ -1,6 +1,7 @@
 ﻿#include "useE154.h"
 
-useE154::useE154(QWidget *parent)
+useE154::useE154(QWidget *parent) :
+    QWidget(parent)
 {
     pLoadDll = new TLoadDll();
     if(!pLoadDll) throw Errore_E154("Ошибка загрузи библиотеки Dll Load_Dll()!");
@@ -60,7 +61,7 @@ std::string useE154::AdcSynchro()
     readDataString += "useE154::AdcSynchro() size:" + std::to_string(Size) + "\n";
     readDataString += "Sample[0]= " + std::to_string(Destination.data[0]) + "\n";
     readDataString += "Sample[" + std::to_string(Size-1) + "]" + std::to_string(Destination.data[Size-1]) + "\n";
-    for(DWORD i=0; i<Size; i++)
+    for(int i=0; i<Size; i++)
     {
         vec_data.append(Destination.data[i]);
         std::string str = std::to_string(vec_data[i]);
@@ -102,9 +103,11 @@ DoubleData useE154::AdcSynchroDouble()
 //typedef LPVOID (WINAPI *pCreateInstance)(char *);
 void useE154::initAPIInstance()
 {
+    char name[] = "e154";
     pCreateInstance CreateInstance = (pCreateInstance)pLoadDll->CallCreateLInstance();
     if(!CreateInstance) throw Errore_E154("Ошибка выделения памяти в функции SetAPIInstance()!");
-    pModule = static_cast<ILE154 *>(CreateInstance("e154"));
+    pModule = static_cast<ILE154 *>(CreateInstance(name));
+    //pModule = static_cast<ILE154 *>(CreateInstance(const_cast<char*>("e154")));
     if(!pModule) throw Errore_E154("Ошибка выделения памяти для интерфейса CreateInstance(\"e154\")!");
 }
 

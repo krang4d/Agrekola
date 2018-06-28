@@ -27,7 +27,6 @@
     <property name="title">
      <string>Файл</string>
     </property>
-    <addaction name="action_menu"/>
     <addaction name="action_save"/>
     <addaction name="action_print"/>
    </widget>
@@ -80,6 +79,7 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+   <addaction name="action_menu"/>
    <addaction name="action_start"/>
   </widget>
   <action name="action_start">
@@ -105,6 +105,10 @@
    </property>
   </action>
   <action name="action_menu">
+   <property name="icon">
+    <iconset resource="rcfile.qrc">
+     <normaloff>:/rcfiles/sun.png</normaloff>:/rcfiles/sun.png</iconset>
+   </property>
    <property name="text">
     <string>В меню</string>
    </property>

@@ -87,10 +87,10 @@ void Widget::setupRealtimeData()
     customPlot4->yAxis->setTickLabelFont(font);
     customPlot4->legend->setFont(font);
     */
-    customPlot1->setOpenGl(true);
-    customPlot2->setOpenGl(true);
-    customPlot3->setOpenGl(true);
-    customPlot4->setOpenGl(true);
+    //customPlot1->setOpenGl(true);
+    //customPlot2->setOpenGl(true);
+    //customPlot3->setOpenGl(true);
+    //customPlot4->setOpenGl(true);
 
     QSharedPointer<QCPAxisTickerTime> timeTicker(new QCPAxisTickerTime);
     timeTicker->setTimeFormat("%m:%s");

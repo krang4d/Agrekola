@@ -16,8 +16,6 @@ public:
     ~ViewGraph();
 
 private slots:
-
-
     void on_pushButton_back_clicked();
 
 private:

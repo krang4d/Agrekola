@@ -18,7 +18,6 @@ public:
 private slots:
     void on_startButton_clicked();
     void on_calibr1Button_clicked();
-    void on_calibr2Button_clicked();
 
 signals:
     void measurement();

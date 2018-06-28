@@ -22,8 +22,3 @@ void Ko2::on_calibr1Button_clicked()
 {
     emit calibration();
 }
-
-void Ko2::on_calibr2Button_clicked()
-{
-    emit calibration();
-}
