@@ -3,17 +3,23 @@
 #include <QScrollBar>
 #include <QMessageBox>
 
+#include <QThread>
+
 Widget::Widget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Widget)
 {
     ui->setupUi(this);
-    setWindowTitle("Программы сбора данных с АЦП по 4 каналам");
+    setWindowTitle("Программы сбора данных с АЦП(E-154) по 4 каналам");
     customPlot1 = ui->frame_1;
     customPlot2 = ui->frame_2;
     customPlot3 = ui->frame_3;
     customPlot4 = ui->frame_4;
     setupRealtimeData();
+
+    TDTimer.start(200);
+    connect(&TDTimer, SIGNAL(timeout()), this, SLOT(updataTD()));
+    setText(QString("Допустимое количество потоков %1\n").arg(QThread::idealThreadCount()));
 }
 
 void Widget::setText(QString str)
@@ -57,12 +63,28 @@ void Widget::setupRealtimeData()
 {
     // include this section to fully disable antialiasing for higher performance:
     /*
-    customPlot->setNotAntialiasedElements(QCP::aeAll);
     QFont font;
     font.setStyleStrategy(QFont::NoAntialias);
-    customPlot->xAxis->setTickLabelFont(font);
-    customPlot->yAxis->setTickLabelFont(font);
-    customPlot->legend->setFont(font);
+
+    customPlot1->setNotAntialiasedElements(QCP::aeAll);
+    customPlot1->xAxis->setTickLabelFont(font);
+    customPlot1->yAxis->setTickLabelFont(font);
+    customPlot1->legend->setFont(font);
+
+    customPlot2->setNotAntialiasedElements(QCP::aeAll);
+    customPlot2->xAxis->setTickLabelFont(font);
+    customPlot2->yAxis->setTickLabelFont(font);
+    customPlot2->legend->setFont(font);
+
+    customPlot3->setNotAntialiasedElements(QCP::aeAll);
+    customPlot3->xAxis->setTickLabelFont(font);
+    customPlot3->yAxis->setTickLabelFont(font);
+    customPlot3->legend->setFont(font);
+
+    customPlot4->setNotAntialiasedElements(QCP::aeAll);
+    customPlot4->xAxis->setTickLabelFont(font);
+    customPlot4->yAxis->setTickLabelFont(font);
+    customPlot4->legend->setFont(font);
     */
     customPlot1->setOpenGl(true);
     customPlot2->setOpenGl(true);
@@ -253,5 +275,20 @@ void Widget::on_checkBox_4_stateChanged(int arg1)
     else{
         setText("off_checkBox_4");
         Agrecola->SetChannel(useE154::CH4, useE154::OFF);
+    }
+}
+
+void Widget::updataTD()
+{
+
+    if(!Agrecola->GetStatusTD())
+    {
+        ui->label_TD->setText(QString("Температура >37°C"));
+        ui->label_TD->setStyleSheet("color: green");
+    }
+    else
+    {
+        ui->label_TD->setText(QString("Температура <37°C"));
+        ui->label_TD->setStyleSheet("color: red");
     }
 }

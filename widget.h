@@ -33,11 +33,13 @@ private slots:
     void on_checkBox_3_stateChanged(int arg1);
     void on_checkBox_4_stateChanged(int arg1);
 
+    void updataTD();
+
 private:
     Ui::Widget *ui;
     QString text;
     useE154 *Agrecola;
-    QTimer dataTimer;
+    QTimer dataTimer, TDTimer;
     QCustomPlot *customPlot1;
     QCustomPlot *customPlot2;
     QCustomPlot *customPlot3;
