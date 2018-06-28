@@ -5,11 +5,12 @@
 
 #include <QThread>
 
-Widget::Widget(QWidget *parent) :
+Widget::Widget(useE154 *Agrekola, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Widget)
 {
     ui->setupUi(this);
+    setAgrekola(Agrekola);
     setWindowTitle("Программы сбора данных с АЦП(E-154) по 4 каналам");
     customPlot1 = ui->frame_1;
     customPlot2 = ui->frame_2;

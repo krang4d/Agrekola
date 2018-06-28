@@ -11,53 +11,87 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 TARGET   =  widgetTest
 TEMPLATE =  app
 
+INCLUDEPATH += libapi
+QMAKE_POST_LINK = copy /Y libapi\\Lusbapi.dll $(DESTDIR)
+
+#DEFINES += QCUSTOMPLOT_USE_OPENGL
+
+INCLUDEPATH += ./choisedialog \
+               ./QCustomPlot
+
 SOURCES +=  main.cpp\
-            widget.cpp \
+    selectcalibrationagr1.cpp \
+    selectinductor.cpp \
+    measurement.cpp \
+    testkoagr.cpp \
+    mainwindow.cpp \
+    param.cpp \
+    viewplot.cpp \
+    kalibragr2.cpp \
+    viewgraph.cpp \
+    choisedialog/agr1.cpp \
+    choisedialog/agr2.cpp \
+    choisedialog/choisedialog.cpp \
+    choisedialog/ko1.cpp \
+    choisedialog/ko2.cpp \
+    choisedialog/ko3.cpp \
+    choisedialog/ko4.cpp \
+    choisedialog/ko5.cpp \
+    startmeasurment.cpp  \
+    widget.cpp \
     useE154.cpp \
     LoadDll.cpp \
-#    chartdir/qchartviewer.cpp \
-#    chartdir/realtimedemo.cpp
     QCustomPlot/qcustomplot.cpp
 
-HEADERS  += widget.h \
+HEADERS  += selectcalibrationagr1.h \
+    selectinductor.h \
+    measurement.h \
+    testkoagr.h \
+    mainwindow.h \
+    param.h \
+    viewplot.h \
+    kalibragr2.h \
+    viewgraph.h \
+    choisedialog/agr1.h \
+    choisedialog/agr2.h \
+    choisedialog/choisedialog.h \
+    choisedialog/ko1.h \
+    choisedialog/ko2.h \
+    choisedialog/ko3.h \
+    choisedialog/ko4.h \
+    choisedialog/ko5.h \
+    startmeasurment.h  \
+    widget.h \
     useE154.h \
     LoadDll.h \
-#    chartdir/qchartviewer.h \
-#    chartdir/realtimedemo.h
     libapi/Lusbapi.h \
     libapi/LusbapiTypes.h \
     QCustomPlot/qcustomplot.h
 
-FORMS    += widget.ui
+FORMS    += selectcalibrationagr1.ui \
+    selectinductor.ui \
+    measurement.ui \
+    testkoagr.ui \
+    mainwindow.ui \
+    param.ui \
+    viewplot.ui \
+    kalibragr2.ui \
+    viewgraph.ui \
+    choisedialog/agr1.ui \
+    choisedialog/agr2.ui \
+    choisedialog/choisedialog.ui \
+    choisedialog/ko1.ui \
+    choisedialog/ko2.ui \
+    choisedialog/ko3.ui \
+    choisedialog/ko4.ui \
+    choisedialog/ko5.ui \
+    startmeasurment.ui \
+    widget.ui
 
-#RESOURCES += \
-#    chartdir/realtimedemo.qrc
-
-INCLUDEPATH += libapi
-QMAKE_POST_LINK = copy /Y libapi\\Lusbapi.dll $(DESTDIR)
-
-#INCLUDEPATH += chartdir/include
-
-#DEFINES += CHARTDIR_HIDE_OBSOLETE _CRT_SECURE_NO_WARNINGS
-
-#win32:contains(QMAKE_HOST.arch, x86_64) {
-#  LIBS += -L$$PWD/chartdir/lib64/ -lchartdir60
-#  QMAKE_POST_LINK = copy /Y chartdir\\lib64\\chartdir60.dll $(DESTDIR)
-#} else {
-#  LIBS += -L$$PWD/chartdir/lib32/ -lchartdir60
-#  QMAKE_POST_LINK = copy /Y chartdir\\lib32\\chartdir60.dll $(DESTDIR)
-#}
-
-#win32:CONFIG(release, debug|release): -L$$PWD/chartdir/lib32/ -lchartdir60
-#else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/chartdir/lib32/ -lchartdir60d
-
-#INCLUDEPATH += $$PWD/chartdir/lib32
-#DEPENDPATH += $$PWD/chartdir/lib32
-
-DEFINES += QCUSTOMPLOT_USE_OPENGL
+RESOURCES += \
+    rcfile.qrc
 
 DISTFILES += \
     libapi/Lusbapi.dll \
     rcfiles/pause.png \
-    rcfiles/play.png \
-    .gitignore
+    rcfiles/play.png

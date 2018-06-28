@@ -11,3 +11,5 @@ QCustomPlot/changelog.txt
 QCustomPlot/documentation/
 QCustomPlot/examples/
 rcfiles/
+/*.Debug
+/*.Release
