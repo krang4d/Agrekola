@@ -9,22 +9,20 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
-    m = new Measurement;
-    st = new StartMeasurment;
-    setCentralWidget(m);
+    centerWidget = new Widget(this);
+    setCentralWidget(centerWidget);
     ch = qobject_cast<ChoiseDialog *>(parentWidget());
     if (!ch){
         QMessageBox test(QMessageBox::Critical, "qobject_cast", QString("qobject_cast in MainWindow::newShow()"), QMessageBox::Ok); test.exec();
     }
-    connect(st, SIGNAL(startMeasurment()), m, SLOT(getData()));
+    connect(st, SIGNAL(startMeasurment()), centerWidget, SLOT(getData()));
     //qApp->installEventFilter(this);
 }
 
 MainWindow::~MainWindow()
 {
-    delete m;
-    delete st;
     delete ui;
+    delete centerWidget;
 }
 
 void MainWindow::newShow()
@@ -46,7 +44,7 @@ void MainWindow::newShow()
     }
     else if(i == 5){
         setWindowTitle(tr("Фибриноген, измерение (5)"));
-        m->setUserMessage(tr("Установите в каналы кюветы с пробами и мешалками, укажите используемые каналы, выберите парные или одиночные пробы и введите номера проб. Для парных выберайте каналы 1 и 2, либо 3 и 4, номера проб в них должны быть одинаковыми. Измените, если нужно время инкубации затем нажмите кнопку Старт."));
+        centerWidget->setUserMessage(tr("Установите в каналы кюветы с пробами и мешалками, укажите используемые каналы, выберите парные или одиночные пробы и введите номера проб. Для парных выберайте каналы 1 и 2, либо 3 и 4, номера проб в них должны быть одинаковыми. Измените, если нужно время инкубации затем нажмите кнопку Старт."));
     }
     else if(i == 6){
         setWindowTitle(tr("Тромбин, измерние (6)"));

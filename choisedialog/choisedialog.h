@@ -46,7 +46,6 @@ private:
 
     Ui::ChoiseDialog *ui;
     //TestKoAgr *test;
-    useE154 *agrekola;
     Widget *test;
     MainWindow *mw;
     Agr1 *agr1; //Определение параметров агрегации

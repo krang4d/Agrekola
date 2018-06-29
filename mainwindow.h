@@ -7,6 +7,7 @@
 #include "viewgraph.h"
 #include "choisedialog.h"
 #include "startmeasurment.h"
+#include "widget.h"
 
 namespace Ui {
 class MainWindow;
@@ -31,7 +32,7 @@ protected:
 
 private:
     Ui::MainWindow *ui;
-    Measurement *m;
+    Widget *centerWidget;
     StartMeasurment *st;
     ChoiseDialog *ch;
 };

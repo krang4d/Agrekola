@@ -4,14 +4,14 @@
 #include <QMessageBox>
 
 #include <QThread>
+#include "useE154.h"
 
-Widget::Widget(useE154 *Agrekola, QDialog *menu, QWidget *parent) :
+Widget::Widget(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::Widget),
-    m(menu)
+    ui(new Ui::Widget)
 {
     ui->setupUi(this);
-    setAgrekola(Agrekola);
+    agrekola = new useE154(this);
     setWindowTitle("Программы сбора данных с АЦП(E-154) по 4 каналам");
     customPlot1 = ui->frame_1;
     customPlot2 = ui->frame_2;
@@ -19,19 +19,18 @@ Widget::Widget(useE154 *Agrekola, QDialog *menu, QWidget *parent) :
     customPlot4 = ui->frame_4;
     setupRealtimeData();
 
-    TDTimer.start(200);
-    connect(&TDTimer, SIGNAL(timeout()), this, SLOT(updataTD()));
-    setText(QString("Допустимое количество потоков %1\n").arg(QThread::idealThreadCount()));
+    setupTimers();
+    setUserMessage(QString("Допустимое количество потоков %1\n").arg(QThread::idealThreadCount()));
 }
 
-void Widget::setText(QString str)
+void Widget::setUserMessage(QString str)
 {
     ui->textEdit->append(str);
 }
 
 void Widget::setAgrekola(useE154 *agr)
 {
-    Agrecola = agr;
+    agrekola = agr;
 }
 
 void Widget::setupQuadraticPlot(QVector<double> data)
@@ -149,18 +148,18 @@ void Widget::setupRealtimeData()
 Widget::~Widget()
 {
     delete ui;
-    //delete m;
+    delete agrekola;
     delete customPlot1;
     delete customPlot2;
     delete customPlot3;
     delete customPlot4;
 }
 
-
+/*
 void Widget::on_AdcSample_clicked()
 {
     double data = Agrecola->AdcSample(useE154::CH2);
-    setText(QString(std::to_string(data).c_str()) + "\n");
+    setUserMessage(QString(std::to_string(data).c_str()) + "\n");
     QScrollBar *vb = ui->textEdit->verticalScrollBar();
     int max = vb->maximum();
     vb->setValue(max);
@@ -172,7 +171,7 @@ void Widget::on_AdcKadr_clicked()
     Agrecola->AdcKADR();
     string str = "ADC[1] = " + std::to_string(Agrecola->volts_array[0]) + "   ADC2 = " + std::to_string(Agrecola->volts_array[1]) +\
             "   ADC3 = " + std::to_string(Agrecola->volts_array[2]) + "   ADC3 = " + std::to_string(Agrecola->volts_array[2]) +"\r\n";
-    setText(QString(str.c_str()));
+    setUserMessage(QString(str.c_str()));
     QScrollBar *vb = ui->textEdit->verticalScrollBar();
     int max = vb->maximum();
     vb->setValue(max);
@@ -181,13 +180,20 @@ void Widget::on_AdcKadr_clicked()
 void Widget::on_AdcSynchro_clicked()
 {
     Agrecola->vec_data.clear();
-    setText(QString(Agrecola->AdcSynchro().c_str()));
+    setUserMessage(QString(Agrecola->AdcSynchro().c_str()));
     setupQuadraticPlot(Agrecola->vec_data);
     QScrollBar *vb = ui->textEdit->verticalScrollBar();
     int max = vb->maximum();
     vb->setValue(max);
 }
 
+void Widget::on_pushButton_back_clicked()
+{
+    close();
+    m->show();
+    this->~QWidget();
+}
+*/
 void Widget::realtimeDataSlot()
 {
     static QTime time(QTime::currentTime());
@@ -197,10 +203,10 @@ void Widget::realtimeDataSlot()
     if (key-lastPointKey > 0.002) // at most add point every 2 ms
     {
       // add data to lines:
-      double a1 = Agrecola->AdcSample(useE154::CH1);
-      double a2 = Agrecola->AdcSample(useE154::CH2);
-      double a3 = Agrecola->AdcSample(useE154::CH3);
-      double a4 = Agrecola->AdcSample(useE154::CH4);
+      double a1 = agrekola->AdcSample(useE154::CH1);
+      double a2 = agrekola->AdcSample(useE154::CH2);
+      double a3 = agrekola->AdcSample(useE154::CH3);
+      double a4 = agrekola->AdcSample(useE154::CH4);
       customPlot1->graph(0)->addData(key, a1); //qSin(key)+qrand()/(double)RAND_MAX*1*qSin(key/0.3843));
       customPlot2->graph(0)->addData(key, a2); //qCos(key)+qrand()/(double)RAND_MAX*0.5*qSin(key/0.4364));
       customPlot3->graph(0)->addData(key, a3); //qCos(key)+qrand()/(double)RAND_MAX*0.5*qSin(key/0.4364));
@@ -240,55 +246,55 @@ void Widget::realtimeDataSlot()
 void Widget::on_checkBox_1_stateChanged(int arg1)
 {
     if(arg1){
-        setText("on_checkBox_1");
-        Agrecola->SetChannel(useE154::CH1, useE154::ON);
+        setUserMessage("on_checkBox_1");
+        agrekola->SetChannel(useE154::CH1, useE154::ON);
     }
     else{
-        setText("off_checkBox_1");
-        Agrecola->SetChannel(useE154::CH1, useE154::OFF);
+        setUserMessage("off_checkBox_1");
+        agrekola->SetChannel(useE154::CH1, useE154::OFF);
     }
 }
 
 void Widget::on_checkBox_2_stateChanged(int arg1)
 {
     if(arg1){
-        setText("on_checkBox_2");
-        Agrecola->SetChannel(useE154::CH2, useE154::ON);
+        setUserMessage("on_checkBox_2");
+        agrekola->SetChannel(useE154::CH2, useE154::ON);
     }
     else{
-        setText("off_checkBox_2");
-        Agrecola->SetChannel(useE154::CH2, useE154::OFF);
+        setUserMessage("off_checkBox_2");
+        agrekola->SetChannel(useE154::CH2, useE154::OFF);
     }
 }
 
 void Widget::on_checkBox_3_stateChanged(int arg1)
 {
     if(arg1){
-        setText("on_checkBox_3");
-        Agrecola->SetChannel(useE154::CH3, useE154::ON);
+        setUserMessage("on_checkBox_3");
+        agrekola->SetChannel(useE154::CH3, useE154::ON);
     }
     else{
-        setText("off_checkBox_3");
-        Agrecola->SetChannel(useE154::CH3, useE154::OFF);
+        setUserMessage("off_checkBox_3");
+        agrekola->SetChannel(useE154::CH3, useE154::OFF);
     }
 }
 
 void Widget::on_checkBox_4_stateChanged(int arg1)
 {
     if(arg1){
-        setText("on_checkBox_4");
-        Agrecola->SetChannel(useE154::CH4, useE154::ON);
+        setUserMessage("on_checkBox_4");
+        agrekola->SetChannel(useE154::CH4, useE154::ON);
     }
     else{
-        setText("off_checkBox_4");
-        Agrecola->SetChannel(useE154::CH4, useE154::OFF);
+        setUserMessage("off_checkBox_4");
+        agrekola->SetChannel(useE154::CH4, useE154::OFF);
     }
 }
 
-void Widget::updataTD()
+void Widget::updataTermo()
 {
 
-    if(!Agrecola->GetStatusTD())
+    if(!agrekola->GetStatusTD())
     {
         ui->label_TD->setText(QString("Температура >37°C"));
         ui->label_TD->setStyleSheet("color: green");
@@ -300,9 +306,29 @@ void Widget::updataTD()
     }
 }
 
-void Widget::on_pushButton_back_clicked()
+void Widget::updateTime()
 {
-    close();
-    m->show();
-    this->~QWidget();
+    //обновление времени на часах
+    dt = QDateTime::currentDateTime();
+    ui->label_time->setText("Время: " + dt.toString("hh:mm:ss"));
+    ui->label_date->setText("Дата: " + dt.toString("dd.MM.yyyy"));
 }
+
+void Widget::getData()
+{
+    //parentWidget()->
+    setUserMessage(tr("signal come \"startMeasurment()\""));
+}
+
+void Widget::setupTimers()
+{
+    //настройка таймера для часов
+    currenttime = new QTimer(this);
+    connect(currenttime, SIGNAL(timeout()), SLOT(updateTime()));
+    currenttime->start(1000);
+    dt = QDateTime::currentDateTime();
+    //настройка таймера для обновления датчика температуры
+    TDTimer.start(200);
+    connect(&TDTimer, SIGNAL(timeout()), this, SLOT(updataTermo()));
+}
+

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>701</width>
-    <height>389</height>
+    <height>358</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -84,7 +84,7 @@
   </widget>
   <action name="action_start">
    <property name="icon">
-    <iconset resource="rcfile.qrc">
+    <iconset>
      <normaloff>:/rcfiles/play.png</normaloff>:/rcfiles/play.png</iconset>
    </property>
    <property name="text">
@@ -106,7 +106,7 @@
   </action>
   <action name="action_menu">
    <property name="icon">
-    <iconset resource="rcfile.qrc">
+    <iconset>
      <normaloff>:/rcfiles/sun.png</normaloff>:/rcfiles/sun.png</iconset>
    </property>
    <property name="text">
@@ -147,8 +147,6 @@
    </property>
   </action>
  </widget>
- <resources>
-  <include location="rcfile.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

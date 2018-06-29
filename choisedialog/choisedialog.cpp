@@ -3,7 +3,6 @@
 
 #include "mainwindow.h"
 #include "QMessageBox"
-#include "useE154.h"
 #include "widget.h"
 
 ChoiseDialog::ChoiseDialog(QDialog *parent) :
@@ -21,7 +20,6 @@ ChoiseDialog::ChoiseDialog(QDialog *parent) :
     ko4 = static_cast<Ko4 *>(ui->stackedWidget->widget(6));
     ko5 = static_cast<Ko5 *>(ui->stackedWidget->widget(7));
 
-    agrekola = new useE154();
     //test = new TestKoAgr(this);
 
     connect(agr1, SIGNAL(measurement()), SLOT(accept()));
@@ -62,7 +60,7 @@ void ChoiseDialog::on_testButton_clicked()
 {
     //TestKoAgr *test = new TestKoAgr(this);
 
-    test = new Widget(agrekola, this);
+    test = new Widget(this);
     //hide();
     test->show();
     //test->show();

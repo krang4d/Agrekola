@@ -2,7 +2,7 @@
 #define SELECTCALIBRATIONAGR1_H
 
 #include <QDialog>
-#include "kalibragr2.h"
+//#include "kalibragr2.h"
 #include "selectinductor.h"
 
 namespace Ui {
@@ -22,7 +22,7 @@ private slots:
 
 private:
     Ui::SelectCalibrationAgr1 *ui;
-    KalibrAgr2 *kalibragr2;
+    //KalibrAgr2 *kalibragr2;
     SelectInductor *selInductor;
 };
 
