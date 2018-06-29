@@ -15,7 +15,7 @@ class Widget : public QWidget
     Q_OBJECT
 
 public:
-    explicit Widget(useE154 *Agrekola, QWidget *parent = 0);
+    explicit Widget(useE154 *Agrekola, QDialog *menu, QWidget *parent = 0);
     void setText(QString str);
     void setAgrekola(useE154 *agr);
     void setupQuadraticPlot(QVector<double> data = {0});
@@ -35,10 +35,13 @@ private slots:
 
     void updataTD();
 
+    void on_pushButton_back_clicked();
+
 private:
     Ui::Widget *ui;
     QString text;
     useE154 *Agrecola;
+    QDialog *m;
     QTimer dataTimer, TDTimer;
     QCustomPlot *customPlot1;
     QCustomPlot *customPlot2;

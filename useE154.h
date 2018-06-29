@@ -44,7 +44,6 @@ signals:
 public:
     useE154(QWidget *parent = 0);
 	~useE154(void);
-    string OpenDevice();
     string GetVersion(void);
     string GetUserMessages() const;
     string GetUsbSpeed();
@@ -65,7 +64,11 @@ protected:
 	void initModuleHandler();
     void initPorts();                           //инициализация всех выводов TTL
     string initADC();
-	void ReleaseAPIInstance();					//(char *ErrorString, bool AbortionFlag);
+
+public:
+    string OpenDevice();
+    string CloseDevice();
+    void ReleaseAPIInstance();					//(char *ErrorString, bool AbortionFlag);
 
 private:
     TLoadDll *pLoadDll;							// указатель на класс динамической загрузки DLL

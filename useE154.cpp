@@ -16,6 +16,7 @@ useE154::~useE154(void)
 {
     delete[] pDestination;
 	ReleaseAPIInstance();
+    if(pLoadDll) { delete pLoadDll; pLoadDll = NULL; }
 }
 
  double useE154::AdcSample(channel ch)
@@ -163,7 +164,7 @@ void useE154::ReleaseAPIInstance() //(char *ErrorString, bool AbortionFlag)
         pModule = NULL;
     }
     // освободим библиотеку
-    if(pLoadDll) { delete pLoadDll; pLoadDll = NULL; }
+    //if(pLoadDll) { delete pLoadDll; pLoadDll = NULL; }
     // если нужно - аварийно завершаем программу
     //if(AbortionFlag) exit(0x1);
 }
@@ -183,6 +184,11 @@ string useE154::OpenDevice()
     if(strcmp(ModuleName, "E154")) Errore_E154("Устройство 'E-154' успешно открыто.");
     return "Устройство 'E-154' открыто в виртуальном слоте №" + std::to_string(i) + ".\n\r" ;
     //user_msg.Format(_T("%sУстройство 'E-154' обнаружено.\n\r"), user_msg);
+}
+
+std::string useE154::CloseDevice()
+{
+    pModule->CloseLDevice();
 }
 
 string useE154::GetUsbSpeed()

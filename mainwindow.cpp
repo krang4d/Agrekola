@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QMessageBox>
+#include <QKeyEvent>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -16,6 +17,7 @@ MainWindow::MainWindow(QWidget *parent) :
         QMessageBox test(QMessageBox::Critical, "qobject_cast", QString("qobject_cast in MainWindow::newShow()"), QMessageBox::Ok); test.exec();
     }
     connect(st, SIGNAL(startMeasurment()), m, SLOT(getData()));
+    //qApp->installEventFilter(this);
 }
 
 MainWindow::~MainWindow()
@@ -54,6 +56,20 @@ void MainWindow::newShow()
     }
     //ui->label_type->setText(QString(std::to_string(i).c_str()));
     show();
+}
+
+bool MainWindow::eventFilter(QObject *watched, QEvent *event)
+{
+    if(event->type() == QEvent::KeyPress)
+    {
+        QKeyEvent *kayEvent = static_cast<QKeyEvent *>(event);
+        if(kayEvent->key() == Qt::Key_Space)
+        {
+            QMessageBox::about(this, "Event is emmited", "Key_Space is pressed!");
+            return true;
+        }
+    }
+    return QMainWindow::eventFilter(watched, event);
 }
 
 void MainWindow::on_action_start_triggered()

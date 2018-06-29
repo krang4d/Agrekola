@@ -5,9 +5,10 @@
 
 #include <QThread>
 
-Widget::Widget(useE154 *Agrekola, QWidget *parent) :
+Widget::Widget(useE154 *Agrekola, QDialog *menu, QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::Widget)
+    ui(new Ui::Widget),
+    m(menu)
 {
     ui->setupUi(this);
     setAgrekola(Agrekola);
@@ -148,6 +149,11 @@ void Widget::setupRealtimeData()
 Widget::~Widget()
 {
     delete ui;
+    //delete m;
+    delete customPlot1;
+    delete customPlot2;
+    delete customPlot3;
+    delete customPlot4;
 }
 
 
@@ -292,4 +298,11 @@ void Widget::updataTD()
         ui->label_TD->setText(QString("Температура <37°C"));
         ui->label_TD->setStyleSheet("color: red");
     }
+}
+
+void Widget::on_pushButton_back_clicked()
+{
+    close();
+    m->show();
+    this->~QWidget();
 }

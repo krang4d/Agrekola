@@ -3,8 +3,10 @@
 
 #include "mainwindow.h"
 #include "QMessageBox"
+#include "useE154.h"
+#include "widget.h"
 
-ChoiseDialog::ChoiseDialog(QWidget *parent) :
+ChoiseDialog::ChoiseDialog(QDialog *parent) :
     QDialog(parent),
     ui(new Ui::ChoiseDialog)
 {
@@ -19,7 +21,8 @@ ChoiseDialog::ChoiseDialog(QWidget *parent) :
     ko4 = static_cast<Ko4 *>(ui->stackedWidget->widget(6));
     ko5 = static_cast<Ko5 *>(ui->stackedWidget->widget(7));
 
-    test = new TestKoAgr(this);
+    agrekola = new useE154();
+    //test = new TestKoAgr(this);
 
     connect(agr1, SIGNAL(measurement()), SLOT(accept()));
     //connect(agr2, SIGNAL(measurement()), SLOT(accept()));
@@ -57,8 +60,12 @@ ChoiseDialog::~ChoiseDialog()
 
 void ChoiseDialog::on_testButton_clicked()
 {
-    TestKoAgr *test = new TestKoAgr(this);
-    test->exec();
+    //TestKoAgr *test = new TestKoAgr(this);
+
+    test = new Widget(agrekola, this);
+    //hide();
+    test->show();
+    //test->show();
 }
 
 void ChoiseDialog::calibration()

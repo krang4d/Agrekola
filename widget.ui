@@ -296,6 +296,13 @@
        </property>
       </widget>
      </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_back">
+       <property name="text">
+        <string>Назад</string>
+       </property>
+      </widget>
+     </item>
     </layout>
    </item>
   </layout>
