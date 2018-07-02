@@ -4,6 +4,7 @@
 #include <QMessageBox>
 
 #include <QThread>
+#include <QEvent>
 #include "useE154.h"
 
 Widget::Widget(QWidget *parent) :
@@ -21,6 +22,18 @@ Widget::Widget(QWidget *parent) :
 
     setupTimers();
     setUserMessage(QString("Допустимое количество потоков %1\n").arg(QThread::idealThreadCount()));
+    setAttribute(Qt::WA_DeleteOnClose);
+    installEventFilter(this);
+}
+
+bool Widget::eventFilter(QObject *watched, QEvent *event)
+{
+    if(event->type() == QEvent::Close)
+    {
+        QMessageBox::about(this, "Event is emmited", "Close Window!");
+        return true;
+    }
+    return QWidget::eventFilter(watched, event);
 }
 
 void Widget::setUserMessage(QString str)

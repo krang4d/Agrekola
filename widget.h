@@ -24,6 +24,7 @@ public:
     void setAgrekola(useE154 *agr);
     void setupQuadraticPlot(QVector<double> data = {0});
     void setupRealtimeData();
+    bool eventFilter(QObject *watched, QEvent *event);
 
 private:
     void setupTimers();

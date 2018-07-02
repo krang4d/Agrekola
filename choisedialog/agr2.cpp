@@ -6,7 +6,6 @@ Agr2::Agr2(QWidget *parent) :
     ui(new Ui::Agr2)
 {
     ui->setupUi(this);
-    kalibragr2 = new KalibrAgr2();
     selcalibrAgr1 = new SelectCalibrationAgr1();
     selInductor = new SelectInductor();
 }
@@ -27,6 +26,7 @@ void Agr2::on_startButton_clicked()
 
 void Agr2::on_calibrButton_clicked()
 {
+    kalibragr2 = new KalibrAgr2();
     kalibragr2->show();
     emit calibration();
 }

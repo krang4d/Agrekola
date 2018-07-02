@@ -17,6 +17,10 @@ public:
 
 private:
     Ui::KalibrAgr2 *ui;
+
+    // QObject interface
+public:
+    bool eventFilter(QObject *watched, QEvent *event) override;
 };
 
 #endif // KALIBRAGR2_H
