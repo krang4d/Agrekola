@@ -2,14 +2,17 @@
 #include "ui_widget.h"
 #include <QScrollBar>
 #include <QMessageBox>
+#include <QDebug>
 
 #include <QThread>
 #include <QEvent>
+#include <QKeyEvent>
 #include "useE154.h"
 
 Widget::Widget(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::Widget)
+    ui(new Ui::Widget),
+    data(false)
 {
     ui->setupUi(this);
     agrekola = new useE154(this);
@@ -17,28 +20,54 @@ Widget::Widget(QWidget *parent) :
     customPlot1 = ui->frame_1;
     customPlot2 = ui->frame_2;
     customPlot3 = ui->frame_3;
+    ui->groupBox_Mix->setVisible(false);
     customPlot4 = ui->frame_4;
     setupRealtimeData();
-
     setupTimers();
-    setUserMessage(QString("Допустимое количество потоков %1\n").arg(QThread::idealThreadCount()));
+    setUserMessage(QString("Допустимое количество потоков %1").arg(QThread::idealThreadCount()));
     setAttribute(Qt::WA_DeleteOnClose);
     installEventFilter(this);
+    //connect(startWin, SIGNAL(startMeasurment()), this, SLOT(getData()));
 }
 
 bool Widget::eventFilter(QObject *watched, QEvent *event)
 {
     if(event->type() == QEvent::Close)
     {
-        QMessageBox::about(this, "Event is emmited", "Close Window!");
+        qDebug() << tr("Close Event is emmited in the Widget!");
+        //parentWidget()->show();
+        return true;
+    }
+    if(event->type() == QEvent::KeyPress)
+    {
+        qDebug() << "Event kayPress";
+        QKeyEvent *kayEvent = static_cast<QKeyEvent *>(event);
+        if(kayEvent->key() == Qt::Key_Enter)
+        {
+            bool b = ui->groupBox_Mix->isVisible();
+            if(b)
+            {
+                ui->groupBox_Mix->setVisible(false);
+                qDebug() << "setVisible(false)";
+            }
+            else
+            {
+                ui->groupBox_Mix->setVisible(true);
+                qDebug() << "setVisible(true)";
+            }
+        }
         return true;
     }
     return QWidget::eventFilter(watched, event);
 }
 
-void Widget::setUserMessage(QString str)
+void Widget::setUserMessage(QString str, bool time)
 {
-    ui->textEdit->append(str);
+    if(!time)
+        ui->textEdit->append(QString("%1,    Время %2")
+                         .arg(str)
+                         .arg(dt.toString("hh:mm:ss")));
+    else ui->textEdit->append(str);
 }
 
 void Widget::setAgrekola(useE154 *agr)
@@ -154,8 +183,8 @@ void Widget::setupRealtimeData()
     connect(customPlot4->yAxis, SIGNAL(rangeChanged(QCPRange)), customPlot4->yAxis2, SLOT(setRange(QCPRange)));
 
     // setup a timer that repeatedly calls MainWindow::realtimeDataSlot:
-    connect(&dataTimer, SIGNAL(timeout()), this, SLOT(realtimeDataSlot()));
-    dataTimer.start(0); // Interval 0 means to refresh as fast as possible
+    connect(&plotTimer, SIGNAL(timeout()), this, SLOT(realtimeDataSlot()));
+    plotTimer.start(0); // Interval 0 means to refresh as fast as possible
 }
 
 Widget::~Widget()
@@ -166,6 +195,78 @@ Widget::~Widget()
     delete customPlot2;
     delete customPlot3;
     delete customPlot4;
+}
+
+void Widget::onMixCh1(bool b)
+{
+    if(b){
+        setUserMessage(tr("Включение перемешивания Канала 1"));
+        agrekola->SetChannel(useE154::CH1, useE154::ON);
+    }
+    else{
+        setUserMessage("Выключение перемешивания Канала 1");
+        agrekola->SetChannel(useE154::CH1, useE154::OFF);
+    }
+}
+
+void Widget::onMixCh2(bool b)
+{
+    if(b){
+        setUserMessage(tr("Включение перемешивания Канала 2"));
+        agrekola->SetChannel(useE154::CH2, useE154::ON);
+    }
+    else{
+        setUserMessage("Выключение перемешивания Канала 2");
+        agrekola->SetChannel(useE154::CH2, useE154::OFF);
+    }
+}
+
+void Widget::onMixCh3(bool b)
+{
+    if(b){
+        setUserMessage(tr("Включение перемешивания Канала 3"));
+        agrekola->SetChannel(useE154::CH3, useE154::ON);
+    }
+    else{
+        setUserMessage("Выключение перемешивания Канала 3");
+        agrekola->SetChannel(useE154::CH3, useE154::OFF);
+    }
+}
+
+void Widget::onMixCh4(bool b)
+{
+    if(b){
+        setUserMessage(tr("Включение перемешивания Канала 4"));
+        agrekola->SetChannel(useE154::CH4, useE154::ON);
+    }
+    else{
+        setUserMessage("Выключение перемешивания Канала 4");
+        agrekola->SetChannel(useE154::CH4, useE154::OFF);
+    }
+}
+
+void Widget::onMixPP(bool b)
+{
+    if(b){
+        setUserMessage(tr("Включение перемешивания PP"));
+        agrekola->SetChannel(useE154::PP, useE154::ON);
+    }
+    else{
+        setUserMessage("Выключение перемешивания PP");
+        agrekola->SetChannel(useE154::PP, useE154::OFF);
+    }
+}
+
+void Widget::onLaser(bool b)
+{
+    if(b){
+        setUserMessage(tr("Включение лазеров"));
+        agrekola->SetChannel(useE154::L, useE154::ON);
+    }
+    else{
+        setUserMessage("Выключение выключение");
+        agrekola->SetChannel(useE154::L, useE154::OFF);
+    }
 }
 
 /*
@@ -227,6 +328,14 @@ void Widget::realtimeDataSlot()
       //rescale value (vertical) axis to fit the current data:
       //ui->customPlot->graph(0)->rescaleValueAxis();
       //ui->customPlot->graph(1)->rescaleValueAxis(true);
+      if(data)
+      {
+          y1.push_back(a1);
+          y2.push_back(a2);
+          y3.push_back(a3);
+          y4.push_back(a4);
+          x.push_back(key);
+      }
       lastPointKey = key;
     }
     // make key axis range scroll with the data (at a constant range size of 8):
@@ -258,50 +367,32 @@ void Widget::realtimeDataSlot()
 
 void Widget::on_checkBox_1_stateChanged(int arg1)
 {
-    if(arg1){
-        setUserMessage("on_checkBox_1");
-        agrekola->SetChannel(useE154::CH1, useE154::ON);
-    }
-    else{
-        setUserMessage("off_checkBox_1");
-        agrekola->SetChannel(useE154::CH1, useE154::OFF);
-    }
+    onMixCh1(arg1);
 }
 
 void Widget::on_checkBox_2_stateChanged(int arg1)
 {
-    if(arg1){
-        setUserMessage("on_checkBox_2");
-        agrekola->SetChannel(useE154::CH2, useE154::ON);
-    }
-    else{
-        setUserMessage("off_checkBox_2");
-        agrekola->SetChannel(useE154::CH2, useE154::OFF);
-    }
+    onMixCh2(arg1);
 }
 
 void Widget::on_checkBox_3_stateChanged(int arg1)
 {
-    if(arg1){
-        setUserMessage("on_checkBox_3");
-        agrekola->SetChannel(useE154::CH3, useE154::ON);
-    }
-    else{
-        setUserMessage("off_checkBox_3");
-        agrekola->SetChannel(useE154::CH3, useE154::OFF);
-    }
+    onMixCh3(arg1);
 }
 
 void Widget::on_checkBox_4_stateChanged(int arg1)
 {
-    if(arg1){
-        setUserMessage("on_checkBox_4");
-        agrekola->SetChannel(useE154::CH4, useE154::ON);
-    }
-    else{
-        setUserMessage("off_checkBox_4");
-        agrekola->SetChannel(useE154::CH4, useE154::OFF);
-    }
+    onMixCh4(arg1);
+}
+
+void Widget::on_checkBox_PP_stateChanged(int arg1)
+{
+    onMixPP(arg1);
+}
+
+void Widget::on_checkBox_L_stateChanged(int arg1)
+{
+    onLaser(arg1);
 }
 
 void Widget::updataTermo()
@@ -329,8 +420,9 @@ void Widget::updateTime()
 
 void Widget::getData()
 {
-    //parentWidget()->
     setUserMessage(tr("signal come \"startMeasurment()\""));
+    data = true;
+    QTimer::singleShot(3000, this, SLOT(writeData()));
 }
 
 void Widget::setupTimers()
@@ -340,8 +432,30 @@ void Widget::setupTimers()
     connect(currenttime, SIGNAL(timeout()), SLOT(updateTime()));
     currenttime->start(1000);
     dt = QDateTime::currentDateTime();
+    setUserMessage(QString("Начало работы программы    Дата %1").arg(dt.toString("dd.MM.yyyy")));
+
     //настройка таймера для обновления датчика температуры
     TDTimer.start(200);
     connect(&TDTimer, SIGNAL(timeout()), this, SLOT(updataTermo()));
 }
 
+void Widget::writeData()
+{
+    data = false;
+    qDebug() << "call writeData()";
+    setUserMessage(QString("call writeData()"));
+    for(int i=0; i<y1.length(); i++)
+    {
+        setUserMessage(QString("%1   %2   %3").arg(i).arg(y1[i]).arg(x[i]), true);
+    }
+    y1.clear();
+    y2.clear();
+    y3.clear();
+    y4.clear();
+    x.clear();
+}
+
+void Widget::on_pushButton_clicked()
+{
+    getData();
+}

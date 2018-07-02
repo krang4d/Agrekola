@@ -109,7 +109,7 @@ void StartMeasurment::on_pushButton_next_clicked()
 
     QMessageBox mb;
     mb.setIcon(QMessageBox::Information);
-    mb.setInformativeText("Выберите канал измерения!");
+    mb.setInformativeText("Выберите канал(ы) измерения!");
     if(!ui->checkBox_ch1->isChecked() && !ui->checkBox_ch2->isChecked() &&\
             !ui->checkBox_ch3->isChecked() && !ui->checkBox_ch4->isChecked())
     {

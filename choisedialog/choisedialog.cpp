@@ -59,11 +59,10 @@ ChoiseDialog::~ChoiseDialog()
 void ChoiseDialog::on_testButton_clicked()
 {
     //TestKoAgr *test = new TestKoAgr(this);
-
-    test = new Widget(this);
     //hide();
+    test = new Widget;
+    test->setWindowModality(Qt::ApplicationModal);
     test->show();
-    //test->show();
 }
 
 void ChoiseDialog::calibration()
