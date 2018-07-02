@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>250</width>
-    <height>321</height>
+    <height>289</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -163,25 +163,7 @@
    <item>
     <layout class="QFormLayout" name="formLayout">
      <item row="0" column="0">
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string>Интервал между
-точками, мин</string>
-       </property>
-       <property name="buddy">
-        <cstring>lineEdit_frequency</cstring>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <widget class="QLineEdit" name="lineEdit_frequency">
-       <property name="text">
-        <string>1</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="label_2">
+      <widget class="QLabel" name="label_t">
        <property name="text">
         <string>Время записи, сек</string>
        </property>
@@ -190,7 +172,7 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="1">
+     <item row="0" column="1">
       <widget class="QLineEdit" name="lineEdit_time">
        <property name="text">
         <string>10</string>
@@ -233,7 +215,6 @@
   <tabstop>lineEdit_ch4</tabstop>
   <tabstop>radioButton_double</tabstop>
   <tabstop>radioButton_single</tabstop>
-  <tabstop>lineEdit_frequency</tabstop>
   <tabstop>lineEdit_time</tabstop>
  </tabstops>
  <resources/>

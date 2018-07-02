@@ -15,8 +15,9 @@ MainWindow::MainWindow(QWidget *parent) :
     if (!ch){
         QMessageBox test(QMessageBox::Critical, "qobject_cast", QString("qobject_cast in MainWindow::newShow()"), QMessageBox::Ok); test.exec();
     }
+    st = new StartMeasurment;
     connect(st, SIGNAL(startMeasurment()), centerWidget, SLOT(getData()));
-    //qApp->installEventFilter(this);
+    installEventFilter(this);
 }
 
 MainWindow::~MainWindow()
@@ -67,6 +68,11 @@ bool MainWindow::eventFilter(QObject *watched, QEvent *event)
             return true;
         }
     }
+    if(event->type() == QEvent::Close)
+    {
+        ch->show();
+        return true;
+    }
     return QMainWindow::eventFilter(watched, event);
 }
 
@@ -74,12 +80,12 @@ void MainWindow::on_action_start_triggered()
 {
     //StartMeasurment *st = new StartMeasurment;
     //st->setWindowModality(Qt::ApplicationModal);
+    st->setWindowModality(Qt::ApplicationModal);
     st->show();
 }
 
 void MainWindow::on_action_menu_triggered()
 {
-    hide();
     ch->show();
     close();
     //this->~MainWindow();

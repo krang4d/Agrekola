@@ -334,12 +334,6 @@
    </item>
    <item>
     <widget class="QTextEdit" name="textEdit">
-     <property name="font">
-      <font>
-       <family>Times New Roman</family>
-       <pointsize>14</pointsize>
-      </font>
-     </property>
      <property name="readOnly">
       <bool>true</bool>
      </property>

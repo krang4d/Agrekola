@@ -84,7 +84,7 @@
   </widget>
   <action name="action_start">
    <property name="icon">
-    <iconset>
+    <iconset resource="rcfile.qrc">
      <normaloff>:/rcfiles/play.png</normaloff>:/rcfiles/play.png</iconset>
    </property>
    <property name="text">
@@ -106,7 +106,7 @@
   </action>
   <action name="action_menu">
    <property name="icon">
-    <iconset>
+    <iconset resource="rcfile.qrc">
      <normaloff>:/rcfiles/sun.png</normaloff>:/rcfiles/sun.png</iconset>
    </property>
    <property name="text">
@@ -147,6 +147,8 @@
    </property>
   </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="rcfile.qrc"/>
+ </resources>
  <connections/>
 </ui>

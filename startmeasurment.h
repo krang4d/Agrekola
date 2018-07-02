@@ -26,7 +26,6 @@ public:
     int getNum_3();
     int getNum_4();
 
-    double getFreq();
     int getTime();
 
 private slots:

@@ -61,6 +61,11 @@ int StartMeasurment::getNum_4()
     return num_4;
 }
 
+int StartMeasurment::getTime()
+{
+    return time;
+}
+
 void StartMeasurment::on_checkBox_ch1_stateChanged(int arg1)
 {
     if(arg1) ui->lineEdit_ch1->setEnabled(true);
@@ -100,7 +105,6 @@ void StartMeasurment::on_pushButton_next_clicked()
     num_2 = ui->lineEdit_ch2->text().toInt();
     num_3 = ui->lineEdit_ch3->text().toInt();
     num_4 = ui->lineEdit_ch4->text().toInt();
-    freq = ui->lineEdit_frequency->text().toDouble();       //интервал между точками
     time = ui->lineEdit_time->text().toInt();               //время записи
 
     QMessageBox mb;
