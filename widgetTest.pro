@@ -22,7 +22,6 @@ INCLUDEPATH += ./choisedialog \
 SOURCES +=  main.cpp\
     selectcalibrationagr1.cpp \
     selectinductor.cpp \
-    measurement.cpp \
     testkoagr.cpp \
     mainwindow.cpp \
     param.cpp \
@@ -45,7 +44,6 @@ SOURCES +=  main.cpp\
 
 HEADERS  += selectcalibrationagr1.h \
     selectinductor.h \
-    measurement.h \
     testkoagr.h \
     mainwindow.h \
     param.h \
@@ -70,7 +68,6 @@ HEADERS  += selectcalibrationagr1.h \
 
 FORMS    += selectcalibrationagr1.ui \
     selectinductor.ui \
-    measurement.ui \
     testkoagr.ui \
     mainwindow.ui \
     param.ui \

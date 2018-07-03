@@ -34,16 +34,19 @@ public:
     void setUserMessage(QString, bool withtime = 1, bool tofile = 0);
     void setAgrekola(useE154 *agr);
 
-
 private:
     bool eventFilter(QObject *watched, QEvent *event);
     void setupQuadraticPlot(QVector<double> data = {0});
-    void setupRealtimeData();
+    void setupRealtimeData(bool duo = 0);
     void setupTimers();
     void setupFile();
 
+public slots:
+    void getData();
+
 private slots:
-    void realtimeDataSlot();
+    void realtimeDataSlotSingle();
+    void realtimeDataSlotDuo();
     void writeData();
     void on_checkBox_1_stateChanged(int arg1);
     void on_checkBox_2_stateChanged(int arg1);
@@ -52,13 +55,8 @@ private slots:
     void on_checkBox_PP_stateChanged(int arg1);
     void on_checkBox_L_stateChanged(int arg1);
     void on_pushButton_clicked();
-
     void updataTermo();
     void updateTime();
-    void getData();
-
-
-
 
 private:
     Ui::Widget *ui;

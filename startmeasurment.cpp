@@ -4,8 +4,8 @@
 
 #include <QMessageBox>
 
-StartMeasurment::StartMeasurment(QWidget *parent) :
-    QWidget(parent),
+StartMeasurment::StartMeasurment(QDialog *parent) :
+    QDialog(parent),
     ui(new Ui::StartMeasurment)
 {
     ui->setupUi(this);
@@ -14,6 +14,11 @@ StartMeasurment::StartMeasurment(QWidget *parent) :
 StartMeasurment::~StartMeasurment()
 {
     delete ui;
+}
+
+bool StartMeasurment::isClacel()
+{
+    return cancel;
 }
 
 bool StartMeasurment::isSingle()
@@ -92,6 +97,17 @@ void StartMeasurment::on_checkBox_ch4_stateChanged(int arg1)
 
 void StartMeasurment::on_pushButton_next_clicked()
 {
+    QMessageBox mb;
+    mb.setIcon(QMessageBox::Information);
+    mb.setInformativeText("Не выбраны канал(ы) измерения!");
+    if(!ui->checkBox_ch1->isChecked() && !ui->checkBox_ch2->isChecked() &&\
+            !ui->checkBox_ch3->isChecked() && !ui->checkBox_ch4->isChecked())
+    {
+        mb.exec();
+        return;
+    }
+    else
+    {
 //    MainWindow *m = qobject_cast<MainWindow *>(parentWidget());
 //    Measurement *cw = qobject_cast<Measurement *>(m->centralWidget());
 //    cw->setFreq(ui->lineEdit_frequency->text().toDouble());
@@ -106,15 +122,6 @@ void StartMeasurment::on_pushButton_next_clicked()
     num_3 = ui->lineEdit_ch3->text().toInt();
     num_4 = ui->lineEdit_ch4->text().toInt();
     time = ui->lineEdit_time->text().toInt();               //время записи
-
-    QMessageBox mb;
-    mb.setIcon(QMessageBox::Information);
-    mb.setInformativeText("Выберите канал(ы) измерения!");
-    if(!ui->checkBox_ch1->isChecked() && !ui->checkBox_ch2->isChecked() &&\
-            !ui->checkBox_ch3->isChecked() && !ui->checkBox_ch4->isChecked())
-    {
-        mb.exec();
-        return;
     }
     mb.setInformativeText("Введите номера всех проб!");
     if(ui->checkBox_ch1->isChecked() && ui->lineEdit_ch1->text().isEmpty())
@@ -127,6 +134,7 @@ void StartMeasurment::on_pushButton_next_clicked()
         mb.exec();
     else
     {
+        cancel = false;
         emit startMeasurment();
         hide();
     }
@@ -142,5 +150,6 @@ void StartMeasurment::on_radioButton_single_toggled(bool checked)
 
 void StartMeasurment::on_pushButton_cancel_clicked()
 {
+    cancel = true;
     hide();
 }

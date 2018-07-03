@@ -4,7 +4,6 @@
 #include <QMessageBox>
 #include <QDebug>
 
-#include <QThread>
 #include <QEvent>
 #include <QKeyEvent>
 #include "useE154.h"
@@ -21,14 +20,26 @@ Widget::Widget(QWidget *parent) :
     customPlot1 = ui->frame_1;
     customPlot2 = ui->frame_2;
     customPlot3 = ui->frame_3;
-    ui->groupBox_Mix->setVisible(false);
     customPlot4 = ui->frame_4;
+    startWin = new StartMeasurment();
+    ui->groupBox_Mix->setVisible(false);
+
     setupRealtimeData();
     setupTimers();
-    setUserMessage(QString("Допустимое количество потоков %1").arg(QThread::idealThreadCount()));
     setAttribute(Qt::WA_DeleteOnClose);
     installEventFilter(this);
     //connect(startWin, SIGNAL(startMeasurment()), this, SLOT(getData()));
+}
+
+Widget::~Widget()
+{
+    delete ui;
+    delete agrekola;
+    delete customPlot1;
+    delete customPlot2;
+    delete customPlot3;
+    delete customPlot4;
+    file.close();
 }
 
 bool Widget::eventFilter(QObject *watched, QEvent *event)
@@ -101,7 +112,7 @@ void Widget::setupQuadraticPlot(QVector<double> data)
         average += data[i];
     }
     average /= data.length();
-    ui->label_average->setText(QString("%1").arg(average));
+    //ui->label_average->setText(QString("%1").arg(average));
     customPlot1->graph(0)->setData(x, data);
     // give the axes some labels:
     customPlot1->xAxis->setLabel("x");
@@ -112,7 +123,7 @@ void Widget::setupQuadraticPlot(QVector<double> data)
     customPlot1->replot();
 }
 
-void Widget::setupRealtimeData()
+void Widget::setupRealtimeData(bool duo)
 {
     // include this section to fully disable antialiasing for higher performance:
     /*
@@ -143,58 +154,98 @@ void Widget::setupRealtimeData()
     //customPlot2->setOpenGl(true);
     //customPlot3->setOpenGl(true);
     //customPlot4->setOpenGl(true);
+    if(!duo)
+    {
+        QSharedPointer<QCPAxisTickerTime> timeTicker(new QCPAxisTickerTime);
+        timeTicker->setTimeFormat("%m:%s");
 
-    QSharedPointer<QCPAxisTickerTime> timeTicker(new QCPAxisTickerTime);
-    timeTicker->setTimeFormat("%m:%s");
+        customPlot1->addGraph();
+        customPlot1->graph(0)->setPen(QPen(QColor(10, 110, 40)));
+        customPlot1->xAxis->setTicker(timeTicker);
+        customPlot1->axisRect()->setupFullAxesBox();
+        customPlot1->xAxis->setLabel("Время, с");
+        customPlot1->yAxis->setLabel("Напряжение, В");
+        customPlot1->yAxis->setRange(-5.5, 5.5);
 
-    customPlot1->addGraph();
-    customPlot1->graph(0)->setPen(QPen(QColor(10, 110, 40)));
-    customPlot1->xAxis->setTicker(timeTicker);
-    customPlot1->axisRect()->setupFullAxesBox();
-    customPlot1->xAxis->setLabel("Время, с");
-    customPlot1->yAxis->setLabel("Напряжение, В");
-    customPlot1->yAxis->setRange(-5.5, 5.5);
+        // make left and bottom axes transfer their ranges to right and top axes:
+        connect(customPlot1->xAxis, SIGNAL(rangeChanged(QCPRange)), customPlot1->xAxis2, SLOT(setRange(QCPRange)));
+        connect(customPlot1->yAxis, SIGNAL(rangeChanged(QCPRange)), customPlot1->yAxis2, SLOT(setRange(QCPRange)));
 
-    // make left and bottom axes transfer their ranges to right and top axes:
-    connect(customPlot1->xAxis, SIGNAL(rangeChanged(QCPRange)), customPlot1->xAxis2, SLOT(setRange(QCPRange)));
-    connect(customPlot1->yAxis, SIGNAL(rangeChanged(QCPRange)), customPlot1->yAxis2, SLOT(setRange(QCPRange)));
+        customPlot2->addGraph();
+        customPlot2->graph(0)->setPen(QPen(QColor(255, 110, 40)));
+        customPlot2->xAxis->setTicker(timeTicker);
+        customPlot2->axisRect()->setupFullAxesBox();
+        customPlot2->xAxis->setLabel("Время, с");
+        customPlot2->yAxis->setLabel("Напряжение, В");
+        customPlot2->yAxis->setRange(-5.5, 5.5);
 
-    customPlot2->addGraph();
-    customPlot2->graph(0)->setPen(QPen(QColor(255, 110, 40)));
-    customPlot2->xAxis->setTicker(timeTicker);
-    customPlot2->axisRect()->setupFullAxesBox();
-    customPlot2->xAxis->setLabel("Время, с");
-    customPlot2->yAxis->setLabel("Напряжение, В");
-    customPlot2->yAxis->setRange(-5.5, 5.5);
+        connect(customPlot2->xAxis, SIGNAL(rangeChanged(QCPRange)), customPlot2->xAxis2, SLOT(setRange(QCPRange)));
+        connect(customPlot2->yAxis, SIGNAL(rangeChanged(QCPRange)), customPlot2->yAxis2, SLOT(setRange(QCPRange)));
 
-    connect(customPlot2->xAxis, SIGNAL(rangeChanged(QCPRange)), customPlot2->xAxis2, SLOT(setRange(QCPRange)));
-    connect(customPlot2->yAxis, SIGNAL(rangeChanged(QCPRange)), customPlot2->yAxis2, SLOT(setRange(QCPRange)));
+        customPlot3->addGraph();
+        customPlot3->graph(0)->setPen(QPen(QColor(255, 110, 200)));
+        customPlot3->xAxis->setTicker(timeTicker);
+        customPlot3->axisRect()->setupFullAxesBox();
+        customPlot3->xAxis->setLabel("Время, с");
+        customPlot3->yAxis->setLabel("Напряжение, В");
+        customPlot3->yAxis->setRange(-5.5, 5.5);
 
-    customPlot3->addGraph();
-    customPlot3->graph(0)->setPen(QPen(QColor(255, 110, 200)));
-    customPlot3->xAxis->setTicker(timeTicker);
-    customPlot3->axisRect()->setupFullAxesBox();
-    customPlot3->xAxis->setLabel("Время, с");
-    customPlot3->yAxis->setLabel("Напряжение, В");
-    customPlot3->yAxis->setRange(-5.5, 5.5);
+        connect(customPlot3->xAxis, SIGNAL(rangeChanged(QCPRange)), customPlot3->xAxis2, SLOT(setRange(QCPRange)));
+        connect(customPlot3->yAxis, SIGNAL(rangeChanged(QCPRange)), customPlot3->yAxis2, SLOT(setRange(QCPRange)));
 
-    connect(customPlot3->xAxis, SIGNAL(rangeChanged(QCPRange)), customPlot3->xAxis2, SLOT(setRange(QCPRange)));
-    connect(customPlot3->yAxis, SIGNAL(rangeChanged(QCPRange)), customPlot3->yAxis2, SLOT(setRange(QCPRange)));
+        customPlot4->addGraph();
+        customPlot4->graph(0)->setPen(QPen(QColor(255, 200, 40)));
+        customPlot4->xAxis->setTicker(timeTicker);
+        customPlot4->axisRect()->setupFullAxesBox();
+        customPlot4->xAxis->setLabel("Время, с");
+        customPlot4->yAxis->setLabel("Напряжение, В");
+        customPlot4->yAxis->setRange(-5.5, 5.5);
 
-    customPlot4->addGraph();
-    customPlot4->graph(0)->setPen(QPen(QColor(255, 200, 40)));
-    customPlot4->xAxis->setTicker(timeTicker);
-    customPlot4->axisRect()->setupFullAxesBox();
-    customPlot4->xAxis->setLabel("Время, с");
-    customPlot4->yAxis->setLabel("Напряжение, В");
-    customPlot4->yAxis->setRange(-5.5, 5.5);
+        connect(customPlot4->xAxis, SIGNAL(rangeChanged(QCPRange)), customPlot4->xAxis2, SLOT(setRange(QCPRange)));
+        connect(customPlot4->yAxis, SIGNAL(rangeChanged(QCPRange)), customPlot4->yAxis2, SLOT(setRange(QCPRange)));
 
-    connect(customPlot4->xAxis, SIGNAL(rangeChanged(QCPRange)), customPlot4->xAxis2, SLOT(setRange(QCPRange)));
-    connect(customPlot4->yAxis, SIGNAL(rangeChanged(QCPRange)), customPlot4->yAxis2, SLOT(setRange(QCPRange)));
+        // setup a timer that repeatedly calls MainWindow::realtimeDataSlot:
+        connect(&plotTimer, SIGNAL(timeout()), this, SLOT(realtimeDataSlotSingle()));
+        disconnect(&plotTimer, SIGNAL(timeout()), this, SLOT(realtimeDataSlotDuo()));
+        plotTimer.stop();
+        plotTimer.start(0); // Interval 0 means to refresh as fast as possible
+    }
+    else
+    {
+        QSharedPointer<QCPAxisTickerTime> timeTicker(new QCPAxisTickerTime);
+        timeTicker->setTimeFormat("%m:%s");
 
-    // setup a timer that repeatedly calls MainWindow::realtimeDataSlot:
-    connect(&plotTimer, SIGNAL(timeout()), this, SLOT(realtimeDataSlot()));
-    plotTimer.start(0); // Interval 0 means to refresh as fast as possible
+        customPlot1->addGraph();
+        customPlot1->graph(0)->setPen(QPen(QColor(10, 110, 40)));
+        customPlot1->graph(1)->setPen(QPen(QColor(255, 110, 40)));
+        customPlot1->xAxis->setTicker(timeTicker);
+        customPlot1->axisRect()->setupFullAxesBox();
+        customPlot1->xAxis->setLabel("Время, с");
+        customPlot1->yAxis->setLabel("Напряжение, В");
+        customPlot1->yAxis->setRange(-5.5, 5.5);
+
+        // make left and bottom axes transfer their ranges to right and top axes:
+        connect(customPlot1->xAxis, SIGNAL(rangeChanged(QCPRange)), customPlot1->xAxis2, SLOT(setRange(QCPRange)));
+        connect(customPlot1->yAxis, SIGNAL(rangeChanged(QCPRange)), customPlot1->yAxis2, SLOT(setRange(QCPRange)));
+
+        customPlot2->addGraph();
+        customPlot2->graph(0)->setPen(QPen(QColor(255, 110, 200)));
+        customPlot2->graph(1)->setPen(QPen(QColor(255, 200, 40)));
+        customPlot2->xAxis->setTicker(timeTicker);
+        customPlot2->axisRect()->setupFullAxesBox();
+        customPlot2->xAxis->setLabel("Время, с");
+        customPlot2->yAxis->setLabel("Напряжение, В");
+        customPlot2->yAxis->setRange(-5.5, 5.5);
+
+        connect(customPlot2->xAxis, SIGNAL(rangeChanged(QCPRange)), customPlot2->xAxis2, SLOT(setRange(QCPRange)));
+        connect(customPlot2->yAxis, SIGNAL(rangeChanged(QCPRange)), customPlot2->yAxis2, SLOT(setRange(QCPRange)));
+
+        // setup a timer that repeatedly calls MainWindow::realtimeDataSlot:
+        connect(&plotTimer, SIGNAL(timeout()), this, SLOT(realtimeDataSlotDuo()));
+        disconnect(&plotTimer, SIGNAL(timeout()), this, SLOT(realtimeDataSlotSingle()));
+        plotTimer.stop();
+        plotTimer.start(0); // Interval 0 means to refresh as fast as possible
+    }
 }
 
 void Widget::setupFile()
@@ -208,25 +259,14 @@ void Widget::setupFile()
     out << "the magic number is:" << 49 << "\n";
 }
 
-Widget::~Widget()
-{
-    delete ui;
-    delete agrekola;
-    delete customPlot1;
-    delete customPlot2;
-    delete customPlot3;
-    delete customPlot4;
-    file.close();
-}
-
 void Widget::onMixCh1(bool b)
 {
     if(b){
-        setUserMessage(tr("Включение перемешивания Канала 1"));
+        setUserMessage(tr("Канал 1: Включение перемешивания"));
         agrekola->SetChannel(useE154::CH1, useE154::ON);
     }
     else{
-        setUserMessage("Выключение перемешивания Канала 1");
+        setUserMessage("Канал 1: Выключение перемешивания");
         agrekola->SetChannel(useE154::CH1, useE154::OFF);
     }
 }
@@ -234,11 +274,11 @@ void Widget::onMixCh1(bool b)
 void Widget::onMixCh2(bool b)
 {
     if(b){
-        setUserMessage(tr("Включение перемешивания Канала 2"));
+        setUserMessage(tr("Канал 2: Включение перемешивания"));
         agrekola->SetChannel(useE154::CH2, useE154::ON);
     }
     else{
-        setUserMessage("Выключение перемешивания Канала 2");
+        setUserMessage("Канал 2: Выключение перемешивания");
         agrekola->SetChannel(useE154::CH2, useE154::OFF);
     }
 }
@@ -246,11 +286,11 @@ void Widget::onMixCh2(bool b)
 void Widget::onMixCh3(bool b)
 {
     if(b){
-        setUserMessage(tr("Включение перемешивания Канала 3"));
+        setUserMessage(tr("Канал 3: Включение перемешивания"));
         agrekola->SetChannel(useE154::CH3, useE154::ON);
     }
     else{
-        setUserMessage("Выключение перемешивания Канала 3");
+        setUserMessage("Канал 3: Выключение перемешивания");
         agrekola->SetChannel(useE154::CH3, useE154::OFF);
     }
 }
@@ -258,11 +298,11 @@ void Widget::onMixCh3(bool b)
 void Widget::onMixCh4(bool b)
 {
     if(b){
-        setUserMessage(tr("Включение перемешивания Канала 4"));
+        setUserMessage(tr("Канал 4: Включение перемешивания"));
         agrekola->SetChannel(useE154::CH4, useE154::ON);
     }
     else{
-        setUserMessage("Выключение перемешивания Канала 4");
+        setUserMessage("Канал 4: Выключение перемешивания");
         agrekola->SetChannel(useE154::CH4, useE154::OFF);
     }
 }
@@ -270,11 +310,11 @@ void Widget::onMixCh4(bool b)
 void Widget::onMixPP(bool b)
 {
     if(b){
-        setUserMessage(tr("Включение перемешивания PP"));
+        setUserMessage(tr("Канал PP: Включение перемешивания"));
         agrekola->SetChannel(useE154::PP, useE154::ON);
     }
     else{
-        setUserMessage("Выключение перемешивания PP");
+        setUserMessage("Канал РР: Выключение перемешивания");
         agrekola->SetChannel(useE154::PP, useE154::OFF);
     }
 }
@@ -330,7 +370,7 @@ void Widget::on_pushButton_back_clicked()
     this->~QWidget();
 }
 */
-void Widget::realtimeDataSlot()
+void Widget::realtimeDataSlotSingle()
 {
     static QTime time(QTime::currentTime());
     // calculate two new data points:
@@ -352,6 +392,65 @@ void Widget::realtimeDataSlot()
       //ui->customPlot->graph(1)->rescaleValueAxis(true);
       if(data)
       {
+          y1.push_back(a1);
+          y2.push_back(a2);
+          y3.push_back(a3);
+          y4.push_back(a4);
+          x.push_back(key);
+      }
+      lastPointKey = key;
+    }
+    // make key axis range scroll with the data (at a constant range size of 8):
+    customPlot1->xAxis->setRange(key, 8, Qt::AlignRight);
+    customPlot1->replot();
+
+    customPlot2->xAxis->setRange(key, 8, Qt::AlignRight);
+    customPlot2->replot();
+
+    customPlot3->xAxis->setRange(key, 8, Qt::AlignRight);
+    customPlot3->replot();
+
+    customPlot4->xAxis->setRange(key, 8, Qt::AlignRight);
+    customPlot4->replot();
+
+    // calculate frames per second:
+    static double lastFpsKey;
+    static int frameCount;
+    ++frameCount;
+    if (key-lastFpsKey > 2) // average fps over 2 seconds
+    {
+        ui->label_fps->setText(QString("%1 FPS, Total Data points: %2")
+                        .arg(frameCount/(key-lastFpsKey), 0, 'f', 0)
+                        .arg(customPlot1->graph(0)->data()->size()+customPlot2->graph(0)->data()->size() + customPlot3->graph(0)->data()->size() + customPlot4->graph(0)->data()->size()));
+        lastFpsKey = key;
+        frameCount = 0;
+    }
+}
+
+void Widget::realtimeDataSlotDuo()
+{
+    static QTime time(QTime::currentTime());
+    // calculate two new data points:
+    double key = time.elapsed()/1000.0; // time elapsed since start of demo, in seconds
+    static double lastPointKey = 0;
+    if (key-lastPointKey > 0.002) // at most add point every 2 ms
+    {
+      // add data to lines:
+      double a1 = agrekola->AdcSample(useE154::CH1);
+      double a2 = agrekola->AdcSample(useE154::CH2);
+      double a3 = agrekola->AdcSample(useE154::CH3);
+      double a4 = agrekola->AdcSample(useE154::CH4);
+      customPlot1->graph(0)->addData(key, a1); //qSin(key)+qrand()/(double)RAND_MAX*1*qSin(key/0.3843));
+      customPlot1->graph(1)->addData(key, a2); //qCos(key)+qrand()/(double)RAND_MAX*0.5*qSin(key/0.4364));
+      customPlot2->graph(0)->addData(key, a3); //qCos(key)+qrand()/(double)RAND_MAX*0.5*qSin(key/0.4364));
+      customPlot2->graph(1)->addData(key, a4); //qCos(key)+qrand()/(double)RAND_MAX*0.5*qSin(key/0.4364));
+      //rescale value (vertical) axis to fit the current data:
+      //ui->customPlot->graph(0)->rescaleValueAxis();
+      //ui->customPlot->graph(1)->rescaleValueAxis(true);
+      if(data)
+      {
+          //a1 = (a1+a2)/2;
+          //a3 = (a3+a4)/2;
           y1.push_back(a1);
           y2.push_back(a2);
           y3.push_back(a3);
@@ -417,6 +516,11 @@ void Widget::on_checkBox_L_stateChanged(int arg1)
     onLaser(arg1);
 }
 
+void Widget::on_pushButton_clicked()
+{
+    getData();
+}
+
 void Widget::updataTermo()
 {
 
@@ -442,9 +546,34 @@ void Widget::updateTime()
 
 void Widget::getData()
 {
-    setUserMessage(tr("signal come \"startMeasurment()\""));
-    data = true;
-    QTimer::singleShot(3000, this, SLOT(writeData()));
+    startWin->setModal(true);
+    startWin->exec();
+    if(!startWin->isClacel())
+    {
+        if(startWin->isSingle())
+        {
+            if(startWin->isChannel_1()) ui->groupBox_f1->show();
+            else ui->groupBox_f1->hide();
+            if(startWin->isChannel_2()) ui->groupBox_f2->show();
+            else ui->groupBox_f2->hide();
+            if(startWin->isChannel_3()) ui->groupBox_f3->show();
+            else ui->groupBox_f3->hide();
+            if(startWin->isChannel_4()) ui->groupBox_f4->show();
+            else ui->groupBox_f4->hide();
+            setupRealtimeData(false);
+        }
+        else
+        {
+            ui->groupBox_f3->hide();
+            ui->groupBox_f4->hide();
+            ui->groupBox_f1->setTitle("Канал 1, 2");
+            ui->groupBox_f2->setTitle("Канал 3, 4");
+            setupRealtimeData(true);
+        }
+        setUserMessage(tr("Измерение"), true, true);
+        data = true;
+        QTimer::singleShot(1000*startWin->getTime(), this, SLOT(writeData()));
+    }
 }
 
 void Widget::setupTimers()
@@ -466,19 +595,17 @@ void Widget::writeData()
     data = false;
     qDebug() << "call writeData()";
     setUserMessage(QString("call writeData()"));
+    setUserMessage(QString("%1\t%2\t%3\t%4\t%5\t%6")
+                   .arg("№").arg("V1").arg("V2").arg("V3").arg("V4").arg("t"), false, true);
     for(int i=0; i<y1.length(); i++)
     {
-        setUserMessage(QString("%1   %2   %3")
-                       .arg(i).arg(y1[i]).arg(x[i]), false, true);
+        setUserMessage(QString("%1\t%2\t%3\t%4\t%5\t%6")
+                       .arg(i).arg(y1[i]).arg(y2[i]).arg(y3[i]).arg(y4[i])
+                       .arg(x[i]), false, true);
     }
     y1.clear();
     y2.clear();
     y3.clear();
     y4.clear();
     x.clear();
-}
-
-void Widget::on_pushButton_clicked()
-{
-    getData();
 }

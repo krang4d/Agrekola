@@ -15,8 +15,6 @@ MainWindow::MainWindow(QWidget *parent) :
     if (!ch){
         QMessageBox test(QMessageBox::Critical, "qobject_cast", QString("qobject_cast in MainWindow::newShow()"), QMessageBox::Ok); test.exec();
     }
-    st = new StartMeasurment;
-    connect(st, SIGNAL(startMeasurment()), centerWidget, SLOT(getData()));
     installEventFilter(this);
 }
 
@@ -91,10 +89,7 @@ bool MainWindow::eventFilter(QObject *watched, QEvent *event)
 
 void MainWindow::on_action_start_triggered()
 {
-    //StartMeasurment *st = new StartMeasurment;
-    //st->setWindowModality(Qt::ApplicationModal);
-    st->setWindowModality(Qt::ApplicationModal);
-    st->show();
+    centerWidget->getData();
 }
 
 void MainWindow::on_action_menu_triggered()

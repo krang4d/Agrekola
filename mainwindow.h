@@ -3,10 +3,6 @@
 
 #include <QMainWindow>
 #include "choisedialog.h"
-#include "measurement.h"
-#include "viewgraph.h"
-#include "choisedialog.h"
-#include "startmeasurment.h"
 #include "widget.h"
 
 namespace Ui {
@@ -32,7 +28,6 @@ private slots:
 private:
     Ui::MainWindow *ui;
     Widget *centerWidget;
-    StartMeasurment *st;
     ChoiseDialog *ch;
 };
 
