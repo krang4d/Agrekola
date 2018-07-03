@@ -15,6 +15,7 @@ Widget::Widget(QWidget *parent) :
     data(false)
 {
     ui->setupUi(this);
+    setupFile();
     agrekola = new useE154(this);
     setWindowTitle("Программы сбора данных с АЦП(E-154) по 4 каналам");
     customPlot1 = ui->frame_1;
@@ -61,13 +62,22 @@ bool Widget::eventFilter(QObject *watched, QEvent *event)
     return QWidget::eventFilter(watched, event);
 }
 
-void Widget::setUserMessage(QString str, bool time)
+void Widget::setUserMessage(QString str, bool withtime, bool tofile)
 {
-    if(!time)
-        ui->textEdit->append(QString("%1,    Время %2")
-                         .arg(str)
-                         .arg(dt.toString("hh:mm:ss")));
-    else ui->textEdit->append(str);
+    if(withtime)
+    {
+        QString msg = QString("%1,    Время %2")
+                .arg(str)
+                .arg(dt.toString("hh:mm:ss"));
+        ui->textEdit->append(msg);
+        if(tofile) out << msg << "\n";
+    }
+
+    else
+    {
+        ui->textEdit->append(str);
+        if(tofile) out << str << "\n";
+    }
 }
 
 void Widget::setAgrekola(useE154 *agr)
@@ -187,6 +197,17 @@ void Widget::setupRealtimeData()
     plotTimer.start(0); // Interval 0 means to refresh as fast as possible
 }
 
+void Widget::setupFile()
+{
+    path = QDir::homePath();
+    QDir::setCurrent(path);
+    file.setFileName("widget.txt");
+
+    if(!file.open(QIODevice::ReadWrite | QIODevice::Append | QIODevice::Text)) qDebug() << "file is't opened";
+    out.setDevice(&file);
+    out << "the magic number is:" << 49 << "\n";
+}
+
 Widget::~Widget()
 {
     delete ui;
@@ -195,6 +216,7 @@ Widget::~Widget()
     delete customPlot2;
     delete customPlot3;
     delete customPlot4;
+    file.close();
 }
 
 void Widget::onMixCh1(bool b)
@@ -446,7 +468,8 @@ void Widget::writeData()
     setUserMessage(QString("call writeData()"));
     for(int i=0; i<y1.length(); i++)
     {
-        setUserMessage(QString("%1   %2   %3").arg(i).arg(y1[i]).arg(x[i]), true);
+        setUserMessage(QString("%1   %2   %3")
+                       .arg(i).arg(y1[i]).arg(x[i]), false, true);
     }
     y1.clear();
     y2.clear();

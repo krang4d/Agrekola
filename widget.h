@@ -6,6 +6,10 @@
 #include <QWidget>
 #include <QTimer>
 #include <QDateTime>
+#include <QDir>
+#include <QFile>
+#include <QIODevice>
+#include <QTextStream>
 #include "useE154.h"
 #include "startmeasurment.h"
 #include "QCustomPlot/qcustomplot.h"
@@ -27,16 +31,16 @@ public:
     void onMixCh4(bool);
     void onMixPP(bool);
     void onLaser(bool);
-
-    void setUserMessage(QString, bool time = 0);
+    void setUserMessage(QString, bool withtime = 1, bool tofile = 0);
     void setAgrekola(useE154 *agr);
-    void setupQuadraticPlot(QVector<double> data = {0});
-    void setupRealtimeData();
-    bool eventFilter(QObject *watched, QEvent *event);
+
 
 private:
+    bool eventFilter(QObject *watched, QEvent *event);
+    void setupQuadraticPlot(QVector<double> data = {0});
+    void setupRealtimeData();
     void setupTimers();
-
+    void setupFile();
 
 private slots:
     void realtimeDataSlot();
@@ -45,16 +49,16 @@ private slots:
     void on_checkBox_2_stateChanged(int arg1);
     void on_checkBox_3_stateChanged(int arg1);
     void on_checkBox_4_stateChanged(int arg1);
+    void on_checkBox_PP_stateChanged(int arg1);
+    void on_checkBox_L_stateChanged(int arg1);
+    void on_pushButton_clicked();
 
     void updataTermo();
     void updateTime();
     void getData();
 
-    void on_checkBox_PP_stateChanged(int arg1);
 
-    void on_checkBox_L_stateChanged(int arg1);
 
-    void on_pushButton_clicked();
 
 private:
     Ui::Widget *ui;
@@ -71,6 +75,10 @@ private:
     bool data;
     QVector<double> x;
     QVector<double> y1, y2, y3, y4;
+
+    QString path;
+    QFile file;
+    QTextStream out;
 };
 
 #endif // WIDGET_H
