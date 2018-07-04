@@ -223,6 +223,25 @@
     </layout>
    </item>
    <item>
+    <widget class="QProgressBar" name="progressBar">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="value">
+      <number>0</number>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+     <property name="textVisible">
+      <bool>true</bool>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QLabel" name="label_fps">
      <property name="text">
       <string>FPS</string>
@@ -324,15 +343,12 @@
     </widget>
    </item>
   </layout>
-  <zorder>groupBox_f4</zorder>
   <zorder>label_fps</zorder>
   <zorder>label_5</zorder>
   <zorder>pushButton</zorder>
   <zorder></zorder>
   <zorder></zorder>
-  <zorder>groupBox_f1</zorder>
-  <zorder>groupBox_f2</zorder>
-  <zorder>groupBox_f3</zorder>
+  <zorder>progressBar</zorder>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>

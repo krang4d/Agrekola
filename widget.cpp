@@ -23,6 +23,7 @@ Widget::Widget(QWidget *parent) :
     customPlot4 = ui->frame_4;
     startWin = new StartMeasurment();
     ui->groupBox_Mix->setVisible(false);
+    ui->progressBar->hide();
 
     setupRealtimeData();
     setupTimers();
@@ -89,6 +90,8 @@ void Widget::setUserMessage(QString str, bool withtime, bool tofile)
         ui->textEdit->append(str);
         if(tofile) out << str << "\n";
     }
+    QScrollBar *b = ui->textEdit->verticalScrollBar();
+    b->triggerAction(QScrollBar::SliderToMaximum);
 }
 
 void Widget::setAgrekola(useE154 *agr)
@@ -376,7 +379,7 @@ void Widget::realtimeDataSlotSingle()
     // calculate two new data points:
     double key = time.elapsed()/1000.0; // time elapsed since start of demo, in seconds
     static double lastPointKey = 0;
-    if (key-lastPointKey > 0.002) // at most add point every 2 ms
+    if (key-lastPointKey > 0.010) // at most add point every 10 ms
     {
       // add data to lines:
       double a1 = agrekola->AdcSample(useE154::CH1);
@@ -433,7 +436,7 @@ void Widget::realtimeDataSlotDuo()
     // calculate two new data points:
     double key = time.elapsed()/1000.0; // time elapsed since start of demo, in seconds
     static double lastPointKey = 0;
-    if (key-lastPointKey > 0.002) // at most add point every 2 ms
+    if (key-lastPointKey > 0.010) // at most add point every 10 ms
     {
       // add data to lines:
       double a1 = agrekola->AdcSample(useE154::CH1);
@@ -449,6 +452,7 @@ void Widget::realtimeDataSlotDuo()
       //ui->customPlot->graph(1)->rescaleValueAxis(true);
       if(data)
       {
+          //(startWin->getTime()/(kay - st));
           //a1 = (a1+a2)/2;
           //a3 = (a3+a4)/2;
           y1.push_back(a1);
@@ -544,6 +548,12 @@ void Widget::updateTime()
     ui->label_date->setText("Дата: " + dt.toString("dd.MM.yyyy"));
 }
 
+void Widget::progressValueChanged()
+{
+    ui->progressBar->setMaximum(t-progressTimer.interval());
+    ui->progressBar->setValue(ui->progressBar->value()+progressTimer.interval());
+}
+
 void Widget::getData()
 {
     startWin->setModal(true);
@@ -571,8 +581,12 @@ void Widget::getData()
             setupRealtimeData(true);
         }
         setUserMessage(tr("Измерение"), true, true);
+        t = startWin->getTime() * 1000;
+        ui->progressBar->setVisible(true);
+        ui->progressBar->setValue(0);
         data = true;
-        QTimer::singleShot(1000*startWin->getTime(), this, SLOT(writeData()));
+        QTimer::singleShot(t, this, SLOT(writeData()));
+        progressTimer.start(300);
     }
 }
 
@@ -586,19 +600,25 @@ void Widget::setupTimers()
     setUserMessage(QString("Начало работы программы    Дата %1").arg(dt.toString("dd.MM.yyyy")));
 
     //настройка таймера для обновления датчика температуры
-    TDTimer.start(200);
+    TDTimer.start(500);
     connect(&TDTimer, SIGNAL(timeout()), this, SLOT(updataTermo()));
+
+    //таймер для отображения процесса сбора данных
+    connect(&progressTimer, SIGNAL(timeout()), this, SLOT(progressValueChanged()));
 }
 
 void Widget::writeData()
 {
+    progressTimer.stop();
     data = false;
     qDebug() << "call writeData()";
-    setUserMessage(QString("call writeData()"));
+    setUserMessage(QString("Запись данных в файл"));
     setUserMessage(QString("%1\t%2\t%3\t%4\t%5\t%6")
                    .arg("№").arg("V1").arg("V2").arg("V3").arg("V4").arg("t"), false, true);
-    for(int i=0; i<y1.length(); i++)
+    for(int i=0; i<x.length(); i++)
     {
+        ui->progressBar->setMaximum(x.length());
+        ui->progressBar->setValue(i);//i*100/x.length());
         setUserMessage(QString("%1\t%2\t%3\t%4\t%5\t%6")
                        .arg(i).arg(y1[i]).arg(y2[i]).arg(y3[i]).arg(y4[i])
                        .arg(x[i]), false, true);
@@ -608,4 +628,5 @@ void Widget::writeData()
     y3.clear();
     y4.clear();
     x.clear();
+    ui->progressBar->setVisible(false);
 }

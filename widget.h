@@ -57,22 +57,24 @@ private slots:
     void on_pushButton_clicked();
     void updataTermo();
     void updateTime();
+    void progressValueChanged();
 
 private:
     Ui::Widget *ui;
     QString text;
     useE154 *agrekola;
     StartMeasurment *startWin;
-    QTimer dataTimer, plotTimer, TDTimer, *currenttime;
+    QTimer progressTimer, dataTimer, plotTimer, TDTimer, *currenttime;
     QDateTime dt;
     QCustomPlot *customPlot1;
     QCustomPlot *customPlot2;
     QCustomPlot *customPlot3;
     QCustomPlot *customPlot4;
 
-    bool data;
+    volatile bool data;
     QVector<double> x;
     QVector<double> y1, y2, y3, y4;
+    double t; //время измерния
 
     QString path;
     QFile file;
