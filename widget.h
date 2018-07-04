@@ -39,7 +39,7 @@ private:
     void setupQuadraticPlot(QVector<double> data = {0});
     void setupRealtimeData(bool duo = 0);
     void setupTimers();
-    void setupFile();
+    void setupFiles();
 
 public slots:
     void getData();
@@ -76,9 +76,8 @@ private:
     QVector<double> y1, y2, y3, y4;
     double t; //время измерния
 
-    QString path;
-    QFile file;
-    QTextStream out;
+    QFile file_setting, file_user, file_data;
+    QTextStream out_settings ,out_user, out_data;
 };
 
 #endif // WIDGET_H

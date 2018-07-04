@@ -14,7 +14,7 @@ Widget::Widget(QWidget *parent) :
     data(false)
 {
     ui->setupUi(this);
-    setupFile();
+    setupFiles();
     agrekola = new useE154(this);
     setWindowTitle("Программы сбора данных с АЦП(E-154) по 4 каналам");
     customPlot1 = ui->frame_1;
@@ -40,7 +40,9 @@ Widget::~Widget()
     delete customPlot2;
     delete customPlot3;
     delete customPlot4;
-    file.close();
+    file_data.close();
+    file_setting.close();
+    file_user.close();
 }
 
 bool Widget::eventFilter(QObject *watched, QEvent *event)
@@ -82,13 +84,13 @@ void Widget::setUserMessage(QString str, bool withtime, bool tofile)
                 .arg(str)
                 .arg(dt.toString("hh:mm:ss"));
         ui->textEdit->append(msg);
-        if(tofile) out << msg << "\n";
+        if(tofile) out_user << msg << "\n";
     }
 
     else
     {
         ui->textEdit->append(str);
-        if(tofile) out << str << "\n";
+        if(tofile) out_user << str << "\n";
     }
     QScrollBar *b = ui->textEdit->verticalScrollBar();
     b->triggerAction(QScrollBar::SliderToMaximum);
@@ -251,15 +253,33 @@ void Widget::setupRealtimeData(bool duo)
     }
 }
 
-void Widget::setupFile()
+void Widget::setupFiles()
 {
-    path = QDir::homePath();
-    QDir::setCurrent(path);
-    file.setFileName("widget.txt");
+    QDir dir;
+    QString path = QDir::homePath();
+    dir.cd(path);
+    if(!dir.cd("Агрекола-4к"))
+    {
+        if(dir.mkdir("Агрекола-4к")) dir.cd("Агрекола-4к");
+        QDir::setCurrent(dir.path());
+        qDebug() << "Current dir is: " <<dir.currentPath();
+    }
+    else QDir::setCurrent(dir.path());
+    //QDir::setCurrent(path);
+    //открываем файл сообщений
+    file_user.setFileName("user.txt");
+    if(!file_user.open(QIODevice::ReadWrite | QIODevice::Append | QIODevice::Text)) qWarning() << "user file is't opened";
+    out_user.setDevice(&file_user);
 
-    if(!file.open(QIODevice::ReadWrite | QIODevice::Append | QIODevice::Text)) qDebug() << "file is't opened";
-    out.setDevice(&file);
-    out << "the magic number is:" << 49 << "\n";
+    //открываем файл данных
+    file_data.setFileName("data.txt");
+    if(!file_data.open(QIODevice::ReadWrite | QIODevice::Append | QIODevice::Text)) qWarning() << "data file is't opened";
+    out_data.setDevice(&file_data);
+
+    //открываем файл настроек
+    file_setting.setFileName("setting.txt");
+    if(!file_setting.open(QIODevice::ReadWrite | QIODevice::Append | QIODevice::Text)) qWarning() << "setting file is't opened";
+    out_settings.setDevice(&file_setting);
 }
 
 void Widget::onMixCh1(bool b)
@@ -580,7 +600,7 @@ void Widget::getData()
             ui->groupBox_f2->setTitle("Канал 3, 4");
             setupRealtimeData(true);
         }
-        setUserMessage(tr("Измерение"), true, true);
+        setUserMessage(tr("Начало измерения"), true, true);
         t = startWin->getTime() * 1000;
         ui->progressBar->setVisible(true);
         ui->progressBar->setValue(0);
@@ -612,16 +632,16 @@ void Widget::writeData()
     progressTimer.stop();
     data = false;
     qDebug() << "call writeData()";
-    setUserMessage(QString("Запись данных в файл"));
-    setUserMessage(QString("%1\t%2\t%3\t%4\t%5\t%6")
-                   .arg("№").arg("V1").arg("V2").arg("V3").arg("V4").arg("t"), false, true);
+    setUserMessage(QString("Запись данных в файл %1/%2").arg(QDir::currentPath()).arg(file_data.fileName()));
+    out_data << QString("%1\t%2\t\t%3\t\t%4\t\t%5\t\t%6\n")
+                .arg("№").arg("V1").arg("V2").arg("V3").arg("V4").arg("t");
     for(int i=0; i<x.length(); i++)
     {
         ui->progressBar->setMaximum(x.length());
         ui->progressBar->setValue(i);//i*100/x.length());
-        setUserMessage(QString("%1\t%2\t%3\t%4\t%5\t%6")
+        out_data << QString("%1\t%2\t%3\t%4\t%5\t%6\n")
                        .arg(i).arg(y1[i]).arg(y2[i]).arg(y3[i]).arg(y4[i])
-                       .arg(x[i]), false, true);
+                       .arg(x[i]);
     }
     y1.clear();
     y2.clear();
