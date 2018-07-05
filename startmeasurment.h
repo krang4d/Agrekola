@@ -2,6 +2,10 @@
 #define STARTMEASURMENT_H
 
 #include <QDialog>
+#include <QFile>
+#include <QTextStream>
+#include <QByteArray>
+#include <QDir>
 
 namespace Ui {
 class StartMeasurment;
@@ -14,7 +18,7 @@ class StartMeasurment : public QDialog
 public:
     explicit StartMeasurment(QDialog *parent = 0);
     ~StartMeasurment();
-    bool isClacel();
+    bool isCancel();
     bool isSingle();
     bool isChannel_1();
     bool isChannel_2();
@@ -26,6 +30,7 @@ public:
     int getNum_3();
     int getNum_4();
     int getTime();
+    QString getStringStatus();
 
 private slots:
     void on_checkBox_ch1_stateChanged(int arg1);
@@ -40,14 +45,16 @@ signals:
     startMeasurment();
 
 private:
+    Ui::StartMeasurment *ui;
     bool cancel;
     bool single;       //пробы одиночные?
     bool channel_1, channel_2, channel_3, channel_4;
     int num_1, num_2, num_3, num_4;
-    double freq;        //интервал между точками
     int time;           //время записи
 
-    Ui::StartMeasurment *ui;
+    QFile file;
+    QTextStream stream;
+    QByteArray byte;
 };
 
 #endif // STARTMEASURMENT_H

@@ -9,14 +9,33 @@ StartMeasurment::StartMeasurment(QDialog *parent) :
     ui(new Ui::StartMeasurment)
 {
     ui->setupUi(this);
+
+    //QDir::current();
+    file.setFileName("startwin.txt");
+    if(!file.open(QIODevice::ReadWrite | QIODevice::Append | QIODevice::Text)) qWarning() << "startwin file is't opened";
+    stream.setDevice(&file);
+    stream << QString("adfadf");
+
+    cancel = true;
+    single = true;
+    channel_1 = true;
+    channel_2 = true;
+    channel_3 = true;
+    channel_4 = true;
+    num_1 = 0;
+    num_2 = 0;
+    num_3 = 0;
+    num_4 = 0;
+    time = 0;
 }
 
 StartMeasurment::~StartMeasurment()
 {
+    file.close();
     delete ui;
 }
 
-bool StartMeasurment::isClacel()
+bool StartMeasurment::isCancel()
 {
     return cancel;
 }
@@ -71,6 +90,11 @@ int StartMeasurment::getTime()
     return time;
 }
 
+QString StartMeasurment::getStringStatus()
+{
+    return QString("");
+}
+
 void StartMeasurment::on_checkBox_ch1_stateChanged(int arg1)
 {
     if(arg1) ui->lineEdit_ch1->setEnabled(true);
@@ -93,6 +117,14 @@ void StartMeasurment::on_checkBox_ch4_stateChanged(int arg1)
 {
     if(arg1) ui->lineEdit_ch4->setEnabled(true);
     else ui->lineEdit_ch4->setEnabled(false);
+}
+
+void StartMeasurment::on_radioButton_single_toggled(bool checked)
+{
+    single = checked;
+//    QMessageBox mb;
+//    mb.setInformativeText("rb_single pressed");
+//    mb.exec();
 }
 
 void StartMeasurment::on_pushButton_next_clicked()
@@ -137,15 +169,22 @@ void StartMeasurment::on_pushButton_next_clicked()
         cancel = false;
         emit startMeasurment();
         hide();
-    }
-}
 
-void StartMeasurment::on_radioButton_single_toggled(bool checked)
-{
-    single = checked;
-//    QMessageBox mb;
-//    mb.setInformativeText("rb_single pressed");
-//    mb.exec();
+        stream << "ntrcn";
+        byte.append("запись");
+        //QString::toLatin1()
+        byte.append(single);
+        byte.append(channel_1);
+        byte.append(channel_2);
+        byte.append(channel_3);
+        byte.append(channel_4);
+        byte.append(num_1);
+        byte.append(num_2);
+        byte.append(num_3);
+        byte.append(num_4);
+        byte.append(time);
+        stream << byte;
+    }
 }
 
 void StartMeasurment::on_pushButton_cancel_clicked()

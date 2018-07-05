@@ -3,7 +3,6 @@
 #include <QScrollBar>
 #include <QMessageBox>
 #include <QDebug>
-
 #include <QEvent>
 #include <QKeyEvent>
 #include "useE154.h"
@@ -86,7 +85,6 @@ void Widget::setUserMessage(QString str, bool withtime, bool tofile)
         ui->textEdit->append(msg);
         if(tofile) out_user << msg << "\n";
     }
-
     else
     {
         ui->textEdit->append(str);
@@ -210,9 +208,9 @@ void Widget::setupRealtimeData(bool duo)
         connect(customPlot4->yAxis, SIGNAL(rangeChanged(QCPRange)), customPlot4->yAxis2, SLOT(setRange(QCPRange)));
 
         // setup a timer that repeatedly calls MainWindow::realtimeDataSlot:
-        connect(&plotTimer, SIGNAL(timeout()), this, SLOT(realtimeDataSlotSingle()));
         disconnect(&plotTimer, SIGNAL(timeout()), this, SLOT(realtimeDataSlotDuo()));
         plotTimer.stop();
+        connect(&plotTimer, SIGNAL(timeout()), this, SLOT(realtimeDataSlotSingle()));
         plotTimer.start(0); // Interval 0 means to refresh as fast as possible
     }
     else
@@ -246,9 +244,9 @@ void Widget::setupRealtimeData(bool duo)
         connect(customPlot2->yAxis, SIGNAL(rangeChanged(QCPRange)), customPlot2->yAxis2, SLOT(setRange(QCPRange)));
 
         // setup a timer that repeatedly calls MainWindow::realtimeDataSlot:
-        connect(&plotTimer, SIGNAL(timeout()), this, SLOT(realtimeDataSlotDuo()));
         disconnect(&plotTimer, SIGNAL(timeout()), this, SLOT(realtimeDataSlotSingle()));
         plotTimer.stop();
+        connect(&plotTimer, SIGNAL(timeout()), this, SLOT(realtimeDataSlotDuo()));
         plotTimer.start(0); // Interval 0 means to refresh as fast as possible
     }
 }
@@ -289,20 +287,6 @@ void Widget::setupFiles()
         qDebug() << "mkdir(data)";
     }
     else QDir::setCurrent(dir.path());
-    //открываем файл данных
-    //имя файла формируется из текущей даты + число запуска программы в этот день
-    QDateTime d = QDateTime::currentDateTime();
-    //int i = 0;
-    for(int i = 0; i<10; i++)
-    {
-        QString name = QString("%1_%2.txt").arg(d.toString("yyyyddMM")).arg(i);
-        if(!QFile::exists(name)){
-            file_data.setFileName(name);
-            if(!file_data.open(QIODevice::ReadWrite | QIODevice::Append | QIODevice::Text)) qWarning() << "data file is't opened";
-            out_data.setDevice(&file_data);
-            return;
-        }
-    }
 }
 
 void Widget::onMixCh1(bool b)
@@ -601,7 +585,7 @@ void Widget::getData()
 {
     startWin->setModal(true);
     startWin->exec();
-    if(!startWin->isClacel())
+    if(!startWin->isCancel())
     {
         if(startWin->isSingle())
         {
@@ -623,11 +607,14 @@ void Widget::getData()
             ui->groupBox_f2->setTitle("Канал 3, 4");
             setupRealtimeData(true);
         }
-        setUserMessage(tr("Начало измерения"), true, true);
+
+        QString stat = QString("Начало измерения"); // (%1 пробы").arg(function(x){return "одиночные";});
+        setUserMessage(stat, true, true);
         t = startWin->getTime() * 1000;
         ui->progressBar->setVisible(true);
         ui->progressBar->setValue(0);
         data = true;
+        emit status(QString("Измерение"));
         QTimer::singleShot(t, this, SLOT(writeData()));
         progressTimer.start(300);
     }
@@ -655,7 +642,23 @@ void Widget::writeData()
     progressTimer.stop();
     data = false;
     qDebug() << "call writeData()";
-    setUserMessage(QString("Запись данных в файл %1/%2").arg(QDir::currentPath()).arg(file_data.fileName()));
+    //создаем файл данных
+    //имя файла формируется из текущей даты + число запуска программы в этот день
+    QDateTime d = QDateTime::currentDateTime();
+    static int i(0);
+    for(;;)
+    {
+        QString name = QString("%1_%2.txt").arg(d.toString("yyyyddMM")).arg(i);
+        if(!QFile::exists(name)){
+            file_data.setFileName(name);
+            if(!file_data.open(QIODevice::ReadWrite | QIODevice::Append | QIODevice::Text)) qWarning() << "data file is't opened";
+            out_data.setDevice(&file_data);
+            break;
+        }
+        i++;
+    }
+    emit status(QString("Запись данных"));
+    qDebug() << "Запись данных";
     out_data << QString("%1\t%2\t\t%3\t\t%4\t\t%5\t\t%6\n")
                 .arg("№").arg("V1").arg("V2").arg("V3").arg("V4").arg("t");
     for(int i=0; i<x.length(); i++)
@@ -672,4 +675,5 @@ void Widget::writeData()
     y4.clear();
     x.clear();
     ui->progressBar->setVisible(false);
+    setUserMessage(QString("Данные записаны в файл %1/%2").arg(QDir::currentPath()).arg(file_data.fileName()), true, true);
 }

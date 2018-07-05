@@ -41,6 +41,9 @@ private:
     void setupTimers();
     void setupFiles();
 
+signals:
+    void status(QString);
+
 public slots:
     void getData();
 
