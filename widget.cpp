@@ -257,29 +257,52 @@ void Widget::setupFiles()
 {
     QDir dir;
     QString path = QDir::homePath();
-    dir.cd(path);
-    if(!dir.cd("Агрекола-4к"))
+    dir.cd(path); //переходим в папку home
+    if(!dir.cd("Agrekola4k"))
     {
-        if(dir.mkdir("Агрекола-4к")) dir.cd("Агрекола-4к");
+        if(dir.mkdir("Agrekola4k")) dir.cd("Agrekola4k");
         QDir::setCurrent(dir.path());
-        qDebug() << "Current dir is: " <<dir.currentPath();
+        qDebug() << "mkdir(Agrekola4k)";
     }
     else QDir::setCurrent(dir.path());
-    //QDir::setCurrent(path);
     //открываем файл сообщений
     file_user.setFileName("user.txt");
     if(!file_user.open(QIODevice::ReadWrite | QIODevice::Append | QIODevice::Text)) qWarning() << "user file is't opened";
     out_user.setDevice(&file_user);
 
-    //открываем файл данных
-    file_data.setFileName("data.txt");
-    if(!file_data.open(QIODevice::ReadWrite | QIODevice::Append | QIODevice::Text)) qWarning() << "data file is't opened";
-    out_data.setDevice(&file_data);
-
+    if(!dir.cd("settings"))
+    {
+        if(dir.mkdir("settings")) dir.cd("settings");
+        QDir::setCurrent(dir.path());
+        qDebug() << "mkdir(settings)";
+    }
+    else QDir::setCurrent(dir.path());
     //открываем файл настроек
     file_setting.setFileName("setting.txt");
     if(!file_setting.open(QIODevice::ReadWrite | QIODevice::Append | QIODevice::Text)) qWarning() << "setting file is't opened";
     out_settings.setDevice(&file_setting);
+
+    if(!dir.cd("../data"))
+    {
+        if(dir.mkdir("../data")) dir.cd("../data");
+        QDir::setCurrent(dir.path());
+        qDebug() << "mkdir(data)";
+    }
+    else QDir::setCurrent(dir.path());
+    //открываем файл данных
+    //имя файла формируется из текущей даты + число запуска программы в этот день
+    QDateTime d = QDateTime::currentDateTime();
+    //int i = 0;
+    for(int i = 0; i<10; i++)
+    {
+        QString name = QString("%1_%2.txt").arg(d.toString("yyyyddMM")).arg(i);
+        if(!QFile::exists(name)){
+            file_data.setFileName(name);
+            if(!file_data.open(QIODevice::ReadWrite | QIODevice::Append | QIODevice::Text)) qWarning() << "data file is't opened";
+            out_data.setDevice(&file_data);
+            return;
+        }
+    }
 }
 
 void Widget::onMixCh1(bool b)
