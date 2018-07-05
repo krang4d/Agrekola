@@ -14,6 +14,7 @@ useE154::useE154(QWidget *parent) :
 
 useE154::~useE154(void)
 {
+    CloseDevice();
     delete[] pDestination;
 	ReleaseAPIInstance();
     if(pLoadDll) { delete pLoadDll; pLoadDll = NULL; }
@@ -26,32 +27,28 @@ useE154::~useE154(void)
     double AdcVolt;
     if(!pModule->ADC_SAMPLE(&AdcSample, (WORD)(ch  | (ADC_INPUT_RANGE_5000mV_E154 << 6)))) { throw Errore_E154("\n\n  ADC_SAMPLE(, 0) --> Bad\n");}
     if(!pModule->ProcessOnePoint(AdcSample, &AdcVolt, (WORD)(ch  | (ADC_INPUT_RANGE_5000mV_E154 << 6)), TRUE, TRUE)) { throw Errore_E154("\n\n  PreocessOnePoint() --> Bad\n"); }
-    AdcSampleList.push_back(AdcVolt);
     pModule->STOP_ADC();
     return AdcVolt;
 }
 
-void useE154::AdcKADR()
+QVector<double> useE154::AdcKADR()
 {
     SHORT AdcBuffer[4];
-    //std::list<SHORT>::iterator it;
+    double volt[16];
     pModule->STOP_ADC();
     pModule->GET_MODULE_DESCRIPTION(&ModuleDescription);
     // получим текущие параметры работы АЦП
-    if(!pModule->GET_ADC_PARS(&ap)) throw Errore_E154("GET_ADC_PARS() --> Bad\n");
+    //if(!pModule->GET_ADC_PARS(&ap)) throw Errore_E154("GET_ADC_PARS() --> Bad\n");
     if(!pModule->ADC_KADR(AdcBuffer)) throw Errore_E154("ADC_KADR() --> Bad\n");
-    if(!pModule->ProcessArray(AdcBuffer, volts_array, 4, TRUE, TRUE)) throw Errore_E154("ProcessArray() --> Bad\n");
-    Adc1BufferList.push_back(AdcBuffer[0]);
-    Adc2BufferList.push_back(AdcBuffer[1]);
-    Adc3BufferList.push_back(AdcBuffer[2]);
-    Adc4BufferList.push_back(AdcBuffer[3]);
-
-    AdcSampleList.push_back(AdcBuffer[0]);
-    AdcSampleList.push_back(AdcBuffer[1]);
-    AdcSampleList.push_back(AdcBuffer[2]);
-    AdcSampleList.push_back(AdcBuffer[3]);
+    if(!pModule->ProcessArray(AdcBuffer, volt, 0x4, TRUE, TRUE)) throw Errore_E154("ProcessArray() --> Bad\n");
     pModule->STOP_ADC();
-    emit ValueCome(&AdcSampleList);
+    vec_data.clear();
+    vec_data.push_back(volt[0]);
+    vec_data.push_back(volt[1]);
+    vec_data.push_back(volt[2]);
+    vec_data.push_back(volt[3]);
+    return vec_data;
+//    emit ValueCome(&AdcSampleList);
 }
 
 std::string useE154::AdcSynchro()
@@ -119,7 +116,7 @@ void useE154::initModuleHandler()
 }
 
 //typedef DWORD (WINAPI *pGetDllVersion)(void);
-string useE154::GetVersion(void)
+QString useE154::GetVersion(void)
 {
     pGetDllVersion GetDllVersion = (pGetDllVersion)pLoadDll->CallGetDllVersion();
     if(!GetDllVersion) throw Errore_E154("Ошибка выделения памяти в функции Get_Version()!");
@@ -127,7 +124,7 @@ string useE154::GetVersion(void)
 //						DllVersion >> 0x10, DllVersion & 0xFFFF,
 //						CURRENT_VERSION_LUSBAPI >> 0x10, CURRENT_VERSION_LUSBAPI & 0xFFFF);
     DWORD DllVersion = GetDllVersion();
-    return "Lusbapi.dll version is v" + std::to_string(DllVersion >> 0x10) + "." + std::to_string(DllVersion & 0xFFFF) + "\n";
+    return QString("Lusbapi.dll version is v%1.%2").arg(DllVersion >> 0x10).arg(DllVersion & 0xFFFF);
 }
 
 void useE154::initPorts()
@@ -135,7 +132,7 @@ void useE154::initPorts()
     if(pModule->ENABLE_TTL_OUT(1)) pModule->TTL_OUT(0); else throw Errore_E154("Ошибка включения линий TTL");
 }
 
-std::string useE154::initADC()
+QString useE154::initADC()
 {
     pModule->STOP_ADC();
     if(!pModule->GET_ADC_PARS(&ap)) throw Errore_E154("Ошибка получния параметров АЦП!\n");
@@ -144,13 +141,14 @@ std::string useE154::initADC()
     ap.InputMode = NO_SYNC_E154;                            // без синхронизации ввода данных
     ap.ChannelsQuantity = 0x4;                              // кол-во активных каналов
     // формируем управляющую таблицу
-    for(int i = 0x0; i < ap.ChannelsQuantity; i++) ap.ControlTable[i] = (WORD)(i | (ADC_INPUT_RANGE_5000mV_E154 << 0x6));
+    for(int i = 0x0; i < ap.ChannelsQuantity; i++)
+        ap.ControlTable[i] = (WORD)(i | (ADC_INPUT_RANGE_5000mV_E154 << 0x6));
     ap.AdcRate = 100.0;                                     // частота работы АЦП в кГц
     ap.InterKadrDelay = 0.0;                                // межкадровая задержка в мс
     // передадим требуемые параметры работы АЦП в модуль
     if(!pModule->SET_ADC_PARS(&ap)) throw Errore_E154("Ошибка установки параметрв АЦП!\n");
 
-    return std::string("initADC()/n");
+    return QString("initADC()");
 }
 
 void useE154::ReleaseAPIInstance() //(char *ErrorString, bool AbortionFlag)
@@ -169,7 +167,7 @@ void useE154::ReleaseAPIInstance() //(char *ErrorString, bool AbortionFlag)
     //if(AbortionFlag) exit(0x1);
 }
 
-string useE154::OpenDevice()
+void useE154::OpenDevice()
 {
 	WORD i;
 	// попробуем обнаружить модуль E-154 в первых 256 виртуальных слотах
@@ -182,34 +180,33 @@ string useE154::OpenDevice()
 
 	// проверим, что это 'E-154'
     if(strcmp(ModuleName, "E154")) Errore_E154("Устройство 'E-154' успешно открыто.");
-    return "Устройство 'E-154' открыто в виртуальном слоте №" + std::to_string(i) + ".\n\r" ;
-    //user_msg.Format(_T("%sУстройство 'E-154' обнаружено.\n\r"), user_msg);
+    //return "Устройство 'E-154' открыто в виртуальном слоте №" + std::to_string(i) + ".\n\r" ;
 }
 
-std::string useE154::CloseDevice()
+void useE154::CloseDevice()
 {
     pModule->CloseLDevice();
 }
 
-string useE154::GetUsbSpeed()
+QString useE154::GetUsbSpeed()
 {
     if(!pModule->GetUsbSpeed(&UsbSpeed)) Errore_E154("Не удалось получить скорость работы интерфейса USB!"); //получаем скорость работы шины USB
-    string speed;
+    QString speed;
     if(UsbSpeed)
     {
         speed = "High-Speed Mode (480 Mbit/s)";
     } else speed = "Full-Speed Mode (12 Mbit/s)";
-    return "USB is in " + speed + "\n";
+    return QString("USB is in %1").arg(speed);
 }
 
-string useE154::GetInformation()
+QString useE154::GetInformation()
 {
-    string str;
-    char str1[16];
-    strcpy(str1, (char*)ModuleDescription.Module.SerialNumber);
-     // получим информацию из ППЗУ модуля
+    //string str;
+    char name[25], serial[16];
     if(!pModule->GET_MODULE_DESCRIPTION(&ModuleDescription)) throw Errore_E154("Не удалось получить дискриптор модуля!");
-    return "Module E-154 (S/N ) is ready ...\n";
+    strcpy(serial, (char*)ModuleDescription.Module.SerialNumber);
+    // получим информацию из ППЗУ модуля
+    return QString("Модуль E-154 (S/N %1 готов").arg(serial);
 }
 
 void useE154::SetChannel(channel ch, int pos)
@@ -243,7 +240,3 @@ bool useE154::GetStatusTD()
     pModule->TTL_IN(&TtlIN); if(TtlIN & (1<<0)) return TRUE; else return FALSE;
 }
 
-string useE154::GetUserMessages() const
-{
-    return user_msg.back();
-}

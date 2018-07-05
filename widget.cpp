@@ -16,6 +16,7 @@ Widget::Widget(QWidget *parent) :
     setupFiles();
     agrekola = new useE154(this);
     setWindowTitle("Программы сбора данных с АЦП(E-154) по 4 каналам");
+    setUserMessage(QString(agrekola->GetInformation()));
     customPlot1 = ui->frame_1;
     customPlot2 = ui->frame_2;
     customPlot3 = ui->frame_3;
@@ -409,23 +410,24 @@ void Widget::realtimeDataSlotSingle()
     if (key-lastPointKey > 0.010) // at most add point every 10 ms
     {
       // add data to lines:
-      double a1 = agrekola->AdcSample(useE154::CH1);
-      double a2 = agrekola->AdcSample(useE154::CH2);
-      double a3 = agrekola->AdcSample(useE154::CH3);
-      double a4 = agrekola->AdcSample(useE154::CH4);
-      customPlot1->graph(0)->addData(key, a1); //qSin(key)+qrand()/(double)RAND_MAX*1*qSin(key/0.3843));
-      customPlot2->graph(0)->addData(key, a2); //qCos(key)+qrand()/(double)RAND_MAX*0.5*qSin(key/0.4364));
-      customPlot3->graph(0)->addData(key, a3); //qCos(key)+qrand()/(double)RAND_MAX*0.5*qSin(key/0.4364));
-      customPlot4->graph(0)->addData(key, a4); //qCos(key)+qrand()/(double)RAND_MAX*0.5*qSin(key/0.4364));
+//      double a1 = agrekola->AdcSample(useE154::CH1);
+//      double a2 = agrekola->AdcSample(useE154::CH2);
+//      double a3 = agrekola->AdcSample(useE154::CH3);
+//      double a4 = agrekola->AdcSample(useE154::CH4);
+      QVector<double> a = agrekola->AdcKADR();
+      customPlot1->graph(0)->addData(key, a[0]); //qSin(key)+qrand()/(double)RAND_MAX*1*qSin(key/0.3843));
+      customPlot2->graph(0)->addData(key, a[1]); //qCos(key)+qrand()/(double)RAND_MAX*0.5*qSin(key/0.4364));
+      customPlot3->graph(0)->addData(key, a[2]); //qCos(key)+qrand()/(double)RAND_MAX*0.5*qSin(key/0.4364));
+      customPlot4->graph(0)->addData(key, a[3]); //qCos(key)+qrand()/(double)RAND_MAX*0.5*qSin(key/0.4364));
       //rescale value (vertical) axis to fit the current data:
       //ui->customPlot->graph(0)->rescaleValueAxis();
       //ui->customPlot->graph(1)->rescaleValueAxis(true);
       if(data)
       {
-          y1.push_back(a1);
-          y2.push_back(a2);
-          y3.push_back(a3);
-          y4.push_back(a4);
+          y1.push_back(a[0]);
+          y2.push_back(a[1]);
+          y3.push_back(a[2]);
+          y4.push_back(a[3]);
           x.push_back(key);
       }
       lastPointKey = key;
