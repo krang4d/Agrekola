@@ -153,10 +153,9 @@ QString useE154::initADC()
 
 void useE154::funThread()
 {
-    while(thread_stop){
-        emit updateTermo(GetStatusTD());
-        emit ValueCome(AdcKADR());
-        QThread::currentThread()->msleep(100);
+    while(!thread_stop){
+        emit update_termo(GetStatusTD());
+        emit value_come(AdcKADR());
     }
 }
 
@@ -204,6 +203,11 @@ void useE154::onMixPP(bool b)
 void useE154::onLaser(bool b)
 {
     SetChannel(L, b);
+}
+
+void useE154::stopThread()
+{
+    thread_stop = true;
 }
 
 int useE154::OpenDevice()

@@ -11,7 +11,6 @@
 #include <QIODevice>
 #include <QTextStream>
 
-#include "useE154.h"
 #include "startmeasurment.h"
 #include "QCustomPlot/qcustomplot.h"
 
@@ -44,13 +43,15 @@ signals:
     void onMixPP(bool);
     void onLaser(bool);
     void status(QString);
+    void get_information();
+    void stop();
 
 public slots:
     void getData();
 
 private slots:
-    void realtimeDataSlotSingle();
-    void realtimeDataSlotDuo();
+    void realtimeDataSlotSingle(QVector<double>);
+    void realtimeDataSlotDuo(QVector<double>);
     void writeData();
     void on_checkBox_1_stateChanged(int arg1);
     void on_checkBox_2_stateChanged(int arg1);
@@ -61,12 +62,12 @@ private slots:
     void on_pushButton_clicked();
     void updataTermo(bool);
     void updateTime();
+
     void progressValueChanged();
 
 private:
     Ui::Widget *ui;
     QString text;
-    useE154 *agrekola;
     StartMeasurment *startWin;
     QTimer progressTimer, dataTimer, plotTimer, TDTimer, *currenttime;
     QDateTime dt;

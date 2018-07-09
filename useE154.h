@@ -38,8 +38,8 @@ public:
     };
 
 signals:
-    void ValueCome(QVector<double>);
-    void updateTermo(bool);
+    void value_come(QVector<double>);
+    void update_termo(bool);
 
 public:
     useE154(QWidget *parent = 0);
@@ -77,6 +77,7 @@ public slots:
     void onMixCh4(bool);
     void onMixPP(bool);
     void onLaser(bool);
+    void stopThread();
 
 private:
     TLoadDll *pLoadDll;							// указатель на класс динамической загрузки DLL

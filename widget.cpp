@@ -14,7 +14,6 @@ Widget::Widget(QWidget *parent) :
 {
     ui->setupUi(this);
     setupFiles();
-    agrekola = new useE154(this);
     setWindowTitle("Программы сбора данных с АЦП(E-154) по 4 каналам");
     customPlot1 = ui->frame_1;
     customPlot2 = ui->frame_2;
@@ -30,21 +29,11 @@ Widget::Widget(QWidget *parent) :
     startWin = new StartMeasurment;
     startWin->setModal(true);
     QWidget::connect(startWin, SIGNAL(startMeasurment()), this, SLOT(getData()));
-    QWidget::connect(this, SIGNAL(onMixCh1(bool)), agrekola, SLOT(onMixCh1(bool)));
-    QWidget::connect(this, SIGNAL(onMixCh2(bool)), agrekola, SLOT(onMixCh2(bool)));
-    QWidget::connect(this, SIGNAL(onMixCh3(bool)), agrekola, SLOT(onMixCh3(bool)));
-    QWidget::connect(this, SIGNAL(onMixCh4(bool)), agrekola, SLOT(onMixCh4(bool)));
-    QWidget::connect(this, SIGNAL(onMixPP(bool)), agrekola, SLOT(onMixPP(bool)));
-    QWidget::connect(this, SIGNAL(onLaser(bool)), agrekola, SLOT(onLaser(bool)));
-
-    QWidget::connect(agrekola, SIGNAL(updateTermo(bool)), this, SLOT(updataTermo(bool)));
-    //QWidget::connect(agrekola, SIGNAL(ValueCome(QVector<double>)), this, SLOT(getData()));
 }
 
 Widget::~Widget()
 {
     delete ui;
-    delete agrekola;
     delete customPlot1;
     delete customPlot2;
     delete customPlot3;
@@ -60,6 +49,7 @@ bool Widget::eventFilter(QObject *watched, QEvent *event)
     {
         qDebug() << tr("Close Event is emmited in the Widget!");
         //parentWidget()->show();
+        emit stop();
         return true;
     }
     if(event->type() == QEvent::KeyPress)
@@ -106,7 +96,8 @@ void Widget::setUserMessage(QString str, bool withtime, bool tofile)
 
 void Widget::setTestMode(bool b)
 {
-    setUserMessage(QString(agrekola->GetInformation()), false);
+    //setUserMessage(QString(agrekola->GetInformation()), false);
+    emit get_information();
     ui->groupBox_Mix->setVisible(b);
 }
 
@@ -218,11 +209,11 @@ void Widget::setupRealtimeData(bool duo)
         connect(customPlot4->xAxis, SIGNAL(rangeChanged(QCPRange)), customPlot4->xAxis2, SLOT(setRange(QCPRange)));
         connect(customPlot4->yAxis, SIGNAL(rangeChanged(QCPRange)), customPlot4->yAxis2, SLOT(setRange(QCPRange)));
 
-        // setup a timer that repeatedly calls MainWindow::realtimeDataSlot:
-        disconnect(&plotTimer, SIGNAL(timeout()), this, SLOT(realtimeDataSlotDuo()));
-        plotTimer.stop();
-        connect(&plotTimer, SIGNAL(timeout()), this, SLOT(realtimeDataSlotSingle()));
-        plotTimer.start(0); // Interval 0 means to refresh as fast as possible
+//        // setup a timer that repeatedly calls MainWindow::realtimeDataSlot:
+//        disconnect(&plotTimer, SIGNAL(timeout()), this, SLOT(realtimeDataSlotDuo()));
+//        plotTimer.stop();
+//        connect(&plotTimer, SIGNAL(timeout()), this, SLOT(realtimeDataSlotSingle()));
+//        plotTimer.start(0); // Interval 0 means to refresh as fast as possible
     }
     else
     {
@@ -254,11 +245,11 @@ void Widget::setupRealtimeData(bool duo)
         connect(customPlot2->xAxis, SIGNAL(rangeChanged(QCPRange)), customPlot2->xAxis2, SLOT(setRange(QCPRange)));
         connect(customPlot2->yAxis, SIGNAL(rangeChanged(QCPRange)), customPlot2->yAxis2, SLOT(setRange(QCPRange)));
 
-        // setup a timer that repeatedly calls MainWindow::realtimeDataSlot:
-        disconnect(&plotTimer, SIGNAL(timeout()), this, SLOT(realtimeDataSlotSingle()));
-        plotTimer.stop();
-        connect(&plotTimer, SIGNAL(timeout()), this, SLOT(realtimeDataSlotDuo()));
-        plotTimer.start(0); // Interval 0 means to refresh as fast as possible
+//        // setup a timer that repeatedly calls MainWindow::realtimeDataSlot:
+//        disconnect(&plotTimer, SIGNAL(timeout()), this, SLOT(realtimeDataSlotSingle()));
+//        plotTimer.stop();
+//        connect(&plotTimer, SIGNAL(timeout()), this, SLOT(realtimeDataSlotDuo()));
+//        plotTimer.start(0); // Interval 0 means to refresh as fast as possible
     }
 }
 
@@ -300,7 +291,7 @@ void Widget::setupFiles()
     else QDir::setCurrent(dir.path());
 }
 
-void Widget::realtimeDataSlotSingle()
+void Widget::realtimeDataSlotSingle(QVector<double> a)
 {
     static QTime time(QTime::currentTime());
     // calculate two new data points:
@@ -309,7 +300,7 @@ void Widget::realtimeDataSlotSingle()
     if (key-lastPointKey > 0.010) // at most add point every 10 ms
     {
 //      add data to lines:
-      QVector<double> a = agrekola->AdcKADR();
+      //QVector<double> a = agrekola->AdcKADR();
       customPlot1->graph(0)->addData(key, a[0]); //qSin(key)+qrand()/(double)RAND_MAX*1*qSin(key/0.3843));
       customPlot2->graph(0)->addData(key, a[1]); //qCos(key)+qrand()/(double)RAND_MAX*0.5*qSin(key/0.4364));
       customPlot3->graph(0)->addData(key, a[2]); //qCos(key)+qrand()/(double)RAND_MAX*0.5*qSin(key/0.4364));
@@ -354,7 +345,7 @@ void Widget::realtimeDataSlotSingle()
     }
 }
 
-void Widget::realtimeDataSlotDuo()
+void Widget::realtimeDataSlotDuo(QVector<double> a)
 {
     static QTime time(QTime::currentTime());
     // calculate two new data points:
@@ -363,14 +354,15 @@ void Widget::realtimeDataSlotDuo()
     if (key-lastPointKey > 0.010) // at most add point every 10 ms
     {
       // add data to lines:
-      double a1 = agrekola->AdcSample(useE154::CH1);
-      double a2 = agrekola->AdcSample(useE154::CH2);
-      double a3 = agrekola->AdcSample(useE154::CH3);
-      double a4 = agrekola->AdcSample(useE154::CH4);
-      customPlot1->graph(0)->addData(key, a1); //qSin(key)+qrand()/(double)RAND_MAX*1*qSin(key/0.3843));
-      customPlot1->graph(1)->addData(key, a2); //qCos(key)+qrand()/(double)RAND_MAX*0.5*qSin(key/0.4364));
-      customPlot2->graph(0)->addData(key, a3); //qCos(key)+qrand()/(double)RAND_MAX*0.5*qSin(key/0.4364));
-      customPlot2->graph(1)->addData(key, a4); //qCos(key)+qrand()/(double)RAND_MAX*0.5*qSin(key/0.4364));
+//      double a1 = agrekola->AdcSample(useE154::CH1);
+//      double a2 = agrekola->AdcSample(useE154::CH2);
+//      double a3 = agrekola->AdcSample(useE154::CH3);
+//      double a4 = agrekola->AdcSample(useE154::CH4);
+
+      customPlot1->graph(0)->addData(key, a[0]); //qSin(key)+qrand()/(double)RAND_MAX*1*qSin(key/0.3843));
+      customPlot1->graph(1)->addData(key, a[1]); //qCos(key)+qrand()/(double)RAND_MAX*0.5*qSin(key/0.4364));
+      customPlot2->graph(0)->addData(key, a[2]); //qCos(key)+qrand()/(double)RAND_MAX*0.5*qSin(key/0.4364));
+      customPlot2->graph(1)->addData(key, a[3]); //qCos(key)+qrand()/(double)RAND_MAX*0.5*qSin(key/0.4364));
       //rescale value (vertical) axis to fit the current data:
       //ui->customPlot->graph(0)->rescaleValueAxis();
       //ui->customPlot->graph(1)->rescaleValueAxis(true);
@@ -379,10 +371,10 @@ void Widget::realtimeDataSlotDuo()
           //(startWin->getTime()/(kay - st));
           //a1 = (a1+a2)/2;
           //a3 = (a3+a4)/2;
-          y1.push_back(a1);
-          y2.push_back(a2);
-          y3.push_back(a3);
-          y4.push_back(a4);
+          y1.push_back(a[0]);
+          y2.push_back(a[1]);
+          y3.push_back(a[2]);
+          y4.push_back(a[3]);
           x.push_back(key);
       }
       lastPointKey = key;

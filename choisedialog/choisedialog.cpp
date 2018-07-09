@@ -5,9 +5,10 @@
 #include "QMessageBox"
 #include "widget.h"
 
-ChoiseDialog::ChoiseDialog(QDialog *parent) :
+ChoiseDialog::ChoiseDialog(useE154 *a, QDialog *parent) :
     QDialog(parent),
-    ui(new Ui::ChoiseDialog)
+    ui(new Ui::ChoiseDialog),
+    agrekola(a)
 {
     ui->setupUi(this);
 
@@ -62,6 +63,15 @@ void ChoiseDialog::on_testButton_clicked()
     //TestKoAgr *test = new TestKoAgr(this);
     //hide();
     test = new Widget;
+    connect(agrekola, SIGNAL(value_come(QVector<double>)), test, SLOT(realtimeDataSlotDuo(QVector<double>)));
+    connect(agrekola, SIGNAL(update_termo(bool)), test, SLOT(updataTermo(bool)));
+    connect(test, SIGNAL(onMixCh1(bool)), agrekola, SLOT(onMixCh1(bool)));
+    connect(test, SIGNAL(onMixCh2(bool)), agrekola, SLOT(onMixCh2(bool)));
+    connect(test, SIGNAL(onMixCh1(bool)), agrekola, SLOT(onMixCh3(bool)));
+    connect(test, SIGNAL(onMixCh1(bool)), agrekola, SLOT(onMixCh4(bool)));
+    connect(test, SIGNAL(onMixPP(bool)), agrekola, SLOT(onMixPP(bool)));
+    connect(test, SIGNAL(onLaser(bool)), agrekola, SLOT(onLaser(bool)));
+    connect(test, SIGNAL(stop()), agrekola, SLOT(stopThread()));
     test->setTestMode(true);
     test->setWindowModality(Qt::ApplicationModal);
     test->show();

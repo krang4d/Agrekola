@@ -13,6 +13,7 @@
 #include "ko5.h"
 #include "testkoagr.h"
 #include "widget.h"
+#include "useE154.h"
 
 class MainWindow;
 
@@ -25,7 +26,7 @@ class ChoiseDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit ChoiseDialog(QDialog *parent = 0);
+    explicit ChoiseDialog(useE154 *a, QDialog *parent = 0);
     int getTypeOfWidget() const;
 
     ~ChoiseDialog();
@@ -45,7 +46,7 @@ private slots:
 private:
 
     Ui::ChoiseDialog *ui;
-    //TestKoAgr *test;
+    useE154 *agrekola;
     Widget *test;
     MainWindow *mw;
     Agr1 *agr1; //Определение параметров агрегации
