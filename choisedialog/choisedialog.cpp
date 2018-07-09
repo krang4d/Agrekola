@@ -63,6 +63,8 @@ void ChoiseDialog::on_testButton_clicked()
     //TestKoAgr *test = new TestKoAgr(this);
     //hide();
     test = new Widget;
+    agrekola->moveToThread(&workerThread);
+    connect(&workerThread, &QThread::finished, agrekola, &QObject::deleteLater);
     connect(agrekola, SIGNAL(value_come(QVector<double>)), test, SLOT(realtimeDataSlotDuo(QVector<double>)));
     connect(agrekola, SIGNAL(update_termo(bool)), test, SLOT(updataTermo(bool)));
     connect(test, SIGNAL(onMixCh1(bool)), agrekola, SLOT(onMixCh1(bool)));
@@ -72,6 +74,7 @@ void ChoiseDialog::on_testButton_clicked()
     connect(test, SIGNAL(onMixPP(bool)), agrekola, SLOT(onMixPP(bool)));
     connect(test, SIGNAL(onLaser(bool)), agrekola, SLOT(onLaser(bool)));
     connect(test, SIGNAL(stop()), agrekola, SLOT(stopThread()));
+    workerThread.start();
     test->setTestMode(true);
     test->setWindowModality(Qt::ApplicationModal);
     test->show();

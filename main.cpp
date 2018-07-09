@@ -7,7 +7,7 @@
 
 #include "choisedialog.h"
 #include "useE154.h"
-
+/*
 void looper(useE154 *a)
 {
     a->funThread();
@@ -27,7 +27,7 @@ void thread_finish()
 {
     qDebug() << "thread_finish()";
 }
-
+*/
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
     useE154 *agrekola = new useE154;
     ChoiseDialog choiseDlg(agrekola);
     choiseDlg.show();
-    QFutureWatcher<void> futureWatcher;;
+    //QFutureWatcher<void> futureWatcher;;
 
 //    QWidget::connect(choiseDlg, SIGNAL(onMixCh1(bool)), agrekola, SLOT(onMixCh1(bool)));
 //    QWidget::connect(choiseDlg, SIGNAL(onMixCh2(bool)), agrekola, SLOT(onMixCh2(bool)));
@@ -47,9 +47,9 @@ int main(int argc, char *argv[])
 //    QWidget::connect(agrekola, SIGNAL(updateTermo(bool)), this, SLOT(updataTermo(bool)));
     //QWidget::connect(agrekola, SIGNAL(ValueCome(QVector<double>)), this, SLOT(getData()));
     //QObject::connect(&choiseDlg, SIGNAL(accepted()), &futureWatcher, SLOT(cancel()));
-    futureWatcher.setFuture(QtConcurrent::run(looper, agrekola));
-    futureWatcher.waitForFinished();
-    delete agrekola;
-    qDebug() << "Canceled?" << futureWatcher.future().isCanceled();
+    //futureWatcher.setFuture(QtConcurrent::run(looper, agrekola));
+    //futureWatcher.waitForFinished();
+    //delete agrekola;
+    //qDebug() << "Canceled?" << futureWatcher.future().isCanceled();
     return a.exec();
 }

@@ -2,6 +2,7 @@
 #define CHOISEDIALOG_H
 
 #include <QDialog>
+#include <QThread>
 
 //dialog include
 #include "agr1.h"
@@ -24,6 +25,7 @@ class ChoiseDialog;
 class ChoiseDialog : public QDialog
 {
     Q_OBJECT
+    QThread workerThread;
 
 public:
     explicit ChoiseDialog(useE154 *a, QDialog *parent = 0);
