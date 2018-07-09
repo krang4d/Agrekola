@@ -45,6 +45,7 @@ int ChoiseDialog::getTypeOfWidget() const
 
 ChoiseDialog::~ChoiseDialog()
 {
+    delete mw;
     delete test;
     delete agr1;
     delete agr2;
