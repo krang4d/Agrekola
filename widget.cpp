@@ -16,12 +16,10 @@ Widget::Widget(QWidget *parent) :
     setupFiles();
     agrekola = new useE154(this);
     setWindowTitle("Программы сбора данных с АЦП(E-154) по 4 каналам");
-    setUserMessage(QString(agrekola->GetInformation()));
     customPlot1 = ui->frame_1;
     customPlot2 = ui->frame_2;
     customPlot3 = ui->frame_3;
     customPlot4 = ui->frame_4;
-    startWin = new StartMeasurment();
     ui->groupBox_Mix->setVisible(false);
     ui->progressBar->hide();
 
@@ -29,7 +27,18 @@ Widget::Widget(QWidget *parent) :
     setupTimers();
     setAttribute(Qt::WA_DeleteOnClose);
     installEventFilter(this);
-    //connect(startWin, SIGNAL(startMeasurment()), this, SLOT(getData()));
+    startWin = new StartMeasurment;
+    startWin->setModal(true);
+    QWidget::connect(startWin, SIGNAL(startMeasurment()), this, SLOT(getData()));
+    QWidget::connect(this, SIGNAL(onMixCh1(bool)), agrekola, SLOT(onMixCh1(bool)));
+    QWidget::connect(this, SIGNAL(onMixCh2(bool)), agrekola, SLOT(onMixCh2(bool)));
+    QWidget::connect(this, SIGNAL(onMixCh3(bool)), agrekola, SLOT(onMixCh3(bool)));
+    QWidget::connect(this, SIGNAL(onMixCh4(bool)), agrekola, SLOT(onMixCh4(bool)));
+    QWidget::connect(this, SIGNAL(onMixPP(bool)), agrekola, SLOT(onMixPP(bool)));
+    QWidget::connect(this, SIGNAL(onLaser(bool)), agrekola, SLOT(onLaser(bool)));
+
+    QWidget::connect(agrekola, SIGNAL(updateTermo(bool)), this, SLOT(updataTermo(bool)));
+    //QWidget::connect(agrekola, SIGNAL(ValueCome(QVector<double>)), this, SLOT(getData()));
 }
 
 Widget::~Widget()
@@ -95,9 +104,10 @@ void Widget::setUserMessage(QString str, bool withtime, bool tofile)
     b->triggerAction(QScrollBar::SliderToMaximum);
 }
 
-void Widget::setAgrekola(useE154 *agr)
+void Widget::setTestMode(bool b)
 {
-    agrekola = agr;
+    setUserMessage(QString(agrekola->GetInformation()), false);
+    ui->groupBox_Mix->setVisible(b);
 }
 
 void Widget::setupQuadraticPlot(QVector<double> data)
@@ -290,117 +300,6 @@ void Widget::setupFiles()
     else QDir::setCurrent(dir.path());
 }
 
-void Widget::onMixCh1(bool b)
-{
-    if(b){
-        setUserMessage(tr("Канал 1: Включение перемешивания"));
-        agrekola->SetChannel(useE154::CH1, useE154::ON);
-    }
-    else{
-        setUserMessage("Канал 1: Выключение перемешивания");
-        agrekola->SetChannel(useE154::CH1, useE154::OFF);
-    }
-}
-
-void Widget::onMixCh2(bool b)
-{
-    if(b){
-        setUserMessage(tr("Канал 2: Включение перемешивания"));
-        agrekola->SetChannel(useE154::CH2, useE154::ON);
-    }
-    else{
-        setUserMessage("Канал 2: Выключение перемешивания");
-        agrekola->SetChannel(useE154::CH2, useE154::OFF);
-    }
-}
-
-void Widget::onMixCh3(bool b)
-{
-    if(b){
-        setUserMessage(tr("Канал 3: Включение перемешивания"));
-        agrekola->SetChannel(useE154::CH3, useE154::ON);
-    }
-    else{
-        setUserMessage("Канал 3: Выключение перемешивания");
-        agrekola->SetChannel(useE154::CH3, useE154::OFF);
-    }
-}
-
-void Widget::onMixCh4(bool b)
-{
-    if(b){
-        setUserMessage(tr("Канал 4: Включение перемешивания"));
-        agrekola->SetChannel(useE154::CH4, useE154::ON);
-    }
-    else{
-        setUserMessage("Канал 4: Выключение перемешивания");
-        agrekola->SetChannel(useE154::CH4, useE154::OFF);
-    }
-}
-
-void Widget::onMixPP(bool b)
-{
-    if(b){
-        setUserMessage(tr("Канал PP: Включение перемешивания"));
-        agrekola->SetChannel(useE154::PP, useE154::ON);
-    }
-    else{
-        setUserMessage("Канал РР: Выключение перемешивания");
-        agrekola->SetChannel(useE154::PP, useE154::OFF);
-    }
-}
-
-void Widget::onLaser(bool b)
-{
-    if(b){
-        setUserMessage(tr("Включение лазеров"));
-        agrekola->SetChannel(useE154::L, useE154::ON);
-    }
-    else{
-        setUserMessage("Выключение выключение");
-        agrekola->SetChannel(useE154::L, useE154::OFF);
-    }
-}
-
-/*
-void Widget::on_AdcSample_clicked()
-{
-    double data = Agrecola->AdcSample(useE154::CH2);
-    setUserMessage(QString(std::to_string(data).c_str()) + "\n");
-    QScrollBar *vb = ui->textEdit->verticalScrollBar();
-    int max = vb->maximum();
-    vb->setValue(max);
-    //Sleep(1000);
-}
-
-void Widget::on_AdcKadr_clicked()
-{
-    Agrecola->AdcKADR();
-    string str = "ADC[1] = " + std::to_string(Agrecola->volts_array[0]) + "   ADC2 = " + std::to_string(Agrecola->volts_array[1]) +\
-            "   ADC3 = " + std::to_string(Agrecola->volts_array[2]) + "   ADC3 = " + std::to_string(Agrecola->volts_array[2]) +"\r\n";
-    setUserMessage(QString(str.c_str()));
-    QScrollBar *vb = ui->textEdit->verticalScrollBar();
-    int max = vb->maximum();
-    vb->setValue(max);
-}
-
-void Widget::on_AdcSynchro_clicked()
-{
-    Agrecola->vec_data.clear();
-    setUserMessage(QString(Agrecola->AdcSynchro().c_str()));
-    setupQuadraticPlot(Agrecola->vec_data);
-    QScrollBar *vb = ui->textEdit->verticalScrollBar();
-    int max = vb->maximum();
-    vb->setValue(max);
-}
-
-void Widget::on_pushButton_back_clicked()
-{
-    close();
-    m->show();
-    this->~QWidget();
-}
-*/
 void Widget::realtimeDataSlotSingle()
 {
     static QTime time(QTime::currentTime());
@@ -409,11 +308,7 @@ void Widget::realtimeDataSlotSingle()
     static double lastPointKey = 0;
     if (key-lastPointKey > 0.010) // at most add point every 10 ms
     {
-      // add data to lines:
-//      double a1 = agrekola->AdcSample(useE154::CH1);
-//      double a2 = agrekola->AdcSample(useE154::CH2);
-//      double a3 = agrekola->AdcSample(useE154::CH3);
-//      double a4 = agrekola->AdcSample(useE154::CH4);
+//      add data to lines:
       QVector<double> a = agrekola->AdcKADR();
       customPlot1->graph(0)->addData(key, a[0]); //qSin(key)+qrand()/(double)RAND_MAX*1*qSin(key/0.3843));
       customPlot2->graph(0)->addData(key, a[1]); //qCos(key)+qrand()/(double)RAND_MAX*0.5*qSin(key/0.4364));
@@ -521,43 +416,55 @@ void Widget::realtimeDataSlotDuo()
 
 void Widget::on_checkBox_1_stateChanged(int arg1)
 {
-    onMixCh1(arg1);
+    if(arg1) setUserMessage("Канал 1: включение перемешивания");
+    else setUserMessage("Канала 1: выключение перемешивания");
+    emit onMixCh1(arg1);
 }
 
 void Widget::on_checkBox_2_stateChanged(int arg1)
 {
-    onMixCh2(arg1);
+    if(arg1) setUserMessage("Канал 2: включение перемешивания");
+    else setUserMessage("Канала 2: выключение перемешивания");
+    emit onMixCh2(arg1);
 }
 
 void Widget::on_checkBox_3_stateChanged(int arg1)
 {
-    onMixCh3(arg1);
+    if(arg1) setUserMessage("Канал 3: включение перемешивания");
+    else setUserMessage("Канала 3: выключение перемешивания");
+    emit onMixCh3(arg1);
 }
 
 void Widget::on_checkBox_4_stateChanged(int arg1)
 {
-    onMixCh4(arg1);
+    if(arg1) setUserMessage("Канал 4: включение перемешивания");
+    else setUserMessage("Канала 4: выключение перемешивания");
+    emit onMixCh4(arg1);
 }
 
 void Widget::on_checkBox_PP_stateChanged(int arg1)
 {
-    onMixPP(arg1);
+    if(arg1) setUserMessage("Канал РР: включение перемешивания");
+    else setUserMessage("Канала РР: выключение перемешивания");
+    emit onMixPP(arg1);
 }
 
 void Widget::on_checkBox_L_stateChanged(int arg1)
 {
-    onLaser(arg1);
+    if(arg1) setUserMessage("Включение лазеров");
+    else setUserMessage("Выключение лазеров");
+    emit onLaser(arg1);
 }
 
 void Widget::on_pushButton_clicked()
 {
-    getData();
+    startWin->show();
 }
 
-void Widget::updataTermo()
+void Widget::updataTermo(bool td)
 {
 
-    if(!agrekola->GetStatusTD())
+    if(!td)
     {
         ui->label_TD->setText(QString("Температура >37°C"));
         ui->label_TD->setStyleSheet("color: green");
@@ -585,8 +492,6 @@ void Widget::progressValueChanged()
 
 void Widget::getData()
 {
-    startWin->setModal(true);
-    startWin->exec();
     if(!startWin->isCancel())
     {
         if(startWin->isSingle())
@@ -609,8 +514,23 @@ void Widget::getData()
             ui->groupBox_f2->setTitle("Канал 3, 4");
             setupRealtimeData(true);
         }
+        QString ch;
 
-        QString stat = QString("Начало измерения"); // (%1 пробы").arg(function(x){return "одиночные";});
+        if (startWin->isChannel_1()) {ch += QString("№1 = %1, ").arg(startWin->getNum_1());}
+        else ch += QString("№1 - выкл., ");
+
+        if (startWin->isChannel_2()) {ch += QString("№2 = %1, ").arg(startWin->getNum_2());}
+        else ch += QString("№2 - выкл., ");
+
+        if (startWin->isChannel_3()) {ch += QString("№3 = %1, ").arg(startWin->getNum_3());}
+        else ch += QString("№3 - выкл., ");
+
+        if (startWin->isChannel_4()) {ch += QString("№4 = %1 ").arg(startWin->getNum_4());}
+        else ch += QString("№4 - выкл. ");
+
+        QString stat = QString("Начало измерения (t = %1c, %2)")
+                               .arg(startWin->getTime()).arg(ch);
+
         setUserMessage(stat, true, true);
         t = startWin->getTime() * 1000;
         ui->progressBar->setVisible(true);
@@ -632,8 +552,8 @@ void Widget::setupTimers()
     setUserMessage(QString("Начало работы программы    Дата %1").arg(dt.toString("dd.MM.yyyy")));
 
     //настройка таймера для обновления датчика температуры
-    TDTimer.start(500);
-    connect(&TDTimer, SIGNAL(timeout()), this, SLOT(updataTermo()));
+    //TDTimer.start(500);
+    //connect(&TDTimer, SIGNAL(timeout()), this, SLOT(updataTermo()));
 
     //таймер для отображения процесса сбора данных
     connect(&progressTimer, SIGNAL(timeout()), this, SLOT(progressValueChanged()));
@@ -671,6 +591,7 @@ void Widget::writeData()
                        .arg(i).arg(y1[i]).arg(y2[i]).arg(y3[i]).arg(y4[i])
                        .arg(x[i]);
     }
+    out_data.flush();
     y1.clear();
     y2.clear();
     y3.clear();

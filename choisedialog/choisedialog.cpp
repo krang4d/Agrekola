@@ -61,6 +61,7 @@ void ChoiseDialog::on_testButton_clicked()
     //TestKoAgr *test = new TestKoAgr(this);
     //hide();
     test = new Widget;
+    test->setTestMode(true);
     test->setWindowModality(Qt::ApplicationModal);
     test->show();
 }

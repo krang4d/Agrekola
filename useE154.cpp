@@ -1,4 +1,5 @@
 ﻿#include "useE154.h"
+#include <QThread>
 
 useE154::useE154(QWidget *parent) :
     QWidget(parent)
@@ -36,7 +37,7 @@ QVector<double> useE154::AdcKADR()
     SHORT AdcBuffer[4];
     double volt[16];
     pModule->STOP_ADC();
-    pModule->GET_MODULE_DESCRIPTION(&ModuleDescription);
+    //pModule->GET_MODULE_DESCRIPTION(&ModuleDescription);
     // получим текущие параметры работы АЦП
     //if(!pModule->GET_ADC_PARS(&ap)) throw Errore_E154("GET_ADC_PARS() --> Bad\n");
     if(!pModule->ADC_KADR(AdcBuffer)) throw Errore_E154("ADC_KADR() --> Bad\n");
@@ -51,19 +52,18 @@ QVector<double> useE154::AdcKADR()
 //    emit ValueCome(&AdcSampleList);
 }
 
-std::string useE154::AdcSynchro()
+QString useE154::AdcSynchro()
 {
     DoubleData Destination = AdcSynchroDouble();
     int Size = Destination.size;
-    std::string readDataString;
-    readDataString += "useE154::AdcSynchro() size:" + std::to_string(Size) + "\n";
-    readDataString += "Sample[0]= " + std::to_string(Destination.data[0]) + "\n";
-    readDataString += "Sample[" + std::to_string(Size-1) + "]" + std::to_string(Destination.data[Size-1]) + "\n";
+    QString readDataString;
+    readDataString += QString("useE154::AdcSynchro() size:%1\n").arg(Size);
+    readDataString += QString("Sample[0]=%1\n").arg(Destination.data[0]);
+    readDataString += QString("Sample[%1]=%2").arg(Size-1).arg(Destination.data[Size-1]);
     for(int i=0; i<Size; i++)
     {
         vec_data.append(Destination.data[i]);
-        std::string str = std::to_string(vec_data[i]);
-        readDataString += "№" + std::to_string(i) + "val:" + str + "\t";
+        readDataString += QString("№%1 val%2").arg(i).arg(vec_data[i]);
     }
     //if(!ReadBuffer) {delete[] ReadBuffer; ReadBuffer = NULL;}
 return readDataString;
@@ -120,11 +120,11 @@ QString useE154::GetVersion(void)
 {
     pGetDllVersion GetDllVersion = (pGetDllVersion)pLoadDll->CallGetDllVersion();
     if(!GetDllVersion) throw Errore_E154("Ошибка выделения памяти в функции Get_Version()!");
-//sprintf(String, " Lusbapi.dll Version Error!!!\n   Current: %1u.%1u. Required: %1u.%1u",
+//sprintf(str, " Lusbapi.dll Version Error!!!\n   Current: %1u.%1u. Required: %1u.%1u",
 //						DllVersion >> 0x10, DllVersion & 0xFFFF,
 //						CURRENT_VERSION_LUSBAPI >> 0x10, CURRENT_VERSION_LUSBAPI & 0xFFFF);
     DWORD DllVersion = GetDllVersion();
-    return QString("Lusbapi.dll version is v%1.%2").arg(DllVersion >> 0x10).arg(DllVersion & 0xFFFF);
+    return QString("Версия dll библиотеки - v%1.%2").arg(DllVersion >> 0x10).arg(DllVersion & 0xFFFF);
 }
 
 void useE154::initPorts()
@@ -151,6 +151,15 @@ QString useE154::initADC()
     return QString("initADC()");
 }
 
+void useE154::funThread()
+{
+    while(thread_stop){
+        emit updateTermo(GetStatusTD());
+        emit ValueCome(AdcKADR());
+        QThread::currentThread()->msleep(100);
+    }
+}
+
 void useE154::ReleaseAPIInstance() //(char *ErrorString, bool AbortionFlag)
 {	// подчищаем интерфейс модуля
     if(pModule)
@@ -167,20 +176,52 @@ void useE154::ReleaseAPIInstance() //(char *ErrorString, bool AbortionFlag)
     //if(AbortionFlag) exit(0x1);
 }
 
-void useE154::OpenDevice()
+void useE154::onMixCh1(bool b)
 {
-	WORD i;
+    SetChannel(CH1, b);
+}
+
+void useE154::onMixCh2(bool b)
+{
+    SetChannel(CH2, b);
+}
+
+void useE154::onMixCh3(bool b)
+{
+    SetChannel(CH3, b);
+}
+
+void useE154::onMixCh4(bool b)
+{
+    SetChannel(CH4, b);
+}
+
+void useE154::onMixPP(bool b)
+{
+    SetChannel(PP, b);
+}
+
+void useE154::onLaser(bool b)
+{
+    SetChannel(L, b);
+}
+
+int useE154::OpenDevice()
+{
+    int i;
 	// попробуем обнаружить модуль E-154 в первых 256 виртуальных слотах
-	for(i = 0x0; i < MaxVirtualSoltsQuantity; i++) if(pModule->OpenLDevice(i)) break;
+    for(i = 0; i < MaxVirtualSoltsQuantity; i++) if(pModule->OpenLDevice(i)) break;
 	// что-нибудь обнаружили?
-    if(i == MaxVirtualSoltsQuantity) throw Errore_E154("Ненайдено ни одного устройства E-154!"); //AbortProgram(" Can't find any module E-154 in first 127 virtual slots!\n");
-																									//else printf(" OpenLDevice(%u) --> OK\n", i);
-	// прочитаем название модуля в обнаруженном виртуальном слоте
-    if(!pModule->GetModuleName(ModuleName)) Errore_E154("Не удалось получить название подключенного модуля!");
+    if(i == MaxVirtualSoltsQuantity) throw Errore_E154("Устройство E-154 не подключено к ПК!");
+
+    if(!pModule->GetModuleName(ModuleName)) throw Errore_E154("Не удалось получить имя подключенного модуля!");
 
 	// проверим, что это 'E-154'
-    if(strcmp(ModuleName, "E154")) Errore_E154("Устройство 'E-154' успешно открыто.");
-    //return "Устройство 'E-154' открыто в виртуальном слоте №" + std::to_string(i) + ".\n\r" ;
+    if(strcmp(ModuleName, "E154")) {
+        qDebug() << QString("Module E-154' is opened in virtual slot %1").arg(i).toLatin1();
+        return 1;
+    }
+    return 0;
 }
 
 void useE154::CloseDevice()
@@ -196,17 +237,18 @@ QString useE154::GetUsbSpeed()
     {
         speed = "High-Speed Mode (480 Mbit/s)";
     } else speed = "Full-Speed Mode (12 Mbit/s)";
-    return QString("USB is in %1").arg(speed);
+    return QString("USB в режиме работы %1").arg(speed);
 }
 
 QString useE154::GetInformation()
 {
-    //string str;
     char name[25], serial[16];
     if(!pModule->GET_MODULE_DESCRIPTION(&ModuleDescription)) throw Errore_E154("Не удалось получить дискриптор модуля!");
     strcpy(serial, (char*)ModuleDescription.Module.SerialNumber);
+    strcpy(name, (char*)ModuleDescription.Module.DeviceName);
     // получим информацию из ППЗУ модуля
-    return QString("Модуль E-154 (S/N %1 готов").arg(serial);
+    return QString(tr("Подключен модуль %1 (S/N %2)\n%3\n%4")
+                   .arg(name).arg(serial).arg(GetUsbSpeed()).arg(GetVersion()));
 }
 
 void useE154::SetChannel(channel ch, int pos)

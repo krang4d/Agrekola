@@ -10,6 +10,7 @@
 #include <QFile>
 #include <QIODevice>
 #include <QTextStream>
+
 #include "useE154.h"
 #include "startmeasurment.h"
 #include "QCustomPlot/qcustomplot.h"
@@ -25,14 +26,8 @@ class Widget : public QWidget
 public:
     explicit Widget(QWidget *parent = 0);
     ~Widget();
-    void onMixCh1(bool);
-    void onMixCh2(bool);
-    void onMixCh3(bool);
-    void onMixCh4(bool);
-    void onMixPP(bool);
-    void onLaser(bool);
-    void setUserMessage(QString, bool withtime = 1, bool tofile = 0);
-    void setAgrekola(useE154 *agr);
+    void setUserMessage(QString, bool withtime = 1, bool tofile = 1);
+    void setTestMode(bool);
 
 private:
     bool eventFilter(QObject *watched, QEvent *event);
@@ -42,6 +37,12 @@ private:
     void setupFiles();
 
 signals:
+    void onMixCh1(bool);
+    void onMixCh2(bool);
+    void onMixCh3(bool);
+    void onMixCh4(bool);
+    void onMixPP(bool);
+    void onLaser(bool);
     void status(QString);
 
 public slots:
@@ -58,7 +59,7 @@ private slots:
     void on_checkBox_PP_stateChanged(int arg1);
     void on_checkBox_L_stateChanged(int arg1);
     void on_pushButton_clicked();
-    void updataTermo();
+    void updataTermo(bool);
     void updateTime();
     void progressValueChanged();
 
@@ -75,6 +76,8 @@ private:
     QCustomPlot *customPlot4;
 
     volatile bool data;
+    QFutureWatcher<void> futureWatcher;
+
     QVector<double> x;
     QVector<double> y1, y2, y3, y4;
     double t; //время измерния

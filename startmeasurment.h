@@ -2,10 +2,6 @@
 #define STARTMEASURMENT_H
 
 #include <QDialog>
-#include <QFile>
-#include <QTextStream>
-#include <QByteArray>
-#include <QDir>
 
 namespace Ui {
 class StartMeasurment;
@@ -32,7 +28,7 @@ public:
     int getTime();
     QString getStringStatus();
 
-private slots:
+public slots:
     void on_checkBox_ch1_stateChanged(int arg1);
     void on_checkBox_ch2_stateChanged(int arg1);
     void on_checkBox_ch3_stateChanged(int arg1);
@@ -51,10 +47,6 @@ private:
     bool channel_1, channel_2, channel_3, channel_4;
     int num_1, num_2, num_3, num_4;
     int time;           //время записи
-
-    QFile file;
-    QTextStream stream;
-    QByteArray byte;
 };
 
 #endif // STARTMEASURMENT_H

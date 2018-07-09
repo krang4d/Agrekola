@@ -38,7 +38,8 @@ public:
     };
 
 signals:
-    void ValueCome(std::list<double>*);
+    void ValueCome(QVector<double>);
+    void updateTermo(bool);
 
 public:
     useE154(QWidget *parent = 0);
@@ -53,7 +54,7 @@ public:
     /*Функции по сбору данных */
     double AdcSample(channel ch);   //простое одноканальное измерение АЦП канала ch, n раз
     QVector<double> AdcKADR();                 //покадровое измерение
-    std::string AdcSynchro();       //измерение в синхронном режиме возвращает строку данных
+    QString AdcSynchro();       //измерение в синхронном режиме возвращает строку данных
     DoubleData AdcSynchroDouble();
 
 
@@ -64,9 +65,18 @@ protected:
     QString initADC();
 
 public:
-    void OpenDevice();
+    void funThread();
+    int OpenDevice();
     void CloseDevice();
     void ReleaseAPIInstance();					//(char *ErrorString, bool AbortionFlag);
+
+public slots:
+    void onMixCh1(bool);
+    void onMixCh2(bool);
+    void onMixCh3(bool);
+    void onMixCh4(bool);
+    void onMixPP(bool);
+    void onLaser(bool);
 
 private:
     TLoadDll *pLoadDll;							// указатель на класс динамической загрузки DLL
@@ -84,5 +94,5 @@ private:
 
 	WORD TtlOut;	//Состояние выходных портов 
 	WORD TtlIN;		//Состояние входных портов
-    //std::list<string> user_msg;
+    volatile bool thread_stop;
 };
