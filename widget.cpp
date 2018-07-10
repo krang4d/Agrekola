@@ -291,8 +291,9 @@ void Widget::setupFiles()
     else QDir::setCurrent(dir.path());
 }
 
-void Widget::realtimeDataSlotSingle(QVector<double> a)
+void Widget::realtimeDataSlotSingle(QVector<double> &a)
 {
+    qDebug() << "a0 = " << a[0];
     static QTime time(QTime::currentTime());
     // calculate two new data points:
     double key = time.elapsed()/1000.0; // time elapsed since start of demo, in seconds
@@ -345,8 +346,9 @@ void Widget::realtimeDataSlotSingle(QVector<double> a)
     }
 }
 
-void Widget::realtimeDataSlotDuo(QVector<double> a)
+void Widget::realtimeDataSlotDuo(QVector<double> &a)
 {
+    qDebug() << "a0 = " << a[0];
     static QTime time(QTime::currentTime());
     // calculate two new data points:
     double key = time.elapsed()/1000.0; // time elapsed since start of demo, in seconds

@@ -1,8 +1,8 @@
 ﻿#include "useE154.h"
 #include <QThread>
 
-useE154::useE154(QWidget *parent) :
-    QWidget(parent)
+useE154::useE154(QThread *parent) :
+    QThread(parent)
 {
     pLoadDll = new TLoadDll();
     if(!pLoadDll) throw Errore_E154("Ошибка загрузи библиотеки Dll Load_Dll()!");
@@ -48,8 +48,9 @@ QVector<double> useE154::AdcKADR()
     vec_data.push_back(volt[1]);
     vec_data.push_back(volt[2]);
     vec_data.push_back(volt[3]);
+    qDebug() << "V0 = " << volt[0];
+    emit value_come(vec_data);
     return vec_data;
-//    emit ValueCome(&AdcSampleList);
 }
 
 QString useE154::AdcSynchro()
@@ -155,7 +156,8 @@ void useE154::funThread()
 {
     while(!thread_stop){
         emit update_termo(GetStatusTD());
-        emit value_come(AdcKADR());
+        QVector<double> data = AdcKADR();
+        emit value_come(data);
     }
 }
 

@@ -9,7 +9,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
-    centerWidget = new Widget(this);
+    centerWidget = new Widget;
     setCentralWidget(centerWidget);
     ch = qobject_cast<ChoiseDialog *>(parentWidget());
     if (!ch){

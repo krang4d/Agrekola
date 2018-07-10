@@ -4,6 +4,7 @@
 #include <QDebug>
 #include <QVector>
 #include <QString>
+#include <QThread>
 
 #include "LoadDll.h"
 #include "Lusbapi.h"
@@ -24,10 +25,12 @@ struct DoubleData
     int size;
 };
 
-class useE154 : public QWidget
+class useE154 : public QThread
 {
      Q_OBJECT
-
+     void run() Q_DECL_OVERRIDE {
+         funThread();
+     }
 public:
     enum {
         OFF, ON
@@ -38,11 +41,11 @@ public:
     };
 
 signals:
-    void value_come(QVector<double>);
+    void value_come(QVector<double>&);
     void update_termo(bool);
 
 public:
-    useE154(QWidget *parent = 0);
+    useE154(QThread *parent = 0);
 	~useE154(void);
     QString GetVersion(void);
     QString GetUserMessages() const;
@@ -51,6 +54,7 @@ public:
     void SetChannel(channel ch, int pos);
     bool GetStatusTD();
 
+public slots:
     /*Функции по сбору данных */
     double AdcSample(channel ch);   //простое одноканальное измерение АЦП канала ch, n раз
     QVector<double> AdcKADR();                 //покадровое измерение
