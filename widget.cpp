@@ -47,7 +47,7 @@ bool Widget::eventFilter(QObject *watched, QEvent *event)
 {
     if(event->type() == QEvent::Close)
     {
-        qDebug() << tr("Close Event is emmited in the Widget!");
+        qDebug() << tr("Close Event is emited in the Widget!");
         //parentWidget()->show();
         emit stop();
         return true;
@@ -291,9 +291,9 @@ void Widget::setupFiles()
     else QDir::setCurrent(dir.path());
 }
 
-void Widget::realtimeDataSlotSingle(QVector<double> &a)
+void Widget::realtimeDataSlotSingle(QVariantList a)
 {
-    qDebug() << "a0 = " << a[0];
+    qDebug() << "ThreadID: " << QThread::currentThreadId() << "a0 = " << a[0];
     static QTime time(QTime::currentTime());
     // calculate two new data points:
     double key = time.elapsed()/1000.0; // time elapsed since start of demo, in seconds
@@ -302,19 +302,19 @@ void Widget::realtimeDataSlotSingle(QVector<double> &a)
     {
 //      add data to lines:
       //QVector<double> a = agrekola->AdcKADR();
-      customPlot1->graph(0)->addData(key, a[0]); //qSin(key)+qrand()/(double)RAND_MAX*1*qSin(key/0.3843));
-      customPlot2->graph(0)->addData(key, a[1]); //qCos(key)+qrand()/(double)RAND_MAX*0.5*qSin(key/0.4364));
-      customPlot3->graph(0)->addData(key, a[2]); //qCos(key)+qrand()/(double)RAND_MAX*0.5*qSin(key/0.4364));
-      customPlot4->graph(0)->addData(key, a[3]); //qCos(key)+qrand()/(double)RAND_MAX*0.5*qSin(key/0.4364));
+      customPlot1->graph(0)->addData(key, a[0].toDouble()); //qSin(key)+qrand()/(double)RAND_MAX*1*qSin(key/0.3843));
+      customPlot2->graph(0)->addData(key, a[1].toDouble()); //qCos(key)+qrand()/(double)RAND_MAX*0.5*qSin(key/0.4364));
+      customPlot3->graph(0)->addData(key, a[2].toDouble()); //qCos(key)+qrand()/(double)RAND_MAX*0.5*qSin(key/0.4364));
+      customPlot4->graph(0)->addData(key, a[3].toDouble()); //qCos(key)+qrand()/(double)RAND_MAX*0.5*qSin(key/0.4364));
       //rescale value (vertical) axis to fit the current data:
       //ui->customPlot->graph(0)->rescaleValueAxis();
       //ui->customPlot->graph(1)->rescaleValueAxis(true);
       if(data)
       {
-          y1.push_back(a[0]);
-          y2.push_back(a[1]);
-          y3.push_back(a[2]);
-          y4.push_back(a[3]);
+          y1.push_back(a[0].toDouble());
+          y2.push_back(a[1].toDouble());
+          y3.push_back(a[2].toDouble());
+          y4.push_back(a[3].toDouble());
           x.push_back(key);
       }
       lastPointKey = key;
@@ -346,7 +346,7 @@ void Widget::realtimeDataSlotSingle(QVector<double> &a)
     }
 }
 
-void Widget::realtimeDataSlotDuo(QVector<double> &a)
+void Widget::realtimeDataSlotDuo(QVector<double> a)
 {
     qDebug() << "a0 = " << a[0];
     static QTime time(QTime::currentTime());

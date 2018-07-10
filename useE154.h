@@ -41,7 +41,7 @@ public:
     };
 
 signals:
-    void value_come(QVector<double>&);
+    void value_come(QVariantList);
     void update_termo(bool);
 
 public:
@@ -57,7 +57,7 @@ public:
 public slots:
     /*Функции по сбору данных */
     double AdcSample(channel ch);   //простое одноканальное измерение АЦП канала ch, n раз
-    QVector<double> AdcKADR();                 //покадровое измерение
+    QVariantList AdcKADR();                 //покадровое измерение
     QString AdcSynchro();       //измерение в синхронном режиме возвращает строку данных
     DoubleData AdcSynchroDouble();
 

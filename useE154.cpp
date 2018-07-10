@@ -32,7 +32,7 @@ useE154::~useE154(void)
     return AdcVolt;
 }
 
-QVector<double> useE154::AdcKADR()
+QVariantList useE154::AdcKADR()
 {
     SHORT AdcBuffer[4];
     double volt[16];
@@ -48,9 +48,14 @@ QVector<double> useE154::AdcKADR()
     vec_data.push_back(volt[1]);
     vec_data.push_back(volt[2]);
     vec_data.push_back(volt[3]);
-    qDebug() << "V0 = " << volt[0];
-    emit value_come(vec_data);
-    return vec_data;
+    qDebug() << "ThreadID: " << QThread::currentThreadId() << " V0 = " << volt[0];
+    QVariantList qvar;
+    qvar.append(volt[0]);
+    qvar.append(volt[1]);
+    qvar.append(volt[2]);
+    qvar.append(volt[3]);
+    //emit value_come(qvar);
+    return qvar;
 }
 
 QString useE154::AdcSynchro()
@@ -156,8 +161,9 @@ void useE154::funThread()
 {
     while(!thread_stop){
         emit update_termo(GetStatusTD());
-        QVector<double> data = AdcKADR();
+        QVariantList data = AdcKADR();
         emit value_come(data);
+        QThread::currentThread()->msleep(50);
     }
 }
 

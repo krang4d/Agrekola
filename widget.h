@@ -50,8 +50,8 @@ public slots:
     void getData();
 
 private slots:
-    void realtimeDataSlotSingle(QVector<double>&);
-    void realtimeDataSlotDuo(QVector<double>&);
+    void realtimeDataSlotSingle(QVariantList);
+    void realtimeDataSlotDuo(QVector<double>);
     void writeData();
     void on_checkBox_1_stateChanged(int arg1);
     void on_checkBox_2_stateChanged(int arg1);
