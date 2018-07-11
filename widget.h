@@ -31,7 +31,7 @@ public:
 private:
     bool eventFilter(QObject *watched, QEvent *event);
     void setupQuadraticPlot(QVector<double> data = {0});
-    void setupRealtimeData(bool duo = 0);
+    void setupRealtimeData();
     void setupTimers();
     void setupFiles();
 
@@ -51,7 +51,6 @@ public slots:
 
 private slots:
     void realtimeDataSlotSingle(QVariantList);
-    void realtimeDataSlotDuo(QVector<double>);
     void writeData();
     void on_checkBox_1_stateChanged(int arg1);
     void on_checkBox_2_stateChanged(int arg1);
@@ -77,6 +76,7 @@ private:
     QCustomPlot *customPlot4;
 
     volatile bool data;
+    bool duo;
     QFutureWatcher<void> futureWatcher;
 
     QVector<double> x;

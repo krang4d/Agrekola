@@ -39,19 +39,19 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_3">
       <item>
-       <widget class="QRadioButton" name="radioButton_double">
-        <property name="text">
-         <string>Парные пробы</string>
-        </property>
-       </widget>
-      </item>
-      <item>
        <widget class="QRadioButton" name="radioButton_single">
         <property name="text">
          <string>Одинарные пробы</string>
         </property>
         <property name="checked">
          <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="radioButton_double">
+        <property name="text">
+         <string>Парные пробы</string>
         </property>
        </widget>
       </item>
@@ -63,7 +63,7 @@
      <item>
       <widget class="QGroupBox" name="groupBox_ch">
        <property name="title">
-        <string>Выбор канала</string>
+        <string>Выбор каналов</string>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_4">
         <item>
@@ -100,7 +100,7 @@
      <item>
       <widget class="QGroupBox" name="groupBox">
        <property name="title">
-        <string>№ пробы</string>
+        <string>№ проб</string>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout">
         <item>
@@ -214,7 +214,6 @@
   <tabstop>checkBox_ch4</tabstop>
   <tabstop>lineEdit_ch4</tabstop>
   <tabstop>radioButton_double</tabstop>
-  <tabstop>radioButton_single</tabstop>
   <tabstop>lineEdit_time</tabstop>
  </tabstops>
  <resources/>

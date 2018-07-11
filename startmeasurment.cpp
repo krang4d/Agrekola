@@ -113,6 +113,41 @@ void StartMeasurment::on_checkBox_ch4_stateChanged(int arg1)
 
 void StartMeasurment::on_radioButton_single_toggled(bool checked)
 {
+    ui->checkBox_ch1->setCheckState(Qt::Unchecked);
+    ui->checkBox_ch2->setCheckState(Qt::Unchecked);
+    ui->checkBox_ch3->setCheckState(Qt::Unchecked);
+    ui->checkBox_ch4->setCheckState(Qt::Unchecked);
+    ui->lineEdit_ch1->setText("");
+    ui->lineEdit_ch2->setText("");
+    ui->lineEdit_ch3->setText("");
+    ui->lineEdit_ch4->setText("");
+
+    if(checked){
+        ui->checkBox_ch1->setText("Канал 1");
+
+        ui->checkBox_ch2->setText("Канал 2");
+        ui->checkBox_ch2->setVisible(true);
+        ui->lineEdit_ch2->setVisible(true);
+
+        ui->checkBox_ch3->setText("Канал 3");
+
+        ui->checkBox_ch4->setText("Канал 4");
+        ui->checkBox_ch4->setVisible(true);
+        ui->lineEdit_ch4->setVisible(true);
+    }
+    else{
+        ui->checkBox_ch1->setEnabled(true);
+        ui->checkBox_ch1->setText("Канал 1, 2");
+
+        ui->checkBox_ch2->setVisible(false);
+        ui->lineEdit_ch2->setVisible(false);
+
+        ui->checkBox_ch3->setEnabled(true);
+        ui->checkBox_ch3->setText("Канал 3, 4");
+
+        ui->checkBox_ch4->setVisible(false);
+        ui->lineEdit_ch4->setVisible(false);
+    }
     single = checked;
 }
 

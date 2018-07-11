@@ -1,5 +1,4 @@
 ﻿#include "useE154.h"
-#include <QThread>
 
 useE154::useE154(QThread *parent) :
     QThread(parent)
@@ -163,7 +162,7 @@ void useE154::funThread()
         emit update_termo(GetStatusTD());
         QVariantList data = AdcKADR();
         emit value_come(data);
-        QThread::currentThread()->msleep(50);
+        QThread::currentThread()->msleep(10);
     }
 }
 

@@ -41,6 +41,7 @@ Widget::~Widget()
     file_data.close();
     file_setting.close();
     file_user.close();
+    emit stop();
 }
 
 bool Widget::eventFilter(QObject *watched, QEvent *event)
@@ -49,7 +50,6 @@ bool Widget::eventFilter(QObject *watched, QEvent *event)
     {
         qDebug() << tr("Close Event is emited in the Widget!");
         //parentWidget()->show();
-        emit stop();
         return true;
     }
     if(event->type() == QEvent::KeyPress)
@@ -128,7 +128,7 @@ void Widget::setupQuadraticPlot(QVector<double> data)
     customPlot1->replot();
 }
 
-void Widget::setupRealtimeData(bool duo)
+void Widget::setupRealtimeData()
 {
     // include this section to fully disable antialiasing for higher performance:
     /*
@@ -300,15 +300,44 @@ void Widget::realtimeDataSlotSingle(QVariantList a)
     static double lastPointKey = 0;
     if (key-lastPointKey > 0.010) // at most add point every 10 ms
     {
-//      add data to lines:
-      //QVector<double> a = agrekola->AdcKADR();
-      customPlot1->graph(0)->addData(key, a[0].toDouble()); //qSin(key)+qrand()/(double)RAND_MAX*1*qSin(key/0.3843));
-      customPlot2->graph(0)->addData(key, a[1].toDouble()); //qCos(key)+qrand()/(double)RAND_MAX*0.5*qSin(key/0.4364));
-      customPlot3->graph(0)->addData(key, a[2].toDouble()); //qCos(key)+qrand()/(double)RAND_MAX*0.5*qSin(key/0.4364));
-      customPlot4->graph(0)->addData(key, a[3].toDouble()); //qCos(key)+qrand()/(double)RAND_MAX*0.5*qSin(key/0.4364));
-      //rescale value (vertical) axis to fit the current data:
-      //ui->customPlot->graph(0)->rescaleValueAxis();
-      //ui->customPlot->graph(1)->rescaleValueAxis(true);
+      if(!duo){
+          customPlot1->graph(0)->addData(key, a[0].toDouble());
+          customPlot2->graph(0)->addData(key, a[1].toDouble());
+          customPlot3->graph(0)->addData(key, a[2].toDouble());
+          customPlot4->graph(0)->addData(key, a[3].toDouble());
+
+          // make key axis range scroll with the data (at a constant range size of 8):
+          customPlot1->xAxis->setRange(key, 8, Qt::AlignRight);
+          customPlot1->replot();
+
+          customPlot2->xAxis->setRange(key, 8, Qt::AlignRight);
+          customPlot2->replot();
+
+          customPlot3->xAxis->setRange(key, 8, Qt::AlignRight);
+          customPlot3->replot();
+
+          customPlot4->xAxis->setRange(key, 8, Qt::AlignRight);
+          customPlot4->replot();
+      }
+      else{
+          customPlot1->graph(0)->addData(key, a[0].toDouble());
+          customPlot1->graph(1)->addData(key, a[1].toDouble());
+          customPlot2->graph(0)->addData(key, a[2].toDouble());
+          customPlot2->graph(1)->addData(key, a[3].toDouble());
+
+          // make key axis range scroll with the data (at a constant range size of 8):
+          customPlot1->xAxis->setRange(key, 8, Qt::AlignRight);
+          customPlot1->replot();
+
+          customPlot2->xAxis->setRange(key, 8, Qt::AlignRight);
+          customPlot2->replot();
+
+          customPlot3->xAxis->setRange(key, 8, Qt::AlignRight);
+          customPlot3->replot();
+
+          customPlot4->xAxis->setRange(key, 8, Qt::AlignRight);
+          customPlot4->replot();
+      }
       if(data)
       {
           y1.push_back(a[0].toDouble());
@@ -319,80 +348,6 @@ void Widget::realtimeDataSlotSingle(QVariantList a)
       }
       lastPointKey = key;
     }
-    // make key axis range scroll with the data (at a constant range size of 8):
-    customPlot1->xAxis->setRange(key, 8, Qt::AlignRight);
-    customPlot1->replot();
-
-    customPlot2->xAxis->setRange(key, 8, Qt::AlignRight);
-    customPlot2->replot();
-
-    customPlot3->xAxis->setRange(key, 8, Qt::AlignRight);
-    customPlot3->replot();
-
-    customPlot4->xAxis->setRange(key, 8, Qt::AlignRight);
-    customPlot4->replot();
-
-    // calculate frames per second:
-    static double lastFpsKey;
-    static int frameCount;
-    ++frameCount;
-    if (key-lastFpsKey > 2) // average fps over 2 seconds
-    {
-        ui->label_fps->setText(QString("%1 FPS, Total Data points: %2")
-                        .arg(frameCount/(key-lastFpsKey), 0, 'f', 0)
-                        .arg(customPlot1->graph(0)->data()->size()+customPlot2->graph(0)->data()->size() + customPlot3->graph(0)->data()->size() + customPlot4->graph(0)->data()->size()));
-        lastFpsKey = key;
-        frameCount = 0;
-    }
-}
-
-void Widget::realtimeDataSlotDuo(QVector<double> a)
-{
-    qDebug() << "a0 = " << a[0];
-    static QTime time(QTime::currentTime());
-    // calculate two new data points:
-    double key = time.elapsed()/1000.0; // time elapsed since start of demo, in seconds
-    static double lastPointKey = 0;
-    if (key-lastPointKey > 0.010) // at most add point every 10 ms
-    {
-      // add data to lines:
-//      double a1 = agrekola->AdcSample(useE154::CH1);
-//      double a2 = agrekola->AdcSample(useE154::CH2);
-//      double a3 = agrekola->AdcSample(useE154::CH3);
-//      double a4 = agrekola->AdcSample(useE154::CH4);
-
-      customPlot1->graph(0)->addData(key, a[0]); //qSin(key)+qrand()/(double)RAND_MAX*1*qSin(key/0.3843));
-      customPlot1->graph(1)->addData(key, a[1]); //qCos(key)+qrand()/(double)RAND_MAX*0.5*qSin(key/0.4364));
-      customPlot2->graph(0)->addData(key, a[2]); //qCos(key)+qrand()/(double)RAND_MAX*0.5*qSin(key/0.4364));
-      customPlot2->graph(1)->addData(key, a[3]); //qCos(key)+qrand()/(double)RAND_MAX*0.5*qSin(key/0.4364));
-      //rescale value (vertical) axis to fit the current data:
-      //ui->customPlot->graph(0)->rescaleValueAxis();
-      //ui->customPlot->graph(1)->rescaleValueAxis(true);
-      if(data)
-      {
-          //(startWin->getTime()/(kay - st));
-          //a1 = (a1+a2)/2;
-          //a3 = (a3+a4)/2;
-          y1.push_back(a[0]);
-          y2.push_back(a[1]);
-          y3.push_back(a[2]);
-          y4.push_back(a[3]);
-          x.push_back(key);
-      }
-      lastPointKey = key;
-    }
-    // make key axis range scroll with the data (at a constant range size of 8):
-    customPlot1->xAxis->setRange(key, 8, Qt::AlignRight);
-    customPlot1->replot();
-
-    customPlot2->xAxis->setRange(key, 8, Qt::AlignRight);
-    customPlot2->replot();
-
-    customPlot3->xAxis->setRange(key, 8, Qt::AlignRight);
-    customPlot3->replot();
-
-    customPlot4->xAxis->setRange(key, 8, Qt::AlignRight);
-    customPlot4->replot();
 
     // calculate frames per second:
     static double lastFpsKey;
@@ -486,10 +441,15 @@ void Widget::progressValueChanged()
 
 void Widget::getData()
 {
+    QString msg;
     if(!startWin->isCancel())
     {
         if(startWin->isSingle())
         {
+            ui->groupBox_f1->setTitle("Канал 1");
+            ui->groupBox_f2->setTitle("Канал 2");
+            ui->groupBox_f3->setTitle("Канал 3");
+            ui->groupBox_f4->setTitle("Канал 4");
             if(startWin->isChannel_1()) ui->groupBox_f1->show();
             else ui->groupBox_f1->hide();
             if(startWin->isChannel_2()) ui->groupBox_f2->show();
@@ -498,34 +458,44 @@ void Widget::getData()
             else ui->groupBox_f3->hide();
             if(startWin->isChannel_4()) ui->groupBox_f4->show();
             else ui->groupBox_f4->hide();
-            setupRealtimeData(false);
+
+            if (startWin->isChannel_1()) {msg += QString("№1 = %1, ").arg(startWin->getNum_1());}
+            else msg += QString("№1 - выкл., ");
+
+            if (startWin->isChannel_2()) {msg += QString("№2 = %1, ").arg(startWin->getNum_2());}
+            else msg += QString("№2 - выкл., ");
+
+            if (startWin->isChannel_3()) {msg += QString("№3 = %1, ").arg(startWin->getNum_3());}
+            else msg += QString("№3 - выкл., ");
+
+            if (startWin->isChannel_4()) {msg += QString("№4 = %1 ").arg(startWin->getNum_4());}
+            else msg += QString("№4 - выкл. ");
+
+            msg = QString("Начало сбора данных, одиночные пробы (t = %1c, %2)").arg(startWin->getTime()).arg(msg);
+            setUserMessage(msg, true, true);
+
+            duo = false;
+            setupRealtimeData();
         }
         else
         {
-            ui->groupBox_f3->hide();
-            ui->groupBox_f4->hide();
             ui->groupBox_f1->setTitle("Канал 1, 2");
             ui->groupBox_f2->setTitle("Канал 3, 4");
-            setupRealtimeData(true);
+            ui->groupBox_f3->hide();
+            ui->groupBox_f4->hide();
+
+            if (startWin->isChannel_1()) {msg += QString("№1, 2 = %1, ").arg(startWin->getNum_1());}
+            else msg += QString("№1, 2 - выкл., ");
+
+            if (startWin->isChannel_3()) {msg += QString("№3, 4 = %1, ").arg(startWin->getNum_3());}
+            else msg += QString("№3, 4 - выкл., ");
+
+            msg = QString("Начало сбора данных, парные пробы (t = %1c, %2)").arg(startWin->getTime()).arg(msg);
+            setUserMessage(msg, true, true);
+
+            duo = true;
+            setupRealtimeData();
         }
-        QString ch;
-
-        if (startWin->isChannel_1()) {ch += QString("№1 = %1, ").arg(startWin->getNum_1());}
-        else ch += QString("№1 - выкл., ");
-
-        if (startWin->isChannel_2()) {ch += QString("№2 = %1, ").arg(startWin->getNum_2());}
-        else ch += QString("№2 - выкл., ");
-
-        if (startWin->isChannel_3()) {ch += QString("№3 = %1, ").arg(startWin->getNum_3());}
-        else ch += QString("№3 - выкл., ");
-
-        if (startWin->isChannel_4()) {ch += QString("№4 = %1 ").arg(startWin->getNum_4());}
-        else ch += QString("№4 - выкл. ");
-
-        QString stat = QString("Начало измерения (t = %1c, %2)")
-                               .arg(startWin->getTime()).arg(ch);
-
-        setUserMessage(stat, true, true);
         t = startWin->getTime() * 1000;
         ui->progressBar->setVisible(true);
         ui->progressBar->setValue(0);
@@ -564,7 +534,7 @@ void Widget::writeData()
     static int i(0);
     for(;;)
     {
-        QString name = QString("%1_%2.txt").arg(d.toString("yyyyddMM")).arg(i);
+        QString name = QString("%1_%2.txt").arg(d.toString("yyyyMMdd")).arg(i);
         if(!QFile::exists(name)){
             file_data.setFileName(name);
             if(!file_data.open(QIODevice::ReadWrite | QIODevice::Append | QIODevice::Text)) qWarning() << "data file is't opened";
