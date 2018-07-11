@@ -5,6 +5,8 @@
 #include "choisedialog.h"
 #include "widget.h"
 
+class ChoiseDialog;
+
 namespace Ui {
 class MainWindow;
 }
@@ -17,13 +19,15 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
     void newShow();
+    void setupThread();
 
 private:
     bool eventFilter(QObject *watched, QEvent *event);
 
 private slots:
     void on_action_start_triggered();
-    void on_action_menu_triggered();
+
+    void on_menu_triggered();
 
 private:
     Ui::MainWindow *ui;

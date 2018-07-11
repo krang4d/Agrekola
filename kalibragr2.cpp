@@ -8,6 +8,7 @@ KalibrAgr2::KalibrAgr2(QWidget *parent) :
     ui(new Ui::KalibrAgr2)
 {
     ui->setupUi(this);
+    setAttribute(Qt::WA_DeleteOnClose);
     setWindowTitle(QString("Определение активности фактора Виллебранда. Калибровка"));
     setAttribute(Qt::WA_DeleteOnClose);
     installEventFilter(this);

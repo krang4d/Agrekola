@@ -1,16 +1,13 @@
 #include "choisedialog.h"
 #include "ui_choisedialog.h"
-
-#include "mainwindow.h"
-#include "widget.h"
-#include <QtConcurrent>
+#include <QDebug>
 
 ChoiseDialog::ChoiseDialog(QDialog *parent) :
     QDialog(parent),
     ui(new Ui::ChoiseDialog)
 {
     ui->setupUi(this);
-
+    setAttribute(Qt::WA_DeleteOnClose);
     agr1 = static_cast<Agr1 *>(ui->stackedWidget->widget(1));
     agr2 = static_cast<Agr2 *>(ui->stackedWidget->widget(2));
 
@@ -20,15 +17,13 @@ ChoiseDialog::ChoiseDialog(QDialog *parent) :
     ko4 = static_cast<Ko4 *>(ui->stackedWidget->widget(6));
     ko5 = static_cast<Ko5 *>(ui->stackedWidget->widget(7));
 
-    //test = new TestKoAgr(this);
-
-    connect(agr1, SIGNAL(measurement()), SLOT(accept()));
+    connect(agr1, SIGNAL(measurement()), SLOT(startMeasurement()));
     //connect(agr2, SIGNAL(measurement()), SLOT(accept()));
-    connect(ko1, SIGNAL(measurement()), SLOT(accept()));
-    connect(ko2, SIGNAL(measurement()), SLOT(accept()));
-    connect(ko3, SIGNAL(measurement()), SLOT(accept()));
-    connect(ko4, SIGNAL(measurement()), SLOT(accept()));
-    connect(ko5, SIGNAL(measurement()), SLOT(accept()));
+    connect(ko1, SIGNAL(measurement()), SLOT(startMeasurement()));
+    connect(ko2, SIGNAL(measurement()), SLOT(startMeasurement()));
+    connect(ko3, SIGNAL(measurement()), SLOT(startMeasurement()));
+    connect(ko4, SIGNAL(measurement()), SLOT(startMeasurement()));
+    connect(ko5, SIGNAL(measurement()), SLOT(startMeasurement()));
 
     connect(agr1, SIGNAL(calibration()), SLOT(calibration()));
     //connect(agr2, SIGNAL(calibration()), SLOT(calibration()));
@@ -45,8 +40,7 @@ int ChoiseDialog::getTypeOfWidget() const
 
 ChoiseDialog::~ChoiseDialog()
 {
-    delete mw;
-    delete test;
+    qDebug() << "call ChoiseDialog::~ChoiseDialog()";
     delete agr1;
     delete agr2;
     delete ko1;
@@ -59,35 +53,40 @@ ChoiseDialog::~ChoiseDialog()
 
 void ChoiseDialog::on_testButton_clicked()
 {
-    //TestKoAgr *test = new TestKoAgr(this);
-    //hide();
-    test = new Widget;
-//    connect(agrekola, SIGNAL(value_come(QVector<double>&)), test, SLOT(realtimeDataSlotSingle(QVector<double>&)));
-//    connect(agrekola, SIGNAL(update_termo(bool)), test, SLOT(updataTermo(bool)));
-//    connect(test, SIGNAL(onMixCh1(bool)), agrekola, SLOT(onMixCh1(bool)));
-//    connect(test, SIGNAL(onMixCh2(bool)), agrekola, SLOT(onMixCh2(bool)));
-//    connect(test, SIGNAL(onMixCh1(bool)), agrekola, SLOT(onMixCh3(bool)));
-//    connect(test, SIGNAL(onMixCh1(bool)), agrekola, SLOT(onMixCh4(bool)));
-//    connect(test, SIGNAL(onMixPP(bool)), agrekola, SLOT(onMixPP(bool)));
-//    connect(test, SIGNAL(onLaser(bool)), agrekola, SLOT(onLaser(bool)));
-    test->setTestMode(true);
-    test->setWindowModality(Qt::ApplicationModal);
-    test->show();
+    useE154 *agrekola = new useE154;
+    Widget *widget =new Widget;
+    //ChoiseDialog choiseDlg;
+    QWidget::connect(widget, SIGNAL(onmixch1(bool)), agrekola, SLOT(onMixCh1(bool)));
+    QWidget::connect(widget, SIGNAL(onmixch2(bool)), agrekola, SLOT(onMixCh2(bool)));
+    QWidget::connect(widget, SIGNAL(onmixch3(bool)), agrekola, SLOT(onMixCh3(bool)));
+    QWidget::connect(widget, SIGNAL(onmixch4(bool)), agrekola, SLOT(onMixCh4(bool)));
+    QWidget::connect(widget, SIGNAL(onmixpp(bool)), agrekola, SLOT(onMixPP(bool)));
+    QWidget::connect(widget, SIGNAL(onlaser(bool)), agrekola, SLOT(onLaser(bool)));
+    QObject::connect(widget, SIGNAL(stop()), agrekola, SLOT(stopThread()));
+    QObject::connect(widget, SIGNAL(stop()), widget, SLOT(deleteLater()));
+
+    QWidget::connect(agrekola, SIGNAL(update_termo(bool)), widget, SLOT(updataTermo(bool)));
+    QWidget::connect(agrekola, SIGNAL(value_come(QVariantList)), widget, SLOT(realtimeDataSlot(QVariantList)));
+    QWidget::connect(agrekola, SIGNAL(finished()), agrekola, SLOT(deleteLater()));
+
+    widget->setTestMode(true);
+    widget->show();
+    agrekola->start();
 }
 
 void ChoiseDialog::calibration()
 {
     int i = ui->stackedWidget->currentIndex();
-    QMessageBox test(QMessageBox::Warning, "calibration", QString("calibration #") + QString(std::to_string(i).c_str()), QMessageBox::Ok);
-    test.exec();
+    QMessageBox t(QMessageBox::Warning, "calibration", QString("calibration #") + QString(std::to_string(i).c_str()), QMessageBox::Ok);
+    t.exec();
     //if(i == 2) kalibragr2->show();
 }
 
-void ChoiseDialog::accept()
+void ChoiseDialog::startMeasurement()
 {
     //QMessageBox msg_accept(QMessageBox::Warning, "accept", QString("i =") + QString(std::to_string(i).c_str()), QMessageBox::Ok);
     //msg_accept.exec();
-    mw = new MainWindow(this);
+    MainWindow *mw = new MainWindow(this);
     mw->newShow();
     hide();
 }

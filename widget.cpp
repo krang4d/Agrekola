@@ -291,7 +291,7 @@ void Widget::setupFiles()
     else QDir::setCurrent(dir.path());
 }
 
-void Widget::realtimeDataSlotSingle(QVariantList a)
+void Widget::realtimeDataSlot(QVariantList a)
 {
     qDebug() << "ThreadID: " << QThread::currentThreadId() << "a0 = " << a[0];
     static QTime time(QTime::currentTime());
@@ -367,42 +367,42 @@ void Widget::on_checkBox_1_stateChanged(int arg1)
 {
     if(arg1) setUserMessage("Канал 1: включение перемешивания");
     else setUserMessage("Канала 1: выключение перемешивания");
-    emit onMixCh1(arg1);
+    emit onmixch1(arg1);
 }
 
 void Widget::on_checkBox_2_stateChanged(int arg1)
 {
     if(arg1) setUserMessage("Канал 2: включение перемешивания");
     else setUserMessage("Канала 2: выключение перемешивания");
-    emit onMixCh2(arg1);
+    emit onmixch2(arg1);
 }
 
 void Widget::on_checkBox_3_stateChanged(int arg1)
 {
     if(arg1) setUserMessage("Канал 3: включение перемешивания");
     else setUserMessage("Канала 3: выключение перемешивания");
-    emit onMixCh3(arg1);
+    emit onmixch3(arg1);
 }
 
 void Widget::on_checkBox_4_stateChanged(int arg1)
 {
     if(arg1) setUserMessage("Канал 4: включение перемешивания");
     else setUserMessage("Канала 4: выключение перемешивания");
-    emit onMixCh4(arg1);
+    emit onmixch4(arg1);
 }
 
 void Widget::on_checkBox_PP_stateChanged(int arg1)
 {
     if(arg1) setUserMessage("Канал РР: включение перемешивания");
     else setUserMessage("Канала РР: выключение перемешивания");
-    emit onMixPP(arg1);
+    emit onmixpp(arg1);
 }
 
 void Widget::on_checkBox_L_stateChanged(int arg1)
 {
     if(arg1) setUserMessage("Включение лазеров");
     else setUserMessage("Выключение лазеров");
-    emit onLaser(arg1);
+    emit onlaser(arg1);
 }
 
 void Widget::on_pushButton_clicked()

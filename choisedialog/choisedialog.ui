@@ -243,15 +243,15 @@
    <sender>exitButton</sender>
    <signal>clicked()</signal>
    <receiver>ChoiseDialog</receiver>
-   <slot>close()</slot>
+   <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>310</x>
-     <y>292</y>
+     <x>308</x>
+     <y>287</y>
     </hint>
     <hint type="destinationlabel">
-     <x>341</x>
-     <y>253</y>
+     <x>340</x>
+     <y>263</y>
     </hint>
    </hints>
   </connection>

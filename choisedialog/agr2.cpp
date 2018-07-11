@@ -13,7 +13,7 @@ Agr2::Agr2(QWidget *parent) :
 Agr2::~Agr2()
 {
     delete ui;
-    delete kalibragr2;
+    //delete kalibragr2;
     delete selInductor;
     delete selcalibrAgr1;
 }

@@ -2,7 +2,6 @@
 #define CHOISEDIALOG_H
 
 #include <QDialog>
-#include <QThread>
 #include <QTimer>
 
 //dialog include
@@ -15,6 +14,9 @@
 #include "ko5.h"
 #include "testkoagr.h"
 #include "widget.h"
+#include "mainwindow.h"
+#include "useE154.h"
+
 
 class MainWindow;
 
@@ -33,7 +35,7 @@ public:
     ~ChoiseDialog();
 
 private slots:
-    virtual void accept();
+    void startMeasurement();
     void on_agr1Button_clicked();
     void on_agr2Button_clicked();
     void on_ko1Button_clicked();
@@ -47,8 +49,6 @@ private slots:
 private:
 
     Ui::ChoiseDialog *ui;
-    Widget *test;
-    MainWindow *mw;
     Agr1 *agr1; //Определение параметров агрегации
     Agr2 *agr2; //Определение активности фактора Виллебранда
     Ko1 *ko1;   //Время свертывания

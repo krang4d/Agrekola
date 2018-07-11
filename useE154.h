@@ -64,15 +64,15 @@ public slots:
 
 protected:
 	void initAPIInstance();
+    void ReleaseAPIInstance();					//(char *ErrorString, bool AbortionFlag);
 	void initModuleHandler();
     void initPorts();                           //инициализация всех выводов TTL
+    void funThread();
     QString initADC();
 
 public:
-    void funThread();
     int OpenDevice();
     void CloseDevice();
-    void ReleaseAPIInstance();					//(char *ErrorString, bool AbortionFlag);
 
 public slots:
     void onMixCh1(bool);

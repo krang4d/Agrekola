@@ -36,12 +36,12 @@ private:
     void setupFiles();
 
 signals:
-    void onMixCh1(bool);
-    void onMixCh2(bool);
-    void onMixCh3(bool);
-    void onMixCh4(bool);
-    void onMixPP(bool);
-    void onLaser(bool);
+    void onmixch1(bool);
+    void onmixch2(bool);
+    void onmixch3(bool);
+    void onmixch4(bool);
+    void onmixpp(bool);
+    void onlaser(bool);
     void status(QString);
     void get_information();
     void stop();
@@ -50,7 +50,7 @@ public slots:
     void getData();
 
 private slots:
-    void realtimeDataSlotSingle(QVariantList);
+    void realtimeDataSlot(QVariantList);
     void writeData();
     void on_checkBox_1_stateChanged(int arg1);
     void on_checkBox_2_stateChanged(int arg1);

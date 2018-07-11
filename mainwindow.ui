@@ -23,50 +23,43 @@
      <height>21</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menu">
+   <widget class="QMenu" name="file">
     <property name="title">
      <string>Файл</string>
     </property>
+    <addaction name="menu"/>
     <addaction name="action_save"/>
     <addaction name="action_print"/>
    </widget>
-   <widget class="QMenu" name="menu_2">
+   <widget class="QMenu" name="plots">
     <property name="title">
      <string>Графики</string>
     </property>
-    <widget class="QMenu" name="menu_3">
-     <property name="title">
-      <string>Просмотр</string>
-     </property>
-     <addaction name="action_all"/>
-    </widget>
-    <addaction name="menu_3"/>
-    <addaction name="action_levels"/>
    </widget>
-   <widget class="QMenu" name="menu_5">
+   <widget class="QMenu" name="abaut">
     <property name="title">
      <string>О программе</string>
     </property>
    </widget>
-   <widget class="QMenu" name="menu_6">
+   <widget class="QMenu" name="measurment">
     <property name="title">
      <string>Измерение</string>
     </property>
     <addaction name="action_abort"/>
     <addaction name="action_setting"/>
    </widget>
-   <widget class="QMenu" name="menu_7">
+   <widget class="QMenu" name="calibration">
     <property name="title">
      <string>Калибровка</string>
     </property>
     <addaction name="action_calibr1"/>
     <addaction name="action_propety"/>
    </widget>
-   <addaction name="menu"/>
-   <addaction name="menu_6"/>
-   <addaction name="menu_7"/>
-   <addaction name="menu_2"/>
-   <addaction name="menu_5"/>
+   <addaction name="file"/>
+   <addaction name="measurment"/>
+   <addaction name="calibration"/>
+   <addaction name="plots"/>
+   <addaction name="abaut"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <widget class="QToolBar" name="toolBar">
@@ -79,43 +72,7 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="action_menu"/>
-   <addaction name="action_start"/>
   </widget>
-  <action name="action_start">
-   <property name="icon">
-    <iconset resource="rcfile.qrc">
-     <normaloff>:/rcfiles/play.png</normaloff>:/rcfiles/play.png</iconset>
-   </property>
-   <property name="text">
-    <string>Начать</string>
-   </property>
-   <property name="shortcut">
-    <string>Return</string>
-   </property>
-  </action>
-  <action name="action_all">
-   <property name="text">
-    <string>Все</string>
-   </property>
-  </action>
-  <action name="action_levels">
-   <property name="text">
-    <string>Просмотр уровней</string>
-   </property>
-  </action>
-  <action name="action_menu">
-   <property name="icon">
-    <iconset resource="rcfile.qrc">
-     <normaloff>:/rcfiles/sun.png</normaloff>:/rcfiles/sun.png</iconset>
-   </property>
-   <property name="text">
-    <string>В меню</string>
-   </property>
-   <property name="shortcut">
-    <string>Esc</string>
-   </property>
-  </action>
   <action name="action_abort">
    <property name="text">
     <string>Прервать</string>
@@ -146,9 +103,12 @@
     <string>Сохранить</string>
    </property>
   </action>
+  <action name="menu">
+   <property name="text">
+    <string>Другой тест</string>
+   </property>
+  </action>
  </widget>
- <resources>
-  <include location="rcfile.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>
