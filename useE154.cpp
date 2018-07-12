@@ -48,7 +48,7 @@ QVariantList useE154::AdcKADR()
     vec_data.push_back(volt[1]);
     vec_data.push_back(volt[2]);
     vec_data.push_back(volt[3]);
-    qDebug() << "ThreadID: " << QThread::currentThreadId() << " V0 = " << volt[0];
+    //sqDebug() << "ThreadID: " << QThread::currentThreadId() << " V0 = " << volt[0];
     QVariantList qvar;
     qvar.append(volt[0]);
     qvar.append(volt[1]);
@@ -163,7 +163,7 @@ void useE154::funThread()
         emit update_termo(GetStatusTD());
         QVariantList data = AdcKADR();
         emit value_come(data);
-        QThread::currentThread()->msleep(10);
+        QThread::currentThread()->msleep(20);
     }
 }
 

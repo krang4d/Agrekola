@@ -29,6 +29,7 @@ class useE154 : public QThread
 {
      Q_OBJECT
      void run() Q_DECL_OVERRIDE {
+         thread_stop = false;
          qDebug() << "Thread useE154 is started, id " << QThread::currentThreadId();
          funThread();
      }

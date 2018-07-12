@@ -308,7 +308,7 @@ void Widget::startProgressBarTimer(QString format, int timer_tic_ms, int time_ms
 
 void Widget::realtimeDataSlot(QVariantList a)
 {
-    qDebug() << "ThreadID: " << QThread::currentThreadId() << "a0 = " << a[0];
+    //qDebug() << "ThreadID: " << QThread::currentThreadId() << "a0 = " << a[0];
     static QTime time(QTime::currentTime());
     // calculate two new data points:
     double key = time.elapsed()/1000.0; // time elapsed since start of demo, in seconds
