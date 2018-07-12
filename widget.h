@@ -69,7 +69,7 @@ private:
     Ui::Widget *ui;
     QString text;
     StartMeasurment *startWin;
-    QTimer incubeTimer, progressTimer, plotTimer, currentTimer;
+    QTimer progressTimer, plotTimer, currentTimer;
     QDateTime dt;
     QCustomPlot *customPlot1;
     QCustomPlot *customPlot2;

@@ -414,7 +414,6 @@ void Widget::on_pushButton_clicked()
 
 void Widget::updataTermo(bool td)
 {
-
     if(!td)
     {
         ui->label_TD->setText(QString("Температура >37°C"));
@@ -455,7 +454,6 @@ void Widget::progressValueChanged()
 
 void Widget::getData()
 {
-    incubeTimer.start(startWin->getTimeIncube()*1000);
     incube = true;
     QString msg;
     if(!startWin->isCancel())
@@ -512,20 +510,26 @@ void Widget::getData()
             duo = true;
             setupRealtimeData();
         }
-        progress_t = startWin->getTime() * 1000;
-        ui->progressBar->setVisible(true);
-        ui->progressBar->setValue(0);
-        data = true;
-        emit status(QString("Измерение"));
-        QTimer::singleShot(progress_t, this, SLOT(writeData()));
-        progressTimer.start(300);
+        QTimer::singleShot(startWin->getTimeIncube()*1000, this, Widget::incubeTimeout);
     }
 }
 
 void Widget::incubeTimeout()
 {
     incube = false;
-    emit status(QString("Время инкубации %1 сек вышло").arg(startWin->getTimeIncube()));
+    setUserMessage("Время инкубации истекло, добавьте стартовый реагеет");
+    emit status(QString("Время инкубации вышло"));
+    //запуск измерения
+    setUserMessage("Измерение");
+
+    progress_t = startWin->getTime() * 1000;
+    ui->progressBar->setFormat("Измерение %p%");
+    ui->progressBar->setVisible(true);
+    ui->progressBar->setValue(0);
+    data = true;
+    emit status(QString("Измерение"));
+    QTimer::singleShot(progress_t, this, SLOT(writeData()));
+    progressTimer.start(300);
 }
 
 void Widget::setupTimers()
@@ -536,15 +540,8 @@ void Widget::setupTimers()
     dt = QDateTime::currentDateTime();
     setUserMessage(QString("Начало работы программы    Дата %1").arg(dt.toString("dd.MM.yyyy")));
 
-    //настройка таймера для обновления датчика температуры
-    //TDTimer.start(500);
-    //connect(&TDTimer, SIGNAL(timeout()), this, SLOT(updataTermo()));
-
     //таймер для отображения процесса сбора данных
     connect(&progressTimer, SIGNAL(timeout()), this, SLOT(progressValueChanged()));
-
-    //таймер для обновления времени инкубации
-    connect(&incubeTimer, SIGNAL(timeout()), this, SLOT(incubeTimeout()));
 }
 
 void Widget::writeData()
@@ -568,6 +565,7 @@ void Widget::writeData()
         i++;
     }
     emit status(QString("Запись данных"));
+    ui->progressBar->setFormat("Запись данных %p%");
     qDebug() << "Запись данных";
     out_data << QString("%1\t%2\t\t%3\t\t%4\t\t%5\t\t%6\n")
                 .arg("№").arg("V1").arg("V2").arg("V3").arg("V4").arg("t");
