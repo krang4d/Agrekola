@@ -20,6 +20,7 @@ StartMeasurment::StartMeasurment(QDialog *parent) :
     num_3 = 0;
     num_4 = 0;
     time = 0;
+    time_incube = 0;
 }
 
 StartMeasurment::~StartMeasurment()
@@ -80,6 +81,11 @@ int StartMeasurment::getNum_4()
 int StartMeasurment::getTime()
 {
     return time;
+}
+
+int StartMeasurment::getTimeIncube()
+{
+    return time_incube;
 }
 
 QString StartMeasurment::getStringStatus()
@@ -179,7 +185,14 @@ void StartMeasurment::on_pushButton_next_clicked()
     if(channel_4)
         num_4 = ui->lineEdit_ch4->text().toInt();
 
-    time = ui->lineEdit_time->text().toInt();               //время записи
+    int t = ui->lineEdit_time->text().toInt();
+    if(!(t >= 1 && t <= 900)){
+        QMessageBox::information(this, "Агрекола-4к",
+        "Время заиси должно быть в диапазоне от 1 до 900 секунд");
+        return;
+    }
+    time = ui->lineEdit_time->text().toInt();
+    time_incube = ui->lineEdit_incube->text().toInt();
 
     mb.setInformativeText("Введите номер пробы!");
     if(ui->checkBox_ch1->isChecked() && ui->lineEdit_ch1->text().isEmpty())
@@ -195,7 +208,6 @@ void StartMeasurment::on_pushButton_next_clicked()
         cancel = false;
         hide();
         emit startMeasurment();
-
     }
 }
 

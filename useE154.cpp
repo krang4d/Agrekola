@@ -18,6 +18,7 @@ useE154::~useE154(void)
     delete[] pDestination;
 	ReleaseAPIInstance();
     if(pLoadDll) { delete pLoadDll; pLoadDll = NULL; }
+    qDebug() << "~useE154()";
 }
 
  double useE154::AdcSample(channel ch)
@@ -215,10 +216,12 @@ void useE154::onLaser(bool b)
 void useE154::stopThread()
 {
     thread_stop = true;
+    qDebug() << "Thread useE154 stoped, id is " << QThread::currentThreadId();
 }
 
 int useE154::OpenDevice()
 {
+    char ModuleName[7];							// название модуля
     int i;
 	// попробуем обнаружить модуль E-154 в первых 256 виртуальных слотах
     for(i = 0; i < MaxVirtualSoltsQuantity; i++) if(pModule->OpenLDevice(i)) break;
@@ -242,6 +245,7 @@ void useE154::CloseDevice()
 
 QString useE154::GetUsbSpeed()
 {
+    BYTE UsbSpeed;								// скорость работы шины USB
     if(!pModule->GetUsbSpeed(&UsbSpeed)) Errore_E154("Не удалось получить скорость работы интерфейса USB!"); //получаем скорость работы шины USB
     QString speed;
     if(UsbSpeed)

@@ -29,6 +29,7 @@ class useE154 : public QThread
 {
      Q_OBJECT
      void run() Q_DECL_OVERRIDE {
+         qDebug() << "Thread useE154 is started, id " << QThread::currentThreadId();
          funThread();
      }
 public:
@@ -47,12 +48,24 @@ signals:
 public:
     useE154(QThread *parent = 0);
 	~useE154(void);
+
+    int OpenDevice();
+    void CloseDevice();
+
     QString GetVersion(void);
     QString GetUserMessages() const;
     QString GetUsbSpeed();
     QString GetInformation();
     void SetChannel(channel ch, int pos);
     bool GetStatusTD();
+
+protected:
+    void initAPIInstance();
+    void ReleaseAPIInstance();					//(char *ErrorString, bool AbortionFlag);
+    void initModuleHandler();
+    void initPorts();                           //инициализация всех выводов TTL
+    void funThread();
+    QString initADC();
 
 public slots:
     /*Функции по сбору данных */
@@ -61,20 +74,6 @@ public slots:
     QString AdcSynchro();       //измерение в синхронном режиме возвращает строку данных
     DoubleData AdcSynchroDouble();
 
-
-protected:
-	void initAPIInstance();
-    void ReleaseAPIInstance();					//(char *ErrorString, bool AbortionFlag);
-	void initModuleHandler();
-    void initPorts();                           //инициализация всех выводов TTL
-    void funThread();
-    QString initADC();
-
-public:
-    int OpenDevice();
-    void CloseDevice();
-
-public slots:
     void onMixCh1(bool);
     void onMixCh2(bool);
     void onMixCh3(bool);
@@ -87,14 +86,11 @@ private:
     TLoadDll *pLoadDll;							// указатель на класс динамической загрузки DLL
 	ILE154 *pModule;							// указатель на интерфейс модуля
 	HANDLE ModuleHandle;						// дескриптор устройства
-	char ModuleName[7];							// название модуля
-	BYTE UsbSpeed;								// скорость работы шины USB
 	MODULE_DESCRIPTION_E154 ModuleDescription;	// структура с полной информацией о модуле
     IO_REQUEST_LUSBAPI IoReq;                   // структура с параметрами запроса на ввод/вывод данных
     ADC_PARS_E154 ap;							// структура параметров работы АЦП модуля
     double *pDestination;
 
-    double volts_array[16];
     QVector<double> vec_data;
 
 	WORD TtlOut;	//Состояние выходных портов 

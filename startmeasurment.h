@@ -26,6 +26,7 @@ public:
     int getNum_3();
     int getNum_4();
     int getTime();
+    int getTimeIncube();
     QString getStringStatus();
 
 public slots:
@@ -47,6 +48,7 @@ private:
     bool channel_1, channel_2, channel_3, channel_4;
     int num_1, num_2, num_3, num_4;
     int time;           //время записи
+    int time_incube;          //время инкубации
 };
 
 #endif // STARTMEASURMENT_H

@@ -1,16 +1,17 @@
 ﻿#include "widget.h"
 #include "ui_widget.h"
+
 #include <QScrollBar>
 #include <QMessageBox>
 #include <QDebug>
 #include <QEvent>
 #include <QKeyEvent>
-#include "useE154.h"
 
 Widget::Widget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Widget),
-    data(false)
+    data(false),
+    incube(false)
 {
     ui->setupUi(this);
     setupFiles();
@@ -34,6 +35,7 @@ Widget::Widget(QWidget *parent) :
 Widget::~Widget()
 {
     delete ui;
+    delete startWin;
     delete customPlot1;
     delete customPlot2;
     delete customPlot3;
@@ -431,16 +433,30 @@ void Widget::updateTime()
     dt = QDateTime::currentDateTime();
     ui->label_time->setText("Время: " + dt.toString("hh:mm:ss"));
     ui->label_date->setText("Дата: " + dt.toString("dd.MM.yyyy"));
+
+    //обновление времени инкубации
+    static int t;
+    if(incube){
+        ui->label_incube->setText(QString("Время инкубации, %1 сек")
+                                  .arg(startWin->getTimeIncube() - t));
+        t++;
+    }
+    else{
+        ui->label_incube->setText(QString("Время инкубации, 0 сек"));
+        t=0;
+    }
 }
 
 void Widget::progressValueChanged()
 {
-    ui->progressBar->setMaximum(t-progressTimer.interval());
+    ui->progressBar->setMaximum(progress_t-progressTimer.interval());
     ui->progressBar->setValue(ui->progressBar->value()+progressTimer.interval());
 }
 
 void Widget::getData()
 {
+    incubeTimer.start(startWin->getTimeIncube()*1000);
+    incube = true;
     QString msg;
     if(!startWin->isCancel())
     {
@@ -496,22 +512,27 @@ void Widget::getData()
             duo = true;
             setupRealtimeData();
         }
-        t = startWin->getTime() * 1000;
+        progress_t = startWin->getTime() * 1000;
         ui->progressBar->setVisible(true);
         ui->progressBar->setValue(0);
         data = true;
         emit status(QString("Измерение"));
-        QTimer::singleShot(t, this, SLOT(writeData()));
+        QTimer::singleShot(progress_t, this, SLOT(writeData()));
         progressTimer.start(300);
     }
+}
+
+void Widget::incubeTimeout()
+{
+    incube = false;
+    emit status(QString("Время инкубации %1 сек вышло").arg(startWin->getTimeIncube()));
 }
 
 void Widget::setupTimers()
 {
     //настройка таймера для часов
-    currenttime = new QTimer(this);
-    connect(currenttime, SIGNAL(timeout()), SLOT(updateTime()));
-    currenttime->start(1000);
+    connect(&currentTimer, SIGNAL(timeout()), SLOT(updateTime()));
+    currentTimer.start(1000);
     dt = QDateTime::currentDateTime();
     setUserMessage(QString("Начало работы программы    Дата %1").arg(dt.toString("dd.MM.yyyy")));
 
@@ -521,6 +542,9 @@ void Widget::setupTimers()
 
     //таймер для отображения процесса сбора данных
     connect(&progressTimer, SIGNAL(timeout()), this, SLOT(progressValueChanged()));
+
+    //таймер для обновления времени инкубации
+    connect(&incubeTimer, SIGNAL(timeout()), this, SLOT(incubeTimeout()));
 }
 
 void Widget::writeData()

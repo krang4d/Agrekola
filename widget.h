@@ -48,6 +48,7 @@ signals:
 
 public slots:
     void getData();
+    void incubeTimeout();
 
 private slots:
     void realtimeDataSlot(QVariantList);
@@ -68,7 +69,7 @@ private:
     Ui::Widget *ui;
     QString text;
     StartMeasurment *startWin;
-    QTimer progressTimer, dataTimer, plotTimer, TDTimer, *currenttime;
+    QTimer incubeTimer, progressTimer, plotTimer, currentTimer;
     QDateTime dt;
     QCustomPlot *customPlot1;
     QCustomPlot *customPlot2;
@@ -77,11 +78,11 @@ private:
 
     volatile bool data;
     bool duo;
-    QFutureWatcher<void> futureWatcher;
+    bool incube;
 
     QVector<double> x;
     QVector<double> y1, y2, y3, y4;
-    double t; //время измерния
+    int progress_t; //время измерния
 
     QFile file_setting, file_user, file_data;
     QTextStream out_settings ,out_user, out_data;
