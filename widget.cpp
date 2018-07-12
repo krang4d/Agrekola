@@ -10,40 +10,44 @@
 Widget::Widget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Widget),
+    startWin(new StartMeasurment),
     data(false),
-    incube(false)
+    incub(false)
 {
     ui->setupUi(this);
     setupFiles();
+    setAttribute(Qt::WA_DeleteOnClose);
     setWindowTitle("Программы сбора данных с АЦП(E-154) по 4 каналам");
+
     customPlot1 = ui->frame_1;
     customPlot2 = ui->frame_2;
     customPlot3 = ui->frame_3;
     customPlot4 = ui->frame_4;
     ui->groupBox_Mix->setVisible(false);
     ui->progressBar->hide();
-
     setupRealtimeData();
     setupTimers();
-    setAttribute(Qt::WA_DeleteOnClose);
+
+
     installEventFilter(this);
-    startWin = new StartMeasurment;
-    startWin->setModal(true);
     QWidget::connect(startWin, SIGNAL(startMeasurment()), this, SLOT(getData()));
 }
 
 Widget::~Widget()
 {
-    delete ui;
-    delete startWin;
-    delete customPlot1;
-    delete customPlot2;
-    delete customPlot3;
-    delete customPlot4;
-    file_data.close();
-    file_setting.close();
-    file_user.close();
     emit stop();
+    file_setting.flush();
+    file_setting.close();
+    file_user.flush();
+    file_user.close();
+
+    delete startWin;
+    //delete customPlot1;
+    //delete customPlot2;
+    //delete customPlot3;
+    //delete customPlot4;
+    delete ui;
+
 }
 
 bool Widget::eventFilter(QObject *watched, QEvent *event)
@@ -99,7 +103,6 @@ void Widget::setUserMessage(QString str, bool withtime, bool tofile)
 void Widget::setTestMode(bool b)
 {
     //setUserMessage(QString(agrekola->GetInformation()), false);
-    emit get_information();
     ui->groupBox_Mix->setVisible(b);
 }
 
@@ -161,7 +164,7 @@ void Widget::setupRealtimeData()
     //customPlot2->setOpenGl(true);
     //customPlot3->setOpenGl(true);
     //customPlot4->setOpenGl(true);
-    if(!duo)
+    if(startWin->isSingle())
     {
         QSharedPointer<QCPAxisTickerTime> timeTicker(new QCPAxisTickerTime);
         timeTicker->setTimeFormat("%m:%s");
@@ -293,6 +296,16 @@ void Widget::setupFiles()
     else QDir::setCurrent(dir.path());
 }
 
+void Widget::startProgressBarTimer(QString format, int timer_tic_ms, int time_ms)
+{
+    progress_t = time_ms;
+    ui->progressBar->setFormat(format);
+    ui->progressBar->setVisible(true);
+    ui->progressBar->setValue(0);
+    ui->progressBar->setMaximum(progress_t);
+    progressTimer.start(timer_tic_ms);
+}
+
 void Widget::realtimeDataSlot(QVariantList a)
 {
     qDebug() << "ThreadID: " << QThread::currentThreadId() << "a0 = " << a[0];
@@ -302,7 +315,7 @@ void Widget::realtimeDataSlot(QVariantList a)
     static double lastPointKey = 0;
     if (key-lastPointKey > 0.010) // at most add point every 10 ms
     {
-      if(!duo){
+      if(startWin->isSingle()){
           customPlot1->graph(0)->addData(key, a[0].toDouble());
           customPlot2->graph(0)->addData(key, a[1].toDouble());
           customPlot3->graph(0)->addData(key, a[2].toDouble());
@@ -340,7 +353,7 @@ void Widget::realtimeDataSlot(QVariantList a)
           customPlot4->xAxis->setRange(key, 8, Qt::AlignRight);
           customPlot4->replot();
       }
-      if(data)
+      if(isData())
       {
           y1.push_back(a[0].toDouble());
           y2.push_back(a[1].toDouble());
@@ -434,27 +447,28 @@ void Widget::updateTime()
     ui->label_date->setText("Дата: " + dt.toString("dd.MM.yyyy"));
 
     //обновление времени инкубации
-    static int t;
-    if(incube){
+    static double t;
+    double interval = currentTimer.interval()/1000.0;
+    if(isIncub()){
         ui->label_incube->setText(QString("Время инкубации, %1 сек")
                                   .arg(startWin->getTimeIncube() - t));
-        t++;
+        t+=interval;
     }
     else{
-        ui->label_incube->setText(QString("Время инкубации, 0 сек"));
+        ui->label_incube->setText(QString("Время инкубации, --- сек"));
         t=0;
     }
 }
 
-void Widget::progressValueChanged()
+void Widget::updateProgressValue()
 {
-    ui->progressBar->setMaximum(progress_t-progressTimer.interval());
+    //ui->progressBar->setMaximum(progress_t-progressTimer.interval());
     ui->progressBar->setValue(ui->progressBar->value()+progressTimer.interval());
 }
 
 void Widget::getData()
 {
-    incube = true;
+    startIncub();
     QString msg;
     if(!startWin->isCancel())
     {
@@ -487,8 +501,6 @@ void Widget::getData()
 
             msg = QString("Начало сбора данных, одиночные пробы (t = %1c, %2)").arg(startWin->getTime()).arg(msg);
             setUserMessage(msg, true, true);
-
-            duo = false;
             setupRealtimeData();
         }
         else
@@ -506,27 +518,54 @@ void Widget::getData()
 
             msg = QString("Начало сбора данных, парные пробы (t = %1c, %2)").arg(startWin->getTime()).arg(msg);
             setUserMessage(msg, true, true);
-
-            duo = true;
             setupRealtimeData();
         }
-        QTimer::singleShot(startWin->getTimeIncube()*1000, this, Widget::incubeTimeout);
+
+        startProgressBarTimer("Инкубация %p%", 100, startWin->getTimeIncube()*1000);
+        QTimer::singleShot(startWin->getTimeIncube()*1000, this, SLOT(incubeTimeout()));
+        emit status(QString("Инкубация"));
     }
+}
+
+void Widget::startData()
+{
+    data = true;
+}
+
+void Widget::stopData()
+{
+    data = false;
+}
+
+bool Widget::isData()
+{
+    return data;
+}
+
+void Widget::startIncub()
+{
+    incub = true;
+}
+
+void Widget::stopIncub()
+{
+    incub = false;
+}
+
+bool Widget::isIncub()
+{
+    return incub;
 }
 
 void Widget::incubeTimeout()
 {
-    incube = false;
+    stopIncub();
     setUserMessage("Время инкубации истекло, добавьте стартовый реагеет");
     emit status(QString("Время инкубации вышло"));
     //запуск измерения
     setUserMessage("Измерение");
-
-    progress_t = startWin->getTime() * 1000;
-    ui->progressBar->setFormat("Измерение %p%");
-    ui->progressBar->setVisible(true);
-    ui->progressBar->setValue(0);
-    data = true;
+    startProgressBarTimer("Измерение %p%", 300, startWin->getTime() * 1000);
+    startData();
     emit status(QString("Измерение"));
     QTimer::singleShot(progress_t, this, SLOT(writeData()));
     progressTimer.start(300);
@@ -536,18 +575,18 @@ void Widget::setupTimers()
 {
     //настройка таймера для часов
     connect(&currentTimer, SIGNAL(timeout()), SLOT(updateTime()));
-    currentTimer.start(1000);
+    currentTimer.start(400);
     dt = QDateTime::currentDateTime();
     setUserMessage(QString("Начало работы программы    Дата %1").arg(dt.toString("dd.MM.yyyy")));
 
     //таймер для отображения процесса сбора данных
-    connect(&progressTimer, SIGNAL(timeout()), this, SLOT(progressValueChanged()));
+    connect(&progressTimer, SIGNAL(timeout()), this, SLOT(updateProgressValue()));
 }
 
 void Widget::writeData()
 {
     progressTimer.stop();
-    data = false;
+    stopData();
     qDebug() << "call writeData()";
     //создаем файл данных
     //имя файла формируется из текущей даты + число запуска программы в этот день
@@ -585,4 +624,5 @@ void Widget::writeData()
     x.clear();
     ui->progressBar->setVisible(false);
     setUserMessage(QString("Данные записаны в файл %1/%2").arg(QDir::currentPath()).arg(file_data.fileName()), true, true);
+    file_data.close();
 }

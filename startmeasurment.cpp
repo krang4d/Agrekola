@@ -9,6 +9,7 @@ StartMeasurment::StartMeasurment(QDialog *parent) :
     ui(new Ui::StartMeasurment)
 {
     ui->setupUi(this);
+    setModal(true);
     cancel = true;
     single = true;
     channel_1 = false;

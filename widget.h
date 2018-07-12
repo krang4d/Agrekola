@@ -34,6 +34,15 @@ private:
     void setupRealtimeData();
     void setupTimers();
     void setupFiles();
+    void startProgressBarTimer(QString format, int timer_tic_ms, int time_ms);
+
+    void startData();
+    void stopData();
+    bool isData();
+
+    void startIncub();
+    void stopIncub();
+    bool isIncub();
 
 signals:
     void onmixch1(bool);
@@ -43,8 +52,7 @@ signals:
     void onmixpp(bool);
     void onlaser(bool);
     void status(QString);
-    void get_information();
-    void stop();
+    void stop();            //сигнал для остановки потока измерений
 
 public slots:
     void getData();
@@ -53,6 +61,7 @@ public slots:
 private slots:
     void realtimeDataSlot(QVariantList);
     void writeData();
+
     void on_checkBox_1_stateChanged(int arg1);
     void on_checkBox_2_stateChanged(int arg1);
     void on_checkBox_3_stateChanged(int arg1);
@@ -60,25 +69,24 @@ private slots:
     void on_checkBox_PP_stateChanged(int arg1);
     void on_checkBox_L_stateChanged(int arg1);
     void on_pushButton_clicked();
+
     void updataTermo(bool);
     void updateTime();
-
-    void progressValueChanged();
+    void updateProgressValue();
 
 private:
     Ui::Widget *ui;
-    QString text;
     StartMeasurment *startWin;
-    QTimer progressTimer, plotTimer, currentTimer;
-    QDateTime dt;
     QCustomPlot *customPlot1;
     QCustomPlot *customPlot2;
     QCustomPlot *customPlot3;
     QCustomPlot *customPlot4;
 
+    QTimer progressTimer, plotTimer, currentTimer;
+    QDateTime dt;
+
     volatile bool data;
-    bool duo;
-    bool incube;
+    bool incub;
 
     QVector<double> x;
     QVector<double> y1, y2, y3, y4;

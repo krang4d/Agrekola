@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1108</width>
-    <height>665</height>
+    <width>918</width>
+    <height>614</height>
    </rect>
   </property>
   <property name="font">
@@ -203,19 +203,6 @@
           <property name="frameShadow">
            <enum>QFrame::Raised</enum>
           </property>
-          <widget class="QLabel" name="label_average_4">
-           <property name="geometry">
-            <rect>
-             <x>990</x>
-             <y>10</y>
-             <width>47</width>
-             <height>16</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>TextLabel</string>
-           </property>
-          </widget>
          </widget>
         </item>
        </layout>

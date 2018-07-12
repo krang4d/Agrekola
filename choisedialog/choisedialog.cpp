@@ -41,13 +41,6 @@ int ChoiseDialog::getTypeOfWidget() const
 ChoiseDialog::~ChoiseDialog()
 {
     qDebug() << "call ChoiseDialog::~ChoiseDialog()";
-    delete agr1;
-    delete agr2;
-    delete ko1;
-    delete ko2;
-    delete ko3;
-    delete ko4;
-    delete ko5;
     delete ui;
 }
 
@@ -63,7 +56,7 @@ void ChoiseDialog::on_testButton_clicked()
     QWidget::connect(widget, SIGNAL(onmixpp(bool)), agrekola, SLOT(onMixPP(bool)));
     QWidget::connect(widget, SIGNAL(onlaser(bool)), agrekola, SLOT(onLaser(bool)));
     QObject::connect(widget, SIGNAL(stop()), agrekola, SLOT(stopThread()));
-    QObject::connect(widget, SIGNAL(stop()), widget, SLOT(deleteLater()));
+    //QObject::connect(widget, SIGNAL(stop()), widget, SLOT(deleteLater());
 
     QWidget::connect(agrekola, SIGNAL(update_termo(bool)), widget, SLOT(updataTermo(bool)));
     QWidget::connect(agrekola, SIGNAL(value_come(QVariantList)), widget, SLOT(realtimeDataSlot(QVariantList)));
@@ -72,6 +65,7 @@ void ChoiseDialog::on_testButton_clicked()
     widget->setTestMode(true);
     widget->show();
     agrekola->start();
+    widget->setUserMessage(agrekola->GetInformation());
 }
 
 void ChoiseDialog::calibration()

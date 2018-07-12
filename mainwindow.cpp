@@ -17,6 +17,7 @@ MainWindow::MainWindow(QWidget *parent) :
         QMessageBox test(QMessageBox::Critical, "qobject_cast", QString("qobject_cast in MainWindow::newShow()"), QMessageBox::Ok); test.exec();
     }
     installEventFilter(this);
+    connect(centerWidget, SIGNAL(status(QString)), this->statusBar(), SLOT(showMessage(QString)));
     setupThread();
 }
 
@@ -109,7 +110,8 @@ bool MainWindow::eventFilter(QObject *watched, QEvent *event)
     if(event->type() == QEvent::Close)
     {
         centerWidget->stop();
-        return true;
+        ch->show();
+        return QMainWindow::eventFilter(watched, event);
     }
     return QMainWindow::eventFilter(watched, event);
 }
