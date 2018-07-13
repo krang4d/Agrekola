@@ -6,46 +6,32 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>345</width>
-    <height>303</height>
+    <width>508</width>
+    <height>376</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Выбор режима</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="2" column="1">
-    <widget class="QPushButton" name="testButton">
-     <property name="text">
-      <string>Тест</string>
-     </property>
-     <property name="shortcut">
-      <string>Space</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="1" rowspan="2" colspan="2">
+   <item row="0" column="1" rowspan="2">
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>6</number>
      </property>
      <widget class="QWidget" name="page">
-      <widget class="QLabel" name="label">
-       <property name="geometry">
-        <rect>
-         <x>7</x>
-         <y>10</y>
-         <width>141</width>
-         <height>241</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Режим не выбран</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>Режим не выбран</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
      <widget class="Agr1" name="page_2">
       <property name="enabled">
@@ -80,7 +66,17 @@
      <widget class="Ko5" name="page_8"/>
     </widget>
    </item>
-   <item row="2" column="2">
+   <item row="2" column="0">
+    <widget class="QPushButton" name="testButton">
+     <property name="text">
+      <string>Тест</string>
+     </property>
+     <property name="shortcut">
+      <string>Space</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
     <widget class="QPushButton" name="exitButton">
      <property name="text">
       <string>Выход</string>
@@ -90,66 +86,7 @@
      </property>
     </widget>
    </item>
-   <item row="1" column="0" rowspan="2">
-    <widget class="QGroupBox" name="groupKoagulometr">
-     <property name="title">
-      <string>Коагулометр</string>
-     </property>
-     <layout class="QVBoxLayout" name="verticalLayout_2">
-      <item>
-       <widget class="QPushButton" name="ko1Button">
-        <property name="text">
-         <string>Время свертывания</string>
-        </property>
-        <property name="shortcut">
-         <string>3</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="ko2Button">
-        <property name="text">
-         <string>АЧТВ</string>
-        </property>
-        <property name="shortcut">
-         <string>4</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="ko3Button">
-        <property name="text">
-         <string>Фибриноген</string>
-        </property>
-        <property name="shortcut">
-         <string>5</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="ko4Button">
-        <property name="text">
-         <string>Тромбин</string>
-        </property>
-        <property name="shortcut">
-         <string>6</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="ko5Button">
-        <property name="text">
-         <string>Протромбиновый комплекс</string>
-        </property>
-        <property name="shortcut">
-         <string>7</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item row="0" column="0">
+   <item row="1" column="0">
     <widget class="QGroupBox" name="groupAgregometr">
      <property name="title">
       <string>Агрегомтр</string>
@@ -157,6 +94,12 @@
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
        <widget class="QPushButton" name="agr1Button">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="text">
          <string>Определение параметров
  агрегации</string>
@@ -168,12 +111,120 @@
       </item>
       <item>
        <widget class="QPushButton" name="agr2Button">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="text">
          <string>Определение активности
 фактора Виллебранда</string>
         </property>
         <property name="shortcut">
          <string>2</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QGroupBox" name="groupKoagulometr">
+     <property name="title">
+      <string>Коагулометр</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <widget class="QPushButton" name="ko1Button">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Время свертывания</string>
+        </property>
+        <property name="shortcut">
+         <string>3</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="ko2Button">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>АЧТВ</string>
+        </property>
+        <property name="shortcut">
+         <string>4</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="ko3Button">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Фибриноген</string>
+        </property>
+        <property name="shortcut">
+         <string>5</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="ko4Button">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Тромбин</string>
+        </property>
+        <property name="shortcut">
+         <string>6</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="ko5Button">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Протромбиновый комплекс</string>
+        </property>
+        <property name="shortcut">
+         <string>7</string>
         </property>
        </widget>
       </item>

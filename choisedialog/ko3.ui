@@ -6,50 +6,160 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>187</width>
-    <height>91</height>
+    <width>369</width>
+    <height>344</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_2">
+  <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <layout class="QVBoxLayout" name="verticalLayout">
-     <item>
-      <widget class="QLabel" name="label">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Фибриноген</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+     <property name="buddy">
+      <cstring>startButton</cstring>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QFormLayout" name="formLayout_5">
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_54">
        <property name="text">
-        <string>Фибриноген</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-       <property name="buddy">
-        <cstring>startButton</cstring>
+        <string>Последняя калибровка</string>
        </property>
       </widget>
      </item>
-     <item>
-      <widget class="QPushButton" name="startButton">
-       <property name="text">
-        <string>Измерение</string>
+     <item row="0" column="1">
+      <widget class="QLabel" name="label_calibrationData_7">
+       <property name="minimumSize">
+        <size>
+         <width>40</width>
+         <height>0</height>
+        </size>
        </property>
-       <property name="shortcut">
-        <string>Return</string>
+       <property name="text">
+        <string>None</string>
        </property>
       </widget>
      </item>
-     <item>
-      <widget class="QPushButton" name="calibr1Button">
+     <item row="1" column="0">
+      <widget class="QLabel" name="label_56">
        <property name="text">
-        <string>Калибровка</string>
-       </property>
-       <property name="shortcut">
-        <string>Ctrl+Return</string>
+        <string>Реагенты, серия №</string>
        </property>
       </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLineEdit" name="lineEdit_28"/>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="label_22">
+       <property name="text">
+        <string>Годен до</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QLineEdit" name="lineEdit_29"/>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="label_57">
+       <property name="text">
+        <string>Фибрмноген к/плазмы</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QLineEdit" name="lineEdit_30"/>
+     </item>
+     <item row="4" column="0">
+      <widget class="QLabel" name="label_58">
+       <property name="text">
+        <string>Время свертывания при</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="1">
+      <widget class="QLineEdit" name="lineEdit_31"/>
+     </item>
+     <item row="5" column="0">
+      <widget class="QLabel" name="label_59">
+       <property name="text">
+        <string>Разведение 200%:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="1">
+      <widget class="QLineEdit" name="lineEdit_32"/>
+     </item>
+     <item row="6" column="0">
+      <widget class="QLabel" name="label_60">
+       <property name="text">
+        <string>Разведение 100%:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="1">
+      <widget class="QLineEdit" name="lineEdit_33"/>
+     </item>
+     <item row="7" column="0">
+      <widget class="QLabel" name="label_55">
+       <property name="text">
+        <string>Разведение 50%:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="7" column="1">
+      <widget class="QLineEdit" name="lineEdit_34"/>
+     </item>
+     <item row="8" column="0">
+      <widget class="QLabel" name="label_63">
+       <property name="text">
+        <string>Разведение 25%:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="8" column="1">
+      <widget class="QLineEdit" name="lineEdit_35"/>
+     </item>
+     <item row="9" column="0">
+      <widget class="QLabel" name="label_61">
+       <property name="text">
+        <string>Время инкубация:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="9" column="1">
+      <widget class="QLineEdit" name="lineEdit_4"/>
      </item>
     </layout>
+   </item>
+   <item>
+    <widget class="QPushButton" name="startButton">
+     <property name="text">
+      <string>Измерение</string>
+     </property>
+     <property name="shortcut">
+      <string>Return</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="calibr1Button">
+     <property name="text">
+      <string>Калибровка</string>
+     </property>
+     <property name="shortcut">
+      <string>Ctrl+Return</string>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

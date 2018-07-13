@@ -6,51 +6,91 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>179</width>
-    <height>108</height>
+    <width>251</width>
+    <height>208</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0">
-    <layout class="QVBoxLayout" name="verticalLayout">
-     <item>
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string>Определение параметрв
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Определение параметрв
 агрегации</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-       <property name="buddy">
-        <cstring>startButton</cstring>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+     <property name="buddy">
+      <cstring>startButton</cstring>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QFormLayout" name="formLayout_4">
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_88">
+       <property name="text">
+        <string>Реагенты, серия №</string>
        </property>
       </widget>
      </item>
-     <item>
-      <widget class="QPushButton" name="startButton">
+     <item row="0" column="1">
+      <widget class="QLineEdit" name="lineEdit_39"/>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="label_89">
        <property name="text">
-        <string>Измерение</string>
-       </property>
-       <property name="shortcut">
-        <string>Return</string>
+        <string>Годен до:</string>
        </property>
       </widget>
      </item>
-     <item>
-      <widget class="QPushButton" name="kolibrButton">
+     <item row="1" column="1">
+      <widget class="QLineEdit" name="lineEdit_40"/>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="label_91">
        <property name="text">
-        <string>Калибровка</string>
-       </property>
-       <property name="shortcut">
-        <string>Ctrl+Return</string>
+        <string>Концентрация тромбинов</string>
        </property>
       </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QLineEdit" name="lineEdit_41"/>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="label_90">
+       <property name="text">
+        <string>Время инкубации</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QLineEdit" name="lineEdit_6"/>
      </item>
     </layout>
+   </item>
+   <item>
+    <widget class="QPushButton" name="startButton">
+     <property name="text">
+      <string>Измерение</string>
+     </property>
+     <property name="shortcut">
+      <string>Return</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="kolibrButton">
+     <property name="text">
+      <string>Калибровка</string>
+     </property>
+     <property name="shortcut">
+      <string>Ctrl+Return</string>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>
