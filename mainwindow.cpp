@@ -2,15 +2,16 @@
 #include "ui_mainwindow.h"
 #include <QMessageBox>
 #include <QKeyEvent>
-#include "useE154.h"
+#include <QThread>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::MainWindow),
+    agrekola(new useE154),
+    centerWidget(new Widget)
 {
     ui->setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
-    centerWidget = new Widget;
     setCentralWidget(centerWidget);
     ch = qobject_cast<ChoiseDialog *>(parentWidget());
     if (!ch){
@@ -22,10 +23,12 @@ MainWindow::MainWindow(QWidget *parent) :
 }
 
 MainWindow::~MainWindow()
-{
+{   
+    agrekola->stopThread();
+    QThread::currentThread()->msleep(100); //ожидание завершения работы потока useE154
+    delete agrekola;
+    delete centerWidget;
     delete ui;
-    centerWidget->stop();
-    //delete centerWidget;
 }
 
 void MainWindow::newShow()
@@ -78,8 +81,7 @@ void MainWindow::newShow()
 
 void MainWindow::setupThread()
 {
-    qDebug() << "main thread ID: " << QThread::currentThreadId();
-    useE154 *agrekola = new useE154;
+    qDebug() << "MainWindow thread ID: " << QThread::currentThreadId();
     //ChoiseDialog choiseDlg;
     QWidget::connect(centerWidget, SIGNAL(onmixch1(bool)), agrekola, SLOT(onMixCh1(bool)));
     QWidget::connect(centerWidget, SIGNAL(onmixch2(bool)), agrekola, SLOT(onMixCh2(bool)));
@@ -109,16 +111,11 @@ bool MainWindow::eventFilter(QObject *watched, QEvent *event)
     }
     if(event->type() == QEvent::Close)
     {
-        centerWidget->stop();
+        //centerWidget->stop();
         ch->show();
         return QMainWindow::eventFilter(watched, event);
     }
     return QMainWindow::eventFilter(watched, event);
-}
-
-void MainWindow::on_action_start_triggered()
-{
-    centerWidget->getData();
 }
 
 void MainWindow::on_menu_triggered()

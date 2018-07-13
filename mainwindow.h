@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "choisedialog.h"
 #include "widget.h"
+#include "useE154.h"
 
 class ChoiseDialog;
 
@@ -25,12 +26,11 @@ private:
     bool eventFilter(QObject *watched, QEvent *event);
 
 private slots:
-    void on_action_start_triggered();
-
     void on_menu_triggered();
 
 private:
     Ui::MainWindow *ui;
+    useE154 *agrekola;
     Widget *centerWidget;
     ChoiseDialog *ch;
 };

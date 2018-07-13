@@ -1,6 +1,7 @@
 #include "choisedialog.h"
 #include "ui_choisedialog.h"
 #include <QDebug>
+#include <QThread>
 
 ChoiseDialog::ChoiseDialog(QDialog *parent) :
     QDialog(parent),
@@ -31,6 +32,7 @@ ChoiseDialog::ChoiseDialog(QDialog *parent) :
     connect(ko3, SIGNAL(calibration()), SLOT(calibration()));
     connect(ko5, SIGNAL(calibration()), SLOT(calibration()));
     connect(ko4, SIGNAL(calibration()), SLOT(calibration()));
+    qDebug() << "ChoiseDialog thread ID: " << QThread::currentThreadId();
 }
 
 int ChoiseDialog::getTypeOfWidget() const

@@ -30,8 +30,9 @@ class useE154 : public QThread
      Q_OBJECT
      void run() Q_DECL_OVERRIDE {
          thread_stop = false;
-         qDebug() << "Thread useE154 is started, id " << QThread::currentThreadId();
+         qDebug() << "Thread useE154 is started, id: " << QThread::currentThreadId();
          funThread();
+         qDebug() << "Thread useE154 is stoped, id: " << QThread::currentThreadId();
      }
 public:
     enum {
@@ -42,11 +43,6 @@ public:
         CH1 = 0x00, CH2 = 0x01 , CH3 = 0x02, CH4 = 0x03, PP = 0x04, L = 0x05
     };
 
-signals:
-    void value_come(QVariantList);
-    void update_termo(bool);
-
-public:
     useE154(QThread *parent = 0);
 	~useE154(void);
 
@@ -68,19 +64,26 @@ protected:
     void funThread();
     QString initADC();
 
+signals:
+    void value_come(QVariantList);
+    void update_termo(bool);
+
 public slots:
-    /*Функции по сбору данных */
+    /*Методы по сбору данных */
     double AdcSample(channel ch);   //простое одноканальное измерение АЦП канала ch, n раз
     QVariantList AdcKADR();                 //покадровое измерение
     QString AdcSynchro();       //измерение в синхронном режиме возвращает строку данных
     DoubleData AdcSynchroDouble();
 
+    /*Методы управления портами*/
     void onMixCh1(bool);
     void onMixCh2(bool);
     void onMixCh3(bool);
     void onMixCh4(bool);
     void onMixPP(bool);
     void onLaser(bool);
+
+    /*Метод остановки потока*/
     void stopThread();
 
 private:

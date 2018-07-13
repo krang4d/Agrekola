@@ -54,7 +54,7 @@ bool Widget::eventFilter(QObject *watched, QEvent *event)
 {
     if(event->type() == QEvent::Close)
     {
-        qDebug() << tr("Close Event is emited in the Widget!");
+        qDebug() << "Close Event is emited in the Widget!";
         //parentWidget()->show();
         return true;
     }

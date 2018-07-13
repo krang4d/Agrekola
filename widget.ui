@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>941</width>
-    <height>695</height>
+    <width>1024</width>
+    <height>768</height>
    </rect>
   </property>
   <property name="font">
@@ -333,7 +333,7 @@
   <zorder>label_5</zorder>
   <zorder>pushButton</zorder>
   <zorder></zorder>
-  <zorder></zorder>
+  <zorder>splitter</zorder>
   <zorder>progressBar</zorder>
  </widget>
  <layoutdefault spacing="6" margin="11"/>

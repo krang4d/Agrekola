@@ -216,7 +216,7 @@ void useE154::onLaser(bool b)
 void useE154::stopThread()
 {
     thread_stop = true;
-    qDebug() << "Thread useE154 stoped, id is " << QThread::currentThreadId();
+    qDebug() << "Call stopThread(), thread id: " << QThread::currentThreadId();
 }
 
 int useE154::OpenDevice()
@@ -232,15 +232,17 @@ int useE154::OpenDevice()
 
 	// проверим, что это 'E-154'
     if(strcmp(ModuleName, "E154")) {
-        qDebug() << QString("Module E-154' is opened in virtual slot %1").arg(i).toLatin1();
+        throw Errore_E154("Модуль не E154!");
         return 1;
     }
+    qDebug().noquote() << QString("Module E-154' is opened in virtual slot %1").arg(i).toLatin1();
     return 0;
 }
 
 void useE154::CloseDevice()
 {
     pModule->CloseLDevice();
+    qDebug() << "Module 'E-154' is closed";
 }
 
 QString useE154::GetUsbSpeed()
