@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>408</width>
+    <width>271</width>
     <height>351</height>
    </rect>
   </property>
@@ -22,6 +22,9 @@
      <property name="alignment">
       <set>Qt::AlignCenter</set>
      </property>
+     <property name="buddy">
+      <cstring>startButton</cstring>
+     </property>
     </widget>
    </item>
    <item>
@@ -33,13 +36,13 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="1">
-      <widget class="QLineEdit" name="lineEdit_42"/>
-     </item>
      <item row="1" column="0">
       <widget class="QLabel" name="label_96">
        <property name="text">
         <string>Тромбопластин, серия №</string>
+       </property>
+       <property name="buddy">
+        <cstring>lineEdit_36</cstring>
        </property>
       </widget>
      </item>
@@ -51,6 +54,9 @@
        <property name="text">
         <string>Годен до</string>
        </property>
+       <property name="buddy">
+        <cstring>lineEdit_37</cstring>
+       </property>
       </widget>
      </item>
      <item row="2" column="1">
@@ -60,6 +66,9 @@
       <widget class="QLabel" name="label_97">
        <property name="text">
         <string>К/плазма, серия №</string>
+       </property>
+       <property name="buddy">
+        <cstring>lineEdit_38</cstring>
        </property>
       </widget>
      </item>
@@ -71,6 +80,9 @@
        <property name="text">
         <string>К/плазма</string>
        </property>
+       <property name="buddy">
+        <cstring>lineEdit_43</cstring>
+       </property>
       </widget>
      </item>
      <item row="4" column="1">
@@ -80,6 +92,9 @@
       <widget class="QLabel" name="label_101">
        <property name="text">
         <string>Разведение 100%:</string>
+       </property>
+       <property name="buddy">
+        <cstring>lineEdit_44</cstring>
        </property>
       </widget>
      </item>
@@ -91,6 +106,9 @@
        <property name="text">
         <string>Разведение 50%:</string>
        </property>
+       <property name="buddy">
+        <cstring>lineEdit_45</cstring>
+       </property>
       </widget>
      </item>
      <item row="6" column="1">
@@ -100,6 +118,9 @@
       <widget class="QLabel" name="label_95">
        <property name="text">
         <string>Разведение 25%:</string>
+       </property>
+       <property name="buddy">
+        <cstring>lineEdit_46</cstring>
        </property>
       </widget>
      </item>
@@ -111,6 +132,9 @@
        <property name="text">
         <string>Разведение 12,5%:</string>
        </property>
+       <property name="buddy">
+        <cstring>lineEdit_47</cstring>
+       </property>
       </widget>
      </item>
      <item row="8" column="1">
@@ -119,12 +143,28 @@
      <item row="9" column="0">
       <widget class="QLabel" name="label_99">
        <property name="text">
-        <string>Время инкубация:</string>
+        <string>Время инкубации, сек</string>
+       </property>
+       <property name="buddy">
+        <cstring>lineEdit_5</cstring>
        </property>
       </widget>
      </item>
      <item row="9" column="1">
       <widget class="QLineEdit" name="lineEdit_5"/>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLabel" name="label_calibrationData_6">
+       <property name="minimumSize">
+        <size>
+         <width>40</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Date</string>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>

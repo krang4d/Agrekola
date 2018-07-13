@@ -1,6 +1,5 @@
 #include "startmeasurment.h"
 #include "ui_startmeasurment.h"
-#include "mainwindow.h"
 
 #include <QMessageBox>
 
@@ -155,7 +154,6 @@ void StartMeasurment::on_radioButton_single_toggled(bool checked)
         ui->checkBox_ch4->setVisible(false);
         ui->lineEdit_ch4->setVisible(false);
     }
-    single = checked;
 }
 
 void StartMeasurment::on_pushButton_next_clicked()

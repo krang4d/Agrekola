@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>363</width>
+    <width>241</width>
     <height>319</height>
    </rect>
   </property>
@@ -57,7 +57,7 @@
         </size>
        </property>
        <property name="text">
-        <string>None</string>
+        <string>Date</string>
        </property>
       </widget>
      </item>
@@ -129,7 +129,10 @@
      <item row="6" column="0">
       <widget class="QLabel" name="label_26">
        <property name="text">
-        <string>Время инкубации</string>
+        <string>Время инкубации, сек</string>
+       </property>
+       <property name="buddy">
+        <cstring>lineEdit_2</cstring>
        </property>
       </widget>
      </item>
