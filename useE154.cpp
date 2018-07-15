@@ -1,4 +1,5 @@
 ﻿#include "useE154.h"
+#include <QFunctionPointer>
 
 useE154::useE154(QThread *parent) :
     QThread(parent)
@@ -21,7 +22,7 @@ useE154::~useE154(void)
     qDebug() << "~useE154()";
 }
 
- double useE154::AdcSample(channel ch)
+ double useE154::AdcSample(Channel ch)
 {
     pModule->STOP_ADC();
     SHORT AdcSample;
@@ -81,7 +82,7 @@ DoubleData useE154::AdcSynchroDouble()
     // выделим память под буфер
     SHORT *ReadBuffer = new SHORT[DataStep];
     pModule->STOP_ADC();
-    if(!ReadBuffer) throw Errore_E154("Ошибка выделения памяти под буфер фанных\n");
+    if(!ReadBuffer) throw Errore_E154("Ошибка выделения памяти под буфер данных\n");
 
     // формируем структуру IoReq
     IoReq.Buffer = ReadBuffer;					// буфер данных
@@ -138,7 +139,7 @@ void useE154::initPorts()
     if(pModule->ENABLE_TTL_OUT(1)) pModule->TTL_OUT(0); else throw Errore_E154("Ошибка включения линий TTL");
 }
 
-QString useE154::initADC()
+void useE154::initADC()
 {
     pModule->STOP_ADC();
     if(!pModule->GET_ADC_PARS(&ap)) throw Errore_E154("Ошибка получния параметров АЦП!\n");
@@ -153,8 +154,7 @@ QString useE154::initADC()
     ap.InterKadrDelay = 0.0;                                // межкадровая задержка в мс
     // передадим требуемые параметры работы АЦП в модуль
     if(!pModule->SET_ADC_PARS(&ap)) throw Errore_E154("Ошибка установки параметрв АЦП!\n");
-
-    return QString("initADC()");
+    //return QString("initADC()");
 }
 
 void useE154::funThread()
@@ -249,12 +249,14 @@ QString useE154::GetUsbSpeed()
 {
     BYTE UsbSpeed;								// скорость работы шины USB
     if(!pModule->GetUsbSpeed(&UsbSpeed)) Errore_E154("Не удалось получить скорость работы интерфейса USB!"); //получаем скорость работы шины USB
-    QString speed;
-    if(UsbSpeed)
-    {
-        speed = "High-Speed Mode (480 Mbit/s)";
-    } else speed = "Full-Speed Mode (12 Mbit/s)";
-    return QString("USB в режиме работы %1").arg(speed);
+//    QString speed;
+//    if(UsbSpeed)
+//    {
+//        speed = "High-Speed Mode (480 Mbit/s)";
+//    } else speed = "Full-Speed Mode (12 Mbit/s)";
+//    return QString("USB в режиме работы %1").arg(speed);
+
+    return [](BYTE x){return x ? "High-Speed Mode (480 Mbit/s)" : "Full-Speed Mode (12 Mbit/s)";}(UsbSpeed);
 }
 
 QString useE154::GetInformation()
@@ -268,7 +270,7 @@ QString useE154::GetInformation()
                    .arg(name).arg(serial).arg(GetUsbSpeed()).arg(GetVersion()));
 }
 
-void useE154::SetChannel(channel ch, int pos)
+void useE154::SetChannel(Channel ch, int pos)
 {
     if(pos == ON){
     switch(ch){

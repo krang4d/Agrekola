@@ -11,7 +11,7 @@
         #include <QLibrary>
     #endif
 typedef DWORD (WINAPI *pGetDllVersion)(void);
-typedef LPVOID (WINAPI *pCreateInstance)(char *);
+typedef LPVOID (WINAPI *pCreateInstance)(PCHAR const);
 class TLoadDll
 {
 	public:

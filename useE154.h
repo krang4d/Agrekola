@@ -39,7 +39,7 @@ public:
         OFF, ON
     };
 
-    enum channel{
+    enum Channel{
         CH1 = 0x00, CH2 = 0x01 , CH3 = 0x02, CH4 = 0x03, PP = 0x04, L = 0x05
     };
 
@@ -53,7 +53,7 @@ public:
     QString GetUserMessages() const;
     QString GetUsbSpeed();
     QString GetInformation();
-    void SetChannel(channel ch, int pos);
+    void SetChannel(Channel ch, int pos);
     bool GetStatusTD();
 
 protected:
@@ -62,7 +62,7 @@ protected:
     void initModuleHandler();
     void initPorts();                           //инициализация всех выводов TTL
     void funThread();
-    QString initADC();
+    void initADC();
 
 signals:
     void value_come(QVariantList);
@@ -70,7 +70,7 @@ signals:
 
 public slots:
     /*Методы по сбору данных */
-    double AdcSample(channel ch);   //простое одноканальное измерение АЦП канала ch, n раз
+    double AdcSample(Channel ch);   //простое одноканальное измерение АЦП канала ch, n раз
     QVariantList AdcKADR();                 //покадровое измерение
     QString AdcSynchro();       //измерение в синхронном режиме возвращает строку данных
     DoubleData AdcSynchroDouble();
