@@ -11,6 +11,7 @@
 #include <QIODevice>
 #include <QTextStream>
 
+#include "savefiles.h"
 #include "startmeasurment.h"
 #include "QCustomPlot/qcustomplot.h"
 
@@ -33,7 +34,6 @@ private:
     void setupQuadraticPlot(QVector<double> data = {0});
     void setupRealtimeData();
     void setupTimers();
-    void setupFiles();
     void startProgressBarTimer(QString format, int timer_tic_ms, int time_ms);
 
     void startData();
@@ -92,8 +92,7 @@ private:
     QVector<double> y1, y2, y3, y4;
     int progress_t; //время измерния
 
-    QFile file_setting, file_user, file_data;
-    QTextStream out_settings ,out_user, out_data;
+    SaveFiles saveFiles;
 };
 
 #endif // WIDGET_H

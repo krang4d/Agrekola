@@ -27,7 +27,6 @@ SOURCES +=  main.cpp\
     param.cpp \
     viewplot.cpp \
     kalibragr2.cpp \
-    viewgraph.cpp \
     choisedialog/agr1.cpp \
     choisedialog/agr2.cpp \
     choisedialog/choisedialog.cpp \
@@ -40,7 +39,8 @@ SOURCES +=  main.cpp\
     widget.cpp \
     useE154.cpp \
     LoadDll.cpp \
-    QCustomPlot/qcustomplot.cpp
+    QCustomPlot/qcustomplot.cpp \
+    savefiles.cpp
 
 HEADERS  += selectcalibrationagr1.h \
     selectinductor.h \
@@ -49,7 +49,6 @@ HEADERS  += selectcalibrationagr1.h \
     param.h \
     viewplot.h \
     kalibragr2.h \
-    viewgraph.h \
     choisedialog/agr1.h \
     choisedialog/agr2.h \
     choisedialog/choisedialog.h \
@@ -64,7 +63,8 @@ HEADERS  += selectcalibrationagr1.h \
     LoadDll.h \
     libapi/Lusbapi.h \
     libapi/LusbapiTypes.h \
-    QCustomPlot/qcustomplot.h
+    QCustomPlot/qcustomplot.h \
+    savefiles.h
 
 FORMS    += selectcalibrationagr1.ui \
     selectinductor.ui \
@@ -73,7 +73,6 @@ FORMS    += selectcalibrationagr1.ui \
     param.ui \
     viewplot.ui \
     kalibragr2.ui \
-    viewgraph.ui \
     choisedialog/agr1.ui \
     choisedialog/agr2.ui \
     choisedialog/choisedialog.ui \
