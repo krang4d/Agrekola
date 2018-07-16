@@ -1,6 +1,8 @@
 #include "savefiles.h"
 #include <QDateTime>
 #include <QDebug>
+#include <QFileDialog>
+#include <QRegExp>
 
 SaveFiles::SaveFiles(QObject *parent) : QObject(parent)
 {
@@ -40,6 +42,38 @@ QString SaveFiles::writeData(QStringList dt)
     out_data.flush();
     file_data.close();
     return str;
+}
+
+QString SaveFiles::openData(QVector<double> &v1, QVector<double> &v2, QVector<double> &v3, QVector<double> &v4, QVector<double> &t)
+{   
+    //запускаем диалог и открыаем нужный файл
+    QDir dir;
+    dir.cd(QDir::homePath());
+    dir.cd("Agrekola4k/data");
+    QString fileName = QFileDialog::getOpenFileName(nullptr , tr("Выберите файл с данными"), dir.path(), tr("Text files (*.txt)"));
+    QFile file(fileName);
+    if(!file.open(QIODevice::ReadOnly | QIODevice::Text)) qWarning() << "data file is't opened";
+    //инициализируем регулярное выражение
+    const QString pattern("(^[0-9]{1,})\\t(-?[0-9]\\.[0-9]{4,})\\t(-?[0-9]\\.[0-9]{4,})\\t(-?[0-9]\\.[0-9]{4,})\\t(-?[0-9]\\.[0-9]{4,})\\t([0-9]{1,}\\.[0-9]{0,3})");
+    //const QString pattern("(^[0-9]{1,})\\t(-?[0-9]\\.[0-9]{5,})\\t(-?[0-9]\\.[0-9]{5,})\\t(-?[0-9]\\.[0-9]{5,})");
+    QRegExp rx;
+    rx.setPatternSyntax(QRegExp::RegExp);
+    rx.setPattern(pattern);
+    //считываем строки и получаем с помощью регулярного выражения все значения
+    while(!file.atEnd())
+    {
+        qDebug() << "pos" << file.pos();
+        QString line = file.readLine();
+        rx.indexIn(line);
+        qDebug() << line;
+        v1.push_back(rx.cap(2).toDouble());
+        v2.push_back(rx.cap(3).toDouble());
+        v3.push_back(rx.cap(4).toDouble());
+        v4.push_back(rx.cap(5).toDouble());
+        t.push_back(rx.cap(6).toDouble());
+    }
+    qDebug() << fileName;
+    return fileName;
 }
 
 void SaveFiles::writeUserMsg(QString msg)

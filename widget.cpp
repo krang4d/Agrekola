@@ -547,8 +547,8 @@ void Widget::writeData()
     ui->progressBar->setFormat("Запись данных %p%");
     qDebug() << "Запись данных";
     QStringList strList;
-    strList << QString("%1\t%2\t%3\t%4\t%5\t%6\n")
-                        .arg("№").arg("V1").arg("V2").arg("V3").arg("V4").arg("t");
+    strList << QString("N\tV1\tV2\tV3\tV4\tV5\n");
+                        //.arg("№").arg("V1").arg("V2").arg("V3").arg("V4").arg("t");
     for(int i=0; i<x.length(); i++)
     {
         ui->progressBar->setMaximum(x.length());

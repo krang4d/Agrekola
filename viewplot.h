@@ -4,6 +4,8 @@
 #include <QWidget>
 #include <QTableWidget>
 
+#include "savefiles.h"
+
 namespace Ui {
 class ViewPlot;
 }
@@ -28,6 +30,7 @@ private slots:
 private:
     Ui::ViewPlot *ui;
     QTableWidget *tb;
+    QVector<double> v1, v2, v3, v4, t;
 };
 
 #endif // VIEWPLOT_H
