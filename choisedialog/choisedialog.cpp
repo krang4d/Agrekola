@@ -121,3 +121,9 @@ void ChoiseDialog::on_ko5Button_clicked()
 {
     ui->stackedWidget->setCurrentIndex(7);
 }
+
+void ChoiseDialog::on_pushButton_clicked()
+{
+    ViewPlot *vp = new ViewPlot;
+    vp->show();
+}

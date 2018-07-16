@@ -44,18 +44,17 @@ QString SaveFiles::writeData(QStringList dt)
     return str;
 }
 
-QString SaveFiles::openData(QVector<double> &v1, QVector<double> &v2, QVector<double> &v3, QVector<double> &v4, QVector<double> &t)
+QString SaveFiles::openData(QWidget *parent, QList<double> &v1, QList<double> &v2, QList<double> &v3, QList<double> &v4, QList<double> &t)
 {   
     //запускаем диалог и открыаем нужный файл
     QDir dir;
     dir.cd(QDir::homePath());
     dir.cd("Agrekola4k/data");
-    QString fileName = QFileDialog::getOpenFileName(nullptr , tr("Выберите файл с данными"), dir.path(), tr("Text files (*.txt)"));
+    QString fileName = QFileDialog::getOpenFileName(parent , tr("Выберите файл с данными"), dir.path(), tr("Text files (*.txt)"));
     QFile file(fileName);
     if(!file.open(QIODevice::ReadOnly | QIODevice::Text)) qWarning() << "data file is't opened";
     //инициализируем регулярное выражение
-    const QString pattern("(^[0-9]{1,})\\t(-?[0-9]\\.[0-9]{4,})\\t(-?[0-9]\\.[0-9]{4,})\\t(-?[0-9]\\.[0-9]{4,})\\t(-?[0-9]\\.[0-9]{4,})\\t([0-9]{1,}\\.[0-9]{0,3})");
-    //const QString pattern("(^[0-9]{1,})\\t(-?[0-9]\\.[0-9]{5,})\\t(-?[0-9]\\.[0-9]{5,})\\t(-?[0-9]\\.[0-9]{5,})");
+    const QString pattern("(^[0-9]{1,})\\t(-?[0-9]\\.[0-9]{2,})\\t(-?[0-9]\\.[0-9]{2,})\\t(-?[0-9]\\.[0-9]{2,})\\t(-?[0-9]\\.[0-9]{2,})\\t([0-9]{1,}\\.[0-9]{0,3})");
     QRegExp rx;
     rx.setPatternSyntax(QRegExp::RegExp);
     rx.setPattern(pattern);
@@ -73,6 +72,7 @@ QString SaveFiles::openData(QVector<double> &v1, QVector<double> &v2, QVector<do
         t.push_back(rx.cap(6).toDouble());
     }
     qDebug() << fileName;
+    file.close();
     return fileName;
 }
 

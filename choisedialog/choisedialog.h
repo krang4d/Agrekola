@@ -16,7 +16,7 @@
 #include "widget.h"
 #include "mainwindow.h"
 #include "useE154.h"
-
+#include"viewplot.h"
 
 class MainWindow;
 
@@ -45,6 +45,8 @@ private slots:
     void on_ko5Button_clicked();
     void on_testButton_clicked();
     void calibration();
+
+    void on_pushButton_clicked();
 
 private:
 

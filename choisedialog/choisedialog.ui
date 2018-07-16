@@ -6,68 +6,37 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>508</width>
-    <height>376</height>
+    <width>510</width>
+    <height>501</height>
    </rect>
+  </property>
+  <property name="font">
+   <font>
+    <pointsize>10</pointsize>
+   </font>
   </property>
   <property name="windowTitle">
    <string>Выбор режима</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="1" column="0">
-    <widget class="QGroupBox" name="groupAgregometr">
-     <property name="title">
-      <string>Агрегомтр</string>
+   <item row="3" column="1">
+    <widget class="QPushButton" name="exitButton">
+     <property name="text">
+      <string>Выход</string>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout">
-      <item>
-       <widget class="QPushButton" name="agr1Button">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>Определение параметров
- агрегации</string>
-        </property>
-        <property name="shortcut">
-         <string>1</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="agr2Button">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>Определение активности
-фактора Виллебранда</string>
-        </property>
-        <property name="shortcut">
-         <string>2</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <spacer name="verticalSpacer">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>40</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-     </layout>
+     <property name="shortcut">
+      <string>Esc</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <widget class="QPushButton" name="testButton">
+     <property name="text">
+      <string>Тест</string>
+     </property>
+     <property name="shortcut">
+      <string>Space</string>
+     </property>
     </widget>
    </item>
    <item row="0" column="0">
@@ -159,27 +128,70 @@
      </layout>
     </widget>
    </item>
-   <item row="2" column="1">
-    <widget class="QPushButton" name="exitButton">
-     <property name="text">
-      <string>Выход</string>
+   <item row="1" column="0">
+    <widget class="QGroupBox" name="groupAgregometr">
+     <property name="title">
+      <string>Агрегомтр</string>
      </property>
-     <property name="shortcut">
-      <string>Esc</string>
-     </property>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QPushButton" name="agr1Button">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Определение параметров
+ агрегации</string>
+        </property>
+        <property name="shortcut">
+         <string>1</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="agr2Button">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Определение активности
+фактора Виллебранда</string>
+        </property>
+        <property name="shortcut">
+         <string>2</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
     </widget>
    </item>
    <item row="2" column="0">
-    <widget class="QPushButton" name="testButton">
+    <widget class="QPushButton" name="pushButton">
      <property name="text">
-      <string>Тест</string>
-     </property>
-     <property name="shortcut">
-      <string>Space</string>
+      <string>Просмотр данных</string>
      </property>
     </widget>
    </item>
-   <item row="0" column="1" rowspan="2">
+   <item row="0" column="1" rowspan="3">
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
       <number>6</number>
