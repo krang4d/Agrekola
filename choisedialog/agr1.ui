@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>224</width>
-    <height>208</height>
+    <height>182</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -68,19 +68,6 @@
      </item>
      <item row="2" column="1">
       <widget class="QLineEdit" name="lineEdit_41"/>
-     </item>
-     <item row="3" column="0">
-      <widget class="QLabel" name="label_90">
-       <property name="text">
-        <string>Время инкубации, сек</string>
-       </property>
-       <property name="buddy">
-        <cstring>lineEdit_6</cstring>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="1">
-      <widget class="QLineEdit" name="lineEdit_6"/>
      </item>
     </layout>
    </item>
