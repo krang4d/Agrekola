@@ -9,7 +9,7 @@ ViewPlot::ViewPlot(QWidget *parent) :
     setAttribute(Qt::WA_DeleteOnClose);
     initTable();
     ui->groupBox->setEnabled(false);
-    ui->pushButton_view->setEnabled(false);
+    initPlots();
 }
 
 ViewPlot::~ViewPlot()
@@ -25,21 +25,54 @@ void ViewPlot::initTable()
     tb->setHorizontalHeaderLabels(headList);
 }
 
-void ViewPlot::initPlot()
+void ViewPlot::initPlots()
 {
     customPlot = ui->frame;
-    customPlot->addGraph();
-    customPlot->addGraph();
-    customPlot->addGraph();
-    customPlot->addGraph();
-    customPlot->graph(0)->addData(t.toVector(), v1.toVector());
-    customPlot->graph(1)->addData(t.toVector(), v2.toVector());
-    customPlot->graph(2)->addData(t.toVector(), v3.toVector());
-    customPlot->graph(3)->addData(t.toVector(), v4.toVector());
+    customPlot->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom | QCP::iSelectAxes |
+                                    QCP::iSelectLegend | QCP::iSelectPlottables);
+    // prepare legend and some graphs:
+    customPlot->legend->setVisible(true);
+    customPlot->addGraph()->setName("V1");
+    customPlot->addGraph()->setName("V2");
+    customPlot->addGraph()->setName("V3");
+    customPlot->addGraph()->setName("V4");
+    // create and prepare a text layout element:
+    //QCPTextElement *legendTitle = new QCPTextElement(customPlot);
+    //legendTitle->setLayer(customPlot->legend->layer()); // place text element on same layer as legend, or it ends up below legend
+    //legendTitle->setText("Канал(номер пробы)");
+    //legendTitle->setFont(QFont("sans", 9, QFont::Bold));
+    // then we add it to the QCPLegend (which is a subclass of QCPLayoutGrid):
+    if (customPlot->legend->hasElement(0, 0)) // if top cell isn't empty, insert an empty row at top
+      customPlot->legend->insertRow(0);
+    //customPlot->legend->addElement(0, 0, legendTitle); // place the text element into the empty cell
     customPlot->xAxis->setLabel("сек");
     customPlot->yAxis->setLabel("Вольт");
+    customPlot->xAxis->setRange(0, 100);
+    customPlot->yAxis->setRange(-6, 6);
+    customPlot->axisRect()->setupFullAxesBox();
+}
+
+void ViewPlot::rePlot()
+{
+
+    //customPlot->graph(0)->setSelectable(QCP::stSingleData);
     customPlot->xAxis->setRange(0, t.back());
     customPlot->yAxis->setRange(-6, 6);
+    customPlot->rescaleAxes();
+
+    customPlot->graph(0)->setPen(QPen(QColor(10, 110, 40)));
+    customPlot->graph(0)->addData(t.toVector(), v1.toVector());
+
+    customPlot->graph(1)->setPen(QPen(QColor(255, 110, 40)));
+    customPlot->graph(1)->addData(t.toVector(), v2.toVector());
+
+    customPlot->graph(2)->setPen(QPen(QColor(255, 110, 200)));
+    customPlot->graph(2)->addData(t.toVector(), v3.toVector());
+
+    customPlot->graph(3)->setPen(QPen(QColor(255, 200, 40)));
+    customPlot->graph(3)->addData(t.toVector(), v4.toVector());
+
+
     customPlot->replot();
 }
 
@@ -55,19 +88,19 @@ void ViewPlot::addData()
         QTableWidgetItem *iv3 = new QTableWidgetItem(tr("%1").arg(v3.at(i)));
         QTableWidgetItem *iv4 = new QTableWidgetItem(tr("%1").arg(v4.at(i)));
         qDebug() << "t =" << t[i];
-        tb->setItem(i, 0, it);
-        tb->setItem(i, 1, iv1);
-        tb->setItem(i, 2, iv2);
-        tb->setItem(i, 3, iv3);
-        tb->setItem(i, 4, iv4);
+
+        tb->setItem(i, 0, iv1);
+        tb->setItem(i, 1, iv2);
+        tb->setItem(i, 2, iv3);
+        tb->setItem(i, 3, iv4);
+        tb->setItem(i, 4, it);
     }
-    initPlot();
+    rePlot();
     ui->groupBox->setEnabled(true);
     ui->checkBox_1->setChecked(true);
     ui->checkBox_2->setChecked(true);
     ui->checkBox_3->setChecked(true);
     ui->checkBox_4->setChecked(true);
-    ui->pushButton_view->setEnabled(true);
 }
 
 void ViewPlot::on_pushButton_back_clicked()
@@ -85,11 +118,6 @@ void ViewPlot::on_pushButton_open_clicked()
     tb->clearContents();
     SaveFiles::openData(this, v1,v2,v3,v4,t);
     addData();
-}
-
-void ViewPlot::on_pushButton_view_clicked()
-{
-    initPlot();
 }
 
 void ViewPlot::on_checkBox_1_stateChanged(int arg1)

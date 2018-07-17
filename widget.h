@@ -31,7 +31,6 @@ public:
 
 private:
     bool eventFilter(QObject *watched, QEvent *event);
-    void setupQuadraticPlot(QVector<double> data = {0});
     void setupRealtimeData();
     void setupTimers();
     void startProgressBarTimer(QString format, int timer_tic_ms, int time_ms);

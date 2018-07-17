@@ -59,17 +59,23 @@ QString SaveFiles::openData(QWidget *parent, QList<double> &v1, QList<double> &v
     rx.setPatternSyntax(QRegExp::RegExp);
     rx.setPattern(pattern);
     //считываем строки и получаем с помощью регулярного выражения все значения
+    int i = 0;
     while(!file.atEnd())
     {
         qDebug() << "pos" << file.pos();
         QString line = file.readLine();
         rx.indexIn(line);
         qDebug() << line;
+        if(i==0)  {i++; continue;}
         v1.push_back(rx.cap(2).toDouble());
         v2.push_back(rx.cap(3).toDouble());
         v3.push_back(rx.cap(4).toDouble());
         v4.push_back(rx.cap(5).toDouble());
         t.push_back(rx.cap(6).toDouble());
+    }
+    double t1 = t.first();
+    for(int i = 0; i < t.size(); ++i) {
+        t[i] -= t1;
     }
     qDebug() << fileName;
     file.close();

@@ -36,10 +36,10 @@ Widget::~Widget()
 {
     emit stop();
     delete startWin;
-    //delete customPlot1;
-    //delete customPlot2;
-    //delete customPlot3;
-    //delete customPlot4;
+    delete customPlot1;
+    delete customPlot2;
+    delete customPlot3;
+    delete customPlot4;
     delete ui;
 
 }
@@ -100,33 +100,6 @@ void Widget::setTestMode(bool b)
     ui->groupBox_Mix->setVisible(b);
 }
 
-void Widget::setupQuadraticPlot(QVector<double> data)
-{
-    if (data.isEmpty())
-    {
-        QMessageBox::warning(this, tr("My Application"),
-                             tr("Нет данных для вывода графика.\n"));
-    }
-    customPlot1->addGraph();
-    QVector<double> x;
-    double average;
-    for(int i = 0; i < data.count(); i++)
-    {
-        x.append(double(i));
-        average += data[i];
-    }
-    average /= data.length();
-    //ui->label_average->setText(QString("%1").arg(average));
-    customPlot1->graph(0)->setData(x, data);
-    // give the axes some labels:
-    customPlot1->xAxis->setLabel("x");
-    customPlot1->yAxis->setLabel("y");
-    // set axes ranges, so we see all data:
-    customPlot1->xAxis->setRange(0, data.length());
-    customPlot1->yAxis->setRange(-5, 5);
-    customPlot1->replot();
-}
-
 void Widget::setupRealtimeData()
 {
     // include this section to fully disable antialiasing for higher performance:
@@ -167,8 +140,8 @@ void Widget::setupRealtimeData()
         customPlot1->graph(0)->setPen(QPen(QColor(10, 110, 40)));
         customPlot1->xAxis->setTicker(timeTicker);
         customPlot1->axisRect()->setupFullAxesBox();
-        customPlot1->xAxis->setLabel("Время, с");
-        customPlot1->yAxis->setLabel("Напряжение, В");
+        customPlot1->xAxis->setLabel("t, сек");
+        customPlot1->yAxis->setLabel("V1, Вольт");
         customPlot1->yAxis->setRange(-5.5, 5.5);
 
         // make left and bottom axes transfer their ranges to right and top axes:
@@ -179,8 +152,8 @@ void Widget::setupRealtimeData()
         customPlot2->graph(0)->setPen(QPen(QColor(255, 110, 40)));
         customPlot2->xAxis->setTicker(timeTicker);
         customPlot2->axisRect()->setupFullAxesBox();
-        customPlot2->xAxis->setLabel("Время, с");
-        customPlot2->yAxis->setLabel("Напряжение, В");
+        customPlot2->xAxis->setLabel("t, сек");
+        customPlot2->yAxis->setLabel("V2, Вотльт");
         customPlot2->yAxis->setRange(-5.5, 5.5);
 
         connect(customPlot2->xAxis, SIGNAL(rangeChanged(QCPRange)), customPlot2->xAxis2, SLOT(setRange(QCPRange)));
@@ -190,8 +163,8 @@ void Widget::setupRealtimeData()
         customPlot3->graph(0)->setPen(QPen(QColor(255, 110, 200)));
         customPlot3->xAxis->setTicker(timeTicker);
         customPlot3->axisRect()->setupFullAxesBox();
-        customPlot3->xAxis->setLabel("Время, с");
-        customPlot3->yAxis->setLabel("Напряжение, В");
+        customPlot3->xAxis->setLabel("t, сек");
+        customPlot3->yAxis->setLabel("V3, Вотльт");
         customPlot3->yAxis->setRange(-5.5, 5.5);
 
         connect(customPlot3->xAxis, SIGNAL(rangeChanged(QCPRange)), customPlot3->xAxis2, SLOT(setRange(QCPRange)));
@@ -201,8 +174,8 @@ void Widget::setupRealtimeData()
         customPlot4->graph(0)->setPen(QPen(QColor(255, 200, 40)));
         customPlot4->xAxis->setTicker(timeTicker);
         customPlot4->axisRect()->setupFullAxesBox();
-        customPlot4->xAxis->setLabel("Время, с");
-        customPlot4->yAxis->setLabel("Напряжение, В");
+        customPlot4->xAxis->setLabel("t, сек");
+        customPlot4->yAxis->setLabel("V4, Вотльт");
         customPlot4->yAxis->setRange(-5.5, 5.5);
 
         connect(customPlot4->xAxis, SIGNAL(rangeChanged(QCPRange)), customPlot4->xAxis2, SLOT(setRange(QCPRange)));
@@ -547,7 +520,7 @@ void Widget::writeData()
     ui->progressBar->setFormat("Запись данных %p%");
     qDebug() << "Запись данных";
     QStringList strList;
-    strList << QString("N\tV1\tV2\tV3\tV4\tV5\n");
+    strList << QString("N\tV1\tV2\tV3\tV4\tt\n");
                         //.arg("№").arg("V1").arg("V2").arg("V3").arg("V4").arg("t");
     for(int i=0; i<x.length(); i++)
     {
