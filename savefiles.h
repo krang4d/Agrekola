@@ -14,7 +14,7 @@ public:
     explicit SaveFiles(QObject *parent = 0);
     ~SaveFiles();
     QString writeData(QStringList);
-    static QString openData(QWidget*, QList<double>&, QList<double>&, QList<double>&, QList<double>&, QList<double>&);
+    static QString openData(QWidget*, QList<double>&, QList<double>&, QList<double>&, QList<double>&, QList<double>&, QStringList&);
     void writeUserMsg(QString);
 
 signals:

@@ -24,6 +24,7 @@ public:
     void rePlot();
     void addData();
     QList<double> v1, v2, v3, v4, t;
+    QStringList param;
 
 private slots:
     void on_pushButton_back_clicked();

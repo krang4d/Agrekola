@@ -9,6 +9,7 @@ ViewPlot::ViewPlot(QWidget *parent) :
     setAttribute(Qt::WA_DeleteOnClose);
     initTable();
     ui->groupBox->setEnabled(false);
+    ui->label_filename->setText(tr("Нет открытых файлов"));
     initPlots();
 }
 
@@ -50,33 +51,39 @@ void ViewPlot::initPlots()
     customPlot->xAxis->setRange(0, 100);
     customPlot->yAxis->setRange(-6, 6);
     customPlot->axisRect()->setupFullAxesBox();
+    customPlot->graph(0)->setPen(QPen(QColor(10, 110, 40)));
+    customPlot->graph(1)->setPen(QPen(QColor(255, 110, 40)));
+    customPlot->graph(2)->setPen(QPen(QColor(255, 110, 200)));
+    customPlot->graph(3)->setPen(QPen(QColor(200, 150, 0)));
 }
 
 void ViewPlot::rePlot()
 {
-
+    const QStringList headList = {param.at(0), param.at(1), param.at(2), param.at(3), param.at(4)};
+    tb->setHorizontalHeaderLabels(headList);
     //customPlot->graph(0)->setSelectable(QCP::stSingleData);
     customPlot->xAxis->setRange(0, t.back());
-    customPlot->yAxis->setRange(-6, 6);
     //customPlot->rescaleAxes();
 
-    customPlot->graph(0)->setPen(QPen(QColor(10, 110, 40)));
+
+    customPlot->graph(0)->setName(param.at(0));
     //customPlot->graph(0)->setLineStyle(QCPGraph::LineStyle::lsStepCenter);
-    QCPScatterStyle myScatter;
-    myScatter.setShape(QCPScatterStyle::ssCircle);
-    myScatter.setPen(QPen(Qt::blue));
-    myScatter.setBrush(Qt::white);
-    myScatter.setSize(5);
-    customPlot->graph(0)->setScatterStyle(myScatter);
+//    QCPScatterStyle myScatter;
+//    myScatter.setShape(QCPScatterStyle::ssCircle);
+//    myScatter.setPen(QPen(Qt::blue));
+//    myScatter.setBrush(Qt::white);
+//    myScatter.setSize(5);
+//    customPlot->graph(0)->setScatterStyle(myScatter);
+    customPlot->graph(0)->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssCircle, Qt::blue, Qt::white, 3));
     customPlot->graph(0)->setData(t.toVector(), v1.toVector(), true);
 
-    customPlot->graph(1)->setPen(QPen(QColor(255, 110, 40)));
+    customPlot->graph(1)->setName(param.at(1));
     customPlot->graph(1)->setData(t.toVector(), v2.toVector(), true);
 
-    customPlot->graph(2)->setPen(QPen(QColor(255, 110, 200)));
+    customPlot->graph(2)->setName(param.at(2));
     customPlot->graph(2)->setData(t.toVector(), v3.toVector(), true);
 
-    customPlot->graph(3)->setPen(QPen(QColor(255, 200, 40)));
+    customPlot->graph(3)->setName(param.at(3));
     customPlot->graph(3)->setData(t.toVector(), v4.toVector(), true);
 
     customPlot->replot();
@@ -122,7 +129,7 @@ void ViewPlot::on_pushButton_open_clicked()
     v4.clear();
     t.clear();
     tb->clearContents();
-    SaveFiles::openData(this, v1,v2,v3,v4,t);
+    ui->label_filename->setText(SaveFiles::openData(this, v1,v2,v3,v4,t,param));
     addData();
 }
 

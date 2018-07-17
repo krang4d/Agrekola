@@ -520,8 +520,11 @@ void Widget::writeData()
     ui->progressBar->setFormat("Запись данных %p%");
     qDebug() << "Запись данных";
     QStringList strList;
-    strList << QString("N\tV1\tV2\tV3\tV4\tt\n");
-                        //.arg("№").arg("V1").arg("V2").arg("V3").arg("V4").arg("t");
+    strList << QString("N\tV1#%1\tV2#%2\tV3#%3\tV4#%4\tt#%5\tti#%6\tp#%7\n")
+                        .arg(startWin->getNum_1()).arg(startWin->getNum_2())
+                        .arg(startWin->getNum_3()).arg(startWin->getNum_4())
+                        .arg(startWin->getTime()).arg(startWin->getTimeIncube())
+                        .arg(startWin->isSingle());
     for(int i=0; i<x.length(); i++)
     {
         ui->progressBar->setMaximum(x.length());

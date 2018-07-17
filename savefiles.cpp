@@ -44,7 +44,7 @@ QString SaveFiles::writeData(QStringList dt)
     return str;
 }
 
-QString SaveFiles::openData(QWidget *parent, QList<double> &v1, QList<double> &v2, QList<double> &v3, QList<double> &v4, QList<double> &t)
+QString SaveFiles::openData(QWidget *parent, QList<double> &v1, QList<double> &v2, QList<double> &v3, QList<double> &v4, QList<double> &t, QStringList &param)
 {   
     //запускаем диалог и открыаем нужный файл
     QDir dir;
@@ -53,20 +53,57 @@ QString SaveFiles::openData(QWidget *parent, QList<double> &v1, QList<double> &v
     QString fileName = QFileDialog::getOpenFileName(parent , tr("Выберите файл с данными"), dir.path(), tr("Text files (*.txt)"));
     QFile file(fileName);
     if(!file.open(QIODevice::ReadOnly | QIODevice::Text)) qWarning() << "data file is't opened";
-    //инициализируем регулярное выражение
-    const QString pattern("(^[0-9]{1,})\\t(-?[0-9]\\.[0-9]{2,})\\t(-?[0-9]\\.[0-9]{2,})\\t(-?[0-9]\\.[0-9]{2,})\\t(-?[0-9]\\.[0-9]{2,})\\t([0-9]{1,}\\.?[0-9]{0,3})");
+    //инициализируем регулярных выражения
+    const QString v1pattern("(V1#[0-9]{1,8})");
+    const QString v2pattern("(V2#[0-9]{1,8})");
+    const QString v3pattern("(V3#[0-9]{1,8})");
+    const QString v4pattern("(V4#[0-9]{1,8})");
+    const QString tpattern("(t#[0-9]{1,8})");
+    const QString tipattern("(ti#[0-9]{1,8})");
+    const QString ppattern("(p#[0-9]{1,8})");
+    const QString datapattern("(^[0-9]{1,})\\t(-?[0-9]\\.[0-9]{2,})\\t(-?[0-9]\\.[0-9]{2,})\\t(-?[0-9]\\.[0-9]{2,})\\t(-?[0-9]\\.[0-9]{2,})\\t([0-9]{1,}\\.?[0-9]{0,3})");
     QRegExp rx;
     rx.setPatternSyntax(QRegExp::RegExp);
-    rx.setPattern(pattern);
+    //считываем параметры с помощью регулярных выражений
+    QString firstline = file.readLine();
+    rx.setPattern(v1pattern);
+    rx.indexIn(firstline);
+    param << rx.cap(1);
+
+    rx.setPattern(v2pattern);
+    rx.indexIn(firstline);
+    param << rx.cap(1);
+
+    rx.setPattern(v3pattern);
+    rx.indexIn(firstline);
+    param << rx.cap(1);
+
+    rx.setPattern(v4pattern);
+    rx.indexIn(firstline);
+    param << rx.cap(1);
+
+    rx.setPattern(tpattern);
+    rx.indexIn(firstline);
+    param << rx.cap(1);
+
+    rx.setPattern(tipattern);
+    rx.indexIn(firstline);
+    param << rx.cap(1);
+
+    rx.setPattern(ppattern);
+    rx.indexIn(firstline);
+    param << rx.cap(1);
+
     //считываем строки и получаем с помощью регулярного выражения все значения
-    int i = 0;
+    rx.setPattern(datapattern);
+    //int i = 0;
     while(!file.atEnd())
     {
         qDebug() << "pos" << file.pos();
         QString line = file.readLine();
         rx.indexIn(line);
         qDebug() << line;
-        if(i==0)  {i++; continue;}
+        //if(i==0)  {i++; continue;}
         v1.push_back(rx.cap(2).toDouble());
         v2.push_back(rx.cap(3).toDouble());
         v3.push_back(rx.cap(4).toDouble());
