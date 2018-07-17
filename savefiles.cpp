@@ -54,7 +54,7 @@ QString SaveFiles::openData(QWidget *parent, QList<double> &v1, QList<double> &v
     QFile file(fileName);
     if(!file.open(QIODevice::ReadOnly | QIODevice::Text)) qWarning() << "data file is't opened";
     //инициализируем регулярное выражение
-    const QString pattern("(^[0-9]{1,})\\t(-?[0-9]\\.[0-9]{2,})\\t(-?[0-9]\\.[0-9]{2,})\\t(-?[0-9]\\.[0-9]{2,})\\t(-?[0-9]\\.[0-9]{2,})\\t([0-9]{1,}\\.[0-9]{0,3})");
+    const QString pattern("(^[0-9]{1,})\\t(-?[0-9]\\.[0-9]{2,})\\t(-?[0-9]\\.[0-9]{2,})\\t(-?[0-9]\\.[0-9]{2,})\\t(-?[0-9]\\.[0-9]{2,})\\t([0-9]{1,}\\.?[0-9]{0,3})");
     QRegExp rx;
     rx.setPatternSyntax(QRegExp::RegExp);
     rx.setPattern(pattern);

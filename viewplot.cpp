@@ -29,7 +29,7 @@ void ViewPlot::initPlots()
 {
     customPlot = ui->frame;
     customPlot->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom | QCP::iSelectAxes |
-                                    QCP::iSelectLegend | QCP::iSelectPlottables);
+                                QCP::iSelectLegend | QCP::iSelectPlottables);
     // prepare legend and some graphs:
     customPlot->legend->setVisible(true);
     customPlot->addGraph()->setName("V1");
@@ -58,20 +58,26 @@ void ViewPlot::rePlot()
     //customPlot->graph(0)->setSelectable(QCP::stSingleData);
     customPlot->xAxis->setRange(0, t.back());
     customPlot->yAxis->setRange(-6, 6);
-    customPlot->rescaleAxes();
+    //customPlot->rescaleAxes();
 
     customPlot->graph(0)->setPen(QPen(QColor(10, 110, 40)));
-    customPlot->graph(0)->addData(t.toVector(), v1.toVector());
+    //customPlot->graph(0)->setLineStyle(QCPGraph::LineStyle::lsStepCenter);
+    QCPScatterStyle myScatter;
+    myScatter.setShape(QCPScatterStyle::ssCircle);
+    myScatter.setPen(QPen(Qt::blue));
+    myScatter.setBrush(Qt::white);
+    myScatter.setSize(5);
+    customPlot->graph(0)->setScatterStyle(myScatter);
+    customPlot->graph(0)->setData(t.toVector(), v1.toVector(), true);
 
     customPlot->graph(1)->setPen(QPen(QColor(255, 110, 40)));
-    customPlot->graph(1)->addData(t.toVector(), v2.toVector());
+    customPlot->graph(1)->setData(t.toVector(), v2.toVector(), true);
 
     customPlot->graph(2)->setPen(QPen(QColor(255, 110, 200)));
-    customPlot->graph(2)->addData(t.toVector(), v3.toVector());
+    customPlot->graph(2)->setData(t.toVector(), v3.toVector(), true);
 
     customPlot->graph(3)->setPen(QPen(QColor(255, 200, 40)));
-    customPlot->graph(3)->addData(t.toVector(), v4.toVector());
-
+    customPlot->graph(3)->setData(t.toVector(), v4.toVector(), true);
 
     customPlot->replot();
 }
