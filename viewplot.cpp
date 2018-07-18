@@ -55,6 +55,16 @@ void ViewPlot::initPlots()
     customPlot->graph(1)->setPen(QPen(QColor(255, 110, 40)));
     customPlot->graph(2)->setPen(QPen(QColor(255, 110, 200)));
     customPlot->graph(3)->setPen(QPen(QColor(200, 150, 0)));
+
+    // connect slot that ties some axis selections together (especially opposite axes):
+    connect(customPlot, SIGNAL(selectionChangedByUser()), this, SLOT(selectionChanged()));
+    // connect slots that takes care that when an axis is selected, only that direction can be dragged and zoomed:
+    connect(customPlot, SIGNAL(mousePress(QMouseEvent*)), this, SLOT(mousePress()));
+    connect(customPlot, SIGNAL(mouseWheel(QWheelEvent*)), this, SLOT(mouseWheel()));
+
+    // connect slot that shows a message in the status bar when a graph is clicked:
+    connect(customPlot, SIGNAL(plottableClick(QCPAbstractPlottable*,int,QMouseEvent*)), this, SLOT(graphClicked(QCPAbstractPlottable*,int)));
+
 }
 
 void ViewPlot::rePlot()
@@ -164,4 +174,83 @@ void ViewPlot::on_pushButton_print_clicked()
     {
         customPlot->savePdf(fileName);
     }
+}
+
+void ViewPlot::selectionChanged()
+{
+    /*
+     normally, axis base line, axis tick labels and axis labels are selectable separately, but we want
+     the user only to be able to select the axis as a whole, so we tie the selected states of the tick labels
+     and the axis base line together. However, the axis label shall be selectable individually.
+
+     The selection state of the left and right axes shall be synchronized as well as the state of the
+     bottom and top axes.
+
+     Further, we want to synchronize the selection of the graphs with the selection state of the respective
+     legend item belonging to that graph. So the user can select a graph by either clicking on the graph itself
+     or on its legend item.
+    */
+
+    // make top and bottom axes be selected synchronously, and handle axis and tick labels as one selectable object:
+    if (customPlot->xAxis->selectedParts().testFlag(QCPAxis::spAxis) || customPlot->xAxis->selectedParts().testFlag(QCPAxis::spTickLabels) ||
+        customPlot->xAxis2->selectedParts().testFlag(QCPAxis::spAxis) || customPlot->xAxis2->selectedParts().testFlag(QCPAxis::spTickLabels))
+    {
+      customPlot->xAxis2->setSelectedParts(QCPAxis::spAxis|QCPAxis::spTickLabels);
+      customPlot->xAxis->setSelectedParts(QCPAxis::spAxis|QCPAxis::spTickLabels);
+    }
+    // make left and right axes be selected synchronously, and handle axis and tick labels as one selectable object:
+    if (customPlot->yAxis->selectedParts().testFlag(QCPAxis::spAxis) || customPlot->yAxis->selectedParts().testFlag(QCPAxis::spTickLabels) ||
+        customPlot->yAxis2->selectedParts().testFlag(QCPAxis::spAxis) || customPlot->yAxis2->selectedParts().testFlag(QCPAxis::spTickLabels))
+    {
+      customPlot->yAxis2->setSelectedParts(QCPAxis::spAxis|QCPAxis::spTickLabels);
+      customPlot->yAxis->setSelectedParts(QCPAxis::spAxis|QCPAxis::spTickLabels);
+    }
+
+    // synchronize selection of graphs with selection of corresponding legend items:
+    for (int i=0; i<customPlot->graphCount(); ++i)
+    {
+      QCPGraph *graph = customPlot->graph(i);
+      QCPPlottableLegendItem *item = customPlot->legend->itemWithPlottable(graph);
+      if (item->selected() || graph->selected())
+      {
+        item->setSelected(true);
+        graph->setSelection(QCPDataSelection(graph->data()->dataRange()));
+      }
+    }
+}
+
+void ViewPlot::mousePress()
+{
+    // if an axis is selected, only allow the direction of that axis to be dragged
+    // if no axis is selected, both directions may be dragged
+    if (customPlot->xAxis->selectedParts().testFlag(QCPAxis::spAxis))
+      customPlot->axisRect()->setRangeDrag(customPlot->xAxis->orientation());
+    else if (customPlot->yAxis->selectedParts().testFlag(QCPAxis::spAxis))
+      customPlot->axisRect()->setRangeDrag(customPlot->yAxis->orientation());
+    else
+      customPlot->axisRect()->setRangeDrag(Qt::Horizontal|Qt::Vertical);
+}
+
+void ViewPlot::mouseWheel()
+{
+    // if an axis is selected, only allow the direction of that axis to be zoomed
+    // if no axis is selected, both directions may be zoomed
+
+    if (customPlot->xAxis->selectedParts().testFlag(QCPAxis::spAxis))
+      customPlot->axisRect()->setRangeZoom(customPlot->xAxis->orientation());
+    else if (customPlot->yAxis->selectedParts().testFlag(QCPAxis::spAxis))
+      customPlot->axisRect()->setRangeZoom(customPlot->yAxis->orientation());
+    else
+        customPlot->axisRect()->setRangeZoom(Qt::Horizontal|Qt::Vertical);
+}
+
+void ViewPlot::graphClicked(QCPAbstractPlottable *plottable, int dataIndex)
+{
+    // since we know we only have QCPGraphs in the plot, we can immediately access interface1D()
+    // usually it's better to first check whether interface1D() returns non-zero, and only then use it.
+    double dataValue = plottable->interface1D()->dataMainValue(dataIndex);
+    QString message = QString("Clicked on graph '%1' at data point #%2 with value %3.").arg(plottable->name()).arg(dataIndex).arg(dataValue);
+    qDebug().quote() << message;
+    //ui->statusBar->showMessage(message, 2500);
+
 }

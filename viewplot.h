@@ -37,6 +37,11 @@ private slots:
 
     void on_pushButton_print_clicked();
 
+    void selectionChanged();
+    void mousePress();
+    void mouseWheel();
+    void graphClicked(QCPAbstractPlottable *plottable, int dataIndex);
+
 private:
     Ui::ViewPlot *ui;
     QTableWidget *tb;
