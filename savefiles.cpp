@@ -46,13 +46,23 @@ QString SaveFiles::writeData(QStringList dt)
 
 QString SaveFiles::openData(QWidget *parent, QList<double> &v1, QList<double> &v2, QList<double> &v3, QList<double> &v4, QList<double> &t, QStringList &param)
 {   
+    //очищаем контейнеры
+    v1.clear();
+    v2.clear();
+    v3.clear();
+    v4.clear();
+    t.clear();
+    param.clear();
     //запускаем диалог и открыаем нужный файл
     QDir dir;
     dir.cd(QDir::homePath());
     dir.cd("Agrekola4k/data");
     QString fileName = QFileDialog::getOpenFileName(parent , tr("Выберите файл с данными"), dir.path(), tr("Text files (*.txt)"));
     QFile file(fileName);
-    if(!file.open(QIODevice::ReadOnly | QIODevice::Text)) qWarning() << "data file is't opened";
+    if(!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qWarning() << "data file is't opened";
+        return "";
+    }
     //инициализируем регулярных выражения
     const QString v1pattern("(V1#[0-9]{1,8})");
     const QString v2pattern("(V2#[0-9]{1,8})");
@@ -68,6 +78,7 @@ QString SaveFiles::openData(QWidget *parent, QList<double> &v1, QList<double> &v
     QString firstline = file.readLine();
     rx.setPattern(v1pattern);
     rx.indexIn(firstline);
+    //if(!rx.cap(1).isEmpty())
     param << rx.cap(1);
 
     rx.setPattern(v2pattern);

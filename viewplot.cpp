@@ -71,7 +71,7 @@ void ViewPlot::initPlots()
 void ViewPlot::rePlot()
 {
     const QStringList headList = {param.at(0), param.at(1), param.at(2), param.at(3), param.at(4)};
-    qDebug() << "parameters: "<<param.at(0) << param.at(1) << param.at(2) << param.at(3) << param.at(4);
+    qDebug() << "parameters: "<< param.at(0) << param.at(1) << param.at(2) << param.at(3) << param.at(4);
     tb->setHorizontalHeaderLabels(headList);
     //customPlot->graph(0)->setSelectable(QCP::stSingleData);
     customPlot->xAxis->setRange(0, t.back());
@@ -135,13 +135,10 @@ void ViewPlot::on_pushButton_back_clicked()
 
 void ViewPlot::on_pushButton_open_clicked()
 {
-    v1.clear();
-    v2.clear();
-    v3.clear();
-    v4.clear();
-    t.clear();
-    tb->clearContents();
-    ui->label_filename->setText(SaveFiles::openData(this, v1,v2,v3,v4,t,param));
+    tb->clear();
+    QString fileName = SaveFiles::openData(this, v1,v2,v3,v4,t,param);
+    if(fileName.isEmpty()) return;
+    ui->label_filename->setText(fileName);
     addData();
 }
 
