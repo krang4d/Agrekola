@@ -1,12 +1,13 @@
 #include "viewplot.h"
 #include "ui_viewplot.h"
 
-ViewPlot::ViewPlot(QWidget *parent) :
-    QWidget(parent),
+ViewPlot::ViewPlot(QDialog *parent) :
+    QDialog(parent),
     ui(new Ui::ViewPlot)
 {
     ui->setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
+    setWindowFlags(Qt::Window);
     initTable();
     ui->groupBox->setEnabled(false);
     ui->label_filename->setText(tr("Нет открытых файлов"));
@@ -70,6 +71,7 @@ void ViewPlot::initPlots()
 void ViewPlot::rePlot()
 {
     const QStringList headList = {param.at(0), param.at(1), param.at(2), param.at(3), param.at(4)};
+    qDebug() << "parameters: "<<param.at(0) << param.at(1) << param.at(2) << param.at(3) << param.at(4);
     tb->setHorizontalHeaderLabels(headList);
     //customPlot->graph(0)->setSelectable(QCP::stSingleData);
     customPlot->xAxis->setRange(0, t.back());

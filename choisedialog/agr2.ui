@@ -150,7 +150,7 @@
         </size>
        </property>
        <property name="text">
-        <string>Количество точек калибровки:</string>
+        <string>Кол-во точек калибровки:</string>
        </property>
        <property name="buddy">
         <cstring>lineEdit_14</cstring>

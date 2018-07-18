@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>380</width>
+    <width>434</width>
     <height>392</height>
    </rect>
   </property>
@@ -14,6 +14,9 @@
    <font>
     <pointsize>10</pointsize>
    </font>
+  </property>
+  <property name="contextMenuPolicy">
+   <enum>Qt::DefaultContextMenu</enum>
   </property>
   <property name="windowTitle">
    <string>Выбор режима</string>
@@ -290,13 +293,14 @@
   </customwidget>
  </customwidgets>
  <tabstops>
-  <tabstop>agr1Button</tabstop>
-  <tabstop>agr2Button</tabstop>
   <tabstop>ko1Button</tabstop>
   <tabstop>ko2Button</tabstop>
   <tabstop>ko3Button</tabstop>
   <tabstop>ko4Button</tabstop>
   <tabstop>ko5Button</tabstop>
+  <tabstop>agr1Button</tabstop>
+  <tabstop>agr2Button</tabstop>
+  <tabstop>pushButton</tabstop>
   <tabstop>testButton</tabstop>
   <tabstop>exitButton</tabstop>
  </tabstops>

@@ -9,6 +9,7 @@ ChoiseDialog::ChoiseDialog(QDialog *parent) :
 {
     ui->setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
+    setWindowFlags(Qt::Window | Qt::MSWindowsFixedSizeDialogHint);
     agr1 = static_cast<Agr1 *>(ui->stackedWidget->widget(1));
     agr2 = static_cast<Agr2 *>(ui->stackedWidget->widget(2));
 
@@ -127,6 +128,5 @@ void ChoiseDialog::on_ko5Button_clicked()
 void ChoiseDialog::on_pushButton_clicked()
 {
     ViewPlot *vp = new ViewPlot(this);
-    vp->setWindowFlags(Qt::Dialog);
     vp->show();
 }

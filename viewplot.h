@@ -1,7 +1,7 @@
 #ifndef VIEWPLOT_H
 #define VIEWPLOT_H
 
-#include <QWidget>
+#include <QDialog>
 #include <QDebug>
 #include <QTableWidget>
 
@@ -12,12 +12,12 @@ namespace Ui {
 class ViewPlot;
 }
 
-class ViewPlot : public QWidget
+class ViewPlot : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit ViewPlot(QWidget *parent = 0);
+    explicit ViewPlot(QDialog *parent = 0);
     ~ViewPlot();
     void initTable();
     void initPlots();
