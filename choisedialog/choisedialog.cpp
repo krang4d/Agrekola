@@ -49,7 +49,8 @@ ChoiseDialog::~ChoiseDialog()
 void ChoiseDialog::on_testButton_clicked()
 {
     useE154 *agrekola = new useE154;
-    Widget *widget =new Widget;
+    Widget *widget =new Widget(this);
+    widget->setWindowFlags(Qt::Dialog);
     //ChoiseDialog choiseDlg;
     QWidget::connect(widget, SIGNAL(onmixch1(bool)), agrekola, SLOT(onMixCh1(bool)));
     QWidget::connect(widget, SIGNAL(onmixch2(bool)), agrekola, SLOT(onMixCh2(bool)));
@@ -66,6 +67,7 @@ void ChoiseDialog::on_testButton_clicked()
 
     widget->setTestMode(true);
     widget->show();
+    hide();
     agrekola->start();
     widget->setUserMessage(agrekola->GetInformation());
 }
@@ -124,6 +126,7 @@ void ChoiseDialog::on_ko5Button_clicked()
 
 void ChoiseDialog::on_pushButton_clicked()
 {
-    ViewPlot *vp = new ViewPlot;
+    ViewPlot *vp = new ViewPlot(this);
+    vp->setWindowFlags(Qt::Dialog);
     vp->show();
 }

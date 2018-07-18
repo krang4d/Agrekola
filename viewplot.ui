@@ -16,7 +16,7 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>Просмотр агрегатограмм</string>
+   <string>Просмотр графиков</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0" colspan="3">
@@ -90,6 +90,13 @@
       <widget class="QPushButton" name="pushButton_open">
        <property name="text">
         <string>Открыть файл</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_print">
+       <property name="text">
+        <string>Сохранить</string>
        </property>
       </widget>
      </item>

@@ -49,7 +49,7 @@ bool Widget::eventFilter(QObject *watched, QEvent *event)
     if(event->type() == QEvent::Close)
     {
         qDebug() << "Close Event is emited in the Widget!";
-        //parentWidget()->show();
+        parentWidget()->show();
         return true;
     }
     if(event->type() == QEvent::KeyPress)

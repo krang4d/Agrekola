@@ -156,3 +156,12 @@ void ViewPlot::on_checkBox_4_stateChanged(int arg1)
     customPlot->graph(3)->setVisible(arg1);
     customPlot->replot();
 }
+
+void ViewPlot::on_pushButton_print_clicked()
+{
+    QString fileName = QFileDialog::getSaveFileName(this, "Сохранение графиков...", qApp->applicationDirPath(), "*.pdf");
+    if (!fileName.isEmpty())
+    {
+        customPlot->savePdf(fileName);
+    }
+}
