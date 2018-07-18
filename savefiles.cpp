@@ -76,9 +76,9 @@ QString SaveFiles::openData(QWidget *parent, QList<double> &v1, QList<double> &v
     rx.setPatternSyntax(QRegExp::RegExp);
     //считываем параметры с помощью регулярных выражений
     QString firstline = file.readLine();
+
     rx.setPattern(v1pattern);
     rx.indexIn(firstline);
-    //if(!rx.cap(1).isEmpty())
     param << rx.cap(1);
 
     rx.setPattern(v2pattern);
@@ -110,10 +110,10 @@ QString SaveFiles::openData(QWidget *parent, QList<double> &v1, QList<double> &v
     //int i = 0;
     while(!file.atEnd())
     {
-        qDebug() << "pos" << file.pos();
+        //qDebug() << "pos" << file.pos();
         QString line = file.readLine();
         rx.indexIn(line);
-        qDebug() << line;
+        //qDebug() << line;
         //if(i==0)  {i++; continue;}
         v1.push_back(rx.cap(2).toDouble());
         v2.push_back(rx.cap(3).toDouble());

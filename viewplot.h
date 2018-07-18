@@ -34,7 +34,6 @@ private slots:
     void on_checkBox_2_stateChanged(int arg1);
     void on_checkBox_3_stateChanged(int arg1);
     void on_checkBox_4_stateChanged(int arg1);
-
     void on_pushButton_print_clicked();
 
     void selectionChanged();
@@ -46,7 +45,6 @@ private:
     Ui::ViewPlot *ui;
     QTableWidget *tb;
     QCustomPlot *customPlot;
-
 };
 
 #endif // VIEWPLOT_H

@@ -21,10 +21,8 @@ ViewPlot::~ViewPlot()
 
 void ViewPlot::initTable()
 {
-    const QStringList headList = {"V1", "V2", "V3", "V4", "t"};
     tb = ui->tableWidget;
     tb->setColumnCount(5);
-    tb->setHorizontalHeaderLabels(headList);
 }
 
 void ViewPlot::initPlots()
@@ -112,7 +110,7 @@ void ViewPlot::addData()
         QTableWidgetItem *iv2 = new QTableWidgetItem(tr("%1").arg(v2.at(i)));
         QTableWidgetItem *iv3 = new QTableWidgetItem(tr("%1").arg(v3.at(i)));
         QTableWidgetItem *iv4 = new QTableWidgetItem(tr("%1").arg(v4.at(i)));
-        qDebug() << "t =" << t[i];
+        //qDebug() << "t =" << t[i];
 
         tb->setItem(i, 0, iv1);
         tb->setItem(i, 1, iv2);
@@ -250,6 +248,16 @@ void ViewPlot::graphClicked(QCPAbstractPlottable *plottable, int dataIndex)
     double dataValue = plottable->interface1D()->dataMainValue(dataIndex);
     QString message = QString("Clicked on graph '%1' at data point #%2 with value %3.").arg(plottable->name()).arg(dataIndex).arg(dataValue);
     qDebug().quote() << message;
+   // tb->selectRow(dataIndex);
+    int column;
+    for(int i=0;i<4;i++) {
+        QTableWidgetItem *cell = tb->item(dataIndex, i);
+        if(dataValue == cell->data(Qt::DisplayRole).toDouble()) {
+            column = i;
+            break;
+        }
+    }
+    tb->setCurrentCell(dataIndex, column);
     //ui->statusBar->showMessage(message, 2500);
 
 }
