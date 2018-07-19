@@ -28,22 +28,30 @@ void ViewPlot::initTable()
 void ViewPlot::initPlots()
 {
     customPlot = ui->frame;
-    customPlot->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom | QCP::iSelectAxes |
-                                QCP::iSelectLegend | QCP::iSelectPlottables);
+    customPlot->setInteractions(QCP::iRangeDrag | QCP::iSelectPlottables | QCP::iRangeZoom | QCP::iSelectAxes); //QCP::iRangeDrag | QCP::iSelectLegend |
+
     // prepare legend and some graphs:
     customPlot->legend->setVisible(true);
-    customPlot->addGraph()->setName("V1");
-    customPlot->addGraph()->setName("V2");
-    customPlot->addGraph()->setName("V3");
-    customPlot->addGraph()->setName("V4");
+    customPlot->addGraph();
+    customPlot->addGraph();
+    customPlot->addGraph();
+    customPlot->addGraph();
+
+    customPlot->graph(0)->setSelectable(QCP::stNone);
+    customPlot->graph(1)->setSelectable(QCP::stNone);
+    customPlot->graph(2)->setSelectable(QCP::stNone);
+    customPlot->graph(3)->setSelectable(QCP::stNone);
+
+
+    //customPlot->setSelectionRectMode(QCP::srmSelect);
     // create and prepare a text layout element:
     //QCPTextElement *legendTitle = new QCPTextElement(customPlot);
     //legendTitle->setLayer(customPlot->legend->layer()); // place text element on same layer as legend, or it ends up below legend
     //legendTitle->setText("Канал(номер пробы)");
     //legendTitle->setFont(QFont("sans", 9, QFont::Bold));
     // then we add it to the QCPLegend (which is a subclass of QCPLayoutGrid):
-    if (customPlot->legend->hasElement(0, 0)) // if top cell isn't empty, insert an empty row at top
-      customPlot->legend->insertRow(0);
+//    if (customPlot->legend->hasElement(0, 0)) // if top cell isn't empty, insert an empty row at top
+//      customPlot->legend->insertRow(0);
     //customPlot->legend->addElement(0, 0, legendTitle); // place the text element into the empty cell
     customPlot->xAxis->setLabel("сек");
     customPlot->yAxis->setLabel("Вольт");
@@ -62,8 +70,12 @@ void ViewPlot::initPlots()
     connect(customPlot, SIGNAL(mouseWheel(QWheelEvent*)), this, SLOT(mouseWheel()));
 
     // connect slot that shows a message in the status bar when a graph is clicked:
-    connect(customPlot, SIGNAL(plottableClick(QCPAbstractPlottable*,int,QMouseEvent*)), this, SLOT(graphClicked(QCPAbstractPlottable*,int)));
+    //connect(customPlot, SIGNAL(plottableClick(QCPAbstractPlottable*,int,QMouseEvent*)), this, SLOT(graphClicked(QCPAbstractPlottable*,int)));
 
+    connect(customPlot->graph(0), SIGNAL(selectionChanged(QCPDataSelection)), SLOT(hasGraph0Selected(QCPDataSelection)));
+    connect(customPlot->graph(0), SIGNAL(selectableChanged(QCP::SelectionType)),  SLOT(hasSelected(QCP::SelectionType)));
+    //connect(customPlot->graph(0), SIGNAL(selectionChanged(bool)), SLOT(hasSelected(bool)));
+    connect(customPlot->selectionRect(), SIGNAL(accepted(QRect,QMouseEvent*)), SLOT(hasSelectedRect(QRect,QMouseEvent*)));
 }
 
 void ViewPlot::rePlot()
@@ -71,28 +83,22 @@ void ViewPlot::rePlot()
     const QStringList headList = {param.at(0), param.at(1), param.at(2), param.at(3), param.at(4)};
     qDebug() << "parameters: "<< param.at(0) << param.at(1) << param.at(2) << param.at(3) << param.at(4);
     tb->setHorizontalHeaderLabels(headList);
-    //customPlot->graph(0)->setSelectable(QCP::stSingleData);
     customPlot->xAxis->setRange(0, t.back());
-    //customPlot->rescaleAxes();
+    customPlot->yAxis->setRange(-6, 6);
 
-
+    customPlot->graph(0)->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssCircle, Qt::color1, Qt::white, 3));
     customPlot->graph(0)->setName(param.at(0));
-    //customPlot->graph(0)->setLineStyle(QCPGraph::LineStyle::lsStepCenter);
-//    QCPScatterStyle myScatter;
-//    myScatter.setShape(QCPScatterStyle::ssCircle);
-//    myScatter.setPen(QPen(Qt::blue));
-//    myScatter.setBrush(Qt::white);
-//    myScatter.setSize(5);
-//    customPlot->graph(0)->setScatterStyle(myScatter);
-    customPlot->graph(0)->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssCircle, Qt::blue, Qt::white, 3));
     customPlot->graph(0)->setData(t.toVector(), v1.toVector(), true);
 
+    customPlot->graph(1)->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssCross, Qt::red, Qt::white, 3));
     customPlot->graph(1)->setName(param.at(1));
     customPlot->graph(1)->setData(t.toVector(), v2.toVector(), true);
 
+    customPlot->graph(2)->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssDiamond, Qt::black, Qt::white, 3));
     customPlot->graph(2)->setName(param.at(2));
     customPlot->graph(2)->setData(t.toVector(), v3.toVector(), true);
 
+    customPlot->graph(3)->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssDisc, Qt::green, Qt::white, 3));
     customPlot->graph(3)->setName(param.at(3));
     customPlot->graph(3)->setData(t.toVector(), v4.toVector(), true);
 
@@ -143,24 +149,30 @@ void ViewPlot::on_pushButton_open_clicked()
 void ViewPlot::on_checkBox_1_stateChanged(int arg1)
 {
     customPlot->graph(0)->setVisible(arg1);
+    customPlot->legend->item(0)->setVisible(arg1);
     customPlot->replot();
+    if(arg1)    customPlot->graph(0)->setSelectable(QCP::stSingleData);
+    else    customPlot->graph(0)->setSelectable(QCP::stNone);
 }
 
 void ViewPlot::on_checkBox_2_stateChanged(int arg1)
 {
     customPlot->graph(1)->setVisible(arg1);
+    customPlot->legend->item(1)->setVisible(arg1);
     customPlot->replot();
 }
 
 void ViewPlot::on_checkBox_3_stateChanged(int arg1)
 {
     customPlot->graph(2)->setVisible(arg1);
+    customPlot->legend->item(2)->setVisible(arg1);
     customPlot->replot();
 }
 
 void ViewPlot::on_checkBox_4_stateChanged(int arg1)
 {
     customPlot->graph(3)->setVisible(arg1);
+    customPlot->legend->item(3)->setVisible(arg1);
     customPlot->replot();
 }
 
@@ -203,17 +215,17 @@ void ViewPlot::selectionChanged()
       customPlot->yAxis->setSelectedParts(QCPAxis::spAxis|QCPAxis::spTickLabels);
     }
 
-    // synchronize selection of graphs with selection of corresponding legend items:
-    for (int i=0; i<customPlot->graphCount(); ++i)
-    {
-      QCPGraph *graph = customPlot->graph(i);
-      QCPPlottableLegendItem *item = customPlot->legend->itemWithPlottable(graph);
-      if (item->selected() || graph->selected())
-      {
-        item->setSelected(true);
-        graph->setSelection(QCPDataSelection(graph->data()->dataRange()));
-      }
-    }
+//    // synchronize selection of graphs with selection of corresponding legend items:
+//    for (int i=0; i<customPlot->graphCount(); ++i)
+//    {
+//      QCPGraph *graph = customPlot->graph(i);
+//      QCPPlottableLegendItem *item = customPlot->legend->itemWithPlottable(graph);
+//      if (item->selected() || graph->selected())
+//      {
+//        item->setSelected(true);
+//        graph->setSelection(QCPDataSelection(graph->data()->dataRange()));
+//      }
+//    }
 }
 
 void ViewPlot::mousePress()
@@ -248,16 +260,59 @@ void ViewPlot::graphClicked(QCPAbstractPlottable *plottable, int dataIndex)
     double dataValue = plottable->interface1D()->dataMainValue(dataIndex);
     QString message = QString("Clicked on graph '%1' at data point #%2 with value %3.").arg(plottable->name()).arg(dataIndex).arg(dataValue);
     qDebug().quote() << message;
-   // tb->selectRow(dataIndex);
-    int column;
-    for(int i=0;i<4;i++) {
-        QTableWidgetItem *cell = tb->item(dataIndex, i);
-        if(dataValue == cell->data(Qt::DisplayRole).toDouble()) {
-            column = i;
-            break;
-        }
+    for (int i=0; i<customPlot->graphCount(); ++i)
+    {
+        if (customPlot->graph(i)->selected())
+            tb->setCurrentCell(dataIndex, i);
     }
-    tb->setCurrentCell(dataIndex, column);
-    //ui->statusBar->showMessage(message, 2500);
+}
 
+void ViewPlot::hasGraph0Selected(QCPDataSelection selection)
+{
+    qDebug() << "ViewPlot::hasGraph0Selected(QCPDataSelection)";
+    double sum = 0, t1, t2;
+    foreach (QCPDataRange dataRange, selection.dataRanges())
+    {
+      QCPGraphDataContainer::const_iterator begin = customPlot->graph(0)->data()->at(dataRange.begin()); // get range begin iterator from index
+      t1 = begin->key;
+      QCPGraphDataContainer::const_iterator end = customPlot->graph(0)->data()->at(dataRange.end()); // get range end iterator from index
+      t2 = end->key;
+      for (QCPGraphDataContainer::const_iterator it=begin; it!=end; ++it)
+      {
+        // iterator "it" will go through all selected data points, as an example, we calculate the value average
+        sum += it->value;
+      }
+    }
+    if(customPlot->selectionRectMode() == QCP::srmSelect) {
+        double ave = sum/selection.dataPointCount();
+        qDebug() << "average =" << ave << " t1 = " << t1 << " t2 = " << t2 << " t2-t1= " << t2-t1 ;
+        ui->label_average->setText(tr("Среднее значение %1 на интервале %2").arg(ave).arg(t2-t1));
+    }
+    customPlot->setSelectionRectMode(QCP::srmNone);
+    //if(!sum/selection.dataPointCount()) customPlot->graph(0)->setSelectable(QCP::stNone);
+}
+
+void ViewPlot::hasSelected(QCP::SelectionType tipe)
+{
+    switch(tipe){
+        case QCP::stDataRange : qDebug() << "ViewPlot::hasSelected(QCP::stDataRange)"; break;
+        default : qDebug() << "ViewPlot::hasSelected(default)";
+    }
+}
+
+//void ViewPlot::hasSelected(bool b)
+//{
+//    qDebug() << "hasSelected(bool)" << b;
+//}
+
+void ViewPlot::hasSelectedRect(QRect r, QMouseEvent *e)
+{
+    qDebug() << "hasSelectedRect X " << r.x() << " Y " << r.y();
+}
+
+void ViewPlot::on_pushButton_select_clicked()
+{
+    customPlot->graph(0)->setSelectable(QCP::stDataRange);
+    customPlot->setSelectionRectMode(QCP::srmSelect);
+    //customPlot->setInteraction(QCP::iMultiSelect);
 }

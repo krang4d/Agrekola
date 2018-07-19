@@ -35,11 +35,16 @@ private slots:
     void on_checkBox_3_stateChanged(int arg1);
     void on_checkBox_4_stateChanged(int arg1);
     void on_pushButton_print_clicked();
+    void on_pushButton_select_clicked();
 
     void selectionChanged();
     void mousePress();
     void mouseWheel();
     void graphClicked(QCPAbstractPlottable *plottable, int dataIndex);
+    void hasGraph0Selected(QCPDataSelection);
+    void hasSelected(QCP::SelectionType);
+    //void hasSelected(bool);
+    void hasSelectedRect(QRect,QMouseEvent*);
 
 private:
     Ui::ViewPlot *ui;
