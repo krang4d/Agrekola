@@ -1,12 +1,9 @@
 #include "savefiles.h"
-#include <QDateTime>
-#include <QDebug>
-#include <QFileDialog>
-#include <QRegExp>
 
 SaveFiles::SaveFiles(QObject *parent) : QObject(parent)
 {
     setupFiles();
+    qDebug() << "setting: " << settingDir.path() << "data: " << dataDir.path() << "user" << userDir.path();
 }
 
 SaveFiles::~SaveFiles()
@@ -26,20 +23,20 @@ QString SaveFiles::writeData(QStringList dt)
     for(;;)
     {
         QString name = QString("%1_%2.txt").arg(d.toString("yyyyMMdd")).arg(i);
-        if(!QFile::exists(name)){
+        if(!QFile::exists(name)) {
             file_data.setFileName(name);
             if(!file_data.open(QIODevice::ReadWrite | QIODevice::Append | QIODevice::Text)) qWarning() << "data file is't opened";
-            out_data.setDevice(&file_data);
+            stream_data.setDevice(&file_data);
             break;
         }
         i++;
     }
     foreach (QString var, dt) {
-        out_data << var;
+        stream_data << var;
     }
 
     QString str = QString("Данные записаны в файл %1/%2").arg(QDir::currentPath()).arg(file_data.fileName());
-    out_data.flush();
+    stream_data.flush();
     file_data.close();
     return str;
 }
@@ -130,11 +127,6 @@ QString SaveFiles::openData(QWidget *parent, QList<double> &v1, QList<double> &v
     return fileName;
 }
 
-void SaveFiles::writeUserMsg(QString msg)
-{
-    out_user << msg << "\n";
-}
-
 void SaveFiles::setupFiles()
 {
     QDir dir;
@@ -147,10 +139,11 @@ void SaveFiles::setupFiles()
         qDebug() << "mkdir(Agrekola4k)";
     }
     else QDir::setCurrent(dir.path());
+    userDir = dir;
     //открываем файл сообщений
     file_user.setFileName("user.txt");
-    if(!file_user.open(QIODevice::ReadWrite | QIODevice::Append | QIODevice::Text)) qWarning() << "user file is't opened";
-    out_user.setDevice(&file_user);
+    if(!file_user.open(QIODevice::ReadWrite | QIODevice::Append | QIODevice::Text)) qDebug() << "user file is't opened";
+    stream_user.setDevice(&file_user);
 
     if(!dir.cd("settings"))
     {
@@ -159,10 +152,7 @@ void SaveFiles::setupFiles()
         qDebug() << "mkdir(settings)";
     }
     else QDir::setCurrent(dir.path());
-    //открываем файл настроек
-    file_setting.setFileName("setting.txt");
-    if(!file_setting.open(QIODevice::ReadWrite | QIODevice::Append | QIODevice::Text)) qWarning() << "setting file is't opened";
-    out_settings.setDevice(&file_setting);
+    settingDir = dir;
 
     if(!dir.cd("../data"))
     {
@@ -171,4 +161,120 @@ void SaveFiles::setupFiles()
         qDebug() << "mkdir(data)";
     }
     else QDir::setCurrent(dir.path());
+    dataDir = dir;
 }
+
+void SaveFiles::writeUserMsg(QString msg)
+{
+    stream_user << msg << "\n";
+}
+
+
+void SaveFiles::openParams(QString name, QStringList &param)
+{
+    QDir::setCurrent(settingDir.path());
+    //открываем файл настроек для чтения параметров
+    file_setting.setFileName(name);
+    if(!file_setting.open(QIODevice::ReadWrite | QIODevice::Text))
+        qWarning().noquote() << tr("setting file %1 is't opened").arg(name);
+    stream_settings.setDevice(&file_setting);
+    QString str;
+    while(!stream_settings.atEnd()) {
+        stream_settings >> str;
+        param << str;
+    }
+    //stream_settings >> param[1];
+    //stream_settings >> param[2];
+//    foreach (QString var, param) {
+//        stream_settings >> var;
+//    }
+    stream_settings.flush();
+    file_setting.close();
+}
+
+void SaveFiles::saveParams(QString name, QStringList param)
+{
+    QDir::setCurrent(settingDir.path());
+    //открываем файл настроек для записи параметров
+    //if(QFile::exists(name)) {QFile::remove(name); qDebug() << "remove file";}
+    file_setting.setFileName(name);
+    if(!file_setting.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate)) qWarning() << tr("setting file %1 is't opened").arg(name);
+
+    stream_settings.setDevice(&file_setting);
+    foreach (QString var, param) {
+        stream_settings << var << "\n";
+    }
+    stream_settings.flush();
+    file_setting.close();
+}
+
+void SaveFiles::openAgr1(QStringList &param)
+{
+    openParams("Agr1.ini", param);
+}
+
+void SaveFiles::openAgr2(QStringList &param)
+{
+    openParams("Agr2.ini", param);
+}
+
+void SaveFiles::openKo1(QStringList &param)
+{
+    openParams("Ko1.ini", param);
+}
+
+void SaveFiles::openKo2(QStringList &param)
+{
+    openParams("Ko2.ini", param);
+}
+
+void SaveFiles::openKo3(QStringList &param)
+{
+    openParams("Ko3.ini", param);
+}
+
+void SaveFiles::openKo4(QStringList &param)
+{
+    openParams("Ko4.ini", param);
+}
+
+void SaveFiles::openKo5(QStringList &param)
+{
+    openParams("Ko5.ini", param);
+}
+
+void SaveFiles::saveAgr1(QStringList param)
+{
+    saveParams("Agr1.ini", param);
+}
+
+void SaveFiles::saveAgr2(QStringList param)
+{
+    saveParams("Agr2.ini", param);
+}
+
+void SaveFiles::saveKo1(QStringList param)
+{
+    saveParams("Ko1.ini", param);
+}
+
+void SaveFiles::saveKo2(QStringList param)
+{
+    saveParams("Ko2.ini", param);
+}
+
+void SaveFiles::saveKo3(QStringList param)
+{
+    saveParams("Ko3.ini", param);
+}
+
+void SaveFiles::saveKo4(QStringList param)
+{
+    saveParams("ko4.ini", param);
+}
+
+void SaveFiles::saveKo5(QStringList param)
+{
+    saveParams("Ko5.ini", param);
+}
+

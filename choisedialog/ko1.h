@@ -2,6 +2,7 @@
 #define KO1_H
 
 #include <QWidget>
+#include "savefiles.h"
 
 namespace Ui {
 class Ko1;
@@ -23,6 +24,7 @@ signals:
 
 private:
     Ui::Ko1 *ui;
+    QStringList param;
 };
 
 #endif // KO1_H

@@ -490,6 +490,9 @@ void Widget::incubeTimeout()
 {
     stopIncub();
     setUserMessage("Время инкубации истекло, добавьте стартовый реагеет");
+    QMessageBox::information(this, "Инкубация",
+                             "Время инкубации истекло, добавьте стартовый реагент\n"
+                             "и нажмите кнопку ОК");
     emit status(QString("Время инкубации вышло"));
     //запуск измерения
     setUserMessage("Измерение");

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>261</width>
-    <height>331</height>
+    <height>391</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -29,7 +29,7 @@
     </widget>
    </item>
    <item>
-    <layout class="QFormLayout" name="formLayout_7">
+    <layout class="QFormLayout" name="formLayout">
      <item row="0" column="0">
       <widget class="QLabel" name="label_1">
        <property name="text">
@@ -56,12 +56,12 @@
         <string>Реагенты, серия №</string>
        </property>
        <property name="buddy">
-        <cstring>lineEdit_8</cstring>
+        <cstring>lineEdit_1</cstring>
        </property>
       </widget>
      </item>
      <item row="1" column="1">
-      <widget class="QLineEdit" name="lineEdit_8"/>
+      <widget class="QLineEdit" name="lineEdit_1"/>
      </item>
      <item row="2" column="0">
       <widget class="QLabel" name="label_3">
@@ -69,12 +69,12 @@
         <string>Годен до:</string>
        </property>
        <property name="buddy">
-        <cstring>lineEdit_9</cstring>
+        <cstring>lineEdit_2</cstring>
        </property>
       </widget>
      </item>
      <item row="2" column="1">
-      <widget class="QLineEdit" name="lineEdit_9"/>
+      <widget class="QLineEdit" name="lineEdit_2"/>
      </item>
      <item row="3" column="0">
       <widget class="QLabel" name="label_4">
@@ -82,12 +82,12 @@
         <string>Разведение 15%:</string>
        </property>
        <property name="buddy">
-        <cstring>lineEdit_15</cstring>
+        <cstring>lineEdit_3</cstring>
        </property>
       </widget>
      </item>
      <item row="3" column="1">
-      <widget class="QLineEdit" name="lineEdit_15"/>
+      <widget class="QLineEdit" name="lineEdit_3"/>
      </item>
      <item row="4" column="0">
       <widget class="QLabel" name="label_5">
@@ -95,12 +95,12 @@
         <string>Разведение 30%:</string>
        </property>
        <property name="buddy">
-        <cstring>lineEdit_10</cstring>
+        <cstring>lineEdit_4</cstring>
        </property>
       </widget>
      </item>
      <item row="4" column="1">
-      <widget class="QLineEdit" name="lineEdit_10"/>
+      <widget class="QLineEdit" name="lineEdit_4"/>
      </item>
      <item row="5" column="0">
       <widget class="QLabel" name="label_6">
@@ -108,12 +108,12 @@
         <string>Разведение 60%:</string>
        </property>
        <property name="buddy">
-        <cstring>lineEdit_11</cstring>
+        <cstring>lineEdit_5</cstring>
        </property>
       </widget>
      </item>
      <item row="5" column="1">
-      <widget class="QLineEdit" name="lineEdit_11"/>
+      <widget class="QLineEdit" name="lineEdit_5"/>
      </item>
      <item row="6" column="0">
       <widget class="QLabel" name="label_7">
@@ -121,12 +121,12 @@
         <string>Разведение 75%:</string>
        </property>
        <property name="buddy">
-        <cstring>lineEdit_12</cstring>
+        <cstring>lineEdit_6</cstring>
        </property>
       </widget>
      </item>
      <item row="6" column="1">
-      <widget class="QLineEdit" name="lineEdit_12"/>
+      <widget class="QLineEdit" name="lineEdit_6"/>
      </item>
      <item row="7" column="0">
       <widget class="QLabel" name="label_8">
@@ -134,12 +134,12 @@
         <string>Разведение 100%:</string>
        </property>
        <property name="buddy">
-        <cstring>lineEdit_13</cstring>
+        <cstring>lineEdit_7</cstring>
        </property>
       </widget>
      </item>
      <item row="7" column="1">
-      <widget class="QLineEdit" name="lineEdit_13"/>
+      <widget class="QLineEdit" name="lineEdit_7"/>
      </item>
      <item row="8" column="0">
       <widget class="QLabel" name="label_10">
@@ -153,12 +153,12 @@
         <string>Кол-во точек калибровки:</string>
        </property>
        <property name="buddy">
-        <cstring>lineEdit_14</cstring>
+        <cstring>lineEdit_8</cstring>
        </property>
       </widget>
      </item>
      <item row="8" column="1">
-      <widget class="QLineEdit" name="lineEdit_14"/>
+      <widget class="QLineEdit" name="lineEdit_8"/>
      </item>
     </layout>
    </item>

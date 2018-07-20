@@ -5,6 +5,7 @@
 #include "kalibragr2.h"
 #include "selectcalibrationagr1.h"
 #include "selectinductor.h"
+#include "savefiles.h"
 
 namespace Ui {
 class Agr2;

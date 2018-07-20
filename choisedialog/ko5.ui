@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>271</width>
-    <height>318</height>
+    <height>375</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -28,9 +28,9 @@
     </widget>
    </item>
    <item>
-    <layout class="QFormLayout" name="formLayout_6">
+    <layout class="QFormLayout" name="formLayout">
      <item row="0" column="0">
-      <widget class="QLabel" name="label_94">
+      <widget class="QLabel" name="label_9">
        <property name="text">
         <string>Последняя калибровка</string>
        </property>
@@ -50,108 +50,108 @@
       </widget>
      </item>
      <item row="1" column="0">
-      <widget class="QLabel" name="label_96">
+      <widget class="QLabel" name="label_1">
        <property name="text">
         <string>Тромбопластин, серия №</string>
        </property>
        <property name="buddy">
-        <cstring>lineEdit_36</cstring>
+        <cstring>lineEdit_1</cstring>
        </property>
       </widget>
      </item>
      <item row="1" column="1">
-      <widget class="QLineEdit" name="lineEdit_36"/>
+      <widget class="QLineEdit" name="lineEdit_1"/>
      </item>
      <item row="2" column="0">
-      <widget class="QLabel" name="label_93">
+      <widget class="QLabel" name="label_2">
        <property name="text">
         <string>Годен до</string>
        </property>
        <property name="buddy">
-        <cstring>lineEdit_37</cstring>
+        <cstring>lineEdit_2</cstring>
        </property>
       </widget>
      </item>
      <item row="2" column="1">
-      <widget class="QLineEdit" name="lineEdit_37"/>
+      <widget class="QLineEdit" name="lineEdit_2"/>
      </item>
      <item row="3" column="0">
-      <widget class="QLabel" name="label_97">
+      <widget class="QLabel" name="label_3">
        <property name="text">
         <string>К/плазма, серия №</string>
        </property>
        <property name="buddy">
-        <cstring>lineEdit_38</cstring>
+        <cstring>lineEdit_3</cstring>
        </property>
       </widget>
      </item>
      <item row="3" column="1">
-      <widget class="QLineEdit" name="lineEdit_38"/>
+      <widget class="QLineEdit" name="lineEdit_3"/>
      </item>
      <item row="4" column="0">
-      <widget class="QLabel" name="label_98">
+      <widget class="QLabel" name="label_4">
        <property name="text">
         <string>К/плазма</string>
        </property>
        <property name="buddy">
-        <cstring>lineEdit_43</cstring>
+        <cstring>lineEdit_4</cstring>
        </property>
       </widget>
      </item>
      <item row="4" column="1">
-      <widget class="QLineEdit" name="lineEdit_43"/>
+      <widget class="QLineEdit" name="lineEdit_4"/>
      </item>
      <item row="5" column="0">
-      <widget class="QLabel" name="label_101">
+      <widget class="QLabel" name="label_5">
        <property name="text">
         <string>Разведение 100%:</string>
        </property>
        <property name="buddy">
-        <cstring>lineEdit_44</cstring>
+        <cstring>lineEdit_5</cstring>
        </property>
       </widget>
      </item>
      <item row="5" column="1">
-      <widget class="QLineEdit" name="lineEdit_44"/>
+      <widget class="QLineEdit" name="lineEdit_5"/>
      </item>
      <item row="6" column="0">
-      <widget class="QLabel" name="label_100">
+      <widget class="QLabel" name="label_6">
        <property name="text">
         <string>Разведение 50%:</string>
        </property>
        <property name="buddy">
-        <cstring>lineEdit_45</cstring>
+        <cstring>lineEdit_6</cstring>
        </property>
       </widget>
      </item>
      <item row="6" column="1">
-      <widget class="QLineEdit" name="lineEdit_45"/>
+      <widget class="QLineEdit" name="lineEdit_6"/>
      </item>
      <item row="7" column="0">
-      <widget class="QLabel" name="label_95">
+      <widget class="QLabel" name="label_7">
        <property name="text">
         <string>Разведение 25%:</string>
        </property>
        <property name="buddy">
-        <cstring>lineEdit_46</cstring>
+        <cstring>lineEdit_7</cstring>
        </property>
       </widget>
      </item>
      <item row="7" column="1">
-      <widget class="QLineEdit" name="lineEdit_46"/>
+      <widget class="QLineEdit" name="lineEdit_7"/>
      </item>
      <item row="8" column="0">
-      <widget class="QLabel" name="label_102">
+      <widget class="QLabel" name="label_8">
        <property name="text">
         <string>Разведение 12,5%:</string>
        </property>
        <property name="buddy">
-        <cstring>lineEdit_47</cstring>
+        <cstring>lineEdit_8</cstring>
        </property>
       </widget>
      </item>
      <item row="8" column="1">
-      <widget class="QLineEdit" name="lineEdit_47"/>
+      <widget class="QLineEdit" name="lineEdit_8"/>
      </item>
     </layout>
    </item>

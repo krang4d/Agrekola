@@ -2,6 +2,9 @@
 #define AGR1_H
 
 #include <QWidget>
+#include <QStringList>
+
+#include "savefiles.h"
 
 namespace Ui {
 class Agr1;
@@ -25,6 +28,8 @@ signals:
 
 private:
     Ui::Agr1 *ui;
+    SaveFiles file;
+    QStringList param;
 };
 
 #endif // AGR1_H

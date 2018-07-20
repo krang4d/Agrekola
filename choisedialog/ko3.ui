@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>265</width>
-    <height>318</height>
+    <height>367</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -28,7 +28,7 @@
     </widget>
    </item>
    <item>
-    <layout class="QFormLayout" name="formLayout_5">
+    <layout class="QFormLayout" name="formLayout">
      <item row="0" column="0">
       <widget class="QLabel" name="label_54">
        <property name="text">
@@ -37,7 +37,7 @@
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QLabel" name="label_calibrationData_7">
+      <widget class="QLabel" name="label_calibrationData">
        <property name="minimumSize">
         <size>
          <width>40</width>
@@ -50,98 +50,98 @@
       </widget>
      </item>
      <item row="1" column="0">
-      <widget class="QLabel" name="label_56">
+      <widget class="QLabel" name="label_1">
        <property name="text">
         <string>Реагенты, серия №</string>
        </property>
        <property name="buddy">
-        <cstring>lineEdit_28</cstring>
+        <cstring>lineEdit_1</cstring>
        </property>
       </widget>
      </item>
      <item row="1" column="1">
-      <widget class="QLineEdit" name="lineEdit_28"/>
+      <widget class="QLineEdit" name="lineEdit_1"/>
      </item>
      <item row="2" column="0">
-      <widget class="QLabel" name="label_22">
+      <widget class="QLabel" name="label_2">
        <property name="text">
         <string>Годен до</string>
        </property>
        <property name="buddy">
-        <cstring>lineEdit_29</cstring>
+        <cstring>lineEdit_2</cstring>
        </property>
       </widget>
      </item>
      <item row="2" column="1">
-      <widget class="QLineEdit" name="lineEdit_29"/>
+      <widget class="QLineEdit" name="lineEdit_2"/>
      </item>
      <item row="3" column="0">
-      <widget class="QLabel" name="label_57">
+      <widget class="QLabel" name="label_3">
        <property name="text">
         <string>Фибрмноген к/плазмы</string>
        </property>
        <property name="buddy">
-        <cstring>lineEdit_30</cstring>
+        <cstring>lineEdit_3</cstring>
        </property>
       </widget>
      </item>
      <item row="3" column="1">
-      <widget class="QLineEdit" name="lineEdit_30"/>
+      <widget class="QLineEdit" name="lineEdit_3"/>
      </item>
      <item row="5" column="0">
-      <widget class="QLabel" name="label_59">
+      <widget class="QLabel" name="label_4">
        <property name="text">
         <string>Разведение 200%:</string>
        </property>
        <property name="buddy">
-        <cstring>lineEdit_32</cstring>
+        <cstring>lineEdit_4</cstring>
        </property>
       </widget>
      </item>
      <item row="5" column="1">
-      <widget class="QLineEdit" name="lineEdit_32"/>
+      <widget class="QLineEdit" name="lineEdit_4"/>
      </item>
      <item row="6" column="0">
-      <widget class="QLabel" name="label_60">
+      <widget class="QLabel" name="label_5">
        <property name="text">
         <string>Разведение 100%:</string>
        </property>
        <property name="buddy">
-        <cstring>lineEdit_33</cstring>
+        <cstring>lineEdit_5</cstring>
        </property>
       </widget>
      </item>
      <item row="6" column="1">
-      <widget class="QLineEdit" name="lineEdit_33"/>
+      <widget class="QLineEdit" name="lineEdit_5"/>
      </item>
      <item row="7" column="0">
-      <widget class="QLabel" name="label_55">
+      <widget class="QLabel" name="label_6">
        <property name="text">
         <string>Разведение 50%:</string>
        </property>
        <property name="buddy">
-        <cstring>lineEdit_34</cstring>
+        <cstring>lineEdit_6</cstring>
        </property>
       </widget>
      </item>
      <item row="7" column="1">
-      <widget class="QLineEdit" name="lineEdit_34"/>
+      <widget class="QLineEdit" name="lineEdit_6"/>
      </item>
      <item row="8" column="0">
-      <widget class="QLabel" name="label_63">
+      <widget class="QLabel" name="label_7">
        <property name="text">
         <string>Разведение 25%:</string>
        </property>
        <property name="buddy">
-        <cstring>lineEdit_35</cstring>
+        <cstring>lineEdit_7</cstring>
        </property>
       </widget>
      </item>
      <item row="8" column="1">
-      <widget class="QLineEdit" name="lineEdit_35"/>
+      <widget class="QLineEdit" name="lineEdit_7"/>
      </item>
      <item row="4" column="0" colspan="2">
-      <widget class="QLabel" name="label_58">
+      <widget class="QLabel" name="label_8">
        <property name="text">
         <string>Время свертывания при</string>
        </property>
