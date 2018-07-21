@@ -3,15 +3,14 @@
 SaveFiles::SaveFiles(QObject *parent) : QObject(parent)
 {
     setupFiles();
-    qDebug() << "setting: " << settingDir.path() << "data: " << dataDir.path() << "user" << userDir.path();
+    qDebug() << "setting: " << settingDir.path() << "data: " << dataDir.path() << "user" << OnlyOne::Instance().file_user.fileName();
 }
 
 SaveFiles::~SaveFiles()
 {
-    file_setting.flush();
-    file_setting.close();
-    file_user.flush();
-    file_user.close();
+    //file_setting.flush();
+//    file_user.flush();
+//    file_user.close();
 }
 
 QString SaveFiles::writeData(QStringList dt)
@@ -139,11 +138,11 @@ void SaveFiles::setupFiles()
         qDebug() << "mkdir(Agrekola4k)";
     }
     else QDir::setCurrent(dir.path());
-    userDir = dir;
+    //userDir = dir;
     //открываем файл сообщений
-    file_user.setFileName("user.txt");
-    if(!file_user.open(QIODevice::ReadWrite | QIODevice::Append | QIODevice::Text)) qDebug() << "user file is't opened";
-    stream_user.setDevice(&file_user);
+//    file_user.setFileName("user.txt");
+//    if(!file_user.open(QIODevice::ReadWrite | QIODevice::Append | QIODevice::Text)) qDebug() << "user file is't opened";
+//    stream_user.setDevice(&file_user);
 
     if(!dir.cd("settings"))
     {
@@ -166,7 +165,7 @@ void SaveFiles::setupFiles()
 
 void SaveFiles::writeUserMsg(QString msg)
 {
-    stream_user << msg << "\n";
+    OnlyOne::Instance().stream_user << msg << "\n";
 }
 
 

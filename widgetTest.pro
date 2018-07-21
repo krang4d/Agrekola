@@ -12,7 +12,7 @@ TARGET   =  widgetTest
 TEMPLATE =  app
 
 INCLUDEPATH += libapi
-QMAKE_POST_LINK = copy /Y libapi\\Lusbapi.dll $(DESTDIR)
+#QMAKE_POST_LINK = copy /Y libapi\\Lusbapi.dll $(DESTDIR)
 
 #DEFINES += QCUSTOMPLOT_USE_OPENGL
 

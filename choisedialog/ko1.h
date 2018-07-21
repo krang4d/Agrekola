@@ -24,6 +24,7 @@ signals:
 
 private:
     Ui::Ko1 *ui;
+    SaveFiles file;
     QStringList param;
 };
 

@@ -47,9 +47,41 @@ protected:
     void setupFiles();
     void openParams(QString name, QStringList &param);
     void saveParams(QString name, QStringList param);
-    QFile file_setting, file_user, file_data;
-    QTextStream stream_settings ,stream_user, stream_data;
-    QDir dataDir, settingDir, userDir;
+    QFile file_setting, file_data;
+    QTextStream stream_settings, stream_data;
+    QDir dataDir, settingDir;
+};
+
+class OnlyOne
+{
+public:
+    QFile file_user;
+    QTextStream stream_user;
+    static OnlyOne& Instance()
+    {
+            static OnlyOne theSingleInstance;
+            return theSingleInstance;
+    }
+
+private:
+    OnlyOne(){
+        QDir dir;
+        QString path = QDir::homePath();
+        dir.cd(path); //переходим в папку home
+        if(!dir.cd("Agrekola4k"))
+        {
+            if(dir.mkdir("Agrekola4k")) dir.cd("Agrekola4k");
+            QDir::setCurrent(dir.path());
+            qDebug() << "mkdir(Agrekola4k)";
+        }
+        else QDir::setCurrent(dir.path());
+        file_user.setFileName("user.txt");
+        if(!file_user.open(QIODevice::ReadWrite | QIODevice::Append | QIODevice::Text))
+                qDebug() << "user file is't opened";
+        stream_user.setDevice(&file_user);
+    }
+    OnlyOne(const OnlyOne& root) = delete;
+    OnlyOne& operator=(const OnlyOne&) = delete;
 };
 
 #endif // SAVEFILES_H

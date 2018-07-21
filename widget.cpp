@@ -79,7 +79,7 @@ void Widget::setUserMessage(QString str, bool withtime, bool tofile)
 {
     if(withtime)
     {
-        QString msg = QString("%1,    Время %2")
+        QString msg = QString(tr("%1,    Время %2"))
                 .arg(str)
                 .arg(dt.toString("hh:mm:ss"));
         ui->textEdit->append(msg);
