@@ -2,6 +2,7 @@
 #include "ui_startmeasurment.h"
 
 #include <QMessageBox>
+#include <QString>
 
 StartMeasurment::StartMeasurment(QDialog *parent) :
     QDialog(parent),
@@ -9,6 +10,20 @@ StartMeasurment::StartMeasurment(QDialog *parent) :
 {
     ui->setupUi(this);
     setModal(true);
+    file.openStartWin(param);
+    if( !param.isEmpty() && param.count() == 10 ) {
+        QString(param.at(0)).toInt();
+        ui->checkBox_ch1->setCheckState(static_cast<Qt::CheckState>(QString(param.at(0)).toInt()));
+        ui->checkBox_ch2->setCheckState(static_cast<Qt::CheckState>(QString(param.at(1)).toInt()));
+        ui->checkBox_ch3->setCheckState(static_cast<Qt::CheckState>(QString(param.at(2)).toInt()));
+        ui->checkBox_ch4->setCheckState(static_cast<Qt::CheckState>(QString(param.at(3)).toInt()));
+        ui->lineEdit_ch1->setText(param.at(4));
+        ui->lineEdit_ch2->setText(param.at(5));
+        ui->lineEdit_ch3->setText(param.at(6));
+        ui->lineEdit_ch4->setText(param.at(7));
+        ui->lineEdit_incube->setText(param.at(8));
+        ui->lineEdit_time->setText(param.at(9));
+    }
     cancel = true;
     single = true;
     channel_1 = false;
@@ -25,6 +40,15 @@ StartMeasurment::StartMeasurment(QDialog *parent) :
 
 StartMeasurment::~StartMeasurment()
 {
+    param.clear();
+    param << QString("%1").arg(static_cast<int>(ui->checkBox_ch1->checkState()))
+          << QString("%1").arg(static_cast<int>(ui->checkBox_ch2->checkState()))
+          << QString("%1").arg(static_cast<int>(ui->checkBox_ch3->checkState()))
+          << QString("%1").arg(static_cast<int>(ui->checkBox_ch4->checkState()))
+          << ui->lineEdit_ch1->text() << ui->lineEdit_ch2->text()
+          << ui->lineEdit_ch3->text() << ui->lineEdit_ch4->text()
+          << ui->lineEdit_incube->text() << ui->lineEdit_time->text();
+    file.saveStartWin(param);
     delete ui;
 }
 
@@ -123,20 +147,17 @@ void StartMeasurment::on_radioButton_single_toggled(bool checked)
     ui->checkBox_ch2->setCheckState(Qt::Unchecked);
     ui->checkBox_ch3->setCheckState(Qt::Unchecked);
     ui->checkBox_ch4->setCheckState(Qt::Unchecked);
-    ui->lineEdit_ch1->setText("");
-    ui->lineEdit_ch2->setText("");
-    ui->lineEdit_ch3->setText("");
-    ui->lineEdit_ch4->setText("");
+   // ui->lineEdit_ch1->setText("");
+   // ui->lineEdit_ch2->setText("");
+   // ui->lineEdit_ch3->setText("");
+   // ui->lineEdit_ch4->setText("");
 
     if(checked){
         ui->checkBox_ch1->setText("Канал 1");
-
         ui->checkBox_ch2->setText("Канал 2");
         ui->checkBox_ch2->setVisible(true);
         ui->lineEdit_ch2->setVisible(true);
-
         ui->checkBox_ch3->setText("Канал 3");
-
         ui->checkBox_ch4->setText("Канал 4");
         ui->checkBox_ch4->setVisible(true);
         ui->lineEdit_ch4->setVisible(true);
@@ -185,7 +206,7 @@ void StartMeasurment::on_pushButton_next_clicked()
         num_4 = ui->lineEdit_ch4->text().toInt();
 
     int t = ui->lineEdit_time->text().toInt();
-    if(!(t >= 1 && t <= 900)){
+    if( !(t>=1 && t<=900) ) {
         QMessageBox::information(this, "Агрекола-4к",
         "Время заиси должно быть в диапазоне от 1 до 900 секунд");
         return;

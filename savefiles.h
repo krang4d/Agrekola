@@ -30,6 +30,7 @@ public:
     void openKo3(QStringList &param);
     void openKo4(QStringList &param);
     void openKo5(QStringList &param);
+    void openStartWin(QStringList &param);
 
     void saveAgr1(QStringList param);
     void saveAgr2(QStringList param);
@@ -38,6 +39,7 @@ public:
     void saveKo3(QStringList param);
     void saveKo4(QStringList param);
     void saveKo5(QStringList param);
+    void saveStartWin(QStringList param);
 
 signals:
 

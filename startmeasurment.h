@@ -2,6 +2,7 @@
 #define STARTMEASURMENT_H
 
 #include <QDialog>
+#include "savefiles.h"
 
 namespace Ui {
 class StartMeasurment;
@@ -43,6 +44,8 @@ signals:
 
 private:
     Ui::StartMeasurment *ui;
+    SaveFiles file;
+    QStringList param;
     bool cancel;
     bool single;       //пробы одиночные?
     bool channel_1, channel_2, channel_3, channel_4;

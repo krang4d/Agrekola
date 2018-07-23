@@ -244,6 +244,11 @@ void SaveFiles::openKo5(QStringList &param)
     openParams("Ko5.ini", param);
 }
 
+void SaveFiles::openStartWin(QStringList &param)
+{
+    openParams("StartWin.ini", param);
+}
+
 void SaveFiles::saveAgr1(QStringList param)
 {
     saveParams("Agr1.ini", param);
@@ -277,5 +282,10 @@ void SaveFiles::saveKo4(QStringList param)
 void SaveFiles::saveKo5(QStringList param)
 {
     saveParams("Ko5.ini", param);
+}
+
+void SaveFiles::saveStartWin(QStringList param)
+{
+    saveParams("StartWin.ini", param);
 }
 
