@@ -176,10 +176,11 @@ void SaveFiles::openParams(QString name, QStringList &param)
     file_setting.setFileName(name);
     if(!file_setting.open(QIODevice::ReadWrite | QIODevice::Text))
         qWarning().noquote() << tr("setting file %1 is't opened").arg(name);
-    stream_settings.setDevice(&file_setting);
+    stream_setting.setDevice(&file_setting);
     QString str;
-    while(!stream_settings.atEnd()) {
-        stream_settings >> str;
+    while(!stream_setting.atEnd()) {
+        str = stream_setting.readLine();
+        str.remove("\n");
         param << str;
     }
     //stream_settings >> param[1];
@@ -187,7 +188,7 @@ void SaveFiles::openParams(QString name, QStringList &param)
 //    foreach (QString var, param) {
 //        stream_settings >> var;
 //    }
-    stream_settings.flush();
+    stream_setting.flush();
     file_setting.close();
 }
 
@@ -197,13 +198,14 @@ void SaveFiles::saveParams(QString name, QStringList param)
     //открываем файл настроек для записи параметров
     //if(QFile::exists(name)) {QFile::remove(name); qDebug() << "remove file";}
     file_setting.setFileName(name);
-    if(!file_setting.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate)) qWarning() << tr("setting file %1 is't opened").arg(name);
-
-    stream_settings.setDevice(&file_setting);
+    if(!file_setting.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate))
+        qWarning() << tr("setting file %1 is't opened").arg(name);
+    //stream_settings.setDevice(&file_setting);
     foreach (QString var, param) {
-        stream_settings << var << "\n";
+        if(!var.isEmpty())
+            file_setting.write( (var + "\n").toLocal8Bit(), var.count() + 1 );
     }
-    stream_settings.flush();
+    //stream_settings.flush();
     file_setting.close();
 }
 

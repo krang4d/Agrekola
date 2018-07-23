@@ -6,6 +6,7 @@
 #include <QDebug>
 #include <QEvent>
 #include <QKeyEvent>
+#include <memory>
 
 Widget::Widget(QWidget *parent) :
     QWidget(parent),
@@ -17,7 +18,6 @@ Widget::Widget(QWidget *parent) :
     ui->setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
     setWindowTitle("Программы сбора данных с АЦП(E-154) по 4 каналам");
-
     customPlot1 = ui->frame_1;
     customPlot2 = ui->frame_2;
     customPlot3 = ui->frame_3;
@@ -36,10 +36,10 @@ Widget::~Widget()
 {
     emit stop();
     delete startWin;
-    delete customPlot1;
-    delete customPlot2;
-    delete customPlot3;
-    delete customPlot4;
+//    delete customPlot1;
+//    delete customPlot2;
+//    delete customPlot3;
+//    delete customPlot4;
     delete ui;
 
 }
@@ -310,35 +310,35 @@ void Widget::realtimeDataSlot(QVariantList a)
 void Widget::on_checkBox_1_stateChanged(int arg1)
 {
     if(arg1) setUserMessage("Канал 1: включение перемешивания");
-    else setUserMessage("Канала 1: выключение перемешивания");
+    else setUserMessage("Канал 1: выключение перемешивания");
     emit onmixch1(arg1);
 }
 
 void Widget::on_checkBox_2_stateChanged(int arg1)
 {
     if(arg1) setUserMessage("Канал 2: включение перемешивания");
-    else setUserMessage("Канала 2: выключение перемешивания");
+    else setUserMessage("Канал 2: выключение перемешивания");
     emit onmixch2(arg1);
 }
 
 void Widget::on_checkBox_3_stateChanged(int arg1)
 {
     if(arg1) setUserMessage("Канал 3: включение перемешивания");
-    else setUserMessage("Канала 3: выключение перемешивания");
+    else setUserMessage("Канал 3: выключение перемешивания");
     emit onmixch3(arg1);
 }
 
 void Widget::on_checkBox_4_stateChanged(int arg1)
 {
     if(arg1) setUserMessage("Канал 4: включение перемешивания");
-    else setUserMessage("Канала 4: выключение перемешивания");
+    else setUserMessage("Канал 4: выключение перемешивания");
     emit onmixch4(arg1);
 }
 
 void Widget::on_checkBox_PP_stateChanged(int arg1)
 {
     if(arg1) setUserMessage("Канал РР: включение перемешивания");
-    else setUserMessage("Канала РР: выключение перемешивания");
+    else setUserMessage("Канал РР: выключение перемешивания");
     emit onmixpp(arg1);
 }
 

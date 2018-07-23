@@ -18,7 +18,7 @@ useE154::~useE154(void)
     CloseDevice();
     delete[] pDestination;
 	ReleaseAPIInstance();
-    if(pLoadDll) { delete pLoadDll; pLoadDll = NULL; }
+    if(pLoadDll) { delete pLoadDll; }
     qDebug() << "~useE154()";
 }
 

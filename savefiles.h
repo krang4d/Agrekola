@@ -48,7 +48,7 @@ protected:
     void openParams(QString name, QStringList &param);
     void saveParams(QString name, QStringList param);
     QFile file_setting, file_data;
-    QTextStream stream_settings, stream_data;
+    QTextStream stream_setting, stream_data;
     QDir dataDir, settingDir;
 };
 
