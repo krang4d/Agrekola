@@ -7,7 +7,7 @@ Ko1::Ko1(QWidget *parent) :
 {
     ui->setupUi(this);
     file.openKo1(param);
-    if(!param.isEmpty()) {
+    if(!param.isEmpty() && param.count() == 2) {
         ui->lineEdit_1->setText(param.at(0));
         ui->lineEdit_2->setText(param.at(1));
     }

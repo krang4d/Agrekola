@@ -43,8 +43,10 @@ int ChoiseDialog::getTypeOfWidget() const
 
 ChoiseDialog::~ChoiseDialog()
 {
-    qDebug() << "call ChoiseDialog::~ChoiseDialog()";
     delete ui;
+    qDebug() << "call ChoiseDialog::~ChoiseDialog()";
+    QThread::currentThread()->msleep(200);
+
 }
 
 void ChoiseDialog::on_testButton_clicked()
