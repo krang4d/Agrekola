@@ -6,7 +6,6 @@
 #include <QDebug>
 #include <QEvent>
 #include <QKeyEvent>
-#include <memory>
 
 Widget::Widget(QWidget *parent) :
     QWidget(parent),
@@ -284,10 +283,14 @@ void Widget::realtimeDataSlot(QVariantList a)
       }
       if(isData())
       {
-          y1.push_back(a[0].toDouble());
-          y2.push_back(a[1].toDouble());
-          y3.push_back(a[2].toDouble());
-          y4.push_back(a[3].toDouble());
+          if(startWin->isChannel_1())
+            y1.push_back(a[0].toDouble());
+          if(startWin->isChannel_2())
+            y2.push_back(a[1].toDouble());
+          if(startWin->isChannel_3())
+            y3.push_back(a[2].toDouble());
+          if(startWin->isChannel_4())
+            y4.push_back(a[3].toDouble());
           x.push_back(key);
       }
       lastPointKey = key;
@@ -492,7 +495,8 @@ void Widget::incubeTimeout()
     setUserMessage("Время инкубации истекло, добавьте стартовый реагеет");
     QMessageBox::information(this, "Инкубация",
                              "Время инкубации истекло, добавьте стартовый реагент\n"
-                             "и нажмите кнопку ОК");
+                             "и нажмите кнопку СТАРТ для соответствующего канала, если\n"
+                             "измерение не запустилось автоматически. Нажмите ОК для продолжения.");
     emit status(QString("Время инкубации вышло"));
     //запуск измерения
     setUserMessage("Измерение");

@@ -3,12 +3,14 @@
 #include <QMessageBox>
 #include <QKeyEvent>
 #include <QThread>
+#include <memory>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
     agrekola(new useE154),
-    centerWidget(new Widget)
+    centerWidget(new Widget),
+    vPlots(new ViewPlot)
 {
     ui->setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
@@ -113,6 +115,7 @@ bool MainWindow::eventFilter(QObject *watched, QEvent *event)
     {
         //centerWidget->stop();
         ch->show();
+        //return true;
         return QMainWindow::eventFilter(watched, event);
     }
     return QMainWindow::eventFilter(watched, event);
@@ -122,4 +125,11 @@ void MainWindow::on_menu_triggered()
 {
     ch->show();
     close();
+}
+
+void MainWindow::on_plots_triggered()
+{
+    std::unique_ptr<ViewPlot> plots(new ViewPlot);
+    plots->exec();
+    QThread::currentThread()->msleep(3000);
 }

@@ -5,6 +5,7 @@
 #include "choisedialog.h"
 #include "widget.h"
 #include "useE154.h"
+#include "viewplot.h"
 
 class ChoiseDialog;
 
@@ -27,12 +28,14 @@ private:
 
 private slots:
     void on_menu_triggered();
+    void on_plots_triggered();
 
 private:
     Ui::MainWindow *ui;
     useE154 *agrekola;
     Widget *centerWidget;
     ChoiseDialog *ch;
+    ViewPlot *vPlots;
 };
 
 #endif // MAINWINDOW_H

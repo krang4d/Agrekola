@@ -32,6 +32,10 @@ public:
     explicit ChoiseDialog(QDialog *parent = 0);
     int getTypeOfWidget() const;
 
+    void showPlot() {
+        on_pushButton_clicked();
+    }
+
     ~ChoiseDialog();
 
 private slots:
@@ -45,7 +49,6 @@ private slots:
     void on_ko5Button_clicked();
     void on_testButton_clicked();
     void calibration();
-
     void on_pushButton_clicked();
 
 private:

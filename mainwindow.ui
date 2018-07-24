@@ -20,53 +20,6 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget"/>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>1300</width>
-     <height>25</height>
-    </rect>
-   </property>
-   <widget class="QMenu" name="file">
-    <property name="title">
-     <string>Файл</string>
-    </property>
-    <addaction name="menu"/>
-    <addaction name="action_save"/>
-    <addaction name="action_print"/>
-   </widget>
-   <widget class="QMenu" name="plots">
-    <property name="title">
-     <string>Графики</string>
-    </property>
-   </widget>
-   <widget class="QMenu" name="abaut">
-    <property name="title">
-     <string>О программе</string>
-    </property>
-   </widget>
-   <widget class="QMenu" name="measurment">
-    <property name="title">
-     <string>Измерение</string>
-    </property>
-    <addaction name="action_abort"/>
-    <addaction name="action_setting"/>
-   </widget>
-   <widget class="QMenu" name="calibration">
-    <property name="title">
-     <string>Калибровка</string>
-    </property>
-    <addaction name="action_calibr1"/>
-    <addaction name="action_propety"/>
-   </widget>
-   <addaction name="file"/>
-   <addaction name="measurment"/>
-   <addaction name="calibration"/>
-   <addaction name="plots"/>
-   <addaction name="abaut"/>
-  </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <widget class="QToolBar" name="toolBar">
    <property name="windowTitle">
@@ -79,11 +32,42 @@
     <bool>false</bool>
    </attribute>
   </widget>
-  <action name="action_abort">
-   <property name="text">
-    <string>Прервать</string>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1300</width>
+     <height>21</height>
+    </rect>
    </property>
-  </action>
+   <widget class="QMenu" name="file">
+    <property name="title">
+     <string>Файл</string>
+    </property>
+    <addaction name="menu"/>
+    <addaction name="action_save"/>
+    <addaction name="action_print"/>
+    <addaction name="separator"/>
+    <addaction name="plots"/>
+   </widget>
+   <widget class="QMenu" name="measurment">
+    <property name="title">
+     <string>Измерение</string>
+    </property>
+    <addaction name="action_setting"/>
+   </widget>
+   <widget class="QMenu" name="calibration">
+    <property name="title">
+     <string>Калибровка</string>
+    </property>
+    <addaction name="action_calibr1"/>
+    <addaction name="action_propety"/>
+   </widget>
+   <addaction name="file"/>
+   <addaction name="measurment"/>
+   <addaction name="calibration"/>
+  </widget>
   <action name="action_setting">
    <property name="text">
     <string>Настройка</string>
@@ -112,6 +96,11 @@
   <action name="menu">
    <property name="text">
     <string>Другой тест</string>
+   </property>
+  </action>
+  <action name="plots">
+   <property name="text">
+    <string>Графики</string>
    </property>
   </action>
  </widget>

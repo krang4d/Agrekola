@@ -138,7 +138,7 @@ void ViewPlot::addData()
 
 void ViewPlot::on_pushButton_back_clicked()
 {
-    close();
+    hide();
 }
 
 void ViewPlot::on_pushButton_open_clicked()
@@ -404,7 +404,7 @@ void ViewPlot::hasGraph3Selected(QCPDataSelection selection)
 
 void ViewPlot::hasSelected(QCP::SelectionType tipe)
 {
-    switch(tipe){
+    switch(tipe) {
         case QCP::stDataRange : qDebug() << "ViewPlot::hasSelected(QCP::stDataRange)"; break;
         default : qDebug() << "ViewPlot::hasSelected(default)";
     }
