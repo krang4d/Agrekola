@@ -527,18 +527,33 @@ void Widget::writeData()
     ui->progressBar->setFormat("Запись данных %p%");
     qDebug() << "Запись данных";
     QStringList strList;
-    strList << QString("N\tV1#%1\tV2#%2\tV3#%3\tV4#%4\tt#%5\tti#%6\tp#%7\n")
-                        .arg(startWin->getNum_1()).arg(startWin->getNum_2())
-                        .arg(startWin->getNum_3()).arg(startWin->getNum_4())
-                        .arg(startWin->getTime()).arg(startWin->getTimeIncube())
-                        .arg(startWin->isSingle());
+    strList << QString("N\t");
+    if(!y1.isEmpty())
+        strList << QString("V1#%1\t").arg(startWin->getNum_1());
+    if(!y2.isEmpty())
+        strList << QString("V2#%1\t").arg(startWin->getNum_2());
+    if(!y3.isEmpty())
+        strList << QString("V3#%1\t").arg(startWin->getNum_3());
+    if(!y4.isEmpty())
+        strList << QString("V4#%1\t").arg(startWin->getNum_4());
+    strList << QString("t#%5\tti#%6\tp#%7\n").arg(startWin->getTime())
+                                            .arg(startWin->getTimeIncube())
+                                            .arg(startWin->isSingle());
     for(int i=0; i<x.length(); i++)
     {
         ui->progressBar->setMaximum(x.length());
         ui->progressBar->setValue(i);//i*100/x.length());
-        strList << QString("%1\t%2\t%3\t%4\t%5\t%6\n")
-                       .arg(i).arg(y1[i]).arg(y2[i]).arg(y3[i]).arg(y4[i])
-                       .arg(x[i]);
+
+        strList << QString("%1\t").arg(i);
+        if(!y1.isEmpty())
+            strList << QString("%1\t").arg(y1[i]);
+        if(!y2.isEmpty())
+            strList << QString("%1\t").arg(y2[i]);
+        if(!y3.isEmpty())
+            strList << QString("%1\t").arg(y3[i]);
+        if(!y4.isEmpty())
+            strList << QString("%1\t").arg(y4[i]);
+        strList << QString("%1\n").arg(x[i]);
     }
     y1.clear();
     y2.clear();
