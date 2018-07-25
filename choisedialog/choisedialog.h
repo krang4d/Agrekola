@@ -31,15 +31,11 @@ class ChoiseDialog : public QDialog
 public:
     explicit ChoiseDialog(QDialog *parent = 0);
     int getTypeOfWidget() const;
-
-    void showPlot() {
-        on_pushButton_clicked();
-    }
-
     ~ChoiseDialog();
 
 private slots:
     void startMeasurement();
+    void calibration();
     void on_agr1Button_clicked();
     void on_agr2Button_clicked();
     void on_ko1Button_clicked();
@@ -48,19 +44,11 @@ private slots:
     void on_ko4Button_clicked();
     void on_ko5Button_clicked();
     void on_testButton_clicked();
-    void calibration();
-    void on_pushButton_clicked();
+    void on_viewPlotsButton_clicked();
 
 private:
 
     Ui::ChoiseDialog *ui;
-    Agr1 *agr1; //Определение параметров агрегации
-    Agr2 *agr2; //Определение активности фактора Виллебранда
-    Ko1 *ko1;   //Время свертывания
-    Ko2 *ko2;   //АЧТВ
-    Ko3 *ko3;   //Фибриноген
-    Ko4 *ko4;   //Тромбин
-    Ko5 *ko5;   //Протромбиновый комплекс
 };
 
 #endif // CHOISEDIALOG_H

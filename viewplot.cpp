@@ -1,7 +1,7 @@
 #include "viewplot.h"
 #include "ui_viewplot.h"
 
-ViewPlot::ViewPlot(QDialog *parent) :
+ViewPlot::ViewPlot(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ViewPlot)
 {
@@ -44,14 +44,14 @@ void ViewPlot::initPlots()
 
 
     //customPlot->setSelectionRectMode(QCP::srmSelect);
-    // create and prepare a text layout element:
+    //create and prepare a text layout element:
     //QCPTextElement *legendTitle = new QCPTextElement(customPlot);
     //legendTitle->setLayer(customPlot->legend->layer()); // place text element on same layer as legend, or it ends up below legend
     //legendTitle->setText("Канал(номер пробы)");
     //legendTitle->setFont(QFont("sans", 9, QFont::Bold));
-    // then we add it to the QCPLegend (which is a subclass of QCPLayoutGrid):
-//    if (customPlot->legend->hasElement(0, 0)) // if top cell isn't empty, insert an empty row at top
-//      customPlot->legend->insertRow(0);
+    //then we add it to the QCPLegend (which is a subclass of QCPLayoutGrid):
+    //if (customPlot->legend->hasElement(0, 0)) // if top cell isn't empty, insert an empty row at top
+    //customPlot->legend->insertRow(0);
     //customPlot->legend->addElement(0, 0, legendTitle); // place the text element into the empty cell
     customPlot->xAxis->setLabel("сек");
     customPlot->yAxis->setLabel("Вольт");
@@ -138,7 +138,7 @@ void ViewPlot::addData()
 
 void ViewPlot::on_pushButton_back_clicked()
 {
-    hide();
+    close();
 }
 
 void ViewPlot::on_pushButton_open_clicked()

@@ -188,7 +188,7 @@
     </widget>
    </item>
    <item row="2" column="0">
-    <widget class="QPushButton" name="pushButton">
+    <widget class="QPushButton" name="viewPlotsButton">
      <property name="text">
       <string>Просмотр данных</string>
      </property>
@@ -300,7 +300,7 @@
   <tabstop>ko5Button</tabstop>
   <tabstop>agr1Button</tabstop>
   <tabstop>agr2Button</tabstop>
-  <tabstop>pushButton</tabstop>
+  <tabstop>viewPlotsButton</tabstop>
   <tabstop>testButton</tabstop>
   <tabstop>exitButton</tabstop>
  </tabstops>

@@ -35,7 +35,6 @@ private:
     useE154 *agrekola;
     Widget *centerWidget;
     ChoiseDialog *ch;
-    ViewPlot *vPlots;
 };
 
 #endif // MAINWINDOW_H

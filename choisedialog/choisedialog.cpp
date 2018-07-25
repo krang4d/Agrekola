@@ -10,14 +10,23 @@ ChoiseDialog::ChoiseDialog(QDialog *parent) :
     ui->setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
     setWindowFlags(Qt::Window | Qt::MSWindowsFixedSizeDialogHint);
-    agr1 = static_cast<Agr1 *>(ui->stackedWidget->widget(1));
-    agr2 = static_cast<Agr2 *>(ui->stackedWidget->widget(2));
 
-    ko1 = static_cast<Ko1 *>(ui->stackedWidget->widget(3));
-    ko2 = static_cast<Ko2 *>(ui->stackedWidget->widget(4));
-    ko3 = static_cast<Ko3 *>(ui->stackedWidget->widget(5));
-    ko4 = static_cast<Ko4 *>(ui->stackedWidget->widget(6));
-    ko5 = static_cast<Ko5 *>(ui->stackedWidget->widget(7));
+    //    Agr1 *agr1; //Определение параметров агрегации
+    //    Agr2 *agr2; //Определение активности фактора Виллебранда
+    //    Ko1 *ko1;   //Время свертывания
+    //    Ko2 *ko2;   //АЧТВ
+    //    Ko3 *ko3;   //Фибриноген
+    //    Ko4 *ko4;   //Тромбин
+    //    Ko5 *ko5;   //Протромбиновый комплекс
+
+    QPointer<Agr1> agr1 = static_cast<Agr1 *>(ui->stackedWidget->widget(1));
+    QPointer<Agr2> agr2 = static_cast<Agr2 *>(ui->stackedWidget->widget(2));
+
+    QPointer<Ko1> ko1 = static_cast<Ko1 *>(ui->stackedWidget->widget(3));
+    QPointer<Ko2> ko2 = static_cast<Ko2 *>(ui->stackedWidget->widget(4));
+    QPointer<Ko3> ko3 = static_cast<Ko3 *>(ui->stackedWidget->widget(5));
+    QPointer<Ko4> ko4 = static_cast<Ko4 *>(ui->stackedWidget->widget(6));
+    QPointer<Ko5> ko5 = static_cast<Ko5 *>(ui->stackedWidget->widget(7));
 
     connect(agr1, SIGNAL(measurement()), SLOT(startMeasurement()));
     //connect(agr2, SIGNAL(measurement()), SLOT(accept()));
@@ -51,7 +60,7 @@ ChoiseDialog::~ChoiseDialog()
 
 void ChoiseDialog::on_testButton_clicked()
 {
-    useE154 *agrekola = new useE154;
+    QPointer<useE154> agrekola = new useE154;
     Widget *widget =new Widget(this);
     widget->setWindowFlags(Qt::Dialog);
     //ChoiseDialog choiseDlg;
@@ -75,21 +84,21 @@ void ChoiseDialog::on_testButton_clicked()
     widget->setUserMessage(agrekola->GetInformation());
 }
 
+void ChoiseDialog::startMeasurement()
+{
+    //QMessageBox msg_accept(QMessageBox::Warning, "accept", QString("i =") + QString(std::to_string(i).c_str()), QMessageBox::Ok);
+    //msg_accept.exec();
+    QPointer<MainWindow> mw = new MainWindow(this);
+    mw->newShow();
+    hide();
+}
+
 void ChoiseDialog::calibration()
 {
     int i = ui->stackedWidget->currentIndex();
     QMessageBox t(QMessageBox::Warning, "calibration", QString("calibration #") + QString(std::to_string(i).c_str()), QMessageBox::Ok);
     t.exec();
     //if(i == 2) kalibragr2->show();
-}
-
-void ChoiseDialog::startMeasurement()
-{
-    //QMessageBox msg_accept(QMessageBox::Warning, "accept", QString("i =") + QString(std::to_string(i).c_str()), QMessageBox::Ok);
-    //msg_accept.exec();
-    MainWindow *mw = new MainWindow(this);
-    mw->newShow();
-    hide();
 }
 
 void ChoiseDialog::on_agr1Button_clicked()
@@ -127,8 +136,8 @@ void ChoiseDialog::on_ko5Button_clicked()
     ui->stackedWidget->setCurrentIndex(7);
 }
 
-void ChoiseDialog::on_pushButton_clicked()
+void ChoiseDialog::on_viewPlotsButton_clicked()
 {
-    ViewPlot *vp = new ViewPlot(this);
+    QPointer<ViewPlot> vp = new ViewPlot(this);
     vp->show();
 }

@@ -9,8 +9,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
     agrekola(new useE154),
-    centerWidget(new Widget),
-    vPlots(new ViewPlot)
+    centerWidget(new Widget)
 {
     ui->setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
@@ -29,7 +28,6 @@ MainWindow::~MainWindow()
     agrekola->stopThread();
     QThread::currentThread()->msleep(100); //ожидание завершения работы потока useE154
     delete agrekola;
-    delete centerWidget;
     delete ui;
 }
 
@@ -115,6 +113,7 @@ bool MainWindow::eventFilter(QObject *watched, QEvent *event)
     {
         //centerWidget->stop();
         ch->show();
+        qDebug() << "Event Close is come!";
         //return true;
         return QMainWindow::eventFilter(watched, event);
     }
@@ -129,7 +128,6 @@ void MainWindow::on_menu_triggered()
 
 void MainWindow::on_plots_triggered()
 {
-    std::unique_ptr<ViewPlot> plots(new ViewPlot);
-    plots->exec();
-    QThread::currentThread()->msleep(3000);
+    QPointer<ViewPlot> plots = new ViewPlot(this);
+    plots->show();
 }

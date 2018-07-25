@@ -17,7 +17,7 @@ class ViewPlot : public QDialog
     Q_OBJECT
 
 public:
-    explicit ViewPlot(QDialog *parent = 0);
+    explicit ViewPlot(QWidget *parent = 0);
     ~ViewPlot();
     void initTable();
     void initPlots();
