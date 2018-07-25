@@ -113,6 +113,32 @@ void ViewPlot::rePlot()
 void ViewPlot::addData()
 {
     qDebug() << "count" << t.count();
+    int n = 0;
+    ui->groupBox->setEnabled(true);
+    if(v1.isEmpty()) ui->checkBox_1->setVisible(false);
+    else {
+        ui->checkBox_1->setChecked(true);
+        ui->checkBox_1->setVisible(true);
+        n++;
+    }
+    if(v2.isEmpty()) ui->checkBox_2->setVisible(false);
+    else {
+        ui->checkBox_2->setChecked(true);
+        ui->checkBox_2->setVisible(true);
+        n++;
+    }
+    if(v3.isEmpty()) ui->checkBox_3->setVisible(false);
+    else {
+        ui->checkBox_3->setChecked(true);
+        ui->checkBox_3->setVisible(true);
+        n++;
+    }
+    if(v4.isEmpty()) ui->checkBox_4->setVisible(false);
+    else {
+        ui->checkBox_4->setChecked(true);
+        ui->checkBox_4->setVisible(true);
+        n++;
+    }
     tb->setRowCount(t.count());
     for(int i = 0; i<t.count(); i++)
     {
@@ -122,29 +148,30 @@ void ViewPlot::addData()
         QTableWidgetItem *iv3;
         QTableWidgetItem *iv4;
 
-        if(!v1.isEmpty()) iv1 = new QTableWidgetItem(tr("%1").arg(v1.at(i)));
-        else iv1 = new QTableWidgetItem(tr("0"));
-        if(!v2.isEmpty()) iv2 = new QTableWidgetItem(tr("%1").arg(v2.at(i)));
-        else iv2 = new QTableWidgetItem(tr("0"));
-        if(!v3.isEmpty()) iv3 = new QTableWidgetItem(tr("%1").arg(v3.at(i)));
-        else iv3 = new QTableWidgetItem(tr("0"));
-        if(!v4.isEmpty()) iv4 = new QTableWidgetItem(tr("%1").arg(v4.at(i)));
-        else iv4 = new QTableWidgetItem(tr("0"));
-
+        if(!v1.isEmpty()) {
+            iv1 = new QTableWidgetItem(tr("%1").arg(v1.at(i)));
+            tb->setItem(i, 0, iv1);
+        }
+        //else iv1 = new QTableWidgetItem(tr("0"));
+        if(!v2.isEmpty()) {
+            iv2 = new QTableWidgetItem(tr("%1").arg(v2.at(i)));
+            tb->setItem(i, 1, iv2);
+        }
+        //else iv2 = new QTableWidgetItem(tr("0"));
+        if(!v3.isEmpty()) {
+            iv3 = new QTableWidgetItem(tr("%1").arg(v3.at(i)));
+            tb->setItem(i, 2, iv3);
+        }
+        //else iv3 = new QTableWidgetItem(tr("0"));
+        if(!v4.isEmpty()) {
+            iv4 = new QTableWidgetItem(tr("%1").arg(v4.at(i)));
+            tb->setItem(i, 3, iv4);
+        }
+        //else iv4 = new QTableWidgetItem(tr("0"));
         //qDebug() << "t =" << t[i];
-
-        tb->setItem(i, 0, iv1);
-        tb->setItem(i, 1, iv2);
-        tb->setItem(i, 2, iv3);
-        tb->setItem(i, 3, iv4);
-        tb->setItem(i, 4, it);
+        tb->setItem(i, n, it);
     }
     rePlot();
-    ui->groupBox->setEnabled(true);
-    ui->checkBox_1->setChecked(true);
-    ui->checkBox_2->setChecked(true);
-    ui->checkBox_3->setChecked(true);
-    ui->checkBox_4->setChecked(true);
 }
 
 void ViewPlot::on_pushButton_back_clicked()
@@ -154,9 +181,9 @@ void ViewPlot::on_pushButton_back_clicked()
 
 void ViewPlot::on_pushButton_open_clicked()
 {
-    tb->clear();
     QString fileName = SaveFiles::openData(this, v1,v2,v3,v4,t,param);
     if(fileName.isEmpty()) return;
+    tb->clear();
     ui->label_filename->setText(fileName);
     addData();
 }
