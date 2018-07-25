@@ -84,8 +84,9 @@ void ViewPlot::initPlots()
 
 void ViewPlot::rePlot()
 {
-    const QStringList headList = {param.at(0), param.at(1), param.at(2), param.at(3), param.at(4)};
-    qDebug() << "parameters: "<< param.at(0) << param.at(1) << param.at(2) << param.at(3) << param.at(4);
+
+    const QStringList headList = param; //{param.at(0), param.at(1), param.at(2), param.at(3), param.at(4)};
+    qDebug() << "parameters: "<< param.join(' ');
     tb->setHorizontalHeaderLabels(headList);
     customPlot->xAxis->setRange(0, t.back());
     customPlot->yAxis->setRange(-6, 6);
@@ -116,10 +117,20 @@ void ViewPlot::addData()
     for(int i = 0; i<t.count(); i++)
     {
         QTableWidgetItem *it = new QTableWidgetItem(tr("%1").arg(t.at(i)));
-        QTableWidgetItem *iv1 = new QTableWidgetItem(tr("%1").arg(v1.at(i)));
-        QTableWidgetItem *iv2 = new QTableWidgetItem(tr("%1").arg(v2.at(i)));
-        QTableWidgetItem *iv3 = new QTableWidgetItem(tr("%1").arg(v3.at(i)));
-        QTableWidgetItem *iv4 = new QTableWidgetItem(tr("%1").arg(v4.at(i)));
+        QTableWidgetItem *iv1;
+        QTableWidgetItem *iv2;
+        QTableWidgetItem *iv3;
+        QTableWidgetItem *iv4;
+
+        if(!v1.isEmpty()) iv1 = new QTableWidgetItem(tr("%1").arg(v1.at(i)));
+        else iv1 = new QTableWidgetItem(tr("0"));
+        if(!v2.isEmpty()) iv2 = new QTableWidgetItem(tr("%1").arg(v2.at(i)));
+        else iv2 = new QTableWidgetItem(tr("0"));
+        if(!v3.isEmpty()) iv3 = new QTableWidgetItem(tr("%1").arg(v3.at(i)));
+        else iv3 = new QTableWidgetItem(tr("0"));
+        if(!v4.isEmpty()) iv4 = new QTableWidgetItem(tr("%1").arg(v4.at(i)));
+        else iv4 = new QTableWidgetItem(tr("0"));
+
         //qDebug() << "t =" << t[i];
 
         tb->setItem(i, 0, iv1);

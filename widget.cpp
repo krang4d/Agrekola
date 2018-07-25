@@ -530,15 +530,19 @@ void Widget::writeData()
     strList << QString("N\t");
     if(!y1.isEmpty())
         strList << QString("V1#%1\t").arg(startWin->getNum_1());
+    else strList << QString("V1#0\t");
     if(!y2.isEmpty())
         strList << QString("V2#%1\t").arg(startWin->getNum_2());
+    else strList << QString("V2#0\t");
     if(!y3.isEmpty())
         strList << QString("V3#%1\t").arg(startWin->getNum_3());
+    else strList << QString("V3#0\t");
     if(!y4.isEmpty())
         strList << QString("V4#%1\t").arg(startWin->getNum_4());
+    else strList << QString("V4#0\t");
     strList << QString("t#%5\tti#%6\tp#%7\n").arg(startWin->getTime())
-                                            .arg(startWin->getTimeIncube())
-                                            .arg(startWin->isSingle());
+                                             .arg(startWin->getTimeIncube())
+                                             .arg(startWin->isSingle());
     for(int i=0; i<x.length(); i++)
     {
         ui->progressBar->setMaximum(x.length());

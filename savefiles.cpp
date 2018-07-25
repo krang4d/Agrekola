@@ -60,10 +60,10 @@ QString SaveFiles::openData(QWidget *parent, QList<double> &v1, QList<double> &v
         return "";
     }
     //инициализируем регулярных выражения
-    const QString v1pattern("(V1#[0-9]{1,8})");
-    const QString v2pattern("(V2#[0-9]{1,8})");
-    const QString v3pattern("(V3#[0-9]{1,8})");
-    const QString v4pattern("(V4#[0-9]{1,8})");
+    const QString v1pattern("(V1#([0-9]{1,8}))");
+    const QString v2pattern("(V2#([0-9]{1,8}))");
+    const QString v3pattern("(V3#([0-9]{1,8}))");
+    const QString v4pattern("(V4#([0-9]{1,8}))");
     const QString tpattern("(t#[0-9]{1,8})");
     const QString tipattern("(ti#[0-9]{1,8})");
     const QString ppattern("(p#[0-9]{1,8})");
@@ -75,19 +75,25 @@ QString SaveFiles::openData(QWidget *parent, QList<double> &v1, QList<double> &v
 
     rx.setPattern(v1pattern);
     rx.indexIn(firstline);
-    param << rx.cap(1);
+    if(rx.cap(2).toInt() != 0) {
+        param << rx.cap(1);
+        qDebug() << "v1pattern(\"(V1#([0-9]{1,8}))\")" << " cap2 =" <<rx.cap(2);
+    }
 
     rx.setPattern(v2pattern);
     rx.indexIn(firstline);
-    param << rx.cap(1);
+    if(rx.cap(2).toInt() != 0)
+        param << rx.cap(1);
 
     rx.setPattern(v3pattern);
     rx.indexIn(firstline);
-    param << rx.cap(1);
+    if(rx.cap(2).toInt() != 0)
+        param << rx.cap(1);
 
     rx.setPattern(v4pattern);
     rx.indexIn(firstline);
-    param << rx.cap(1);
+    if(rx.cap(2).toInt() != 0)
+        param << rx.cap(1);
 
     rx.setPattern(tpattern);
     rx.indexIn(firstline);
@@ -102,24 +108,60 @@ QString SaveFiles::openData(QWidget *parent, QList<double> &v1, QList<double> &v
     param << rx.cap(1);
 
     //считываем строки и получаем с помощью регулярного выражения все значения
+    QString pat("-?[0-9]\\.[0-9]{2,}");
+    rx.setPattern(pat);
+    QString line = file.readLine();
+    QStringList stl = line.split('\t');
+    //int i = rx.captureCount();
+    qDebug() << "QStringList = " << stl.join(" ") << "Count " << stl.count();
+
     rx.setPattern(datapattern);
     //int i = 0;
     while(!file.atEnd())
     {
         //qDebug() << "pos" << file.pos();
         QString line = file.readLine();
-        rx.indexIn(line);
+        line.remove("\n");
+        //rx.indexIn(line);
         //qDebug() << line;
         //if(i==0)  {i++; continue;}
-        v1.push_back(rx.cap(2).toDouble());
-        v2.push_back(rx.cap(3).toDouble());
-        v3.push_back(rx.cap(4).toDouble());
-        v4.push_back(rx.cap(5).toDouble());
-        t.push_back(rx.cap(6).toDouble());
+        QStringList stl = line.split('\t');
+        switch(stl.count()) {
+            case 3: {
+                v1.push_back(stl.at(1).toDouble());
+                t.push_back(stl.at(2).toDouble());
+            } break;
+            case 4: {
+                v1.push_back(stl.at(1).toDouble());
+                v2.push_back(stl.at(2).toDouble());
+                t.push_back(stl.at(3).toDouble());
+            } break;
+            case 5: {
+                v1.push_back(stl.at(1).toDouble());
+                v2.push_back(stl.at(2).toDouble());
+                v3.push_back(stl.at(3).toDouble());
+                t.push_back(stl.at(4).toDouble());
+            }
+            case 6: {
+                v1.push_back(stl.at(1).toDouble());
+                v2.push_back(stl.at(2).toDouble());
+                v3.push_back(stl.at(3).toDouble());
+                v4.push_back(stl.at(4).toDouble());
+                t.push_back(stl.at(5).toDouble());
+            } break;
+        default : qDebug() << "SaveFile: Value out of range";
+        }
+
+//        v1.push_back(rx.cap(2).toDouble());
+//        v2.push_back(rx.cap(3).toDouble());
+//        v3.push_back(rx.cap(4).toDouble());
+//        v4.push_back(rx.cap(5).toDouble());
+//        t.push_back(rx.cap(6).toDouble());
     }
     double t1 = t.first();
     for(int i = 0; i < t.size(); ++i) {
         t[i] -= t1;
+        qDebug() << t[i];
     }
     qDebug() << fileName;
     file.close();
