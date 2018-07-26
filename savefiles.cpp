@@ -3,7 +3,7 @@
 SaveFiles::SaveFiles(QObject *parent) : QObject(parent)
 {
     setupFiles();
-    qDebug() << "setting: " << settingDir.path() << "data: " << dataDir.path() << "user" << OnlyOne::Instance().file_user.fileName();
+    qDebug() << "setting: " << settingDir.path() << "data: " << dataDir.path() << "user" << OnlyOneFile::Instance().file_user.fileName();
 }
 
 SaveFiles::~SaveFiles()
@@ -207,7 +207,7 @@ void SaveFiles::setupFiles()
 
 void SaveFiles::writeUserMsg(QString msg)
 {
-    OnlyOne::Instance().stream_user << msg << "\n";
+    OnlyOneFile::Instance().stream_user << msg << "\n";
 }
 
 

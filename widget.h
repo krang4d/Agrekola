@@ -75,7 +75,7 @@ private slots:
 
 private:
     Ui::Widget *ui;
-    StartMeasurment *startWin;
+    QPointer<StartMeasurment> startWin;
     QCustomPlot *customPlot1;
     QCustomPlot *customPlot2;
     QCustomPlot *customPlot3;

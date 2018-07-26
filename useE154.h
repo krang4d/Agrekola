@@ -101,3 +101,19 @@ private:
 	WORD TtlIN;		//Состояние входных портов
     volatile bool thread_stop;
 };
+
+class OnlyOneE154
+{
+public:
+    static OnlyOneE154& Instance()
+    {
+            static OnlyOneE154 theSingleInstance;
+            return theSingleInstance;
+    }
+
+private:
+    OnlyOneE154(){}
+    OnlyOneE154(const OnlyOneE154& root) = delete;
+    OnlyOneE154& operator=(const OnlyOneE154&) = delete;
+};
+

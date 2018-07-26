@@ -26,7 +26,6 @@ Widget::Widget(QWidget *parent) :
     setupRealtimeData();
     setupTimers();
 
-
     installEventFilter(this);
     QWidget::connect(startWin, SIGNAL(startMeasurment()), this, SLOT(getData()));
 }
@@ -35,10 +34,6 @@ Widget::~Widget()
 {
     emit stop();
     delete startWin;
-//    delete customPlot1;
-//    delete customPlot2;
-//    delete customPlot3;
-//    delete customPlot4;
     delete ui;
 
 }

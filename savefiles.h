@@ -54,19 +54,19 @@ protected:
     QDir dataDir, settingDir;
 };
 
-class OnlyOne
+class OnlyOneFile
 {
 public:
     QFile file_user;
     QTextStream stream_user;
-    static OnlyOne& Instance()
+    static OnlyOneFile& Instance()
     {
-            static OnlyOne theSingleInstance;
+            static OnlyOneFile theSingleInstance;
             return theSingleInstance;
     }
 
 private:
-    OnlyOne(){
+    OnlyOneFile(){
         QDir dir;
         QString path = QDir::homePath();
         dir.cd(path); //переходим в папку home
@@ -82,8 +82,8 @@ private:
                 qDebug() << "user file is't opened";
         stream_user.setDevice(&file_user);
     }
-    OnlyOne(const OnlyOne& root) = delete;
-    OnlyOne& operator=(const OnlyOne&) = delete;
+    OnlyOneFile(const OnlyOneFile& root) = delete;
+    OnlyOneFile& operator=(const OnlyOneFile&) = delete;
 };
 
 #endif // SAVEFILES_H
