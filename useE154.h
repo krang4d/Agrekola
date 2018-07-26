@@ -49,7 +49,6 @@ public:
     int OpenDevice();
     void CloseDevice();
 
-    QString GetVersion(void);
     QString GetUserMessages() const;
     QString GetUsbSpeed();
     QString GetInformation();
@@ -57,9 +56,6 @@ public:
     bool GetStatusTD();
 
 protected:
-    void initAPIInstance();
-    void ReleaseAPIInstance();					//(char *ErrorString, bool AbortionFlag);
-    void initModuleHandler();
     void initPorts();                           //инициализация всех выводов TTL
     void funThread();
     void initADC();
@@ -87,9 +83,8 @@ public slots:
     void stopThread();
 
 private:
-    TLoadDll *pLoadDll;							// указатель на класс динамической загрузки DLL
+
 	ILE154 *pModule;							// указатель на интерфейс модуля
-	HANDLE ModuleHandle;						// дескриптор устройства
 	MODULE_DESCRIPTION_E154 ModuleDescription;	// структура с полной информацией о модуле
     IO_REQUEST_LUSBAPI IoReq;                   // структура с параметрами запроса на ввод/вывод данных
     ADC_PARS_E154 ap;							// структура параметров работы АЦП модуля
@@ -104,6 +99,10 @@ private:
 
 class OnlyOneE154
 {
+    TLoadDll *pLoadDll;							// указатель на класс динамической загрузки DLL
+    ILE154 *pModule;							// указатель на интерфейс модуля
+    //HANDLE ModuleHandle;						// дескриптор устройства
+
 public:
     static OnlyOneE154& Instance()
     {
@@ -111,9 +110,65 @@ public:
             return theSingleInstance;
     }
 
+    ILE154* getModule() { return pModule; }
+
+    //typedef DWORD (WINAPI *pGetDllVersion)(void);
+    inline QString GetVersion()
+    {
+        pGetDllVersion GetDllVersion = (pGetDllVersion)pLoadDll->CallGetDllVersion();
+        if(!GetDllVersion) qDebug().noquote() << QString("Ошибка выделения памяти в функции Get_Version()!");
+        //sprintf(str, " Lusbapi.dll Version Error!!!\n   Current: %1u.%1u. Required: %1u.%1u",
+        //						DllVersion >> 0x10, DllVersion & 0xFFFF,
+        //						CURRENT_VERSION_LUSBAPI >> 0x10, CURRENT_VERSION_LUSBAPI & 0xFFFF);
+        DWORD DllVersion = GetDllVersion();
+        return QString("Версия dll библиотеки - v%1.%2").arg(DllVersion >> 0x10).arg(DllVersion & 0xFFFF);
+    }
+
 private:
-    OnlyOneE154(){}
+    OnlyOneE154(){
+        pLoadDll = new TLoadDll();
+        if(!pLoadDll) qDebug().noquote() << QString("Ошибка загрузи библиотеки Dll Load_Dll()!");
+        initAPIInstance();
+        //initModuleHandler();
+    }
+
+    ~OnlyOneE154() {
+        ReleaseAPIInstance();
+    }
+
     OnlyOneE154(const OnlyOneE154& root) = delete;
     OnlyOneE154& operator=(const OnlyOneE154&) = delete;
+
+    //typedef LPVOID (WINAPI *pCreateInstance)(char *);
+    inline void initAPIInstance()
+    {
+        char name[] = "e154";
+        pCreateInstance CreateInstance = (pCreateInstance)pLoadDll->CallCreateLInstance();
+        if(!CreateInstance) qDebug().noquote() << QString("Ошибка выделения памяти в функции SetAPIInstance()!");
+        pModule = static_cast<ILE154 *>(CreateInstance(name));
+        //pModule = static_cast<ILE154 *>(CreateInstance(const_cast<char*>("e154")));
+        if(!pModule) qDebug().noquote() << QString("Ошибка выделения памяти для интерфейса CreateInstance(\"e154\")!");
+    }
+
+    inline void ReleaseAPIInstance() //(char *ErrorString, bool AbortionFlag)
+    {	// подчищаем интерфейс модуля
+        if(pModule)
+        {
+            // освободим интерфейс модуля
+            if(!pModule->ReleaseLInstance()) qDebug().noquote() << QString("Ошибка при освобождении интерфейса ReleaseLInstance()!");
+            //else printf(" ReleaseLInstance() --> OK\n");
+            // обнулим указатель на интерфейс модуля
+            pModule = NULL;
+
+            if(!pLoadDll) {
+                delete pLoadDll;
+            }
+        }
+    }
+//    void initModuleHandler()
+//    {
+//        ModuleHandle = pModule->GetModuleHandle();
+//        if(ModuleHandle == INVALID_HANDLE_VALUE) qDebug().noquote() << QString("GetModuleHandle() --> Bad\n");
+//    }
 };
 

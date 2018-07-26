@@ -4,10 +4,7 @@
 useE154::useE154(QThread *parent) :
     QThread(parent)
 {
-    pLoadDll = new TLoadDll();
-    if(!pLoadDll) throw Errore_E154("Ошибка загрузи библиотеки Dll Load_Dll()!");
-    initAPIInstance();
-	initModuleHandler();
+    pModule = OnlyOneE154::Instance().getModule();
 	OpenDevice();
     initPorts();
     initADC();
@@ -17,8 +14,6 @@ useE154::~useE154(void)
 {
     CloseDevice();
     delete[] pDestination;
-	ReleaseAPIInstance();
-    if(pLoadDll) { delete pLoadDll; }
     qDebug() << "~useE154()";
 }
 
@@ -105,44 +100,15 @@ DoubleData useE154::AdcSynchroDouble()
     return data;
 }
 
-//typedef LPVOID (WINAPI *pCreateInstance)(char *);
-void useE154::initAPIInstance()
-{
-    char name[] = "e154";
-    pCreateInstance CreateInstance = (pCreateInstance)pLoadDll->CallCreateLInstance();
-    if(!CreateInstance) throw Errore_E154("Ошибка выделения памяти в функции SetAPIInstance()!");
-    pModule = static_cast<ILE154 *>(CreateInstance(name));
-    //pModule = static_cast<ILE154 *>(CreateInstance(const_cast<char*>("e154")));
-    if(!pModule) throw Errore_E154("Ошибка выделения памяти для интерфейса CreateInstance(\"e154\")!");
-}
-
-void useE154::initModuleHandler()
-{
-    ModuleHandle = pModule->GetModuleHandle();
-    if(ModuleHandle == INVALID_HANDLE_VALUE) Errore_E154("GetModuleHandle() --> Bad\n");
-}
-
-//typedef DWORD (WINAPI *pGetDllVersion)(void);
-QString useE154::GetVersion(void)
-{
-    pGetDllVersion GetDllVersion = (pGetDllVersion)pLoadDll->CallGetDllVersion();
-    if(!GetDllVersion) throw Errore_E154("Ошибка выделения памяти в функции Get_Version()!");
-//sprintf(str, " Lusbapi.dll Version Error!!!\n   Current: %1u.%1u. Required: %1u.%1u",
-//						DllVersion >> 0x10, DllVersion & 0xFFFF,
-//						CURRENT_VERSION_LUSBAPI >> 0x10, CURRENT_VERSION_LUSBAPI & 0xFFFF);
-    DWORD DllVersion = GetDllVersion();
-    return QString("Версия dll библиотеки - v%1.%2").arg(DllVersion >> 0x10).arg(DllVersion & 0xFFFF);
-}
-
 void useE154::initPorts()
 {
-    if(pModule->ENABLE_TTL_OUT(1)) pModule->TTL_OUT(0); else throw Errore_E154("Ошибка включения линий TTL");
+    if(pModule->ENABLE_TTL_OUT(1)) pModule->TTL_OUT(0); else qDebug().noquote() << QString("Ошибка включения линий TTL");
 }
 
 void useE154::initADC()
 {
     pModule->STOP_ADC();
-    if(!pModule->GET_ADC_PARS(&ap)) throw Errore_E154("Ошибка получния параметров АЦП!\n");
+    if(!pModule->GET_ADC_PARS(&ap)) qDebug().noquote() << QString("Ошибка получния параметров АЦП!\n");
     ap.ClkSource = INT_ADC_CLOCK_E154;                      // внутренний запуск АЦП
     ap.EnableClkOutput = ADC_CLOCK_TRANS_DISABLED_E154; 	// без трансляции тактовых импульсо АЦП
     ap.InputMode = NO_SYNC_E154;                            // без синхронизации ввода данных
@@ -153,7 +119,7 @@ void useE154::initADC()
     ap.AdcRate = 100.0;                                     // частота работы АЦП в кГц
     ap.InterKadrDelay = 0.0;                                // межкадровая задержка в мс
     // передадим требуемые параметры работы АЦП в модуль
-    if(!pModule->SET_ADC_PARS(&ap)) throw Errore_E154("Ошибка установки параметрв АЦП!\n");
+    if(!pModule->SET_ADC_PARS(&ap)) qDebug().noquote() << QString("Ошибка установки параметрв АЦП!\n");
     //return QString("initADC()");
 }
 
@@ -165,22 +131,6 @@ void useE154::funThread()
         emit value_come(data);
         QThread::currentThread()->msleep(20);
     }
-}
-
-void useE154::ReleaseAPIInstance() //(char *ErrorString, bool AbortionFlag)
-{	// подчищаем интерфейс модуля
-    if(pModule)
-    {
-        // освободим интерфейс модуля
-        if(!pModule->ReleaseLInstance()) throw Errore_E154("Ошибка при освобождении интерфейса ReleaseLInstance()!");
-        //else printf(" ReleaseLInstance() --> OK\n");
-        // обнулим указатель на интерфейс модуля
-        pModule = NULL;
-    }
-    // освободим библиотеку
-    //if(pLoadDll) { delete pLoadDll; pLoadDll = NULL; }
-    // если нужно - аварийно завершаем программу
-    //if(AbortionFlag) exit(0x1);
 }
 
 void useE154::onMixCh1(bool b)
@@ -248,7 +198,7 @@ void useE154::CloseDevice()
 QString useE154::GetUsbSpeed()
 {
     BYTE UsbSpeed;								// скорость работы шины USB
-    if(!pModule->GetUsbSpeed(&UsbSpeed)) Errore_E154("Не удалось получить скорость работы интерфейса USB!"); //получаем скорость работы шины USB
+    if(!pModule->GetUsbSpeed(&UsbSpeed)) qDebug().noquote() << QString("Не удалось получить скорость работы интерфейса USB!"); //получаем скорость работы шины USB
 //    QString speed;
 //    if(UsbSpeed)
 //    {
@@ -262,12 +212,12 @@ QString useE154::GetUsbSpeed()
 QString useE154::GetInformation()
 {
     char name[25], serial[16];
-    if(!pModule->GET_MODULE_DESCRIPTION(&ModuleDescription)) throw Errore_E154("Не удалось получить дискриптор модуля!");
+    if(!pModule->GET_MODULE_DESCRIPTION(&ModuleDescription)) qDebug().noquote() << QString("Не удалось получить дискриптор модуля!");
     strcpy(serial, (char*)ModuleDescription.Module.SerialNumber);
     strcpy(name, (char*)ModuleDescription.Module.DeviceName);
     // получим информацию из ППЗУ модуля
     return QString(tr("Подключен модуль %1 (S/N %2)\n%3\n%4")
-                   .arg(name).arg(serial).arg(GetUsbSpeed()).arg(GetVersion()));
+                   .arg(name).arg(serial).arg(GetUsbSpeed()).arg(OnlyOneE154::Instance().GetVersion()));
 }
 
 void useE154::SetChannel(Channel ch, int pos)

@@ -14,9 +14,9 @@ int main(int argc, char *argv[])
 //    ChoiseDialog *dlg_menu = new ChoiseDialog;
 //    dlg_menu->show();
     useE154 first;
-    Sleep(1000);
-    //useE154 second;
-
-
+    qDebug().noquote() << first.GetInformation();
+//    Sleep(1000);
+//    useE154 second;
+//    qDebug().noquote() << second.GetInformation();
     return a.exec();
 }
