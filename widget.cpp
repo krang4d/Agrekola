@@ -221,11 +221,10 @@ void Widget::setupRealtimeData()
 
 void Widget::startProgressBarTimer(QString format, int timer_tic_ms, int time_ms)
 {
-    progress_t = time_ms;
     ui->progressBar->setFormat(format);
     ui->progressBar->setVisible(true);
     ui->progressBar->setValue(0);
-    ui->progressBar->setMaximum(progress_t);
+    ui->progressBar->setMaximum(time_ms);
     progressTimer.start(timer_tic_ms);
 }
 
@@ -451,7 +450,7 @@ void Widget::getData()
         }
 
 
-        startProgressBarTimer("Инкубация %v", 100, startWin->getTimeIncube()*1000);
+        startProgressBarTimer("Инкубация %p%", 10, startWin->getTimeIncube()*1000);
         QTimer::singleShot(startWin->getTimeIncube()*1000, this, &incubeTimeout);
         startIncub();
         emit status(QString("Инкубация"));
@@ -499,10 +498,10 @@ void Widget::incubeTimeout()
     emit status(QString("Время инкубации вышло"));
     //запуск измерения
     setUserMessage("Измерение");
-    startProgressBarTimer("Измерение %v", 100, startWin->getTime() * 1000);
+    startProgressBarTimer("Измерение %p%", 10, startWin->getTime() * 1000);
     startData();
     emit status(QString("Измерение"));
-    QTimer::singleShot(progress_t, this, SLOT(writeData()));
+    QTimer::singleShot(startWin->getTime() * 1000, this, SLOT(writeData()));
     //progressTimer.start(100);
 }
 
@@ -515,7 +514,7 @@ void Widget::setupTimers()
     setUserMessage(QString("Начало работы программы    Дата %1").arg(dt.toString("dd.MM.yyyy")));
 
     //таймер для отображения процесса сбора данных
-    connect(&progressTimer, SIGNAL(timeout()), this, SLOT(updateProgressValue()));
+    connect(&progressTimer, SIGNAL(timeout()), SLOT(updateProgressValue()));
 }
 
 void Widget::writeData()
