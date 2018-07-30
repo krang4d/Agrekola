@@ -88,6 +88,7 @@ private:
     bool incub;
 
     QVector<double> x;
+    //QMap<double, double> y1;
     QVector<double> y1, y2, y3, y4;
     int progress_t; //время измерния
 

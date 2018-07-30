@@ -1,5 +1,6 @@
 ﻿#include "useE154.h"
 #include <QFunctionPointer>
+#include <QTime>
 
 useE154::useE154(QThread *parent) :
     QThread(parent)
@@ -126,10 +127,15 @@ void useE154::initADC()
 void useE154::funThread()
 {
     while(!thread_stop){
+        static QTime time(QTime::currentTime());
+        static double lastPointKey = 0;
+        double key = time.elapsed()/1000.0; // time elapsed since start in seconds
+        if(key - lastPointKey > 1) {
         emit update_termo(GetStatusTD());
-        QVariantList data = AdcKADR();
-        emit value_come(data);
-        QThread::currentThread()->msleep(20);
+        lastPointKey = key;
+        }
+        emit value_come(AdcKADR());
+        QThread::currentThread()->msleep(10);
     }
 }
 

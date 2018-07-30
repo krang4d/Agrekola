@@ -229,6 +229,13 @@ void Widget::startProgressBarTimer(QString format, int timer_tic_ms, int time_ms
     progressTimer.start(timer_tic_ms);
 }
 
+void Widget::updateProgressValue()
+{
+    //ui->progressBar->setMaximum(progress_t-progressTimer.interval());
+    int value = ui->progressBar->value();
+    ui->progressBar->setValue(value+progressTimer.interval());
+}
+
 void Widget::realtimeDataSlot(QVariantList a)
 {
     //qDebug() << "ThreadID: " << QThread::currentThreadId() << "a0 = " << a[0];
@@ -236,9 +243,9 @@ void Widget::realtimeDataSlot(QVariantList a)
     // calculate two new data points:
     double key = time.elapsed()/1000.0; // time elapsed since start of demo, in seconds
     static double lastPointKey = 0;
-    if (key-lastPointKey > 0.010) // at most add point every 10 ms
+    if (key-lastPointKey > 0.01) // at most add point every 10 ms
     {
-      if(startWin->isSingle()){
+        if(startWin->isSingle()){
           customPlot1->graph(0)->addData(key, a[0].toDouble());
           customPlot2->graph(0)->addData(key, a[1].toDouble());
           customPlot3->graph(0)->addData(key, a[2].toDouble());
@@ -256,8 +263,8 @@ void Widget::realtimeDataSlot(QVariantList a)
 
           customPlot4->xAxis->setRange(key, 8, Qt::AlignRight);
           customPlot4->replot();
-      }
-      else{
+        }
+        else{
           customPlot1->graph(0)->addData(key, a[0].toDouble());
           customPlot1->graph(1)->addData(key, a[1].toDouble());
           customPlot2->graph(0)->addData(key, a[2].toDouble());
@@ -275,28 +282,30 @@ void Widget::realtimeDataSlot(QVariantList a)
 
           customPlot4->xAxis->setRange(key, 8, Qt::AlignRight);
           customPlot4->replot();
-      }
-      if(isData())
-      {
-          if(startWin->isChannel_1())
-            y1.push_back(a[0].toDouble());
-          if(startWin->isChannel_2())
-            y2.push_back(a[1].toDouble());
-          if(startWin->isChannel_3())
-            y3.push_back(a[2].toDouble());
-          if(startWin->isChannel_4())
-            y4.push_back(a[3].toDouble());
-          x.push_back(key);
-      }
-      lastPointKey = key;
+        }
+        if(isData()) {
+            if(startWin->isChannel_1()) {
+                y1.push_back(a[0].toDouble());
+                //y1.insert(key, a[0].toDouble());
+            }
+            if(startWin->isChannel_2()) {
+                y2.push_back(a[1].toDouble());
+            }
+            if(startWin->isChannel_3()) {
+                y3.push_back(a[2].toDouble());
+            }
+            if(startWin->isChannel_4()) {
+                y4.push_back(a[3].toDouble());
+            }
+        x.push_back(key);
+        }
+        lastPointKey = key;
     }
-
     // calculate frames per second:
     static double lastFpsKey;
     static int frameCount;
     ++frameCount;
-    if (key-lastFpsKey > 2) // average fps over 2 seconds
-    {
+    if (key-lastFpsKey > 2) {// average fps over 2 seconds
         ui->label_fps->setText(QString("%1 FPS, Total Data points: %2")
                         .arg(frameCount/(key-lastFpsKey), 0, 'f', 0)
                         .arg(customPlot1->graph(0)->data()->size()+customPlot2->graph(0)->data()->size() + customPlot3->graph(0)->data()->size() + customPlot4->graph(0)->data()->size()));
@@ -387,15 +396,8 @@ void Widget::updateTime()
     }
 }
 
-void Widget::updateProgressValue()
-{
-    //ui->progressBar->setMaximum(progress_t-progressTimer.interval());
-    ui->progressBar->setValue(ui->progressBar->value()+progressTimer.interval());
-}
-
 void Widget::getData()
 {
-    startIncub();
     QString msg;
     if(!startWin->isCancel())
     {
@@ -448,8 +450,10 @@ void Widget::getData()
             setupRealtimeData();
         }
 
-        startProgressBarTimer("Инкубация %p%", 100, startWin->getTimeIncube()*1000);
+
+        startProgressBarTimer("Инкубация %v", 100, startWin->getTimeIncube()*1000);
         QTimer::singleShot(startWin->getTimeIncube()*1000, this, &incubeTimeout);
+        startIncub();
         emit status(QString("Инкубация"));
     }
 }
@@ -495,18 +499,18 @@ void Widget::incubeTimeout()
     emit status(QString("Время инкубации вышло"));
     //запуск измерения
     setUserMessage("Измерение");
-    startProgressBarTimer("Измерение %p%", 300, startWin->getTime() * 1000);
+    startProgressBarTimer("Измерение %v", 100, startWin->getTime() * 1000);
     startData();
     emit status(QString("Измерение"));
     QTimer::singleShot(progress_t, this, SLOT(writeData()));
-    progressTimer.start(300);
+    //progressTimer.start(100);
 }
 
 void Widget::setupTimers()
 {
     //настройка таймера для часов
     connect(&currentTimer, SIGNAL(timeout()), SLOT(updateTime()));
-    currentTimer.start(400);
+    currentTimer.start(300);
     dt = QDateTime::currentDateTime();
     setUserMessage(QString("Начало работы программы    Дата %1").arg(dt.toString("dd.MM.yyyy")));
 
@@ -516,7 +520,6 @@ void Widget::setupTimers()
 
 void Widget::writeData()
 {
-    progressTimer.stop();
     stopData();
     emit status(QString("Запись данных"));
     ui->progressBar->setFormat("Запись данных %p%");
@@ -538,8 +541,14 @@ void Widget::writeData()
     strList << QString("t#%5\tti#%6\tp#%7\n").arg(startWin->getTime())
                                              .arg(startWin->getTimeIncube())
                                              .arg(startWin->isSingle());
+//    QStringList extList;
+//    QMap<double, double>::const_iterator it = y1.constBegin();
+//    while(it != y1.constEnd()) {
+//        strList << QString("%1\t").arg(it.value()) << QString("%1\n").arg(it.key());
+//    }
     for(int i=0; i<x.length(); i++)
     {
+        progressTimer.stop();
         ui->progressBar->setMaximum(x.length());
         ui->progressBar->setValue(i);//i*100/x.length());
 
