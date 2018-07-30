@@ -40,7 +40,8 @@ SOURCES +=  main.cpp\
     useE154.cpp \
     LoadDll.cpp \
     QCustomPlot/qcustomplot.cpp \
-    savefiles.cpp
+    savefiles.cpp \
+    calculatedata.cpp
 
 HEADERS  += selectcalibrationagr1.h \
     selectinductor.h \
@@ -64,7 +65,8 @@ HEADERS  += selectcalibrationagr1.h \
     libapi/Lusbapi.h \
     libapi/LusbapiTypes.h \
     QCustomPlot/qcustomplot.h \
-    savefiles.h
+    savefiles.h \
+    calculatedata.h
 
 FORMS    += selectcalibrationagr1.ui \
     selectinductor.ui \

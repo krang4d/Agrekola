@@ -449,7 +449,6 @@ void Widget::getData()
             setupRealtimeData();
         }
 
-
         startProgressBarTimer("Инкубация %p%", 10, startWin->getTimeIncube()*1000);
         QTimer::singleShot(startWin->getTimeIncube()*1000, this, &incubeTimeout);
         startIncub();
