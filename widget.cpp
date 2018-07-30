@@ -449,7 +449,7 @@ void Widget::getData()
         }
 
         startProgressBarTimer("Инкубация %p%", 100, startWin->getTimeIncube()*1000);
-        QTimer::singleShot(startWin->getTimeIncube()*1000, this, SLOT(incubeTimeout()));
+        QTimer::singleShot(startWin->getTimeIncube()*1000, this, &incubeTimeout);
         emit status(QString("Инкубация"));
     }
 }

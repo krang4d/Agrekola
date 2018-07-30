@@ -10,11 +10,9 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-//    qDebug() << "main thread ID: " << QThread::currentThreadId();
-//    ChoiseDialog *dlg_menu = new ChoiseDialog;
-//    dlg_menu->show();
-    useE154 first;
-    qDebug().noquote() << first.GetInformation();
+    qDebug() << "main thread ID: " << QThread::currentThreadId();
+    ChoiseDialog *dlg_menu = new ChoiseDialog;
+    dlg_menu->show();
 //    Sleep(1000);
 //    useE154 second;
 //    qDebug().noquote() << second.GetInformation();

@@ -101,13 +101,13 @@ class OnlyOneE154
 {
     TLoadDll *pLoadDll;							// указатель на класс динамической загрузки DLL
     ILE154 *pModule;							// указатель на интерфейс модуля
-    //HANDLE ModuleHandle;						// дескриптор устройства
+    HANDLE ModuleHandle;						// дескриптор устройства
 
 public:
     static OnlyOneE154& Instance()
     {
-            static OnlyOneE154 theSingleInstance;
-            return theSingleInstance;
+        static OnlyOneE154 theSingleInstance;
+        return theSingleInstance;
     }
 
     ILE154* getModule() { return pModule; }
@@ -125,9 +125,10 @@ public:
     }
 
 private:
-    OnlyOneE154(){
+    OnlyOneE154() {
         pLoadDll = new TLoadDll();
         if(!pLoadDll) qDebug().noquote() << QString("Ошибка загрузи библиотеки Dll Load_Dll()!");
+
         initAPIInstance();
         //initModuleHandler();
     }
@@ -165,10 +166,10 @@ private:
             }
         }
     }
-//    void initModuleHandler()
-//    {
-//        ModuleHandle = pModule->GetModuleHandle();
-//        if(ModuleHandle == INVALID_HANDLE_VALUE) qDebug().noquote() << QString("GetModuleHandle() --> Bad\n");
-//    }
+    void initModuleHandler()
+    {
+        ModuleHandle = pModule->GetModuleHandleW();
+        if(ModuleHandle == INVALID_HANDLE_VALUE) qDebug().noquote() << QString("GetModuleHandle() --> Bad\n");
+    }
 };
 

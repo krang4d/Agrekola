@@ -247,10 +247,12 @@ void ViewPlot::on_pushButton_select_clicked()
 
 void ViewPlot::on_pushButton_print_clicked()
 {
-    QString fileName = QFileDialog::getSaveFileName(this, "Сохранение графиков...", qApp->applicationDirPath(), "*.pdf");
-    if (!fileName.isEmpty())
-    {
+    QString fileName = QFileDialog::getSaveFileName(this, "Сохранение графиков...", qApp->applicationDirPath(), "*.pdf;;*.jpg");
+    if (!fileName.isEmpty() || fileName.indexOf("*.pdf") > 0) {
         customPlot->savePdf(fileName);
+    }
+    if (!fileName.isEmpty() || fileName.indexOf("*.jpg") > 0) {
+        customPlot->saveJpg(fileName);
     }
 }
 

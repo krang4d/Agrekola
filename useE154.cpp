@@ -205,7 +205,6 @@ QString useE154::GetUsbSpeed()
 //        speed = "High-Speed Mode (480 Mbit/s)";
 //    } else speed = "Full-Speed Mode (12 Mbit/s)";
 //    return QString("USB в режиме работы %1").arg(speed);
-
     return [](BYTE x){return x ? "High-Speed Mode (480 Mbit/s)" : "Full-Speed Mode (12 Mbit/s)";}(UsbSpeed);
 }
 
@@ -222,19 +221,19 @@ QString useE154::GetInformation()
 
 void useE154::SetChannel(Channel ch, int pos)
 {
-    if(pos == ON){
-    switch(ch){
-            case CH1: { TtlOut |= (1<<0); pModule->TTL_OUT(TtlOut); break; }
-            case CH2: { TtlOut |= (1<<1); pModule->TTL_OUT(TtlOut); break; }
-            case CH3: { TtlOut |= (1<<2); pModule->TTL_OUT(TtlOut); break; }
-            case CH4: { TtlOut |= (1<<3); pModule->TTL_OUT(TtlOut); break; }
-            case  PP: { TtlOut |= (1<<4); pModule->TTL_OUT(TtlOut); break; }
-            case   L: { TtlOut |= (1<<5); pModule->TTL_OUT(TtlOut); break; }
-                default: throw Errore_E154("Неправильно выбран TTL канал");
-     }
+    if(pos == ON) {
+        switch(ch) {
+                case CH1: { TtlOut |= (1<<0); pModule->TTL_OUT(TtlOut); break; }
+                case CH2: { TtlOut |= (1<<1); pModule->TTL_OUT(TtlOut); break; }
+                case CH3: { TtlOut |= (1<<2); pModule->TTL_OUT(TtlOut); break; }
+                case CH4: { TtlOut |= (1<<3); pModule->TTL_OUT(TtlOut); break; }
+                case  PP: { TtlOut |= (1<<4); pModule->TTL_OUT(TtlOut); break; }
+                case   L: { TtlOut |= (1<<5); pModule->TTL_OUT(TtlOut); break; }
+                    default:    qDebug().noquote() << QString("Неправильно выбран TTL канал");
+        }
     }
     else{
-     switch(ch){
+        switch(ch) {
             case CH1: { TtlOut &= ~(1<<0); pModule->TTL_OUT(TtlOut); break; }
             case CH2: { TtlOut &= ~(1<<1); pModule->TTL_OUT(TtlOut); break; }
             case CH3: { TtlOut &= ~(1<<2); pModule->TTL_OUT(TtlOut); break; }
