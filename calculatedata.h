@@ -14,21 +14,23 @@ class CalculateData : public QObject
 public:
     explicit CalculateData(QObject *parent = 0);
     CalculateData(QMap<double, double>, QObject *parent = 0);
-    virtual void calc()  = 0;
+    virtual double calc();
 
 protected:
     QMap<double, double> mdata;
+    double jump;  //скачек величиной 4-10% от среднего уровня сигнала базовое значение
+    double mix_t; //время в течение которго происходит перемешивание реагента с плазмой и успокоение жидкости
 
 signals:
 
 public slots:
 };
 
-class CalculateArg1 : public CalculateData
+class CalculateKo1 : public CalculateData
 {
 public:
-    CalculateArg1() {}
-    void calc() override;
+    explicit CalculateKo1(QMap<double, double>);
+    double calc() override;
 };
 
 #endif // CALCULATEDATA_H

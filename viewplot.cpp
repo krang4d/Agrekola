@@ -460,3 +460,15 @@ void ViewPlot::hasSelectedRect(QRect r, QMouseEvent *e)
     qDebug() << "hasSelectedRect X " << r.x() << " Y " << r.y();
 }
 
+void ViewPlot::on_pushButton_calc_clicked()
+{
+    if(ui->checkBox_1->isChecked()) {
+        QMap<double, double> data;
+        for(int i = 0; i < t.count(); ++i) {
+            data.insert(t.at(i), v1.at(i));
+        }
+        CalculateKo1 calc(data);
+        double value = calc.calc();
+        ui->label_average->setText(tr("Время свертывания = %1").arg(value));
+    }
+}

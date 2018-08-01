@@ -7,6 +7,7 @@
 
 #include "savefiles.h"
 #include "QCustomPlot/qcustomplot.h"
+#include "calculatedata.h"
 
 namespace Ui {
 class ViewPlot;
@@ -36,6 +37,7 @@ private slots:
     void on_checkBox_4_stateChanged(int arg1);
     void on_pushButton_select_clicked();
     void on_pushButton_print_clicked();
+    void on_pushButton_calc_clicked();
 
     void selectionChanged();
     void mousePress();
