@@ -86,6 +86,7 @@ private:
 
     volatile bool data;
     bool incub;
+    bool pulse;
 
     QVector<double> x;
     //QMap<double, double> y1;

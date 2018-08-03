@@ -35,7 +35,6 @@ Widget::~Widget()
     emit stop();
     delete startWin;
     delete ui;
-
 }
 
 bool Widget::eventFilter(QObject *watched, QEvent *event)
@@ -240,8 +239,19 @@ void Widget::realtimeDataSlot(QVariantList a)
     //qDebug() << "ThreadID: " << QThread::currentThreadId() << "a0 = " << a[0];
     static QTime time(QTime::currentTime());
     // calculate two new data points:
+
     double key = time.elapsed()/1000.0; // time elapsed since start of demo, in seconds
     static double lastPointKey = 0;
+    static double lastPointV1 = a[0].toDouble();
+    static double lastPointV2 = a[1].toDouble();
+    static double lastPointV3 = a[2].toDouble();
+    static double lastPointV4 = a[3].toDouble();
+
+    if((a[0].toDouble() - lastPointV1) > 0.1f && !pulse) {
+        pulse = true;
+        qDebug() << "The pulse is come!";
+        startData();
+    }
     if (key-lastPointKey > 0.01) // at most add point every 10 ms
     {
         if(startWin->isSingle()){
@@ -448,22 +458,23 @@ void Widget::getData()
             setUserMessage(msg, true, true);
             setupRealtimeData();
         }
-
-        startProgressBarTimer("Инкубация %p%", 10, startWin->getTimeIncube()*1000);
-        QTimer::singleShot(startWin->getTimeIncube()*1000, this, &incubeTimeout);
         startIncub();
-        emit status(QString("Инкубация"));
     }
 }
 
 void Widget::startData()
 {
+    setUserMessage("Измерение");
+    startProgressBarTimer("Измерение %p%", 10, startWin->getTime() * 1000);
+    QTimer::singleShot(startWin->getTime() * 1000, this, SLOT(writeData()));
     data = true;
+    emit status(QString("Измерение"));
 }
 
 void Widget::stopData()
 {
     data = false;
+    pulse = false;
 }
 
 bool Widget::isData()
@@ -473,7 +484,11 @@ bool Widget::isData()
 
 void Widget::startIncub()
 {
+    setUserMessage("Инкубация");
+    startProgressBarTimer("Инкубация %p%", 10, startWin->getTimeIncube()*1000);
+    QTimer::singleShot(startWin->getTimeIncube()*1000, this, &incubeTimeout);
     incub = true;
+    emit status(QString("Инкубация"));
 }
 
 void Widget::stopIncub()
@@ -490,18 +505,13 @@ void Widget::incubeTimeout()
 {
     stopIncub();
     setUserMessage("Время инкубации истекло, добавьте стартовый реагеет");
-    QMessageBox::information(this, "Инкубация",
-                             "Время инкубации истекло, добавьте стартовый реагент\n"
-                             "и нажмите кнопку СТАРТ для соответствующего канала, если\n"
-                             "измерение не запустилось автоматически. Нажмите ОК для продолжения.");
-    emit status(QString("Время инкубации вышло"));
-    //запуск измерения
-    setUserMessage("Измерение");
-    startProgressBarTimer("Измерение %p%", 10, startWin->getTime() * 1000);
-    startData();
-    emit status(QString("Измерение"));
-    QTimer::singleShot(startWin->getTime() * 1000, this, SLOT(writeData()));
-    //progressTimer.start(100);
+//    QMessageBox::information(this, "Инкубация",
+//                             "Время инкубации истекло, добавьте стартовый реагент\n"
+//                             "и нажмите кнопку СТАРТ для соответствующего канала, если\n"
+//                             "измерение не запустилось автоматически. Нажмите ОК для продолжения.");
+//    emit status(QString("Время инкубации вышло"));
+    //запуск измерени
+    //startData();
 }
 
 void Widget::setupTimers()
