@@ -3,7 +3,7 @@
 SaveFiles::SaveFiles(QObject *parent) : QObject(parent)
 {
     setupFiles();
-    qDebug() << "setting: " << settingDir.path() << "data: " << dataDir.path() << "user" << OnlyOneFile::Instance().file_user.fileName();
+    //qDebug() << "setting: " << settingDir.path() << "data: " << dataDir.path() << "user" << OnlyOneFile::Instance().file_user.fileName();
 }
 
 SaveFiles::~SaveFiles()

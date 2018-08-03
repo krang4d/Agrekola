@@ -44,6 +44,7 @@ private slots:
     void mouseWheel();
     void graphClicked(QCPAbstractPlottable *plottable, int dataIndex);
 
+    void calcSelected(int ngraph, QCPDataSelection selection);
     void hasGraph0Selected(QCPDataSelection);
     void hasGraph1Selected(QCPDataSelection);
     void hasGraph2Selected(QCPDataSelection);

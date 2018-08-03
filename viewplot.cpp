@@ -329,7 +329,8 @@ void ViewPlot::graphClicked(QCPAbstractPlottable *plottable, int dataIndex)
     // since we know we only have QCPGraphs in the plot, we can immediately access interface1D()
     // usually it's better to first check whether interface1D() returns non-zero, and only then use it.
     double dataValue = plottable->interface1D()->dataMainValue(dataIndex);
-    QString message = QString("Clicked on graph '%1' at data point #%2 with value %3.").arg(plottable->name()).arg(dataIndex).arg(dataValue);
+    QString message = QString("Clicked on graph '%1' at data point #%2 with value %3.")
+            .arg(plottable->name()).arg(dataIndex).arg(dataValue);
     qDebug().quote() << message;
     for (int i=0; i<customPlot->graphCount(); ++i)
     {
@@ -338,10 +339,13 @@ void ViewPlot::graphClicked(QCPAbstractPlottable *plottable, int dataIndex)
     }
 }
 
-void ViewPlot::hasGraph0Selected(QCPDataSelection selection)
-{
-    auto graph = customPlot->graph(0);
+void ViewPlot::calcSelected(int ngraph, QCPDataSelection selection) {
     qDebug() << "ViewPlot::hasGraph0Selected(QCPDataSelection)";
+//    customPlot->graph(0)->interface1D()->dataMainValue();
+//    selection.dataRange().
+//    double dataValue = plottable->interface1D()->dataMainValue(selection.dataRange());
+//    QString message = QString("Clicked on graph '%1' at data point #%2 with value %3.").arg(plottable->name()).arg(dataIndex).arg(dataValue);
+    auto graph = customPlot->graph(ngraph);
     double sum = 0, t1, t2;
     foreach (QCPDataRange dataRange, selection.dataRanges())
     {
@@ -360,86 +364,34 @@ void ViewPlot::hasGraph0Selected(QCPDataSelection selection)
         qDebug() << "G0 average =" << ave << " t1 = " << t1 << " t2 = " << t2 << " t2-t1= " << t2-t1 ;
         ui->label_average->setText(tr("Среднее значение %1 на интервале %2").arg(ave).arg(t2-t1));
     }
+    QString message = QString("Clicked on graph '%1' at data point #%2 with value %3.")
+            .arg(graph->name()).arg(t1).arg(sum);
+    qDebug() << message;
+    int i = t.indexOf(t1, 1);
+    tb->setCurrentCell(i, ngraph);
     customPlot->setSelectionRectMode(QCP::srmNone);
     //if(!sum/selection.dataPointCount()) graph1->setSelectable(QCP::stNone);
 }
 
+void ViewPlot::hasGraph0Selected(QCPDataSelection selection)
+{
+
+    calcSelected(0, selection);
+}
+
 void ViewPlot::hasGraph1Selected(QCPDataSelection selection)
 {
-    auto graph = customPlot->graph(1);
-    qDebug() << "ViewPlot::hasGraph1Selected(QCPDataSelection)";
-    double sum = 0, t1, t2;
-    foreach (QCPDataRange dataRange, selection.dataRanges())
-    {
-      QCPGraphDataContainer::const_iterator begin = graph->data()->at(dataRange.begin()); // get range begin iterator from index
-      t1 = begin->key;
-      QCPGraphDataContainer::const_iterator end = graph->data()->at(dataRange.end()); // get range end iterator from index
-      t2 = end->key;
-      for (QCPGraphDataContainer::const_iterator it=begin; it!=end; ++it)
-      {
-        // iterator "it" will go through all selected data points, as an example, we calculate the value average
-        sum += it->value;
-      }
-    }
-    if(customPlot->selectionRectMode() == QCP::srmSelect) {
-        double ave = sum/selection.dataPointCount();
-        qDebug() << "G1 average =" << ave << " t1 = " << t1 << " t2 = " << t2 << " t2-t1= " << t2-t1 ;
-        ui->label_average->setText(tr("Среднее значение %1 на интервале %2").arg(ave).arg(t2-t1));
-    }
-    customPlot->setSelectionRectMode(QCP::srmNone);
-    //if(!sum/selection.dataPointCount()) graph->setSelectable(QCP::stNone);
+    calcSelected(1, selection);
 }
 
 void ViewPlot::hasGraph2Selected(QCPDataSelection selection)
 {
-    auto graph = customPlot->graph(2);
-    qDebug() << "ViewPlot::hasGraph2Selected(QCPDataSelection)";
-    double sum = 0, t1, t2;
-    foreach (QCPDataRange dataRange, selection.dataRanges())
-    {
-      QCPGraphDataContainer::const_iterator begin = graph->data()->at(dataRange.begin()); // get range begin iterator from index
-      t1 = begin->key;
-      QCPGraphDataContainer::const_iterator end = graph->data()->at(dataRange.end()); // get range end iterator from index
-      t2 = end->key;
-      for (QCPGraphDataContainer::const_iterator it=begin; it!=end; ++it)
-      {
-        // iterator "it" will go through all selected data points, as an example, we calculate the value average
-        sum += it->value;
-      }
-    }
-    if(customPlot->selectionRectMode() == QCP::srmSelect) {
-        double ave = sum/selection.dataPointCount();
-        qDebug() << "G2 average =" << ave << " t1 = " << t1 << " t2 = " << t2 << " t2-t1= " << t2-t1 ;
-        ui->label_average->setText(tr("Среднее значение %1 на интервале %2").arg(ave).arg(t2-t1));
-    }
-    customPlot->setSelectionRectMode(QCP::srmNone);
-    //if(!sum/selection.dataPointCount()) graph->setSelectable(QCP::stNone);
+    calcSelected(2, selection);
 }
 
 void ViewPlot::hasGraph3Selected(QCPDataSelection selection)
 {
-    auto graph = customPlot->graph(3);
-    qDebug() << "ViewPlot::hasGraph3Selected(QCPDataSelection)";
-    double sum = 0, t1, t2;
-    foreach (QCPDataRange dataRange, selection.dataRanges())
-    {
-      QCPGraphDataContainer::const_iterator begin = graph->data()->at(dataRange.begin()); // get range begin iterator from index
-      t1 = begin->key;
-      QCPGraphDataContainer::const_iterator end = graph->data()->at(dataRange.end()); // get range end iterator from index
-      t2 = end->key;
-      for (QCPGraphDataContainer::const_iterator it=begin; it!=end; ++it)
-      {
-        // iterator "it" will go through all selected data points, as an example, we calculate the value average
-        sum += it->value;
-      }
-    }
-    if(customPlot->selectionRectMode() == QCP::srmSelect) {
-        double ave = sum/selection.dataPointCount();
-        qDebug() << "G3 average =" << ave << " t1 = " << t1 << " t2 = " << t2 << " t2-t1= " << t2-t1 ;
-        ui->label_average->setText(tr("Среднее значение %1 на интервале %2").arg(ave).arg(t2-t1));
-    }
-    customPlot->setSelectionRectMode(QCP::srmNone);
-    //if(!sum/selection.dataPointCount()) graph->setSelectable(QCP::stNone);
+    calcSelected(3, selection);
 }
 
 void ViewPlot::hasSelected(QCP::SelectionType tipe)
