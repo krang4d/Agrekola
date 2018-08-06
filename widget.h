@@ -35,13 +35,13 @@ private:
     void setupTimers();
     void startProgressBarTimer(QString format, int timer_tic_ms, int time_ms);
 
-    void startData();
-    void stopData();
-    bool isData();
-
     void startIncub();
     void stopIncub();
     bool isIncub();
+
+    void startData(int);
+    void stopData(int);
+    bool isData(int);
 
 signals:
     void onmixch1(bool);
@@ -52,6 +52,7 @@ signals:
     void onlaser(bool);
     void status(QString);
     void stop();            //сигнал для остановки потока измерений
+    void impulse(int n);
 
 public slots:
     void getData();
@@ -59,7 +60,7 @@ public slots:
 
 private slots:
     void realtimeDataSlot(QVariantList);
-    void writeData();
+    void writeData(const int n = 0);
 
     void on_checkBox_1_stateChanged(int arg1);
     void on_checkBox_2_stateChanged(int arg1);
@@ -84,12 +85,12 @@ private:
     QTimer progressTimer, plotTimer, currentTimer;
     QDateTime dt;
 
-    volatile bool data;
+    volatile bool data1, data2, data3, data4;
     bool incub;
-    bool pulse;
+    bool pulse1, pulse2, pulse3, pulse4;
 
     QVector<double> x;
-    //QMap<double, double> y1;
+    QMap<double, double> map_y1, map_y2, map_y3, map_y4 ;
     QVector<double> y1, y2, y3, y4;
 
     SaveFiles saveFiles;

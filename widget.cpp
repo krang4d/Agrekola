@@ -11,9 +11,15 @@ Widget::Widget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Widget),
     startWin(new StartMeasurment),
-    data(false),
+    data1(false),
+    data2(false),
+    data3(false),
+    data4(false),
     incub(false),
-    pulse(false)
+    pulse1(false),
+    pulse2(false),
+    pulse3(false),
+    pulse4(false)
 {
     ui->setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
@@ -247,13 +253,35 @@ void Widget::realtimeDataSlot(QVariantList a)
     static double lastPointV2 = a[1].toDouble();
     static double lastPointV3 = a[2].toDouble();
     static double lastPointV4 = a[3].toDouble();
-    double dd =std::abs(a[0].toDouble() - lastPointV1);
+    double dx1 = std::abs(a[0].toDouble() - lastPointV1);
+    double dx2 = std::abs(a[1].toDouble() - lastPointV2);
+    double dx3 = std::abs(a[2].toDouble() - lastPointV3);
+    double dx4 = std::abs(a[3].toDouble() - lastPointV4);
     lastPointV1 = a[0].toDouble();
-    if( dd > 0.2f && pulse) {
-        pulse = false;
-        qDebug() << QString("The pulse is come! dd=%1").arg(dd);
-        startData();
+    if( dx1 > 0.2f && pulse1) {
+        pulse1 = false;
+        qDebug() << QString("The pulse is come! da1=%1").arg(dx1);
+        startData(1);
     }
+    lastPointV2 = a[1].toDouble();
+    if( dx2 > 0.2f && pulse2) {
+        pulse2 = false;
+        qDebug() << QString("The pulse is come! da2=%1").arg(dx2);
+        startData(2);
+    }
+    lastPointV3 = a[2].toDouble();
+    if( dx3 > 0.2f && pulse3) {
+        pulse3 = false;
+        qDebug() << QString("The pulse is come! da3=%1").arg(dx3);
+        startData(3);
+    }
+    lastPointV4 = a[3].toDouble();
+    if( dx4 > 0.2f && pulse4) {
+        pulse4 = false;
+        qDebug() << QString("The pulse is come! da4=%1").arg(dx4);
+        startData(4);
+    }
+
     if (key-lastPointKey > 0.01) // at most add point every 10 ms
     {
         if(startWin->isSingle()){
@@ -294,22 +322,33 @@ void Widget::realtimeDataSlot(QVariantList a)
           customPlot4->xAxis->setRange(key, 8, Qt::AlignRight);
           customPlot4->replot();
         }
-        if(isData()) {
-            if(startWin->isChannel_1()) {
+        if(isData(1)) {
+            if(startWin->isChannel_1() ) {
+                map_y1.insert(key, a[0].toDouble());
                 y1.push_back(a[0].toDouble());
                 //y1.insert(key, a[0].toDouble());
             }
+        }
+        if(isData(2)) {
             if(startWin->isChannel_2()) {
+                map_y2.insert(key, a[1].toDouble());
                 y2.push_back(a[1].toDouble());
             }
+        }
+        if(isData(3)) {
             if(startWin->isChannel_3()) {
+                map_y3.insert(key, a[2].toDouble());
                 y3.push_back(a[2].toDouble());
             }
+        }
+        if(isData(4)) {
             if(startWin->isChannel_4()) {
+                map_y4.insert(key, a[3].toDouble());
                 y4.push_back(a[3].toDouble());
             }
-        x.push_back(key);
         }
+        if(isData(1) || isData(2) || isData(3) || isData(4))
+            x.push_back(key);
         lastPointKey = key;
     }
     // calculate frames per second:
@@ -396,7 +435,7 @@ void Widget::updateTime()
     //обновление времени инкубации
     static double t;
     double interval = currentTimer.interval()/1000.0;
-    if(isIncub()){
+    if(isIncub()) {
         ui->label_incube->setText(QString("Время инкубации, %1 сек")
                                   .arg(startWin->getTimeIncube() - t));
         t+=interval;
@@ -464,24 +503,70 @@ void Widget::getData()
     }
 }
 
-void Widget::startData()
+void Widget::startData(int n)
 {
-    setUserMessage("Измерение");
-    startProgressBarTimer("Измерение %p%", 10, startWin->getTime() * 1000);
-    QTimer::singleShot(startWin->getTime() * 1000, this, SLOT(writeData()));
-    data = true;
-    emit status(QString("Измерение"));
+    if(n == 1) {
+        data1 = true;
+        setUserMessage("Измерение по каналу 1");
+        emit status(QString("Измерение по каналу 1"));
+        startProgressBarTimer("Измерение по каналу 1 %p%", 10, startWin->getTime() * 1000);
+        auto func = [=](){writeData(1);};
+        QTimer::singleShot(startWin->getTime() * 1000, func);
+    }
+    if(n == 2) {
+        data2 = true;
+        emit status(QString("Измерение по каналу 2"));
+        startProgressBarTimer("Измерение по каналу 2 %p%", 10, startWin->getTime() * 1000);
+        auto func = [=](){writeData(2);};
+        QTimer::singleShot(startWin->getTime() * 1000, func);
+    }
+    if(n == 3) {
+        data3 = true;
+        emit status(QString("Измерение по каналу 3"));
+        startProgressBarTimer("Измерение по каналу 3 %p%", 10, startWin->getTime() * 1000);
+        auto func = [=](){writeData(3);};
+        QTimer::singleShot(startWin->getTime() * 1000, func);
+    }
+    if(n == 4) {
+        data4 = true;
+        emit status(QString("Измерение по каналу 4"));
+        startProgressBarTimer("Измерение по каналу 4 %p%", 10, startWin->getTime() * 1000);
+        auto func = [=](){writeData(4);};
+        QTimer::singleShot(startWin->getTime() * 1000, func);
+    }
 }
 
-void Widget::stopData()
+void Widget::stopData(int n)
 {
-    data = false;
-    pulse = false;
+    if(n == 1) {
+        data1 = false;
+        pulse1 = false;
+    }
+    if(n == 2) {
+        data2 = false;
+        pulse2 = false;
+    }
+    if(n == 3) {
+        data3 = false;
+        pulse3 = false;
+    }
+    if(n == 4) {
+        data4 = false;
+        pulse4 = false;
+    }
 }
 
-bool Widget::isData()
+bool Widget::isData(int n)
 {
-    return data;
+    if(n == 1)
+        return data1;
+    if(n == 2)
+        return data2;
+    if(n == 3)
+        return data3;
+    if(n == 4)
+        return data4;
+    return 0;
 }
 
 void Widget::startIncub()
@@ -506,7 +591,14 @@ bool Widget::isIncub()
 void Widget::incubeTimeout()
 {
     stopIncub();
-    pulse = true;
+    if(startWin->isChannel_1())
+        pulse1 = true;
+    if(startWin->isChannel_2())
+        pulse2 = true;
+    if(startWin->isChannel_3())
+        pulse3 = true;
+    if(startWin->isChannel_4())
+        pulse3 = true;
     setUserMessage("Время инкубации истекло, добавьте стартовый реагеет");
 //    QMessageBox::information(this, "Инкубация",
 //                             "Время инкубации истекло, добавьте стартовый реагент\n"
@@ -529,12 +621,12 @@ void Widget::setupTimers()
     connect(&progressTimer, SIGNAL(timeout()), SLOT(updateProgressValue()));
 }
 
-void Widget::writeData()
+void Widget::writeData(const int n)
 {
-    stopData();
-    emit status(QString("Запись данных"));
+    stopData(n);
+    emit status(QString("Запись данных по каналу %1").arg(n));
     ui->progressBar->setFormat("Запись данных %p%");
-    qDebug() << "Запись данных";
+    qDebug().noquote() << QString("Запись данных по каналу %1").arg(n);
     QStringList strList;
     strList << QString("N\t");
     if(!y1.isEmpty())
