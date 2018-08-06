@@ -4,6 +4,8 @@
 #include <QDialog>
 #include <QDebug>
 #include <QTableWidget>
+#include <QList>
+#include <QVector>
 
 #include "savefiles.h"
 #include "QCustomPlot/qcustomplot.h"

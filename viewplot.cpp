@@ -1,5 +1,7 @@
 #include "viewplot.h"
 #include "ui_viewplot.h"
+#include <algorithm>
+#include <list>
 
 ViewPlot::ViewPlot(QWidget *parent) :
     QDialog(parent),
@@ -84,12 +86,45 @@ void ViewPlot::initPlots()
 
 void ViewPlot::rePlot()
 {
-
     const QStringList headList = param; //{param.at(0), param.at(1), param.at(2), param.at(3), param.at(4)};
     qDebug() << "parameters: "<< param.join(' ');
     tb->setHorizontalHeaderLabels(headList);
     customPlot->xAxis->setRange(0, t.back());
-    customPlot->yAxis->setRange(-6, 6);
+
+    QList<QList<double>::iterator> list_max;
+    QList<QList<double>::iterator> list_min;
+    if(!v1.isEmpty()) {
+        auto resoult = std::minmax_element(v1.begin(), v1.end());
+        list_max.push_back(resoult.second);
+        list_min.push_back(resoult.first);
+    }
+    if(!v2.isEmpty()) {
+        auto resoult = std::minmax_element(v2.begin(), v2.end());
+        list_max.push_back(resoult.second);
+        list_min.push_back(resoult.first);
+    }
+    if(!v3.isEmpty()) {
+        auto resoult = std::minmax_element(v3.begin(), v3.end());
+        list_max.push_back(resoult.second);
+        list_min.push_back(resoult.first);
+    }
+    if(!v4.isEmpty()) {
+        auto resoult = std::minmax_element(v4.begin(), v4.end());
+        list_max.push_back(resoult.second);
+        list_min.push_back(resoult.first);
+    }
+
+    //QList<double> list_max = {*resoult1.second, *resoult2.second, *resoult3.second, *resoult4.second};
+    //QList<double> list_min = {*resoult1.first, *resoult2.first, *resoult3.first, *resoult4.first};
+
+    //auto max = [&](){return *std::max(list_max.begin(), list_max.end());};
+    //auto min = [&](){return *std::min(list_min.begin(), list_min.end());};
+
+    //auto max = std::max(list_max.begin(), list_max.end());
+    //auto min = std::min(list_min.begin(), list_min.end());
+    //auto max = [&](){return *resoult1.second;};
+    //auto min = [&](){return *resoult1.first;};
+    customPlot->yAxis->setRange(*list_min.front(), *list_max.front()); //(min, max)
 
     customPlot->graph(0)->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssCircle, Qt::color1, Qt::white, 3));
     customPlot->graph(0)->setName(param.at(0));
