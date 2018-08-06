@@ -12,7 +12,8 @@ Widget::Widget(QWidget *parent) :
     ui(new Ui::Widget),
     startWin(new StartMeasurment),
     data(false),
-    incub(false)
+    incub(false),
+    pulse(false)
 {
     ui->setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
@@ -246,10 +247,11 @@ void Widget::realtimeDataSlot(QVariantList a)
     static double lastPointV2 = a[1].toDouble();
     static double lastPointV3 = a[2].toDouble();
     static double lastPointV4 = a[3].toDouble();
-
-    if((a[0].toDouble() - lastPointV1) > 0.1f && !pulse) {
-        pulse = true;
-        qDebug() << "The pulse is come!";
+    double dd =std::abs(a[0].toDouble() - lastPointV1);
+    lastPointV1 = a[0].toDouble();
+    if( dd > 0.2f && pulse) {
+        pulse = false;
+        qDebug() << QString("The pulse is come! dd=%1").arg(dd);
         startData();
     }
     if (key-lastPointKey > 0.01) // at most add point every 10 ms
@@ -504,6 +506,7 @@ bool Widget::isIncub()
 void Widget::incubeTimeout()
 {
     stopIncub();
+    pulse = true;
     setUserMessage("Время инкубации истекло, добавьте стартовый реагеет");
 //    QMessageBox::information(this, "Инкубация",
 //                             "Время инкубации истекло, добавьте стартовый реагент\n"
