@@ -240,6 +240,13 @@
           </property>
          </widget>
         </item>
+        <item>
+         <widget class="QLabel" name="label_led1">
+          <property name="text">
+           <string>TextLabel</string>
+          </property>
+         </widget>
+        </item>
        </layout>
       </widget>
      </item>
@@ -265,6 +272,13 @@
           </property>
          </widget>
         </item>
+        <item>
+         <widget class="QLabel" name="label_led2">
+          <property name="text">
+           <string>TextLabel</string>
+          </property>
+         </widget>
+        </item>
        </layout>
       </widget>
      </item>
@@ -287,6 +301,13 @@
           </property>
           <property name="frameShadow">
            <enum>QFrame::Raised</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_led3">
+          <property name="text">
+           <string>TextLabel</string>
           </property>
          </widget>
         </item>
@@ -322,6 +343,13 @@
           </property>
          </widget>
         </item>
+        <item>
+         <widget class="QLabel" name="label_led4">
+          <property name="text">
+           <string>TextLabel</string>
+          </property>
+         </widget>
+        </item>
        </layout>
       </widget>
      </item>
@@ -331,16 +359,7 @@
   <zorder>label_fps</zorder>
   <zorder>label_5</zorder>
   <zorder>pushButton</zorder>
-  <zorder></zorder>
   <zorder>progressBar</zorder>
-  <zorder>frame_1</zorder>
-  <zorder>frame_2</zorder>
-  <zorder>frame_3</zorder>
-  <zorder>frame_4</zorder>
-  <zorder>groupBox_f4</zorder>
-  <zorder>groupBox_f3</zorder>
-  <zorder>groupBox_f2</zorder>
-  <zorder>groupBox_f1</zorder>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>

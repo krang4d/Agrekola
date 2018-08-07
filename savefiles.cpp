@@ -170,7 +170,6 @@ QString SaveFiles::openData(QWidget *parent, QList<double> &v1, QList<double> &v
             } break;
         default : qDebug() << "SaveFile: Value out of range";
         }
-
 //        v1.push_back(rx.cap(2).toDouble());
 //        v2.push_back(rx.cap(3).toDouble());
 //        v3.push_back(rx.cap(4).toDouble());
@@ -228,7 +227,6 @@ void SaveFiles::writeUserMsg(QString msg)
 {
     OnlyOneFile::Instance().stream_user << msg << "\n";
 }
-
 
 void SaveFiles::openParams(QString name, QStringList &param)
 {

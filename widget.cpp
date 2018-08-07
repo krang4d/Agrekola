@@ -33,7 +33,6 @@ Widget::Widget(QWidget *parent) :
     ui->progressBar->hide();
     setupRealtimeData();
     setupTimers();
-
     installEventFilter(this);
     QWidget::connect(startWin, SIGNAL(startMeasurment()), this, SLOT(getData()));
 }
@@ -47,26 +46,21 @@ Widget::~Widget()
 
 bool Widget::eventFilter(QObject *watched, QEvent *event)
 {
-    if(event->type() == QEvent::Close)
-    {
+    if(event->type() == QEvent::Close) {
         qDebug() << "Close Event is emited in the Widget!";
         parentWidget()->show();
         return true;
     }
-    if(event->type() == QEvent::KeyPress)
-    {
+    if(event->type() == QEvent::KeyPress) {
         qDebug() << "Event kayPress";
         QKeyEvent *kayEvent = static_cast<QKeyEvent *>(event);
-        if(kayEvent->key() == Qt::Key_Enter)
-        {
+        if(kayEvent->key() == Qt::Key_Enter) {
             bool b = ui->groupBox_Mix->isVisible();
-            if(b)
-            {
+            if(b) {
                 ui->groupBox_Mix->setVisible(false);
                 qDebug() << "setVisible(false)";
             }
-            else
-            {
+            else {
                 ui->groupBox_Mix->setVisible(true);
                 qDebug() << "setVisible(true)";
             }
@@ -78,16 +72,14 @@ bool Widget::eventFilter(QObject *watched, QEvent *event)
 
 void Widget::setUserMessage(QString str, bool withtime, bool tofile)
 {
-    if(withtime)
-    {
+    if(withtime) {
         QString msg = QString(tr("%1,    Время %2"))
                 .arg(str)
                 .arg(dt.toString("hh:mm:ss"));
         ui->textEdit->append(msg);
         if(tofile) saveFiles.writeUserMsg(msg);
     }
-    else
-    {
+    else {
         ui->textEdit->append(str);
         if(tofile) saveFiles.writeUserMsg(str);
     }
@@ -95,14 +87,12 @@ void Widget::setUserMessage(QString str, bool withtime, bool tofile)
     b->triggerAction(QScrollBar::SliderToMaximum);
 }
 
-void Widget::setTestMode(bool b)
-{
+void Widget::setTestMode(bool b) {
     //setUserMessage(QString(agrekola->GetInformation()), false);
     ui->groupBox_Mix->setVisible(b);
 }
 
-void Widget::setupRealtimeData()
-{
+void Widget::setupRealtimeData() {
     // include this section to fully disable antialiasing for higher performance:
     /*
     QFont font;
@@ -132,8 +122,7 @@ void Widget::setupRealtimeData()
     //customPlot2->setOpenGl(true);
     //customPlot3->setOpenGl(true);
     //customPlot4->setOpenGl(true);
-    if(startWin->isSingle())
-    {
+    if(startWin->isSingle()) {
         QSharedPointer<QCPAxisTickerTime> timeTicker(new QCPAxisTickerTime);
         timeTicker->setTimeFormat("%m:%s");
 
@@ -188,8 +177,7 @@ void Widget::setupRealtimeData()
 //        connect(&plotTimer, SIGNAL(timeout()), this, SLOT(realtimeDataSlotSingle()));
 //        plotTimer.start(0); // Interval 0 means to refresh as fast as possible
     }
-    else
-    {
+    else {
         QSharedPointer<QCPAxisTickerTime> timeTicker(new QCPAxisTickerTime);
         timeTicker->setTimeFormat("%m:%s");
 
@@ -226,8 +214,7 @@ void Widget::setupRealtimeData()
     }
 }
 
-void Widget::startProgressBarTimer(QString format, int timer_tic_ms, int time_ms)
-{
+void Widget::startProgressBarTimer(QString format, int timer_tic_ms, int time_ms) {
     ui->progressBar->setFormat(format);
     ui->progressBar->setVisible(true);
     ui->progressBar->setValue(0);
@@ -235,15 +222,13 @@ void Widget::startProgressBarTimer(QString format, int timer_tic_ms, int time_ms
     progressTimer.start(timer_tic_ms);
 }
 
-void Widget::updateProgressValue()
-{
+void Widget::updateProgressValue() {
     //ui->progressBar->setMaximum(progress_t-progressTimer.interval());
     int value = ui->progressBar->value();
     ui->progressBar->setValue(value+progressTimer.interval());
 }
 
-void Widget::realtimeDataSlot(QVariantList a)
-{
+void Widget::realtimeDataSlot(QVariantList a) {
     //qDebug() << "ThreadID: " << QThread::currentThreadId() << "a0 = " << a[0];
     static QTime time(QTime::currentTime());
     // calculate two new data points:
@@ -261,31 +246,30 @@ void Widget::realtimeDataSlot(QVariantList a)
     lastPointV1 = a[0].toDouble();
     if( dx1 > 0.2f && pulse1) {
         pulse1 = false;
-        qDebug() << QString("The pulse is come! da1=%1").arg(dx1);
+        qDebug() << QString("The pulse is come! dx1=%1").arg(dx1);
         startData(1);
     }
     lastPointV2 = a[1].toDouble();
     if( dx2 > 0.2f && pulse2) {
         pulse2 = false;
-        qDebug() << QString("The pulse is come! da2=%1").arg(dx2);
+        qDebug() << QString("The pulse is come! dx2=%1").arg(dx2);
         startData(2);
     }
     lastPointV3 = a[2].toDouble();
     if( dx3 > 0.2f && pulse3) {
         pulse3 = false;
-        qDebug() << QString("The pulse is come! da3=%1").arg(dx3);
+        qDebug() << QString("The pulse is come! dx3=%1").arg(dx3);
         startData(3);
     }
     lastPointV4 = a[3].toDouble();
     if( dx4 > 0.2f && pulse4) {
         pulse4 = false;
-        qDebug() << QString("The pulse is come! da4=%1").arg(dx4);
+        qDebug() << QString("The pulse is come! dx4=%1").arg(dx4);
         startData(4);
     }
 
-    if (key-lastPointKey > 0.01) // at most add point every 10 ms
-    {
-        if(startWin->isSingle()){
+    if (key-lastPointKey > 0.01) {// at most add point every 10 ms
+        if(startWin->isSingle()) {
           customPlot1->graph(0)->addData(key, a[0].toDouble());
           customPlot2->graph(0)->addData(key, a[1].toDouble());
           customPlot3->graph(0)->addData(key, a[2].toDouble());
@@ -304,7 +288,7 @@ void Widget::realtimeDataSlot(QVariantList a)
           customPlot4->xAxis->setRange(key, 8, Qt::AlignRight);
           customPlot4->replot();
         }
-        else{
+        else {
           customPlot1->graph(0)->addData(key, a[0].toDouble());
           customPlot1->graph(1)->addData(key, a[1].toDouble());
           customPlot2->graph(0)->addData(key, a[2].toDouble());
@@ -327,27 +311,34 @@ void Widget::realtimeDataSlot(QVariantList a)
             if(startWin->isChannel_1() ) {
                 map_y1.insert(key, a[0].toDouble());
                 y1.push_back(a[0].toDouble());
-                //y1.insert(key, a[0].toDouble());
+                ui->label_led1->setStyleSheet("color: green;");
             }
         }
+        else ui->label_led1->setStyleSheet("color: yellow;");
         if(isData(2)) {
             if(startWin->isChannel_2()) {
                 map_y2.insert(key, a[1].toDouble());
                 y2.push_back(a[1].toDouble());
+                ui->label_led2->setStyleSheet("color: green;");
             }
         }
+        else ui->label_led2->setStyleSheet("color: yellow;");
         if(isData(3)) {
             if(startWin->isChannel_3()) {
                 map_y3.insert(key, a[2].toDouble());
                 y3.push_back(a[2].toDouble());
+                ui->label_led3->setStyleSheet("color: green;");
             }
         }
+        else ui->label_led3->setStyleSheet("color: yellow;");
         if(isData(4)) {
             if(startWin->isChannel_4()) {
                 map_y4.insert(key, a[3].toDouble());
                 y4.push_back(a[3].toDouble());
+                ui->label_led4->setStyleSheet("color: green;");
             }
         }
+        else ui->label_led4->setStyleSheet("color: yellow;");
         if(isData(1) || isData(2) || isData(3) || isData(4))
             x.push_back(key);
         lastPointKey = key;
@@ -414,13 +405,11 @@ void Widget::on_pushButton_clicked()
 
 void Widget::updataTermo(bool td)
 {
-    if(!td)
-    {
+    if(!td) {
         ui->label_TD->setText(QString("Температура >37°C"));
         ui->label_TD->setStyleSheet("color: green");
     }
-    else
-    {
+    else {
         ui->label_TD->setText(QString("Температура <37°C"));
         ui->label_TD->setStyleSheet("color: red");
     }
@@ -441,7 +430,7 @@ void Widget::updateTime()
                                   .arg(startWin->getTimeIncube() - t));
         t+=interval;
     }
-    else{
+    else {
         ui->label_incube->setText(QString("Время инкубации, --- сек"));
         t=0;
     }
@@ -450,10 +439,8 @@ void Widget::updateTime()
 void Widget::getData()
 {
     QString msg;
-    if(!startWin->isCancel())
-    {
-        if(startWin->isSingle())
-        {
+    if(!startWin->isCancel()) {
+        if(startWin->isSingle()) {
             ui->groupBox_f1->setTitle("Канал 1");
             ui->groupBox_f2->setTitle("Канал 2");
             ui->groupBox_f3->setTitle("Канал 3");
@@ -483,8 +470,7 @@ void Widget::getData()
             setUserMessage(msg, true, true);
             setupRealtimeData();
         }
-        else
-        {
+        else {
             ui->groupBox_f1->setTitle("Канал 1, 2");
             ui->groupBox_f2->setTitle("Канал 3, 4");
             ui->groupBox_f3->hide();
@@ -511,28 +497,31 @@ void Widget::startData(int n)
         setUserMessage("Измерение по каналу 1");
         emit status(QString("Измерение по каналу 1"));
         startProgressBarTimer("Измерение по каналу 1 %p%", 10, startWin->getTime() * 1000);
-        auto func = [=](){writeData(1);};
+        auto func = [=](){writeMapData(1);};
         QTimer::singleShot(startWin->getTime() * 1000, func);
     }
     if(n == 2) {
         data2 = true;
+        setUserMessage("Измерение по каналу 2");
         emit status(QString("Измерение по каналу 2"));
         startProgressBarTimer("Измерение по каналу 2 %p%", 10, startWin->getTime() * 1000);
-        auto func = [=](){writeData(2);};
+        auto func = [=](){writeMapData(2);};
         QTimer::singleShot(startWin->getTime() * 1000, func);
     }
     if(n == 3) {
         data3 = true;
+        setUserMessage("Измерение по каналу 3");
         emit status(QString("Измерение по каналу 3"));
         startProgressBarTimer("Измерение по каналу 3 %p%", 10, startWin->getTime() * 1000);
-        auto func = [=](){writeData(3);};
+        auto func = [=](){writeMapData(3);};
         QTimer::singleShot(startWin->getTime() * 1000, func);
     }
     if(n == 4) {
         data4 = true;
+        setUserMessage("Измерение по каналу 4");
         emit status(QString("Измерение по каналу 4"));
         startProgressBarTimer("Измерение по каналу 4 %p%", 10, startWin->getTime() * 1000);
-        auto func = [=](){writeData(4);};
+        auto func = [=](){writeMapData(4);};
         QTimer::singleShot(startWin->getTime() * 1000, func);
     }
 }
@@ -591,16 +580,21 @@ bool Widget::isIncub()
 
 void Widget::incubeTimeout()
 {
+    num = 0;
     stopIncub();
-    if(startWin->isChannel_1())
-        pulse1 = true;
-    if(startWin->isChannel_2())
-        pulse2 = true;
-    if(startWin->isChannel_3())
-        pulse3 = true;
-    if(startWin->isChannel_4())
-        pulse3 = true;
-    setUserMessage("Время инкубации истекло, добавьте стартовый реагеет");
+    if(startWin->isChannel_1()) {
+        pulse1 = true; num++;
+    }
+    if(startWin->isChannel_2()) {
+        pulse2 = true; num++;
+    }
+    if(startWin->isChannel_3()) {
+        pulse3 = true; num++;
+    }
+    if(startWin->isChannel_4()) {
+        pulse3 = true; num++;
+    }
+    setUserMessage("Время инкубации истекло, добавьте стартовый реагент!");
 //    QMessageBox::information(this, "Инкубация",
 //                             "Время инкубации истекло, добавьте стартовый реагент\n"
 //                             "и нажмите кнопку СТАРТ для соответствующего канала, если\n"
@@ -649,9 +643,8 @@ void Widget::writeData(const int n)
 //    QMap<double, double>::const_iterator it = y1.constBegin();
 //    while(it != y1.constEnd()) {
 //        strList << QString("%1\t").arg(it.value()) << QString("%1\n").arg(it.key());
-//    }
-    for(int i=0; i<x.length(); i++)
-    {
+//  }
+    for(int i=0; i<x.length(); i++) {
         progressTimer.stop();
         ui->progressBar->setMaximum(x.length());
         ui->progressBar->setValue(i);//i*100/x.length());
@@ -672,6 +665,75 @@ void Widget::writeData(const int n)
     y3.clear();
     y4.clear();
     x.clear();
+    ui->progressBar->setVisible(false);
+    setUserMessage(saveFiles.writeData(strList), true, true);
+}
+
+void Widget::writeMapData(const int n)
+{
+    stopData(n);
+    num--;
+    //if( num > 0 ) ;
+    setUserMessage(QString("Запись данных по каналу %1").arg(n));
+    emit status(QString("Запись данных по каналу %1").arg(n));
+    ui->progressBar->setFormat("Запись данных %p%");
+    qDebug().noquote() << QString("Запись данных по каналу %1").arg(n);
+
+    QStringList strList;
+    auto func = [&](QMap<double, double> map) {
+        strList << QString("t#%5\tti#%6\tp#%7\n").arg(startWin->getTime())
+                                                 .arg(startWin->getTimeIncube())
+                                                 .arg(startWin->isSingle());
+        auto it = map.constBegin();
+        while(it != map.constEnd()) {
+            static int i = 0;
+            strList << QString("%1\t%2\t%3\n").arg(i).arg(it.value()).arg(it.key());
+            ++it; ++i;
+        }
+        map.clear();
+    };
+    strList << QString("N\t");
+    if( n == 1 && !map_y1.isEmpty() ) {
+        strList << QString("V1#%1\t").arg(startWin->getNum_1());
+        func(map_y1);
+    }
+    if( n == 2 && !map_y2.isEmpty() ) {
+        strList << QString("V2#%1\t").arg(startWin->getNum_2());
+        func(map_y2);
+    }
+    if( n == 3 && !map_y3.isEmpty() ) {
+        strList << QString("V3#%1\t").arg(startWin->getNum_3());
+        func(map_y3);
+    }
+    if( n == 4 && !map_y4.isEmpty() ) {
+        strList << QString("V4#%1\t").arg(startWin->getNum_4());
+        func(map_y4);
+    }
+
+//    for(int i=0; i<x.length(); i++) {
+//        progressTimer.stop();
+//        ui->progressBar->setMaximum(x.length());
+//        ui->progressBar->setValue(i);//i*100/x.length());
+
+//        strList << QString("%1\t").arg(i);
+//        if(!y1.isEmpty())
+//            strList << QString("%1\t").arg(y1[i]);
+//        if(!y2.isEmpty())
+//            strList << QString("%1\t").arg(y2[i]);
+//        if(!y3.isEmpty())
+//            strList << QString("%1\t").arg(y3[i]);
+//        if(!y4.isEmpty())
+//            strList << QString("%1\t").arg(y4[i]);
+//        strList << QString("%1\n").arg(x[i]);
+//    }
+    num--;
+//    if( !(num > 0) ) {
+//        y1.clear();
+//        y2.clear();
+//        y3.clear();
+//        y4.clear();
+//        x.clear();
+//    }
     ui->progressBar->setVisible(false);
     setUserMessage(saveFiles.writeData(strList), true, true);
 }

@@ -61,6 +61,7 @@ public slots:
 private slots:
     void realtimeDataSlot(QVariantList);
     void writeData(const int n = 0);
+    void writeMapData(const int n = 0);
 
     void on_checkBox_1_stateChanged(int arg1);
     void on_checkBox_2_stateChanged(int arg1);
@@ -94,6 +95,7 @@ private:
     QVector<double> y1, y2, y3, y4;
 
     SaveFiles saveFiles;
+    int num;
 };
 
 #endif // WIDGET_H
