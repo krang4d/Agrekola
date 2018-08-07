@@ -6,6 +6,7 @@
 #include <QDebug>
 #include <QEvent>
 #include <QKeyEvent>
+#include <QtConcurrent>
 
 Widget::Widget(QWidget *parent) :
     QWidget(parent),

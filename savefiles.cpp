@@ -15,6 +15,24 @@ SaveFiles::~SaveFiles()
 
 QString SaveFiles::writeData(QStringList dt)
 {
+    QDir dir;
+    QString path = QDir::homePath();
+    dir.cd(path); //переходим в папку home
+    if(!dir.cd("Agrekola4k"))
+    {
+        if(dir.mkdir("Agrekola4k")) dir.cd("Agrekola4k");
+        QDir::setCurrent(dir.path());
+        qDebug() << "mkdir(Agrekola4k)";
+    }
+    else QDir::setCurrent(dir.path());
+
+    if(!dir.cd("data"))
+    {
+        if(dir.mkdir("data")) dir.cd("data");
+        QDir::setCurrent(dir.path());
+        qDebug() << "mkdir(data)";
+    }
+    else QDir::setCurrent(dir.path());
     //создаем файл данных
     //имя файла формируется из текущей даты + число запуска программы в этот день
     QDateTime d = QDateTime::currentDateTime();
@@ -23,20 +41,21 @@ QString SaveFiles::writeData(QStringList dt)
     {
         QString name = QString("%1_%2.txt").arg(d.toString("yyyyMMdd")).arg(i);
         if(!QFile::exists(name)) {
-            file_data.setFileName(name);
-            if(!file_data.open(QIODevice::ReadWrite | QIODevice::Append | QIODevice::Text)) qWarning() << "data file is't opened";
-            stream_data.setDevice(&file_data);
+
+            OnlyOneFile::Instance().file_data.setFileName(name);
+            if(!OnlyOneFile::Instance().file_data.open(QIODevice::ReadWrite | QIODevice::Append | QIODevice::Text)) qWarning() << "data file is't opened";
+            OnlyOneFile::Instance().stream_data.setDevice(&OnlyOneFile::Instance().file_data);
             break;
         }
         i++;
     }
     foreach (QString var, dt) {
-        stream_data << var;
+        OnlyOneFile::Instance().stream_data << var;
     }
 
-    QString str = QString("Данные записаны в файл %1/%2").arg(QDir::currentPath()).arg(file_data.fileName());
-    stream_data.flush();
-    file_data.close();
+    QString str = QString("Данные записаны в файл %1/%2").arg(QDir::currentPath()).arg(OnlyOneFile::Instance().file_data.fileName());
+    OnlyOneFile::Instance().stream_data.flush();
+    OnlyOneFile::Instance().file_data.close();
     return str;
 }
 

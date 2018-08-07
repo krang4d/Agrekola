@@ -19,7 +19,7 @@ class SaveFiles : public QObject
 public:
     explicit SaveFiles(QObject *parent = 0);
     ~SaveFiles();
-    QString writeData(QStringList);
+    static QString writeData(QStringList);
     static QString openData(QWidget*, QList<double>&, QList<double>&, QList<double>&, QList<double>&, QList<double>&, QStringList&);
     void writeUserMsg(QString);
 
@@ -49,16 +49,16 @@ protected:
     void setupFiles();
     void openParams(QString name, QStringList &param);
     void saveParams(QString name, QStringList param);
-    QFile file_setting, file_data;
-    QTextStream stream_setting, stream_data;
+    QFile file_setting;
+    QTextStream stream_setting;
     QDir dataDir, settingDir;
 };
 
 class OnlyOneFile
 {
 public:
-    QFile file_user;
-    QTextStream stream_user;
+    QFile file_user, file_data;
+    QTextStream stream_user, stream_data;
     static OnlyOneFile& Instance()
     {
             static OnlyOneFile theSingleInstance;
