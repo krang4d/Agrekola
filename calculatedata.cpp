@@ -1,18 +1,18 @@
 #include "calculatedata.h"
 #include <QtMath>
 
-CalculateData::CalculateData(QObject *parent) : QObject(parent)
+CalcData::CalcData(QObject *parent) : QObject(parent)
 {
     jump = 0.04f;
     mix_t = 4.0f;
 }
 
-CalculateData::CalculateData(QMap<double, double> map, QObject *parent) : CalculateData(parent)
+CalcData::CalcData(QMap<double, double> map, QObject *parent) : CalcData(parent)
 {
     mdata = map;
 }
 
-double CalculateData::calc()
+double CalcData::calc()
 {
     QMap<double, double>::const_iterator it = mdata.begin();
     QMap<double, double>::const_iterator state;
@@ -48,15 +48,15 @@ double CalculateData::calc()
     return state.key();
 }
 
-CalculateKo1::CalculateKo1(QMap<double, double> map) : CalculateData(map)
+CalcKo1::CalcKo1(QMap<double, double> map) : CalcData(map)
 {
 /*скачек величиной 4-10% от среднего уровня сигнала для определения времени свертывания*/
     //jump = 0.04f;
 }
 
-double CalculateKo1::calc()
+double CalcKo1::calc()
 {
-    double k = CalculateData::calc() - 1;
-    qDebug() << "CalculateArg1::calc() " << k;
+    double k = CalcData::calc() - 1;
+    qDebug() << "CalcArg1::calc() " << k;
     return k;
 }

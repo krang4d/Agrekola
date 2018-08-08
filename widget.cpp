@@ -684,30 +684,34 @@ void Widget::writeMapData(const int n)
         strList << QString("t#%5\tti#%6\tp#%7\n").arg(startWin->getTime())
                                                  .arg(startWin->getTimeIncube())
                                                  .arg(startWin->isSingle());
+        int i = 0;
         auto it = map.constBegin();
         while(it != map.constEnd()) {
-            static int i = 0;
             strList << QString("%1\t%2\t%3\n").arg(i).arg(it.value()).arg(it.key());
             ++it; ++i;
         }
-        map.clear();
+        //map.clear();
     };
     strList << QString("N\t");
     if( n == 1 && !map_y1.isEmpty() ) {
         strList << QString("V1#%1\t").arg(startWin->getNum_1());
         func(map_y1);
+        map_y1.clear();
     }
     if( n == 2 && !map_y2.isEmpty() ) {
         strList << QString("V2#%1\t").arg(startWin->getNum_2());
         func(map_y2);
+        map_y2.clear();
     }
     if( n == 3 && !map_y3.isEmpty() ) {
         strList << QString("V3#%1\t").arg(startWin->getNum_3());
         func(map_y3);
+        map_y3.clear();
     }
     if( n == 4 && !map_y4.isEmpty() ) {
         strList << QString("V4#%1\t").arg(startWin->getNum_4());
         func(map_y4);
+        map_y4.clear();
     }
 
 //    for(int i=0; i<x.length(); i++) {
