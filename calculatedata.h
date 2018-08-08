@@ -31,6 +31,9 @@ class CalcKo1 : public CalcData
 public:
     explicit CalcKo1(QMap<double, double>);
     double calc() override;
+
+private:
+    //параметры для определения времени свертывания
 };
 
 class CalcKo2 : public CalcData
@@ -38,6 +41,10 @@ class CalcKo2 : public CalcData
 public:
     explicit CalcKo2(QMap<double, double>);
     double calc() override;
+
+private:
+    //параметры для определения АЧТВ
+    double tk; // АЧТВ контрольной плазмы
 };
 
 class CalcKo3 : public CalcData
@@ -45,6 +52,10 @@ class CalcKo3 : public CalcData
 public:
     explicit CalcKo3(QMap<double, double>);
     double calc() override;
+
+private:
+    //параметры для определения Фибриногена
+
 };
 
 class CalcKo4 : public CalcData
@@ -52,6 +63,10 @@ class CalcKo4 : public CalcData
 public:
     explicit CalcKo4(QMap<double, double>);
     double calc() override;
+
+private:
+    //параметры для определения Тромбина
+    double tk; // АЧТВ контрольной плазмы
 };
 
 class CalcKo5 : public CalcData
@@ -59,6 +74,9 @@ class CalcKo5 : public CalcData
 public:
     explicit CalcKo5(QMap<double, double>);
     double calc() override;
+
+private:
+    //параметры для определения Протромбина
 };
 
 class CalcAgr1 : public CalcData
@@ -66,6 +84,9 @@ class CalcAgr1 : public CalcData
 public:
     explicit CalcAgr1(QMap<double, double>);
     double calc() override;
+
+private:
+    //параметры для определения Агрегации
 };
 
 class CalcAgr2 : public CalcData
@@ -73,6 +94,9 @@ class CalcAgr2 : public CalcData
 public:
     explicit CalcAgr2(QMap<double, double>);
     double calc() override;
+
+private:
+    //параметры для определения ф-ра Виллебранда
 };
 
 #endif // CALCULATEDATA_H

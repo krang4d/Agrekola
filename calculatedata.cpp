@@ -67,7 +67,7 @@ double CalcKo1::calc()
     return k;
 }
 
-CalcKo2::CalcKo2(QMap<double, double>)
+CalcKo2::CalcKo2(QMap<double, double>) : tk(1.0f)
 {
     SaveFiles file;
     file.openKo1(param);
@@ -79,7 +79,7 @@ CalcKo2::CalcKo2(QMap<double, double>)
 
 double CalcKo2::calc()
 {
-    return 0;
+    return CalcData::calc()/tk;
 }
 
 CalcKo3::CalcKo3(QMap<double, double>)
@@ -97,7 +97,7 @@ double CalcKo3::calc()
     return 0;
 }
 
-CalcKo4::CalcKo4(QMap<double, double>)
+CalcKo4::CalcKo4(QMap<double, double>) : tk(1.0f)
 {
     SaveFiles file;
     file.openKo4(param);
@@ -109,7 +109,7 @@ CalcKo4::CalcKo4(QMap<double, double>)
 
 double CalcKo4::calc()
 {
-    return 0;
+    return CalcData::calc()/tk;
 }
 
 CalcKo5::CalcKo5(QMap<double, double>)
