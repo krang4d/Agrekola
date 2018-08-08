@@ -66,7 +66,7 @@ public:
     }
 
 private:
-    OnlyOneFile(){
+    OnlyOneFile() {
         QDir dir;
         QString path = QDir::homePath();
         dir.cd(path); //переходим в папку home

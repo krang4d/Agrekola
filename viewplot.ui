@@ -47,6 +47,45 @@
       </widget>
      </item>
      <item>
+      <widget class="QComboBox" name="comboBox">
+       <item>
+        <property name="text">
+         <string>Определение параметров агрегации Agr1</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Определение активности фактора Виллебранда Agr2</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Время свкртывания Ko1</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>АЧТВ Ko2</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Фибриноген Ko3</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Тромбин Ko4</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Протромбиновый комплекс Ko5</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="pushButton_calc">
        <property name="text">
         <string>Расчет</string>

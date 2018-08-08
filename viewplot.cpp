@@ -454,8 +454,30 @@ void ViewPlot::on_pushButton_calc_clicked()
         for(int i = 0; i < t.count(); ++i) {
             data.insert(t.at(i), v1.at(i));
         }
-        CalcKo1 calc(data);
-        double value = calc.calc();
+        QSharedPointer<CalcData> calc;
+        int i = ui->comboBox->currentIndex();
+        switch (i) {
+        case 0: calc = QSharedPointer<CalcData>(new CalcAgr1(data), &QObject::deleteLater);
+            break;
+        case 1: calc = QSharedPointer<CalcData>(new CalcAgr2(data), &QObject::deleteLater);
+            break;
+        case 2: calc = QSharedPointer<CalcData>(new CalcKo1(data), &QObject::deleteLater);
+            break;
+        case 3: calc = QSharedPointer<CalcData>(new CalcKo2(data), &QObject::deleteLater);
+            break;
+        case 4: calc = QSharedPointer<CalcData>(new CalcKo3(data), &QObject::deleteLater);
+            break;
+        case 5: calc = QSharedPointer<CalcData>(new CalcKo4(data), &QObject::deleteLater);
+            break;
+        case 6: calc = QSharedPointer<CalcData>(new CalcKo5(data), &QObject::deleteLater);
+            break;
+
+        default: qDebug().noquote() << QString("Неправильный индекс ViewPlot::on_pushButton_calc_clicked() %1").arg(i);
+            break;
+        }
+        //CalcKo1 calc(data);
+        if(calc.isNull()) qDebug() << "Ошибка выделения памяти ViewPlot::on_pushButton_calc_clicked()";
+        double value = calc->calc();
         ui->label_average->setText(tr("Время свертывания = %1").arg(value));
     }
 }
