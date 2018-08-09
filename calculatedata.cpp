@@ -67,10 +67,10 @@ double CalcKo1::calc()
     return k;
 }
 
-CalcKo2::CalcKo2(QMap<double, double>) : tk(1.0f)
+CalcKo2::CalcKo2(QMap<double, double> map) : CalcData(map), tk(1.0f)
 {
     SaveFiles file;
-    file.openKo1(param);
+    file.openKo2(param);
     qDebug() << "параметры CalcKo2";
     for(auto it = param.begin(); it < param.end(); it++) {
         qDebug() << *it;
@@ -82,7 +82,7 @@ double CalcKo2::calc()
     return CalcData::calc()/tk;
 }
 
-CalcKo3::CalcKo3(QMap<double, double>)
+CalcKo3::CalcKo3(QMap<double, double> map) : CalcData(map)
 {
     SaveFiles file;
     file.openKo3(param);
@@ -97,7 +97,7 @@ double CalcKo3::calc()
     return 0;
 }
 
-CalcKo4::CalcKo4(QMap<double, double>) : tk(1.0f)
+CalcKo4::CalcKo4(QMap<double, double> map) : CalcData(map), tk(1.0f)
 {
     SaveFiles file;
     file.openKo4(param);
@@ -112,7 +112,7 @@ double CalcKo4::calc()
     return CalcData::calc()/tk;
 }
 
-CalcKo5::CalcKo5(QMap<double, double>)
+CalcKo5::CalcKo5(QMap<double, double> map) : CalcData(map)
 {
     SaveFiles file;
     file.openKo5(param);
@@ -120,14 +120,30 @@ CalcKo5::CalcKo5(QMap<double, double>)
     for(auto it = param.begin(); it < param.end(); it++) {
         qDebug() << *it;
     }
+    QString p = param.at(3);
+    a1 = p.toDouble();
+    qDebug() << "по Квику =" << a1;
 }
 
 double CalcKo5::calc()
 {
-    return 0;
+    // <-- проверка значений калибровки
+    a2 = a1*50.0f/100.0f;       //(12)
+    a3 = a1*25.0f/100.0f;       //(13)
+    a4 = a1*12.5f/100.0f;       //(14)
+
+    tgalfa1 = (t2-t1)/qLn(a1/a2);  //(16)
+    tgalfa2 = (t3-t2)/qLn(a2/a3);  //(17)
+    tgalfa3 = (t3-t1)/qLn(a1/a3);  //(18)
+    tgalfa4 = (t4-t2)/qLn(a2/a4);  //(19)
+    tgalfa = ( tgalfa1 + tgalfa2 + tgalfa3 + tgalfa4 ) / k;
+
+    lgax = ( t1 - CalcData::calc() + qLn(a1) * tgalfa ) / tgalfa;
+
+    return qPow(10, lgax);
 }
 
-CalcAgr1::CalcAgr1(QMap<double, double>)
+CalcAgr1::CalcAgr1(QMap<double, double> map) : CalcData(map)
 {
     SaveFiles file;
     file.openAgr1(param);
@@ -142,7 +158,7 @@ double CalcAgr1::calc()
     return 0;
 }
 
-CalcAgr2::CalcAgr2(QMap<double, double>)
+CalcAgr2::CalcAgr2(QMap<double, double> map) : CalcData(map)
 {
     SaveFiles file;
     file.openAgr2(param);

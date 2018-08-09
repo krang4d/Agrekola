@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>271</width>
-    <height>339</height>
+    <height>295</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -71,7 +71,7 @@
      <item row="5" column="0">
       <widget class="QLabel" name="label_4">
        <property name="text">
-        <string>К/плазма</string>
+        <string>Протромбин по Квику</string>
        </property>
        <property name="buddy">
         <cstring>lineEdit_4</cstring>
@@ -84,7 +84,7 @@
      <item row="6" column="0">
       <widget class="QLabel" name="label_5">
        <property name="text">
-        <string>Разведение 100%:</string>
+        <string>Протромбиновое отношение</string>
        </property>
        <property name="buddy">
         <cstring>lineEdit_5</cstring>
@@ -97,7 +97,7 @@
      <item row="7" column="0">
       <widget class="QLabel" name="label_6">
        <property name="text">
-        <string>Разведение 50%:</string>
+        <string>Протромбиновый индекс</string>
        </property>
        <property name="buddy">
         <cstring>lineEdit_6</cstring>
@@ -108,32 +108,13 @@
       <widget class="QLineEdit" name="lineEdit_6"/>
      </item>
      <item row="8" column="0">
-      <widget class="QLabel" name="label_7">
+      <widget class="QLabel" name="label_9">
        <property name="text">
-        <string>Разведение 25%:</string>
-       </property>
-       <property name="buddy">
-        <cstring>lineEdit_7</cstring>
+        <string>Калибровка</string>
        </property>
       </widget>
      </item>
      <item row="8" column="1">
-      <widget class="QLineEdit" name="lineEdit_7"/>
-     </item>
-     <item row="9" column="0">
-      <widget class="QLabel" name="label_8">
-       <property name="text">
-        <string>Разведение 12,5%:</string>
-       </property>
-       <property name="buddy">
-        <cstring>lineEdit_8</cstring>
-       </property>
-      </widget>
-     </item>
-     <item row="9" column="1">
-      <widget class="QLineEdit" name="lineEdit_8"/>
-     </item>
-     <item row="4" column="1">
       <widget class="QLabel" name="label_calibrationData">
        <property name="minimumSize">
         <size>
@@ -143,13 +124,6 @@
        </property>
        <property name="text">
         <string>не проводилась</string>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="0">
-      <widget class="QLabel" name="label_9">
-       <property name="text">
-        <string>Калибровка</string>
        </property>
       </widget>
      </item>
