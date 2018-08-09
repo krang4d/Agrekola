@@ -62,7 +62,7 @@ CalcKo1::CalcKo1(QMap<double, double> map) : CalcData(map)
 
 double CalcKo1::calc()
 {
-    double k = CalcData::calc() - 1;
+    double k = CalcData::calc();
     qDebug() << "CalcArg1::calc() " << k;
     return k;
 }
@@ -90,11 +90,28 @@ CalcKo3::CalcKo3(QMap<double, double> map) : CalcData(map)
     for(auto it = param.begin(); it < param.end(); it++) {
         qDebug() << *it;
     }
+    QString p = param.at(3);
+    c2 = p.toDouble();
+    qDebug() << "по Клауссу =" << c2;
+
 }
 
 double CalcKo3::calc()
 {
-    return 0;
+    // <-- проверка значений калибровки
+    c1 = c2*200.0f/100.0f;          //(3)
+    c3 = c2*50.0f/100.0f;           //(4)
+    c4 = c2*25.0f/100.0f;           //(5)
+
+    tgalfa1 = qLn(t2/t1)/qLn(c1/c2);   //(7)
+    tgalfa2 = qLn(t3/t2)/qLn(c2/c3);   //(8)
+    tgalfa3 = qLn(t3/t1)/qLn(c1/c3);   //(9)
+    tgalfa4 = qLn(t4/t2)/qLn(c2/c4);   //(10)
+    tgalfa = ( tgalfa1 + tgalfa2 + tgalfa3 + tgalfa4 ) / k; //(6)
+
+    lgcx = ( qLn(t2/CalcData::calc()) + qLn(c2) * tgalfa ) / tgalfa; //(11)
+
+    return qPow(10, lgcx);
 }
 
 CalcKo4::CalcKo4(QMap<double, double> map) : CalcData(map), tk(1.0f)
@@ -136,9 +153,9 @@ double CalcKo5::calc()
     tgalfa2 = (t3-t2)/qLn(a2/a3);  //(17)
     tgalfa3 = (t3-t1)/qLn(a1/a3);  //(18)
     tgalfa4 = (t4-t2)/qLn(a2/a4);  //(19)
-    tgalfa = ( tgalfa1 + tgalfa2 + tgalfa3 + tgalfa4 ) / k;
+    tgalfa = ( tgalfa1 + tgalfa2 + tgalfa3 + tgalfa4 ) / k; //(15)
 
-    lgax = ( t1 - CalcData::calc() + qLn(a1) * tgalfa ) / tgalfa;
+    lgax = ( t1 - CalcData::calc() + qLn(a1) * tgalfa ) / tgalfa; //(20)
 
     return qPow(10, lgax);
 }
