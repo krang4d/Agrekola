@@ -1,20 +1,10 @@
 #include "calculatedata.h"
 #include <QtMath>
 
-CalcData::CalcData(QObject *parent) : QObject(parent)
+CalcData::CalcData(QMap<double, double> map, QCustomPlot *p, QObject *parent) : mdata(map), plot(p), QObject(parent)
 {
     jump = 0.04f;
     mix_t = 4.0f;
-}
-
-CalcData::CalcData(QMap<double, double> map, QObject *parent) : CalcData(parent)
-{
-    mdata = map;
-}
-
-CalcData::CalcData(QMap<double, double> map, QCustomPlot *p, QObject *parent) : CalcData(map, parent)
-{
-    plot = p;
 }
 
 double CalcData::calcKo()
@@ -48,6 +38,13 @@ double CalcData::calcKo()
         //qDebug() << QString("%1").arg(avg - state.value());
         ++state;
     }
+    if(plot != NULL) {
+        static QCPGraph *g = plot->addGraph();
+        g->setName("AVG");
+        QVector<double> key = {0, 30};
+        QVector<double> value = {avg, avg};
+        g->setData(key, value);
+    }
     qDebug().noquote() << QString("sum = %1, ikey = %2, avg = %3")
                           .arg(sum).arg(state.key()).arg(sum/num);
     return state.key();
@@ -69,23 +66,31 @@ double CalcData::calcAgr()
         }
         ++it;
     }
+
     QMap<double, double>::const_iterator max_dx;
+    QMap<double, double> map_dx;
     double max = it.value(), min = it.value(), last_value = it.value(), dx = 0;
     while(it != mdata.end()) {
         if(it.value() > max)
             max = it.value();
         if(it.value() < min)
-            min = it.value();
+            min = it.value(); 
 
         if((it.value() - last_value) > dx) {
             dx = it.value() - last_value;
-            max_dx = it;
+            max_dx = it - 1;
         }
+        map_dx.insert((it-1).key(), it.value() - last_value);
         last_value = it.value();
 
         num ++;
         sum += it.value();
         ++it;
+    }
+    if(plot != NULL) {
+        static QCPGraph *g  = plot->addGraph();
+        g->setName("DX");
+        g->setData(map_dx.keys().toVector(), map_dx.values().toVector());
     }
     double avg = sum/num;
     double over = avg*jump;
@@ -93,9 +98,12 @@ double CalcData::calcAgr()
     double a = (max_dx+1).value() - max_dx.value();
     double b = (max_dx+1).key() - max_dx.key();
     double tgalfa = a/b;
-    QCPGraph *g = plot->addGraph();
-    g->addData(max_dx.key(), max_dx.value());
-    g->addData(max_dx.key() + 1, max_dx.value() + tgalfa);
+    if(plot != NULL) {
+        static QCPGraph *g = plot->addGraph();
+        QVector<double> key = {max_dx.key(), max_dx.key() + 1, max_dx.key() + 1};
+        QVector<double> value = {max_dx.value(), max_dx.value() + tgalfa, max_dx.value()};
+        g->setData(key, value);
+    }
     qDebug() << QString("Max DX -->%1, Acceleration -->%2, a%3, b%4 ").arg(max_dx.key()).arg(tgalfa).arg(a).arg(b);
     qDebug() << "Минимум --> " << min << "Максимум -->" << max;
 
@@ -109,7 +117,7 @@ double CalcData::calcAgr()
     }
     qDebug().noquote() << QString("sum = %1, ikey = %2, avg = %3")
                           .arg(sum).arg(state.key()).arg(sum/num);
-    return state.key();
+    return tgalfa;
 }
 
 CalcKo1::CalcKo1(QMap<double, double> map) : CalcData(map)
@@ -122,6 +130,11 @@ CalcKo1::CalcKo1(QMap<double, double> map) : CalcData(map)
     for(auto it = param.begin(); it < param.end(); it++) {
         qDebug() << *it;
     }
+}
+
+CalcKo1::CalcKo1(QMap<double, double> map, QCustomPlot *p) : CalcKo1(map)
+{
+    plot = p;
 }
 
 double CalcKo1::calc()

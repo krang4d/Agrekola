@@ -461,7 +461,7 @@ void ViewPlot::on_pushButton_calc_clicked()
             break;
         case 1: calc = QSharedPointer<CalcData>(new CalcAgr2(data), &QObject::deleteLater);
             break;
-        case 2: calc = QSharedPointer<CalcData>(new CalcKo1(data), &QObject::deleteLater);
+        case 2: calc = QSharedPointer<CalcData>(new CalcKo1(data, customPlot), &QObject::deleteLater);
             break;
         case 3: calc = QSharedPointer<CalcData>(new CalcKo2(data), &QObject::deleteLater);
             break;
@@ -479,6 +479,6 @@ void ViewPlot::on_pushButton_calc_clicked()
         if(calc.isNull()) qDebug() << "Ошибка выделения памяти ViewPlot::on_pushButton_calc_clicked()";
         double value = calc->calc();
         customPlot->replot();
-        ui->label_average->setText(tr("Время свертывания = %1").arg(value));
+        ui->label_average->setText(tr("Значение = %1").arg(value));
     }
 }

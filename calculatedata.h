@@ -13,9 +13,7 @@ class CalcData : public QObject
 {
     Q_OBJECT
 public:
-    explicit CalcData(QObject *parent = 0);
-    CalcData(QMap<double, double>, QObject *parent = 0);
-    CalcData(QMap<double, double>, QCustomPlot *p, QObject *parent = 0);
+    CalcData(QMap<double, double>, QCustomPlot *p = NULL, QObject *parent = 0);
     virtual double calcKo();
     virtual double calcAgr();
     virtual double calc() = 0;
@@ -35,6 +33,7 @@ class CalcKo1 : public CalcData
 {
 public:
     explicit CalcKo1(QMap<double, double>);
+    CalcKo1(QMap<double, double>, QCustomPlot*);
     double calc();
 
 
