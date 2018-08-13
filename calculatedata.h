@@ -7,6 +7,7 @@
 #include <QMap>
 #include <numeric>
 #include <savefiles.h>
+#include <qcustomplot.h>
 
 class CalcData : public QObject
 {
@@ -14,6 +15,7 @@ class CalcData : public QObject
 public:
     explicit CalcData(QObject *parent = 0);
     CalcData(QMap<double, double>, QObject *parent = 0);
+    CalcData(QMap<double, double>, QCustomPlot *p, QObject *parent = 0);
     virtual double calcKo();
     virtual double calcAgr();
     virtual double calc() = 0;
@@ -23,6 +25,7 @@ protected:
     QMap<double, double> mdata;
     double jump;                    //скачек величиной 4-10% от среднего уровня сигнала базовое значение для определения времени свертывания
     double mix_t;                   //время в течение которго происходит перемешивание реагента с плазмой и успокоение жидкости
+    QCustomPlot *plot;
 signals:
 
 public slots:
@@ -107,6 +110,7 @@ class CalcAgr1 : public CalcData
 {
 public:
     explicit CalcAgr1(QMap<double, double>);
+    CalcAgr1(QMap<double, double>, QCustomPlot *p);
     double calc();
 
 private:
@@ -122,6 +126,8 @@ public:
 private:
     //параметры для определения ф-ра Виллебранда
     const int k = 3;                //часло калибровочных точек
+    double btp;                     //богатая тромбоцитами плазма
+    double otp;                     //обогащенная тромбоцитами плазма
     double c1;                      //активность фактора Виллебранда контр. плазмы (100%)
     double c2, c3, c4;              //активность фактора Виллебранда других разведений 50%, 25%
     double ck1, ck2, ck3;           //значение скорости агрегации
