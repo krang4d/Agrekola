@@ -33,7 +33,6 @@ private:
     bool eventFilter(QObject *watched, QEvent *event);
     void setupRealtimeData();
     void setupTimers();
-    void startProgressBarTimer(QString format, int timer_tic_ms, int time_ms);
 
     void startIncub();
     void stopIncub();
@@ -52,7 +51,6 @@ signals:
     void onlaser(bool);
     void status(QString);
     void stop();            //сигнал для остановки потока измерений
-    void impulse(int n);
 
 public slots:
     void getData();
@@ -73,7 +71,6 @@ private slots:
 
     void updataTermo(bool);
     void updateTime();
-    void updateProgressValue();
 
 private:
     Ui::Widget *ui;
@@ -83,7 +80,7 @@ private:
     QCustomPlot *customPlot3;
     QCustomPlot *customPlot4;
 
-    QTimer progressTimer, plotTimer, currentTimer;
+    QTimer plotTimer, currentTimer;
     QDateTime dt;
 
     volatile bool data1, data2, data3, data4;
@@ -97,5 +94,23 @@ private:
     SaveFiles saveFiles;
     int num;
 };
+
+//class ProgressBar : QProgressBar
+//{
+//    Q_OBJECT
+
+//public:
+//    explicit ProgressBar(QWidget *parent = 0);
+//    void startProgressBarTimer(QString format, int timer_tic_ms, int time_ms);
+//    ~ProgressBar();
+//private:
+//    QTimer progressTimer;
+
+//signals:
+
+//public slots:
+//    void updateProgressValue();
+
+//};
 
 #endif // WIDGET_H

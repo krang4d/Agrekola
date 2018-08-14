@@ -7,6 +7,9 @@
 #include <QEvent>
 #include <QKeyEvent>
 #include <QtConcurrent>
+#include <progresstimerbar.h>
+#include <functional>
+#include
 
 Widget::Widget(QWidget *parent) :
     QWidget(parent),
@@ -30,7 +33,6 @@ Widget::Widget(QWidget *parent) :
     customPlot3 = ui->frame_3;
     customPlot4 = ui->frame_4;
     ui->groupBox_Mix->setVisible(false);
-    ui->progressBar->hide();
     setupRealtimeData();
     setupTimers();
     installEventFilter(this);
@@ -214,25 +216,10 @@ void Widget::setupRealtimeData() {
     }
 }
 
-void Widget::startProgressBarTimer(QString format, int timer_tic_ms, int time_ms) {
-    ui->progressBar->setFormat(format);
-    ui->progressBar->setVisible(true);
-    ui->progressBar->setValue(0);
-    ui->progressBar->setMaximum(time_ms);
-    progressTimer.start(timer_tic_ms);
-}
-
-void Widget::updateProgressValue() {
-    //ui->progressBar->setMaximum(progress_t-progressTimer.interval());
-    int value = ui->progressBar->value();
-    ui->progressBar->setValue(value+progressTimer.interval());
-}
-
 void Widget::realtimeDataSlot(QVariantList a) {
     //qDebug() << "ThreadID: " << QThread::currentThreadId() << "a0 = " << a[0];
     static QTime time(QTime::currentTime());
     // calculate two new data points:
-
     double key = time.elapsed()/1000.0; // time elapsed since start of demo, in seconds
     static double lastPointKey = 0;
     static double lastPointV1 = a[0].toDouble();
@@ -492,36 +479,42 @@ void Widget::getData()
 
 void Widget::startData(int n)
 {
+    QString str;
+    auto func = [=](){
+        writeMapData(n);
+    };
     if(n == 1) {
         data1 = true;
-        setUserMessage("Измерение по каналу 1");
-        emit status(QString("Измерение по каналу 1"));
-        startProgressBarTimer("Измерение по каналу 1 %p%", 10, startWin->getTime() * 1000);
-        auto func = [=](){writeMapData(1);};
+        str = QString("Измерение по каналу 1");
+        ProgressTimerBar *pb = new ProgressTimerBar;
+        setUserMessage(str);
+        emit status(QString(str));
+        pb->startProgress(QString("%1 %p%").arg(str), 10, startWin->getTime() * 1000);
         QTimer::singleShot(startWin->getTime() * 1000, func);
+
     }
     if(n == 2) {
         data2 = true;
+        ProgressTimerBar *pb = new ProgressTimerBar;
         setUserMessage("Измерение по каналу 2");
         emit status(QString("Измерение по каналу 2"));
-        startProgressBarTimer("Измерение по каналу 2 %p%", 10, startWin->getTime() * 1000);
-        auto func = [=](){writeMapData(2);};
+        pb->startProgress("Измерение по каналу 2 %p%", 10, startWin->getTime() * 1000);
         QTimer::singleShot(startWin->getTime() * 1000, func);
     }
     if(n == 3) {
         data3 = true;
+        ProgressTimerBar *pb = new ProgressTimerBar;
         setUserMessage("Измерение по каналу 3");
         emit status(QString("Измерение по каналу 3"));
-        startProgressBarTimer("Измерение по каналу 3 %p%", 10, startWin->getTime() * 1000);
-        auto func = [=](){writeMapData(3);};
+        pb->startProgress("Измерение по каналу 3 %p%", 10, startWin->getTime() * 1000);
         QTimer::singleShot(startWin->getTime() * 1000, func);
     }
     if(n == 4) {
         data4 = true;
+        ProgressTimerBar *pb = new ProgressTimerBar;
         setUserMessage("Измерение по каналу 4");
         emit status(QString("Измерение по каналу 4"));
-        startProgressBarTimer("Измерение по каналу 4 %p%", 10, startWin->getTime() * 1000);
-        auto func = [=](){writeMapData(4);};
+        pb->startProgress("Измерение по каналу 4 %p%", 10, startWin->getTime() * 1000);
         QTimer::singleShot(startWin->getTime() * 1000, func);
     }
 }
@@ -562,7 +555,8 @@ bool Widget::isData(int n)
 void Widget::startIncub()
 {
     setUserMessage("Инкубация");
-    startProgressBarTimer("Инкубация %p%", 10, startWin->getTimeIncube()*1000);
+    ProgressTimerBar *pb = new ProgressTimerBar;
+    pb->startProgress("Инкубация %p%", 10, startWin->getTimeIncube()*1000);
     QTimer::singleShot(startWin->getTimeIncube()*1000, this, &incubeTimeout);
     incub = true;
     emit status(QString("Инкубация"));
@@ -592,7 +586,7 @@ void Widget::incubeTimeout()
         pulse3 = true; num++;
     }
     if(startWin->isChannel_4()) {
-        pulse3 = true; num++;
+        pulse4 = true; num++;
     }
     setUserMessage("Время инкубации истекло, добавьте стартовый реагент!");
 //    QMessageBox::information(this, "Инкубация",
@@ -611,16 +605,15 @@ void Widget::setupTimers()
     currentTimer.start(300);
     dt = QDateTime::currentDateTime();
     setUserMessage(QString("Начало работы программы    Дата %1").arg(dt.toString("dd.MM.yyyy")));
-
-    //таймер для отображения процесса сбора данных
-    connect(&progressTimer, SIGNAL(timeout()), SLOT(updateProgressValue()));
 }
 
 void Widget::writeData(const int n)
 {
     stopData(n);
     emit status(QString("Запись данных по каналу %1").arg(n));
-    ui->progressBar->setFormat("Запись данных %p%");
+    QProgressBar *pb = new QProgressBar;
+    pb->setFormat("Запись данных %p%");
+    pb->show();
     qDebug().noquote() << QString("Запись данных по каналу %1").arg(n);
     QStringList strList;
     strList << QString("N\t");
@@ -645,9 +638,8 @@ void Widget::writeData(const int n)
 //        strList << QString("%1\t").arg(it.value()) << QString("%1\n").arg(it.key());
 //  }
     for(int i=0; i<x.length(); i++) {
-        progressTimer.stop();
-        ui->progressBar->setMaximum(x.length());
-        ui->progressBar->setValue(i);//i*100/x.length());
+        pb->setMaximum(x.length());
+        pb->setValue(i);//i*100/x.length());
 
         strList << QString("%1\t").arg(i);
         if(!y1.isEmpty())
@@ -665,7 +657,8 @@ void Widget::writeData(const int n)
     y3.clear();
     y4.clear();
     x.clear();
-    ui->progressBar->setVisible(false);
+    pb->close();
+    pb->deleteLater();
     setUserMessage(saveFiles.writeData(strList), true, true);
 }
 
@@ -676,7 +669,9 @@ void Widget::writeMapData(const int n)
     //if( num > 0 ) ;
     setUserMessage(QString("Запись данных по каналу %1").arg(n));
     emit status(QString("Запись данных по каналу %1").arg(n));
-    ui->progressBar->setFormat("Запись данных %p%");
+    QProgressBar *pb = new QProgressBar;
+    pb->setFormat("Запись данных %p%");
+    pb->show();
     qDebug().noquote() << QString("Запись данных по каналу %1").arg(n);
 
     QStringList strList;
@@ -687,9 +682,13 @@ void Widget::writeMapData(const int n)
         int i = 0;
         auto it = map.constBegin();
         while(it != map.constEnd()) {
+            pb->setMaximum(map.count());
+            pb->setValue(i+1);//i*100/x.length());
             strList << QString("%1\t%2\t%3\n").arg(i).arg(it.value()).arg(it.key());
             ++it; ++i;
         }
+        pb->close();
+        pb->deleteLater();
         //map.clear();
     };
     strList << QString("N\t");
@@ -713,31 +712,35 @@ void Widget::writeMapData(const int n)
         func(map_y4);
         map_y4.clear();
     }
-
-//    for(int i=0; i<x.length(); i++) {
-//        progressTimer.stop();
-//        ui->progressBar->setMaximum(x.length());
-//        ui->progressBar->setValue(i);//i*100/x.length());
-
-//        strList << QString("%1\t").arg(i);
-//        if(!y1.isEmpty())
-//            strList << QString("%1\t").arg(y1[i]);
-//        if(!y2.isEmpty())
-//            strList << QString("%1\t").arg(y2[i]);
-//        if(!y3.isEmpty())
-//            strList << QString("%1\t").arg(y3[i]);
-//        if(!y4.isEmpty())
-//            strList << QString("%1\t").arg(y4[i]);
-//        strList << QString("%1\n").arg(x[i]);
-//    }
     num--;
-//    if( !(num > 0) ) {
-//        y1.clear();
-//        y2.clear();
-//        y3.clear();
-//        y4.clear();
-//        x.clear();
-//    }
-    ui->progressBar->setVisible(false);
     setUserMessage(saveFiles.writeData(strList), true, true);
 }
+
+//ProgressBar::ProgressBar(QWidget *parent) : QProgressBar(parent)
+//{
+//    //таймер для отображения процесса сбора данных
+//    connect(&progressTimer, SIGNAL(timeout()), SLOT(updateProgressValue()));
+//}
+
+//void ProgressBar::startProgressBarTimer(QString format, int timer_tic_ms, int time_ms)
+//{
+//    setFormat(format);
+//    setVisible(true);
+//    setValue(0);
+//    setMaximum(time_ms);
+//    progressTimer.start(timer_tic_ms);
+//}
+
+
+//void ProgressBar::updateProgressValue() {
+//    //ui->progressBar->setMaximum(progress_t-progressTimer.interval());
+//    if(value() < maximum()) {
+//        setValue(value()+progressTimer.interval());
+//    }
+//    else hide();
+//}
+
+//ProgressBar::~ProgressBar()
+//{
+
+//}

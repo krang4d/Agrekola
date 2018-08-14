@@ -19,11 +19,12 @@ public:
     virtual double calc() = 0;
 
 protected:
-    QStringList param;
     QMap<double, double> mdata;
+    QCustomPlot *plot;
+    QStringList param;
     double jump;                    //скачек величиной 4-10% от среднего уровня сигнала базовое значение для определения времени свертывания
     double mix_t;                   //время в течение которго происходит перемешивание реагента с плазмой и успокоение жидкости
-    QCustomPlot *plot;
+
 signals:
 
 public slots:
@@ -65,7 +66,7 @@ private:
     double c1, c3, c4;              //Концентрация фибриногена других разведений 200%, 50%, 25%
     double t1, t2, t3, t4;          //время свертывания для каждого разведения, t2 - контр. плпзма
     double tgalfa, tgalfa1, tgalfa2;
-    double tgalfa3, tgalfa4;  //угол наклона k-ого участка калибровочной кривой
+    double tgalfa3, tgalfa4;        //угол наклона k-ого участка калибровочной кривой
     double lgcx;                    //искомая величиан ax = 10^lgcx
 };
 
@@ -114,6 +115,8 @@ public:
 
 private:
     //параметры для определения Агрегации
+    double btp;                     //богатая тромбоцитами плазма
+    double otp;                     //обогащенная тромбоцитами плазма
 };
 
 class CalcAgr2 : public CalcData
@@ -124,7 +127,7 @@ public:
 
 private:
     //параметры для определения ф-ра Виллебранда
-    const int k = 3;                //часло калибровочных точек
+    const int kt = 3;               //часло калибровочных точек
     double btp;                     //богатая тромбоцитами плазма
     double otp;                     //обогащенная тромбоцитами плазма
     double c1;                      //активность фактора Виллебранда контр. плазмы (100%)

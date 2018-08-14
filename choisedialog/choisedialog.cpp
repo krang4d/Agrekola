@@ -96,8 +96,7 @@ void ChoiseDialog::startMeasurement()
 void ChoiseDialog::calibration()
 {
     int i = ui->stackedWidget->currentIndex();
-    QMessageBox t(QMessageBox::Warning, "calibration", QString("calibration #") + QString(std::to_string(i).c_str()), QMessageBox::Ok);
-    t.exec();
+    QMessageBox::warning(this, "calibration", QString("calibration #%1").arg(i), QMessageBox::Ok);
     //if(i == 2) kalibragr2->show();
 }
 

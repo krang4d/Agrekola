@@ -41,7 +41,8 @@ SOURCES +=  main.cpp\
     LoadDll.cpp \
     QCustomPlot/qcustomplot.cpp \
     savefiles.cpp \
-    calculatedata.cpp
+    calculatedata.cpp \
+    progresstimerbar.cpp
 
 HEADERS  += selectcalibrationagr1.h \
     selectinductor.h \
@@ -66,7 +67,8 @@ HEADERS  += selectcalibrationagr1.h \
     libapi/LusbapiTypes.h \
     QCustomPlot/qcustomplot.h \
     savefiles.h \
-    calculatedata.h
+    calculatedata.h \
+    progresstimerbar.h
 
 FORMS    += selectcalibrationagr1.ui \
     selectinductor.ui \
@@ -84,7 +86,8 @@ FORMS    += selectcalibrationagr1.ui \
     choisedialog/ko4.ui \
     choisedialog/ko5.ui \
     startmeasurment.ui \
-    widget.ui
+    widget.ui \
+    progresstimerbar.ui
 
 RESOURCES += \
     rcfile.qrc
