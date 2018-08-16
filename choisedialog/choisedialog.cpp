@@ -29,7 +29,7 @@ ChoiseDialog::ChoiseDialog(QDialog *parent) :
     QPointer<Ko5> ko5 = static_cast<Ko5 *>(ui->stackedWidget->widget(7));
 
     connect(agr1, SIGNAL(measurement()), SLOT(startMeasurement()));
-    //connect(agr2, SIGNAL(measurement()), SLOT(accept()));
+    connect(agr2, SIGNAL(measurement()), SLOT(startMeasurement()));
     connect(ko1, SIGNAL(measurement()), SLOT(startMeasurement()));
     connect(ko2, SIGNAL(measurement()), SLOT(startMeasurement()));
     connect(ko3, SIGNAL(measurement()), SLOT(startMeasurement()));
@@ -37,7 +37,7 @@ ChoiseDialog::ChoiseDialog(QDialog *parent) :
     connect(ko5, SIGNAL(measurement()), SLOT(startMeasurement()));
 
     connect(agr1, SIGNAL(calibration()), SLOT(calibration()));
-    //connect(agr2, SIGNAL(calibration()), SLOT(calibration()));
+    connect(agr2, SIGNAL(calibration()), SLOT(calibration()));
     connect(ko2, SIGNAL(calibration()), SLOT(calibration()));
     connect(ko3, SIGNAL(calibration()), SLOT(calibration()));
     connect(ko5, SIGNAL(calibration()), SLOT(calibration()));
@@ -47,7 +47,34 @@ ChoiseDialog::ChoiseDialog(QDialog *parent) :
 
 int ChoiseDialog::getTypeOfWidget() const
 {
-    return ui->stackedWidget->currentIndex();
+    QString str;
+    int i = ui->stackedWidget->currentIndex();
+    switch (i){
+    case 1:{
+        str = tr("Определение параметров агрегации, измерение (Agr1 1)");
+    }break;
+    case 2:{
+        str = tr("Определение активности фактора Виллебранда, измерение (Agr2 2)");
+    }break;
+    case 3:{
+        str = tr("Время свертывания, измерение (Ko1 3)");
+    }break;
+    case 4:{
+        str = tr("АЧТВ, измерение (Ko2 4)");
+    }break;
+    case 5:{
+        str = tr("Фибриноген, измерение (Ko3 5)");
+    }
+    case 6:{
+        str = tr("Тромбин, измерние (Ko4 6)");
+    }break;
+    case 7:{
+        str = tr("Протромбиновый комплекс, измерение (Ko5 7)");
+    }break;
+    default:
+        break;
+    }
+    return i;
 }
 
 ChoiseDialog::~ChoiseDialog()
@@ -77,7 +104,7 @@ void ChoiseDialog::on_testButton_clicked()
     QWidget::connect(agrekola, SIGNAL(value_come(QVariantList)), widget, SLOT(realtimeDataSlot(QVariantList)));
     QWidget::connect(agrekola, SIGNAL(finished()), agrekola, SLOT(deleteLater()));
 
-    widget->setTestMode(true);
+    widget->setMode(0); //Test
     widget->show();
     hide();
     agrekola->start();

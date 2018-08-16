@@ -27,14 +27,15 @@ public:
     explicit Widget(QWidget *parent = 0);
     ~Widget();
     void setUserMessage(QString, bool withtime = 1, bool tofile = 1);
-    void setTestMode(bool);
+    void setMode(int);
+    int getMode();
 
 private:
     bool eventFilter(QObject *watched, QEvent *event);
     void setupRealtimeData();
     void setupTimers();
 
-    void startIncub();
+    void startIncub(int time_sec, int num);
     void stopIncub();
     bool isIncub();
 
@@ -93,6 +94,7 @@ private:
 
     SaveFiles saveFiles;
     int num;
+    int mode;
 };
 
 //class ProgressBar : QProgressBar

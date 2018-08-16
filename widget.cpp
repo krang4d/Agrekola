@@ -9,7 +9,6 @@
 #include <QtConcurrent>
 #include <progresstimerbar.h>
 #include <functional>
-#include
 
 Widget::Widget(QWidget *parent) :
     QWidget(parent),
@@ -89,9 +88,45 @@ void Widget::setUserMessage(QString str, bool withtime, bool tofile)
     b->triggerAction(QScrollBar::SliderToMaximum);
 }
 
-void Widget::setTestMode(bool b) {
+void Widget::setMode(int b) {
+
+    mode = b;
     //setUserMessage(QString(agrekola->GetInformation()), false);
-    ui->groupBox_Mix->setVisible(b);
+    QString str;
+    switch (b){
+    case 0:{
+        str = tr("Тест (Test 0)");
+        ui->groupBox_Mix->setVisible(b);
+    }
+    case 1:{
+        str = tr("Определение параметров агрегации, измерение (Agr1 1)");
+    }break;
+    case 2:{
+        str = tr("Определение активности фактора Виллебранда, измерение (Agr2 2)");
+    }break;
+    case 3:{
+        str = tr("Время свертывания, измерение (Ko1 3)");
+    }break;
+    case 4:{
+        str = tr("АЧТВ, измерение (Ko2 4)");
+    }break;
+    case 5:{
+        str = tr("Фибриноген, измерение (Ko3 5)");
+    }
+    case 6:{
+        str = tr("Тромбин, измерние (Ko4 6)");
+    }break;
+    case 7:{
+        str = tr("Протромбиновый комплекс, измерение (Ko5 7)");
+    }break;
+    default:
+        break;
+    }
+}
+
+int Widget::getMode()
+{
+    return mode;
 }
 
 void Widget::setupRealtimeData() {
@@ -473,7 +508,14 @@ void Widget::getData()
             setUserMessage(msg, true, true);
             setupRealtimeData();
         }
-        startIncub();
+        if( getMode() == 2 ) {
+            int t = startWin->getTimeIncube() *1000;
+            std::function<void (void)> func = [=](){startIncub(3, 2);};
+            //QTimer::singleShot(t, func);
+            ProgressTimerBar *p = new ProgressTimerBar;
+            p->startProgress("Время инкубации №1", 100, t, func);
+        }
+        else startIncub(startWin->getTimeIncube(), 0);
     }
 }
 
@@ -552,14 +594,14 @@ bool Widget::isData(int n)
     return 0;
 }
 
-void Widget::startIncub()
+void Widget::startIncub(int time_sec, int num)
 {
-    setUserMessage("Инкубация");
+    setUserMessage(QString("Инкубация %1").arg(num));
     ProgressTimerBar *pb = new ProgressTimerBar;
-    pb->startProgress("Инкубация %p%", 10, startWin->getTimeIncube()*1000);
-    QTimer::singleShot(startWin->getTimeIncube()*1000, this, &incubeTimeout);
+    pb->startProgress(QString("Инкубация %1 %p%").arg(num), 10, time_sec*1000);
+    QTimer::singleShot(time_sec*1000, this, &incubeTimeout);
     incub = true;
-    emit status(QString("Инкубация"));
+    emit status(QString("Инкубация %1").arg(num));
 }
 
 void Widget::stopIncub()

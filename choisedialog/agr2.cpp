@@ -35,13 +35,13 @@ Agr2::~Agr2()
 
 void Agr2::on_startButton_clicked()
 {
-    selcalibrAgr1->show();
+    //selcalibrAgr1->show();
     emit measurement();
 }
 
 void Agr2::on_calibrButton_clicked()
 {
-    kalibragr2 = new KalibrAgr2();
-    kalibragr2->show();
+    //kalibragr2 = new KalibrAgr2();
+    //kalibragr2->show();
     emit calibration();
 }

@@ -35,6 +35,7 @@ void MainWindow::newShow()
 {
     show();
     int i = ch->getTypeOfWidget();
+    centerWidget->setMode(i);
     //else  {QMessageBox test(QMessageBox::Warning, "qobject_cast", QString("qobject_cast"), QMessageBox::Ok); test.exec();}
     QString str;
     switch (i){
