@@ -39,42 +39,41 @@ void MainWindow::newShow()
     //else  {QMessageBox test(QMessageBox::Warning, "qobject_cast", QString("qobject_cast"), QMessageBox::Ok); test.exec();}
     QString str;
     switch (i){
-    case 1:{
+    case 1:
         str = tr("Определение параметров агрегации, измерение (1)");
         setWindowTitle(str);
         centerWidget->setUserMessage(str);
-
-    }break;
-    case 2:{
+        break;
+    case 2:
         str = tr("Определение активности фактора Виллебранда, измерение (2)");
         setWindowTitle(str);
         centerWidget->setUserMessage(str);
-    }break;
-    case 3:{
+        break;
+    case 3:
         str = tr("Время свертывания, измерение (3)");
         setWindowTitle(str);
         centerWidget->setUserMessage(str);
-    }break;
-    case 4:{
+        break;
+    case 4:
         str = tr("АЧТВ, измерение (4)");
         setWindowTitle(str);
         centerWidget->setUserMessage(str);
-    }break;
-    case 5:{
+        break;
+    case 5:
         str = tr("Фибриноген, измерение (5)");
         setWindowTitle(str);
         centerWidget->setUserMessage(tr("Установите в каналы кюветы с пробами и мешалками, укажите используемые каналы, выберите парные или одиночные пробы и введите номера проб. Для парных выберайте каналы 1 и 2, либо 3 и 4, номера проб в них должны быть одинаковыми. Измените, если нужно время инкубации затем нажмите кнопку Старт."));
-    }
-    case 6:{
+        break;
+    case 6:
         str = tr("Тромбин, измерние (6)");
         setWindowTitle(str);
         centerWidget->setUserMessage(str);
-    }break;
-    case 7:{
+        break;
+    case 7:
         str = tr("Протромбиновый комплекс, измерение (7)");
         setWindowTitle(str);
         centerWidget->setUserMessage(str);
-    }break;
+        break;
     default:
         break;
     }

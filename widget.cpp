@@ -94,31 +94,31 @@ void Widget::setMode(int b) {
     //setUserMessage(QString(agrekola->GetInformation()), false);
     QString str;
     switch (b){
-    case 0:{
+    case 0:
         str = tr("Тест (Test 0)");
         ui->groupBox_Mix->setVisible(b);
-    }
-    case 1:{
+        break;
+    case 1:
         str = tr("Определение параметров агрегации, измерение (Agr1 1)");
-    }break;
-    case 2:{
+        break;
+    case 2:
         str = tr("Определение активности фактора Виллебранда, измерение (Agr2 2)");
-    }break;
-    case 3:{
+        break;
+    case 3:
         str = tr("Время свертывания, измерение (Ko1 3)");
-    }break;
-    case 4:{
+        break;
+    case 4:
         str = tr("АЧТВ, измерение (Ko2 4)");
-    }break;
-    case 5:{
+        break;
+    case 5:
         str = tr("Фибриноген, измерение (Ko3 5)");
-    }
-    case 6:{
+        break;
+    case 6:
         str = tr("Тромбин, измерние (Ko4 6)");
-    }break;
-    case 7:{
+        break;
+    case 7:
         str = tr("Протромбиновый комплекс, измерение (Ko5 7)");
-    }break;
+        break;
     default:
         break;
     }
@@ -521,85 +521,79 @@ void Widget::getData()
 
 void Widget::startData(int n)
 {
-    QString str;
-    auto func = [=](){
+    QString str = QString("Измерение по каналу %1").arg(n);
+    setUserMessage(str);
+    emit status(str);
+    std::function<void (int)> func = [=](int n){
         writeMapData(n);
     };
-    if(n == 1) {
-        data1 = true;
-        str = QString("Измерение по каналу 1");
-        ProgressTimerBar *pb = new ProgressTimerBar;
-        setUserMessage(str);
-        emit status(QString(str));
-        pb->startProgress(QString("%1 %p%").arg(str), 10, startWin->getTime() * 1000);
-        QTimer::singleShot(startWin->getTime() * 1000, func);
+    ProgressTimerBar *pb = new ProgressTimerBar;
+    pb->startProgress(QString("%1 %p%").arg(str), 10, startWin->getTime() * 1000, std::bind(func, n));
 
-    }
-    if(n == 2) {
+    switch (n) {
+    case 1:
+        data1 = true;
+        break;
+    case 2:
         data2 = true;
-        ProgressTimerBar *pb = new ProgressTimerBar;
-        setUserMessage("Измерение по каналу 2");
-        emit status(QString("Измерение по каналу 2"));
-        pb->startProgress("Измерение по каналу 2 %p%", 10, startWin->getTime() * 1000);
-        QTimer::singleShot(startWin->getTime() * 1000, func);
-    }
-    if(n == 3) {
+        break;
+    case 3:
         data3 = true;
-        ProgressTimerBar *pb = new ProgressTimerBar;
-        setUserMessage("Измерение по каналу 3");
-        emit status(QString("Измерение по каналу 3"));
-        pb->startProgress("Измерение по каналу 3 %p%", 10, startWin->getTime() * 1000);
-        QTimer::singleShot(startWin->getTime() * 1000, func);
-    }
-    if(n == 4) {
+        break;
+    case 4:
         data4 = true;
-        ProgressTimerBar *pb = new ProgressTimerBar;
-        setUserMessage("Измерение по каналу 4");
-        emit status(QString("Измерение по каналу 4"));
-        pb->startProgress("Измерение по каналу 4 %p%", 10, startWin->getTime() * 1000);
-        QTimer::singleShot(startWin->getTime() * 1000, func);
+        break;
+    default:
+        break;
     }
 }
 
 void Widget::stopData(int n)
 {
-    if(n == 1) {
+    switch (n) {
+    case 1:
         data1 = false;
         pulse1 = false;
-    }
-    if(n == 2) {
+        break;
+    case 2:
         data2 = false;
         pulse2 = false;
-    }
-    if(n == 3) {
+        break;
+    case 3:
         data3 = false;
         pulse3 = false;
-    }
-    if(n == 4) {
+        break;
+    case 4:
         data4 = false;
         pulse4 = false;
+        break;
+    default: qDebug() << "n is out of data from Widget::stopData(n)";
     }
 }
 
 bool Widget::isData(int n)
 {
-    if(n == 1)
+    switch (n) {
+    case 1:
         return data1;
-    if(n == 2)
+    case 2:
         return data2;
-    if(n == 3)
+    case 3:
         return data3;
-    if(n == 4)
+    case 4:
         return data4;
+    default: qDebug() << "n is out of data from Widget::isData(n)";
+    }
     return 0;
 }
 
 void Widget::startIncub(int time_sec, int num)
 {
     setUserMessage(QString("Инкубация %1").arg(num));
+    std::function<void(Widget*)> func = &Widget::incubeTimeout;
+    std::function<void(void)> bind_func = std::bind(func, this);
     ProgressTimerBar *pb = new ProgressTimerBar;
-    pb->startProgress(QString("Инкубация %1 %p%").arg(num), 10, time_sec*1000);
-    QTimer::singleShot(time_sec*1000, this, &incubeTimeout);
+    pb->startProgress(QString("Инкубация %1 %p%").arg(num), 10, time_sec*1000, bind_func);
     incub = true;
     emit status(QString("Инкубация %1").arg(num));
 }
@@ -653,7 +647,7 @@ void Widget::writeData(const int n)
 {
     stopData(n);
     emit status(QString("Запись данных по каналу %1").arg(n));
-    QProgressBar *pb = new QProgressBar;
+    QSharedPointer<QProgressBar> pb = QSharedPointer<QProgressBar>(new QProgressBar);
     pb->setFormat("Запись данных %p%");
     pb->show();
     qDebug().noquote() << QString("Запись данных по каналу %1").arg(n);
@@ -699,8 +693,6 @@ void Widget::writeData(const int n)
     y3.clear();
     y4.clear();
     x.clear();
-    pb->close();
-    pb->deleteLater();
     setUserMessage(saveFiles.writeData(strList), true, true);
 }
 
@@ -711,7 +703,7 @@ void Widget::writeMapData(const int n)
     //if( num > 0 ) ;
     setUserMessage(QString("Запись данных по каналу %1").arg(n));
     emit status(QString("Запись данных по каналу %1").arg(n));
-    QProgressBar *pb = new QProgressBar;
+    QSharedPointer<QProgressBar> pb = QSharedPointer<QProgressBar>(new QProgressBar);
     pb->setFormat("Запись данных %p%");
     pb->show();
     qDebug().noquote() << QString("Запись данных по каналу %1").arg(n);
@@ -729,8 +721,6 @@ void Widget::writeMapData(const int n)
             strList << QString("%1\t%2\t%3\n").arg(i).arg(it.value()).arg(it.key());
             ++it; ++i;
         }
-        pb->close();
-        pb->deleteLater();
         //map.clear();
     };
     strList << QString("N\t");

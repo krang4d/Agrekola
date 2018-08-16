@@ -1,5 +1,6 @@
 #include "progresstimerbar.h"
 #include "ui_progresstimerbar.h"
+#include <QDebug>
 
 ProgressTimerBar::ProgressTimerBar(QWidget *parent) :
     QWidget(parent),
@@ -39,9 +40,11 @@ void ProgressTimerBar::updateProgress()
         ui->progressBar->setValue(ui->progressBar->value()+progressTimer.interval());
     }
     else {
-        hide();
         progressTimer.stop();
-    if(func)
-        func();
+        if(func) {
+            func();
+            qDebug() << "Выплнение func";
+        }
+        hide();
     }
 }
