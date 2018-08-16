@@ -27,7 +27,9 @@ MainWindow::~MainWindow()
 {   
     agrekola->stopThread();
     QThread::currentThread()->msleep(100); //ожидание завершения работы потока useE154
-    delete agrekola;
+    if(agrekola->isFinished()){
+        delete agrekola;
+    } else qDebug() << "the Agrekoal can not stoped form the ~MainWindow()";
     delete ui;
 }
 

@@ -76,7 +76,7 @@ void Widget::setUserMessage(QString str, bool withtime, bool tofile)
     if(withtime) {
         QString msg = QString(tr("%1,    Время %2"))
                 .arg(str)
-                .arg(dt.toString("hh:mm:ss"));
+                .arg(dt.toString("hh:mm:ss.zzz"));
         ui->textEdit->append(msg);
         if(tofile) saveFiles.writeUserMsg(msg);
     }
@@ -268,24 +268,28 @@ void Widget::realtimeDataSlot(QVariantList a) {
     lastPointV1 = a[0].toDouble();
     if( dx1 > 0.2f && pulse1) {
         pulse1 = false;
+        setUserMessage("Канал 1 - импульс");
         qDebug() << QString("The pulse is come! dx1=%1").arg(dx1);
         startData(1);
     }
     lastPointV2 = a[1].toDouble();
     if( dx2 > 0.2f && pulse2) {
         pulse2 = false;
+        setUserMessage("Канал 2 - импульс");
         qDebug() << QString("The pulse is come! dx2=%1").arg(dx2);
         startData(2);
     }
     lastPointV3 = a[2].toDouble();
     if( dx3 > 0.2f && pulse3) {
         pulse3 = false;
+        setUserMessage("Канал 3 - импульс");
         qDebug() << QString("The pulse is come! dx3=%1").arg(dx3);
         startData(3);
     }
     lastPointV4 = a[3].toDouble();
     if( dx4 > 0.2f && pulse4) {
         pulse4 = false;
+        setUserMessage("Канал 4 - импульс");
         qDebug() << QString("The pulse is come! dx4=%1").arg(dx4);
         startData(4);
     }
@@ -423,6 +427,11 @@ void Widget::on_checkBox_L_stateChanged(int arg1)
 void Widget::on_pushButton_clicked()
 {
     startWin->show();
+    ui->checkBox_L->setChecked(true); //включение лазеров
+    ui->checkBox_1->setChecked(true); //включение перемешивания
+    ui->checkBox_2->setChecked(true);
+    ui->checkBox_3->setChecked(true);
+    ui->checkBox_4->setChecked(true);
 }
 
 void Widget::updataTermo(bool td)
@@ -510,10 +519,9 @@ void Widget::getData()
         }
         if( getMode() == 2 ) {
             int t = startWin->getTimeIncube() *1000;
-            std::function<void (void)> func = [=](){startIncub(3, 2);};
-            //QTimer::singleShot(t, func);
-            ProgressTimerBar *p = new ProgressTimerBar;
-            p->startProgress("Время инкубации №1", 100, t, func);
+            std::function<void (void)> func = [this](){startIncub(3, 2);};
+            QPointer<ProgressTimerBar> pb = new ProgressTimerBar;
+            pb->startProgress("Время инкубации №1", 100, t, func);
         }
         else startIncub(startWin->getTimeIncube(), 0);
     }
@@ -524,10 +532,10 @@ void Widget::startData(int n)
     QString str = QString("Измерение по каналу %1").arg(n);
     setUserMessage(str);
     emit status(str);
-    std::function<void (int)> func = [=](int n){
+    std::function<void (int)> func = [this](int n){
         writeMapData(n);
     };
-    ProgressTimerBar *pb = new ProgressTimerBar;
+    QPointer<ProgressTimerBar> pb = new ProgressTimerBar;
     pb->startProgress(QString("%1 %p%").arg(str), 10, startWin->getTime() * 1000, std::bind(func, n));
 
     switch (n) {
@@ -554,21 +562,26 @@ void Widget::stopData(int n)
     case 1:
         data1 = false;
         pulse1 = false;
+        ui->checkBox_1->setChecked(false); //включение перемешивания
         break;
     case 2:
         data2 = false;
         pulse2 = false;
+        ui->checkBox_2->setChecked(false);
         break;
     case 3:
         data3 = false;
         pulse3 = false;
+        ui->checkBox_3->setChecked(false);
         break;
     case 4:
         data4 = false;
         pulse4 = false;
+        ui->checkBox_4->setChecked(false);
         break;
     default: qDebug() << "n is out of data from Widget::stopData(n)";
     }
+    ui->checkBox_L->setChecked(false); //включение лазеров
 }
 
 bool Widget::isData(int n)
@@ -591,15 +604,15 @@ void Widget::startIncub(int time_sec, int num)
 {
     setUserMessage(QString("Инкубация %1").arg(num));
     std::function<void(Widget*)> func = &Widget::incubeTimeout;
-    std::function<void(void)> bind_func = std::bind(func, this);
-    ProgressTimerBar *pb = new ProgressTimerBar;
-    pb->startProgress(QString("Инкубация %1 %p%").arg(num), 10, time_sec*1000, bind_func);
+    QPointer<ProgressTimerBar> pb = new ProgressTimerBar;
+    pb->startProgress(QString("Инкубация %1 %p%").arg(num), 10, time_sec*1000, std::bind(func, this));
     incub = true;
     emit status(QString("Инкубация %1").arg(num));
 }
 
 void Widget::stopIncub()
 {
+    setUserMessage("Время инкубации истекло, добавьте стартовый реагент!");
     incub = false;
 }
 
@@ -613,18 +626,22 @@ void Widget::incubeTimeout()
     num = 0;
     stopIncub();
     if(startWin->isChannel_1()) {
+        setUserMessage("Канала 1 в ожидании стартового импульса");
         pulse1 = true; num++;
     }
     if(startWin->isChannel_2()) {
+        setUserMessage("Канала 2 в ожидании стартового импульса");
         pulse2 = true; num++;
     }
     if(startWin->isChannel_3()) {
+        setUserMessage("Канала 3 в ожидании стартового импульса");
         pulse3 = true; num++;
     }
     if(startWin->isChannel_4()) {
+        setUserMessage("Канала 4 в ожидании стартового импульса");
         pulse4 = true; num++;
     }
-    setUserMessage("Время инкубации истекло, добавьте стартовый реагент!");
+
 //    QMessageBox::information(this, "Инкубация",
 //                             "Время инкубации истекло, добавьте стартовый реагент\n"
 //                             "и нажмите кнопку СТАРТ для соответствующего канала, если\n"
@@ -647,7 +664,7 @@ void Widget::writeData(const int n)
 {
     stopData(n);
     emit status(QString("Запись данных по каналу %1").arg(n));
-    QSharedPointer<QProgressBar> pb = QSharedPointer<QProgressBar>(new QProgressBar);
+    QPointer<QProgressBar> pb = new QProgressBar;
     pb->setFormat("Запись данных %p%");
     pb->show();
     qDebug().noquote() << QString("Запись данных по каналу %1").arg(n);
@@ -703,7 +720,7 @@ void Widget::writeMapData(const int n)
     //if( num > 0 ) ;
     setUserMessage(QString("Запись данных по каналу %1").arg(n));
     emit status(QString("Запись данных по каналу %1").arg(n));
-    QSharedPointer<QProgressBar> pb = QSharedPointer<QProgressBar>(new QProgressBar);
+    QPointer<QProgressBar> pb = new QProgressBar;
     pb->setFormat("Запись данных %p%");
     pb->show();
     qDebug().noquote() << QString("Запись данных по каналу %1").arg(n);
