@@ -42,7 +42,8 @@ SOURCES +=  main.cpp\
     QCustomPlot/qcustomplot.cpp \
     savefiles.cpp \
     calculatedata.cpp \
-    progresstimerbar.cpp
+    progresstimerbar.cpp \
+    impulewaiter.cpp
 
 HEADERS  += selectcalibrationagr1.h \
     selectinductor.h \
@@ -68,7 +69,8 @@ HEADERS  += selectcalibrationagr1.h \
     QCustomPlot/qcustomplot.h \
     savefiles.h \
     calculatedata.h \
-    progresstimerbar.h
+    progresstimerbar.h \
+    impulewaiter.h
 
 FORMS    += selectcalibrationagr1.ui \
     selectinductor.ui \
@@ -87,7 +89,8 @@ FORMS    += selectcalibrationagr1.ui \
     choisedialog/ko5.ui \
     startmeasurment.ui \
     widget.ui \
-    progresstimerbar.ui
+    progresstimerbar.ui \
+    impulewaiter.ui
 
 RESOURCES += \
     rcfile.qrc

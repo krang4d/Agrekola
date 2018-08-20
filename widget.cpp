@@ -10,19 +10,16 @@
 #include <progresstimerbar.h>
 #include <functional>
 
+#define DX 0.1f
+
 Widget::Widget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Widget),
     startWin(new StartMeasurment),
-    data1(false),
-    data2(false),
-    data3(false),
-    data4(false),
+    data1(false), data2(false), data3(false), data4(false),
     incub(false),
-    pulse1(false),
-    pulse2(false),
-    pulse3(false),
-    pulse4(false)
+    pulse1(false), pulse2(false), pulse3(false), pulse4(false),
+    ready1(false), ready2(false), ready3(false), ready4(false)
 {
     ui->setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
@@ -266,29 +263,37 @@ void Widget::realtimeDataSlot(QVariantList a) {
     double dx3 = std::abs(a[2].toDouble() - lastPointV3);
     double dx4 = std::abs(a[3].toDouble() - lastPointV4);
     lastPointV1 = a[0].toDouble();
-    if( dx1 > 0.2f && pulse1) {
+    if((dx1 > DX || pulse1) && ready1) {
         pulse1 = false;
+        ready1 = false;
+        emit hasPulse1();
         setUserMessage("Канал 1 - импульс");
         qDebug() << QString("The pulse is come! dx1=%1").arg(dx1);
         startData(1);
     }
     lastPointV2 = a[1].toDouble();
-    if( dx2 > 0.2f && pulse2) {
+    if((dx2 > DX || pulse2) && ready2) {
         pulse2 = false;
+        ready2 = false;
+        emit hasPulse2();
         setUserMessage("Канал 2 - импульс");
         qDebug() << QString("The pulse is come! dx2=%1").arg(dx2);
         startData(2);
     }
     lastPointV3 = a[2].toDouble();
-    if( dx3 > 0.2f && pulse3) {
+    if((dx3 > DX || pulse3) && ready3) {
         pulse3 = false;
+        ready3 = false;
+        emit hasPulse3();
         setUserMessage("Канал 3 - импульс");
         qDebug() << QString("The pulse is come! dx3=%1").arg(dx3);
         startData(3);
     }
     lastPointV4 = a[3].toDouble();
-    if( dx4 > 0.2f && pulse4) {
+    if((dx4 > DX || pulse4) && ready4) {
         pulse4 = false;
+        ready4 = false;
+        emit hasPulse4();
         setUserMessage("Канал 4 - импульс");
         qDebug() << QString("The pulse is come! dx4=%1").arg(dx4);
         startData(4);
@@ -337,34 +342,34 @@ void Widget::realtimeDataSlot(QVariantList a) {
             if(startWin->isChannel_1() ) {
                 map_y1.insert(key, a[0].toDouble());
                 y1.push_back(a[0].toDouble());
-                ui->label_led1->setStyleSheet("color: green;");
+                //ui->label_led1->setStyleSheet("color: green;");
             }
         }
-        else ui->label_led1->setStyleSheet("color: yellow;");
+        //else ui->label_led1->setStyleSheet("color: yellow;");
         if(isData(2)) {
             if(startWin->isChannel_2()) {
                 map_y2.insert(key, a[1].toDouble());
                 y2.push_back(a[1].toDouble());
-                ui->label_led2->setStyleSheet("color: green;");
+                //ui->label_led2->setStyleSheet("color: green;");
             }
         }
-        else ui->label_led2->setStyleSheet("color: yellow;");
+        //else ui->label_led2->setStyleSheet("color: yellow;");
         if(isData(3)) {
             if(startWin->isChannel_3()) {
                 map_y3.insert(key, a[2].toDouble());
                 y3.push_back(a[2].toDouble());
-                ui->label_led3->setStyleSheet("color: green;");
+                //ui->label_led3->setStyleSheet("color: green;");
             }
         }
-        else ui->label_led3->setStyleSheet("color: yellow;");
+        //else ui->label_led3->setStyleSheet("color: yellow;");
         if(isData(4)) {
             if(startWin->isChannel_4()) {
                 map_y4.insert(key, a[3].toDouble());
                 y4.push_back(a[3].toDouble());
-                ui->label_led4->setStyleSheet("color: green;");
+                //ui->label_led4->setStyleSheet("color: green;");
             }
         }
-        else ui->label_led4->setStyleSheet("color: yellow;");
+        //else ui->label_led4->setStyleSheet("color: yellow;");
         if(isData(1) || isData(2) || isData(3) || isData(4))
             x.push_back(key);
         lastPointKey = key;
@@ -476,12 +481,16 @@ void Widget::getData()
             ui->groupBox_f2->setTitle("Канал 2");
             ui->groupBox_f3->setTitle("Канал 3");
             ui->groupBox_f4->setTitle("Канал 4");
+
             if(startWin->isChannel_1()) ui->groupBox_f1->show();
             else ui->groupBox_f1->hide();
+
             if(startWin->isChannel_2()) ui->groupBox_f2->show();
             else ui->groupBox_f2->hide();
+
             if(startWin->isChannel_3()) ui->groupBox_f3->show();
             else ui->groupBox_f3->hide();
+
             if(startWin->isChannel_4()) ui->groupBox_f4->show();
             else ui->groupBox_f4->hide();
 
@@ -537,18 +546,21 @@ void Widget::startData(int n)
     };
     QPointer<ProgressTimerBar> pb = new ProgressTimerBar;
     pb->startProgress(QString("%1 %p%").arg(str), 10, startWin->getTime() * 1000, std::bind(func, n));
-
     switch (n) {
     case 1:
+        ui->groupBox_f1->layout()->addWidget(pb);
         data1 = true;
         break;
     case 2:
+        ui->groupBox_f2->layout()->addWidget(pb);
         data2 = true;
         break;
     case 3:
+        ui->groupBox_f3->layout()->addWidget(pb);
         data3 = true;
         break;
     case 4:
+        ui->groupBox_f4->layout()->addWidget(pb);
         data4 = true;
         break;
     default:
@@ -623,25 +635,47 @@ bool Widget::isIncub()
 
 void Widget::incubeTimeout()
 {
-    num = 0;
+    QPointer<ImpuleWaiter> iw = new ImpuleWaiter;
     stopIncub();
     if(startWin->isChannel_1()) {
         setUserMessage("Канала 1 в ожидании стартового импульса");
-        pulse1 = true; num++;
+        ready1 = true;
+        iw->addWaiter(1);
     }
     if(startWin->isChannel_2()) {
         setUserMessage("Канала 2 в ожидании стартового импульса");
-        pulse2 = true; num++;
+        ready2 = true;
+        iw->addWaiter(2);
     }
     if(startWin->isChannel_3()) {
         setUserMessage("Канала 3 в ожидании стартового импульса");
-        pulse3 = true; num++;
+        ready3 = true;
+        iw->addWaiter(3);
     }
     if(startWin->isChannel_4()) {
         setUserMessage("Канала 4 в ожидании стартового импульса");
-        pulse4 = true; num++;
+        ready4 = true;
+        iw->addWaiter(4);
     }
+    connect(this, &Widget::hasPulse1, iw, &ImpuleWaiter::has_pulse_1);
+    connect(this, &Widget::hasPulse2, iw, &ImpuleWaiter::has_pulse_2);
+    connect(this, &Widget::hasPulse3, iw, &ImpuleWaiter::has_pulse_3);
+    connect(this, &Widget::hasPulse4, iw, &ImpuleWaiter::has_pulse_4);
 
+    connect(iw, &ImpuleWaiter::press_1, [=](){
+        disconnect(this, &Widget::hasPulse1, iw, &ImpuleWaiter::has_pulse_1);
+        pulse1 = true;});
+    connect(iw, &ImpuleWaiter::press_2, [=](){
+        disconnect(this, &Widget::hasPulse2, iw, &ImpuleWaiter::has_pulse_2);
+        pulse2 = true;});
+    connect(iw, &ImpuleWaiter::press_3, [=](){
+        disconnect(this, &Widget::hasPulse3, iw, &ImpuleWaiter::has_pulse_3);
+        pulse3 = true;});
+    connect(iw, &ImpuleWaiter::press_4, [=](){
+        disconnect(this, &Widget::hasPulse4, iw, &ImpuleWaiter::has_pulse_4);
+        pulse4 = true;});
+
+    iw->startWait();
 //    QMessageBox::information(this, "Инкубация",
 //                             "Время инкубации истекло, добавьте стартовый реагент\n"
 //                             "и нажмите кнопку СТАРТ для соответствующего канала, если\n"
@@ -716,13 +750,27 @@ void Widget::writeData(const int n)
 void Widget::writeMapData(const int n)
 {
     stopData(n);
-    num--;
-    //if( num > 0 ) ;
     setUserMessage(QString("Запись данных по каналу %1").arg(n));
     emit status(QString("Запись данных по каналу %1").arg(n));
-    QPointer<QProgressBar> pb = new QProgressBar;
-    pb->setFormat("Запись данных %p%");
-    pb->show();
+    QPointer<QProgressDialog> pb = new QProgressDialog;
+    pb->setLabelText(QString("Запись данных %p%"));
+    switch (n) {
+    case 1:
+        ui->groupBox_f1->layout()->addWidget(pb);
+        break;
+    case 2:
+        ui->groupBox_f2->layout()->addWidget(pb);
+        break;
+    case 3:
+        ui->groupBox_f3->layout()->addWidget(pb);
+        break;
+    case 4:
+        ui->groupBox_f4->layout()->addWidget(pb);
+        break;
+    default:
+        break;
+    }
+    //pb->show();
     qDebug().noquote() << QString("Запись данных по каналу %1").arg(n);
 
     QStringList strList;
@@ -734,7 +782,7 @@ void Widget::writeMapData(const int n)
         auto it = map.constBegin();
         while(it != map.constEnd()) {
             pb->setMaximum(map.count());
-            pb->setValue(i+1);//i*100/x.length());
+            pb->setValue(i);//i*100/x.length());
             strList << QString("%1\t%2\t%3\n").arg(i).arg(it.value()).arg(it.key());
             ++it; ++i;
         }
@@ -761,7 +809,6 @@ void Widget::writeMapData(const int n)
         func(map_y4);
         map_y4.clear();
     }
-    num--;
     setUserMessage(saveFiles.writeData(strList), true, true);
 }
 

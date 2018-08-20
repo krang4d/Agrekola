@@ -5,6 +5,7 @@
 #include <QDebug>
 #include <QString>
 #include <QMap>
+#include <QtMath>
 #include <numeric>
 #include <savefiles.h>
 #include <qcustomplot.h>
@@ -36,7 +37,6 @@ public:
     explicit CalcKo1(QMap<double, double>);
     CalcKo1(QMap<double, double>, QCustomPlot*);
     double calc();
-
 
 private:
     //параметры для определения времени свертывания
