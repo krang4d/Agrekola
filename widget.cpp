@@ -782,7 +782,7 @@ void Widget::writeMapData(const int n)
         auto it = map.constBegin();
         while(it != map.constEnd()) {
             pb->setMaximum(map.count());
-            pb->setValue(i);//i*100/x.length());
+            pb->setValue(i+1);//i*100/x.length());
             strList << QString("%1\t%2\t%3\n").arg(i).arg(it.value()).arg(it.key());
             ++it; ++i;
         }

@@ -1,12 +1,16 @@
 ﻿#include "useE154.h"
 #include <QFunctionPointer>
 #include <QTime>
+#include <QMessageBox>
 
 useE154::useE154(QThread *parent) :
     QThread(parent)
 {
     pModule = OnlyOneE154::Instance().getModule();
-	OpenDevice();
+    if (OpenDevice() != 0) {
+        QMessageBox::warning(0, QString("Ошибка подключения"), QString("Проверьте USB cоединение с ПК и запустите програму снова!"));
+        std::exit(-10);
+    }
     initPorts();
     initADC();
 }
@@ -182,14 +186,18 @@ int useE154::OpenDevice()
 	// попробуем обнаружить модуль E-154 в первых 256 виртуальных слотах
     for(i = 0; i < MaxVirtualSoltsQuantity; i++) if(pModule->OpenLDevice(i)) break;
 	// что-нибудь обнаружили?
-    if(i == MaxVirtualSoltsQuantity) throw Errore_E154("Устройство E-154 не подключено к ПК!");
-
-    if(!pModule->GetModuleName(ModuleName)) throw Errore_E154("Не удалось получить имя подключенного модуля!");
-
+    if(i == MaxVirtualSoltsQuantity) {
+        qCritical() << "The E-154 is't connected to PC!";
+        return -1;
+    }
+    if(!pModule->GetModuleName(ModuleName)) {
+        qCritical() << "Не удалось получить имя подключенного модуля!";
+        return -2;
+    }
 	// проверим, что это 'E-154'
     if(strcmp(ModuleName, "E154")) {
-        throw Errore_E154("Модуль не E154!");
-        return 1;
+        qCritical() << "Модуль не E154!";
+        return -3;
     }
     qDebug().noquote() << QString("Module E-154' is opened in virtual slot %1").arg(i).toLatin1();
     return 0;
@@ -204,14 +212,9 @@ void useE154::CloseDevice()
 QString useE154::GetUsbSpeed()
 {
     BYTE UsbSpeed;								// скорость работы шины USB
-    if(!pModule->GetUsbSpeed(&UsbSpeed)) qDebug().noquote() << QString("Не удалось получить скорость работы интерфейса USB!"); //получаем скорость работы шины USB
-//    QString speed;
-//    if(UsbSpeed)
-//    {
-//        speed = "High-Speed Mode (480 Mbit/s)";
-//    } else speed = "Full-Speed Mode (12 Mbit/s)";
-//    return QString("USB в режиме работы %1").arg(speed);
-    return [](BYTE x){return x ? "High-Speed Mode (480 Mbit/s)" : "Full-Speed Mode (12 Mbit/s)";}(UsbSpeed);
+    if(!pModule->GetUsbSpeed(&UsbSpeed))        //получаем скорость работы шины USB
+        qDebug().noquote() << QString("Не удалось получить скорость работы интерфейса USB!");
+    return UsbSpeed ? "High-Speed Mode (480 Mbit/s)" : "Full-Speed Mode (12 Mbit/s)";
 }
 
 QString useE154::GetInformation()
@@ -229,24 +232,62 @@ void useE154::SetChannel(Channel ch, int pos)
 {
     if(pos == ON) {
         switch(ch) {
-            case CH1: { TtlOut |= (1<<0); pModule->TTL_OUT(TtlOut); break; }
-            case CH2: { TtlOut |= (1<<1); pModule->TTL_OUT(TtlOut); break; }
-            case CH3: { TtlOut |= (1<<2); pModule->TTL_OUT(TtlOut); break; }
-            case CH4: { TtlOut |= (1<<3); pModule->TTL_OUT(TtlOut); break; }
-            case  PP: { TtlOut |= (1<<4); pModule->TTL_OUT(TtlOut); break; }
-            case   L: { TtlOut |= (1<<5); pModule->TTL_OUT(TtlOut); break; }
-                default:    qDebug().noquote() << QString("Неправильно выбран TTL канал");
+            case CH1:
+                TtlOut |= (1<<0);
+                pModule->TTL_OUT(TtlOut);
+                break;
+            case CH2:
+                TtlOut |= (1<<1);
+                pModule->TTL_OUT(TtlOut);
+                break;
+            case CH3:
+                TtlOut |= (1<<2);
+                pModule->TTL_OUT(TtlOut);
+                break;
+            case CH4:
+                TtlOut |= (1<<3);
+                pModule->TTL_OUT(TtlOut);
+                break;
+            case  PP:
+                TtlOut |= (1<<4);
+                pModule->TTL_OUT(TtlOut);
+                break;
+            case   L:
+                TtlOut |= (1<<5);
+                pModule->TTL_OUT(TtlOut);
+                break;
+            default:
+                qDebug() << "Неправильно выбран TTL канал";
         }
     }
     else{
         switch(ch) {
-            case CH1: { TtlOut &= ~(1<<0); pModule->TTL_OUT(TtlOut); break; }
-            case CH2: { TtlOut &= ~(1<<1); pModule->TTL_OUT(TtlOut); break; }
-            case CH3: { TtlOut &= ~(1<<2); pModule->TTL_OUT(TtlOut); break; }
-            case CH4: { TtlOut &= ~(1<<3); pModule->TTL_OUT(TtlOut); break; }
-            case  PP: { TtlOut &= ~(1<<4); pModule->TTL_OUT(TtlOut); break; }
-            case   L: { TtlOut &= ~(1<<5); pModule->TTL_OUT(TtlOut); break; }
-                default: throw Errore_E154("Неправильно выбран TTL канал");
+            case CH1:
+                TtlOut &= ~(1<<0);
+                pModule->TTL_OUT(TtlOut);
+                break;
+            case CH2:
+                TtlOut &= ~(1<<1);
+                pModule->TTL_OUT(TtlOut);
+                break;
+            case CH3:
+                TtlOut &= ~(1<<2);
+                pModule->TTL_OUT(TtlOut);
+                break;
+            case CH4:
+                TtlOut &= ~(1<<3);
+                pModule->TTL_OUT(TtlOut);
+                break;
+            case  PP:
+                TtlOut &= ~(1<<4);
+                pModule->TTL_OUT(TtlOut);
+                break;
+            case   L:
+                TtlOut &= ~(1<<5);
+                pModule->TTL_OUT(TtlOut);
+                break;
+            default:
+                throw qDebug() << "Неправильно выбран TTL канал";
         }
     }
 }
