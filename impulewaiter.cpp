@@ -77,6 +77,7 @@ void ImpuleWaiter::loopslot()
     if(count == 0 ) {
         loop.stop();
         hide();
+        emit alldone();
         destroy(true, true);
         deleteLater();
     }

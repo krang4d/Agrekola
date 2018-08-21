@@ -37,6 +37,7 @@ signals:
     press_2();
     press_3();
     press_4();
+    alldone();
 
 private:
     Ui::ImpuleWaiter *ui;

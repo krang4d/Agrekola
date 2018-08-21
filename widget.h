@@ -59,7 +59,7 @@ signals:
     void hasPulse4();
 
 public slots:
-    void getData();
+    void startMeasurment();
     void incubeTimeout();
 
 private slots:

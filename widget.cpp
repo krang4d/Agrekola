@@ -32,7 +32,7 @@ Widget::Widget(QWidget *parent) :
     setupRealtimeData();
     setupTimers();
     installEventFilter(this);
-    QWidget::connect(startWin, SIGNAL(startMeasurment()), this, SLOT(getData()));
+    QWidget::connect(startWin, SIGNAL(startMeasurment()), this, SLOT(startMeasurment()));
 }
 
 Widget::~Widget()
@@ -432,11 +432,6 @@ void Widget::on_checkBox_L_stateChanged(int arg1)
 void Widget::on_pushButton_clicked()
 {
     startWin->show();
-    ui->checkBox_L->setChecked(true); //включение лазеров
-    ui->checkBox_1->setChecked(true); //включение перемешивания
-    ui->checkBox_2->setChecked(true);
-    ui->checkBox_3->setChecked(true);
-    ui->checkBox_4->setChecked(true);
 }
 
 void Widget::updataTermo(bool td)
@@ -472,8 +467,14 @@ void Widget::updateTime()
     }
 }
 
-void Widget::getData()
+void Widget::startMeasurment()
 {
+    ui->pushButton->setEnabled(false);
+    ui->checkBox_L->setChecked(true); //включение лазеров
+    ui->checkBox_1->setChecked(true); //включение перемешивания
+    ui->checkBox_2->setChecked(true);
+    ui->checkBox_3->setChecked(true);
+    ui->checkBox_4->setChecked(true);
     QString msg;
     if(!startWin->isCancel()) {
         if(startWin->isSingle()) {
@@ -617,6 +618,7 @@ void Widget::startIncub(int time_sec, int num)
     setUserMessage(QString("Инкубация %1").arg(num));
     std::function<void(Widget*)> func = &Widget::incubeTimeout;
     QPointer<ProgressTimerBar> pb = new ProgressTimerBar;
+    pb->setWindowTitle(QString("Инкубация"));
     pb->startProgress(QString("Инкубация %1 %p%").arg(num), 10, time_sec*1000, std::bind(func, this));
     incub = true;
     emit status(QString("Инкубация %1").arg(num));
