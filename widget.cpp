@@ -11,6 +11,8 @@
 #include <functional>
 
 #define DX 0.1f
+#define MIN -6.0f
+#define MAX 6.0f
 
 Widget::Widget(QWidget *parent) :
     QWidget(parent),
@@ -156,6 +158,7 @@ void Widget::setupRealtimeData() {
     //customPlot2->setOpenGl(true);
     //customPlot3->setOpenGl(true);
     //customPlot4->setOpenGl(true);
+
     if(startWin->isSingle()) {
         QSharedPointer<QCPAxisTickerTime> timeTicker(new QCPAxisTickerTime);
         timeTicker->setTimeFormat("%m:%s");
@@ -166,7 +169,7 @@ void Widget::setupRealtimeData() {
         customPlot1->axisRect()->setupFullAxesBox();
         customPlot1->xAxis->setLabel("t, сек");
         customPlot1->yAxis->setLabel("V1, Вольт");
-        customPlot1->yAxis->setRange(-5.5, 5.5);
+        customPlot1->yAxis->setRange(MIN, MAX);
 
         // make left and bottom axes transfer their ranges to right and top axes:
         connect(customPlot1->xAxis, SIGNAL(rangeChanged(QCPRange)), customPlot1->xAxis2, SLOT(setRange(QCPRange)));
@@ -178,7 +181,7 @@ void Widget::setupRealtimeData() {
         customPlot2->axisRect()->setupFullAxesBox();
         customPlot2->xAxis->setLabel("t, сек");
         customPlot2->yAxis->setLabel("V2, Вотльт");
-        customPlot2->yAxis->setRange(-5.5, 5.5);
+        customPlot2->yAxis->setRange(MIN, MAX);
 
         connect(customPlot2->xAxis, SIGNAL(rangeChanged(QCPRange)), customPlot2->xAxis2, SLOT(setRange(QCPRange)));
         connect(customPlot2->yAxis, SIGNAL(rangeChanged(QCPRange)), customPlot2->yAxis2, SLOT(setRange(QCPRange)));
@@ -189,7 +192,7 @@ void Widget::setupRealtimeData() {
         customPlot3->axisRect()->setupFullAxesBox();
         customPlot3->xAxis->setLabel("t, сек");
         customPlot3->yAxis->setLabel("V3, Вотльт");
-        customPlot3->yAxis->setRange(-5.5, 5.5);
+        customPlot3->yAxis->setRange(MIN, MAX);
 
         connect(customPlot3->xAxis, SIGNAL(rangeChanged(QCPRange)), customPlot3->xAxis2, SLOT(setRange(QCPRange)));
         connect(customPlot3->yAxis, SIGNAL(rangeChanged(QCPRange)), customPlot3->yAxis2, SLOT(setRange(QCPRange)));
@@ -200,7 +203,7 @@ void Widget::setupRealtimeData() {
         customPlot4->axisRect()->setupFullAxesBox();
         customPlot4->xAxis->setLabel("t, сек");
         customPlot4->yAxis->setLabel("V4, Вотльт");
-        customPlot4->yAxis->setRange(-5.5, 5.5);
+        customPlot4->yAxis->setRange(MIN, MAX);
 
         connect(customPlot4->xAxis, SIGNAL(rangeChanged(QCPRange)), customPlot4->xAxis2, SLOT(setRange(QCPRange)));
         connect(customPlot4->yAxis, SIGNAL(rangeChanged(QCPRange)), customPlot4->yAxis2, SLOT(setRange(QCPRange)));
@@ -222,7 +225,7 @@ void Widget::setupRealtimeData() {
         customPlot1->axisRect()->setupFullAxesBox();
         customPlot1->xAxis->setLabel("Время, с");
         customPlot1->yAxis->setLabel("Напряжение, В");
-        customPlot1->yAxis->setRange(-5.5, 5.5);
+        customPlot1->yAxis->setRange(MIN, MAX);
 
         // make left and bottom axes transfer their ranges to right and top axes:
         connect(customPlot1->xAxis, SIGNAL(rangeChanged(QCPRange)), customPlot1->xAxis2, SLOT(setRange(QCPRange)));
@@ -235,7 +238,7 @@ void Widget::setupRealtimeData() {
         customPlot2->axisRect()->setupFullAxesBox();
         customPlot2->xAxis->setLabel("Время, с");
         customPlot2->yAxis->setLabel("Напряжение, В");
-        customPlot2->yAxis->setRange(-5.5, 5.5);
+        customPlot2->yAxis->setRange(MIN, MAX);
 
         connect(customPlot2->xAxis, SIGNAL(rangeChanged(QCPRange)), customPlot2->xAxis2, SLOT(setRange(QCPRange)));
         connect(customPlot2->yAxis, SIGNAL(rangeChanged(QCPRange)), customPlot2->yAxis2, SLOT(setRange(QCPRange)));
