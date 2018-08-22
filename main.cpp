@@ -13,8 +13,5 @@ int main(int argc, char *argv[])
     qDebug() << "main thread ID: " << QThread::currentThreadId();
     ChoiseDialog *dlg_menu = new ChoiseDialog;
     dlg_menu->show();
-//    Sleep(1000);
-//    useE154 second;
-//    qDebug().noquote() << second.GetInformation();
     return a.exec();
 }

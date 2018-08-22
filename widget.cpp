@@ -474,40 +474,56 @@ void Widget::startMeasurment()
 {
     ui->pushButton->setEnabled(false);
     ui->checkBox_L->setChecked(true); //включение лазеров
-    ui->checkBox_1->setChecked(true); //включение перемешивания
-    ui->checkBox_2->setChecked(true);
-    ui->checkBox_3->setChecked(true);
-    ui->checkBox_4->setChecked(true);
     QString msg;
-    if(!startWin->isCancel()) {
+    //if(!startWin->isCancel()) {
         if(startWin->isSingle()) {
             ui->groupBox_f1->setTitle("Канал 1");
             ui->groupBox_f2->setTitle("Канал 2");
             ui->groupBox_f3->setTitle("Канал 3");
             ui->groupBox_f4->setTitle("Канал 4");
 
-            if(startWin->isChannel_1()) ui->groupBox_f1->show();
+            if(startWin->isChannel_1()) {
+                ui->checkBox_1->setChecked(true); //включение перемешивания
+                ui->groupBox_f1->show();
+            }
             else ui->groupBox_f1->hide();
 
-            if(startWin->isChannel_2()) ui->groupBox_f2->show();
+            if(startWin->isChannel_2()) {
+                ui->checkBox_2->setChecked(true);
+                ui->groupBox_f2->show();
+            }
             else ui->groupBox_f2->hide();
 
-            if(startWin->isChannel_3()) ui->groupBox_f3->show();
+            if(startWin->isChannel_3()) {
+                ui->checkBox_3->setChecked(true);
+                ui->groupBox_f3->show();
+            }
             else ui->groupBox_f3->hide();
 
-            if(startWin->isChannel_4()) ui->groupBox_f4->show();
+            if(startWin->isChannel_4()) {
+                ui->checkBox_4->setChecked(true);
+                ui->groupBox_f4->show();
+            }
             else ui->groupBox_f4->hide();
 
-            if (startWin->isChannel_1()) {msg += QString("№1 = %1, ").arg(startWin->getNum_1());}
+            if (startWin->isChannel_1()) {
+                msg += QString("№1 = %1, ").arg(startWin->getNum_1());
+            }
             else msg += QString("№1 - выкл., ");
 
-            if (startWin->isChannel_2()) {msg += QString("№2 = %1, ").arg(startWin->getNum_2());}
+            if (startWin->isChannel_2()) {
+                msg += QString("№2 = %1, ").arg(startWin->getNum_2());
+            }
             else msg += QString("№2 - выкл., ");
 
-            if (startWin->isChannel_3()) {msg += QString("№3 = %1, ").arg(startWin->getNum_3());}
+            if (startWin->isChannel_3()) {
+                msg += QString("№3 = %1, ").arg(startWin->getNum_3());
+            }
             else msg += QString("№3 - выкл., ");
 
-            if (startWin->isChannel_4()) {msg += QString("№4 = %1 ").arg(startWin->getNum_4());}
+            if (startWin->isChannel_4()) {
+                msg += QString("№4 = %1 ").arg(startWin->getNum_4());
+            }
             else msg += QString("№4 - выкл. ");
 
             msg = QString("Начало сбора данных, одиночные пробы (t = %1c, %2)").arg(startWin->getTime()).arg(msg);
@@ -537,7 +553,7 @@ void Widget::startMeasurment()
             pb->startProgress("Время инкубации №1", 100, t, func);
         }
         else startIncub(startWin->getTimeIncube(), 0);
-    }
+    //}
 }
 
 void Widget::startData(int n)

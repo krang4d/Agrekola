@@ -1,8 +1,8 @@
 #include "calculatedata.h"
 #include <QtMath>
 
-CalcData::CalcData(QMap<double, double> map, QCustomPlot *p, QObject *parent)
-    : mdata(map), plot(p), QObject(parent)
+CalcData::CalcData(QMap<double, double> map, QCustomPlot *p)
+    : mdata(map), plot(p)
 {
     jump = 0.04f;
     mix_t = 4.0f;
@@ -42,7 +42,9 @@ double CalcData::calcKo()
     if(plot != NULL) {
         static QCPGraph *g = plot->addGraph();
         g->setName("AVG");
-        QVector<double> key = {0, 30};
+        double endpoint =  (mdata.end()-1).key();
+        qDebug() << QString("endpoint %1").arg(endpoint);
+        QVector<double> key = {0, endpoint};
         QVector<double> value = {avg, avg};
         g->setData(key, value);
     }
