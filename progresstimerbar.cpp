@@ -2,12 +2,16 @@
 #include "ui_progresstimerbar.h"
 #include <QDebug>
 
+#define TIMER_PERIOD_MS 10
+
 ProgressTimerBar::ProgressTimerBar(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::ProgressTimerBar),
     func(nullptr)
 {
     ui->setupUi(this);
+    ui->progressBar->setValue(0);
+    ui->progressBar->setFormat("В ожидании");
     //таймер для отображения процесса сбора данных
     connect(&progressTimer, SIGNAL(timeout()), SLOT(updateProgress()));
 }
@@ -17,20 +21,35 @@ ProgressTimerBar::~ProgressTimerBar()
     delete ui;
 }
 
-void ProgressTimerBar::startProgress(QString format, int timer_tic_ms, int time_ms)
+void ProgressTimerBar::startProgress(QString format, int time_ms)
 {
     ui->progressBar->setFormat(format);
     ui->progressBar->setVisible(true);
     ui->progressBar->setValue(0);
     ui->progressBar->setMaximum(time_ms);
-    progressTimer.start(timer_tic_ms);
+    progressTimer.start(TIMER_PERIOD_MS);
     show();
 }
 
-void ProgressTimerBar::startProgress(QString format, int timer_tic_ms, int time_ms, std::function<void(void)> f)
+void ProgressTimerBar::startProgress(QString format, int time_ms, std::function<void(void)> f)
 {
-    startProgress(format, timer_tic_ms, time_ms);
+    startProgress(format, time_ms);
     func = f;
+}
+
+void ProgressTimerBar::setValue(int value)
+{
+    ui->progressBar->setValue(value);
+}
+
+void ProgressTimerBar::setMaximum(int maximum)
+{
+    ui->progressBar->setMaximum(maximum);
+}
+
+void ProgressTimerBar::setFormat(QString format)
+{
+    ui->progressBar->setFormat(format);
 }
 
 void ProgressTimerBar::updateProgress()
@@ -45,6 +64,9 @@ void ProgressTimerBar::updateProgress()
             func();
             qDebug() << "Выплнение func";
         }
-        hide();
+        ui->progressBar->setFormat("В ожидании");
+        ui->progressBar->setValue(0);
+        emit done();
+        //hide();
     }
 }

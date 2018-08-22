@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>250</width>
+    <width>272</width>
     <height>317</height>
    </rect>
   </property>
@@ -19,7 +19,7 @@
   <property name="windowTitle">
    <string>Параметры измерения</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_2">
+  <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QGroupBox" name="groupBox_probe">
      <property name="sizePolicy">
@@ -102,17 +102,11 @@
        <property name="title">
         <string>№ проб</string>
        </property>
-       <layout class="QVBoxLayout" name="verticalLayout">
+       <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
          <widget class="QLineEdit" name="lineEdit_ch1">
           <property name="enabled">
            <bool>false</bool>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>50</width>
-            <height>20</height>
-           </size>
           </property>
          </widget>
         </item>
@@ -121,12 +115,6 @@
           <property name="enabled">
            <bool>false</bool>
           </property>
-          <property name="maximumSize">
-           <size>
-            <width>50</width>
-            <height>20</height>
-           </size>
-          </property>
          </widget>
         </item>
         <item>
@@ -134,24 +122,12 @@
           <property name="enabled">
            <bool>false</bool>
           </property>
-          <property name="maximumSize">
-           <size>
-            <width>50</width>
-            <height>20</height>
-           </size>
-          </property>
          </widget>
         </item>
         <item>
          <widget class="QLineEdit" name="lineEdit_ch4">
           <property name="enabled">
            <bool>false</bool>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>50</width>
-            <height>20</height>
-           </size>
           </property>
          </widget>
         </item>

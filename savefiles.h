@@ -12,6 +12,7 @@
 #include <QFileDialog>
 #include <QRegExp>
 #include <QStringList>
+#include <progresstimerbar.h>
 
 class SaveFiles : public QObject
 {
@@ -19,7 +20,7 @@ class SaveFiles : public QObject
 public:
     explicit SaveFiles(QObject *parent = 0);
     ~SaveFiles();
-    static QString writeData(QStringList);
+    static QString writeData(QStringList, ProgressTimerBar *bar = NULL);
     static QString openData(QWidget*, QList<double>&, QList<double>&, QList<double>&, QList<double>&, QList<double>&, QStringList&);
     void writeUserMsg(QString);
 

@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QTimer>
+#include <QString>
 #include <functional>
 
 //typedef void (*Function)(void);
@@ -18,15 +19,20 @@ class ProgressTimerBar : public QWidget
 public:
     explicit ProgressTimerBar(QWidget *parent = 0);
     ~ProgressTimerBar();
-    void startProgress(QString format, int timer_tic_ms, int time_ms);
-    void startProgress(QString format, int timer_tic_ms, int time_ms, std::function<void (void)> f);
+    void startProgress(QString format, int time_ms);
+    void startProgress(QString format, int time_ms, std::function<void (void)> f);
+    void setMaximum(int maximum);
+    void setFormat(QString format);
 
 private:
     Ui::ProgressTimerBar *ui;
     QTimer progressTimer;
+signals:
+    done();
 
 public slots:
     void updateProgress();
+    void setValue(int value);
 
 private:
     std::function<void (void)> func;

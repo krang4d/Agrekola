@@ -15,6 +15,7 @@
 #include "startmeasurment.h"
 #include "QCustomPlot/qcustomplot.h"
 #include "impulewaiter.h"
+#include <progresstimerbar.h>
 
 namespace Ui {
 class Widget;
@@ -81,11 +82,9 @@ private slots:
 private:
     Ui::Widget *ui;
     QPointer<StartMeasurment> startWin;
-    QCustomPlot *customPlot1;
-    QCustomPlot *customPlot2;
-    QCustomPlot *customPlot3;
-    QCustomPlot *customPlot4;
+    QCustomPlot *customPlot1, *customPlot2, *customPlot3, *customPlot4;
 
+    QPointer<ProgressTimerBar> pBar1, pBar2, pBar3, pBar4;
     QTimer plotTimer, currentTimer;
     QDateTime dt;
 

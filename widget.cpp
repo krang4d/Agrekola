@@ -7,7 +7,6 @@
 #include <QEvent>
 #include <QKeyEvent>
 #include <QtConcurrent>
-#include <progresstimerbar.h>
 #include <functional>
 
 #define DX 0.1f
@@ -18,6 +17,7 @@ Widget::Widget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Widget),
     startWin(new StartMeasurment),
+    pBar1(new ProgressTimerBar), pBar2(new ProgressTimerBar), pBar3(new ProgressTimerBar), pBar4(new ProgressTimerBar),
     data1(false), data2(false), data3(false), data4(false),
     incub(false),
     pulse1(false), pulse2(false), pulse3(false), pulse4(false),
@@ -27,9 +27,13 @@ Widget::Widget(QWidget *parent) :
     setAttribute(Qt::WA_DeleteOnClose);
     setWindowTitle("Программы сбора данных с АЦП(E-154) по 4 каналам");
     customPlot1 = ui->frame_1;
+    ui->groupBox_f1->layout()->addWidget(pBar1);
     customPlot2 = ui->frame_2;
+    ui->groupBox_f2->layout()->addWidget(pBar2);
     customPlot3 = ui->frame_3;
+    ui->groupBox_f3->layout()->addWidget(pBar3);
     customPlot4 = ui->frame_4;
+    ui->groupBox_f4->layout()->addWidget(pBar4);
     ui->groupBox_Mix->setVisible(false);
     setupRealtimeData();
     setupTimers();
@@ -550,7 +554,7 @@ void Widget::startMeasurment()
             int t = startWin->getTimeIncube() *1000;
             std::function<void (void)> func = [this](){startIncub(3, 2);};
             QPointer<ProgressTimerBar> pb = new ProgressTimerBar;
-            pb->startProgress("Время инкубации №1", 100, t, func);
+            pb->startProgress("Время инкубации №1", t, func);
         }
         else startIncub(startWin->getTimeIncube(), 0);
     //}
@@ -564,23 +568,27 @@ void Widget::startData(int n)
     std::function<void (int)> func = [this](int n){
         writeMapData(n);
     };
-    QPointer<ProgressTimerBar> pb = new ProgressTimerBar;
-    pb->startProgress(QString("%1 %p%").arg(str), 10, startWin->getTime() * 1000, std::bind(func, n));
+    //QPointer<ProgressTimerBar> pb = new ProgressTimerBar;
+    //pb->startProgress(QString("%1 %p%").arg(str), 10, startWin->getTime() * 1000, std::bind(func, n));
     switch (n) {
     case 1:
-        ui->groupBox_f1->layout()->addWidget(pb);
+        //ui->groupBox_f1->layout()->addWidget(pb);
+        pBar1->startProgress(QString("%1 %p%").arg(str), startWin->getTime() * 1000, std::bind(func, n));
         data1 = true;
         break;
     case 2:
-        ui->groupBox_f2->layout()->addWidget(pb);
+        //ui->groupBox_f2->layout()->addWidget(pb);
+        pBar2->startProgress(QString("%1 %p%").arg(str), startWin->getTime() * 1000, std::bind(func, n));
         data2 = true;
         break;
     case 3:
-        ui->groupBox_f3->layout()->addWidget(pb);
+        //ui->groupBox_f3->layout()->addWidget(pb);
+        pBar3->startProgress(QString("%1 %p%").arg(str), startWin->getTime() * 1000, std::bind(func, n));
         data3 = true;
         break;
     case 4:
-        ui->groupBox_f4->layout()->addWidget(pb);
+        //ui->groupBox_f4->layout()->addWidget(pb);
+        pBar4->startProgress(QString("%1 %p%").arg(str), startWin->getTime() * 1000, std::bind(func, n));
         data4 = true;
         break;
     default:
@@ -637,8 +645,9 @@ void Widget::startIncub(int time_sec, int num)
     setUserMessage(QString("Инкубация %1").arg(num));
     std::function<void(Widget*)> func = &Widget::incubeTimeout;
     QPointer<ProgressTimerBar> pb = new ProgressTimerBar;
+    connect(pb.data(), SIGNAL(done()), pb.data(), SLOT(deleteLater()));
     pb->setWindowTitle(QString("Инкубация"));
-    pb->startProgress(QString("Инкубация %1 %p%").arg(num), 10, time_sec*1000, std::bind(func, this));
+    pb->startProgress(QString("Инкубация %1 %p%").arg(num), time_sec*1000, std::bind(func, this));
     incub = true;
     emit status(QString("Инкубация %1").arg(num));
 }
@@ -773,24 +782,30 @@ void Widget::writeMapData(const int n)
     stopData(n);
     setUserMessage(QString("Запись данных по каналу %1").arg(n));
     emit status(QString("Запись данных по каналу %1").arg(n));
-    QPointer<QProgressDialog> pb = new QProgressDialog;
-    pb->setLabelText(QString("Запись данных %p%"));
+    //QPointer<QProgressDialog> pb = new QProgressDialog;
+    //pb->setLabelText(QString("Запись данных %p%"));
+    QPointer<ProgressTimerBar> pBar;
     switch (n) {
     case 1:
-        ui->groupBox_f1->layout()->addWidget(pb);
+        //ui->groupBox_f1->layout()->addWidget(pb);
+        pBar = pBar1;
         break;
     case 2:
-        ui->groupBox_f2->layout()->addWidget(pb);
+        //ui->groupBox_f2->layout()->addWidget(pb);
+        pBar = pBar2;
         break;
     case 3:
-        ui->groupBox_f3->layout()->addWidget(pb);
+        //ui->groupBox_f3->layout()->addWidget(pb);
+        pBar = pBar3;
         break;
     case 4:
-        ui->groupBox_f4->layout()->addWidget(pb);
+        //ui->groupBox_f4->layout()->addWidget(pb);
+        pBar = pBar4;
         break;
     default:
         break;
     }
+    pBar->setFormat(QString("Запись данных %p%"));
     //pb->show();
     qDebug().noquote() << QString("Запись данных по каналу %1").arg(n);
 
@@ -802,8 +817,8 @@ void Widget::writeMapData(const int n)
         int i = 0;
         auto it = map.constBegin();
         while(it != map.constEnd()) {
-            pb->setMaximum(map.count());
-            pb->setValue(i+1);//i*100/x.length());
+            //pb->setMaximum(map.count());
+            //pb->setValue(i+1);//i*100/x.length());
             strList << QString("%1\t%2\t%3\n").arg(i).arg(it.value()).arg(it.key());
             ++it; ++i;
         }
@@ -813,24 +828,28 @@ void Widget::writeMapData(const int n)
     if( n == 1 && !map_y1.isEmpty() ) {
         strList << QString("V1#%1\t").arg(startWin->getNum_1());
         func(map_y1);
+        pBar->setMaximum(map_y1.count());
         map_y1.clear();
     }
     if( n == 2 && !map_y2.isEmpty() ) {
         strList << QString("V2#%1\t").arg(startWin->getNum_2());
         func(map_y2);
+        pBar->setMaximum(map_y2.count());
         map_y2.clear();
     }
     if( n == 3 && !map_y3.isEmpty() ) {
         strList << QString("V3#%1\t").arg(startWin->getNum_3());
         func(map_y3);
+        pBar->setMaximum(map_y3.count());
         map_y3.clear();
     }
     if( n == 4 && !map_y4.isEmpty() ) {
         strList << QString("V4#%1\t").arg(startWin->getNum_4());
         func(map_y4);
+        pBar->setMaximum(map_y4.count());
         map_y4.clear();
     }
-    setUserMessage(saveFiles.writeData(strList), true, true);
+    setUserMessage(saveFiles.writeData(strList, pBar), true, true);
 }
 
 //ProgressBar::ProgressBar(QWidget *parent) : QProgressBar(parent)
