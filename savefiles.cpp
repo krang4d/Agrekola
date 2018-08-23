@@ -52,8 +52,10 @@ QString SaveFiles::writeData(QStringList dt, ProgressTimerBar *bar)
     int n = 0;
     foreach (QString var, dt) {
         OnlyOneFile::Instance().stream_data << var;
-        bar->setValue(++n);
-        //emit value_changed(++n);
+        n++;
+        if(bar != NULL && n%100 == 0 && n == dt.count())
+            bar->setValue(n);
+        emit value_changed(n);
     }
 
     QString str = QString("Данные записаны в файл %1/%2").arg(QDir::currentPath()).arg(OnlyOneFile::Instance().file_data.fileName());

@@ -348,7 +348,6 @@ void Widget::realtimeDataSlot(QVariantList a) {
         if(isData(1)) {
             if(startWin->isChannel_1() ) {
                 map_y1.insert(key, a[0].toDouble());
-                y1.push_back(a[0].toDouble());
                 //ui->label_led1->setStyleSheet("color: green;");
             }
         }
@@ -356,7 +355,6 @@ void Widget::realtimeDataSlot(QVariantList a) {
         if(isData(2)) {
             if(startWin->isChannel_2()) {
                 map_y2.insert(key, a[1].toDouble());
-                y2.push_back(a[1].toDouble());
                 //ui->label_led2->setStyleSheet("color: green;");
             }
         }
@@ -364,7 +362,6 @@ void Widget::realtimeDataSlot(QVariantList a) {
         if(isData(3)) {
             if(startWin->isChannel_3()) {
                 map_y3.insert(key, a[2].toDouble());
-                y3.push_back(a[2].toDouble());
                 //ui->label_led3->setStyleSheet("color: green;");
             }
         }
@@ -372,13 +369,10 @@ void Widget::realtimeDataSlot(QVariantList a) {
         if(isData(4)) {
             if(startWin->isChannel_4()) {
                 map_y4.insert(key, a[3].toDouble());
-                y4.push_back(a[3].toDouble());
                 //ui->label_led4->setStyleSheet("color: green;");
             }
         }
         //else ui->label_led4->setStyleSheet("color: yellow;");
-        if(isData(1) || isData(2) || isData(3) || isData(4))
-            x.push_back(key);
         lastPointKey = key;
     }
     // calculate frames per second:
@@ -477,75 +471,89 @@ void Widget::updateTime()
 void Widget::startMeasurment()
 {
     ui->pushButton->setEnabled(false);
-    ui->checkBox_L->setChecked(true); //включение лазеров
     QString msg;
-    //if(!startWin->isCancel()) {
+    if(!startWin->isCancel()) {
         if(startWin->isSingle()) {
-            ui->groupBox_f1->setTitle("Канал 1");
-            ui->groupBox_f2->setTitle("Канал 2");
-            ui->groupBox_f3->setTitle("Канал 3");
-            ui->groupBox_f4->setTitle("Канал 4");
-
-            if(startWin->isChannel_1()) {
-                ui->checkBox_1->setChecked(true); //включение перемешивания
-                ui->groupBox_f1->show();
-            }
-            else ui->groupBox_f1->hide();
-
-            if(startWin->isChannel_2()) {
-                ui->checkBox_2->setChecked(true);
-                ui->groupBox_f2->show();
-            }
-            else ui->groupBox_f2->hide();
-
-            if(startWin->isChannel_3()) {
-                ui->checkBox_3->setChecked(true);
-                ui->groupBox_f3->show();
-            }
-            else ui->groupBox_f3->hide();
-
-            if(startWin->isChannel_4()) {
-                ui->checkBox_4->setChecked(true);
-                ui->groupBox_f4->show();
-            }
-            else ui->groupBox_f4->hide();
 
             if (startWin->isChannel_1()) {
                 msg += QString("№1 = %1, ").arg(startWin->getNum_1());
+                ui->checkBox_1->setChecked(true); //включение перемешивания 1
+                ui->groupBox_f1->setTitle("Канал 1");
+                ui->groupBox_f1->show();
             }
-            else msg += QString("№1 - выкл., ");
+            else {
+                msg += QString("№1 - выкл., ");
+                ui->groupBox_f1->hide();
+            }
 
             if (startWin->isChannel_2()) {
                 msg += QString("№2 = %1, ").arg(startWin->getNum_2());
+                ui->checkBox_2->setChecked(true); //включение перемешивания 2
+                ui->groupBox_f2->setTitle("Канал 2");
+                ui->groupBox_f2->show();
             }
-            else msg += QString("№2 - выкл., ");
+            else {
+                msg += QString("№2 - выкл., ");
+                ui->groupBox_f2->hide();
+            }
 
             if (startWin->isChannel_3()) {
                 msg += QString("№3 = %1, ").arg(startWin->getNum_3());
+                ui->checkBox_3->setChecked(true); //включение перемешивания 3
+                ui->groupBox_f3->setTitle("Канал 3");
+                ui->groupBox_f3->show();
             }
-            else msg += QString("№3 - выкл., ");
+            else {
+                msg += QString("№3 - выкл., ");
+                ui->groupBox_f3->hide();
+            }
 
             if (startWin->isChannel_4()) {
                 msg += QString("№4 = %1 ").arg(startWin->getNum_4());
+                ui->checkBox_4->setChecked(true); //включение перемешивания 4
+                ui->groupBox_f4->setTitle("Канал 4");
+                ui->groupBox_f4->show();
             }
-            else msg += QString("№4 - выкл. ");
+            else {
+                msg += QString("№4 - выкл. ");
+                ui->groupBox_f4->hide();
+            }
 
             msg = QString("Начало сбора данных, одиночные пробы (t = %1c, %2)").arg(startWin->getTime()).arg(msg);
             setUserMessage(msg, true, true);
+
+            ui->checkBox_L->setChecked(true); //включение лазеров
+
             setupRealtimeData();
         }
         else {
-            ui->groupBox_f1->setTitle("Канал 1, 2");
-            ui->groupBox_f2->setTitle("Канал 3, 4");
-            ui->groupBox_f3->hide();
-            ui->groupBox_f4->hide();
 
-            if (startWin->isChannel_1()) {msg += QString("№1, 2 = %1, ").arg(startWin->getNum_1());}
-            else msg += QString("№1, 2 - выкл., ");
+            if (startWin->isChannel_1()) {
+                msg += QString("№1, 2 = %1, ").arg(startWin->getNum_1());
+                ui->groupBox_f1->setTitle("Канал 1, 2");
+                ui->groupBox_f2->hide();
+                ui->checkBox_1->setChecked(true); //включение перемешивания 1
+                ui->checkBox_2->setChecked(true); //включение перемешивания 2
+            }
+            else {
+                msg += QString("№1, 2 - выкл., ");
+                ui->groupBox_f1->hide();
+                ui->groupBox_f2->hide();
+            }
 
-            if (startWin->isChannel_3()) {msg += QString("№3, 4 = %1, ").arg(startWin->getNum_3());}
-            else msg += QString("№3, 4 - выкл., ");
+            if (startWin->isChannel_3()) {
+                msg += QString("№3, 4 = %1, ").arg(startWin->getNum_3());
+                ui->groupBox_f3->setTitle("Канал 3, 4");
+                ui->groupBox_f4->hide();
+                ui->checkBox_3->setChecked(true); //включение перемешивания 3
+                ui->checkBox_4->setChecked(true); //включение перемешивания 4
 
+            }
+            else {
+                msg += QString("№3, 4 - выкл., ");
+                ui->groupBox_f3->hide();
+                ui->groupBox_f4->hide();
+            }
             msg = QString("Начало сбора данных, парные пробы (t = %1c, %2)").arg(startWin->getTime()).arg(msg);
             setUserMessage(msg, true, true);
             setupRealtimeData();
@@ -557,7 +565,7 @@ void Widget::startMeasurment()
             pb->startProgress("Время инкубации №1", t, func);
         }
         else startIncub(startWin->getTimeIncube(), 0);
-    //}
+    }
 }
 
 void Widget::startData(int n)
@@ -621,7 +629,11 @@ void Widget::stopData(int n)
         break;
     default: qDebug() << "n is out of data from Widget::stopData(n)";
     }
-    ui->checkBox_L->setChecked(false); //включение лазеров
+    if (!isData(1) && !isData(2) && !isData(3) && !isData(4)) {
+        setUserMessage(QString("Конец сбора данных"));
+        ui->checkBox_L->setChecked(false);
+        ui->pushButton->setEnabled(true);
+    }
 }
 
 bool Widget::isData(int n)
@@ -643,11 +655,17 @@ bool Widget::isData(int n)
 void Widget::startIncub(int time_sec, int num)
 {
     setUserMessage(QString("Инкубация %1").arg(num));
-    std::function<void(Widget*)> func = &Widget::incubeTimeout;
-    QPointer<ProgressTimerBar> pb = new ProgressTimerBar;
-    connect(pb.data(), SIGNAL(done()), pb.data(), SLOT(deleteLater()));
-    pb->setWindowTitle(QString("Инкубация"));
-    pb->startProgress(QString("Инкубация %1 %p%").arg(num), time_sec*1000, std::bind(func, this));
+    QPointer<ImpuleWaiter> iw = new ImpuleWaiter;
+    //std::function<void(Widget*)> func = &Widget::incubeTimeout;
+    std::function<void(Widget*, QPointer<ImpuleWaiter>)> func = &Widget::incubeTimeout;
+    //QPointer<ProgressTimerBar> pb = new ProgressTimerBar;
+    //connect(pb.data(), SIGNAL(done()), pb.data(), SLOT(deleteLater()));
+    //pb->setWindowTitle(QString("Инкубация"));
+    //pb->startProgress(QString("Инкубация %1 %p%").arg(num), time_sec*1000, std::bind(func, this));
+    pBar1->startProgress(QString("Инкубация %1 %p%").arg(num), time_sec*1000, std::bind(func, this, iw));
+    pBar2->startProgress(QString("Инкубация %1 %p%").arg(num), time_sec*1000);
+    pBar3->startProgress(QString("Инкубация %1 %p%").arg(num), time_sec*1000);
+    pBar4->startProgress(QString("Инкубация %1 %p%").arg(num), time_sec*1000);
     incub = true;
     emit status(QString("Инкубация %1").arg(num));
 }
@@ -663,9 +681,8 @@ bool Widget::isIncub()
     return incub;
 }
 
-void Widget::incubeTimeout()
+void Widget::incubeTimeout(QPointer<ImpuleWaiter> iw)
 {
-    QPointer<ImpuleWaiter> iw = new ImpuleWaiter;
     stopIncub();
     if(startWin->isChannel_1()) {
         setUserMessage("Канала 1 в ожидании стартового импульса");
@@ -722,59 +739,6 @@ void Widget::setupTimers()
     currentTimer.start(300);
     dt = QDateTime::currentDateTime();
     setUserMessage(QString("Начало работы программы    Дата %1").arg(dt.toString("dd.MM.yyyy")));
-}
-
-void Widget::writeData(const int n)
-{
-    stopData(n);
-    emit status(QString("Запись данных по каналу %1").arg(n));
-    QPointer<QProgressBar> pb = new QProgressBar;
-    pb->setFormat("Запись данных %p%");
-    pb->show();
-    qDebug().noquote() << QString("Запись данных по каналу %1").arg(n);
-    QStringList strList;
-    strList << QString("N\t");
-    if(!y1.isEmpty())
-        strList << QString("V1#%1\t").arg(startWin->getNum_1());
-    else strList << QString("V1#0\t");
-    if(!y2.isEmpty())
-        strList << QString("V2#%1\t").arg(startWin->getNum_2());
-    else strList << QString("V2#0\t");
-    if(!y3.isEmpty())
-        strList << QString("V3#%1\t").arg(startWin->getNum_3());
-    else strList << QString("V3#0\t");
-    if(!y4.isEmpty())
-        strList << QString("V4#%1\t").arg(startWin->getNum_4());
-    else strList << QString("V4#0\t");
-    strList << QString("t#%5\tti#%6\tp#%7\n").arg(startWin->getTime())
-                                             .arg(startWin->getTimeIncube())
-                                             .arg(startWin->isSingle());
-//    QStringList extList;
-//    QMap<double, double>::const_iterator it = y1.constBegin();
-//    while(it != y1.constEnd()) {
-//        strList << QString("%1\t").arg(it.value()) << QString("%1\n").arg(it.key());
-//  }
-    for(int i=0; i<x.length(); i++) {
-        pb->setMaximum(x.length());
-        pb->setValue(i);//i*100/x.length());
-
-        strList << QString("%1\t").arg(i);
-        if(!y1.isEmpty())
-            strList << QString("%1\t").arg(y1[i]);
-        if(!y2.isEmpty())
-            strList << QString("%1\t").arg(y2[i]);
-        if(!y3.isEmpty())
-            strList << QString("%1\t").arg(y3[i]);
-        if(!y4.isEmpty())
-            strList << QString("%1\t").arg(y4[i]);
-        strList << QString("%1\n").arg(x[i]);
-    }
-    y1.clear();
-    y2.clear();
-    y3.clear();
-    y4.clear();
-    x.clear();
-    setUserMessage(saveFiles.writeData(strList), true, true);
 }
 
 void Widget::writeMapData(const int n)
@@ -851,32 +815,3 @@ void Widget::writeMapData(const int n)
     }
     setUserMessage(saveFiles.writeData(strList, pBar), true, true);
 }
-
-//ProgressBar::ProgressBar(QWidget *parent) : QProgressBar(parent)
-//{
-//    //таймер для отображения процесса сбора данных
-//    connect(&progressTimer, SIGNAL(timeout()), SLOT(updateProgressValue()));
-//}
-
-//void ProgressBar::startProgressBarTimer(QString format, int timer_tic_ms, int time_ms)
-//{
-//    setFormat(format);
-//    setVisible(true);
-//    setValue(0);
-//    setMaximum(time_ms);
-//    progressTimer.start(timer_tic_ms);
-//}
-
-
-//void ProgressBar::updateProgressValue() {
-//    //ui->progressBar->setMaximum(progress_t-progressTimer.interval());
-//    if(value() < maximum()) {
-//        setValue(value()+progressTimer.interval());
-//    }
-//    else hide();
-//}
-
-//ProgressBar::~ProgressBar()
-//{
-
-//}

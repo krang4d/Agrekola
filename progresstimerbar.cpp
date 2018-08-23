@@ -2,7 +2,7 @@
 #include "ui_progresstimerbar.h"
 #include <QDebug>
 
-#define TIMER_PERIOD_MS 10
+#define TIMER_PERIOD_MS 100
 
 ProgressTimerBar::ProgressTimerBar(QWidget *parent) :
     QWidget(parent),

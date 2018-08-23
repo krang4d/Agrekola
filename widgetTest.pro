@@ -43,7 +43,8 @@ SOURCES +=  main.cpp\
     savefiles.cpp \
     calculatedata.cpp \
     progresstimerbar.cpp \
-    impulewaiter.cpp
+    impulewaiter.cpp \
+    incubation.cpp
 
 HEADERS  += selectcalibrationagr1.h \
     selectinductor.h \
@@ -70,7 +71,8 @@ HEADERS  += selectcalibrationagr1.h \
     savefiles.h \
     calculatedata.h \
     progresstimerbar.h \
-    impulewaiter.h
+    impulewaiter.h \
+    incubation.h
 
 FORMS    += selectcalibrationagr1.ui \
     selectinductor.ui \

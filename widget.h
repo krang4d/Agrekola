@@ -61,11 +61,10 @@ signals:
 
 public slots:
     void startMeasurment();
-    void incubeTimeout();
+    void incubeTimeout(QPointer<ImpuleWaiter> iw);
 
 private slots:
     void realtimeDataSlot(QVariantList);
-    void writeData(const int n = 0);
     void writeMapData(const int n = 0);
 
     void on_checkBox_1_stateChanged(int arg1);
@@ -95,28 +94,9 @@ private:
 
     QVector<double> x;
     QMap<double, double> map_y1, map_y2, map_y3, map_y4 ;
-    QVector<double> y1, y2, y3, y4;
 
     SaveFiles saveFiles;
     int mode;
 };
-
-//class ProgressBar : QProgressBar
-//{
-//    Q_OBJECT
-
-//public:
-//    explicit ProgressBar(QWidget *parent = 0);
-//    void startProgressBarTimer(QString format, int timer_tic_ms, int time_ms);
-//    ~ProgressBar();
-//private:
-//    QTimer progressTimer;
-
-//signals:
-
-//public slots:
-//    void updateProgressValue();
-
-//};
 
 #endif // WIDGET_H
