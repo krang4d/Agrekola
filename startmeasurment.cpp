@@ -4,7 +4,7 @@
 #include <QMessageBox>
 #include <QString>
 
-StartMeasurment::StartMeasurment(QDialog *parent) :
+StartMeasurment::StartMeasurment(int mode, QDialog *parent) :
     QDialog(parent),
     ui(new Ui::StartMeasurment)
 {
@@ -36,6 +36,17 @@ StartMeasurment::StartMeasurment(QDialog *parent) :
     num_4 = 0;
     time = 0;
     time_incube = 0;
+    if(mode == 1 || mode == 2 ) {
+        ui->lineEdit_incube_2->setVisible(true);
+        ui->label_incube_2->setVisible(true);
+        ui->label_incube->setText(QString("Время инкубации 1"));
+
+    }
+    else {
+        ui->lineEdit_incube_2->setVisible(false);
+        ui->label_incube_2->setVisible(false);
+        ui->label_incube->setText(QString("Время инкубации"));
+    }
 }
 
 StartMeasurment::~StartMeasurment()
@@ -107,9 +118,11 @@ int StartMeasurment::getTime()
     return time;
 }
 
-int StartMeasurment::getTimeIncube()
+int StartMeasurment::getTimeIncube(int i)
 {
-    return time_incube;
+    if(i = 1)
+        return time_incube;
+    else return time_incube_2;
 }
 
 QString StartMeasurment::getStringStatus()
@@ -213,6 +226,7 @@ void StartMeasurment::on_pushButton_next_clicked()
     }
     time = ui->lineEdit_time->text().toInt();
     time_incube = ui->lineEdit_incube->text().toInt();
+    time_incube_2 = ui->lineEdit_incube_2->text().toInt();
 
     mb.setInformativeText("Введите номер пробы!");
     if(ui->checkBox_ch1->isChecked() && ui->lineEdit_ch1->text().isEmpty())

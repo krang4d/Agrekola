@@ -104,6 +104,50 @@
           </property>
          </widget>
         </item>
+        <item>
+         <widget class="QComboBox" name="comboBox">
+          <item>
+           <property name="text">
+            <string>Test</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string notr="true">Agr1</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string notr="true">Agr2</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Ko1</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Ko2</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Ko3</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Ko4</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Ko5</string>
+           </property>
+          </item>
+         </widget>
+        </item>
        </layout>
       </widget>
      </item>

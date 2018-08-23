@@ -78,6 +78,8 @@ private slots:
     void updataTermo(bool);
     void updateTime();
 
+    void on_comboBox_currentIndexChanged(int index);
+
 private:
     Ui::Widget *ui;
     QPointer<StartMeasurment> startWin;

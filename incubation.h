@@ -1,6 +1,7 @@
 #ifndef INCUBATION_H
 #define INCUBATION_H
 
+#include <QObject>
 
 class Incubation : public QObject
 {

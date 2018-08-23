@@ -13,7 +13,7 @@ class StartMeasurment : public QDialog
     Q_OBJECT
 
 public:
-    explicit StartMeasurment(QDialog *parent = 0);
+    explicit StartMeasurment(int = 0, QDialog *parent = 0);
     ~StartMeasurment();
     bool isCancel();
     bool isSingle();
@@ -27,7 +27,7 @@ public:
     int getNum_3();
     int getNum_4();
     int getTime();
-    int getTimeIncube();
+    int getTimeIncube(int = 1);
     QString getStringStatus();
 
 public slots:
@@ -51,7 +51,7 @@ private:
     bool channel_1, channel_2, channel_3, channel_4;
     int num_1, num_2, num_3, num_4;
     int time;           //время записи
-    int time_incube;          //время инкубации
+    int time_incube, time_incube_2; //время инкубации
 };
 
 #endif // STARTMEASURMENT_H

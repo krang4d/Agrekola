@@ -16,7 +16,6 @@
 Widget::Widget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Widget),
-    startWin(new StartMeasurment),
     pBar1(new ProgressTimerBar), pBar2(new ProgressTimerBar), pBar3(new ProgressTimerBar), pBar4(new ProgressTimerBar),
     data1(false), data2(false), data3(false), data4(false),
     incub(false),
@@ -38,13 +37,11 @@ Widget::Widget(QWidget *parent) :
     setupRealtimeData();
     setupTimers();
     installEventFilter(this);
-    QWidget::connect(startWin, SIGNAL(startMeasurment()), this, SLOT(startMeasurment()));
 }
 
 Widget::~Widget()
 {
     emit stop();
-    delete startWin;
     delete ui;
 }
 
@@ -94,37 +91,6 @@ void Widget::setUserMessage(QString str, bool withtime, bool tofile)
 void Widget::setMode(int b) {
 
     mode = b;
-    //setUserMessage(QString(agrekola->GetInformation()), false);
-    QString str;
-    switch (b){
-    case 0:
-        str = tr("Тест (Test 0)");
-        ui->groupBox_Mix->setVisible(b);
-        break;
-    case 1:
-        str = tr("Определение параметров агрегации, измерение (Agr1 1)");
-        break;
-    case 2:
-        str = tr("Определение активности фактора Виллебранда, измерение (Agr2 2)");
-        break;
-    case 3:
-        str = tr("Время свертывания, измерение (Ko1 3)");
-        break;
-    case 4:
-        str = tr("АЧТВ, измерение (Ko2 4)");
-        break;
-    case 5:
-        str = tr("Фибриноген, измерение (Ko3 5)");
-        break;
-    case 6:
-        str = tr("Тромбин, измерние (Ko4 6)");
-        break;
-    case 7:
-        str = tr("Протромбиновый комплекс, измерение (Ko5 7)");
-        break;
-    default:
-        break;
-    }
 }
 
 int Widget::getMode()
@@ -133,37 +99,8 @@ int Widget::getMode()
 }
 
 void Widget::setupRealtimeData() {
-    // include this section to fully disable antialiasing for higher performance:
-    /*
-    QFont font;
-    font.setStyleStrategy(QFont::NoAntialias);
-
-    customPlot1->setNotAntialiasedElements(QCP::aeAll);
-    customPlot1->xAxis->setTickLabelFont(font);
-    customPlot1->yAxis->setTickLabelFont(font);
-    customPlot1->legend->setFont(font);
-
-    customPlot2->setNotAntialiasedElements(QCP::aeAll);
-    customPlot2->xAxis->setTickLabelFont(font);
-    customPlot2->yAxis->setTickLabelFont(font);
-    customPlot2->legend->setFont(font);
-
-    customPlot3->setNotAntialiasedElements(QCP::aeAll);
-    customPlot3->xAxis->setTickLabelFont(font);
-    customPlot3->yAxis->setTickLabelFont(font);
-    customPlot3->legend->setFont(font);
-
-    customPlot4->setNotAntialiasedElements(QCP::aeAll);
-    customPlot4->xAxis->setTickLabelFont(font);
-    customPlot4->yAxis->setTickLabelFont(font);
-    customPlot4->legend->setFont(font);
-    */
-    //customPlot1->setOpenGl(true);
-    //customPlot2->setOpenGl(true);
-    //customPlot3->setOpenGl(true);
-    //customPlot4->setOpenGl(true);
-
-    if(startWin->isSingle()) {
+    std::function<bool(void)> foo = [this](){ if(startWin.isNull()) return true; else return startWin->isSingle();};
+    if(foo()) {
         QSharedPointer<QCPAxisTickerTime> timeTicker(new QCPAxisTickerTime);
         timeTicker->setTimeFormat("%m:%s");
 
@@ -307,7 +244,8 @@ void Widget::realtimeDataSlot(QVariantList a) {
     }
 
     if (key-lastPointKey > 0.01) {// at most add point every 10 ms
-        if(startWin->isSingle()) {
+        std::function<bool(void)> foo = [this](){ if(startWin.isNull()) return true; else return startWin->isSingle();};
+        if(foo()) {
           customPlot1->graph(0)->addData(key, a[0].toDouble());
           customPlot2->graph(0)->addData(key, a[1].toDouble());
           customPlot3->graph(0)->addData(key, a[2].toDouble());
@@ -432,7 +370,10 @@ void Widget::on_checkBox_L_stateChanged(int arg1)
 
 void Widget::on_pushButton_clicked()
 {
+    startWin = new StartMeasurment(getMode());
     startWin->show();
+    connect(startWin, SIGNAL(startMeasurment()), this, SLOT(startMeasurment()));
+
 }
 
 void Widget::updataTermo(bool td)
@@ -558,11 +499,16 @@ void Widget::startMeasurment()
             setUserMessage(msg, true, true);
             setupRealtimeData();
         }
-        if( getMode() == 2 ) {
+        if( getMode() == 1 ||getMode() == 2 ) {
+
             int t = startWin->getTimeIncube() *1000;
             std::function<void (void)> func = [this](){startIncub(3, 2);};
-            QPointer<ProgressTimerBar> pb = new ProgressTimerBar;
-            pb->startProgress("Время инкубации №1", t, func);
+            //QPointer<ProgressTimerBar> pb = new ProgressTimerBar;
+            pBar1->startProgress("Время инкубации №1", t, func);
+            pBar2->startProgress("Время инкубации №1", t);
+            pBar3->startProgress("Время инкубации №1", t);
+            pBar4->startProgress("Время инкубации №1", t);
+            //connect(pBar1.data(), SIGNAL(done()), pb.data(), SLOT(deleteLater()));
         }
         else startIncub(startWin->getTimeIncube(), 0);
     }
@@ -814,4 +760,41 @@ void Widget::writeMapData(const int n)
         map_y4.clear();
     }
     setUserMessage(saveFiles.writeData(strList, pBar), true, true);
+}
+
+void Widget::on_comboBox_currentIndexChanged(int index)
+{
+    setMode(index);
+    //setUserMessage(QString(agrekola->GetInformation()), false);
+    QString str;
+    switch (index){
+    case 0:
+        str = tr("Тест (Test 0)");
+        //ui->groupBox_Mix->setVisible(b);
+        break;
+    case 1:
+        str = tr("Определение параметров агрегации, измерение (Agr1 1)");
+        break;
+    case 2:
+        str = tr("Определение активности фактора Виллебранда, измерение (Agr2 2)");
+        break;
+    case 3:
+        str = tr("Время свертывания, измерение (Ko1 3)");
+        break;
+    case 4:
+        str = tr("АЧТВ, измерение (Ko2 4)");
+        break;
+    case 5:
+        str = tr("Фибриноген, измерение (Ko3 5)");
+        break;
+    case 6:
+        str = tr("Тромбин, измерние (Ko4 6)");
+        break;
+    case 7:
+        str = tr("Протромбиновый комплекс, измерение (Ko5 7)");
+        break;
+    default:
+        break;
+    }
+    setUserMessage(str, 0);
 }
