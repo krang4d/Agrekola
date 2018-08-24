@@ -504,13 +504,6 @@ void Widget::startMeasurment()
         }
         if( getMode() == 1 ||getMode() == 2 ) {
             startIncub(2);
-//            std::function<void (void)> func = [this](){startIncub(3, 2);};
-            //QPointer<ProgressTimerBar> pb = new ProgressTimerBar;
-//            pBar1->startProgress("Время инкубации №1", t, func);
-//            pBar2->startProgress("Время инкубации №1", t);
-//            pBar3->startProgress("Время инкубации №1", t);
-//            pBar4->startProgress("Время инкубации №1", t);
-            //connect(pBar1.data(), SIGNAL(done()), pb.data(), SLOT(deleteLater()));
         }
         else startIncub(1);
     }
@@ -524,26 +517,20 @@ void Widget::startData(int n)
     std::function<void (int)> func = [this](int n){
         writeMapData(n);
     };
-    //QPointer<ProgressTimerBar> pb = new ProgressTimerBar;
-    //pb->startProgress(QString("%1 %p%").arg(str), 10, startWin->getTime() * 1000, std::bind(func, n));
     switch (n) {
     case 1:
-        //ui->groupBox_f1->layout()->addWidget(pb);
         pBar1->startProgress(QString("%1 %p%").arg(str), startWin->getTime() * 1000, std::bind(func, n));
         data1 = true;
         break;
     case 2:
-        //ui->groupBox_f2->layout()->addWidget(pb);
         pBar2->startProgress(QString("%1 %p%").arg(str), startWin->getTime() * 1000, std::bind(func, n));
         data2 = true;
         break;
     case 3:
-        //ui->groupBox_f3->layout()->addWidget(pb);
         pBar3->startProgress(QString("%1 %p%").arg(str), startWin->getTime() * 1000, std::bind(func, n));
         data3 = true;
         break;
     case 4:
-        //ui->groupBox_f4->layout()->addWidget(pb);
         pBar4->startProgress(QString("%1 %p%").arg(str), startWin->getTime() * 1000, std::bind(func, n));
         data4 = true;
         break;
@@ -608,14 +595,15 @@ void Widget::startIncub(int num)
 
     //std::function<void(Widget*)> func = &Widget::incubeTimeout;
 
-    if(num == 1) {
+    if(num < 2) {
         std::function<void(Widget*)> func = &Widget::incubeTimeout;
         std::function<void(void)> foo = std::bind(func, this);
         int time_ms = startWin->getTimeIncube(1) * 1000;
-        pBar1->startProgress(QString("Инкубация %1 %p%").arg(num), time_ms, foo);
-        pBar2->startProgress(QString("Инкубация %1 %p%").arg(num), time_ms);
-        pBar3->startProgress(QString("Инкубация %1 %p%").arg(num), time_ms);
-        pBar4->startProgress(QString("Инкубация %1 %p%").arg(num), time_ms);
+        QString n;
+        pBar1->startProgress(QString("Инкубация %p%"), time_ms, foo);
+        pBar2->startProgress(QString("Инкубация %p%"), time_ms);
+        pBar3->startProgress(QString("Инкубация %p%"), time_ms);
+        pBar4->startProgress(QString("Инкубация %p%"), time_ms);
     }
     else {
         QMessageBox *imessageBox = new QMessageBox(this);
@@ -628,10 +616,10 @@ void Widget::startIncub(int num)
         std::function<void(void)> foo = std::bind(func, imessageBox);
 
         int time_ms = startWin->getTimeIncube(2) * 1000;
-        pBar1->startProgress(QString("Инкубация %1 %p%").arg(num), time_ms, foo);
-        pBar2->startProgress(QString("Инкубация %1 %p%").arg(num), time_ms);
-        pBar3->startProgress(QString("Инкубация %1 %p%").arg(num), time_ms);
-        pBar4->startProgress(QString("Инкубация %1 %p%").arg(num), time_ms);
+        pBar1->startProgress(QString("Инкубация 1 %p%"), time_ms, foo);
+        pBar2->startProgress(QString("Инкубация 1 %p%"), time_ms);
+        pBar3->startProgress(QString("Инкубация 1 %p%"), time_ms);
+        pBar4->startProgress(QString("Инкубация 1 %p%"), time_ms);
     }
     emit status(QString("Инкубация %1").arg(num));
 }
@@ -650,13 +638,12 @@ bool Widget::isIncub()
 void Widget::incubeTimeout_0()
 {
     std::function<void(Widget*)> func = &Widget::incubeTimeout;
-    int num = 1;
     int time_ms = startWin->getTimeIncube(1) * 1000;
     //pBar1->setFormat("Инкубация 0");
-    pBar1->startProgress(QString("Инкубация %1 %p%").arg(num), time_ms, std::bind(func, this));
-    pBar2->startProgress(QString("Инкубация %1 %p%").arg(num), time_ms);
-    pBar3->startProgress(QString("Инкубация %1 %p%").arg(num), time_ms);
-    pBar4->startProgress(QString("Инкубация %1 %p%").arg(num), time_ms);
+    pBar1->startProgress(QString("Инкубация 2 %p%"), time_ms, std::bind(func, this));
+    pBar2->startProgress(QString("Инкубация 2 %p%"), time_ms);
+    pBar3->startProgress(QString("Инкубация 2 %p%"), time_ms);
+    pBar4->startProgress(QString("Инкубация 2 %p%"), time_ms);
 }
 
 void Widget::incubeTimeout()
@@ -728,7 +715,7 @@ void Widget::writeMapData(const int n)
     emit status(QString("Запись данных по каналу %1").arg(n));
     //QPointer<QProgressDialog> pb = new QProgressDialog;
     //pb->setLabelText(QString("Запись данных %p%"));
-    QPointer<ProgressTimerBar> pBar;
+    ProgressTimerBar *pBar;
     switch (n) {
     case 1:
         //ui->groupBox_f1->layout()->addWidget(pb);
@@ -749,7 +736,6 @@ void Widget::writeMapData(const int n)
     default:
         break;
     }
-    pBar->setFormat(QString("Запись данных %p%"));
     //pb->show();
     qDebug().noquote() << QString("Запись данных по каналу %1").arg(n);
 
@@ -768,32 +754,35 @@ void Widget::writeMapData(const int n)
         }
         //map.clear();
     };
+    pBar->setFormat(QString("Запись данных %p%"));
     strList << QString("N\t");
     if( n == 1 && !map_y1.isEmpty() ) {
         strList << QString("V1#%1\t").arg(startWin->getNum_1());
-        func(map_y1);
         pBar->setMaximum(map_y1.count());
+        func(map_y1);
         map_y1.clear();
     }
     if( n == 2 && !map_y2.isEmpty() ) {
         strList << QString("V2#%1\t").arg(startWin->getNum_2());
-        func(map_y2);
         pBar->setMaximum(map_y2.count());
+        func(map_y2);
         map_y2.clear();
     }
     if( n == 3 && !map_y3.isEmpty() ) {
         strList << QString("V3#%1\t").arg(startWin->getNum_3());
-        func(map_y3);
         pBar->setMaximum(map_y3.count());
+        func(map_y3);
         map_y3.clear();
     }
     if( n == 4 && !map_y4.isEmpty() ) {
         strList << QString("V4#%1\t").arg(startWin->getNum_4());
-        func(map_y4);
         pBar->setMaximum(map_y4.count());
+        func(map_y4);
         map_y4.clear();
     }
-    setUserMessage(saveFiles.writeData(strList, pBar), true, true);
+    connect(&saveFiles, SIGNAL(value_changed(int)), pBar, SLOT(setValue(int)));
+    QString filename = saveFiles.writeData(strList);
+    setUserMessage(filename, true, true);
 }
 
 void Widget::on_comboBox_currentIndexChanged(int index)

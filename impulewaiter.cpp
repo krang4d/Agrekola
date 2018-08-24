@@ -12,6 +12,11 @@ ImpuleWaiter::ImpuleWaiter(QWidget *parent) :
     ui->pushButton_2->setEnabled(false);
     ui->pushButton_3->setEnabled(false);
     ui->pushButton_4->setEnabled(false);
+
+    ui->pushButton_1->setVisible(false);
+    ui->pushButton_2->setVisible(false);
+    ui->pushButton_3->setVisible(false);
+    ui->pushButton_4->setVisible(false);
 }
 
 void ImpuleWaiter::startWait()
@@ -27,15 +32,19 @@ void ImpuleWaiter::addWaiter(int n)
     switch (n) {
     case 1:
         ui->pushButton_1->setEnabled(true);
+        ui->pushButton_1->setVisible(true);
         break;
     case 2:
         ui->pushButton_2->setEnabled(true);
+        ui->pushButton_2->setVisible(true);
         break;
     case 3:
         ui->pushButton_3->setEnabled(true);
+        ui->pushButton_3->setVisible(true);
         break;
     case 4:
         ui->pushButton_4->setEnabled(true);
+        ui->pushButton_4->setVisible(true);
         break;
     default: qDebug() << "ImpuleWaiter::addImpulse out of range!";
         break;

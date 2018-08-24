@@ -60,13 +60,13 @@ void ProgressTimerBar::updateProgress()
     }
     else {
         progressTimer.stop();
+        ui->progressBar->setFormat("Стоп");
+        ui->progressBar->setValue(0);
+        emit done();
         if(func) {
             func();
             qDebug() << "Выплнение func";
         }
-        ui->progressBar->setFormat("В ожидании");
-        ui->progressBar->setValue(0);
-        emit done();
         //hide();
     }
 }

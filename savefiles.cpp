@@ -13,7 +13,7 @@ SaveFiles::~SaveFiles()
 //    file_user.close();
 }
 
-QString SaveFiles::writeData(QStringList dt, ProgressTimerBar *bar)
+QString SaveFiles::writeData(QStringList dt)
 {
     QDir dir;
     QString path = QDir::homePath();
@@ -53,9 +53,8 @@ QString SaveFiles::writeData(QStringList dt, ProgressTimerBar *bar)
     foreach (QString var, dt) {
         OnlyOneFile::Instance().stream_data << var;
         n++;
-        if(bar != NULL && n%100 == 0 && n == dt.count())
-            bar->setValue(n);
-        emit value_changed(n);
+        if(n%100 == 0 && n == dt.count())
+            emit value_changed(n);
     }
 
     QString str = QString("Данные записаны в файл %1/%2").arg(QDir::currentPath()).arg(OnlyOneFile::Instance().file_data.fileName());
