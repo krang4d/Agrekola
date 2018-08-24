@@ -16,11 +16,12 @@
 Widget::Widget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Widget),
-    pBar1(new ProgressTimerBar), pBar2(new ProgressTimerBar), pBar3(new ProgressTimerBar), pBar4(new ProgressTimerBar),
+    pBar1(new ProgressTimerBar), pBar2(new ProgressTimerBar),
+    pBar3(new ProgressTimerBar), pBar4(new ProgressTimerBar),
     data1(false), data2(false), data3(false), data4(false),
-    incub(false),
     pulse1(false), pulse2(false), pulse3(false), pulse4(false),
-    ready1(false), ready2(false), ready3(false), ready4(false)
+    ready1(false), ready2(false), ready3(false), ready4(false),
+    incub(false)
 {
     ui->setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
@@ -50,6 +51,7 @@ bool Widget::eventFilter(QObject *watched, QEvent *event)
     if(event->type() == QEvent::Close) {
         qDebug() << "Close Event is emited in the Widget!";
         parentWidget()->show();
+        emit stop();
         return true;
     }
     if(event->type() == QEvent::KeyPress) {
@@ -320,7 +322,8 @@ void Widget::realtimeDataSlot(QVariantList a) {
     if (key-lastFpsKey > 2) {// average fps over 2 seconds
         ui->label_fps->setText(QString("%1 FPS, Total Data points: %2")
                         .arg(frameCount/(key-lastFpsKey), 0, 'f', 0)
-                        .arg(customPlot1->graph(0)->data()->size()+customPlot2->graph(0)->data()->size() + customPlot3->graph(0)->data()->size() + customPlot4->graph(0)->data()->size()));
+                        .arg(customPlot1->graph(0)->data()->size()+customPlot2->graph(0)->data()->size()\
+                             + customPlot3->graph(0)->data()->size() + customPlot4->graph(0)->data()->size()));
         lastFpsKey = key;
         frameCount = 0;
     }
@@ -460,11 +463,10 @@ void Widget::startMeasurment()
                 ui->groupBox_f4->hide();
             }
 
-            msg = QString("Начало сбора данных, одиночные пробы (t = %1c, %2)").arg(startWin->getTime()).arg(msg);
+            msg = QString("Начало сбора данных, одиночные пробы (t = %1c, %2)")
+                    .arg(startWin->getTime()).arg(msg);
             setUserMessage(msg, true, true);
-
             ui->checkBox_L->setChecked(true); //включение лазеров
-
             setupRealtimeData();
         }
         else {
@@ -495,22 +497,22 @@ void Widget::startMeasurment()
                 ui->groupBox_f3->hide();
                 ui->groupBox_f4->hide();
             }
-            msg = QString("Начало сбора данных, парные пробы (t = %1c, %2)").arg(startWin->getTime()).arg(msg);
+            msg = QString("Начало сбора данных, парные пробы (t = %1c, %2)")
+                    .arg(startWin->getTime()).arg(msg);
             setUserMessage(msg, true, true);
             setupRealtimeData();
         }
         if( getMode() == 1 ||getMode() == 2 ) {
-
-            int t = startWin->getTimeIncube() *1000;
-            std::function<void (void)> func = [this](){startIncub(3, 2);};
+            startIncub(2);
+//            std::function<void (void)> func = [this](){startIncub(3, 2);};
             //QPointer<ProgressTimerBar> pb = new ProgressTimerBar;
-            pBar1->startProgress("Время инкубации №1", t, func);
-            pBar2->startProgress("Время инкубации №1", t);
-            pBar3->startProgress("Время инкубации №1", t);
-            pBar4->startProgress("Время инкубации №1", t);
+//            pBar1->startProgress("Время инкубации №1", t, func);
+//            pBar2->startProgress("Время инкубации №1", t);
+//            pBar3->startProgress("Время инкубации №1", t);
+//            pBar4->startProgress("Время инкубации №1", t);
             //connect(pBar1.data(), SIGNAL(done()), pb.data(), SLOT(deleteLater()));
         }
-        else startIncub(startWin->getTimeIncube(), 0);
+        else startIncub(1);
     }
 }
 
@@ -598,21 +600,39 @@ bool Widget::isData(int n)
     return 0;
 }
 
-void Widget::startIncub(int time_sec, int num)
+void Widget::startIncub(int num)
 {
-    setUserMessage(QString("Инкубация %1").arg(num));
-    QPointer<ImpuleWaiter> iw = new ImpuleWaiter;
-    //std::function<void(Widget*)> func = &Widget::incubeTimeout;
-    std::function<void(Widget*, QPointer<ImpuleWaiter>)> func = &Widget::incubeTimeout;
-    //QPointer<ProgressTimerBar> pb = new ProgressTimerBar;
-    //connect(pb.data(), SIGNAL(done()), pb.data(), SLOT(deleteLater()));
-    //pb->setWindowTitle(QString("Инкубация"));
-    //pb->startProgress(QString("Инкубация %1 %p%").arg(num), time_sec*1000, std::bind(func, this));
-    pBar1->startProgress(QString("Инкубация %1 %p%").arg(num), time_sec*1000, std::bind(func, this, iw));
-    pBar2->startProgress(QString("Инкубация %1 %p%").arg(num), time_sec*1000);
-    pBar3->startProgress(QString("Инкубация %1 %p%").arg(num), time_sec*1000);
-    pBar4->startProgress(QString("Инкубация %1 %p%").arg(num), time_sec*1000);
     incub = true;
+
+    setUserMessage(QString("Инкубация %1").arg(num));
+
+    //std::function<void(Widget*)> func = &Widget::incubeTimeout;
+
+    if(num == 1) {
+        std::function<void(Widget*)> func = &Widget::incubeTimeout;
+        std::function<void(void)> foo = std::bind(func, this);
+        int time_ms = startWin->getTimeIncube(1) * 1000;
+        pBar1->startProgress(QString("Инкубация %1 %p%").arg(num), time_ms, foo);
+        pBar2->startProgress(QString("Инкубация %1 %p%").arg(num), time_ms);
+        pBar3->startProgress(QString("Инкубация %1 %p%").arg(num), time_ms);
+        pBar4->startProgress(QString("Инкубация %1 %p%").arg(num), time_ms);
+    }
+    else {
+        QMessageBox *imessageBox = new QMessageBox(this);
+        connect(imessageBox, SIGNAL(buttonClicked(QAbstractButton*)), this, SLOT(incubeTimeout_0()));
+        //connect(imessageBox.data(), SIGNAL(buttonClicked(QAbstractButton*)), imessageBox.data(), SLOT(deleteLater()));
+        imessageBox->setText(QString("Время инкубации истекло, добавьте разведения плазмы в рабочие каналы и нажмите кнопку \"ОК\"" ));
+
+        //imessageBox->show();
+        std::function<void(QMessageBox*)> func = &QMessageBox::exec; //&Widget::incubeTimeout_0;
+        std::function<void(void)> foo = std::bind(func, imessageBox);
+
+        int time_ms = startWin->getTimeIncube(2) * 1000;
+        pBar1->startProgress(QString("Инкубация %1 %p%").arg(num), time_ms, foo);
+        pBar2->startProgress(QString("Инкубация %1 %p%").arg(num), time_ms);
+        pBar3->startProgress(QString("Инкубация %1 %p%").arg(num), time_ms);
+        pBar4->startProgress(QString("Инкубация %1 %p%").arg(num), time_ms);
+    }
     emit status(QString("Инкубация %1").arg(num));
 }
 
@@ -627,26 +647,40 @@ bool Widget::isIncub()
     return incub;
 }
 
-void Widget::incubeTimeout(QPointer<ImpuleWaiter> iw)
+void Widget::incubeTimeout_0()
 {
+    std::function<void(Widget*)> func = &Widget::incubeTimeout;
+    int num = 1;
+    int time_ms = startWin->getTimeIncube(1) * 1000;
+    //pBar1->setFormat("Инкубация 0");
+    pBar1->startProgress(QString("Инкубация %1 %p%").arg(num), time_ms, std::bind(func, this));
+    pBar2->startProgress(QString("Инкубация %1 %p%").arg(num), time_ms);
+    pBar3->startProgress(QString("Инкубация %1 %p%").arg(num), time_ms);
+    pBar4->startProgress(QString("Инкубация %1 %p%").arg(num), time_ms);
+}
+
+void Widget::incubeTimeout()
+{
+    QPointer<ImpuleWaiter> iw = new ImpuleWaiter;
+
     stopIncub();
     if(startWin->isChannel_1()) {
-        setUserMessage("Канала 1 в ожидании стартового импульса");
+        setUserMessage("Канала 1 в ожидании добавления стартового реагента");
         ready1 = true;
         iw->addWaiter(1);
     }
     if(startWin->isChannel_2()) {
-        setUserMessage("Канала 2 в ожидании стартового импульса");
+        setUserMessage("Канала 2 в ожидании добавления стартового реагента");
         ready2 = true;
         iw->addWaiter(2);
     }
     if(startWin->isChannel_3()) {
-        setUserMessage("Канала 3 в ожидании стартового импульса");
+        setUserMessage("Канала 3 в ожидании добавления стартового реагента");
         ready3 = true;
         iw->addWaiter(3);
     }
     if(startWin->isChannel_4()) {
-        setUserMessage("Канала 4 в ожидании стартового импульса");
+        setUserMessage("Канала 4 в ожидании добавления стартового реагента");
         ready4 = true;
         iw->addWaiter(4);
     }

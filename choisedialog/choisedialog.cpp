@@ -88,7 +88,7 @@ ChoiseDialog::~ChoiseDialog()
 void ChoiseDialog::on_testButton_clicked()
 {
     QPointer<useE154> agrekola = new useE154;
-    Widget *widget =new Widget(this);
+    QPointer<Widget> widget =new Widget(this);
     widget->setWindowFlags(Qt::Dialog);
     //ChoiseDialog choiseDlg;
     QWidget::connect(widget, SIGNAL(onmixch1(bool)), agrekola, SLOT(onMixCh1(bool)));

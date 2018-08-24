@@ -37,7 +37,7 @@ private:
     void setupRealtimeData();
     void setupTimers();
 
-    void startIncub(int time_sec, int num);
+    void startIncub(int num);
     void stopIncub();
     bool isIncub();
 
@@ -61,7 +61,8 @@ signals:
 
 public slots:
     void startMeasurment();
-    void incubeTimeout(QPointer<ImpuleWaiter> iw);
+    void incubeTimeout_0();
+    void incubeTimeout();
 
 private slots:
     void realtimeDataSlot(QVariantList);
@@ -90,9 +91,9 @@ private:
     QDateTime dt;
 
     volatile bool data1, data2, data3, data4;
-    bool incub;
     bool pulse1, pulse2, pulse3, pulse4;
     bool ready1, ready2, ready3, ready4;
+    bool incub;
 
     QVector<double> x;
     QMap<double, double> map_y1, map_y2, map_y3, map_y4 ;
