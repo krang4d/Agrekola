@@ -1,15 +1,24 @@
 #include "calculatedata.h"
 #include <QtMath>
 
+CalcData::CalcData()
+{
+    jump = 0.04f;
+    mix_t = 4.0f;
+    plot = NULL;
+}
+
 CalcData::CalcData(QMap<double, double> map, QCustomPlot *p)
     : mdata(map), plot(p)
 {
     jump = 0.04f;
     mix_t = 4.0f;
+    plot = NULL;
 }
 
-double CalcData::calcKo()
+double CalcData::calcKo(QMap<double, double> map)
 {
+    mdata = map;
     QMap<double, double>::const_iterator it = mdata.begin();
     QMap<double, double>::const_iterator state;
     double sum = 0;
@@ -123,7 +132,43 @@ double CalcData::calcAgr()
     return tgalfa;
 }
 
-CalcKo1::CalcKo1(QMap<double, double> map) : CalcData(map)
+CalcData *CalcData::createCalc(Mode_ID)
+{
+    CalcData *p;
+    double result;
+    switch ( Mode_ID ) {
+    case Test_ID:
+        str = tr("Тест (Test 0)");
+        result = 0;
+        break;
+    case Agr1_ID:
+        str = tr("Определение параметров агрегации, измерение (Agr1 1)");
+        p = new CalcAgr1();
+        break;
+    case 2:
+        str = tr("Определение активности фактора Виллебранда, измерение (Agr2 2)");
+        break;
+    case 3:
+        str = tr("Время свертывания, измерение (Ko1 3)");
+        break;
+    case 4:
+        str = tr("АЧТВ, измерение (Ko2 4)");
+        break;
+    case 5:
+        str = tr("Фибриноген, измерение (Ko3 5)");
+        break;
+    case 6:
+        str = tr("Тромбин, измерние (Ko4 6)");
+        break;
+    case 7:
+        str = tr("Протромбиновый комплекс, измерение (Ko5 7)");
+        break;
+    default:
+        break;
+    }
+}
+
+CalcKo1::CalcKo1()
 {
 /*скачек величиной 4-10% от среднего уровня сигнала для определения времени свертывания*/
     //jump = 0.04f;
@@ -140,9 +185,9 @@ CalcKo1::CalcKo1(QMap<double, double> map, QCustomPlot *p) : CalcKo1(map)
     plot = p;
 }
 
-double CalcKo1::calc()
+double CalcKo1::calc( QMap<double, double>  map)
 {
-    double k = CalcData::calcKo();
+    double k = CalcData::calcKo(map);
     qDebug() << "CalcArg1::calc() " << k;
     return k;
 }

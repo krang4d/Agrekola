@@ -8,6 +8,7 @@
 #include <QKeyEvent>
 #include <QtConcurrent>
 #include <functional>
+#include "calculatedata.h"
 
 #define DX 0.1f
 #define MIN -6.0f
@@ -88,16 +89,6 @@ void Widget::setUserMessage(QString str, bool withtime, bool tofile)
     }
     QScrollBar *b = ui->textEdit->verticalScrollBar();
     b->triggerAction(QScrollBar::SliderToMaximum);
-}
-
-void Widget::setMode(int b) {
-
-    mode = b;
-}
-
-int Widget::getMode()
-{
-    return mode;
 }
 
 void Widget::setupRealtimeData() {
@@ -708,13 +699,13 @@ void Widget::setupTimers()
     setUserMessage(QString("Начало работы программы    Дата %1").arg(dt.toString("dd.MM.yyyy")));
 }
 
-void Widget::writeMapData(const int n)
+void Widget::writeMapData(int n)
 {
     stopData(n);
+
     setUserMessage(QString("Запись данных по каналу %1").arg(n));
     emit status(QString("Запись данных по каналу %1").arg(n));
-    //QPointer<QProgressDialog> pb = new QProgressDialog;
-    //pb->setLabelText(QString("Запись данных %p%"));
+
     ProgressTimerBar *pBar;
     switch (n) {
     case 1:
@@ -754,7 +745,6 @@ void Widget::writeMapData(const int n)
         }
         //map.clear();
     };
-    pBar->setFormat(QString("Запись данных %p%"));
     strList << QString("N\t");
     if( n == 1 && !map_y1.isEmpty() ) {
         strList << QString("V1#%1\t").arg(startWin->getNum_1());
@@ -780,20 +770,23 @@ void Widget::writeMapData(const int n)
         func(map_y4);
         map_y4.clear();
     }
-    connect(&saveFiles, SIGNAL(value_changed(int)), pBar, SLOT(setValue(int)));
-    QString filename = saveFiles.writeData(strList);
+    //connect(&saveFiles, SIGNAL(value_changed(int)), pBar, SLOT(setValue(int)));
+    pBar->setFormat(QString("Запись данных %p%"));
+    QString filename = saveFiles.writeData(strList, pBar);
     setUserMessage(filename, true, true);
+    //std::function<QString(void)> f1= [=](){return SaveFiles::writeData(strList);};
+    //std::function<QString(void)> foo = func();
+//    QFuture<QString> result = QtConcurrent::run(f1);
+//    QString filename = result.result();
 }
 
 void Widget::on_comboBox_currentIndexChanged(int index)
 {
     setMode(index);
-    //setUserMessage(QString(agrekola->GetInformation()), false);
     QString str;
     switch (index){
     case 0:
         str = tr("Тест (Test 0)");
-        //ui->groupBox_Mix->setVisible(b);
         break;
     case 1:
         str = tr("Определение параметров агрегации, измерение (Agr1 1)");

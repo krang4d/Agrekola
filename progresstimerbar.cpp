@@ -40,6 +40,8 @@ void ProgressTimerBar::startProgress(QString format, int time_ms, std::function<
 void ProgressTimerBar::setValue(int value)
 {
     ui->progressBar->setValue(value);
+    if(ui->progressBar->value() == ui->progressBar->maximum())
+        ui->progressBar->setFormat("Готов");
 }
 
 void ProgressTimerBar::setMaximum(int maximum)
@@ -60,8 +62,8 @@ void ProgressTimerBar::updateProgress()
     }
     else {
         progressTimer.stop();
-        ui->progressBar->setFormat("Стоп");
-        ui->progressBar->setValue(0);
+        ui->progressBar->setFormat("Готов");
+        //ui->progressBar->setValue(0);
         emit done();
         if(func) {
             func();

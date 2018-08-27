@@ -1,4 +1,5 @@
 #include "savefiles.h"
+#include <QThread>
 
 SaveFiles::SaveFiles(QObject *parent) : QObject(parent)
 {
@@ -13,7 +14,7 @@ SaveFiles::~SaveFiles()
 //    file_user.close();
 }
 
-QString SaveFiles::writeData(QStringList dt)
+QString SaveFiles::writeData(QStringList dt, ProgressTimerBar* pb)
 {
     QDir dir;
     QString path = QDir::homePath();
@@ -41,7 +42,6 @@ QString SaveFiles::writeData(QStringList dt)
     {
         QString name = QString("%1_%2.txt").arg(d.toString("yyyyMMdd")).arg(i);
         if(!QFile::exists(name)) {
-
             OnlyOneFile::Instance().file_data.setFileName(name);
             if(!OnlyOneFile::Instance().file_data.open(QIODevice::ReadWrite | QIODevice::Append | QIODevice::Text)) qWarning() << "data file is't opened";
             OnlyOneFile::Instance().stream_data.setDevice(&OnlyOneFile::Instance().file_data);
@@ -53,8 +53,11 @@ QString SaveFiles::writeData(QStringList dt)
     foreach (QString var, dt) {
         OnlyOneFile::Instance().stream_data << var;
         n++;
-        if(n%100 == 0 && n == dt.count())
-            emit value_changed(n);
+        pb->setValue(n);
+        if(n%100 == 0) {
+
+        }
+            //emit value_changed(n);
     }
 
     QString str = QString("Данные записаны в файл %1/%2").arg(QDir::currentPath()).arg(OnlyOneFile::Instance().file_data.fileName());

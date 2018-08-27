@@ -20,7 +20,7 @@ class SaveFiles : public QObject
 public:
     explicit SaveFiles(QObject *parent = 0);
     ~SaveFiles();
-    QString writeData(QStringList);
+    static QString writeData(QStringList, ProgressTimerBar * = nullptr);
     static QString openData(QWidget*, QList<double>&, QList<double>&, QList<double>&, QList<double>&, QList<double>&, QStringList&);
     void writeUserMsg(QString);
 

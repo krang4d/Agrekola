@@ -10,14 +10,18 @@
 #include <savefiles.h>
 #include <qcustomplot.h>
 
+enum Mode_ID {Test_ID=0, Agr1_ID, Agr2_ID, Ko1_ID, Ko2_ID, Ko3_ID, Ko4_ID, Ko5_ID };
+
 class CalcData : public QObject
 {
     Q_OBJECT
 public:
+    explicit CalcData();
     CalcData(QMap<double, double>, QCustomPlot *p = NULL);
     virtual double calcKo();
     virtual double calcAgr();
     virtual double calc() = 0;
+    static CalcData* createCalc( Mode_ID );
 
 protected:
     QMap<double, double> mdata;
@@ -34,9 +38,9 @@ public slots:
 class CalcKo1 : public CalcData
 {
 public:
-    explicit CalcKo1(QMap<double, double>);
+    explicit CalcKo1();
     CalcKo1(QMap<double, double>, QCustomPlot*);
-    double calc();
+    double calc(QMap<double, double>);
 
 private:
     //параметры для определения времени свертывания

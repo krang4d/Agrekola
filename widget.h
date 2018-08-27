@@ -29,8 +29,8 @@ public:
     explicit Widget(QWidget *parent = 0);
     ~Widget();
     void setUserMessage(QString, bool withtime = 1, bool tofile = 1);
-    void setMode(int);
-    int getMode();
+    inline void setMode(int m)  { mode = m;    }
+    inline int getMode()        { return mode; }
 
 private:
     bool eventFilter(QObject *watched, QEvent *event);
@@ -66,7 +66,7 @@ public slots:
 
 private slots:
     void realtimeDataSlot(QVariantList);
-    void writeMapData(const int n = 0);
+    void writeMapData(int n = 0);
 
     void on_checkBox_1_stateChanged(int arg1);
     void on_checkBox_2_stateChanged(int arg1);
@@ -86,7 +86,7 @@ private:
     QPointer<StartMeasurment> startWin;
     QCustomPlot *customPlot1, *customPlot2, *customPlot3, *customPlot4;
 
-    QPointer<ProgressTimerBar> pBar1, pBar2, pBar3, pBar4;
+    ProgressTimerBar *pBar1, *pBar2, *pBar3, *pBar4;
     QTimer plotTimer, currentTimer;
     QDateTime dt;
 
