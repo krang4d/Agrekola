@@ -449,36 +449,36 @@ void ViewPlot::hasSelectedRect(QRect r, QMouseEvent *e)
 
 void ViewPlot::on_pushButton_calc_clicked()
 {
-//    if(ui->checkBox_1->isChecked()) {
-//        QMap<double, double> data;
-//        for(int i = 0; i < t.count(); ++i) {
-//            data.insert(t.at(i), v1.at(i));
-//        }
-//        QSharedPointer<CalcData> calc;
-//        int i = ui->comboBox->currentIndex();
-//        switch (i) {
-//        case 0: calc = QSharedPointer<CalcData>(new CalcAgr1(data, customPlot), &QObject::deleteLater);
-//            break;
-//        case 1: calc = QSharedPointer<CalcData>(new CalcAgr2(data), &QObject::deleteLater);
-//            break;
-//        case 2: calc = QSharedPointer<CalcData>(new CalcKo1(data, customPlot), &QObject::deleteLater);
-//            break;
-//        case 3: calc = QSharedPointer<CalcData>(new CalcKo2(data), &QObject::deleteLater);
-//            break;
-//        case 4: calc = QSharedPointer<CalcData>(new CalcKo3(data), &QObject::deleteLater);
-//            break;
-//        case 5: calc = QSharedPointer<CalcData>(new CalcKo4(data), &QObject::deleteLater);
-//            break;
-//        case 6: calc = QSharedPointer<CalcData>(new CalcKo5(data), &QObject::deleteLater);
-//            break;
+    if(ui->checkBox_1->isChecked()) {
+        QMap<double, double> data;
+        for(int i = 0; i < t.count(); ++i) {
+            data.insert(t.at(i), v1.at(i));
+        }
+        QSharedPointer<CalcData> calc;
+        int i = ui->comboBox->currentIndex();
+        switch (i) {
+        case 0: calc = QSharedPointer<CalcData>(new CalcAgr1(customPlot), &QObject::deleteLater);
+            break;
+        case 1: calc = QSharedPointer<CalcData>(new CalcAgr2(), &QObject::deleteLater);
+            break;
+        case 2: calc = QSharedPointer<CalcData>(new CalcKo1(customPlot), &QObject::deleteLater);
+            break;
+        case 3: calc = QSharedPointer<CalcData>(new CalcKo2(), &QObject::deleteLater);
+            break;
+        case 4: calc = QSharedPointer<CalcData>(new CalcKo3(), &QObject::deleteLater);
+            break;
+        case 5: calc = QSharedPointer<CalcData>(new CalcKo4(), &QObject::deleteLater);
+            break;
+        case 6: calc = QSharedPointer<CalcData>(new CalcKo5(), &QObject::deleteLater);
+            break;
 
-//        default: qDebug().noquote() << QString("Неправильный индекс ViewPlot::on_pushButton_calc_clicked() %1").arg(i);
-//            break;
-//        }
-//        //CalcKo1 calc(data);
-//        if(calc.isNull()) qDebug() << "Ошибка выделения памяти ViewPlot::on_pushButton_calc_clicked()";
-//        double value = calc->calc();
-//        customPlot->replot();
-//        ui->label_average->setText(tr("Значение = %1").arg(value));
-//    }
+        default: qDebug().noquote() << QString("Неправильный индекс ViewPlot::on_pushButton_calc_clicked() %1").arg(i);
+            break;
+        }
+        //CalcKo1 calc(data);
+        if(calc.isNull()) qDebug() << "Ошибка выделения памяти ViewPlot::on_pushButton_calc_clicked()";
+        double value = calc->calc(data);
+        customPlot->replot();
+        ui->label_average->setText(tr("Значение = %1").arg(value));
+    }
 }

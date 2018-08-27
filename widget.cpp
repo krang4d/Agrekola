@@ -8,7 +8,6 @@
 #include <QKeyEvent>
 #include <QtConcurrent>
 #include <functional>
-#include "calculatedata.h"
 
 #define DX 0.1f
 #define MIN -6.0f
@@ -699,10 +698,12 @@ void Widget::setupTimers()
     setUserMessage(QString("Начало работы программы    Дата %1").arg(dt.toString("dd.MM.yyyy")));
 }
 
-void Widget::writeMapData(int n)
+double Widget::writeMapData(int n)
 {
+    double retval;
     stopData(n);
-
+    CalcData *p = CalcData::createCalc( getMode() );
+    if(p == NULL) { qDebug() << "p is NULL"; }
     setUserMessage(QString("Запись данных по каналу %1").arg(n));
     emit status(QString("Запись данных по каналу %1").arg(n));
 
@@ -747,24 +748,32 @@ void Widget::writeMapData(int n)
     };
     strList << QString("N\t");
     if( n == 1 && !map_y1.isEmpty() ) {
+        retval = p->calc(map_y1);
+        setUserMessage(QString("Рассчитанное значение = %1 по методике %2").arg(retval).arg(n));
         strList << QString("V1#%1\t").arg(startWin->getNum_1());
         pBar->setMaximum(map_y1.count());
         func(map_y1);
         map_y1.clear();
     }
     if( n == 2 && !map_y2.isEmpty() ) {
+        retval = p->calc(map_y2);
+        setUserMessage(QString("Рассчитанное значение = %1 по методике %2").arg(retval).arg(n));
         strList << QString("V2#%1\t").arg(startWin->getNum_2());
         pBar->setMaximum(map_y2.count());
         func(map_y2);
         map_y2.clear();
     }
     if( n == 3 && !map_y3.isEmpty() ) {
+        retval = p->calc(map_y3);
+        setUserMessage(QString("Рассчитанное значение = %1 по методике %2").arg(retval).arg(n));
         strList << QString("V3#%1\t").arg(startWin->getNum_3());
         pBar->setMaximum(map_y3.count());
         func(map_y3);
         map_y3.clear();
     }
     if( n == 4 && !map_y4.isEmpty() ) {
+        retval = p->calc(map_y4);
+        setUserMessage(QString("Рассчитанное значение = %1 по методике %2").arg(retval).arg(n));
         strList << QString("V4#%1\t").arg(startWin->getNum_4());
         pBar->setMaximum(map_y4.count());
         func(map_y4);
@@ -778,36 +787,44 @@ void Widget::writeMapData(int n)
     //std::function<QString(void)> foo = func();
 //    QFuture<QString> result = QtConcurrent::run(f1);
 //    QString filename = result.result();
+    return retval;
 }
 
 void Widget::on_comboBox_currentIndexChanged(int index)
 {
-    setMode(index);
     QString str;
     switch (index){
     case 0:
         str = tr("Тест (Test 0)");
+        setMode(Test_ID);
         break;
     case 1:
         str = tr("Определение параметров агрегации, измерение (Agr1 1)");
+        setMode(Agr1_ID);
         break;
     case 2:
         str = tr("Определение активности фактора Виллебранда, измерение (Agr2 2)");
+        setMode(Agr2_ID);
         break;
     case 3:
         str = tr("Время свертывания, измерение (Ko1 3)");
+        setMode(Ko1_ID);
         break;
     case 4:
         str = tr("АЧТВ, измерение (Ko2 4)");
+        setMode(Ko2_ID);
         break;
     case 5:
         str = tr("Фибриноген, измерение (Ko3 5)");
+        setMode(Ko3_ID);
         break;
     case 6:
         str = tr("Тромбин, измерние (Ko4 6)");
+        setMode(Ko4_ID);
         break;
     case 7:
         str = tr("Протромбиновый комплекс, измерение (Ko5 7)");
+        setMode(Ko5_ID);
         break;
     default:
         break;

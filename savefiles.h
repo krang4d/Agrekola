@@ -21,6 +21,7 @@ public:
     explicit SaveFiles(QObject *parent = 0);
     ~SaveFiles();
     static QString writeData(QStringList, ProgressTimerBar * = nullptr);
+    void openDataMap(QMap<double, double> &map);
     static QString openData(QWidget*, QList<double>&, QList<double>&, QList<double>&, QList<double>&, QList<double>&, QStringList&);
     void writeUserMsg(QString);
 

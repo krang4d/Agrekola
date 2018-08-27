@@ -66,6 +66,17 @@ QString SaveFiles::writeData(QStringList dt, ProgressTimerBar* pb)
     return str;
 }
 
+void SaveFiles::openDataMap(QMap<double, double> &map)
+{
+    QList<double> y1, y2, y3, y4, x;
+    QStringList p;
+    openData(NULL, y1, y2, y3, y4, x, p);
+    int i = 0;
+    for(auto it = x.begin(); it != x.end(); it++) {
+        map.insert(x.at(i), y1.at(i));
+    }
+}
+
 QString SaveFiles::openData(QWidget *parent, QList<double> &v1, QList<double> &v2, QList<double> &v3, QList<double> &v4, QList<double> &t, QStringList &param)
 {   
     //очищаем контейнеры

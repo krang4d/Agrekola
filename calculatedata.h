@@ -10,17 +10,18 @@
 #include <savefiles.h>
 #include <qcustomplot.h>
 
-enum Mode_ID {Test_ID=0, Agr1_ID, Agr2_ID, Ko1_ID, Ko2_ID, Ko3_ID, Ko4_ID, Ko5_ID };
+enum Mode_ID {Test_ID = 0, Agr1_ID, Agr2_ID, Ko1_ID, Ko2_ID, Ko3_ID, Ko4_ID, Ko5_ID };
 
 class CalcData : public QObject
 {
     Q_OBJECT
 public:
     explicit CalcData();
+    virtual ~CalcData() {}
     CalcData(QMap<double, double>, QCustomPlot *p = NULL);
-    virtual double calcKo();
-    virtual double calcAgr();
-    virtual double calc() = 0;
+    virtual double calcKo(QMap<double, double>);
+    virtual double calcAgr(QMap<double, double>);
+    virtual double calc(QMap<double, double>) = 0;
     static CalcData* createCalc( Mode_ID );
 
 protected:
@@ -39,8 +40,9 @@ class CalcKo1 : public CalcData
 {
 public:
     explicit CalcKo1();
-    CalcKo1(QMap<double, double>, QCustomPlot*);
-    double calc(QMap<double, double>);
+    explicit CalcKo1(QCustomPlot*);
+    double
+    calc(QMap<double, double>);
 
 private:
     //параметры для определения времени свертывания
@@ -49,8 +51,8 @@ private:
 class CalcKo2 : public CalcData
 {
 public:
-    explicit CalcKo2(QMap<double, double>);
-    double calc();
+    explicit CalcKo2();
+    double calc(QMap<double, double>);
 
 private:
     //параметры для определения АЧТВ
@@ -60,8 +62,8 @@ private:
 class CalcKo3 : public CalcData
 {
 public:
-    explicit CalcKo3(QMap<double, double>);
-    double calc();
+    explicit CalcKo3();
+    double calc(QMap<double, double>);
 
 private:
     //параметры для определения Фибриногена
@@ -77,8 +79,8 @@ private:
 class CalcKo4 : public CalcData
 {
 public:
-    explicit CalcKo4(QMap<double, double>);
-    double calc();
+    explicit CalcKo4();
+    double calc(QMap<double, double>);
 
 private:
     //параметры для определения Тромбина
@@ -88,8 +90,8 @@ private:
 class CalcKo5 : public CalcData
 {
 public:
-    explicit CalcKo5(QMap<double, double>);
-    double calc();
+    explicit CalcKo5();
+    double calc(QMap<double, double>);
 
 private:
     //параметры для определения Протромбинового комплекса
@@ -113,9 +115,9 @@ private:
 class CalcAgr1 : public CalcData
 {
 public:
-    explicit CalcAgr1(QMap<double, double>);
-    CalcAgr1(QMap<double, double>, QCustomPlot *p);
-    double calc();
+    explicit CalcAgr1();
+    CalcAgr1(QCustomPlot *p);
+    double calc(QMap<double, double>);
 
 private:
     //параметры для определения Агрегации
@@ -126,8 +128,8 @@ private:
 class CalcAgr2 : public CalcData
 {
 public:
-    explicit CalcAgr2(QMap<double, double>);
-    double calc();
+    explicit CalcAgr2();
+    double calc(QMap<double, double>);
 
 private:
     //параметры для определения ф-ра Виллебранда

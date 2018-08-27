@@ -16,6 +16,7 @@
 #include "QCustomPlot/qcustomplot.h"
 #include "impulewaiter.h"
 #include <progresstimerbar.h>
+#include "calculatedata.h"
 
 namespace Ui {
 class Widget;
@@ -29,8 +30,38 @@ public:
     explicit Widget(QWidget *parent = 0);
     ~Widget();
     void setUserMessage(QString, bool withtime = 1, bool tofile = 1);
-    inline void setMode(int m)  { mode = m;    }
-    inline int getMode()        { return mode; }
+    inline void setMode(Mode_ID m)  { id = m;    }
+    inline void setMode(int i) {
+        switch (i){
+        case 0:
+            setMode(Test_ID);
+            break;
+        case 1:
+            setMode(Agr1_ID);
+            break;
+        case 2:
+            setMode(Agr2_ID);
+            break;
+        case 3:
+            setMode(Ko1_ID);
+            break;
+        case 4:
+            setMode(Ko2_ID);
+            break;
+        case 5:
+            setMode(Ko3_ID);
+            break;
+        case 6:
+            setMode(Ko4_ID);
+            break;
+        case 7:;
+            setMode(Ko5_ID);
+            break;
+        default:
+            break;
+        }
+    }
+    inline Mode_ID getMode() { return id; }
 
 private:
     bool eventFilter(QObject *watched, QEvent *event);
@@ -100,6 +131,7 @@ private:
 
     SaveFiles saveFiles;
     int mode;
+    Mode_ID id;
 };
 
 #endif // WIDGET_H
