@@ -120,7 +120,7 @@ int StartMeasurment::getTime()
 
 int StartMeasurment::getTimeIncube(int i)
 {
-    if(i = 1)
+    if(i == 1)
         return time_incube;
     else return time_incube_2;
 }
@@ -197,7 +197,7 @@ void StartMeasurment::on_pushButton_next_clicked()
     mb.setInformativeText("Не выбран канал измерения!");
     if(ui->checkBox_ch1->isChecked() || ui->checkBox_ch2->isChecked() ||\
             ui->checkBox_ch3->isChecked() || ui->checkBox_ch4->isChecked());
-    else{
+    else {
         mb.exec();
         return;
     }
@@ -219,7 +219,7 @@ void StartMeasurment::on_pushButton_next_clicked()
         num_4 = ui->lineEdit_ch4->text().toInt();
 
     int t = ui->lineEdit_time->text().toInt();
-    if( !(t>=1 && t<=900) ) {
+    if( !(t>=10 && t<=900) ) {
         QMessageBox::information(this, "Агрекола-4к",
         "Время заиси должно быть в диапазоне от 1 до 900 секунд");
         return;
@@ -237,8 +237,7 @@ void StartMeasurment::on_pushButton_next_clicked()
         mb.exec();
     else if(ui->checkBox_ch4->isChecked() && ui->lineEdit_ch4->text().isEmpty())
         mb.exec();
-    else
-    {
+    else {
         cancel = false;
         hide();
         emit startMeasurment();

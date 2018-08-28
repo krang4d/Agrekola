@@ -793,7 +793,7 @@ double Widget::writeMapData(int n)
 void Widget::on_comboBox_currentIndexChanged(int index)
 {
     QString str;
-    switch (index){
+    switch (index) {
     case 0:
         str = tr("Тест (Test 0)");
         setMode(Test_ID);

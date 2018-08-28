@@ -30,9 +30,9 @@ public:
     explicit Widget(QWidget *parent = 0);
     ~Widget();
     void setUserMessage(QString, bool withtime = 1, bool tofile = 1);
-    inline void setMode(Mode_ID m)  { id = m;    }
+    inline void setMode(Mode_ID m)  { id = m; }
     inline void setMode(int i) {
-        switch (i){
+        switch (i) {
         case 0:
             setMode(Test_ID);
             break;
@@ -97,7 +97,7 @@ public slots:
 
 private slots:
     void realtimeDataSlot(QVariantList);
-    void writeMapData(int n = 0);
+    double writeMapData(int n = 0);
 
     void on_checkBox_1_stateChanged(int arg1);
     void on_checkBox_2_stateChanged(int arg1);
