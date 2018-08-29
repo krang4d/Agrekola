@@ -51,6 +51,13 @@ StartMeasurment::StartMeasurment(int mode, QDialog *parent) :
 
 StartMeasurment::~StartMeasurment()
 {
+    saveData();
+    delete ui;
+}
+
+
+void StartMeasurment::saveData()
+{
     param.clear();
     param << QString("%1").arg(static_cast<int>(ui->checkBox_ch1->checkState()))
           << QString("%1").arg(static_cast<int>(ui->checkBox_ch2->checkState()))
@@ -60,7 +67,6 @@ StartMeasurment::~StartMeasurment()
           << ui->lineEdit_ch3->text() << ui->lineEdit_ch4->text()
           << ui->lineEdit_incube->text() << ui->lineEdit_time->text();
     file.saveStartWin(param);
-    delete ui;
 }
 
 bool StartMeasurment::isCancel()
@@ -242,6 +248,7 @@ void StartMeasurment::on_pushButton_next_clicked()
         hide();
         emit startMeasurment();
     }
+    saveData();
 }
 
 void StartMeasurment::on_pushButton_cancel_clicked()

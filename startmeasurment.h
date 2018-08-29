@@ -30,6 +30,9 @@ public:
     int getTimeIncube(int = 1);
     QString getStringStatus();
 
+protected:
+    void saveData();
+
 public slots:
     void on_checkBox_ch1_stateChanged(int arg1);
     void on_checkBox_ch2_stateChanged(int arg1);

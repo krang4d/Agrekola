@@ -281,6 +281,7 @@ void SaveFiles::saveParams(QString name, QStringList param)
     foreach (QString var, param) {
         if(!var.isEmpty())
             file_setting.write( (var + "\n").toLocal8Bit(), var.count() + 1 );
+        else file_setting.write("\n");
     }
     //stream_settings.flush();
     file_setting.close();
