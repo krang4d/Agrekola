@@ -25,6 +25,7 @@ public:
     static CalcData* createCalc( Mode_ID );
 
     virtual double calc(QMap<double, double>) = 0;
+    virtual QString info() = 0;
 
 protected:
     QMap<double, double> mdata;
@@ -43,8 +44,8 @@ class CalcKo1 : public CalcData
 public:
     explicit CalcKo1();
     explicit CalcKo1(QCustomPlot*);
-    double
-    calc(QMap<double, double>);
+    double calc(QMap<double, double>) override;
+    QString info() override;
 
 private:
     //параметры для определения времени свертывания
@@ -54,7 +55,8 @@ class CalcKo2 : public CalcData
 {
 public:
     explicit CalcKo2();
-    double calc(QMap<double, double>);
+    double calc(QMap<double, double>) override;
+    QString info() override;
 
 private:
     //параметры для определения АЧТВ
@@ -65,7 +67,8 @@ class CalcKo3 : public CalcData
 {
 public:
     explicit CalcKo3();
-    double calc(QMap<double, double>);
+    double calc(QMap<double, double>) override;
+    QString info() override;
 
 private:
     //параметры для определения Фибриногена
@@ -82,7 +85,8 @@ class CalcKo4 : public CalcData
 {
 public:
     explicit CalcKo4();
-    double calc(QMap<double, double>);
+    double calc(QMap<double, double>) override;
+    QString info() override;
 
 private:
     //параметры для определения Тромбина
@@ -93,7 +97,8 @@ class CalcKo5 : public CalcData
 {
 public:
     explicit CalcKo5();
-    double calc(QMap<double, double>);
+    double calc(QMap<double, double>) override;
+    QString info() override;
 
 private:
     //параметры для определения Протромбинового комплекса
@@ -119,7 +124,8 @@ class CalcAgr1 : public CalcData
 public:
     explicit CalcAgr1();
     CalcAgr1(QCustomPlot *p);
-    double calc(QMap<double, double>);
+    double calc(QMap<double, double>) override;
+    QString info() override;
 
 private:
     //параметры для определения Агрегации
@@ -131,7 +137,8 @@ class CalcAgr2 : public CalcData
 {
 public:
     explicit CalcAgr2();
-    double calc(QMap<double, double>);
+    double calc(QMap<double, double>) override;
+    QString info() override;
 
 private:
     //параметры для определения ф-ра Виллебранда

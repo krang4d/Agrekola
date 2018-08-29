@@ -749,7 +749,7 @@ double Widget::writeMapData(int n)
     strList << QString("N\t");
     if( n == 1 && !map_y1.isEmpty() ) {
         retval = p->calc(map_y1);
-        setUserMessage(QString("Рассчитанное значение = %1 по методике %2").arg(retval).arg(n));
+        setUserMessage(QString("Рассчитанное значение = %1 по методике '%2'").arg(retval).arg(p->info()));
         strList << QString("V1#%1\t").arg(startWin->getNum_1());
         pBar->setMaximum(map_y1.count());
         func(map_y1);
@@ -757,7 +757,7 @@ double Widget::writeMapData(int n)
     }
     if( n == 2 && !map_y2.isEmpty() ) {
         retval = p->calc(map_y2);
-        setUserMessage(QString("Рассчитанное значение = %1 по методике %2").arg(retval).arg(n));
+        setUserMessage(QString("Рассчитанное значение = %1 по методике '%2'").arg(retval).arg(p->info()));
         strList << QString("V2#%1\t").arg(startWin->getNum_2());
         pBar->setMaximum(map_y2.count());
         func(map_y2);
@@ -765,7 +765,7 @@ double Widget::writeMapData(int n)
     }
     if( n == 3 && !map_y3.isEmpty() ) {
         retval = p->calc(map_y3);
-        setUserMessage(QString("Рассчитанное значение = %1 по методике %2").arg(retval).arg(n));
+        setUserMessage(QString("Рассчитанное значение = %1 по методике '%2'").arg(retval).arg(p->info()));
         strList << QString("V3#%1\t").arg(startWin->getNum_3());
         pBar->setMaximum(map_y3.count());
         func(map_y3);
@@ -773,7 +773,7 @@ double Widget::writeMapData(int n)
     }
     if( n == 4 && !map_y4.isEmpty() ) {
         retval = p->calc(map_y4);
-        setUserMessage(QString("Рассчитанное значение = %1 по методике %2").arg(retval).arg(n));
+        setUserMessage(QString("Рассчитанное значение = %1 по методике '%2'").arg(retval).arg(p->info()));
         strList << QString("V4#%1\t").arg(startWin->getNum_4());
         pBar->setMaximum(map_y4.count());
         func(map_y4);

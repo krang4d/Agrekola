@@ -197,6 +197,11 @@ double CalcKo1::calc(QMap<double, double> map)
     return k;
 }
 
+QString CalcKo1::info()
+{
+    return QString("Время свертывания");
+}
+
 CalcKo2::CalcKo2() : t0(0)
 {
     SaveFiles file;
@@ -213,6 +218,11 @@ CalcKo2::CalcKo2() : t0(0)
 double CalcKo2::calc(QMap<double, double> map)
 {
     return CalcData::calcKo(map)/t0; //(1)
+}
+
+QString CalcKo2::info()
+{
+    return QString("АЧТВ");
 }
 
 CalcKo3::CalcKo3()
@@ -246,6 +256,11 @@ double CalcKo3::calc(QMap<double, double> map)
     return qPow(10, lgcx);
 }
 
+QString CalcKo3::info()
+{
+    return QString("Фибриноген");
+}
+
 CalcKo4::CalcKo4() : t0(0)
 {
     SaveFiles file;
@@ -262,6 +277,11 @@ CalcKo4::CalcKo4() : t0(0)
 double CalcKo4::calc(QMap<double, double> map)
 {
     return CalcData::calcKo(map)/t0;
+}
+
+QString CalcKo4::info()
+{
+    return QString("Тромбин");
 }
 
 CalcKo5::CalcKo5()
@@ -295,6 +315,11 @@ double CalcKo5::calc(QMap<double, double> map)
     return qPow(10, lgax);
 }
 
+QString CalcKo5::info()
+{
+    return QString("Протромбиновый комплекс");
+}
+
 CalcAgr1::CalcAgr1()
 {
     SaveFiles file;
@@ -314,6 +339,11 @@ double CalcAgr1::calc(QMap<double, double> map)
 {
     double k = (btp - otp) / 100;
     return CalcData::calcAgr(map)*k;
+}
+
+QString CalcAgr1::info()
+{
+    return QString("Агрегация");
 }
 
 CalcAgr2::CalcAgr2()
@@ -343,4 +373,9 @@ double CalcAgr2::calc(QMap<double, double> map)
 
     double k = (btp - otp) / 100;
     return qPow(10, lgcx);
+}
+
+QString CalcAgr2::info()
+{
+    return QString("фактор Виллебранда");
 }
