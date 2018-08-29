@@ -219,9 +219,9 @@ void StartMeasurment::on_pushButton_next_clicked()
         num_4 = ui->lineEdit_ch4->text().toInt();
 
     int t = ui->lineEdit_time->text().toInt();
-    if( !(t>=10 && t<=900) ) {
+    if( !(t>=5 && t<=900) ) {
         QMessageBox::information(this, "Агрекола-4к",
-        "Время заиси должно быть в диапазоне от 1 до 900 секунд");
+        "Время заиси должно быть в диапазоне от 5 до 900 секунд");
         return;
     }
     time = ui->lineEdit_time->text().toInt();

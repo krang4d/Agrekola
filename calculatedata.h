@@ -17,12 +17,14 @@ class CalcData : public QObject
     Q_OBJECT
 public:
     explicit CalcData();
-    virtual ~CalcData() {}
     CalcData(QMap<double, double>, QCustomPlot *p = NULL);
-    virtual double calcKo(QMap<double, double>);
-    virtual double calcAgr(QMap<double, double>);
-    virtual double calc(QMap<double, double>) = 0;
+    virtual ~CalcData() {}
+
+    double calcKo(QMap<double, double>);
+    double calcAgr(QMap<double, double>);
     static CalcData* createCalc( Mode_ID );
+
+    virtual double calc(QMap<double, double>) = 0;
 
 protected:
     QMap<double, double> mdata;

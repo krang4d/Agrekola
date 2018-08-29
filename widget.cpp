@@ -492,7 +492,7 @@ void Widget::startMeasurment()
             setUserMessage(msg, true, true);
             setupRealtimeData();
         }
-        if( getMode() == 1 ||getMode() == 2 ) {
+        if( getMode() == Agr1_ID ||getMode() == Agr2_ID ) {
             startIncub(2);
         }
         else startIncub(1);
@@ -585,7 +585,7 @@ void Widget::startIncub(int num)
 
     //std::function<void(Widget*)> func = &Widget::incubeTimeout;
 
-    if(num < 2) {
+    if(num == 1) {
         std::function<void(Widget*)> func = &Widget::incubeTimeout;
         std::function<void(void)> foo = std::bind(func, this);
         int time_ms = startWin->getTimeIncube(1) * 1000;
@@ -597,15 +597,15 @@ void Widget::startIncub(int num)
     }
     else {
         QMessageBox *imessageBox = new QMessageBox(this);
-        connect(imessageBox, SIGNAL(buttonClicked(QAbstractButton*)), this, SLOT(incubeTimeout_0()));
         //connect(imessageBox.data(), SIGNAL(buttonClicked(QAbstractButton*)), imessageBox.data(), SLOT(deleteLater()));
         imessageBox->setText(QString("Время инкубации истекло, добавьте разведения плазмы в рабочие каналы и нажмите кнопку \"ОК\"" ));
 
-        //imessageBox->show();
         std::function<void(QMessageBox*)> func = &QMessageBox::exec; //&Widget::incubeTimeout_0;
+        connect(imessageBox, SIGNAL(buttonClicked(QAbstractButton*)), this, SLOT(incubeTimeout_0()));
+
         std::function<void(void)> foo = std::bind(func, imessageBox);
 
-        int time_ms = startWin->getTimeIncube(2) * 1000;
+        int time_ms = startWin->getTimeIncube(1) * 1000;
         pBar1->startProgress(QString("Инкубация 1 %p%"), time_ms, foo);
         pBar2->startProgress(QString("Инкубация 1 %p%"), time_ms);
         pBar3->startProgress(QString("Инкубация 1 %p%"), time_ms);
@@ -628,7 +628,7 @@ bool Widget::isIncub()
 void Widget::incubeTimeout_0()
 {
     std::function<void(Widget*)> func = &Widget::incubeTimeout;
-    int time_ms = startWin->getTimeIncube(1) * 1000;
+    int time_ms = startWin->getTimeIncube(2) * 1000;
     //pBar1->setFormat("Инкубация 0");
     pBar1->startProgress(QString("Инкубация 2 %p%"), time_ms, std::bind(func, this));
     pBar2->startProgress(QString("Инкубация 2 %p%"), time_ms);
