@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>934</width>
+    <width>937</width>
     <height>709</height>
    </rect>
   </property>
@@ -60,7 +60,7 @@
        </item>
        <item>
         <property name="text">
-         <string>Время свкртывания Ko1</string>
+         <string>Время свертывания Ko1</string>
         </property>
        </item>
        <item>

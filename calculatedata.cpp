@@ -15,8 +15,9 @@ CalcData::CalcData(QMap<double, double> map, QCustomPlot *p)
 
 double CalcData::calcKo(QMap<double, double> map)
 {
+    if(map.isEmpty()) { qDebug() << "error from CalcData::caalcKo(): the map is empty!"; return 0; }
     QMap<double, double>::const_iterator it = map.begin();
-    QMap<double, double>::const_iterator state;
+    QMap<double, double>::const_iterator state = map.end();
     double sum = 0;
     int num = 0;
 
@@ -62,9 +63,10 @@ double CalcData::calcKo(QMap<double, double> map)
 
 double CalcData::calcAgr(QMap<double, double> map)
 {
+    if(map.isEmpty()) { qDebug() << "error from CalcData::caalcAgr(): the map is empty!"; return 0; }
     mix_t = 0;
     QMap<double, double>::const_iterator it = map.begin();
-    QMap<double, double>::const_iterator state;
+    QMap<double, double>::const_iterator state = map.end();
     double sum = 0;
     int num = 0;
 
@@ -372,7 +374,7 @@ double CalcAgr2::calc(QMap<double, double> map)
     lgcx = ( std::log10(ck1/CalcData::calcAgr(map)) + std::log10(c1) * tgalfa ) / tgalfa;   //(28)
 
     double k = (btp - otp) / 100;
-    return qPow(10, lgcx);
+    return qPow(10, lgcx)/k;
 }
 
 QString CalcAgr2::info()

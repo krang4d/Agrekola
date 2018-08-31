@@ -16,7 +16,7 @@ SelectInductor::~SelectInductor()
 
 void SelectInductor::on_radioButton_other_toggled(bool checked)
 {
-    if(ui->radioButton_other->isChecked())
+    if(checked)
         ui->lineEdit_other->setEnabled(true);
     else ui->lineEdit_other->setEnabled(false);
 }

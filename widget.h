@@ -61,7 +61,8 @@ public:
             break;
         }
     }
-    inline Mode_ID getMode() { return id; }
+    inline Mode_ID getMode()     { return id; }
+    inline bool isSensorReady()  { return termoSensor; } //проверка тепловой готовности
 
 private:
     bool eventFilter(QObject *watched, QEvent *event);
@@ -74,7 +75,7 @@ private:
 
     void startData(int);
     void stopData(int);
-    bool isData(int);
+    bool isData(int = 0);
 
 signals:
     void onmixch1(bool);
@@ -89,6 +90,11 @@ signals:
     void hasPulse2();
     void hasPulse3();
     void hasPulse4();
+
+    void stopData1();
+    void stopData2();
+    void stopData3();
+    void stopData4();
 
 public slots:
     void startMeasurment();
@@ -125,8 +131,8 @@ private:
     bool pulse1, pulse2, pulse3, pulse4;
     bool ready1, ready2, ready3, ready4;
     bool incub;
+    bool termoSensor;
 
-    QVector<double> x;
     QMap<double, double> map_y1, map_y2, map_y3, map_y4 ;
 
     SaveFiles saveFiles;

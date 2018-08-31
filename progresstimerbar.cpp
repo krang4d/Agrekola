@@ -2,8 +2,6 @@
 #include "ui_progresstimerbar.h"
 #include <QDebug>
 
-#define TIMER_PERIOD_MS 100
-
 ProgressTimerBar::ProgressTimerBar(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::ProgressTimerBar),
@@ -12,6 +10,7 @@ ProgressTimerBar::ProgressTimerBar(QWidget *parent) :
     ui->setupUi(this);
     ui->progressBar->setValue(0);
     ui->progressBar->setFormat("В ожидании");
+    state = Ready;
     //таймер для отображения процесса сбора данных
     connect(&progressTimer, SIGNAL(timeout()), SLOT(updateProgress()));
 }
@@ -62,7 +61,7 @@ void ProgressTimerBar::updateProgress()
     }
     else {
         progressTimer.stop();
-        ui->progressBar->setFormat("Готов");
+        ui->progressBar->setFormat("Готово");
         //ui->progressBar->setValue(0);
         emit done();
         if(func) {

@@ -38,6 +38,9 @@ Widget::Widget(QWidget *parent) :
     setupRealtimeData();
     setupTimers();
     installEventFilter(this);
+
+    //std::function<void(void)> fun = [](){ qDebug() << "emit stopData1";};
+    connect(this, &Widget::stopData1, [this](){  stopData( 1 ); qDebug() << "emit stopData1"; });
 }
 
 Widget::~Widget()
@@ -91,7 +94,7 @@ void Widget::setUserMessage(QString str, bool withtime, bool tofile)
 }
 
 void Widget::setupRealtimeData() {
-    std::function<bool(void)> foo = [this](){ if(startWin.isNull()) return true; else return startWin->isSingle();};
+    std::function<bool(void)> foo = [this](){ if(startWin.isNull()) return true; else return startWin->isSingle(); };
     if(foo()) {
         QSharedPointer<QCPAxisTickerTime> timeTicker(new QCPAxisTickerTime);
         timeTicker->setTimeFormat("%m:%s");
@@ -275,32 +278,40 @@ void Widget::realtimeDataSlot(QVariantList a) {
           customPlot4->xAxis->setRange(key, 8, Qt::AlignRight);
           customPlot4->replot();
         }
-        if(isData(1)) {
-            if(startWin->isChannel_1() ) {
-                map_y1.insert(key, a[0].toDouble());
-                //ui->label_led1->setStyleSheet("color: green;");
+
+        //std::function<bool(QMap<double, double>)> stop = [](QMap<double, double> map){ CalcKo1 stopData; return stopData.calcKo(map) == 0 ? true : false; };
+        static double dx;
+        if( isData( 1 ) && startWin->isChannel_1() ) {
+
+            map_y1.insert(key, a[0].toDouble());
+            //key >= (map_y1.begin().key() + 4) &&
+            if( key <= (map_y1.begin().key() + 5) ) {
+                    dx = map_y1.last();
+                    qDebug() << "dx" << dx;
             }
-        }
+            else {
+                qDebug() << "" << std::abs(map_y1.last() - dx) << ">=" << std::abs(dx*0.1);
+                if(  getMode() != Agr1_ID && getMode() != Agr2_ID && std::abs(map_y1.last() - dx) >= std::abs(dx*0.1) ) {
+                //(getMode() == Ko1_ID || getMode() == Ko2_ID  || getMode() == Ko3_ID || getMode() == Ko4_ID || getMode() == Ko5_ID )) {
+                emit stopData1();
+                }
+            }
+            //ui->label_led1->setStyleSheet("color: green;");
+        } else dx = 0;
         //else ui->label_led1->setStyleSheet("color: yellow;");
-        if(isData(2)) {
-            if(startWin->isChannel_2()) {
+        if( isData( 2 ) && startWin->isChannel_2() ) {
                 map_y2.insert(key, a[1].toDouble());
                 //ui->label_led2->setStyleSheet("color: green;");
-            }
         }
         //else ui->label_led2->setStyleSheet("color: yellow;");
-        if(isData(3)) {
-            if(startWin->isChannel_3()) {
+        if(isData( 3 ) && startWin->isChannel_3() ) {
                 map_y3.insert(key, a[2].toDouble());
-                //ui->label_led3->setStyleSheet("color: green;");
-            }
+                //ui->label_led3->setStyleSheet("color: green;");}
         }
         //else ui->label_led3->setStyleSheet("color: yellow;");
-        if(isData(4)) {
-            if(startWin->isChannel_4()) {
+        if(isData( 4 )  && startWin->isChannel_4() ) {
                 map_y4.insert(key, a[3].toDouble());
                 //ui->label_led4->setStyleSheet("color: green;");
-            }
         }
         //else ui->label_led4->setStyleSheet("color: yellow;");
         lastPointKey = key;
@@ -374,36 +385,20 @@ void Widget::updataTermo(bool td)
     if(!td) {
         ui->label_TD->setText(QString("Температура >37°C"));
         ui->label_TD->setStyleSheet("color: green");
+        termoSensor = !td;
+
     }
     else {
         ui->label_TD->setText(QString("Температура <37°C"));
         ui->label_TD->setStyleSheet("color: red");
-    }
-}
-
-void Widget::updateTime()
-{
-    //обновление времени на часах
-    dt = QDateTime::currentDateTime();
-    ui->label_time->setText("Время: " + dt.toString("hh:mm:ss"));
-    ui->label_date->setText("Дата: " + dt.toString("dd.MM.yyyy"));
-
-    //обновление времени инкубации
-    static double t;
-    double interval = currentTimer.interval()/1000.0;
-    if(isIncub()) {
-        ui->label_incube->setText(QString("Время инкубации, %1 сек")
-                                  .arg(startWin->getTimeIncube() - t));
-        t+=interval;
-    }
-    else {
-        ui->label_incube->setText(QString("Время инкубации, --- сек"));
-        t=0;
+        termoSensor = td;
     }
 }
 
 void Widget::startMeasurment()
 {
+    //setUserMessage(getMode());
+    //isSensorReady();
     ui->pushButton->setEnabled(false);
     QString msg;
     if(!startWin->isCancel()) {
@@ -505,7 +500,7 @@ void Widget::startData(int n)
     setUserMessage(str);
     emit status(str);
     std::function<void (int)> func = [this](int n){
-        writeMapData(n);
+        stopData(n);
     };
     switch (n) {
     case 1:
@@ -533,28 +528,42 @@ void Widget::stopData(int n)
 {
     switch (n) {
     case 1:
+        if(data1) {
         data1 = false;
         pulse1 = false;
         ui->checkBox_1->setChecked(false); //включение перемешивания
+        writeMapData( 1 );
+        }
         break;
     case 2:
+        if(data2) {
         data2 = false;
         pulse2 = false;
         ui->checkBox_2->setChecked(false);
+        writeMapData( 2 );
+        }
         break;
     case 3:
+        if(data3) {
         data3 = false;
         pulse3 = false;
         ui->checkBox_3->setChecked(false);
+        writeMapData( 3 );
+        }
         break;
     case 4:
+        if(data4) {
         data4 = false;
         pulse4 = false;
         ui->checkBox_4->setChecked(false);
+        writeMapData( 4 );
+        }
         break;
     default: qDebug() << "n is out of data from Widget::stopData(n)";
     }
-    if (!isData(1) && !isData(2) && !isData(3) && !isData(4)) {
+    std::function<bool(void)> isPulse = [this](){ return pulse1 || pulse2 || pulse3 || pulse4 ;};
+    if (!isData(1) && !isData(2) && !isData(3) && !isData(4)\
+            && !isIncub() && !isPulse()) {
         setUserMessage(QString("Конец сбора данных"));
         ui->checkBox_L->setChecked(false);
         ui->pushButton->setEnabled(true);
@@ -564,6 +573,8 @@ void Widget::stopData(int n)
 bool Widget::isData(int n)
 {
     switch (n) {
+    case 0:
+        return (data1 || data2 ||data3 || data4);
     case 1:
         return data1;
     case 2:
@@ -580,43 +591,37 @@ bool Widget::isData(int n)
 void Widget::startIncub(int num)
 {
     incub = true;
-
-    setUserMessage(QString("Инкубация %1").arg(num));
-
     //std::function<void(Widget*)> func = &Widget::incubeTimeout;
-
     if(num == 1) {
         std::function<void(Widget*)> func = &Widget::incubeTimeout;
         std::function<void(void)> foo = std::bind(func, this);
         int time_ms = startWin->getTimeIncube(1) * 1000;
-        QString n;
         pBar1->startProgress(QString("Инкубация %p%"), time_ms, foo);
         pBar2->startProgress(QString("Инкубация %p%"), time_ms);
         pBar3->startProgress(QString("Инкубация %p%"), time_ms);
         pBar4->startProgress(QString("Инкубация %p%"), time_ms);
+        setUserMessage(QString("Инкубация"));
+        emit status(QString("Инкубация"));
     }
     else {
-        QMessageBox *imessageBox = new QMessageBox(this);
+        QPointer<QMessageBox> imessageBox = new QMessageBox(this);
         //connect(imessageBox.data(), SIGNAL(buttonClicked(QAbstractButton*)), imessageBox.data(), SLOT(deleteLater()));
         imessageBox->setText(QString("Время инкубации истекло, добавьте разведения плазмы в рабочие каналы и нажмите кнопку \"ОК\"" ));
-
         std::function<void(QMessageBox*)> func = &QMessageBox::exec; //&Widget::incubeTimeout_0;
         connect(imessageBox, SIGNAL(buttonClicked(QAbstractButton*)), this, SLOT(incubeTimeout_0()));
-
-        std::function<void(void)> foo = std::bind(func, imessageBox);
-
+        std::function<void(void)> foo = std::bind(func, imessageBox.data());
         int time_ms = startWin->getTimeIncube(1) * 1000;
         pBar1->startProgress(QString("Инкубация 1 %p%"), time_ms, foo);
         pBar2->startProgress(QString("Инкубация 1 %p%"), time_ms);
         pBar3->startProgress(QString("Инкубация 1 %p%"), time_ms);
         pBar4->startProgress(QString("Инкубация 1 %p%"), time_ms);
+        setUserMessage(QString("Инкубация 1"));
+        emit status(QString("Инкубация 1"));
     }
-    emit status(QString("Инкубация %1").arg(num));
 }
 
 void Widget::stopIncub()
 {
-    setUserMessage("Время инкубации истекло, добавьте стартовый реагент!");
     incub = false;
 }
 
@@ -638,6 +643,7 @@ void Widget::incubeTimeout_0()
 
 void Widget::incubeTimeout()
 {
+    setUserMessage("Время инкубации истекло, добавьте стартовый реагент!");
     QPointer<ImpuleWaiter> iw = new ImpuleWaiter;
 
     stopIncub();
@@ -689,19 +695,9 @@ void Widget::incubeTimeout()
     //startData();
 }
 
-void Widget::setupTimers()
-{
-    //настройка таймера для часов
-    connect(&currentTimer, SIGNAL(timeout()), SLOT(updateTime()));
-    currentTimer.start(300);
-    dt = QDateTime::currentDateTime();
-    setUserMessage(QString("Начало работы программы    Дата %1").arg(dt.toString("dd.MM.yyyy")));
-}
-
 double Widget::writeMapData(int n)
 {
     double retval;
-    stopData(n);
     CalcData *p = CalcData::createCalc( getMode() );
     if(p == NULL) { qDebug() << "p is NULL"; }
     setUserMessage(QString("Запись данных по каналу %1").arg(n));
@@ -830,4 +826,34 @@ void Widget::on_comboBox_currentIndexChanged(int index)
         break;
     }
     setUserMessage(str, 0);
+}
+
+void Widget::updateTime()
+{
+    //обновление времени на часах
+    dt = QDateTime::currentDateTime();
+    ui->label_time->setText("Время: " + dt.toString("hh:mm:ss"));
+    ui->label_date->setText("Дата: " + dt.toString("dd.MM.yyyy"));
+
+    //обновление времени инкубации
+    static double t;
+    double interval = currentTimer.interval()/1000.0;
+    if(isIncub()) {
+        ui->label_incube->setText(QString("Время инкубации, %1 сек")
+                                  .arg(startWin->getTimeIncube() - t));
+        t+=interval;
+    }
+    else {
+        ui->label_incube->setText(QString("Время инкубации, --- сек"));
+        t=0;
+    }
+}
+
+void Widget::setupTimers()
+{
+    //настройка таймера для часов
+    connect(&currentTimer, &QTimer::timeout, [this](){ updateTime();});
+    currentTimer.start(300);
+    dt = QDateTime::currentDateTime();
+    setUserMessage(QString("Начало работы программы    Дата %1").arg(dt.toString("dd.MM.yyyy")));
 }
