@@ -3,7 +3,7 @@
 
 CalcData::CalcData()
 {
-    jump = 0.04f;
+    dx = 0.04f;
     mix_t = 4.0f;
     plot = NULL;
 }
@@ -22,7 +22,7 @@ double CalcData::calcKo(QMap<double, double> map)
     int num = 0;
 
     while(it != map.end()) {
-        if((it.key() - map.begin().key()) > mix_t) {
+        if((it.key() - map.begin().key()) >= mix_t) {
             state = it;
             //qDebug().noquote() << QString("key = %1, value = %2").arg(it.key()).arg(it.value());
             break;
@@ -36,7 +36,7 @@ double CalcData::calcKo(QMap<double, double> map)
         ++it;
     }
     double avg = sum/num;
-    double over = avg*jump;
+    double over = avg*dx;
 
     while(state != map.end()) {
         if( (avg-state.value()) >= over ) {
@@ -58,7 +58,7 @@ double CalcData::calcKo(QMap<double, double> map)
     }
     qDebug().noquote() << QString("sum = %1, ikey = %2, avg = %3")
                           .arg(sum).arg(state.key()).arg(sum/num);
-    return state.key() - map.begin().key();
+    return map.lastKey() - state.key(); //state.key() - map.begin().key();
 }
 
 double CalcData::calcAgr(QMap<double, double> map)
@@ -105,7 +105,7 @@ double CalcData::calcAgr(QMap<double, double> map)
         g->setData(map_dx.keys().toVector(), map_dx.values().toVector());
     }
     double avg = sum/num;
-    double over = avg*jump;
+    double over = avg*dx;
 
     double a = (max_dx+1).value() - max_dx.value();
     double b = (max_dx+1).key() - max_dx.key();
@@ -175,10 +175,28 @@ CalcData *CalcData::createCalc(Mode_ID  id)
     return p;
 }
 
+void CalcData::setMix_t(double sec)
+{
+    mix_t = sec;
+}
+
+double CalcData::getMix_t()
+{
+    return mix_t;
+}
+
+void CalcData::setDx(double dx)
+{
+    this->dx = dx;
+}
+
+double CalcData::getDx()
+{
+    return dx;
+}
+
 CalcKo1::CalcKo1()
 {
-/*скачек величиной 4-10% от среднего уровня сигнала для определения времени свертывания*/
-    //jump = 0.04f;
     SaveFiles file;
     file.openKo1(param);
     qDebug() << "параметры CalcKo1";
@@ -189,6 +207,7 @@ CalcKo1::CalcKo1()
 
 CalcKo1::CalcKo1(QCustomPlot *p)
 {
+    CalcKo1();
     plot = p;
 }
 
@@ -212,9 +231,9 @@ CalcKo2::CalcKo2() : t0(0)
     for(auto it = param.begin(); it < param.end(); it++) {
         qDebug() << *it;
     }
-    QString p = param.at(1);
+    QString p = param.last();
     t0 = p.toDouble();
-    qDebug() << "АЧТВ-тест =" << t0;
+    qDebug() << "АЧТВ контрольной плазмы =" << t0;
 }
 
 double CalcKo2::calc(QMap<double, double> map)
@@ -235,7 +254,7 @@ CalcKo3::CalcKo3()
     for(auto it = param.begin(); it < param.end(); it++) {
         qDebug() << *it;
     }
-    QString p = param.at(3);
+    QString p = param.last();
     c2 = p.toDouble();
     qDebug() << "по Клауссу =" << c2;
 }
@@ -271,7 +290,7 @@ CalcKo4::CalcKo4() : t0(0)
     for(auto it = param.begin(); it < param.end(); it++) {
         qDebug() << *it;
     }
-    QString p = param.at(4);
+    QString p = param.last();
     t0 = p.toDouble();
     qDebug() << "Тромбин =" << t0;
 }
@@ -294,7 +313,7 @@ CalcKo5::CalcKo5()
     for(auto it = param.begin(); it < param.end(); it++) {
         qDebug() << *it;
     }
-    QString p = param.at(3);
+    QString p = param.last();
     a1 = p.toDouble();
     qDebug() << "по Квику =" << a1;
 }

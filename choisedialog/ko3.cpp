@@ -7,7 +7,7 @@ Ko3::Ko3(QWidget *parent) :
 {
     ui->setupUi(this);
     file.openKo3(param);
-    if( !param.isEmpty() && param.count() == 4 ) {
+    if( !param.isEmpty() && param.count() >= 4 ) {
         ui->label_calibrationData->setText(param.at(0));
         ui->lineEdit_1->setText(param.at(1));
         ui->lineEdit_2->setText(param.at(2));
@@ -17,9 +17,11 @@ Ko3::Ko3(QWidget *parent) :
 
 Ko3::~Ko3()
 {
-    param.clear();
-    param << ui->label_calibrationData->text() << ui->lineEdit_1->text()
-          << ui->lineEdit_2->text() << ui->lineEdit_3->text();
+    //param.clear();
+    param.replace(0, ui->label_calibrationData->text());
+    param.replace(1, ui->lineEdit_1->text());
+    param.replace(2, ui->lineEdit_2->text());
+    param.replace(3, ui->lineEdit_3->text());
     file.saveKo3(param);
     delete ui;
 }

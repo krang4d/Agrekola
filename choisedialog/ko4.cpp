@@ -7,7 +7,7 @@ Ko4::Ko4(QWidget *parent) :
 {
     ui->setupUi(this);
     file.openKo4(param);
-    if( !param.isEmpty() && param.count() == 6 ) {
+    if( !param.isEmpty() && param.count() >= 6 ) {
         ui->label_calibrationData->setText(param.at(0));
         ui->lineEdit_1->setText(param.at(1));
         ui->lineEdit_2->setText(param.at(2));
@@ -19,10 +19,13 @@ Ko4::Ko4(QWidget *parent) :
 
 Ko4::~Ko4()
 {
-    param.clear();
-    param << ui->label_calibrationData->text() << ui->lineEdit_1->text()
-          << ui->lineEdit_2->text() << ui->lineEdit_3->text() << ui->lineEdit_4->text()
-          << ui->lineEdit_5->text();
+    //param.clear();
+    param.replace(0, ui->label_calibrationData->text());
+    param.replace(1, ui->lineEdit_1->text());
+    param.replace(2, ui->lineEdit_2->text());
+    param.replace(3, ui->lineEdit_3->text());
+    param.replace(4, ui->lineEdit_4->text());
+    param.replace(5, ui->lineEdit_5->text());
     file.saveKo4(param);
     delete ui;
 }

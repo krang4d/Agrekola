@@ -27,12 +27,18 @@ public:
     virtual double calc(QMap<double, double>) = 0;
     virtual QString info() = 0;
 
+    void setMix_t(double sec);
+    double getMix_t();
+
+    void setDx(double dx);
+    double getDx();
+
 protected:
     QMap<double, double> mdata;
     QCustomPlot *plot;
     QStringList param;
-    double jump;                    //скачек величиной 4-10% от среднего уровня сигнала базовое значение для определения времени свертывания
-    double mix_t;                   //время в течение которго происходит перемешивание реагента с плазмой и успокоение жидкости
+    double dx;                    //скачек величиной 4-10% от среднего уровня сигнала базовое значение для определения времени свертывания
+    double mix_t;                 //время в течение которго происходит перемешивание реагента с плазмой и успокоение жидкости
 
 signals:
 

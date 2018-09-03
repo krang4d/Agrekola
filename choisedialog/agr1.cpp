@@ -7,7 +7,7 @@ Agr1::Agr1(QWidget *parent) :
 {
     ui->setupUi(this);
     file.openAgr1(param);
-    if( !param.isEmpty() && param.count() == 3 ) { //3 парамеьра
+    if( !param.isEmpty() && param.count() >= 3 ) { //3 парамеьра
         ui->lineEdit_1->setText(param.at(0));
         ui->lineEdit_2->setText(param.at(1));
         ui->lineEdit_3->setText(param.at(2));
@@ -16,8 +16,10 @@ Agr1::Agr1(QWidget *parent) :
 
 Agr1::~Agr1()
 {
-    param.clear();
-    param << ui->lineEdit_1->text() << ui->lineEdit_2->text() << ui->lineEdit_3->text();
+    //param.clear();
+    param.replace(0, ui->lineEdit_1->text());
+    param.replace(1, ui->lineEdit_2->text());
+    param.replace(2, ui->lineEdit_3->text());
     file.saveAgr1(param);
     delete ui;
 }
