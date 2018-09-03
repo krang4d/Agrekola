@@ -41,7 +41,7 @@ void Ko2::on_calibr1Button_clicked()
 
 void Ko2::calibration_data_come(double t0)
 {
-    //один параметр АЧТВ контрольной плазмы
+    //один параметр АЧТВ контрольной нормальной плазмы
     QDateTime dt = QDateTime::currentDateTime();
     ui->label_calibrationData->setText(dt.toString("dd.MM.yyyy ") + dt.toString("hh:mm:ss"));
     if(param.count() <= 5)

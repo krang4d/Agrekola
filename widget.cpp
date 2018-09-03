@@ -838,6 +838,7 @@ double Widget::writeMapData(int n)
         func(map_y4);
         map_y4.clear();
     }
+    emit ret_value(retval);
     //connect(&saveFiles, SIGNAL(value_changed(int)), pBar, SLOT(setValue(int)));
     pBar->setFormat(QString("Запись данных %p%"));
     QString filename = saveFiles.writeData(strList, pBar);

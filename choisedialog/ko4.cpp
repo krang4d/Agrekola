@@ -39,3 +39,14 @@ void Ko4::on_calibr1Button_clicked()
 {
     emit calibration();
 }
+
+void Ko4::calibration_data_come(double t0)
+{
+    //один параметр ТВ контрольной нормальной плазмы
+    QDateTime dt = QDateTime::currentDateTime();
+    ui->label_calibrationData->setText(dt.toString("dd.MM.yyyy ") + dt.toString("hh:mm:ss"));
+    if(param.count() <= 6)
+        param.push_back(QString("%1").arg(t0));
+    else param.replace(6, QString("%1").arg(t0));
+    file.saveKo2(param);
+}

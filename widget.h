@@ -96,6 +96,8 @@ signals:
     void stopData3();
     void stopData4();
 
+    void ret_value(double);
+
 public slots:
     void startMeasurment();
     void incubeTimeout_0();

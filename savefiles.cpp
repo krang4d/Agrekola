@@ -266,6 +266,7 @@ void SaveFiles::openParams(QString name, QStringList &param)
 //        stream_settings >> var;
 //    }
     stream_setting.flush();
+    file_setting.flush();
     file_setting.close();
 }
 
@@ -283,7 +284,7 @@ void SaveFiles::saveParams(QString name, QStringList param)
             file_setting.write( (var + "\n").toLocal8Bit(), var.count() + 1 );
         else file_setting.write("\n");
     }
-    //stream_settings.flush();
+    file_setting.flush();
     file_setting.close();
 }
 

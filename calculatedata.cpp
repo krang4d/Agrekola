@@ -297,7 +297,7 @@ CalcKo4::CalcKo4() : t0(0)
 
 double CalcKo4::calc(QMap<double, double> map)
 {
-    return CalcData::calcKo(map)/t0;
+    return CalcData::calcKo(map)/t0;    //(2)
 }
 
 QString CalcKo4::info()

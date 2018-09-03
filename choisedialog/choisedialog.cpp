@@ -135,8 +135,8 @@ void ChoiseDialog::calibration()
         hide();
         agrekola->start();
         widget->setUserMessage(str);
-
-
+        //QMessageBox::information(this, "АЧТВ калибровка", "Установите кювету с контрольной нормальной плазмой и нажмите \"Старт\"");
+        widget->setUserMessage(QString("Установите кювету с контрольной нормальной плазмой и нажмите \"Старт\""));
         connect(widget.data(), SIGNAL(ret_value(double)), ko2.data(), SLOT(calibration_data_come(double)));
         //connect(w.data(), SIGNAL(ret_value(double)), w.data(), SLOT(deleteLater()));
 //        connect(w.data(), &Widget::destroyed, [=](){
@@ -148,6 +148,36 @@ void ChoiseDialog::calibration()
     }
     case 6:{
         str = tr("Тромбин, калибровка (Ko4 6)");
+        QPointer<useE154> agrekola = new useE154;
+        QPointer<Widget> widget =new Widget(this);
+        widget->setWindowFlags(Qt::Dialog);
+        //ChoiseDialog choiseDlg;
+        QWidget::connect(widget, SIGNAL(onmixch1(bool)), agrekola, SLOT(onMixCh1(bool)));
+        QWidget::connect(widget, SIGNAL(onmixch2(bool)), agrekola, SLOT(onMixCh2(bool)));
+        QWidget::connect(widget, SIGNAL(onmixch3(bool)), agrekola, SLOT(onMixCh3(bool)));
+        QWidget::connect(widget, SIGNAL(onmixch4(bool)), agrekola, SLOT(onMixCh4(bool)));
+        QWidget::connect(widget, SIGNAL(onmixpp(bool)), agrekola, SLOT(onMixPP(bool)));
+        QWidget::connect(widget, SIGNAL(onlaser(bool)), agrekola, SLOT(onLaser(bool)));
+        QObject::connect(widget, SIGNAL(stop()), agrekola, SLOT(stopThread()));
+        //QObject::connect(widget, SIGNAL(stop()), widget, SLOT(deleteLater());
+
+        QWidget::connect(agrekola, SIGNAL(update_termo(bool)), widget, SLOT(updataTermo(bool)));
+        QWidget::connect(agrekola, SIGNAL(value_come(QVariantList)), widget, SLOT(realtimeDataSlot(QVariantList)));
+        QWidget::connect(agrekola, SIGNAL(finished()), agrekola, SLOT(deleteLater()));
+        QWidget::connect(widget, SIGNAL(destroyed(QObject*)), agrekola, SLOT(deleteLater()));
+
+        widget->setMode(Ko1_ID); //
+        widget->show();
+        hide();
+        agrekola->start();
+        widget->setUserMessage(str);
+        //QMessageBox::information(this, "АЧТВ калибровка", "Установите кювету с контрольной нормальной плазмой и нажмите \"Старт\"");
+        widget->setUserMessage(QString("Установите кювету с контрольной нормальной плазмой и нажмите \"Старт\""));
+        connect(widget.data(), SIGNAL(ret_value(double)), ko4.data(), SLOT(calibration_data_come(double)));
+        //connect(w.data(), SIGNAL(ret_value(double)), w.data(), SLOT(deleteLater()));
+//        connect(w.data(), &Widget::destroyed, [=](){
+//            disconnect(w.data(), SIGNAL(ret_value(double)), ko2.data(), SLOT(calibration_data_come(double)));
+//        });
     }break;
     case 7:{
         str = tr("Протромбиновый комплекс, калибровка (Ko5 7)");

@@ -20,6 +20,9 @@ private slots:
     void on_startButton_clicked();
     void on_calibr1Button_clicked();
 
+public slots:
+    void calibration_data_come(double);
+
 signals:
     void measurement();
     void calibration();
