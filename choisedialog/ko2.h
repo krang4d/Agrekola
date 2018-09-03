@@ -24,6 +24,9 @@ signals:
     void measurement();
     void calibration();
 
+public slots:
+    void calibration_data_come(double);
+
 private:
     Ui::Ko2 *ui;
     SaveFiles file;

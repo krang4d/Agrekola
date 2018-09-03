@@ -47,7 +47,13 @@ private slots:
     void on_viewPlotsButton_clicked();
 
 private:
-
+    QPointer<Agr1> agr1;
+    QPointer<Agr2> agr2;
+    QPointer<Ko1> ko1;
+    QPointer<Ko2> ko2;
+    QPointer<Ko3> ko3;
+    QPointer<Ko4> ko4;
+    QPointer<Ko5> ko5;
     Ui::ChoiseDialog *ui;
 };
 

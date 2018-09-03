@@ -19,14 +19,14 @@ ChoiseDialog::ChoiseDialog(QDialog *parent) :
     //    Ko4 *ko4;   //Тромбин
     //    Ko5 *ko5;   //Протромбиновый комплекс
 
-    QPointer<Agr1> agr1 = static_cast<Agr1 *>(ui->stackedWidget->widget(1));
-    QPointer<Agr2> agr2 = static_cast<Agr2 *>(ui->stackedWidget->widget(2));
+    agr1 = static_cast<Agr1 *>(ui->stackedWidget->widget(1));
+    agr2 = static_cast<Agr2 *>(ui->stackedWidget->widget(2));
 
-    QPointer<Ko1> ko1 = static_cast<Ko1 *>(ui->stackedWidget->widget(3));
-    QPointer<Ko2> ko2 = static_cast<Ko2 *>(ui->stackedWidget->widget(4));
-    QPointer<Ko3> ko3 = static_cast<Ko3 *>(ui->stackedWidget->widget(5));
-    QPointer<Ko4> ko4 = static_cast<Ko4 *>(ui->stackedWidget->widget(6));
-    QPointer<Ko5> ko5 = static_cast<Ko5 *>(ui->stackedWidget->widget(7));
+    ko1 = static_cast<Ko1 *>(ui->stackedWidget->widget(3));
+    ko2 = static_cast<Ko2 *>(ui->stackedWidget->widget(4));
+    ko3 = static_cast<Ko3 *>(ui->stackedWidget->widget(5));
+    ko4 = static_cast<Ko4 *>(ui->stackedWidget->widget(6));
+    ko5 = static_cast<Ko5 *>(ui->stackedWidget->widget(7));
 
     connect(agr1, SIGNAL(measurement()), SLOT(startMeasurement()));
     connect(agr2, SIGNAL(measurement()), SLOT(startMeasurement()));
@@ -49,31 +49,6 @@ int ChoiseDialog::getTypeOfWidget() const
 {
     QString str;
     int i = ui->stackedWidget->currentIndex();
-    switch (i){
-    case 1:{
-        str = tr("Определение параметров агрегации, измерение (Agr1 1)");
-    }break;
-    case 2:{
-        str = tr("Определение активности фактора Виллебранда, измерение (Agr2 2)");
-    }break;
-    case 3:{
-        str = tr("Время свертывания, измерение (Ko1 3)");
-    }break;
-    case 4:{
-        str = tr("АЧТВ, измерение (Ko2 4)");
-    }break;
-    case 5:{
-        str = tr("Фибриноген, измерение (Ko3 5)");
-    }
-    case 6:{
-        str = tr("Тромбин, измерние (Ko4 6)");
-    }break;
-    case 7:{
-        str = tr("Протромбиновый комплекс, измерение (Ko5 7)");
-    }break;
-    default:
-        break;
-    }
     return i;
 }
 
@@ -124,7 +99,63 @@ void ChoiseDialog::startMeasurement()
 void ChoiseDialog::calibration()
 {
     int i = ui->stackedWidget->currentIndex();
-    QMessageBox::warning(this, "calibration", QString("calibration #%1").arg(i), QMessageBox::Ok);
+    QString str;
+    switch (i){
+    case 1:{
+        str = tr("Определение параметров агрегации, калибровка (Agr1 1)");
+    }break;
+    case 2:{
+        str = tr("Определение активности фактора Виллебранда, калибровка (Agr2 2)");
+    }break;
+    case 3:{
+        str = tr("Время свертывания, калибровка (Ko1 3)");
+    }break;
+    case 4:{
+        str = tr("АЧТВ, калибровка (Ko2 4)");     
+        QPointer<useE154> agrekola = new useE154;
+        QPointer<Widget> widget =new Widget(this);
+        widget->setWindowFlags(Qt::Dialog);
+        //ChoiseDialog choiseDlg;
+        QWidget::connect(widget, SIGNAL(onmixch1(bool)), agrekola, SLOT(onMixCh1(bool)));
+        QWidget::connect(widget, SIGNAL(onmixch2(bool)), agrekola, SLOT(onMixCh2(bool)));
+        QWidget::connect(widget, SIGNAL(onmixch3(bool)), agrekola, SLOT(onMixCh3(bool)));
+        QWidget::connect(widget, SIGNAL(onmixch4(bool)), agrekola, SLOT(onMixCh4(bool)));
+        QWidget::connect(widget, SIGNAL(onmixpp(bool)), agrekola, SLOT(onMixPP(bool)));
+        QWidget::connect(widget, SIGNAL(onlaser(bool)), agrekola, SLOT(onLaser(bool)));
+        QObject::connect(widget, SIGNAL(stop()), agrekola, SLOT(stopThread()));
+        //QObject::connect(widget, SIGNAL(stop()), widget, SLOT(deleteLater());
+
+        QWidget::connect(agrekola, SIGNAL(update_termo(bool)), widget, SLOT(updataTermo(bool)));
+        QWidget::connect(agrekola, SIGNAL(value_come(QVariantList)), widget, SLOT(realtimeDataSlot(QVariantList)));
+        QWidget::connect(agrekola, SIGNAL(finished()), agrekola, SLOT(deleteLater()));
+        QWidget::connect(widget, SIGNAL(destroyed(QObject*)), agrekola, SLOT(deleteLater()));
+
+        widget->setMode(Ko1_ID); //
+        widget->show();
+        hide();
+        agrekola->start();
+        widget->setUserMessage(str);
+
+
+        connect(widget.data(), SIGNAL(ret_value(double)), ko2.data(), SLOT(calibration_data_come(double)));
+        //connect(w.data(), SIGNAL(ret_value(double)), w.data(), SLOT(deleteLater()));
+//        connect(w.data(), &Widget::destroyed, [=](){
+//            disconnect(w.data(), SIGNAL(ret_value(double)), ko2.data(), SLOT(calibration_data_come(double)));
+//        });
+    }break;
+    case 5:{
+        str = tr("Фибриноген, калибровка (Ko3 5)");
+    }
+    case 6:{
+        str = tr("Тромбин, калибровка (Ko4 6)");
+    }break;
+    case 7:{
+        str = tr("Протромбиновый комплекс, калибровка (Ko5 7)");
+    }break;
+    default:
+        break;
+    }
+    //QMessageBox::warning(this, "calibration", QString("calibration #%1").arg(i), QMessageBox::Ok);
     //if(i == 2) kalibragr2->show();
 }
 

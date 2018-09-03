@@ -1,5 +1,6 @@
 #include "ko2.h"
 #include "ui_ko2.h"
+#include <QDateTime>
 
 Ko2::Ko2(QWidget *parent) :
     QWidget(parent),
@@ -36,4 +37,15 @@ void Ko2::on_startButton_clicked()
 void Ko2::on_calibr1Button_clicked()
 {
     emit calibration();
+}
+
+void Ko2::calibration_data_come(double t0)
+{
+    //один параметр АЧТВ контрольной плазмы
+    QDateTime dt = QDateTime::currentDateTime();
+    ui->label_calibrationData->setText(dt.toString("dd.MM.yyyy ") + dt.toString("hh:mm:ss"));
+    if(param.count() <= 5)
+        param.push_back(QString("%1").arg(t0));
+    else param.replace(5, QString("%1").arg(t0));
+    file.saveKo2(param);
 }
