@@ -69,6 +69,29 @@ void StartMeasurment::saveData()
     file.saveStartWin(param);
 }
 
+bool StartMeasurment::isChannel(int ch)
+{
+    switch (ch) {
+    case 0:
+        return channel_1 || channel_2 ||channel_3 || channel_4;
+        break;
+    case 1:
+        return channel_1;
+        break;
+    case 2:
+        return channel_2;
+        break;
+    case 3:
+        return channel_3;
+        break;
+    case 4:
+        return channel_4;
+        break;
+    default:
+        return channel_1 || channel_2 ||channel_3 || channel_4;
+    }
+}
+
 bool StartMeasurment::isCancel()
 {
     return cancel;
@@ -79,25 +102,25 @@ bool StartMeasurment::isSingle()
     return single;
 }
 
-bool StartMeasurment::isChannel_1()
-{
-    return channel_1;
-}
+//bool StartMeasurment::isChannel_1()
+//{
+//    return channel_1;
+//}
 
-bool StartMeasurment::isChannel_2()
-{
-    return channel_2;
-}
+//bool StartMeasurment::isChannel_2()
+//{
+//    return channel_2;
+//}
 
-bool StartMeasurment::isChannel_3()
-{
-    return channel_3;
-}
+//bool StartMeasurment::isChannel_3()
+//{
+//    return channel_3;
+//}
 
-bool StartMeasurment::isChannel_4()
-{
-    return channel_4;
-}
+//bool StartMeasurment::isChannel_4()
+//{
+//    return channel_4;
+//}
 
 int StartMeasurment::getNum_1()
 {

@@ -9,7 +9,7 @@
 #include <QtConcurrent>
 #include <functional>
 
-#define DX 0.1f
+#define Start_DX 0.1f
 #define MIN -6.0f
 #define MAX 6.0f
 
@@ -41,6 +41,9 @@ Widget::Widget(QWidget *parent) :
 
     //std::function<void(void)> fun = [](){ qDebug() << "emit stopData1";};
     connect(this, &Widget::stopData1, [this](){  stopData( 1 ); qDebug() << "emit stopData1"; });
+    connect(this, &Widget::stopData2, [this](){  stopData( 2 ); qDebug() << "emit stopData2"; });
+    connect(this, &Widget::stopData3, [this](){  stopData( 3 ); qDebug() << "emit stopData3"; });
+    connect(this, &Widget::stopData4, [this](){  stopData( 4 ); qDebug() << "emit stopData4"; });
 }
 
 Widget::~Widget()
@@ -94,7 +97,7 @@ void Widget::setUserMessage(QString str, bool withtime, bool tofile)
 }
 
 void Widget::setupRealtimeData() {
-    std::function<bool(void)> foo = [this](){ if(startWin.isNull()) return true; else return startWin->isSingle(); };
+    std::function<bool(void)> foo = [this](){ return startWin.isNull() ? : startWin->isSingle(); };
     if(foo()) {
         QSharedPointer<QCPAxisTickerTime> timeTicker(new QCPAxisTickerTime);
         timeTicker->setTimeFormat("%m:%s");
@@ -202,7 +205,7 @@ void Widget::realtimeDataSlot(QVariantList a) {
     double dx3 = std::abs(a[2].toDouble() - lastPointV3);
     double dx4 = std::abs(a[3].toDouble() - lastPointV4);
     lastPointV1 = a[0].toDouble();
-    if((dx1 > DX || pulse1) && ready1) {
+    if((dx1 > Start_DX || pulse1) && ready1) {
         pulse1 = false;
         ready1 = false;
         emit hasPulse1();
@@ -211,7 +214,7 @@ void Widget::realtimeDataSlot(QVariantList a) {
         startData(1);
     }
     lastPointV2 = a[1].toDouble();
-    if((dx2 > DX || pulse2) && ready2) {
+    if((dx2 > Start_DX || pulse2) && ready2) {
         pulse2 = false;
         ready2 = false;
         emit hasPulse2();
@@ -220,7 +223,7 @@ void Widget::realtimeDataSlot(QVariantList a) {
         startData(2);
     }
     lastPointV3 = a[2].toDouble();
-    if((dx3 > DX || pulse3) && ready3) {
+    if((dx3 > Start_DX || pulse3) && ready3) {
         pulse3 = false;
         ready3 = false;
         emit hasPulse3();
@@ -229,13 +232,13 @@ void Widget::realtimeDataSlot(QVariantList a) {
         startData(3);
     }
     lastPointV4 = a[3].toDouble();
-    if((dx4 > DX || pulse4) && ready4) {
+    if((dx4 > Start_DX || pulse4) && ready4) {
         pulse4 = false;
         ready4 = false;
         emit hasPulse4();
         setUserMessage("Канал 4 - импульс");
         qDebug() << QString("The pulse is come! dx4=%1").arg(dx4);
-        startData(4);
+        startData( 4 );
     }
 
     if (key-lastPointKey > 0.01) {// at most add point every 10 ms
@@ -279,41 +282,101 @@ void Widget::realtimeDataSlot(QVariantList a) {
           customPlot4->replot();
         }
 
-        //std::function<bool(QMap<double, double>)> stop = [](QMap<double, double> map){ CalcKo1 stopData; return stopData.calcKo(map) == 0 ? true : false; };
-        static double dx;
-        if( isData( 1 ) && startWin->isChannel_1() ) {
-
+        static double stop_dy1 = 0 ;
+        //static QVector<double> y1;
+        if( isData( 1 ) && startWin->isChannel(1) ) {
             map_y1.insert(key, a[0].toDouble());
-            //key >= (map_y1.begin().key() + 4) &&
-            if( key <= (map_y1.begin().key() + 5) ) {
-                    dx = map_y1.last();
-                    qDebug() << "dx" << dx;
+            if( key <= (map_y1.begin().key() + 4) ) {
+                    stop_dy1 = map_y1.last();
+                    qDebug() << "stop_dx1 = " << stop_dy1;
             }
             else {
-                qDebug() << "" << std::abs(map_y1.last() - dx) << ">=" << std::abs(dx*0.1);
-                if(  getMode() != Agr1_ID && getMode() != Agr2_ID && std::abs(map_y1.last() - dx) >= std::abs(dx*0.1) ) {
-                //(getMode() == Ko1_ID || getMode() == Ko2_ID  || getMode() == Ko3_ID || getMode() == Ko4_ID || getMode() == Ko5_ID )) {
-                emit stopData1();
+                //y1.push_back(a[0].toDouble());
+                if(  getMode() != Agr1_ID && getMode() != Agr2_ID && std::abs(map_y1.last() - stop_dy1) >= std::abs(stop_dy1*0.1) ) {
+                    qDebug() << "emit stopData1" << std::abs(map_y1.last() - stop_dy1) << ">=" << std::abs(stop_dy1*0.1);
+                    emit stopData1();
                 }
             }
-            //ui->label_led1->setStyleSheet("color: green;");
-        } else dx = 0;
-        //else ui->label_led1->setStyleSheet("color: yellow;");
-        if( isData( 2 ) && startWin->isChannel_2() ) {
-                map_y2.insert(key, a[1].toDouble());
-                //ui->label_led2->setStyleSheet("color: green;");
         }
-        //else ui->label_led2->setStyleSheet("color: yellow;");
-        if(isData( 3 ) && startWin->isChannel_3() ) {
-                map_y3.insert(key, a[2].toDouble());
-                //ui->label_led3->setStyleSheet("color: green;");}
+        else {
+            stop_dy1 = 0;
+            //if(!y2.isEmpty()) { y2.clear(); }
         }
-        //else ui->label_led3->setStyleSheet("color: yellow;");
-        if(isData( 4 )  && startWin->isChannel_4() ) {
-                map_y4.insert(key, a[3].toDouble());
-                //ui->label_led4->setStyleSheet("color: green;");
+
+        static double stop_dy2 = 0 ;
+        //static QVector<double> y2;
+        if( isData( 2 ) && startWin->isChannel(2) ) {
+            map_y2.insert(key, a[1].toDouble());
+            if( key <= (map_y2.begin().key() + 4) ) {
+                    stop_dy2 = map_y2.last();
+                    qDebug() << "stop_dx2 = " << stop_dy2;
+            }
+            else {
+                //y2.push_back(a[1].toDouble());
+                if(  getMode() != Agr1_ID && getMode() != Agr2_ID && std::abs(map_y2.last() - stop_dy2) >= std::abs(stop_dy2*0.1) ) {
+                    qDebug() << "emit stopData1" << std::abs(map_y2.last() - stop_dy2) << ">=" << std::abs(stop_dy2*0.1);
+                    emit stopData2();
+                }
+            }
         }
-        //else ui->label_led4->setStyleSheet("color: yellow;");
+        else {
+            stop_dy2 = 0;
+            //if(!y2.isEmpty()) { y2.clear(); }
+        }
+
+        static double stop_dy3 = 0 ;
+        //static QVector<double> y3;
+        if( isData( 3 ) && startWin->isChannel(3) ) {
+            map_y3.insert(key, a[2].toDouble());
+            if( key <= (map_y3.begin().key() + 4) ) {
+                    stop_dy3 = map_y3.last();
+                    qDebug() << "stop_dx3 = " << stop_dy3;
+            }
+            else {
+                //y3.push_back(a[2].toDouble());
+                if(  getMode() != Agr1_ID && getMode() != Agr2_ID && std::abs(map_y3.last() - stop_dy3) >= std::abs(stop_dy3*0.1) ) {
+                    qDebug() << "emit stopData3" << std::abs(map_y3.last() - stop_dy3) << ">=" << std::abs(stop_dy3*0.1);
+                    emit stopData3();
+                }
+            }
+        }
+        else {
+            stop_dy3 = 0;
+            //if(!y3.isEmpty()) { y3.clear(); }
+        }
+
+        static double stop_dy4 = 0 ;
+        //static QVector<double> y4;
+        if( isData( 4 ) && startWin->isChannel(4) ) {
+            map_y4.insert(key, a[3].toDouble());
+            if( key <= (map_y4.begin().key() + 4) ) {
+                    stop_dy4 = map_y4.last();
+                    qDebug() << "stop_dx4 = " << stop_dy4;
+            }
+            else {
+                //y4.push_back(a[4].toDouble());
+                if(  getMode() != Agr1_ID && getMode() != Agr2_ID && std::abs(map_y4.last() - stop_dy4) >= std::abs(stop_dy4*0.1) ) {
+                    qDebug() << "emit stopData4" << std::abs(map_y4.last() - stop_dy4) << ">=" << std::abs(stop_dy4*0.1);
+                    emit stopData4();
+                }
+            }
+        }
+        else {
+            stop_dy4 = 0;
+            //if(!y4.isEmpty()) { y4.clear(); }
+        }
+//        if( isData( 2 ) && startWin->isChannel(2) ) {
+//                map_y2.insert(key, a[1].toDouble());
+//        }
+
+//        if(isData( 3 ) && startWin->isChannel(3) ) {
+//                map_y3.insert(key, a[2].toDouble());
+//        }
+
+//        if(isData( 4 )  && startWin->isChannel(4) ) {
+//                map_y4.insert(key, a[3].toDouble());
+//        }
+
         lastPointKey = key;
     }
     // calculate frames per second:
@@ -404,7 +467,7 @@ void Widget::startMeasurment()
     if(!startWin->isCancel()) {
         if(startWin->isSingle()) {
 
-            if (startWin->isChannel_1()) {
+            if (startWin->isChannel(1)) {
                 msg += QString("№1 = %1, ").arg(startWin->getNum_1());
                 ui->checkBox_1->setChecked(true); //включение перемешивания 1
                 ui->groupBox_f1->setTitle("Канал 1");
@@ -415,7 +478,7 @@ void Widget::startMeasurment()
                 ui->groupBox_f1->hide();
             }
 
-            if (startWin->isChannel_2()) {
+            if (startWin->isChannel(2)) {
                 msg += QString("№2 = %1, ").arg(startWin->getNum_2());
                 ui->checkBox_2->setChecked(true); //включение перемешивания 2
                 ui->groupBox_f2->setTitle("Канал 2");
@@ -426,7 +489,7 @@ void Widget::startMeasurment()
                 ui->groupBox_f2->hide();
             }
 
-            if (startWin->isChannel_3()) {
+            if (startWin->isChannel(3)) {
                 msg += QString("№3 = %1, ").arg(startWin->getNum_3());
                 ui->checkBox_3->setChecked(true); //включение перемешивания 3
                 ui->groupBox_f3->setTitle("Канал 3");
@@ -437,7 +500,7 @@ void Widget::startMeasurment()
                 ui->groupBox_f3->hide();
             }
 
-            if (startWin->isChannel_4()) {
+            if (startWin->isChannel(4)) {
                 msg += QString("№4 = %1 ").arg(startWin->getNum_4());
                 ui->checkBox_4->setChecked(true); //включение перемешивания 4
                 ui->groupBox_f4->setTitle("Канал 4");
@@ -456,7 +519,7 @@ void Widget::startMeasurment()
         }
         else {
 
-            if (startWin->isChannel_1()) {
+            if (startWin->isChannel(1)) {
                 msg += QString("№1, 2 = %1, ").arg(startWin->getNum_1());
                 ui->groupBox_f1->setTitle("Канал 1, 2");
                 ui->groupBox_f2->hide();
@@ -469,7 +532,7 @@ void Widget::startMeasurment()
                 ui->groupBox_f2->hide();
             }
 
-            if (startWin->isChannel_3()) {
+            if (startWin->isChannel(3)) {
                 msg += QString("№3, 4 = %1, ").arg(startWin->getNum_3());
                 ui->groupBox_f3->setTitle("Канал 3, 4");
                 ui->groupBox_f4->hide();
@@ -526,6 +589,7 @@ void Widget::startData(int n)
 
 void Widget::stopData(int n)
 {
+    if(!isData()) return;
     switch (n) {
     case 1:
         if(data1) {
@@ -562,11 +626,10 @@ void Widget::stopData(int n)
     default: qDebug() << "n is out of data from Widget::stopData(n)";
     }
     std::function<bool(void)> isPulse = [this](){ return pulse1 || pulse2 || pulse3 || pulse4 ;};
-    if (!isData(1) && !isData(2) && !isData(3) && !isData(4)\
-            && !isIncub() && !isPulse()) {
-        setUserMessage(QString("Конец сбора данных"));
+    if (!isData() && !isIncub() && !isPulse()) {
         ui->checkBox_L->setChecked(false);
         ui->pushButton->setEnabled(true);
+        setUserMessage(QString("Конец сбора данных"));
     }
 }
 
@@ -647,22 +710,22 @@ void Widget::incubeTimeout()
     QPointer<ImpuleWaiter> iw = new ImpuleWaiter;
 
     stopIncub();
-    if(startWin->isChannel_1()) {
+    if(startWin->isChannel(1)) {
         setUserMessage("Канала 1 в ожидании добавления стартового реагента");
         ready1 = true;
         iw->addWaiter(1);
     }
-    if(startWin->isChannel_2()) {
+    if(startWin->isChannel(2)) {
         setUserMessage("Канала 2 в ожидании добавления стартового реагента");
         ready2 = true;
         iw->addWaiter(2);
     }
-    if(startWin->isChannel_3()) {
+    if(startWin->isChannel(3)) {
         setUserMessage("Канала 3 в ожидании добавления стартового реагента");
         ready3 = true;
         iw->addWaiter(3);
     }
-    if(startWin->isChannel_4()) {
+    if(startWin->isChannel(4)) {
         setUserMessage("Канала 4 в ожидании добавления стартового реагента");
         ready4 = true;
         iw->addWaiter(4);

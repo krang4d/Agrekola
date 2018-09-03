@@ -17,10 +17,11 @@ public:
     ~StartMeasurment();
     bool isCancel();
     bool isSingle();
-    bool isChannel_1();
-    bool isChannel_2();
-    bool isChannel_3();
-    bool isChannel_4();
+    bool isChannel(int = 0);
+//    bool isChannel_1();
+//    bool isChannel_2();
+//    bool isChannel_3();
+//    bool isChannel_4();
 
     int getNum_1();
     int getNum_2();
