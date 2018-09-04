@@ -61,7 +61,7 @@ void ProgressTimerBar::updateProgress()
     }
     else {
         progressTimer.stop();
-        ui->progressBar->setFormat("Готово");
+        //ui->progressBar->setFormat("Готово");
         //ui->progressBar->setValue(0);
         emit done();
         if(func) {

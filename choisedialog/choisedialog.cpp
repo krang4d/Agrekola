@@ -145,6 +145,7 @@ void ChoiseDialog::calibration()
     }break;
     case 5:{
         str = tr("Фибриноген, калибровка (Ko3 5)");
+
     }
     case 6:{
         str = tr("Тромбин, калибровка (Ko4 6)");
@@ -171,7 +172,7 @@ void ChoiseDialog::calibration()
         hide();
         agrekola->start();
         widget->setUserMessage(str);
-        //QMessageBox::information(this, "АЧТВ калибровка", "Установите кювету с контрольной нормальной плазмой и нажмите \"Старт\"");
+        //QMessageBox::information(this, "АЧТВ калибровка", "Установите кювету с контрольной нормальной плазмой и нажмите \"Начать\"");
         widget->setUserMessage(QString("Установите кювету с контрольной нормальной плазмой и нажмите \"Старт\""));
         connect(widget.data(), SIGNAL(ret_value(double)), ko4.data(), SLOT(calibration_data_come(double)));
         //connect(w.data(), SIGNAL(ret_value(double)), w.data(), SLOT(deleteLater()));

@@ -439,6 +439,14 @@ void Widget::on_pushButton_clicked()
 {
     startWin = new StartMeasurment(getMode());
     startWin->show();
+    pBar1->setFormat("В ожидании");
+    pBar1->setValue(0);
+    pBar2->setFormat("В ожидании");
+    pBar2->setValue(0);
+    pBar3->setFormat("В ожидании");
+    pBar3->setValue(0);
+    pBar4->setFormat("В ожидании");
+    pBar4->setValue(0);
     connect(startWin, SIGNAL(startMeasurment()), this, SLOT(startMeasurment()));
 
 }

@@ -53,7 +53,7 @@ void ImpuleWaiter::addWaiter(int n)
     case 4:
         ui->pushButton_4->setEnabled(true);
         ui->pushButton_4->setVisible(true);
-        ui->pushButton_4->setVisible(true);
+        ui->label_4->setVisible(true);
         break;
     default: qDebug() << "ImpuleWaiter::addImpulse out of range!";
         break;
