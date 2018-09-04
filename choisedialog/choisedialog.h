@@ -34,7 +34,7 @@ public:
     ~ChoiseDialog();
 
 private slots:
-    void startMeasurement();
+    void startMeasurement(StartMeasurment*);
     void calibration();
     void on_agr1Button_clicked();
     void on_agr2Button_clicked();

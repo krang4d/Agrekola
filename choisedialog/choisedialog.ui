@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>458</width>
-    <height>392</height>
+    <width>574</width>
+    <height>498</height>
    </rect>
   </property>
   <property name="font">
@@ -190,7 +190,7 @@
    <item row="2" column="0">
     <widget class="QPushButton" name="viewPlotsButton">
      <property name="text">
-      <string>Просмотр данных</string>
+      <string>Просмотр графиков</string>
      </property>
     </widget>
    </item>

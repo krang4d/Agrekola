@@ -6,23 +6,25 @@ Ko1::Ko1(QWidget *parent) :
     ui(new Ui::Ko1)
 {
     ui->setupUi(this);
-    file.openKo1(param);
-    if(!param.isEmpty() && param.count() >= 2) {
-        ui->lineEdit_1->setText(param.at(0));
-        ui->lineEdit_2->setText(param.at(1));
-    }
+//    file.openKo1(param);
+//    if(!param.isEmpty() && param.count() >= 2) {
+//        ui->lineEdit_1->setText(param.at(0));
+//        ui->lineEdit_2->setText(param.at(1));
+//    }
+    startPar = ui->widget;
+    connect(ui->widget, SIGNAL(startMeasurment(StartMeasurment*)), this, SIGNAL(measurement(StartMeasurment*)));
 }
 
 Ko1::~Ko1()
 {
     //param.clear();
-    param.replace(0, ui->lineEdit_1->text());
-    param.replace(1, ui->lineEdit_2->text());
-    file.saveKo1(param);
+//    param.replace(0, ui->lineEdit_1->text());
+//    param.replace(1, ui->lineEdit_2->text());
+//    file.saveKo1(param);
     delete ui;
 }
 
-void Ko1::on_startButton_clicked()
-{
-    emit measurement();
-}
+//void Ko1::on_startButton_clicked()
+//{
+//    emit measurement();
+//}

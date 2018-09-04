@@ -15,6 +15,7 @@ Ko2::Ko2(QWidget *parent) :
         ui->lineEdit_3->setText(param.at(3));
         ui->lineEdit_4->setText(param.at(4));
     }
+    connect(ui->page_1, SIGNAL(startMeasurment(StartMeasurment*)), this, SIGNAL(measurement(StartMeasurment*)));
 }
 
 Ko2::~Ko2()
@@ -31,7 +32,7 @@ Ko2::~Ko2()
 
 void Ko2::on_startButton_clicked()
 {
-    emit measurement();
+    emit measurement(ui->page_1);
 }
 
 void Ko2::on_calibr1Button_clicked()

@@ -2,6 +2,7 @@
 #include "ui_choisedialog.h"
 #include <QDebug>
 #include <QThread>
+#include "startmeasurment.h"
 
 ChoiseDialog::ChoiseDialog(QDialog *parent) :
     QDialog(parent),
@@ -28,13 +29,13 @@ ChoiseDialog::ChoiseDialog(QDialog *parent) :
     ko4 = static_cast<Ko4 *>(ui->stackedWidget->widget(6));
     ko5 = static_cast<Ko5 *>(ui->stackedWidget->widget(7));
 
-    connect(agr1, SIGNAL(measurement()), SLOT(startMeasurement()));
-    connect(agr2, SIGNAL(measurement()), SLOT(startMeasurement()));
-    connect(ko1, SIGNAL(measurement()), SLOT(startMeasurement()));
-    connect(ko2, SIGNAL(measurement()), SLOT(startMeasurement()));
-    connect(ko3, SIGNAL(measurement()), SLOT(startMeasurement()));
-    connect(ko4, SIGNAL(measurement()), SLOT(startMeasurement()));
-    connect(ko5, SIGNAL(measurement()), SLOT(startMeasurement()));
+    connect(agr1, SIGNAL(measurement(StartMeasurment*)), SLOT(startMeasurement(StartMeasurment*)));
+    connect(agr2, SIGNAL(measurement(StartMeasurment*)), SLOT(startMeasurement(StartMeasurment*)));
+    connect(ko1, SIGNAL(measurement(StartMeasurment*)), SLOT(startMeasurement(StartMeasurment*)));
+    connect(ko2, SIGNAL(measurement(StartMeasurment*)), SLOT(startMeasurement(StartMeasurment*)));
+    connect(ko3, SIGNAL(measurement(StartMeasurment*)), SLOT(startMeasurement(StartMeasurment*)));
+    connect(ko4, SIGNAL(measurement(StartMeasurment*)), SLOT(startMeasurement(StartMeasurment*)));
+    connect(ko5, SIGNAL(measurement(StartMeasurment*)), SLOT(startMeasurement(StartMeasurment*)));
 
     connect(agr1, SIGNAL(calibration()), SLOT(calibration()));
     connect(agr2, SIGNAL(calibration()), SLOT(calibration()));
@@ -87,10 +88,11 @@ void ChoiseDialog::on_testButton_clicked()
     widget->setUserMessage(agrekola->GetInformation());
 }
 
-void ChoiseDialog::startMeasurement()
+void ChoiseDialog::startMeasurement(StartMeasurment* sw)
 {
-    //QMessageBox msg_accept(QMessageBox::Warning, "accept", QString("i =") + QString(std::to_string(i).c_str()), QMessageBox::Ok);
-    //msg_accept.exec();
+    QMessageBox msg_accept(QMessageBox::Warning, "accept", QString("i =%1").arg(sw->getNum_1()), QMessageBox::Ok);
+    msg_accept.exec();
+
     QPointer<MainWindow> mw = new MainWindow(this);
     mw->newShow();
     hide();
