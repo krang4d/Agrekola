@@ -13,6 +13,7 @@ Ko3::Ko3(QWidget *parent) :
         ui->lineEdit_2->setText(param.at(2));
         ui->lineEdit_3->setText(param.at(3));
     }
+    connect(ui->page_2, &StartMeasurment::startMeasurment, this, &Ko3::measurement);
 }
 
 Ko3::~Ko3()
@@ -28,11 +29,10 @@ Ko3::~Ko3()
 
 void Ko3::on_startButton_clicked()
 {
-    emit measurement();
+    emit measurement(ui->page_2);
 }
 
 void Ko3::on_calibr1Button_clicked()
 {
     emit calibration();
 }
-

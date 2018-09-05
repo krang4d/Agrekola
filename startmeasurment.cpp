@@ -4,26 +4,13 @@
 #include <QMessageBox>
 #include <QString>
 
-StartMeasurment::StartMeasurment(int mode, QDialog *parent) :
+StartMeasurment::StartMeasurment(QDialog *parent) :
     QDialog(parent),
     ui(new Ui::StartMeasurment)
 {
     ui->setupUi(this);
     setModal(true);
-    file.openStartWin(param);
-    if( !param.isEmpty() && param.count() == 10 ) {
-        QString(param.at(0)).toInt();
-        ui->checkBox_ch1->setCheckState(static_cast<Qt::CheckState>(QString(param.at(0)).toInt()));
-        ui->checkBox_ch2->setCheckState(static_cast<Qt::CheckState>(QString(param.at(1)).toInt()));
-        ui->checkBox_ch3->setCheckState(static_cast<Qt::CheckState>(QString(param.at(2)).toInt()));
-        ui->checkBox_ch4->setCheckState(static_cast<Qt::CheckState>(QString(param.at(3)).toInt()));
-        ui->lineEdit_ch1->setText(param.at(4));
-        ui->lineEdit_ch2->setText(param.at(5));
-        ui->lineEdit_ch3->setText(param.at(6));
-        ui->lineEdit_ch4->setText(param.at(7));
-        ui->lineEdit_incube->setText(param.at(8));
-        ui->lineEdit_time->setText(param.at(9));
-    }
+    openData();
     cancel = true;
     single = true;
     channel_1 = false;
@@ -36,17 +23,12 @@ StartMeasurment::StartMeasurment(int mode, QDialog *parent) :
     num_4 = 0;
     time = 0;
     time_incube = 0;
-    if(mode == 1 || mode == 2 ) {
-        ui->lineEdit_incube_2->setVisible(true);
-        ui->label_incube_2->setVisible(true);
-        ui->label_incube->setText(QString("Время инкубации 1"));
+}
 
-    }
-    else {
-        ui->lineEdit_incube_2->setVisible(false);
-        ui->label_incube_2->setVisible(false);
-        ui->label_incube->setText(QString("Время инкубации"));
-    }
+StartMeasurment::StartMeasurment(int mode, QDialog *parent) :
+    StartMeasurment(parent)
+{
+    setMode(mode);
 }
 
 StartMeasurment::~StartMeasurment()
@@ -69,6 +51,24 @@ void StartMeasurment::saveData()
     file.saveStartWin(param);
 }
 
+void StartMeasurment::openData()
+{
+    file.openStartWin(param);
+    if( !param.isEmpty() && param.count() >= 10 ) {
+        QString(param.at(0)).toInt();
+        ui->checkBox_ch1->setCheckState(static_cast<Qt::CheckState>(QString(param.at(0)).toInt()));
+        ui->checkBox_ch2->setCheckState(static_cast<Qt::CheckState>(QString(param.at(1)).toInt()));
+        ui->checkBox_ch3->setCheckState(static_cast<Qt::CheckState>(QString(param.at(2)).toInt()));
+        ui->checkBox_ch4->setCheckState(static_cast<Qt::CheckState>(QString(param.at(3)).toInt()));
+        ui->lineEdit_ch1->setText(param.at(4));
+        ui->lineEdit_ch2->setText(param.at(5));
+        ui->lineEdit_ch3->setText(param.at(6));
+        ui->lineEdit_ch4->setText(param.at(7));
+        ui->lineEdit_incube->setText(param.at(8));
+        ui->lineEdit_time->setText(param.at(9));
+    }
+}
+
 bool StartMeasurment::isChannel(int ch)
 {
     switch (ch) {
@@ -89,6 +89,21 @@ bool StartMeasurment::isChannel(int ch)
         break;
     default:
         return channel_1 || channel_2 ||channel_3 || channel_4;
+    }
+}
+
+void StartMeasurment::setMode(int mode)
+{
+    if(mode == 1 || mode == 2 ) {
+        ui->lineEdit_incube_2->setVisible(true);
+        ui->label_incube_2->setVisible(true);
+        ui->label_incube->setText(QString("Время инкубации 1"));
+
+    }
+    else {
+        ui->lineEdit_incube_2->setVisible(false);
+        ui->label_incube_2->setVisible(false);
+        ui->label_incube->setText(QString("Время инкубации"));
     }
 }
 
@@ -268,14 +283,15 @@ void StartMeasurment::on_pushButton_next_clicked()
         mb.exec();
     else {
         cancel = false;
-        hide();
-        emit startMeasurment();
+        //hide();
+        emit startMeasurment(this);
     }
     saveData();
 }
 
 void StartMeasurment::on_pushButton_cancel_clicked()
 {
+    openData();
     cancel = true;
-    hide();
+    //hide();
 }

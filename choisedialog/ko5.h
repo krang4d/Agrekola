@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include "savefiles.h"
+#include "startmeasurment.h"
 
 namespace Ui {
 class Ko5;
@@ -21,7 +22,7 @@ private slots:
     void on_calibr1Button_clicked();
 
 signals:
-    void measurement();
+    void measurement(StartMeasurment*);
     void calibration();
 
 private:

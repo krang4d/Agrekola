@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QStringList>
+#include "startmeasurment.h"
 
 #include "savefiles.h"
 
@@ -23,7 +24,7 @@ private slots:
     void on_kolibrButton_clicked();
 
 signals:
-    void measurement();
+    void measurement(StartMeasurment*);
     void calibration();
 
 private:

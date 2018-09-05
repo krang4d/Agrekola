@@ -16,6 +16,7 @@ Ko5::Ko5(QWidget *parent) :
         ui->lineEdit_5->setText(param.at(5));
         ui->lineEdit_6->setText(param.at(6));
     }
+    connect(ui->page_2, &StartMeasurment::startMeasurment, this, &Ko5::measurement);
 }
 
 Ko5::~Ko5()
@@ -34,7 +35,7 @@ Ko5::~Ko5()
 
 void Ko5::on_startButton_clicked()
 {
-    emit measurement();
+    emit measurement(ui->page_2);
 }
 
 void Ko5::on_calibr1Button_clicked()

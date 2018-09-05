@@ -13,15 +13,14 @@ class StartMeasurment : public QDialog
     Q_OBJECT
 
 public:
-    explicit StartMeasurment(int = 0, QDialog *parent = 0);
+    explicit StartMeasurment(QDialog *parent = 0);
+    StartMeasurment(int = 0, QDialog *parent = 0);
     ~StartMeasurment();
     bool isCancel();
     bool isSingle();
     bool isChannel(int = 0);
-//    bool isChannel_1();
-//    bool isChannel_2();
-//    bool isChannel_3();
-//    bool isChannel_4();
+
+    void setMode(int);
 
     int getNum_1();
     int getNum_2();
@@ -33,6 +32,7 @@ public:
 
 protected:
     void saveData();
+    void openData();
 
 public slots:
     void on_checkBox_ch1_stateChanged(int arg1);
@@ -44,7 +44,7 @@ public slots:
     void on_pushButton_cancel_clicked();
 
 signals:
-    startMeasurment();
+    startMeasurment(StartMeasurment*);
 
 private:
     Ui::StartMeasurment *ui;

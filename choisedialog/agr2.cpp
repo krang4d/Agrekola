@@ -6,6 +6,7 @@ Agr2::Agr2(QWidget *parent) :
     ui(new Ui::Agr2)
 {
     ui->setupUi(this);
+    ui->page_2->setMode(2);
     file.openAgr2(param);
     if( !param.isEmpty() && param.count() >= 7 ) {
         ui->label_calibrationData->setText(param.at(0));
@@ -18,6 +19,7 @@ Agr2::Agr2(QWidget *parent) :
     }
     selcalibrAgr1 = new SelectCalibrationAgr1();
     selInductor = new SelectInductor();
+    connect(ui->page_2, &StartMeasurment::startMeasurment, this, &Agr2::measurement);
 }
 
 Agr2::~Agr2()
@@ -35,12 +37,6 @@ Agr2::~Agr2()
     delete selInductor;
     delete selcalibrAgr1;
     delete ui;
-}
-
-void Agr2::on_startButton_clicked()
-{
-    //selcalibrAgr1->show();
-    emit measurement();
 }
 
 void Agr2::on_calibrButton_clicked()

@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include "savefiles.h"
+#include "startmeasurment.h"
 
 namespace Ui {
 class Ko4;
@@ -24,7 +25,7 @@ public slots:
     void calibration_data_come(double);
 
 signals:
-    void measurement();
+    void measurement(StartMeasurment*);
     void calibration();
 
 private:

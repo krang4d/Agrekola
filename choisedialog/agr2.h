@@ -6,6 +6,7 @@
 #include "selectcalibrationagr1.h"
 #include "selectinductor.h"
 #include "savefiles.h"
+#include "startmeasurment.h"
 
 namespace Ui {
 class Agr2;
@@ -20,11 +21,10 @@ public:
     ~Agr2();
 
 private slots:
-    void on_startButton_clicked();
     void on_calibrButton_clicked();
 
 signals:
-    void measurement();
+    void measurement(StartMeasurment*);
     void calibration();
 
 private:

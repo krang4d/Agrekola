@@ -6,6 +6,7 @@
 #include "widget.h"
 #include "useE154.h"
 #include "viewplot.h"
+//#include "startmeasurment.h"
 
 class ChoiseDialog;
 

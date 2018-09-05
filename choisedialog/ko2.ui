@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>316</width>
-    <height>314</height>
+    <width>339</width>
+    <height>371</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,21 +15,31 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>АЧТВ</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QToolBox" name="toolBox">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
-     <widget class="QWidget" name="page_2">
+     <widget class="QWidget" name="page_1">
       <property name="geometry">
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>298</width>
-        <height>242</height>
+        <width>321</width>
+        <height>280</height>
        </rect>
       </property>
       <attribute name="label">
-       <string>Калибровка АЧТВ</string>
+       <string>Калибровка</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
@@ -151,29 +161,29 @@
             </property>
            </spacer>
           </item>
-          <item>
-           <widget class="QPushButton" name="startButton">
-            <property name="text">
-             <string>Продолжить</string>
-            </property>
-           </widget>
-          </item>
          </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="startButton">
+         <property name="text">
+          <string>Продолжить</string>
+         </property>
         </widget>
        </item>
       </layout>
      </widget>
-     <widget class="StartMeasurment" name="page_1">
+     <widget class="StartMeasurment" name="page_2">
       <property name="geometry">
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>298</width>
-        <height>242</height>
+        <width>321</width>
+        <height>280</height>
        </rect>
       </property>
       <attribute name="label">
-       <string>Измерение АЧТВ</string>
+       <string>Измерение</string>
       </attribute>
      </widget>
     </widget>

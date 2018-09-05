@@ -315,7 +315,7 @@ CalcKo5::CalcKo5()
     }
     QString p = param.last();
     a1 = p.toDouble();
-    qDebug() << "по Квику =" << a1;
+    qDebug() << "ТВ контрольной плазмы =" << a1;
 }
 
 double CalcKo5::calc(QMap<double, double> map)

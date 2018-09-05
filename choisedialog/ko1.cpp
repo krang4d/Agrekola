@@ -12,7 +12,8 @@ Ko1::Ko1(QWidget *parent) :
 //        ui->lineEdit_2->setText(param.at(1));
 //    }
     startPar = ui->widget;
-    connect(ui->widget, SIGNAL(startMeasurment(StartMeasurment*)), this, SIGNAL(measurement(StartMeasurment*)));
+    //connect(ui->widget, SIGNAL(startMeasurment(StartMeasurment*)), this, SIGNAL(measurement(StartMeasurment*)));
+    connect(ui->widget, &StartMeasurment::startMeasurment, this, &Ko1::measurement);
 }
 
 Ko1::~Ko1()
