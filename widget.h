@@ -14,9 +14,10 @@
 #include "savefiles.h"
 #include "startmeasurment.h"
 #include "QCustomPlot/qcustomplot.h"
-#include "impulewaiter.h"
 #include <progresstimerbar.h>
 #include "calculatedata.h"
+#include "impulewaiter.h"
+#include "startmeasurment.h"
 
 namespace Ui {
 class Widget;
@@ -28,6 +29,7 @@ class Widget : public QWidget
 
 public:
     explicit Widget(QWidget *parent = 0);
+    Widget(StartMeasurment*, QWidget *parent = 0);
     ~Widget();
     void setUserMessage(QString, bool withtime = 1, bool tofile = 1);
     inline void setMode(Mode_ID m)  { id = m; }
@@ -61,6 +63,7 @@ public:
             break;
         }
     }
+    void setStartWindow(StartMeasurment*);
     inline Mode_ID getMode()     { return id; }
     inline bool isSensorReady()  { return termoSensor; } //проверка тепловой готовности
 

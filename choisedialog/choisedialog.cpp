@@ -90,11 +90,11 @@ void ChoiseDialog::on_testButton_clicked()
 
 void ChoiseDialog::startMeasurement(StartMeasurment* sw)
 {
-    QMessageBox msg_accept(QMessageBox::Warning, "accept", QString("i =%1").arg(sw->getNum_1()), QMessageBox::Ok);
-    msg_accept.exec();
+    //QMessageBox msg_accept(QMessageBox::Warning, "accept", QString("i =%1").arg(sw->getNum_1()), QMessageBox::Ok);
+    //msg_accept.exec();
 
     QPointer<MainWindow> mw = new MainWindow(this);
-    mw->newShow();
+    mw->newShow(sw);
     hide();
 }
 

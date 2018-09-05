@@ -33,11 +33,12 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::newShow()
+void MainWindow::newShow(StartMeasurment* sw)
 {
     show();
     int i = ch->getTypeOfWidget();
     centerWidget->setMode(i);
+    centerWidget->setStartWindow(sw);
     //else  {QMessageBox test(QMessageBox::Warning, "qobject_cast", QString("qobject_cast"), QMessageBox::Ok); test.exec();}
     QString str;
     switch (i){

@@ -46,6 +46,19 @@ Widget::Widget(QWidget *parent) :
     connect(this, &Widget::stopData4, [this](){  stopData( 4 ); qDebug() << "emit stopData4"; });
 }
 
+Widget::Widget(StartMeasurment *sw, QWidget *parent) : Widget(parent)
+{
+    startWin.clear();
+    startWin = sw;
+}
+
+
+void Widget::setStartWindow(StartMeasurment *sw)
+{
+    startWin.clear();
+    startWin = sw;
+}
+
 Widget::~Widget()
 {
     emit stop();
@@ -437,7 +450,8 @@ void Widget::on_checkBox_L_stateChanged(int arg1)
 
 void Widget::on_pushButton_clicked()
 {
-    startWin = new StartMeasurment(getMode());
+    //startWin = new StartMeasurment(getMode());
+    startWin->setMode(getMode());
     startWin->show();
     pBar1->setFormat("В ожидании");
     pBar1->setValue(0);
@@ -447,7 +461,8 @@ void Widget::on_pushButton_clicked()
     pBar3->setValue(0);
     pBar4->setFormat("В ожидании");
     pBar4->setValue(0);
-    connect(startWin, SIGNAL(startMeasurment()), this, SLOT(startMeasurment()));
+    emit startMeasurment();
+    //connect(startWin, SIGNAL(startMeasurment()), this, SLOT(startMeasurment()));
 
 }
 

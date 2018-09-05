@@ -21,7 +21,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-    void newShow();
+    void newShow(StartMeasurment*sw);
     void setupThread();
 
 private:
