@@ -137,8 +137,8 @@ void ChoiseDialog::calibration()
         hide();
         agrekola->start();
         widget->setUserMessage(str);
-        //QMessageBox::information(this, "АЧТВ калибровка", "Установите кювету с контрольной нормальной плазмой и нажмите \"Старт\"");
-        widget->setUserMessage(QString("Установите кювету с контрольной нормальной плазмой и нажмите \"Старт\""));
+        //QMessageBox::information(this, "АЧТВ калибровка", "Установите кювету с контрольной нормальной плазмой и нажмите \"Начать\"");
+        widget->setUserMessage(QString("Установите кювету с контрольной нормальной плазмой и нажмите \"Начать\""));
         connect(widget.data(), SIGNAL(ret_value(double)), ko2.data(), SLOT(calibration_data_come(double)));
         //connect(w.data(), SIGNAL(ret_value(double)), w.data(), SLOT(deleteLater()));
 //        connect(w.data(), &Widget::destroyed, [=](){
@@ -175,7 +175,7 @@ void ChoiseDialog::calibration()
         agrekola->start();
         widget->setUserMessage(str);
         //QMessageBox::information(this, "АЧТВ калибровка", "Установите кювету с контрольной нормальной плазмой и нажмите \"Начать\"");
-        widget->setUserMessage(QString("Установите кювету с контрольной нормальной плазмой и нажмите \"Старт\""));
+        widget->setUserMessage(QString("Установите кювету с контрольной нормальной плазмой и нажмите \"Начать\""));
         connect(widget.data(), SIGNAL(ret_value(double)), ko4.data(), SLOT(calibration_data_come(double)));
         //connect(w.data(), SIGNAL(ret_value(double)), w.data(), SLOT(deleteLater()));
 //        connect(w.data(), &Widget::destroyed, [=](){

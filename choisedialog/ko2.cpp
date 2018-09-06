@@ -31,11 +31,6 @@ Ko2::~Ko2()
     delete ui;
 }
 
-void Ko2::on_startButton_clicked()
-{
-    emit measurement(ui->page_2);
-}
-
 void Ko2::on_calibr1Button_clicked()
 {
     emit calibration();

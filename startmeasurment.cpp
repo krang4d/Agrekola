@@ -47,14 +47,14 @@ void StartMeasurment::saveData()
           << QString("%1").arg(static_cast<int>(ui->checkBox_ch4->checkState()))
           << ui->lineEdit_ch1->text() << ui->lineEdit_ch2->text()
           << ui->lineEdit_ch3->text() << ui->lineEdit_ch4->text()
-          << ui->lineEdit_incube->text() << ui->lineEdit_time->text();
+          << ui->lineEdit_incube->text() << ui->lineEdit_time->text() << ui->lineEdit_incube_2->text();
     file.saveStartWin(param);
 }
 
 void StartMeasurment::openData()
 {
     file.openStartWin(param);
-    if( !param.isEmpty() && param.count() >= 10 ) {
+    if( !param.isEmpty() && param.count() >= 11 ) {
         QString(param.at(0)).toInt();
         ui->checkBox_ch1->setCheckState(static_cast<Qt::CheckState>(QString(param.at(0)).toInt()));
         ui->checkBox_ch2->setCheckState(static_cast<Qt::CheckState>(QString(param.at(1)).toInt()));
@@ -66,6 +66,7 @@ void StartMeasurment::openData()
         ui->lineEdit_ch4->setText(param.at(7));
         ui->lineEdit_incube->setText(param.at(8));
         ui->lineEdit_time->setText(param.at(9));
+        ui->lineEdit_incube_2->setText(param.at(10));
     }
 }
 
@@ -283,7 +284,7 @@ void StartMeasurment::on_pushButton_next_clicked()
         mb.exec();
     else {
         cancel = false;
-        //hide();
+        hide();
         emit startMeasurment(this);
     }
     saveData();
@@ -293,5 +294,5 @@ void StartMeasurment::on_pushButton_cancel_clicked()
 {
     openData();
     cancel = true;
-    //hide();
+    hide();
 }

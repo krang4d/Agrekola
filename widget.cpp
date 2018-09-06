@@ -222,7 +222,7 @@ void Widget::realtimeDataSlot(QVariantList a) {
         pulse1 = false;
         ready1 = false;
         emit hasPulse1();
-        setUserMessage("Канал 1 - импульс");
+        setUserMessage("Канал 1 - введен стартовый реагент в кювету");
         qDebug() << QString("The pulse is come! dx1=%1").arg(dx1);
         startData(1);
     }
@@ -231,7 +231,7 @@ void Widget::realtimeDataSlot(QVariantList a) {
         pulse2 = false;
         ready2 = false;
         emit hasPulse2();
-        setUserMessage("Канал 2 - импульс");
+        setUserMessage("Канал 2 - введен стартовый реагент в кювету");
         qDebug() << QString("The pulse is come! dx2=%1").arg(dx2);
         startData(2);
     }
@@ -240,7 +240,7 @@ void Widget::realtimeDataSlot(QVariantList a) {
         pulse3 = false;
         ready3 = false;
         emit hasPulse3();
-        setUserMessage("Канал 3 - импульс");
+        setUserMessage("Канал 3 - введен стартовый реагент в кювету");
         qDebug() << QString("The pulse is come! dx3=%1").arg(dx3);
         startData(3);
     }
@@ -249,7 +249,7 @@ void Widget::realtimeDataSlot(QVariantList a) {
         pulse4 = false;
         ready4 = false;
         emit hasPulse4();
-        setUserMessage("Канал 4 - импульс");
+        setUserMessage("Канал 4 - введен стартовый реагент в кювету");
         qDebug() << QString("The pulse is come! dx4=%1").arg(dx4);
         startData( 4 );
     }
@@ -408,48 +408,58 @@ void Widget::realtimeDataSlot(QVariantList a) {
 
 void Widget::on_checkBox_1_stateChanged(int arg1)
 {
-    if(arg1) setUserMessage("Канал 1: включение перемешивания");
-    else setUserMessage("Канал 1: выключение перемешивания");
+    if(arg1) setUserMessage("Канал 1: Включение двигателя магнитной мешалки");
+    else setUserMessage("Канал 1: Выключение двигателя магнитной мешалки");
     emit onmixch1(arg1);
 }
 
 void Widget::on_checkBox_2_stateChanged(int arg1)
 {
-    if(arg1) setUserMessage("Канал 2: включение перемешивания");
-    else setUserMessage("Канал 2: выключение перемешивания");
+    if(arg1) setUserMessage("Канал 2: Включение двигателя магнитной мешалки");
+    else setUserMessage("Канал 2: Выключение двигателя магнитной мешалки");
     emit onmixch2(arg1);
 }
 
 void Widget::on_checkBox_3_stateChanged(int arg1)
 {
-    if(arg1) setUserMessage("Канал 3: включение перемешивания");
-    else setUserMessage("Канал 3: выключение перемешивания");
+    if(arg1) setUserMessage("Канал 3: Включение двигателя магнитной мешалки");
+    else setUserMessage("Канал 3: Выключение двигателя магнитной мешалки");
     emit onmixch3(arg1);
 }
 
 void Widget::on_checkBox_4_stateChanged(int arg1)
 {
-    if(arg1) setUserMessage("Канал 4: включение перемешивания");
-    else setUserMessage("Канал 4: выключение перемешивания");
+    if(arg1) setUserMessage("Канал 4: Включение двигателя магнитной мешалки");
+    else setUserMessage("Канал 4: Выключение двигателя магнитной мешалки");
     emit onmixch4(arg1);
 }
 
 void Widget::on_checkBox_PP_stateChanged(int arg1)
 {
-    if(arg1) setUserMessage("Канал РР: включение перемешивания");
-    else setUserMessage("Канал РР: выключение перемешивания");
+    if(arg1) setUserMessage("Канал РР: Включение двигателя магнитной мешалки");
+    else setUserMessage("Канал РР: Вкылючение двигателя магнитной мешалки");
     emit onmixpp(arg1);
 }
 
 void Widget::on_checkBox_L_stateChanged(int arg1)
 {
-    if(arg1) setUserMessage("Включение лазеров");
-    else setUserMessage("Выключение лазеров");
+    if(arg1) setUserMessage("Включение питания лазеров каждого из каналов");
+    else setUserMessage("Выключение питания лазеров каждого из каналов");
     emit onlaser(arg1);
 }
 
 void Widget::on_pushButton_clicked()
 {
+    if(getMode() == Test_ID) {
+//        std::function<void(void)> foo = [=](){ startMeasurment();
+//        disconnect(startWin.data(), SIGNAL(startMeasurment(StartMeasurment*)), this, SLOT(startMeasurment()));
+//        };
+        startWin = new StartMeasurment(0);
+        connect(startWin.data(), &StartMeasurment::startMeasurment, [=](){ startMeasurment();
+            disconnect(startWin.data(), SIGNAL(startMeasurment(StartMeasurment*)), this, SLOT(startMeasurment()));
+            });
+    }
+
     //startWin = new StartMeasurment(getMode());
     startWin->setMode(getMode());
     startWin->show();
@@ -462,7 +472,8 @@ void Widget::on_pushButton_clicked()
     pBar4->setFormat("В ожидании");
     pBar4->setValue(0);
     emit startMeasurment();
-    //connect(startWin, SIGNAL(startMeasurment()), this, SLOT(startMeasurment()));
+
+
 
 }
 
@@ -533,7 +544,11 @@ void Widget::startMeasurment()
                 msg += QString("№4 - выкл. ");
                 ui->groupBox_f4->hide();
             }
-
+//            ---->> время инкубации 2
+//            if(getMode() == 1 && getMode() == 2) {
+//                msg = QString("Начало сбора данных, одиночные пробы (t = %1c, %2)")
+//                        .arg(startWin->getTime()).arg(msg);
+//            }
             msg = QString("Начало сбора данных, одиночные пробы (t = %1c, %2)")
                     .arg(startWin->getTime()).arg(msg);
             setUserMessage(msg, true, true);
@@ -686,7 +701,7 @@ void Widget::startIncub(int num)
         pBar2->startProgress(QString("Инкубация %p%"), time_ms);
         pBar3->startProgress(QString("Инкубация %p%"), time_ms);
         pBar4->startProgress(QString("Инкубация %p%"), time_ms);
-        setUserMessage(QString("Инкубация"));
+        setUserMessage(QString("Инкубация (%1c)").arg(startWin->getTimeIncube()));
         emit status(QString("Инкубация"));
     }
     else {
@@ -701,7 +716,7 @@ void Widget::startIncub(int num)
         pBar2->startProgress(QString("Инкубация 1 %p%"), time_ms);
         pBar3->startProgress(QString("Инкубация 1 %p%"), time_ms);
         pBar4->startProgress(QString("Инкубация 1 %p%"), time_ms);
-        setUserMessage(QString("Инкубация 1"));
+        setUserMessage(QString("Инкубация 1 (%1c)").arg(startWin->getTimeIncube()));
         emit status(QString("Инкубация 1"));
     }
 }
@@ -725,11 +740,12 @@ void Widget::incubeTimeout_0()
     pBar2->startProgress(QString("Инкубация 2 %p%"), time_ms);
     pBar3->startProgress(QString("Инкубация 2 %p%"), time_ms);
     pBar4->startProgress(QString("Инкубация 2 %p%"), time_ms);
+    setUserMessage(QString("инкубация 2 (%1c)").arg(startWin->getTimeIncube(2)));
 }
 
 void Widget::incubeTimeout()
 {
-    setUserMessage("Время инкубации истекло, добавьте стартовый реагент!");
+    //setUserMessage("Время инкубации истекло, добавьте стартовый реагент!");
     QPointer<ImpuleWaiter> iw = new ImpuleWaiter;
 
     stopIncub();

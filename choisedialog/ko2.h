@@ -18,7 +18,6 @@ public:
     ~Ko2();
 
 private slots:
-    void on_startButton_clicked();
     void on_calibr1Button_clicked();
 
 signals:
