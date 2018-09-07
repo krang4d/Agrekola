@@ -437,7 +437,7 @@ void Widget::on_checkBox_4_stateChanged(int arg1)
 void Widget::on_checkBox_PP_stateChanged(int arg1)
 {
     if(arg1) setUserMessage("Канал РР: Включение двигателя магнитной мешалки");
-    else setUserMessage("Канал РР: Вкылючение двигателя магнитной мешалки");
+    else setUserMessage("Канал РР: Выключение двигателя магнитной мешалки");
     emit onmixpp(arg1);
 }
 
@@ -454,9 +454,11 @@ void Widget::on_pushButton_clicked()
 //        std::function<void(void)> foo = [=](){ startMeasurment();
 //        disconnect(startWin.data(), SIGNAL(startMeasurment(StartMeasurment*)), this, SLOT(startMeasurment()));
 //        };
+        startWin.clear();
         startWin = new StartMeasurment(0);
         connect(startWin.data(), &StartMeasurment::startMeasurment, [=](){ startMeasurment();
             disconnect(startWin.data(), SIGNAL(startMeasurment(StartMeasurment*)), this, SLOT(startMeasurment()));
+            startWin->hide();
             });
     }
 
@@ -502,7 +504,7 @@ void Widget::startMeasurment()
         if(startWin->isSingle()) {
 
             if (startWin->isChannel(1)) {
-                msg += QString("№1 = %1, ").arg(startWin->getNum_1());
+                msg += QString("№1 = %1, ").arg(startWin->getNum(1));
                 ui->checkBox_1->setChecked(true); //включение перемешивания 1
                 ui->groupBox_f1->setTitle("Канал 1");
                 ui->groupBox_f1->show();
@@ -513,7 +515,7 @@ void Widget::startMeasurment()
             }
 
             if (startWin->isChannel(2)) {
-                msg += QString("№2 = %1, ").arg(startWin->getNum_2());
+                msg += QString("№2 = %1, ").arg(startWin->getNum(2));
                 ui->checkBox_2->setChecked(true); //включение перемешивания 2
                 ui->groupBox_f2->setTitle("Канал 2");
                 ui->groupBox_f2->show();
@@ -524,7 +526,7 @@ void Widget::startMeasurment()
             }
 
             if (startWin->isChannel(3)) {
-                msg += QString("№3 = %1, ").arg(startWin->getNum_3());
+                msg += QString("№3 = %1, ").arg(startWin->getNum(3));
                 ui->checkBox_3->setChecked(true); //включение перемешивания 3
                 ui->groupBox_f3->setTitle("Канал 3");
                 ui->groupBox_f3->show();
@@ -535,7 +537,7 @@ void Widget::startMeasurment()
             }
 
             if (startWin->isChannel(4)) {
-                msg += QString("№4 = %1 ").arg(startWin->getNum_4());
+                msg += QString("№4 = %1 ").arg(startWin->getNum(4));
                 ui->checkBox_4->setChecked(true); //включение перемешивания 4
                 ui->groupBox_f4->setTitle("Канал 4");
                 ui->groupBox_f4->show();
@@ -558,7 +560,7 @@ void Widget::startMeasurment()
         else {
 
             if (startWin->isChannel(1)) {
-                msg += QString("№1, 2 = %1, ").arg(startWin->getNum_1());
+                msg += QString("№1, 2 = %1, ").arg(startWin->getNum(1));
                 ui->groupBox_f1->setTitle("Канал 1, 2");
                 ui->groupBox_f2->hide();
                 ui->checkBox_1->setChecked(true); //включение перемешивания 1
@@ -571,7 +573,7 @@ void Widget::startMeasurment()
             }
 
             if (startWin->isChannel(3)) {
-                msg += QString("№3, 4 = %1, ").arg(startWin->getNum_3());
+                msg += QString("№3, 4 = %1, ").arg(startWin->getNum(3));
                 ui->groupBox_f3->setTitle("Канал 3, 4");
                 ui->groupBox_f4->hide();
                 ui->checkBox_3->setChecked(true); //включение перемешивания 3
@@ -750,22 +752,22 @@ void Widget::incubeTimeout()
 
     stopIncub();
     if(startWin->isChannel(1)) {
-        setUserMessage("Канала 1 в ожидании добавления стартового реагента");
+        setUserMessage("Канала 1 в ожидании введения стартового реагента");
         ready1 = true;
         iw->addWaiter(1);
     }
     if(startWin->isChannel(2)) {
-        setUserMessage("Канала 2 в ожидании добавления стартового реагента");
+        setUserMessage("Канала 2 в ожидании введения стартового реагента");
         ready2 = true;
         iw->addWaiter(2);
     }
     if(startWin->isChannel(3)) {
-        setUserMessage("Канала 3 в ожидании добавления стартового реагента");
+        setUserMessage("Канала 3 в ожидании введения стартового реагента");
         ready3 = true;
         iw->addWaiter(3);
     }
     if(startWin->isChannel(4)) {
-        setUserMessage("Канала 4 в ожидании добавления стартового реагента");
+        setUserMessage("Канала 4 в ожидании введения стартового реагента");
         ready4 = true;
         iw->addWaiter(4);
     }
@@ -848,7 +850,7 @@ double Widget::writeMapData(int n)
     if( n == 1 && !map_y1.isEmpty() ) {
         retval = p->calc(map_y1);
         setUserMessage(QString("Рассчитанное значение = %1 по методике '%2'").arg(retval).arg(p->info()));
-        strList << QString("V1#%1\t").arg(startWin->getNum_1());
+        strList << QString("V1#%1\t").arg(startWin->getNum(1));
         pBar->setMaximum(map_y1.count());
         func(map_y1);
         map_y1.clear();
@@ -856,7 +858,7 @@ double Widget::writeMapData(int n)
     if( n == 2 && !map_y2.isEmpty() ) {
         retval = p->calc(map_y2);
         setUserMessage(QString("Рассчитанное значение = %1 по методике '%2'").arg(retval).arg(p->info()));
-        strList << QString("V2#%1\t").arg(startWin->getNum_2());
+        strList << QString("V2#%1\t").arg(startWin->getNum(2));
         pBar->setMaximum(map_y2.count());
         func(map_y2);
         map_y2.clear();
@@ -864,7 +866,7 @@ double Widget::writeMapData(int n)
     if( n == 3 && !map_y3.isEmpty() ) {
         retval = p->calc(map_y3);
         setUserMessage(QString("Рассчитанное значение = %1 по методике '%2'").arg(retval).arg(p->info()));
-        strList << QString("V3#%1\t").arg(startWin->getNum_3());
+        strList << QString("V3#%1\t").arg(startWin->getNum(3));
         pBar->setMaximum(map_y3.count());
         func(map_y3);
         map_y3.clear();
@@ -872,7 +874,7 @@ double Widget::writeMapData(int n)
     if( n == 4 && !map_y4.isEmpty() ) {
         retval = p->calc(map_y4);
         setUserMessage(QString("Рассчитанное значение = %1 по методике '%2'").arg(retval).arg(p->info()));
-        strList << QString("V4#%1\t").arg(startWin->getNum_4());
+        strList << QString("V4#%1\t").arg(startWin->getNum(4));
         pBar->setMaximum(map_y4.count());
         func(map_y4);
         map_y4.clear();

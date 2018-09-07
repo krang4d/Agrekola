@@ -4,7 +4,6 @@
 #include <QWidget>
 #include <QStringList>
 #include "startmeasurment.h"
-
 #include "savefiles.h"
 
 namespace Ui {

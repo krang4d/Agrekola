@@ -118,44 +118,29 @@ bool StartMeasurment::isSingle()
     return single;
 }
 
-//bool StartMeasurment::isChannel_1()
-//{
-//    return channel_1;
-//}
-
-//bool StartMeasurment::isChannel_2()
-//{
-//    return channel_2;
-//}
-
-//bool StartMeasurment::isChannel_3()
-//{
-//    return channel_3;
-//}
-
-//bool StartMeasurment::isChannel_4()
-//{
-//    return channel_4;
-//}
-
-int StartMeasurment::getNum_1()
+int StartMeasurment::getNum(const int ch)
 {
+    switch (ch) {
+    case 0:
+        return 0;
+        break;
+    case 1:
+        return num_1;
+        break;
+    case 2:
+        return num_2;
+        break;
+    case 3:
+        return num_3;
+        break;
+    case 4:
+        return num_4;
+        break;
+    default:
+        return 0;
+    }
+
     return num_1;
-}
-
-int StartMeasurment::getNum_2()
-{
-    return num_2;
-}
-
-int StartMeasurment::getNum_3()
-{
-    return num_3;
-}
-
-int StartMeasurment::getNum_4()
-{
-    return num_4;
 }
 
 int StartMeasurment::getTime()
@@ -205,10 +190,6 @@ void StartMeasurment::on_radioButton_single_toggled(bool checked)
     ui->checkBox_ch2->setCheckState(Qt::Unchecked);
     ui->checkBox_ch3->setCheckState(Qt::Unchecked);
     ui->checkBox_ch4->setCheckState(Qt::Unchecked);
-   // ui->lineEdit_ch1->setText("");
-   // ui->lineEdit_ch2->setText("");
-   // ui->lineEdit_ch3->setText("");
-   // ui->lineEdit_ch4->setText("");
 
     if(checked){
         ui->checkBox_ch1->setText("Канал 1");
@@ -284,15 +265,15 @@ void StartMeasurment::on_pushButton_next_clicked()
         mb.exec();
     else {
         cancel = false;
-        hide();
+        //hide();
         emit startMeasurment(this);
     }
     saveData();
 }
 
-void StartMeasurment::on_pushButton_cancel_clicked()
-{
-    openData();
-    cancel = true;
-    hide();
-}
+//void StartMeasurment::on_pushButton_cancel_clicked()
+//{
+//    openData();
+//    cancel = true;
+//    hide();
+//}

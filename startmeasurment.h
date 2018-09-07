@@ -22,10 +22,10 @@ public:
 
     void setMode(int);
 
-    int getNum_1();
-    int getNum_2();
-    int getNum_3();
-    int getNum_4();
+    int getNum(const int);
+//    int getNum_2();
+//    int getNum_3();
+//    int getNum_4();
     int getTime();
     int getTimeIncube(int = 1);
     QString getStringStatus();
@@ -41,7 +41,7 @@ public slots:
     void on_checkBox_ch4_stateChanged(int arg1);
     void on_radioButton_single_toggled(bool checked);
     void on_pushButton_next_clicked();
-    void on_pushButton_cancel_clicked();
+//  void on_pushButton_cancel_clicked();
 
 signals:
     startMeasurment(StartMeasurment*);
