@@ -23,9 +23,6 @@ public:
     void setMode(int);
 
     int getNum(const int);
-//    int getNum_2();
-//    int getNum_3();
-//    int getNum_4();
     int getTime();
     int getTimeIncube(int = 1);
     QString getStringStatus();

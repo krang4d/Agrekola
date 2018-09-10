@@ -157,7 +157,61 @@ int StartMeasurment::getTimeIncube(int i)
 
 QString StartMeasurment::getStringStatus()
 {
-    return QString("");
+    QString msg;
+    if(isSingle()) {
+        if (isChannel(1)) {
+            msg += QString("№1 = %1, ").arg(getNum(1));
+        }
+        else {
+            msg += QString("№1 - выкл., ");
+        }
+
+        if (isChannel(2)) {
+            msg += QString("№2 = %1, ").arg(getNum(2));
+        }
+        else {
+            msg += QString("№2 - выкл., ");
+        }
+
+        if (isChannel(3)) {
+            msg += QString("№3 = %1, ").arg(getNum(3));
+        }
+        else {
+            msg += QString("№3 - выкл., ");
+        }
+
+        if (isChannel(4)) {
+            msg += QString("№4 = %1 ").arg(getNum(4));
+        }
+        else {
+            msg += QString("№4 - выкл. ");
+        }
+//        //---->> магические числа для времени инкубации 2
+//        if(getMode() == 1 && getMode() == 2) {
+//            msg = QString("Начало сбора данных, одиночные пробы (t = %1c, %2)")
+//                    .arg(startWin->getTime()).arg(msg);
+//        }
+        msg = QString("Начало сбора данных, одиночные пробы (t = %1c, %2)")
+                .arg(getTime()).arg(msg);
+    }
+    else {
+        if (isChannel(1)) {
+            msg += QString("№1, 2 = %1, ").arg(getNum(1));
+        }
+        else {
+            msg += QString("№1, 2 - выкл., ");
+        }
+
+        if (isChannel(3)) {
+            msg += QString("№3, 4 = %1, ").arg(getNum(3));
+        }
+        else {
+            msg += QString("№3, 4 - выкл., ");
+        }
+        msg = QString("Начало сбора данных, парные пробы (t = %1c, %2)")
+                .arg(getTime()).arg(msg);
+    }
+    return msg;
 }
 
 void StartMeasurment::on_checkBox_ch1_stateChanged(int arg1)

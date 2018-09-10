@@ -33,6 +33,7 @@ Ko2::~Ko2()
 
 void Ko2::on_calibr1Button_clicked()
 {
+     //ui->page_2->set
     emit calibration();
 }
 

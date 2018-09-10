@@ -37,12 +37,12 @@ ChoiseDialog::ChoiseDialog(QDialog *parent) :
     connect(ko4, SIGNAL(measurement(StartMeasurment*)), SLOT(startMeasurement(StartMeasurment*)));
     connect(ko5, SIGNAL(measurement(StartMeasurment*)), SLOT(startMeasurement(StartMeasurment*)));
 
-    connect(agr1, SIGNAL(calibration()), SLOT(calibration()));
-    connect(agr2, SIGNAL(calibration()), SLOT(calibration()));
-    connect(ko2, SIGNAL(calibration()), SLOT(calibration()));
-    connect(ko3, SIGNAL(calibration()), SLOT(calibration()));
-    connect(ko5, SIGNAL(calibration()), SLOT(calibration()));
-    connect(ko4, SIGNAL(calibration()), SLOT(calibration()));
+//    connect(agr1, SIGNAL(calibration(StartMeasurment*)), SLOT(calibration(StartMeasurment*)));
+//    connect(agr2, SIGNAL(calibration(StartMeasurment*)), SLOT(calibration(StartMeasurment*)));
+//    connect(ko2, SIGNAL(calibration(StartMeasurment*)), SLOT(calibration(StartMeasurment*)));
+//    connect(ko3, SIGNAL(calibration(StartMeasurment*)), SLOT(calibration(StartMeasurment*)));
+//    connect(ko5, SIGNAL(calibration(StartMeasurment*)), SLOT(calibration(StartMeasurment*)));
+//    connect(ko4, SIGNAL(calibration(StartMeasurment*)), SLOT(calibration(StartMeasurment*)));
     qDebug() << "ChoiseDialog thread ID: " << QThread::currentThreadId();
 }
 

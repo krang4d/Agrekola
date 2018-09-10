@@ -462,7 +462,7 @@ void Widget::on_pushButton_clicked()
             });
     }
 
-    //startWin = new StartMeasurment(getMode());
+
     startWin->setMode(getMode());
     startWin->show();
     pBar1->setFormat("В ожидании");
@@ -474,9 +474,6 @@ void Widget::on_pushButton_clicked()
     pBar4->setFormat("В ожидании");
     pBar4->setValue(0);
     emit startMeasurment();
-
-
-
 }
 
 void Widget::updataTermo(bool td)
@@ -496,84 +493,62 @@ void Widget::updataTermo(bool td)
 
 void Widget::startMeasurment()
 {
-    //setUserMessage(getMode());
-    //isSensorReady();
     ui->pushButton->setEnabled(false);
-    QString msg;
     if(!startWin->isCancel()) {
         if(startWin->isSingle()) {
-
             if (startWin->isChannel(1)) {
-                msg += QString("№1 = %1, ").arg(startWin->getNum(1));
                 ui->checkBox_1->setChecked(true); //включение перемешивания 1
                 ui->groupBox_f1->setTitle("Канал 1");
                 ui->groupBox_f1->show();
             }
             else {
-                msg += QString("№1 - выкл., ");
                 ui->groupBox_f1->hide();
             }
 
             if (startWin->isChannel(2)) {
-                msg += QString("№2 = %1, ").arg(startWin->getNum(2));
                 ui->checkBox_2->setChecked(true); //включение перемешивания 2
                 ui->groupBox_f2->setTitle("Канал 2");
                 ui->groupBox_f2->show();
             }
             else {
-                msg += QString("№2 - выкл., ");
                 ui->groupBox_f2->hide();
             }
 
             if (startWin->isChannel(3)) {
-                msg += QString("№3 = %1, ").arg(startWin->getNum(3));
                 ui->checkBox_3->setChecked(true); //включение перемешивания 3
                 ui->groupBox_f3->setTitle("Канал 3");
                 ui->groupBox_f3->show();
             }
             else {
-                msg += QString("№3 - выкл., ");
                 ui->groupBox_f3->hide();
             }
 
             if (startWin->isChannel(4)) {
-                msg += QString("№4 = %1 ").arg(startWin->getNum(4));
                 ui->checkBox_4->setChecked(true); //включение перемешивания 4
                 ui->groupBox_f4->setTitle("Канал 4");
                 ui->groupBox_f4->show();
             }
             else {
-                msg += QString("№4 - выкл. ");
                 ui->groupBox_f4->hide();
             }
-//            ---->> время инкубации 2
-//            if(getMode() == 1 && getMode() == 2) {
-//                msg = QString("Начало сбора данных, одиночные пробы (t = %1c, %2)")
-//                        .arg(startWin->getTime()).arg(msg);
-//            }
-            msg = QString("Начало сбора данных, одиночные пробы (t = %1c, %2)")
-                    .arg(startWin->getTime()).arg(msg);
-            setUserMessage(msg, true, true);
+            setUserMessage(startWin->getStringStatus());
             ui->checkBox_L->setChecked(true); //включение лазеров
             setupRealtimeData();
         }
         else {
 
             if (startWin->isChannel(1)) {
-                msg += QString("№1, 2 = %1, ").arg(startWin->getNum(1));
                 ui->groupBox_f1->setTitle("Канал 1, 2");
                 ui->groupBox_f2->hide();
                 ui->checkBox_1->setChecked(true); //включение перемешивания 1
                 ui->checkBox_2->setChecked(true); //включение перемешивания 2
             }
             else {
-                msg += QString("№1, 2 - выкл., ");
                 ui->groupBox_f1->hide();
                 ui->groupBox_f2->hide();
             }
 
             if (startWin->isChannel(3)) {
-                msg += QString("№3, 4 = %1, ").arg(startWin->getNum(3));
                 ui->groupBox_f3->setTitle("Канал 3, 4");
                 ui->groupBox_f4->hide();
                 ui->checkBox_3->setChecked(true); //включение перемешивания 3
@@ -581,13 +556,9 @@ void Widget::startMeasurment()
 
             }
             else {
-                msg += QString("№3, 4 - выкл., ");
                 ui->groupBox_f3->hide();
                 ui->groupBox_f4->hide();
             }
-            msg = QString("Начало сбора данных, парные пробы (t = %1c, %2)")
-                    .arg(startWin->getTime()).arg(msg);
-            setUserMessage(msg, true, true);
             setupRealtimeData();
         }
         if( getMode() == Agr1_ID ||getMode() == Agr2_ID ) {
@@ -752,22 +723,22 @@ void Widget::incubeTimeout()
 
     stopIncub();
     if(startWin->isChannel(1)) {
-        setUserMessage("Канала 1 в ожидании введения стартового реагента");
+        setUserMessage("Канал 1 в ожидании введения стартового реагента");
         ready1 = true;
         iw->addWaiter(1);
     }
     if(startWin->isChannel(2)) {
-        setUserMessage("Канала 2 в ожидании введения стартового реагента");
+        setUserMessage("Канал 2 в ожидании введения стартового реагента");
         ready2 = true;
         iw->addWaiter(2);
     }
     if(startWin->isChannel(3)) {
-        setUserMessage("Канала 3 в ожидании введения стартового реагента");
+        setUserMessage("Канал 3 в ожидании введения стартового реагента");
         ready3 = true;
         iw->addWaiter(3);
     }
     if(startWin->isChannel(4)) {
-        setUserMessage("Канала 4 в ожидании введения стартового реагента");
+        setUserMessage("Канал 4 в ожидании введения стартового реагента");
         ready4 = true;
         iw->addWaiter(4);
     }
@@ -886,8 +857,8 @@ double Widget::writeMapData(int n)
     setUserMessage(filename, true, true);
     //std::function<QString(void)> f1= [=](){return SaveFiles::writeData(strList);};
     //std::function<QString(void)> foo = func();
-//    QFuture<QString> result = QtConcurrent::run(f1);
-//    QString filename = result.result();
+    //QFuture<QString> result = QtConcurrent::run(f1);
+    //QString filename = result.result();
     return retval;
 }
 
