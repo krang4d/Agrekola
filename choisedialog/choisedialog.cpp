@@ -37,12 +37,12 @@ ChoiseDialog::ChoiseDialog(QDialog *parent) :
     connect(ko4, SIGNAL(measurement(StartMeasurment*)), SLOT(startMeasurement(StartMeasurment*)));
     connect(ko5, SIGNAL(measurement(StartMeasurment*)), SLOT(startMeasurement(StartMeasurment*)));
 
-//    connect(agr1, SIGNAL(calibration(StartMeasurment*)), SLOT(calibration(StartMeasurment*)));
-//    connect(agr2, SIGNAL(calibration(StartMeasurment*)), SLOT(calibration(StartMeasurment*)));
-//    connect(ko2, SIGNAL(calibration(StartMeasurment*)), SLOT(calibration(StartMeasurment*)));
-//    connect(ko3, SIGNAL(calibration(StartMeasurment*)), SLOT(calibration(StartMeasurment*)));
-//    connect(ko5, SIGNAL(calibration(StartMeasurment*)), SLOT(calibration(StartMeasurment*)));
-//    connect(ko4, SIGNAL(calibration(StartMeasurment*)), SLOT(calibration(StartMeasurment*)));
+    connect(agr1, SIGNAL(calibration(StartMeasurment*)), SLOT(calibration(StartMeasurment*)));
+    connect(agr2, SIGNAL(calibration(StartMeasurment*)), SLOT(calibration(StartMeasurment*)));
+    connect(ko2, SIGNAL(calibration(StartMeasurment*)), SLOT(calibration(StartMeasurment*)));
+    connect(ko3, SIGNAL(calibration(StartMeasurment*)), SLOT(calibration(StartMeasurment*)));
+    connect(ko5, SIGNAL(calibration(StartMeasurment*)), SLOT(calibration(StartMeasurment*)));
+    connect(ko4, SIGNAL(calibration(StartMeasurment*)), SLOT(calibration(StartMeasurment*)));
     qDebug() << "ChoiseDialog thread ID: " << QThread::currentThreadId();
 }
 
@@ -98,92 +98,96 @@ void ChoiseDialog::startMeasurement(StartMeasurment* sw)
     hide();
 }
 
-void ChoiseDialog::calibration()
+void ChoiseDialog::calibration(StartMeasurment* sw)
 {
     int i = ui->stackedWidget->currentIndex();
-    QString str;
+    QPointer<useE154> agrekola = new useE154;
+    QPointer<Widget> widget =new Widget(sw, this);
+    widget->setWindowFlags(Qt::Dialog);
+    //ChoiseDialog choiseDlg;
+    QWidget::connect(widget, SIGNAL(onmixch1(bool)), agrekola, SLOT(onMixCh1(bool)));
+    QWidget::connect(widget, SIGNAL(onmixch2(bool)), agrekola, SLOT(onMixCh2(bool)));
+    QWidget::connect(widget, SIGNAL(onmixch3(bool)), agrekola, SLOT(onMixCh3(bool)));
+    QWidget::connect(widget, SIGNAL(onmixch4(bool)), agrekola, SLOT(onMixCh4(bool)));
+    QWidget::connect(widget, SIGNAL(onmixpp(bool)), agrekola, SLOT(onMixPP(bool)));
+    QWidget::connect(widget, SIGNAL(onlaser(bool)), agrekola, SLOT(onLaser(bool)));
+    QObject::connect(widget, SIGNAL(stop()), agrekola, SLOT(stopThread()));
+    //QObject::connect(widget, SIGNAL(stop()), widget, SLOT(deleteLater());
+
+    QWidget::connect(agrekola, SIGNAL(update_termo(bool)), widget, SLOT(updataTermo(bool)));
+    QWidget::connect(agrekola, SIGNAL(value_come(QVariantList)), widget, SLOT(realtimeDataSlot(QVariantList)));
+    QWidget::connect(agrekola, SIGNAL(finished()), agrekola, SLOT(deleteLater()));
+    QWidget::connect(widget, SIGNAL(destroyed(QObject*)), agrekola, SLOT(deleteLater()));
+
+    agrekola->start();
+    widget->show();
+    hide();
+
+    QPointer<QMessageBox> msg(new QMessageBox());
     switch (i){
     case 1:{
-        str = tr("Определение параметров агрегации, калибровка (Agr1 1)");
+        widget->setMode(Agr1_ID);
+        QString("Определение параметров агрегации, калибровка (Agr1 1)");
     }break;
     case 2:{
-        str = tr("Определение активности фактора Виллебранда, калибровка (Agr2 2)");
+        widget->setMode(Agr1_ID);
+        QString("Определение активности фактора Виллебранда, калибровка (Agr2 2)");
     }break;
     case 3:{
-        str = tr("Время свертывания, калибровка (Ko1 3)");
+        widget->setMode(Ko1_ID);
+        QString("Время свертывания, калибровка (Ko1 3)");
     }break;
     case 4:{
-        str = tr("АЧТВ, калибровка (Ko2 4)");     
-        QPointer<useE154> agrekola = new useE154;
-        QPointer<Widget> widget =new Widget(this);
-        widget->setWindowFlags(Qt::Dialog);
-        //ChoiseDialog choiseDlg;
-        QWidget::connect(widget, SIGNAL(onmixch1(bool)), agrekola, SLOT(onMixCh1(bool)));
-        QWidget::connect(widget, SIGNAL(onmixch2(bool)), agrekola, SLOT(onMixCh2(bool)));
-        QWidget::connect(widget, SIGNAL(onmixch3(bool)), agrekola, SLOT(onMixCh3(bool)));
-        QWidget::connect(widget, SIGNAL(onmixch4(bool)), agrekola, SLOT(onMixCh4(bool)));
-        QWidget::connect(widget, SIGNAL(onmixpp(bool)), agrekola, SLOT(onMixPP(bool)));
-        QWidget::connect(widget, SIGNAL(onlaser(bool)), agrekola, SLOT(onLaser(bool)));
-        QObject::connect(widget, SIGNAL(stop()), agrekola, SLOT(stopThread()));
-        //QObject::connect(widget, SIGNAL(stop()), widget, SLOT(deleteLater());
-
-        QWidget::connect(agrekola, SIGNAL(update_termo(bool)), widget, SLOT(updataTermo(bool)));
-        QWidget::connect(agrekola, SIGNAL(value_come(QVariantList)), widget, SLOT(realtimeDataSlot(QVariantList)));
-        QWidget::connect(agrekola, SIGNAL(finished()), agrekola, SLOT(deleteLater()));
-        QWidget::connect(widget, SIGNAL(destroyed(QObject*)), agrekola, SLOT(deleteLater()));
-
-        widget->setMode(Ko1_ID); //
-        widget->show();
-        hide();
-        agrekola->start();
-        widget->setUserMessage(str);
-        //QMessageBox::information(this, "АЧТВ калибровка", "Установите кювету с контрольной нормальной плазмой и нажмите \"Начать\"");
-        widget->setUserMessage(QString("Установите кювету с контрольной нормальной плазмой и нажмите \"Начать\""));
-        connect(widget.data(), SIGNAL(ret_value(double)), ko2.data(), SLOT(calibration_data_come(double)));
+        widget->setMode(Ko1_ID);
+        widget->setUserMessage("АЧТВ, калибровка (Ko2 4)", 0);
+        //QMessageBox::information(this, "АЧТВ калибровка", "Установите кювету с контрольной нормальной плазмой и нажмите \"Старт\"");
+        widget->setUserMessage(QString("Установите кювету с контрольной нормальной плазмой и нажмите \"Старт\""), 0);
+        connect(widget.data(), SIGNAL(ret_value1(double)), ko2.data(), SLOT(calibration_data1_come(double)));
+        connect(widget.data(), SIGNAL(ret_value2(double)), ko2.data(), SLOT(calibration_data2_come(double)));
+        connect(widget.data(), SIGNAL(ret_value3(double)), ko2.data(), SLOT(calibration_data3_come(double)));
+        connect(widget.data(), SIGNAL(ret_value4(double)), ko2.data(), SLOT(calibration_data4_come(double)));
         //connect(w.data(), SIGNAL(ret_value(double)), w.data(), SLOT(deleteLater()));
 //        connect(w.data(), &Widget::destroyed, [=](){
 //            disconnect(w.data(), SIGNAL(ret_value(double)), ko2.data(), SLOT(calibration_data_come(double)));
 //        });
     }break;
     case 5:{
-        str = tr("Фибриноген, калибровка (Ko3 5)");
+        widget->setMode(Ko1_ID);
+        widget->setUserMessage("Фибриноген, калибровка (Ko3 5)", 0);
+        //QMessageBox::information(0, "", "Установите кюветы с контрольной нормальной плазмой и нажмите \"Старт\"");
+        widget->setUserMessage(QString("Установите кюветы с контрольной нормальной плазмой и нажмите \"Старт\""), 0);
+        widget->setUserMessage(QString("Канал 1 - 200%, Канал 2 - 100%, Канал 3 - 50%, Канал 4 - 25%"), 0);
+        connect(widget.data(), SIGNAL(ret_value1(double)), ko3.data(), SLOT(calibration_data1_come(double)));
+        connect(widget.data(), SIGNAL(ret_value2(double)), ko3.data(), SLOT(calibration_data2_come(double)));
+        connect(widget.data(), SIGNAL(ret_value3(double)), ko3.data(), SLOT(calibration_data3_come(double)));
+        connect(widget.data(), SIGNAL(ret_value4(double)), ko3.data(), SLOT(calibration_data4_come(double)));
 
-    }
+//        msg->setText("Установите кювету с контрольной нормальной плазмой и нажмите \"Старт\"");
+//        msg->show();
+    }break;
     case 6:{
-        str = tr("Тромбин, калибровка (Ko4 6)");
-        QPointer<useE154> agrekola = new useE154;
-        QPointer<Widget> widget =new Widget(this);
-        widget->setWindowFlags(Qt::Dialog);
-        //ChoiseDialog choiseDlg;
-        QWidget::connect(widget, SIGNAL(onmixch1(bool)), agrekola, SLOT(onMixCh1(bool)));
-        QWidget::connect(widget, SIGNAL(onmixch2(bool)), agrekola, SLOT(onMixCh2(bool)));
-        QWidget::connect(widget, SIGNAL(onmixch3(bool)), agrekola, SLOT(onMixCh3(bool)));
-        QWidget::connect(widget, SIGNAL(onmixch4(bool)), agrekola, SLOT(onMixCh4(bool)));
-        QWidget::connect(widget, SIGNAL(onmixpp(bool)), agrekola, SLOT(onMixPP(bool)));
-        QWidget::connect(widget, SIGNAL(onlaser(bool)), agrekola, SLOT(onLaser(bool)));
-        QObject::connect(widget, SIGNAL(stop()), agrekola, SLOT(stopThread()));
-        //QObject::connect(widget, SIGNAL(stop()), widget, SLOT(deleteLater());
-
-        QWidget::connect(agrekola, SIGNAL(update_termo(bool)), widget, SLOT(updataTermo(bool)));
-        QWidget::connect(agrekola, SIGNAL(value_come(QVariantList)), widget, SLOT(realtimeDataSlot(QVariantList)));
-        QWidget::connect(agrekola, SIGNAL(finished()), agrekola, SLOT(deleteLater()));
-        QWidget::connect(widget, SIGNAL(destroyed(QObject*)), agrekola, SLOT(deleteLater()));
-
-        widget->setMode(Ko1_ID); //
-        widget->show();
-        hide();
-        agrekola->start();
-        widget->setUserMessage(str);
-        //QMessageBox::information(this, "АЧТВ калибровка", "Установите кювету с контрольной нормальной плазмой и нажмите \"Начать\"");
-        widget->setUserMessage(QString("Установите кювету с контрольной нормальной плазмой и нажмите \"Начать\""));
-        connect(widget.data(), SIGNAL(ret_value(double)), ko4.data(), SLOT(calibration_data_come(double)));
+        widget->setMode(Ko1_ID);
+        widget->setUserMessage("Тромбин, калибровка (Ko4 6)", 0);
+        //widget->startMeasurment();
+        //QMessageBox::information(this, "АЧТВ калибровка", "Установите кювету с контрольной нормальной плазмой и нажмите \"Старт\"");
+        widget->setUserMessage(QString("Установите кювету с контрольной нормальной плазмой и нажмите \"Старт\""), 0);
+        connect(widget.data(), SIGNAL(ret_value1(double)), ko4.data(), SLOT(calibration_data1_come(double)));
+        connect(widget.data(), SIGNAL(ret_value2(double)), ko4.data(), SLOT(calibration_data2_come(double)));
+        connect(widget.data(), SIGNAL(ret_value3(double)), ko4.data(), SLOT(calibration_data3_come(double)));
+        connect(widget.data(), SIGNAL(ret_value4(double)), ko4.data(), SLOT(calibration_data4_come(double)));
         //connect(w.data(), SIGNAL(ret_value(double)), w.data(), SLOT(deleteLater()));
 //        connect(w.data(), &Widget::destroyed, [=](){
 //            disconnect(w.data(), SIGNAL(ret_value(double)), ko2.data(), SLOT(calibration_data_come(double)));
 //        });
     }break;
     case 7:{
-        str = tr("Протромбиновый комплекс, калибровка (Ko5 7)");
+        widget->setMode(Ko1_ID);
+        widget->setUserMessage(QString("Протромбиновый комплекс, калибровка (Ko5 7)"), 0);
+        widget->setUserMessage(QString("Установите кювету с контрольной нормальной плазмой и нажмите \"Старт\""), 0);
+        connect(widget.data(), SIGNAL(ret_value1(double)), ko5.data(), SLOT(calibration_data1_come(double)));
+        connect(widget.data(), SIGNAL(ret_value2(double)), ko5.data(), SLOT(calibration_data2_come(double)));
+        connect(widget.data(), SIGNAL(ret_value3(double)), ko5.data(), SLOT(calibration_data3_come(double)));
+        connect(widget.data(), SIGNAL(ret_value4(double)), ko5.data(), SLOT(calibration_data4_come(double)));
     }break;
     default:
         break;

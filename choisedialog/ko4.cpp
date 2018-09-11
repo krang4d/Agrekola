@@ -14,7 +14,8 @@ Ko4::Ko4(QWidget *parent) :
         ui->lineEdit_3->setText(param.at(3));
         ui->lineEdit_4->setText(param.at(4));
         ui->lineEdit_5->setText(param.at(5));
-    }
+    } else
+        param = QStringList({0, 0, 0, 0, 0, 0, 0 , 0 , 0, 0});//10 параметров
     connect(ui->page_2, &StartMeasurment::startMeasurment, this, &Ko4::measurement);
 }
 
@@ -38,16 +39,50 @@ void Ko4::on_startButton_clicked()
 
 void Ko4::on_calibr1Button_clicked()
 {
-    emit calibration();
+    emit calibration(StartCalibrationKo4::getStart());
 }
 
-void Ko4::calibration_data_come(double t0)
+void Ko4::calibration_data_come(int n, double deta)
 {
-    //один параметр ТВ контрольной нормальной плазмы
+    //один параметр контрольной нормальной плазмы
     QDateTime dt = QDateTime::currentDateTime();
     ui->label_calibrationData->setText(dt.toString("dd.MM.yyyy ") + dt.toString("hh:mm:ss"));
-    if(param.count() <= 6)
-        param.push_back(QString("%1").arg(t0));
-    else param.replace(6, QString("%1").arg(t0));
-    file.saveKo2(param);
+    if(param.count() <= n)
+        param.push_back(QString("%1").arg(deta));
+    else param.replace(n, QString("%1").arg(deta));
+    file.saveKo4(param);
+}
+
+void Ko4::calibration_data1_come(double t0)
+{
+    calibration_data_come(6, t0);
+}
+
+void Ko4::calibration_data2_come(double t0)
+{
+    calibration_data_come(7, t0);
+}
+
+void Ko4::calibration_data3_come(double t0)
+{
+    calibration_data_come(8, t0);
+}
+
+void Ko4::calibration_data4_come(double t0)
+{
+    calibration_data_come(9, t0);
+}
+
+StartMeasurment *StartCalibrationKo4::getStart()
+{
+    StartMeasurment *sm = new StartMeasurment(0);
+    sm->setChannels(true, true, true, true);
+    sm->setNum(1, "Калибровка");
+    sm->setNum(2, "Калибровка");
+    sm->setNum(3, "Калибровка");
+    sm->setNum(4, "Калибровка");
+    sm->setTime(10);
+    sm->setTimeIncube(1, 3);
+    //stKo2->cancel = false;
+    return sm;
 }

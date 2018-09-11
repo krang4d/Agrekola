@@ -99,10 +99,14 @@ signals:
     void stopData3();
     void stopData4();
 
-    void ret_value(double);
+    void ret_value1(double);
+    void ret_value2(double);
+    void ret_value3(double);
+    void ret_value4(double);
 
 public slots:
     void startMeasurment();
+    void startMeasurment(StartMeasurment *);
     void incubeTimeout_0();
     void incubeTimeout();
 

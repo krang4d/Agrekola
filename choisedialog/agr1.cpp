@@ -19,6 +19,7 @@ Agr1::Agr1(QWidget *parent) :
 Agr1::~Agr1()
 {
     //param.clear();
+    if(param.count() == 0)  param = QStringList({0, 0, 0});
     param.replace(0, ui->lineEdit_1->text());
     param.replace(1, ui->lineEdit_2->text());
     param.replace(2, ui->lineEdit_3->text());
@@ -33,5 +34,7 @@ void Agr1::on_startButton_clicked()
 
 void Agr1::on_kolibrButton_clicked()
 {
-    emit calibration();
+    StartMeasurment *sm = ui->page_2;
+    sm->openData();
+    emit calibration(ui->page_2);
 }

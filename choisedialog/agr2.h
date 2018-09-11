@@ -25,7 +25,7 @@ private slots:
 
 signals:
     void measurement(StartMeasurment*);
-    void calibration();
+    void calibration(StartMeasurment*);
 
 private:
     Ui::Agr2 *ui;

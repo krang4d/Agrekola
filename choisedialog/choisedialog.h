@@ -35,7 +35,7 @@ public:
 
 private slots:
     void startMeasurement(StartMeasurment*);
-    void calibration();
+    void calibration(StartMeasurment *);
     void on_agr1Button_clicked();
     void on_agr2Button_clicked();
     void on_ko1Button_clicked();

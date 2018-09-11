@@ -15,7 +15,8 @@ Ko5::Ko5(QWidget *parent) :
         ui->lineEdit_4->setText(param.at(4));
         ui->lineEdit_5->setText(param.at(5));
         ui->lineEdit_6->setText(param.at(6));
-    }
+    } else
+        param = QStringList({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}); //11 параметров
     connect(ui->page_2, &StartMeasurment::startMeasurment, this, &Ko5::measurement);
 }
 
@@ -33,12 +34,53 @@ Ko5::~Ko5()
     delete ui;
 }
 
-void Ko5::on_startButton_clicked()
-{
-    emit measurement(ui->page_2);
-}
-
 void Ko5::on_calibr1Button_clicked()
 {
-    emit calibration();
+    file.saveKo5(param);
+    emit calibration(StartCalibrationKo5::getStart());
+}
+
+void Ko5::calibration_data_come(int n, double deta)
+{
+    //один параметр контрольной нормальной плазмы
+    QDateTime dt = QDateTime::currentDateTime();
+    ui->label_calibrationData->setText(dt.toString("dd.MM.yyyy ") + dt.toString("hh:mm:ss"));
+    if(param.count() <= n)
+        param.push_back(QString("%1").arg(deta));
+    else param.replace(n, QString("%1").arg(deta));
+    file.saveKo5(param);
+}
+
+void Ko5::calibration_data1_come(double t0)
+{
+    calibration_data_come(7, t0);
+}
+
+void Ko5::calibration_data2_come(double t0)
+{
+    calibration_data_come(8, t0);
+}
+
+void Ko5::calibration_data3_come(double t0)
+{
+    calibration_data_come(9, t0);
+}
+
+void Ko5::calibration_data4_come(double t0)
+{
+    calibration_data_come(10, t0);
+}
+
+StartMeasurment *StartCalibrationKo5::getStart()
+{
+    StartMeasurment *sm = new StartMeasurment(0);
+    sm->setChannels(true, true, true, true);
+    sm->setNum(1, "Калибровка");
+    sm->setNum(2, "Калибровка");
+    sm->setNum(3, "Калибровка");
+    sm->setNum(4, "Калибровка");
+    sm->setTime(10);
+    sm->setTimeIncube(1, 3);
+    //stKo2->cancel = false;
+    return sm;
 }

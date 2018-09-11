@@ -2,6 +2,7 @@
 #define STARTMEASURMENT_H
 
 #include <QDialog>
+#include <QString>
 #include "savefiles.h"
 
 namespace Ui {
@@ -16,18 +17,25 @@ public:
     explicit StartMeasurment(QDialog *parent = 0);
     StartMeasurment(int = 0, QDialog *parent = 0);
     ~StartMeasurment();
+
     bool isCancel();
     bool isSingle();
     bool isChannel(int = 0);
+    setChannels(bool ch1, bool ch2, bool ch3, bool ch4);
 
-    void setMode(int);
+    void setMode(int, bool single = 1);
 
-    int getNum(const int);
+    QString getNum(const int ch);
+    void setNum(const int ch, const QString num);
+
     int getTime();
+    void setTime(int);
+
     int getTimeIncube(int = 1);
+    void setTimeIncube(int i, int ts);
+
     QString getStringStatus();
 
-protected:
     void saveData();
     void openData();
 
@@ -50,7 +58,7 @@ private:
     bool cancel;
     bool single;       //пробы одиночные?
     bool channel_1, channel_2, channel_3, channel_4;
-    int num_1, num_2, num_3, num_4;
+    QString num_1, num_2, num_3, num_4;
     int time;           //время записи
     int time_incube, time_incube_2; //время инкубации
 };

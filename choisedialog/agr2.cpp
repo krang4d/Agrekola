@@ -25,6 +25,7 @@ Agr2::Agr2(QWidget *parent) :
 Agr2::~Agr2()
 {
     //param.clear();
+    if(param.count() == 0) param = QStringList({0, 0, 0, 0, 0, 0, 0});
     param.replace(0, ui->label_calibrationData->text());
     param.replace(1, ui->lineEdit_1->text());
     param.replace(2, ui->lineEdit_2->text());
@@ -43,5 +44,5 @@ void Agr2::on_calibrButton_clicked()
 {
     //kalibragr2 = new KalibrAgr2();
     //kalibragr2->show();
-    emit calibration();
+    emit calibration(ui->page_2);
 }

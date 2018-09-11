@@ -48,15 +48,15 @@ Widget::Widget(QWidget *parent) :
 
 Widget::Widget(StartMeasurment *sw, QWidget *parent) : Widget(parent)
 {
-    startWin.clear();
-    startWin = sw;
+    startWin.clear();    
+    startWin = QPointer<StartMeasurment>(sw);
 }
 
 
 void Widget::setStartWindow(StartMeasurment *sw)
 {
     startWin.clear();
-    startWin = sw;
+    startWin = QPointer<StartMeasurment>(sw);
 }
 
 Widget::~Widget()
@@ -450,21 +450,6 @@ void Widget::on_checkBox_L_stateChanged(int arg1)
 
 void Widget::on_pushButton_clicked()
 {
-    if(getMode() == Test_ID) {
-//        std::function<void(void)> foo = [=](){ startMeasurment();
-//        disconnect(startWin.data(), SIGNAL(startMeasurment(StartMeasurment*)), this, SLOT(startMeasurment()));
-//        };
-        startWin.clear();
-        startWin = new StartMeasurment(0);
-        connect(startWin.data(), &StartMeasurment::startMeasurment, [=](){ startMeasurment();
-            disconnect(startWin.data(), SIGNAL(startMeasurment(StartMeasurment*)), this, SLOT(startMeasurment()));
-            startWin->hide();
-            });
-    }
-
-
-    startWin->setMode(getMode());
-    startWin->show();
     pBar1->setFormat("В ожидании");
     pBar1->setValue(0);
     pBar2->setFormat("В ожидании");
@@ -473,7 +458,23 @@ void Widget::on_pushButton_clicked()
     pBar3->setValue(0);
     pBar4->setFormat("В ожидании");
     pBar4->setValue(0);
-    emit startMeasurment();
+
+    if(getMode() == Test_ID) {
+//        std::function<void(void)> foo = [=](){ startMeasurment();
+//        disconnect(startWin.data(), SIGNAL(startMeasurment(StartMeasurment*)), this, SLOT(startMeasurment()));
+//        };
+        startWin.clear();
+        startWin = new StartMeasurment(0);
+        startWin->setMode(getMode());
+        startWin->show();
+        connect(startWin.data(), &StartMeasurment::startMeasurment, [=](){ startMeasurment();
+            disconnect(startWin.data(), SIGNAL(startMeasurment(StartMeasurment*)), this, SLOT(startMeasurment()));
+            startWin->hide();
+            });
+    }
+    else {
+        startMeasurment();
+    }
 }
 
 void Widget::updataTermo(bool td)
@@ -493,6 +494,7 @@ void Widget::updataTermo(bool td)
 
 void Widget::startMeasurment()
 {
+    //qDebug() << "Widget::startMeasurment() start pressed";
     ui->pushButton->setEnabled(false);
     if(!startWin->isCancel()) {
         if(startWin->isSingle()) {
@@ -566,6 +568,12 @@ void Widget::startMeasurment()
         }
         else startIncub(1);
     }
+}
+
+void Widget::startMeasurment(StartMeasurment *s)
+{
+    startWin  = QPointer<StartMeasurment>(s);
+    startMeasurment();
 }
 
 void Widget::startData(int n)
@@ -825,6 +833,7 @@ double Widget::writeMapData(int n)
         pBar->setMaximum(map_y1.count());
         func(map_y1);
         map_y1.clear();
+        emit ret_value1(retval);
     }
     if( n == 2 && !map_y2.isEmpty() ) {
         retval = p->calc(map_y2);
@@ -833,6 +842,7 @@ double Widget::writeMapData(int n)
         pBar->setMaximum(map_y2.count());
         func(map_y2);
         map_y2.clear();
+        emit ret_value2(retval);
     }
     if( n == 3 && !map_y3.isEmpty() ) {
         retval = p->calc(map_y3);
@@ -841,6 +851,7 @@ double Widget::writeMapData(int n)
         pBar->setMaximum(map_y3.count());
         func(map_y3);
         map_y3.clear();
+        emit ret_value3(retval);
     }
     if( n == 4 && !map_y4.isEmpty() ) {
         retval = p->calc(map_y4);
@@ -849,8 +860,9 @@ double Widget::writeMapData(int n)
         pBar->setMaximum(map_y4.count());
         func(map_y4);
         map_y4.clear();
+        emit ret_value4(retval);
     }
-    emit ret_value(retval);
+    //emit ret_value(retval);
     //connect(&saveFiles, SIGNAL(value_changed(int)), pBar, SLOT(setValue(int)));
     pBar->setFormat(QString("Запись данных %p%"));
     QString filename = saveFiles.writeData(strList, pBar);

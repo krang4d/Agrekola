@@ -17,10 +17,10 @@ StartMeasurment::StartMeasurment(QDialog *parent) :
     channel_2 = false;
     channel_3 = false;
     channel_4 = false;
-    num_1 = 0;
-    num_2 = 0;
-    num_3 = 0;
-    num_4 = 0;
+    num_1 = "";
+    num_2 = "";
+    num_3 = "";
+    num_4 = "";
     time = 0;
     time_incube = 0;
 }
@@ -93,8 +93,20 @@ bool StartMeasurment::isChannel(int ch)
     }
 }
 
-void StartMeasurment::setMode(int mode)
+StartMeasurment::setChannels(bool ch1, bool ch2, bool ch3, bool ch4)
 {
+    channel_1 = ch1;
+    channel_2 = ch2;
+    channel_3 = ch3;
+    channel_4 = ch4;
+    if( ch1 || ch2 || ch3 || ch4 ) {
+        cancel = false;
+    }else cancel = true;
+}
+
+void StartMeasurment::setMode(int mode, bool s)
+{
+    single = s;
     if(mode == 1 || mode == 2 ) {
         ui->lineEdit_incube_2->setVisible(true);
         ui->label_incube_2->setVisible(true);
@@ -118,12 +130,9 @@ bool StartMeasurment::isSingle()
     return single;
 }
 
-int StartMeasurment::getNum(const int ch)
+QString StartMeasurment::getNum(const int ch)
 {
-    switch (ch) {
-    case 0:
-        return 0;
-        break;
+    switch ( ch ) {
     case 1:
         return num_1;
         break;
@@ -139,8 +148,27 @@ int StartMeasurment::getNum(const int ch)
     default:
         return 0;
     }
-
     return num_1;
+}
+
+void StartMeasurment::setNum(const int ch, const QString num)
+{
+    switch ( ch ) {
+    case 1:
+        num_1 = num;
+        break;
+    case 2:
+        num_2 = num;
+        break;
+    case 3:
+        num_3 = num;
+        break;
+    case 4:
+        num_4 = num;
+        break;
+    default:
+        return;
+    }
 }
 
 int StartMeasurment::getTime()
@@ -148,11 +176,23 @@ int StartMeasurment::getTime()
     return time;
 }
 
+void StartMeasurment::setTime(int ts)
+{
+    time = ts;
+}
+
 int StartMeasurment::getTimeIncube(int i)
 {
     if(i == 1)
         return time_incube;
     else return time_incube_2;
+}
+
+void StartMeasurment::setTimeIncube(int i, int ts)
+{
+    if(i == 1)
+        time_incube = ts;
+    else time_incube_2 = ts;
 }
 
 QString StartMeasurment::getStringStatus()
@@ -284,19 +324,19 @@ void StartMeasurment::on_pushButton_next_clicked()
     single = ui->radioButton_single->isChecked();           //пробы одиночные?
     channel_1 = ui->checkBox_ch1->isChecked();
     if(channel_1)
-        num_1 = ui->lineEdit_ch1->text().toInt();
+        num_1 = ui->lineEdit_ch1->text();
 
     channel_2 = ui->checkBox_ch2->isChecked();
     if(channel_2)
-        num_2 = ui->lineEdit_ch2->text().toInt();
+        num_2 = ui->lineEdit_ch2->text();
 
     channel_3 = ui->checkBox_ch3->isChecked();
     if(channel_3)
-        num_3 = ui->lineEdit_ch3->text().toInt();
+        num_3 = ui->lineEdit_ch3->text();
 
     channel_4 = ui->checkBox_ch4->isChecked();
     if(channel_4)
-        num_4 = ui->lineEdit_ch4->text().toInt();
+        num_4 = ui->lineEdit_ch4->text();
 
     int t = ui->lineEdit_time->text().toInt();
     if( !(t>=5 && t<=900) ) {
