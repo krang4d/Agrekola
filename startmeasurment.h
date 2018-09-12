@@ -21,7 +21,7 @@ public:
     bool isCancel();
     bool isSingle();
     bool isChannel(int = 0);
-    setChannels(bool ch1, bool ch2, bool ch3, bool ch4);
+    void setChannels(bool ch1, bool ch2, bool ch3, bool ch4);
 
     void setMode(int, bool single = 1);
 

@@ -93,7 +93,7 @@ bool StartMeasurment::isChannel(int ch)
     }
 }
 
-StartMeasurment::setChannels(bool ch1, bool ch2, bool ch3, bool ch4)
+void StartMeasurment::setChannels(bool ch1, bool ch2, bool ch3, bool ch4)
 {
     channel_1 = ch1;
     channel_2 = ch2;
@@ -348,7 +348,7 @@ void StartMeasurment::on_pushButton_next_clicked()
     time_incube = ui->lineEdit_incube->text().toInt();
     time_incube_2 = ui->lineEdit_incube_2->text().toInt();
 
-    mb.setInformativeText("Введите номер пробы!");
+    mb.setInformativeText("Введите недостающие данные о проводимом исследовании");
     if(ui->checkBox_ch1->isChecked() && ui->lineEdit_ch1->text().isEmpty())
         mb.exec();
     else if(ui->checkBox_ch2->isChecked() && ui->lineEdit_ch2->text().isEmpty())

@@ -24,7 +24,9 @@ public:
     void startProgress(QString format, int time_ms);
     void startProgress(QString format, int time_ms, std::function<void (void)> f);
     void setMaximum(int maximum);
+    int getMaximum();
     void setFormat(QString format);
+    void Wait();
 
     inline State_ID getState() {
         return state;

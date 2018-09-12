@@ -450,14 +450,27 @@ void Widget::on_checkBox_L_stateChanged(int arg1)
 
 void Widget::on_pushButton_clicked()
 {
-    pBar1->setFormat("В ожидании");
-    pBar1->setValue(0);
-    pBar2->setFormat("В ожидании");
-    pBar2->setValue(0);
-    pBar3->setFormat("В ожидании");
-    pBar3->setValue(0);
-    pBar4->setFormat("В ожидании");
-    pBar4->setValue(0);
+    if( termoSensor ) {
+        setUserMessage("Дождитесь нагрева термостата");
+        pBar1->setFormat("В ожидании");
+        pBar1->setValue(0);
+        pBar2->setFormat("В ожидании");
+        pBar2->setValue(0);
+        pBar3->setFormat("В ожидании");
+        pBar3->setValue(0);
+        pBar4->setFormat("В ожидании");
+        pBar4->setValue(0);
+    } else {
+        setUserMessage("Термостат нагрет до 37ºC");
+        pBar1->setFormat("Готов");
+        pBar1->setValue(pBar1->getMaximum());
+        pBar2->setFormat("Готов");
+        pBar2->setValue(pBar2->getMaximum());
+        pBar3->setFormat("Готов");
+        pBar3->setValue(pBar3->getMaximum());
+        pBar4->setFormat("Готов");
+        pBar4->setValue(pBar4->getMaximum());
+    }
 
     if(getMode() == Test_ID) {
 //        std::function<void(void)> foo = [=](){ startMeasurment();
@@ -689,9 +702,17 @@ void Widget::startIncub(int num)
         QPointer<QMessageBox> imessageBox = new QMessageBox(this);
         //connect(imessageBox.data(), SIGNAL(buttonClicked(QAbstractButton*)), imessageBox.data(), SLOT(deleteLater()));
         imessageBox->setText(QString("Время инкубации истекло, добавьте разведения плазмы в рабочие каналы и нажмите кнопку \"ОК\"" ));
-        std::function<void(QMessageBox*)> func = &QMessageBox::exec; //&Widget::incubeTimeout_0;
+        std::function<void ()> foo = [imessageBox, this]() {
+            pBar1->Wait();
+            pBar2->Wait();
+            pBar3->Wait();
+            pBar4->Wait();
+            imessageBox->exec();
+            //QMessageBox::exec(); //&Widget::incubeTimeout_0;
+        };
+
         connect(imessageBox, SIGNAL(buttonClicked(QAbstractButton*)), this, SLOT(incubeTimeout_0()));
-        std::function<void(void)> foo = std::bind(func, imessageBox.data());
+        //std::function<void(void)> foo = std::bind(func, imessageBox.data());
         int time_ms = startWin->getTimeIncube(1) * 1000;
         pBar1->startProgress(QString("Инкубация 1 %p%"), time_ms, foo);
         pBar2->startProgress(QString("Инкубация 1 %p%"), time_ms);
@@ -734,21 +755,25 @@ void Widget::incubeTimeout()
         setUserMessage("Канал 1 в ожидании введения стартового реагента");
         ready1 = true;
         iw->addWaiter(1);
+        pBar1->Wait();
     }
     if(startWin->isChannel(2)) {
         setUserMessage("Канал 2 в ожидании введения стартового реагента");
         ready2 = true;
         iw->addWaiter(2);
+        pBar2->Wait();
     }
     if(startWin->isChannel(3)) {
         setUserMessage("Канал 3 в ожидании введения стартового реагента");
         ready3 = true;
         iw->addWaiter(3);
+        pBar3->Wait();
     }
     if(startWin->isChannel(4)) {
         setUserMessage("Канал 4 в ожидании введения стартового реагента");
         ready4 = true;
         iw->addWaiter(4);
+        pBar4->Wait();
     }
     connect(this, &Widget::hasPulse1, iw, &ImpuleWaiter::has_pulse_1);
     connect(this, &Widget::hasPulse2, iw, &ImpuleWaiter::has_pulse_2);

@@ -13,13 +13,12 @@ Agr1::Agr1(QWidget *parent) :
         ui->lineEdit_2->setText(param.at(1));
         ui->lineEdit_3->setText(param.at(2));
         connect(ui->page_2, &StartMeasurment::startMeasurment, this, &Agr1::measurement);
-    }
+    } else param = QStringList({0, 0, 0, 0, 0, 0, 0});
 }
 
 Agr1::~Agr1()
 {
     //param.clear();
-    if(param.count() == 0)  param = QStringList({0, 0, 0});
     param.replace(0, ui->lineEdit_1->text());
     param.replace(1, ui->lineEdit_2->text());
     param.replace(2, ui->lineEdit_3->text());
@@ -27,14 +26,53 @@ Agr1::~Agr1()
     delete ui;
 }
 
-void Agr1::on_startButton_clicked()
-{
-    emit measurement(ui->page_2);
-}
-
 void Agr1::on_kolibrButton_clicked()
 {
-    StartMeasurment *sm = ui->page_2;
-    sm->openData();
-    emit calibration(ui->page_2);
+    emit calibration(StartCalibrationAgr1::getStart());
+}
+
+void Agr1::calibration_data_come(int n, double deta)
+{
+    //один параметр контрольной нормальной плазмы
+    QDateTime dt = QDateTime::currentDateTime();
+    ui->label_calibrationData->setText(dt.toString("dd.MM.yyyy ") + dt.toString("hh:mm:ss"));
+    if(param.count() <= n)
+        param.push_back(QString("%1").arg(deta));
+    else param.replace(n, QString("%1").arg(deta));
+    file.saveKo2(param);
+}
+
+void Agr1::calibration_data1_come(double t0)
+{
+    calibration_data_come(3, t0);
+}
+
+void Agr1::calibration_data2_come(double t0)
+{
+    calibration_data_come(4, t0);
+}
+
+void Agr1::calibration_data3_come(double t0)
+{
+    calibration_data_come(5, t0);
+}
+
+void Agr1::calibration_data4_come(double t0)
+{
+    calibration_data_come(6, t0);
+}
+
+StartMeasurment *StartCalibrationAgr1::getStart()
+{
+    StartMeasurment *sm = new StartMeasurment(0);
+    sm->setChannels(true, true, true, true);
+    sm->setNum(1, "Калибровка");
+    sm->setNum(2, "Калибровка");
+    sm->setNum(3, "Калибровка");
+    sm->setNum(4, "Калибровка");
+    sm->setTime(10);
+    sm->setTimeIncube(1, 3);
+    sm->setTimeIncube(2, 4);
+    //stKo2->cancel = false;
+    return sm;
 }
