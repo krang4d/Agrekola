@@ -119,8 +119,8 @@ void Widget::setupRealtimeData() {
         customPlot1->graph(0)->setPen(QPen(QColor(10, 110, 40)));
         customPlot1->xAxis->setTicker(timeTicker);
         customPlot1->axisRect()->setupFullAxesBox();
-        customPlot1->xAxis->setLabel("t, сек");
-        customPlot1->yAxis->setLabel("V1, Вольт");
+        customPlot1->xAxis->setLabel("сек");
+        customPlot1->yAxis2->setLabel("Вольт");
         customPlot1->yAxis->setRange(MIN, MAX);
 
         // make left and bottom axes transfer their ranges to right and top axes:
@@ -131,8 +131,8 @@ void Widget::setupRealtimeData() {
         customPlot2->graph(0)->setPen(QPen(QColor(255, 110, 40)));
         customPlot2->xAxis->setTicker(timeTicker);
         customPlot2->axisRect()->setupFullAxesBox();
-        customPlot2->xAxis->setLabel("t, сек");
-        customPlot2->yAxis->setLabel("V2, Вотльт");
+        customPlot2->xAxis->setLabel("сек");
+        customPlot2->yAxis2->setLabel("Вольт");
         customPlot2->yAxis->setRange(MIN, MAX);
 
         connect(customPlot2->xAxis, SIGNAL(rangeChanged(QCPRange)), customPlot2->xAxis2, SLOT(setRange(QCPRange)));
@@ -142,8 +142,8 @@ void Widget::setupRealtimeData() {
         customPlot3->graph(0)->setPen(QPen(QColor(255, 110, 200)));
         customPlot3->xAxis->setTicker(timeTicker);
         customPlot3->axisRect()->setupFullAxesBox();
-        customPlot3->xAxis->setLabel("t, сек");
-        customPlot3->yAxis->setLabel("V3, Вотльт");
+        customPlot3->xAxis->setLabel("сек");
+        customPlot3->yAxis2->setLabel("Вольт");
         customPlot3->yAxis->setRange(MIN, MAX);
 
         connect(customPlot3->xAxis, SIGNAL(rangeChanged(QCPRange)), customPlot3->xAxis2, SLOT(setRange(QCPRange)));
@@ -153,8 +153,8 @@ void Widget::setupRealtimeData() {
         customPlot4->graph(0)->setPen(QPen(QColor(255, 200, 40)));
         customPlot4->xAxis->setTicker(timeTicker);
         customPlot4->axisRect()->setupFullAxesBox();
-        customPlot4->xAxis->setLabel("t, сек");
-        customPlot4->yAxis->setLabel("V4, Вотльт");
+        customPlot4->xAxis->setLabel("сек");
+        customPlot4->yAxis2->setLabel("Вольт");
         customPlot4->yAxis->setRange(MIN, MAX);
 
         connect(customPlot4->xAxis, SIGNAL(rangeChanged(QCPRange)), customPlot4->xAxis2, SLOT(setRange(QCPRange)));
@@ -175,8 +175,8 @@ void Widget::setupRealtimeData() {
         customPlot1->graph(1)->setPen(QPen(QColor(255, 110, 40)));
         customPlot1->xAxis->setTicker(timeTicker);
         customPlot1->axisRect()->setupFullAxesBox();
-        customPlot1->xAxis->setLabel("Время, с");
-        customPlot1->yAxis->setLabel("Напряжение, В");
+        customPlot1->xAxis->setLabel("сек");
+        customPlot1->yAxis2->setLabel("Вольт");
         customPlot1->yAxis->setRange(MIN, MAX);
 
         // make left and bottom axes transfer their ranges to right and top axes:
@@ -188,8 +188,8 @@ void Widget::setupRealtimeData() {
         customPlot2->graph(1)->setPen(QPen(QColor(255, 200, 40)));
         customPlot2->xAxis->setTicker(timeTicker);
         customPlot2->axisRect()->setupFullAxesBox();
-        customPlot2->xAxis->setLabel("Время, с");
-        customPlot2->yAxis->setLabel("Напряжение, В");
+        customPlot2->xAxis->setLabel("сек");
+        customPlot2->yAxis2->setLabel("Вольт");
         customPlot2->yAxis->setRange(MIN, MAX);
 
         connect(customPlot2->xAxis, SIGNAL(rangeChanged(QCPRange)), customPlot2->xAxis2, SLOT(setRange(QCPRange)));
@@ -702,19 +702,25 @@ void Widget::startIncub(int num)
         QPointer<QMessageBox> imessageBox = new QMessageBox(this);
         //connect(imessageBox.data(), SIGNAL(buttonClicked(QAbstractButton*)), imessageBox.data(), SLOT(deleteLater()));
         imessageBox->setText(QString("Время инкубации истекло, добавьте разведения плазмы в рабочие каналы и нажмите кнопку \"ОК\"" ));
-        std::function<void ()> foo = [imessageBox, this]() {
+//        std::function<void ()> foo = [imessageBox, this]() {
+//            pBar1->Wait();
+//            pBar2->Wait();
+//            pBar3->Wait();
+//            pBar4->Wait();
+//            imessageBox->exec();
+//            //QMessageBox::exec(); //&Widget::incubeTimeout_0;
+//        };
+        connect(imessageBox, SIGNAL(buttonClicked(QAbstractButton*)), this, SLOT(incubeTimeout_0()));
+        //std::function<void(void)> foo = std::bind(func, imessageBox.data());
+        int time_ms = startWin->getTimeIncube(1) * 1000;
+        pBar1->startProgress(QString("Инкубация 1 %p%"), time_ms, [imessageBox, this]() {
             pBar1->Wait();
             pBar2->Wait();
             pBar3->Wait();
             pBar4->Wait();
             imessageBox->exec();
             //QMessageBox::exec(); //&Widget::incubeTimeout_0;
-        };
-
-        connect(imessageBox, SIGNAL(buttonClicked(QAbstractButton*)), this, SLOT(incubeTimeout_0()));
-        //std::function<void(void)> foo = std::bind(func, imessageBox.data());
-        int time_ms = startWin->getTimeIncube(1) * 1000;
-        pBar1->startProgress(QString("Инкубация 1 %p%"), time_ms, foo);
+        });
         pBar2->startProgress(QString("Инкубация 1 %p%"), time_ms);
         pBar3->startProgress(QString("Инкубация 1 %p%"), time_ms);
         pBar4->startProgress(QString("Инкубация 1 %p%"), time_ms);
@@ -853,7 +859,9 @@ double Widget::writeMapData(int n)
     strList << QString("N\t");
     if( n == 1 && !map_y1.isEmpty() ) {
         retval = p->calc(map_y1);
-        setUserMessage(QString("Рассчитанное значение = %1 по методике '%2'").arg(retval).arg(p->info()));
+        setUserMessage(QString("Рассчитанное значение = %1 по методике '%2'")
+                       .arg(retval)
+                       .arg(p->info()));
         strList << QString("V1#%1\t").arg(startWin->getNum(1));
         pBar->setMaximum(map_y1.count());
         func(map_y1);
@@ -862,7 +870,9 @@ double Widget::writeMapData(int n)
     }
     if( n == 2 && !map_y2.isEmpty() ) {
         retval = p->calc(map_y2);
-        setUserMessage(QString("Рассчитанное значение = %1 по методике '%2'").arg(retval).arg(p->info()));
+        setUserMessage(QString("Рассчитанное значение = %1 по методике '%2'")
+                       .arg(retval)
+                       .arg(p->info()));
         strList << QString("V2#%1\t").arg(startWin->getNum(2));
         pBar->setMaximum(map_y2.count());
         func(map_y2);
@@ -871,7 +881,9 @@ double Widget::writeMapData(int n)
     }
     if( n == 3 && !map_y3.isEmpty() ) {
         retval = p->calc(map_y3);
-        setUserMessage(QString("Рассчитанное значение = %1 по методике '%2'").arg(retval).arg(p->info()));
+        setUserMessage(QString("Рассчитанное значение = %1 по методике '%2'")
+                       .arg(retval)
+                       .arg(p->info()));
         strList << QString("V3#%1\t").arg(startWin->getNum(3));
         pBar->setMaximum(map_y3.count());
         func(map_y3);
@@ -880,7 +892,9 @@ double Widget::writeMapData(int n)
     }
     if( n == 4 && !map_y4.isEmpty() ) {
         retval = p->calc(map_y4);
-        setUserMessage(QString("Рассчитанное значение = %1 по методике '%2'").arg(retval).arg(p->info()));
+        setUserMessage(QString("Рассчитанное значение = %1 по методике '%2'")
+                       .arg(retval)
+                       .arg(p->info()));
         strList << QString("V4#%1\t").arg(startWin->getNum(4));
         pBar->setMaximum(map_y4.count());
         func(map_y4);
@@ -968,5 +982,6 @@ void Widget::setupTimers()
     connect(&currentTimer, &QTimer::timeout, [this](){ updateTime();});
     currentTimer.start(300);
     dt = QDateTime::currentDateTime();
-    setUserMessage(QString("Начало работы программы    Дата %1").arg(dt.toString("dd.MM.yyyy")));
+    setUserMessage(QString("Начало работы программы    Дата %1")
+                   .arg(dt.toString("dd.MM.yyyy")));
 }

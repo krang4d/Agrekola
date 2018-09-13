@@ -20,12 +20,21 @@ public:
     explicit Agr2(QWidget *parent = 0);
     ~Agr2();
 
+private:
+    void calibrationDataCome(int n, double deta);
+
 private slots:
     void on_calibrButton_clicked();
 
+public slots:
+    void calibrationData1Come(double);
+    void calibrationData2Come(double);
+    void calibrationData3Come(double);
+    void calibrationData4Come(double);
+
 signals:
-    void measurement(StartMeasurment*);
-    void calibration(StartMeasurment*);
+    void measurement(StartMeasurment *);
+    void calibration(StartMeasurment *);
 
 private:
     Ui::Agr2 *ui;
@@ -34,6 +43,14 @@ private:
     KalibrAgr2 *kalibragr2;
     SelectCalibrationAgr1 *selcalibrAgr1;
     SelectInductor *selInductor;
+};
+
+class StartCalibrationAgr2 : public StartMeasurment
+{
+    Q_OBJECT
+public:
+    StartCalibrationAgr2() = delete;
+    static StartMeasurment *getStart();
 };
 
 #endif // AGR2_H

@@ -246,6 +246,11 @@ QString CalcKo2::info()
     return QString("АЧТВ");
 }
 
+//void CalcKo2::getCalibrationDeta(double &c1, double &c2, double &c3, double &c4)
+//{
+
+//}
+
 CalcKo3::CalcKo3()
 {
     SaveFiles file;
@@ -364,7 +369,7 @@ double CalcAgr1::calc(QMap<double, double> map)
 
 QString CalcAgr1::info()
 {
-    return QString("Агрегация");
+    return QString("Степень агрегации");
 }
 
 CalcAgr2::CalcAgr2()

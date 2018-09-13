@@ -38,7 +38,7 @@ void Ko2::on_calibr1Button_clicked()
     emit calibration(StartCalibrationKo2::getStart());
 }
 
-void Ko2::calibration_data_come(int n , double deta)
+void Ko2::calibrationDataCome(int n , double deta)
 {
     //один параметр контрольной нормальной плазмы
     QDateTime dt = QDateTime::currentDateTime();
@@ -49,24 +49,24 @@ void Ko2::calibration_data_come(int n , double deta)
     file.saveKo2(param);
 }
 
-void Ko2::calibration_data1_come(double t0)
+void Ko2::calibrationData1Come(double t0)
 {
-    calibration_data_come(5, t0);
+    calibrationDataCome(5, t0);
 }
 
-void Ko2::calibration_data2_come(double t0)
+void Ko2::calibrationData2Come(double t0)
 {
-    calibration_data_come(6, t0);
+    calibrationDataCome(6, t0);
 }
 
-void Ko2::calibration_data3_come(double t0)
+void Ko2::calibrationData3Come(double t0)
 {
-    calibration_data_come(7, t0);
+    calibrationDataCome(7, t0);
 }
 
-void Ko2::calibration_data4_come(double t0)
+void Ko2::calibrationData4Come(double t0)
 {
-    calibration_data_come(8, t0);
+    calibrationDataCome(8, t0);
 }
 
 StartMeasurment *StartCalibrationKo2::getStart()

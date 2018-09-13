@@ -24,6 +24,7 @@ public:
     double calcAgr(QMap<double, double>);
     static CalcData* createCalc( Mode_ID );
 
+    //virtual void getCalibrationDeta(double &c1, double &c2,double &c3, double &c4) = 0;
     virtual double calc(QMap<double, double>) = 0;
     virtual QString info() = 0;
 
@@ -50,23 +51,30 @@ class CalcKo1 : public CalcData
 public:
     explicit CalcKo1();
     explicit CalcKo1(QCustomPlot*);
-    double calc(QMap<double, double>) override;
-    QString info() override;
 
 private:
     //параметры для определения времени свертывания
+
+    // CalcData interface
+public:
+    QString info() override;
+    double calc(QMap<double, double>) override;
 };
 
 class CalcKo2 : public CalcData
 {
 public:
     explicit CalcKo2();
-    double calc(QMap<double, double>) override;
-    QString info() override;
 
 private:
     //параметры для определения АЧТВ
     double t0;                      // АЧТВ контрольной плазмы
+
+    // CalcData interface
+public:
+    double calc(QMap<double, double>) override;
+    QString info() override;
+   // void getCalibrationDeta(double &c1, double &c2, double &c3, double &c4) override;
 };
 
 class CalcKo3 : public CalcData
@@ -152,7 +160,7 @@ private:
     double btp;                     //богатая тромбоцитами плазма
     double otp;                     //обогащенная тромбоцитами плазма
     double c1;                      //активность фактора Виллебранда контр. плазмы (100%)
-    double c2, c3, c4;              //активность фактора Виллебранда других разведений 50%, 25%
+    double c2, c3, c4;              //активность фактора Виллебранда других разведений 200% 50%, 25%
     double ck1, ck2, ck3;           //значение скорости агрегации
     double tgalfa, tgalfa1;
     double tgalfa2, tgalfa3;        //угол наклона k-ого участка калибровочной кривой

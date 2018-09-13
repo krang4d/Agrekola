@@ -12,8 +12,9 @@ Agr1::Agr1(QWidget *parent) :
         ui->lineEdit_1->setText(param.at(0));
         ui->lineEdit_2->setText(param.at(1));
         ui->lineEdit_3->setText(param.at(2));
-        connect(ui->page_2, &StartMeasurment::startMeasurment, this, &Agr1::measurement);
-    } else param = QStringList({0, 0, 0, 0, 0, 0, 0});
+    } else
+        param = QStringList({0, 0, 0, 0, 0, 0, 0});
+    connect(ui->page_2, &StartMeasurment::startMeasurment, this, &Agr1::measurement);
 }
 
 Agr1::~Agr1()
@@ -31,7 +32,7 @@ void Agr1::on_kolibrButton_clicked()
     emit calibration(StartCalibrationAgr1::getStart());
 }
 
-void Agr1::calibration_data_come(int n, double deta)
+void Agr1::calibrationDataCome(int n, double deta)
 {
     //один параметр контрольной нормальной плазмы
     QDateTime dt = QDateTime::currentDateTime();
@@ -39,27 +40,27 @@ void Agr1::calibration_data_come(int n, double deta)
     if(param.count() <= n)
         param.push_back(QString("%1").arg(deta));
     else param.replace(n, QString("%1").arg(deta));
-    file.saveKo2(param);
+    file.saveAgr1(param);
 }
 
-void Agr1::calibration_data1_come(double t0)
+void Agr1::calibrationData1Come(double t0)
 {
-    calibration_data_come(3, t0);
+    calibrationDataCome(3, t0);
 }
 
-void Agr1::calibration_data2_come(double t0)
+void Agr1::calibrationData2Come(double t0)
 {
-    calibration_data_come(4, t0);
+    calibrationDataCome(4, t0);
 }
 
-void Agr1::calibration_data3_come(double t0)
+void Agr1::calibrationData3Come(double t0)
 {
-    calibration_data_come(5, t0);
+    calibrationDataCome(5, t0);
 }
 
-void Agr1::calibration_data4_come(double t0)
+void Agr1::calibrationData4Come(double t0)
 {
-    calibration_data_come(6, t0);
+    calibrationDataCome(6, t0);
 }
 
 StartMeasurment *StartCalibrationAgr1::getStart()

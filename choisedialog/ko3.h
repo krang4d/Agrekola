@@ -18,16 +18,16 @@ public:
     ~Ko3();
 
 private:
-    void calibration_data_come(int n, double deta);
+    void calibrationDataCome(int n, double deta);
 
 private slots:
     void on_calibr1Button_clicked();
 
 public slots:
-    void calibration_data1_come(double);
-    void calibration_data2_come(double);
-    void calibration_data3_come(double);
-    void calibration_data4_come(double);
+    void calibrationData1Come(double);
+    void calibrationData2Come(double);
+    void calibrationData3Come(double);
+    void calibrationData4Come(double);
 
 signals:
     void measurement(StartMeasurment*);
