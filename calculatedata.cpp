@@ -214,7 +214,7 @@ CalcKo1::CalcKo1(QCustomPlot *p)
 double CalcKo1::calc(QMap<double, double> map)
 {
     double k = CalcData::calcKo(map);
-    qDebug() << "CalcArg1::calc() " << k;
+    qDebug() << "CalcKo1::calc() " << k;
     return k;
 }
 
@@ -223,22 +223,30 @@ QString CalcKo1::info()
     return QString("Время свертывания");
 }
 
-CalcKo2::CalcKo2() : t0(0)
+CalcKo2::CalcKo2()
 {
     SaveFiles file;
     file.openKo2(param);
-    qDebug() << "параметры CalcKo2";
-    for(auto it = param.begin(); it < param.end(); it++) {
-        qDebug() << *it;
-    }
-    QString p = param.last();
-    t0 = p.toDouble();
+    qDebug() << "параметры CalcKo2 " << param.count();
+    QString d1, d2, d3, d4;
+    auto it = param.end();
+    d1 = *(it-4);
+    d2 = *(it-3);
+    d3 = *(it-2);
+    d4 = *(it-1);
+
+    qDebug() << d1 << d2 << d3 << d4;
+//    auto it = param.end() - 4;
+//    for(; it < param.end(); it++) {
+//        qDebug() << *it;
+//    }
+    t0 = (d1.toDouble() + d2.toDouble() + d3.toDouble() + d4.toDouble())/4;
     qDebug() << "АЧТВ контрольной плазмы =" << t0;
 }
 
 double CalcKo2::calc(QMap<double, double> map)
 {
-    return CalcData::calcKo(map)/t0; //(1)
+    return CalcData::calcKo(map)/t0; // ОТН АЧТВ(1)
 }
 
 QString CalcKo2::info()
@@ -248,36 +256,53 @@ QString CalcKo2::info()
 
 //void CalcKo2::getCalibrationDeta(double &c1, double &c2, double &c3, double &c4)
 //{
-
 //}
 
 CalcKo3::CalcKo3()
 {
     SaveFiles file;
     file.openKo3(param);
-    qDebug() << "параметры CalcKo3";
-    for(auto it = param.begin(); it < param.end(); it++) {
-        qDebug() << *it;
-    }
-    QString p = param.last();
-    c2 = p.toDouble();
-    qDebug() << "по Клауссу =" << c2;
+    qDebug() << "параметры CalcKo3" << param.count();
+    QString d0, d1, d2, d3, d4;
+    auto it = param.end();
+    d0 = *(it-5);
+    d1 = *(it-4);
+    d2 = *(it-3);
+    d3 = *(it-2);
+    d4 = *(it-1);
+    c2 = d0.toDouble();
+    t1 = d1.toDouble();
+    t2 = d2.toDouble();
+    t3 = d3.toDouble();
+    t4 = d4.toDouble();
+    qDebug() << c2 << t1 << t2 << t3 << t4;
+
+    c1 = c2*200.0f/100.0f;              //(3)
+    c3 = c2*50.0f/100.0f;               //(4)
+    c4 = c2*25.0f/100.0f;               //(5)
+
+//    for(auto it = param.begin(); it < param.end(); it++) {
+//        qDebug() << *it;
+//    }
+//    QString p = param.last();
+//    c2 = p.toDouble();
+//    qDebug() << "по Клауссу =" << c2;
 }
 
 double CalcKo3::calc(QMap<double, double> map)
 {
     // <-- проверка значений калибровки
-    c1 = c2*200.0f/100.0f;              //(3)
-    c3 = c2*50.0f/100.0f;               //(4)
-    c4 = c2*25.0f/100.0f;               //(5)
-
-    tgalfa1 = std::log10(t2/t1)/std::log10(c1/c2);    //(7)
-    tgalfa2 = std::log10(t3/t2)/std::log10(c2/c3);    //(8)
-    tgalfa3 = std::log10(t3/t1)/std::log10(c1/c3);    //(9)
-    tgalfa4 = std::log10(t4/t2)/std::log10(c2/c4);    //(10)
+    if( t2/t1 <1 || t3/t2 <1 || t4/t3 <1) {
+        qDebug() << "Нет соответствия критерию возрастания";
+        //QMessageBox::warning(nullptr, "Фибриноген", "Нет соответствия критерию возрастания");
+    }
+    tgalfa1 = std::log10(t2/t1)/std::log10(c1/c2);          //(7)
+    tgalfa2 = std::log10(t3/t2)/std::log10(c2/c3);          //(8)
+    tgalfa3 = std::log10(t3/t1)/std::log10(c1/c3);          //(9)
+    tgalfa4 = std::log10(t4/t2)/std::log10(c2/c4);          //(10)
     tgalfa = ( tgalfa1 + tgalfa2 + tgalfa3 + tgalfa4 ) / k; //(6)
 
-    lgcx = ( std::log10(t2/CalcData::calcKo(map)) + std::log10(c2) * tgalfa ) / tgalfa; //(11)
+    lgcx = ( std::log10(t2/CalcData::calcKo(map)) + std::log10(c2) * tgalfa ) / tgalfa; // (11)
 
     return qPow(10, lgcx);
 }
@@ -287,22 +312,30 @@ QString CalcKo3::info()
     return QString("Фибриноген");
 }
 
-CalcKo4::CalcKo4() : t0(0)
+CalcKo4::CalcKo4()
 {
     SaveFiles file;
     file.openKo4(param);
-    qDebug() << "параметры CalcKo4";
-    for(auto it = param.begin(); it < param.end(); it++) {
-        qDebug() << *it;
-    }
-    QString p = param.last();
-    t0 = p.toDouble();
-    qDebug() << "Тромбин =" << t0;
+    qDebug() << "параметры CalcKo4" << param.count();
+
+    QString d1, d2, d3, d4;
+    auto it = param.end();
+    d1 = *(it-4);
+    d2 = *(it-3);
+    d3 = *(it-2);
+    d4 = *(it-1);
+    qDebug() << d1 << d2 << d3 << d4;
+//    auto it = param.end() - 4;
+//    for(; it < param.end(); it++) {
+//        qDebug() << *it;
+//    }
+    t0 = (d1.toDouble() + d2.toDouble() + d3.toDouble() + d4.toDouble())/4;
+    qDebug() << "Тромбин контрольной плазмы =" << t0;
 }
 
 double CalcKo4::calc(QMap<double, double> map)
 {
-    return CalcData::calcKo(map)/t0;    //(2)
+    return CalcData::calcKo(map)/t0;    //ОТН Тромбин(2)
 }
 
 QString CalcKo4::info()

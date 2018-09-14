@@ -14,7 +14,6 @@ enum Mode_ID {Test_ID = 0, Agr1_ID, Agr2_ID, Ko1_ID, Ko2_ID, Ko3_ID, Ko4_ID, Ko5
 
 class CalcData : public QObject
 {
-    Q_OBJECT
 public:
     explicit CalcData();
     CalcData(QMap<double, double>, QCustomPlot *p = NULL);
@@ -24,7 +23,7 @@ public:
     double calcAgr(QMap<double, double>);
     static CalcData* createCalc( Mode_ID );
 
-    //virtual void getCalibrationDeta(double &c1, double &c2,double &c3, double &c4) = 0;
+    //virtual void getCalibrationDeta(double &c1, double &c2,double &c3, double &c4);
     virtual double calc(QMap<double, double>) = 0;
     virtual QString info() = 0;
 
@@ -40,10 +39,6 @@ protected:
     QStringList param;
     double dx;                    //скачек величиной 4-10% от среднего уровня сигнала базовое значение для определения времени свертывания
     double mix_t;                 //время в течение которго происходит перемешивание реагента с плазмой и успокоение жидкости
-
-signals:
-
-public slots:
 };
 
 class CalcKo1 : public CalcData
