@@ -1,3 +1,4 @@
+//Фибриноген
 #include "ko3.h"
 #include "ui_ko3.h"
 
@@ -6,25 +7,13 @@ Ko3::Ko3(QWidget *parent) :
     ui(new Ui::Ko3)
 {
     ui->setupUi(this);
-    file.openKo3(param);
-    if( !param.isEmpty() && param.count() >= 4 ) {
-        ui->label_calibrationData->setText(param.at(0));
-        ui->lineEdit_1->setText(param.at(1));
-        ui->lineEdit_2->setText(param.at(2));
-        ui->lineEdit_3->setText(param.at(3));
-    } else
-        param = QStringList({0, 0, 0, 0, 0, 0, 0, 0}); //8 параметров
+    open();
     connect(ui->page_2, &StartMeasurment::startMeasurment, this, &Ko3::measurement);
 }
 
 Ko3::~Ko3()
 {
-    //param.clear();
-    param.replace(0, ui->label_calibrationData->text());
-    param.replace(1, ui->lineEdit_1->text());
-    param.replace(2, ui->lineEdit_2->text());
-    param.replace(3, ui->lineEdit_3->text());
-    file.saveKo3(param);
+    save();
     delete ui;
 }
 
@@ -42,6 +31,28 @@ void Ko3::calibrationDataCome(int n, double deta)
         param.push_back(QString("%1").arg(deta));
     else param.replace(n, QString("%1").arg(deta));
     file.saveKo2(param);
+}
+
+void Ko3::open()
+{
+    file.openKo3(param);
+    if( !param.isEmpty() && param.count() >= 8 ) {
+        ui->label_calibrationData->setText(param.at(0));
+        ui->lineEdit_1->setText(param.at(1));
+        ui->lineEdit_2->setText(param.at(2));
+        ui->lineEdit_3->setText(param.at(3));
+    } else
+        param = QStringList({0, 0, 0, 0, 0, 0, 0, 0}); //8 параметров
+}
+
+void Ko3::save()
+{
+    //param.clear();
+    param.replace(0, ui->label_calibrationData->text());
+    param.replace(1, ui->lineEdit_1->text());
+    param.replace(2, ui->lineEdit_2->text());
+    param.replace(3, ui->lineEdit_3->text());
+    file.saveKo3(param);
 }
 
 void Ko3::calibrationData1Come(double t0)

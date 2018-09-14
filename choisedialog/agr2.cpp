@@ -7,36 +7,15 @@ Agr2::Agr2(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->page_2->setMode(2);
-    file.openAgr2(param);
-    if( !param.isEmpty() && param.count() >= 7 ) {
-        ui->label_calibrationData->setText(param.at(0));
-        ui->lineEdit_1->setText(param.at(1));
-        ui->lineEdit_2->setText(param.at(2));
-        ui->lineEdit_3->setText(param.at(3));
-        ui->lineEdit_4->setText(param.at(4));
-        ui->lineEdit_5->setText(param.at(5));
-        ui->lineEdit_6->setText(param.at(6));
-    } else
-        param = QStringList({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
-    selcalibrAgr1 = new SelectCalibrationAgr1();
-    selInductor = new SelectInductor();
+    open();
+    QPointer<SelectCalibrationAgr1> selcalibrAgr1 = new SelectCalibrationAgr1();
+    QPointer<SelectInductor>selInductor = new SelectInductor();
     connect(ui->page_2, &StartMeasurment::startMeasurment, this, &Agr2::measurement);
 }
 
 Agr2::~Agr2()
 {
-    //param.clear();
-    param.replace(0, ui->label_calibrationData->text());
-    param.replace(1, ui->lineEdit_1->text());
-    param.replace(2, ui->lineEdit_2->text());
-    param.replace(3, ui->lineEdit_3->text());
-    param.replace(4, ui->lineEdit_4->text());
-    param.replace(5, ui->lineEdit_5->text());
-    param.replace(6, ui->lineEdit_6->text());
-    file.saveAgr2(param);
-    //delete kalibragr2;
-    delete selInductor;
-    delete selcalibrAgr1;
+    save();
     delete ui;
 }
 
@@ -56,6 +35,34 @@ void Agr2::calibrationDataCome(int n, double deta)
     if(param.count() <= n)
         param.push_back(QString("%1").arg(deta));
     else param.replace(n, QString("%1").arg(deta));
+    file.saveAgr2(param);
+}
+
+void Agr2::open()
+{
+    file.openAgr2(param);
+    if( !param.isEmpty() && param.count() >= 11 ) {
+        ui->label_calibrationData->setText(param.at(0));
+        ui->lineEdit_1->setText(param.at(1));
+        ui->lineEdit_2->setText(param.at(2));
+        ui->lineEdit_3->setText(param.at(3));
+        ui->lineEdit_4->setText(param.at(4));
+        ui->lineEdit_5->setText(param.at(5));
+        ui->lineEdit_6->setText(param.at(6));
+    } else
+        param = QStringList({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
+}
+
+void Agr2::save()
+{
+    //param.clear();
+    param.replace(0, ui->label_calibrationData->text());
+    param.replace(1, ui->lineEdit_1->text());
+    param.replace(2, ui->lineEdit_2->text());
+    param.replace(3, ui->lineEdit_3->text());
+    param.replace(4, ui->lineEdit_4->text());
+    param.replace(5, ui->lineEdit_5->text());
+    param.replace(6, ui->lineEdit_6->text());
     file.saveAgr2(param);
 }
 

@@ -19,9 +19,13 @@ public:
 
 private:
     void calibrationDataCome(int n, double deta);
+    void open();
+    void save();
 
 private slots:
     void on_calibr1Button_clicked();
+
+    void on_toolBox_currentChanged(int index);
 
 public slots:
     void calibrationData1Come(double);

@@ -19,6 +19,8 @@ public:
 
 private:
     void calibrationDataCome(int n, double deta);
+    void open();
+    void save();
 
 private slots:
     void on_calibr1Button_clicked();
@@ -30,8 +32,8 @@ public slots:
     void calibrationData4Come(double);
 
 signals:
-    void measurement(StartMeasurment*);
-    void calibration(StartMeasurment*);
+    void measurement(StartMeasurment *);
+    void calibration(StartMeasurment *);
 
 private:
     Ui::Ko3 *ui;

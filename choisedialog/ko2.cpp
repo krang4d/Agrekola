@@ -7,28 +7,14 @@ Ko2::Ko2(QWidget *parent) :
     ui(new Ui::Ko2)
 {
     ui->setupUi(this);
-    file.openKo2(param);
-    if( !param.isEmpty() && param.count() >= 5 ) {
-        ui->label_calibrationData->setText(param.at(0));
-        ui->lineEdit_1->setText(param.at(1));
-        ui->lineEdit_2->setText(param.at(2));
-        ui->lineEdit_3->setText(param.at(3));
-        ui->lineEdit_4->setText(param.at(4));
-    } else
-        param = QStringList({0, 0, 0, 0, 0, 0, 0, 0, 0}); //9 параметров
+    open();
     //connect(ui->page_1, SIGNAL(startMeasurment(StartMeasurment*)), this, SIGNAL(measurement(StartMeasurment*)));
     connect(ui->page_2, &StartMeasurment::startMeasurment, this, &Ko2::measurement);
 }
 
 Ko2::~Ko2()
 {
-    //param.clear();
-    param.replace(0, ui->label_calibrationData->text());
-    param.replace(1, ui->lineEdit_1->text());
-    param.replace(2, ui->lineEdit_2->text());
-    param.replace(3, ui->lineEdit_3->text());
-    param.replace(4, ui->lineEdit_4->text());
-    file.saveKo2(param);
+    save();
     delete ui;
 }
 
@@ -49,24 +35,51 @@ void Ko2::calibrationDataCome(int n , double deta)
     file.saveKo2(param);
 }
 
-void Ko2::calibrationData1Come(double t0)
+void Ko2::open()
 {
-    calibrationDataCome(5, t0);
+    file.openKo2(param);
+    if( !param.isEmpty() && param.count() >= 10 ) {
+        ui->label_calibrationData->setText(param.at(0));
+        ui->lineEdit_1->setText(param.at(1));
+        ui->lineEdit_2->setText(param.at(2));
+        ui->lineEdit_3->setText(param.at(3));
+        ui->lineEdit_4->setText(param.at(4));
+        ui->lineEdit_5->setText(param.at(5));
+    } else
+        param = QStringList({0, 0, 0, 0, 0, 0, 0, 0, 0, 0}); //10 параметров
+    //connect(ui->page_1, SIGNAL(startMeasurment(StartMeasurment*)), this, SIGNAL(measurement(StartMeasurment*)));
 }
 
-void Ko2::calibrationData2Come(double t0)
+void Ko2::save()
+{
+    //param.clear();
+    param.replace(0, ui->label_calibrationData->text());
+    param.replace(1, ui->lineEdit_1->text());
+    param.replace(2, ui->lineEdit_2->text());
+    param.replace(3, ui->lineEdit_3->text());
+    param.replace(4, ui->lineEdit_4->text());
+    param.replace(5, ui->lineEdit_5->text());
+    file.saveKo2(param);
+}
+
+void Ko2::calibrationData1Come(double t0)
 {
     calibrationDataCome(6, t0);
 }
 
-void Ko2::calibrationData3Come(double t0)
+void Ko2::calibrationData2Come(double t0)
 {
     calibrationDataCome(7, t0);
 }
 
-void Ko2::calibrationData4Come(double t0)
+void Ko2::calibrationData3Come(double t0)
 {
     calibrationDataCome(8, t0);
+}
+
+void Ko2::calibrationData4Come(double t0)
+{
+    calibrationDataCome(9, t0);
 }
 
 StartMeasurment *StartCalibrationKo2::getStart()
@@ -81,4 +94,9 @@ StartMeasurment *StartCalibrationKo2::getStart()
     sm->setTimeIncube(1, 3);
     //stKo2->cancel = false;
     return sm;
+}
+
+void Ko2::on_toolBox_currentChanged(int index)
+{
+    open();
 }

@@ -22,6 +22,8 @@ public:
 
 private:
     void calibrationDataCome(int n, double deta);
+    void open();
+    void save();
 
 private slots:
     void on_calibrButton_clicked();
