@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>600</width>
-    <height>520</height>
+    <width>577</width>
+    <height>555</height>
    </rect>
   </property>
   <property name="font">
@@ -19,7 +19,7 @@
    <enum>Qt::DefaultContextMenu</enum>
   </property>
   <property name="windowTitle">
-   <string>Агрекола-4к Выбор режима</string>
+   <string>Выбор режима</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="3" column="1">

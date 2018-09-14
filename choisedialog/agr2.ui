@@ -17,7 +17,7 @@
    <item>
     <widget class="QLabel" name="label">
      <property name="text">
-      <string>Определение активности фактора Виллебранда</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;Определение активности фактора Виллебранда&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -34,8 +34,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>442</width>
-        <height>324</height>
+        <width>436</width>
+        <height>322</height>
        </rect>
       </property>
       <attribute name="label">
@@ -187,7 +187,7 @@
        </rect>
       </property>
       <attribute name="label">
-       <string>Измерение</string>
+       <string>Тест</string>
       </attribute>
      </widget>
     </widget>

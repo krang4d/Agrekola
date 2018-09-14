@@ -51,6 +51,9 @@ public slots:
 signals:
     startMeasurment(StartMeasurment*);
 
+private slots:
+    void on_comboBox_inductor_currentIndexChanged(const QString &arg1);
+
 private:
     Ui::StartMeasurment *ui;
     SaveFiles file;

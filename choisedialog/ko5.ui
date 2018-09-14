@@ -17,7 +17,7 @@
    <item>
     <widget class="QLabel" name="label">
      <property name="text">
-      <string>Протромбиновый комплекс</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;Протромбиновый комплекс&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -200,7 +200,7 @@
        </rect>
       </property>
       <attribute name="label">
-       <string>Измерение</string>
+       <string>Тест</string>
       </attribute>
      </widget>
     </widget>

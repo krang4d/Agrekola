@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>333</width>
-    <height>353</height>
+    <width>365</width>
+    <height>382</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -50,7 +50,7 @@
      <property name="checkable">
       <bool>false</bool>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout_3">
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
       <item>
        <widget class="QRadioButton" name="radioButton_single">
         <property name="text">
@@ -113,7 +113,7 @@
      <item>
       <widget class="QGroupBox" name="groupBox">
        <property name="title">
-        <string>№ проб</string>
+        <string>Номер пробы</string>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
@@ -205,6 +205,56 @@
        </property>
       </widget>
      </item>
+     <item row="3" column="1">
+      <widget class="QComboBox" name="comboBox_inductor">
+       <item>
+        <property name="text">
+         <string>Коллаген</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>АДФ</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Ристомицин</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Адреналин</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Другой</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="4" column="1">
+      <widget class="QLineEdit" name="lineEdit_iname">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="label_itype">
+       <property name="text">
+        <string>Тип индуктора</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="0">
+      <widget class="QLabel" name="label_iname">
+       <property name="text">
+        <string>Название индуктора</string>
+       </property>
+      </widget>
+     </item>
     </layout>
    </item>
    <item>
@@ -245,7 +295,6 @@
   <tabstop>lineEdit_ch3</tabstop>
   <tabstop>checkBox_ch4</tabstop>
   <tabstop>lineEdit_ch4</tabstop>
-  <tabstop>radioButton_double</tabstop>
   <tabstop>lineEdit_time</tabstop>
  </tabstops>
  <resources/>

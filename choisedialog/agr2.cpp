@@ -8,8 +8,8 @@ Agr2::Agr2(QWidget *parent) :
     ui->setupUi(this);
     ui->page_2->setMode(2);
     open();
-    QPointer<SelectCalibrationAgr1> selcalibrAgr1 = new SelectCalibrationAgr1();
-    QPointer<SelectInductor>selInductor = new SelectInductor();
+//    selcalibrAgr1 = new SelectCalibrationAgr1();
+//    selInductor = new SelectInductor();
     connect(ui->page_2, &StartMeasurment::startMeasurment, this, &Agr2::measurement);
 }
 

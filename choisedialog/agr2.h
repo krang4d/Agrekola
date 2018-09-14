@@ -42,9 +42,6 @@ private:
     Ui::Agr2 *ui;
     SaveFiles file;
     QStringList param;
-    KalibrAgr2 *kalibragr2;
-    SelectCalibrationAgr1 *selcalibrAgr1;
-    SelectInductor *selInductor;
 };
 
 class StartCalibrationAgr2 : public StartMeasurment

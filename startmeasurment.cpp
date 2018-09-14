@@ -23,6 +23,9 @@ StartMeasurment::StartMeasurment(QDialog *parent) :
     num_4 = "";
     time = 0;
     time_incube = 0;
+
+    ui->label_iname->setVisible(false);
+    ui->lineEdit_iname->setVisible(false);
 }
 
 StartMeasurment::StartMeasurment(int mode, QDialog *parent) :
@@ -111,12 +114,16 @@ void StartMeasurment::setMode(int mode, bool s)
         ui->lineEdit_incube_2->setVisible(true);
         ui->label_incube_2->setVisible(true);
         ui->label_incube->setText(QString("Время инкубации 1"));
+        ui->comboBox_inductor->setVisible(true);
+        ui->label_itype->setVisible(true);
 
     }
     else {
         ui->lineEdit_incube_2->setVisible(false);
         ui->label_incube_2->setVisible(false);
         ui->label_incube->setText(QString("Время инкубации"));
+        ui->comboBox_inductor->setVisible(false);
+        ui->label_itype->setVisible(false);
     }
 }
 
@@ -371,3 +378,16 @@ void StartMeasurment::on_pushButton_next_clicked()
 //    cancel = true;
 //    hide();
 //}
+
+void StartMeasurment::on_comboBox_inductor_currentIndexChanged(const QString &arg1)
+{
+    if(arg1 == "Другой") {
+        ui->lineEdit_iname->setVisible(true);
+        ui->label_iname->setVisible(true);
+    }
+    else
+    {
+        ui->lineEdit_iname->setVisible(false);
+        ui->label_iname->setVisible(false);
+    }
+}

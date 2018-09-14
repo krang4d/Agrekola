@@ -110,7 +110,7 @@ void Widget::setUserMessage(QString str, bool withtime, bool tofile)
 }
 
 void Widget::setupRealtimeData() {
-    std::function<bool(void)> foo = [this](){ return startWin.isNull() ? : startWin->isSingle(); };
+    auto foo = [this](){ return startWin.isNull() ? : startWin->isSingle(); };
     if(foo()) {
         QSharedPointer<QCPAxisTickerTime> timeTicker(new QCPAxisTickerTime);
         timeTicker->setTimeFormat("%m:%s");
