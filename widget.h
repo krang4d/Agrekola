@@ -71,6 +71,7 @@ private:
     bool eventFilter(QObject *watched, QEvent *event);
     void setupRealtimeData();
     void setupTimers();
+    void setupWidget();
 
     void startIncub(int num);
     void stopIncub();

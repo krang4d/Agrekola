@@ -50,6 +50,7 @@ Widget::Widget(StartMeasurment *sw, QWidget *parent) : Widget(parent)
 {
     startWin.clear();    
     startWin = QPointer<StartMeasurment>(sw);
+    setupWidget();
 }
 
 
@@ -57,6 +58,7 @@ void Widget::setStartWindow(StartMeasurment *sw)
 {
     startWin.clear();
     startWin = QPointer<StartMeasurment>(sw);
+    setupWidget();
 }
 
 Widget::~Widget()
@@ -509,78 +511,11 @@ void Widget::startMeasurment()
 {
     //qDebug() << "Widget::startMeasurment() start pressed";
     ui->pushButton->setEnabled(false);
-    if(!startWin->isCancel()) {
-        if(startWin->isSingle()) {
-            if (startWin->isChannel(1)) {
-                ui->checkBox_1->setChecked(true); //включение перемешивания 1
-                ui->groupBox_f1->setTitle("Канал 1");
-                ui->groupBox_f1->show();
-            }
-            else {
-                ui->groupBox_f1->hide();
-            }
-
-            if (startWin->isChannel(2)) {
-                ui->checkBox_2->setChecked(true); //включение перемешивания 2
-                ui->groupBox_f2->setTitle("Канал 2");
-                ui->groupBox_f2->show();
-            }
-            else {
-                ui->groupBox_f2->hide();
-            }
-
-            if (startWin->isChannel(3)) {
-                ui->checkBox_3->setChecked(true); //включение перемешивания 3
-                ui->groupBox_f3->setTitle("Канал 3");
-                ui->groupBox_f3->show();
-            }
-            else {
-                ui->groupBox_f3->hide();
-            }
-
-            if (startWin->isChannel(4)) {
-                ui->checkBox_4->setChecked(true); //включение перемешивания 4
-                ui->groupBox_f4->setTitle("Канал 4");
-                ui->groupBox_f4->show();
-            }
-            else {
-                ui->groupBox_f4->hide();
-            }
-            setUserMessage(startWin->getStringStatus());
-            ui->checkBox_L->setChecked(true); //включение лазеров
-            setupRealtimeData();
-        }
-        else {
-
-            if (startWin->isChannel(1)) {
-                ui->groupBox_f1->setTitle("Канал 1, 2");
-                ui->groupBox_f2->hide();
-                ui->checkBox_1->setChecked(true); //включение перемешивания 1
-                ui->checkBox_2->setChecked(true); //включение перемешивания 2
-            }
-            else {
-                ui->groupBox_f1->hide();
-                ui->groupBox_f2->hide();
-            }
-
-            if (startWin->isChannel(3)) {
-                ui->groupBox_f3->setTitle("Канал 3, 4");
-                ui->groupBox_f4->hide();
-                ui->checkBox_3->setChecked(true); //включение перемешивания 3
-                ui->checkBox_4->setChecked(true); //включение перемешивания 4
-
-            }
-            else {
-                ui->groupBox_f3->hide();
-                ui->groupBox_f4->hide();
-            }
-            setupRealtimeData();
-        }
+    setupWidget();
         if( getMode() == Agr1_ID ||getMode() == Agr2_ID ) {
             startIncub(2);
         }
         else startIncub(1);
-    }
 }
 
 void Widget::startMeasurment(StartMeasurment *s)
@@ -984,4 +919,76 @@ void Widget::setupTimers()
     dt = QDateTime::currentDateTime();
     setUserMessage(QString("Начало работы программы    Дата %1")
                    .arg(dt.toString("dd.MM.yyyy")));
+}
+
+void Widget::setupWidget()
+{
+    if(!startWin->isCancel()) {
+        if(startWin->isSingle()) {
+            if (startWin->isChannel(1)) {
+                ui->checkBox_1->setChecked(true); //включение перемешивания 1
+                ui->groupBox_f1->setTitle("Канал 1");
+                ui->groupBox_f1->show();
+            }
+            else {
+                ui->groupBox_f1->hide();
+            }
+
+            if (startWin->isChannel(2)) {
+                ui->checkBox_2->setChecked(true); //включение перемешивания 2
+                ui->groupBox_f2->setTitle("Канал 2");
+                ui->groupBox_f2->show();
+            }
+            else {
+                ui->groupBox_f2->hide();
+            }
+
+            if (startWin->isChannel(3)) {
+                ui->checkBox_3->setChecked(true); //включение перемешивания 3
+                ui->groupBox_f3->setTitle("Канал 3");
+                ui->groupBox_f3->show();
+            }
+            else {
+                ui->groupBox_f3->hide();
+            }
+
+            if (startWin->isChannel(4)) {
+                ui->checkBox_4->setChecked(true); //включение перемешивания 4
+                ui->groupBox_f4->setTitle("Канал 4");
+                ui->groupBox_f4->show();
+            }
+            else {
+                ui->groupBox_f4->hide();
+            }
+            setUserMessage(startWin->getStringStatus());
+            ui->checkBox_L->setChecked(true); //включение лазеров
+            setupRealtimeData();
+        }
+        else {
+
+            if (startWin->isChannel(1)) {
+                ui->groupBox_f1->setTitle("Канал 1, 2");
+                ui->groupBox_f2->hide();
+                ui->checkBox_1->setChecked(true); //включение перемешивания 1
+                ui->checkBox_2->setChecked(true); //включение перемешивания 2
+            }
+            else {
+                ui->groupBox_f1->hide();
+                ui->groupBox_f2->hide();
+            }
+
+            if (startWin->isChannel(3)) {
+                ui->groupBox_f3->setTitle("Канал 3, 4");
+                ui->groupBox_f4->hide();
+                ui->checkBox_3->setChecked(true); //включение перемешивания 3
+                ui->checkBox_4->setChecked(true); //включение перемешивания 4
+
+            }
+            else {
+                ui->groupBox_f3->hide();
+                ui->groupBox_f4->hide();
+            }
+            setupRealtimeData();
+        }
+    }
 }
