@@ -41,6 +41,14 @@ protected:
     double mix_t;                 //время в течение которго происходит перемешивание реагента с плазмой и успокоение жидкости
 };
 
+class CalcLevel : public CalcData
+{
+public:
+    explicit CalcLevel();
+    QString info() override;
+    double calc(QMap<double, double>) override;
+};
+
 class CalcKo1 : public CalcData
 {
 public:

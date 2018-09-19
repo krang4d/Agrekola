@@ -139,7 +139,7 @@ CalcData *CalcData::createCalc(Mode_ID  id)
     switch (id) {
     case Test_ID:
         str = tr("Тест (Test 0)");
-        p = new CalcKo1();
+        p = new CalcLevel();
         break;
     case Agr1_ID:
         str = tr("Определение параметров агрегации, измерение (Agr1 1)");
@@ -437,4 +437,39 @@ double CalcAgr2::calc(QMap<double, double> map)
 QString CalcAgr2::info()
 {
     return QString("фактор Виллебранда");
+}
+
+CalcLevel::CalcLevel()
+{
+
+}
+
+QString CalcLevel::info()
+{
+    return QString("среднее Значение");
+}
+
+double CalcLevel::calc(QMap<double, double> map)
+{
+    if(map.isEmpty()) { qDebug() << "error from CalcData::caalcKo(): the map is empty!"; return 0; }
+    QMap<double, double>::const_iterator it = map.begin();
+    QMap<double, double>::const_iterator state = map.end();
+    double sum = 0;
+    int num = 0;
+
+    while(it != map.end()) {
+        if((it.key() - map.begin().key()) >= mix_t) {
+            state = it;
+            //qDebug().noquote() << QString("key = %1, value = %2").arg(it.key()).arg(it.value());
+            break;
+        }
+        ++it;
+    }
+
+    while(it != map.end()) {
+        num ++;
+        sum += it.value();
+        ++it;
+    }
+    return sum/num;
 }
