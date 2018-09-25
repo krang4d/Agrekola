@@ -110,12 +110,17 @@ signals:
     void ret_value3(double);
     void ret_value4(double);
 
+    void btp_done();
+    void otp_done();
+    void done();
+
 public slots:
     void startMeasurment();
     void startMeasurment(StartMeasurment *);
     void startIncub(int num);
     void startData(int);
-//    void getBTPOTP();
+    void getLevelBTP();
+    void getLevelOTP();
 
 private slots:
     void realtimeDataSlot(QVariantList);

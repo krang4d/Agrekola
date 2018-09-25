@@ -29,6 +29,7 @@ void ProgressTimerBar::startProgress(QString format, int time_ms)
     ui->progressBar->setValue(0);
     ui->progressBar->setMaximum(time_ms);
     progressTimer.start(TIMER_PERIOD_MS);
+    setState(Busy_ID);
     show();
 }
 
@@ -64,6 +65,7 @@ void ProgressTimerBar::Wait()
 {
     ui->progressBar->setMaximum(0);
     ui->progressBar->setMinimum(0);
+    setState(Ready_ID);
 }
 
 void ProgressTimerBar::updateProgress()
@@ -76,6 +78,7 @@ void ProgressTimerBar::updateProgress()
         progressTimer.stop();
         //ui->progressBar->setFormat("Готово");
         //ui->progressBar->setValue(0);
+        setState(Ready_ID);
         emit done();
         if(func) {
             func();

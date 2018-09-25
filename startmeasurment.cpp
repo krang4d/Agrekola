@@ -98,6 +98,11 @@ bool StartMeasurment::isChannel(int ch)
 
 void StartMeasurment::setChannels(bool ch1, bool ch2, bool ch3, bool ch4)
 {
+    num = 0;
+    if(ch1) num++;
+    if(ch2) num++;
+    if(ch3) num++;
+    if(ch4) num++;
     channel_1 = ch1;
     channel_2 = ch2;
     channel_3 = ch3;

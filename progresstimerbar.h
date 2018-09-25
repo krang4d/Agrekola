@@ -7,7 +7,7 @@
 #include <functional>
 
 #define TIMER_PERIOD_MS 100
-enum State_ID { Ready = 0, Incube_1, Incube_2, WaitImp, Measur, Write, Calc };
+enum State_ID { Busy_ID = 0, Ready_ID };
 //typedef void (*Function)(void);
 
 namespace Ui {

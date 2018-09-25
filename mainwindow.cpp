@@ -52,26 +52,29 @@ void MainWindow::newShow(StartMeasurment* sw)
         QMessageBox *imessageBox = new QMessageBox(this);
         imessageBox->setText(QString("Фиксация «100%» и «0%» уровней. Подготовьте и пронумеруйте пробы с БТП и ОТП"));
 
+        connect(this, SIGNAL(otp_done()), SLOT(getBTP()));
+        getOTP();
+
         //определение БТП
-        centerWidget->setMode(Level_ID);
-        centerWidget->setStartWindow(StartCalibrationAgr1::getBTP100());
-        centerWidget->setUserMessage(QString("Установите пробы с БТП в рабочие  каналы и нажмите \"Старт\""), 0);
+//        centerWidget->setMode(Level_ID);
+//        centerWidget->setStartWindow(StartCalibrationAgr1::getBTP100());
+//        centerWidget->setUserMessage(QString("Установите пробы с БТП в рабочие  каналы и нажмите \"Старт\""), 0);
 
 //        std::function<void(double)> savebtp2_1;
 //        std::function<void(double)> savebtp2_2;
 //        std::function<void(double)> savebtp2_3;
 //        std::function<void(double)> savebtp2_4;
 
-        std::function<void(double)> saveotp2_1;
-        std::function<void(double)> saveotp2_2;
-        std::function<void(double)> saveotp2_3;
-        std::function<void(double)> saveotp2_4;
+//        std::function<void(double)> saveotp2_1;
+//        std::function<void(double)> saveotp2_2;
+//        std::function<void(double)> saveotp2_3;
+//        std::function<void(double)> saveotp2_4;
 
         //std::function<void(int, double)> savebtp2;
         //std::function<void(int, double)> saveotp2;
 
-        auto saveotp2 = [&](int n, double d) {
-            static int i = 0;
+//        auto saveotp2 = [&](int n, double d) {
+//            static int i = 0;
 
 //            QStringList btp100;
 //            SaveFiles file_btp;
@@ -82,28 +85,28 @@ void MainWindow::newShow(StartMeasurment* sw)
 //            }
 //            btp100.replace(n, QString("%1").arg(d));
 //            file_btp.saveBTP100(btp100);
-            qDebug() << "Определение ОТП контрольной плазмы";
-        };
+//            qDebug() << "Определение ОТП контрольной плазмы";
+//        };
 
-        saveotp2_1 = std::bind(saveotp2, 0, _1);
-        saveotp2_2 = std::bind(saveotp2, 1, _1);
-        saveotp2_3 = std::bind(saveotp2, 2, _1);
-        saveotp2_4 = std::bind(saveotp2, 3, _1);
+//        saveotp2_1 = std::bind(saveotp2, 0, _1);
+//        saveotp2_2 = std::bind(saveotp2, 1, _1);
+//        saveotp2_3 = std::bind(saveotp2, 2, _1);
+//        saveotp2_4 = std::bind(saveotp2, 3, _1);
 
-        auto savebtp2 = [&](int n, double d) {
-            static int i = 0;
-            i++;
-            QStringList btp100;
-            SaveFiles file_btp;
-            qDebug() << QString("retavlue = %1, index = %2").arg(d).arg(n);
-            file_btp.openBTP100(btp100);
-            if (btp100.isEmpty() || btp100.count() != 4) {
-                btp100 = QStringList({"0", "0", "0", "0"});
-            }
-            btp100.replace(n, QString("%1").arg(d));
-            file_btp.saveBTP100(btp100);
-            if(i == 4) {
-                i = 0;
+//        auto savebtp2 = [&](int n, double d) {
+//            static int i = 0;
+//            i++;
+//            QStringList btp100;
+//            SaveFiles file_btp;
+//            qDebug() << QString("retavlue = %1, index = %2").arg(d).arg(n);
+//            file_btp.openBTP100(btp100);
+//            if (btp100.isEmpty() || btp100.count() != 4) {
+//                btp100 = QStringList({"0", "0", "0", "0"});
+//            }
+//            btp100.replace(n, QString("%1").arg(d));
+//            file_btp.saveBTP100(btp100);
+//            if(i == 4) {
+//                i = 0;
                 //this->centerWidget->setUserMessage(QString("Установите пробы с ОТП в рабочие  каналы и нажмите \"Старт\""), 0);
                 //определение ОТП
                 //centerWidget->setMode(Level_ID);
@@ -114,22 +117,22 @@ void MainWindow::newShow(StartMeasurment* sw)
 //                connect(centerWidget, &Widget::ret_value2, saveotp2_2);
 //                connect(centerWidget, &Widget::ret_value3, saveotp2_3);
 //                connect(centerWidget, &Widget::ret_value4, saveotp2_4);
-            }
-        };
+//            }
+//        };
 
 //        savebtp2_1 = std::bind(savebtp2, 0, _1);
 //        savebtp2_2 = std::bind(savebtp2, 1, _1);
 //        savebtp2_3 = std::bind(savebtp2, 2, _1);
 //        savebtp2_4 = std::bind(savebtp2, 3, _1);
 // disconnect(centerWidget, &Widget::ret_value1, 0, 0);
-        connect(centerWidget, &Widget::ret_value1, [&](double x){
-                savebtp2(0, x); } );
-        connect(centerWidget, &Widget::ret_value2, [&](double x){
-                savebtp2(1, x); } );
-        connect(centerWidget, &Widget::ret_value3, [&](double x){
-                savebtp2(2, x); } );
-        connect(centerWidget, &Widget::ret_value4, [&](double x){
-                savebtp2(3, x); } );
+//        connect(centerWidget, &Widget::ret_value1, [&](double x){
+//                savebtp2(0, x); } );
+//        connect(centerWidget, &Widget::ret_value2, [&](double x){
+//                savebtp2(1, x); } );
+//        connect(centerWidget, &Widget::ret_value3, [&](double x){
+//                savebtp2(2, x); } );
+//        connect(centerWidget, &Widget::ret_value4, [&](double x){
+//                savebtp2(3, x); } );
     }
         break;
     case 2:
@@ -192,6 +195,34 @@ void MainWindow::getOTP()
     centerWidget->setMode(Level_ID);
     centerWidget->setStartWindow(StartCalibrationAgr1::getOTP0());
     centerWidget->setUserMessage(QString("Установите пробы с ОТП в рабочие  каналы и нажмите \"Старт\""), 0);
+
+    auto saveotp2 = [&](int n, double d) {
+        static int i = 0;
+        i++;
+            QStringList btp100;
+            SaveFiles file_btp;
+            qDebug() << QString("retavlue = %1, index = %2").arg(d).arg(n);
+            file_btp.openBTP100(btp100);
+            if (btp100.isEmpty() || btp100.count() != 4) {
+                btp100 = QStringList({"0", "0", "0", "0"});
+            }
+            btp100.replace(n, QString("%1").arg(d));
+            file_btp.saveBTP100(btp100);
+        qDebug() << "Определение ОТП контрольной плазмы";
+        if(i == 4) {
+            i = 0;
+            emit otp_done();
+        }
+    };
+
+    connect(centerWidget, &Widget::ret_value1, [&](double x){ disconnect(centerWidget, &Widget::ret_value1, 0, 0);
+            saveotp2(0, x); } );
+    connect(centerWidget, &Widget::ret_value2, [&](double x){ disconnect(centerWidget, &Widget::ret_value2, 0, 0);
+            saveotp2(1, x); } );
+    connect(centerWidget, &Widget::ret_value3, [&](double x){ disconnect(centerWidget, &Widget::ret_value3, 0, 0);
+            saveotp2(2, x); } );
+    connect(centerWidget, &Widget::ret_value4, [&](double x){ disconnect(centerWidget, &Widget::ret_value4, 0, 0);
+            saveotp2(3, x); } );
 }
 
 void MainWindow::getBTP()

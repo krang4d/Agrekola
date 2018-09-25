@@ -8,6 +8,7 @@
 #include <QKeyEvent>
 #include <QtConcurrent>
 #include <functional>
+#include "agr1.h"
 
 #define Start_DX 0.1f
 #define MIN -6.0f
@@ -533,6 +534,77 @@ void Widget::startData(int n)
     }
 }
 
+void Widget::getLevelBTP()
+{
+    //определение БТП
+    setMode(Level_ID);
+    setStartWindow(StartCalibrationAgr1::getBTP100());
+    setUserMessage(QString("Установите пробы с БТП в рабочие  каналы и нажмите \"Старт\""), 0);
+
+    auto savebtp2 = [&](int n, double d) {
+        static int i = 0;
+        i++;
+        QStringList btp100;
+        SaveFiles file_btp;
+        qDebug() << QString("retavlue = %1, index = %2").arg(d).arg(n);
+        file_btp.openBTP100(btp100);
+        if (btp100.isEmpty() || btp100.count() != 4) {
+            btp100 = QStringList({"0", "0", "0", "0"});
+        }
+        btp100.replace(n, QString("%1").arg(d));
+        file_btp.saveBTP100(btp100);
+        if(i == startWin->num) {
+            i = 0;
+            emit btp_done();
+        }
+    };
+
+    connect(this, &Widget::ret_value1, [&](double x){ disconnect(this, &Widget::ret_value1, 0, 0);
+            savebtp2(0, x); } );
+    connect(this, &Widget::ret_value2, [&](double x){ disconnect(this, &Widget::ret_value2, 0, 0);
+            savebtp2(1, x); } );
+    connect(this, &Widget::ret_value3, [&](double x){ disconnect(this, &Widget::ret_value3, 0, 0);
+            savebtp2(2, x); } );
+    connect(this, &Widget::ret_value4, [&](double x){ disconnect(this, &Widget::ret_value4, 0, 0);
+            savebtp2(3, x); } );
+}
+
+void Widget::getLevelOTP()
+{
+    //определение ОТП
+    setMode(Level_ID);
+    setStartWindow(StartCalibrationAgr1::getOTP0());
+    setUserMessage(QString("Установите пробы с ОТП в рабочие  каналы и нажмите \"Старт\""), 0);
+
+    auto saveotp2 = [&](int n, double d) {
+        static int i = 0;
+        i++;
+            QStringList otp0;
+            SaveFiles file_otp;
+            qDebug() << QString("retavlue = %1, index = %2").arg(d).arg(n);
+            file_otp.openBTP0(otp0);
+            if (otp0.isEmpty() || otp0.count() != 4) {
+                otp0 = QStringList({"0", "0", "0", "0"});
+            }
+            otp0.replace(n, QString("%1").arg(d));
+            file_otp.saveBTP0(otp0);
+        qDebug() << "Определение ОТП контрольной плазмы";
+        if(i == startWin->num) {
+            i = 0;
+            emit otp_done();
+        }
+    };
+
+    connect(this, &Widget::ret_value1, [&](double x){ disconnect(this, &Widget::ret_value1, 0, 0);
+            saveotp2(0, x); } );
+    connect(this, &Widget::ret_value2, [&](double x){ disconnect(this, &Widget::ret_value2, 0, 0);
+            saveotp2(1, x); } );
+    connect(this, &Widget::ret_value3, [&](double x){ disconnect(this, &Widget::ret_value3, 0, 0);
+            saveotp2(2, x); } );
+    connect(this, &Widget::ret_value4, [&](double x){ disconnect(this, &Widget::ret_value4, 0, 0);
+            saveotp2(3, x); } );
+}
+
 void Widget::stopData(int n)
 {
     if(!isData()) {qDebug() << "stop"; return; }
@@ -576,6 +648,7 @@ void Widget::stopData(int n)
         ui->checkBox_L->setChecked(false);
         ui->pushButton->setEnabled(true);
         setUserMessage(QString("Конец сбора данных"));
+        emit done();
     }
 }
 
@@ -844,6 +917,11 @@ void Widget::on_comboBox_currentIndexChanged(int index)
     case 7:
         str = tr("Протромбиновый комплекс, измерение (Ko5 7)");
         setMode(Ko5_ID);
+        break;
+    case 8:
+        str = tr("Определение уровня, измерение (Ko5 7)");
+        startWin = QPointer<StartMeasurment>(StartCalibrationAgr1::getOTP0());
+        setMode(Level_ID);
         break;
     default:
         break;
