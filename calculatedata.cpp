@@ -169,6 +169,10 @@ CalcData *CalcData::createCalc(Mode_ID  id)
         str = tr("Протромбиновый комплекс, измерение (Ko5 7)");
         p = new CalcKo5();
         break;
+    case Level_ID:
+        str = tr("Измерение уровня");
+        p = new CalcLevel();
+        break;
     default: p = NULL;
         break;
     }

@@ -51,20 +51,16 @@ int ChoiseDialog::getTypeOfWidget() const
     return ui->stackedWidget->currentIndex();
 }
 
-ChoiseDialog::~ChoiseDialog()
-{
-    delete ui;
-    qDebug() << "call ChoiseDialog::~ChoiseDialog()";
-    QThread::currentThread()->msleep(300);
-
-}
-
-void ChoiseDialog::on_testButton_clicked()
+QPointer<Widget> ChoiseDialog::CreateWidgetThread(StartMeasurment *sm)
 {
     QPointer<useE154> agrekola = new useE154;
-    QPointer<Widget> widget =new Widget(this);
+    QPointer<Widget> widget;
+    if(sm != 0)
+        widget = QPointer<Widget>(new Widget(sm, this));
+    else widget = QPointer<Widget>(new Widget(this));
+
     widget->setWindowFlags(Qt::Dialog);
-    //ChoiseDialog choiseDlg;
+
     QWidget::connect(widget, SIGNAL(onmixch1(bool)), agrekola, SLOT(onMixCh1(bool)));
     QWidget::connect(widget, SIGNAL(onmixch2(bool)), agrekola, SLOT(onMixCh2(bool)));
     QWidget::connect(widget, SIGNAL(onmixch3(bool)), agrekola, SLOT(onMixCh3(bool)));
@@ -78,12 +74,24 @@ void ChoiseDialog::on_testButton_clicked()
     QWidget::connect(agrekola, SIGNAL(value_come(QVariantList)), widget, SLOT(realtimeDataSlot(QVariantList)));
     QWidget::connect(agrekola, SIGNAL(finished()), agrekola, SLOT(deleteLater()));
     QWidget::connect(widget, SIGNAL(destroyed(QObject*)), agrekola, SLOT(deleteLater()));
+    agrekola->start();
+    //widget->setUserMessage(agrekola->GetInformation());
+    return widget;
+}
 
+ChoiseDialog::~ChoiseDialog()
+{
+    delete ui;
+    qDebug() << "call ChoiseDialog::~ChoiseDialog()";
+    QThread::currentThread()->msleep(300);
+}
+
+void ChoiseDialog::on_testButton_clicked()
+{
+    QPointer<Widget> widget = CreateWidgetThread();
     widget->setMode(0); //Test
     widget->show();
     hide();
-    agrekola->start();
-    widget->setUserMessage(agrekola->GetInformation());
 }
 
 void ChoiseDialog::startMeasurement(StartMeasurment* sw)
@@ -96,25 +104,8 @@ void ChoiseDialog::startMeasurement(StartMeasurment* sw)
 void ChoiseDialog::calibration(StartMeasurment* sw)
 {
     int i = ui->stackedWidget->currentIndex();
-    QPointer<useE154> agrekola = new useE154;
-    QPointer<Widget> widget =new Widget(sw, this);
-    widget->setWindowFlags(Qt::Dialog);
-    //ChoiseDialog choiseDlg;
-    QWidget::connect(widget, SIGNAL(onmixch1(bool)), agrekola, SLOT(onMixCh1(bool)));
-    QWidget::connect(widget, SIGNAL(onmixch2(bool)), agrekola, SLOT(onMixCh2(bool)));
-    QWidget::connect(widget, SIGNAL(onmixch3(bool)), agrekola, SLOT(onMixCh3(bool)));
-    QWidget::connect(widget, SIGNAL(onmixch4(bool)), agrekola, SLOT(onMixCh4(bool)));
-    QWidget::connect(widget, SIGNAL(onmixpp(bool)), agrekola, SLOT(onMixPP(bool)));
-    QWidget::connect(widget, SIGNAL(onlaser(bool)), agrekola, SLOT(onLaser(bool)));
-    QObject::connect(widget, SIGNAL(stop()), agrekola, SLOT(stopThread()));
-    QObject::connect(widget, SIGNAL(stop()), widget, SLOT(deleteLater()));
+    QPointer<Widget> widget= CreateWidgetThread(sw);
 
-    QWidget::connect(agrekola, SIGNAL(update_termo(bool)), widget, SLOT(updataTermo(bool)));
-    QWidget::connect(agrekola, SIGNAL(value_come(QVariantList)), widget, SLOT(realtimeDataSlot(QVariantList)));
-    QWidget::connect(agrekola, SIGNAL(finished()), agrekola, SLOT(deleteLater()));
-    QWidget::connect(widget, SIGNAL(destroyed(QObject*)), agrekola, SLOT(deleteLater()));
-
-    agrekola->start();
     widget->show();
     hide();
 

@@ -29,7 +29,7 @@ class Widget : public QWidget
 
 public:
     explicit Widget(QWidget *parent = 0);
-    Widget(StartMeasurment*, QWidget *parent = 0);
+    Widget(StartMeasurment *, QWidget *parent = 0);
     ~Widget();
     void setUserMessage(QString, bool withtime = 1, bool tofile = 1);
     inline void setMode(Mode_ID m)  { id = m; }
@@ -59,6 +59,9 @@ public:
         case 7:;
             setMode(Ko5_ID);
             break;
+        case 8:
+            setMode(Level_ID);
+            break;
         default:
             break;
         }
@@ -67,19 +70,21 @@ public:
     inline Mode_ID getMode()     { return id; }
     inline bool isSensorReady()  { return termoSensor; } //проверка тепловой готовности
 
-private:
+    void stopIncub();
+    bool isIncub();
+
+    void stopData(int);
+    bool isData(int = 0);
+
+protected:
     bool eventFilter(QObject *watched, QEvent *event);
     void setupRealtimeData();
     void setupTimers();
     void setupWidget();
 
-    void startIncub(int num);
-    void stopIncub();
-    bool isIncub();
-
-    void startData(int);
-    void stopData(int);
-    bool isData(int = 0);
+protected slots:
+    void incubeTimeout_0();
+    void incubeTimeout();
 
 signals:
     void onmixch1(bool);
@@ -108,8 +113,9 @@ signals:
 public slots:
     void startMeasurment();
     void startMeasurment(StartMeasurment *);
-    void incubeTimeout_0();
-    void incubeTimeout();
+    void startIncub(int num);
+    void startData(int);
+//    void getBTPOTP();
 
 private slots:
     void realtimeDataSlot(QVariantList);
@@ -130,24 +136,40 @@ private slots:
 
 private:
     Ui::Widget *ui;
-    QPointer<StartMeasurment> startWin;
-    QPointer<QCustomPlot> customPlot1, customPlot2, customPlot3, customPlot4;
-
-    QPointer<ProgressTimerBar> pBar1, pBar2, pBar3, pBar4;
     QTimer plotTimer, currentTimer;
     QDateTime dt;
 
     volatile bool data1, data2, data3, data4;
     bool pulse1, pulse2, pulse3, pulse4;
     bool ready1, ready2, ready3, ready4;
-    bool incub;
     bool termoSensor;
+    bool incub;
 
     QMap<double, double> map_y1, map_y2, map_y3, map_y4 ;
-
+    QVector<double> btp, otp;
     SaveFiles saveFiles;
     int mode;
     Mode_ID id;
+
+public:
+    QPointer<StartMeasurment> startWin;
+    QPointer<QCustomPlot> customPlot1, customPlot2, customPlot3, customPlot4;
+    QPointer<ProgressTimerBar> pBar1, pBar2, pBar3, pBar4;
+};
+
+class Agregometr  : public QObject
+{
+    Q_OBJECT
+public:
+    Agregometr(Widget *);
+
+public slots:
+    void start();
+//    void getLevelBTP();
+//    void getLevelOTP();
+
+private:
+    Widget *widget;
 };
 
 #endif // WIDGET_H

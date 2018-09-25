@@ -16,12 +16,12 @@
 Widget::Widget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Widget),
-    pBar1(new ProgressTimerBar), pBar2(new ProgressTimerBar),
-    pBar3(new ProgressTimerBar), pBar4(new ProgressTimerBar),
     data1(false), data2(false), data3(false), data4(false),
     pulse1(false), pulse2(false), pulse3(false), pulse4(false),
     ready1(false), ready2(false), ready3(false), ready4(false),
-    incub(false)
+    incub(false),
+    pBar1(new ProgressTimerBar), pBar2(new ProgressTimerBar),
+    pBar3(new ProgressTimerBar), pBar4(new ProgressTimerBar)
 {
     ui->setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
@@ -196,12 +196,6 @@ void Widget::setupRealtimeData() {
 
         connect(customPlot2->xAxis, SIGNAL(rangeChanged(QCPRange)), customPlot2->xAxis2, SLOT(setRange(QCPRange)));
         connect(customPlot2->yAxis, SIGNAL(rangeChanged(QCPRange)), customPlot2->yAxis2, SLOT(setRange(QCPRange)));
-
-//        // setup a timer that repeatedly calls MainWindow::realtimeDataSlot:
-//        disconnect(&plotTimer, SIGNAL(timeout()), this, SLOT(realtimeDataSlotSingle()));
-//        plotTimer.stop();
-//        connect(&plotTimer, SIGNAL(timeout()), this, SLOT(realtimeDataSlotDuo()));
-//        plotTimer.start(0); // Interval 0 means to refresh as fast as possible
     }
 }
 
@@ -298,7 +292,6 @@ void Widget::realtimeDataSlot(QVariantList a) {
         }
 
         static double stop_dy1 = 0 ;
-        //static QVector<double> y1;
         if( isData( 1 ) && startWin->isChannel(1) ) {
             map_y1.insert(key, a[0].toDouble());
             if( key <= (map_y1.begin().key() + 4) ) {
@@ -306,7 +299,6 @@ void Widget::realtimeDataSlot(QVariantList a) {
                     qDebug() << "stop_dx1 = " << stop_dy1;
             }
             else {
-                //y1.push_back(a[0].toDouble());
                 if(  getMode() != Agr1_ID && getMode() != Agr2_ID && std::abs(map_y1.last() - stop_dy1) >= std::abs(stop_dy1*0.1) ) {
                     qDebug() << "emit stopData1" << std::abs(map_y1.last() - stop_dy1) << ">=" << std::abs(stop_dy1*0.1);
                     emit stopData1();
@@ -315,11 +307,9 @@ void Widget::realtimeDataSlot(QVariantList a) {
         }
         else {
             stop_dy1 = 0;
-            //if(!y2.isEmpty()) { y2.clear(); }
         }
 
         static double stop_dy2 = 0 ;
-        //static QVector<double> y2;
         if( isData( 2 ) && startWin->isChannel(2) ) {
             map_y2.insert(key, a[1].toDouble());
             if( key <= (map_y2.begin().key() + 4) ) {
@@ -327,20 +317,17 @@ void Widget::realtimeDataSlot(QVariantList a) {
                     qDebug() << "stop_dx2 = " << stop_dy2;
             }
             else {
-                //y2.push_back(a[1].toDouble());
                 if(  getMode() != Agr1_ID && getMode() != Agr2_ID && std::abs(map_y2.last() - stop_dy2) >= std::abs(stop_dy2*0.1) ) {
-                    qDebug() << "emit stopData1" << std::abs(map_y2.last() - stop_dy2) << ">=" << std::abs(stop_dy2*0.1);
+                    qDebug() << "emit stopData2" << std::abs(map_y2.last() - stop_dy2) << ">=" << std::abs(stop_dy2*0.1);
                     emit stopData2();
                 }
             }
         }
         else {
             stop_dy2 = 0;
-            //if(!y2.isEmpty()) { y2.clear(); }
         }
 
         static double stop_dy3 = 0 ;
-        //static QVector<double> y3;
         if( isData( 3 ) && startWin->isChannel(3) ) {
             map_y3.insert(key, a[2].toDouble());
             if( key <= (map_y3.begin().key() + 4) ) {
@@ -348,7 +335,6 @@ void Widget::realtimeDataSlot(QVariantList a) {
                     qDebug() << "stop_dx3 = " << stop_dy3;
             }
             else {
-                //y3.push_back(a[2].toDouble());
                 if(  getMode() != Agr1_ID && getMode() != Agr2_ID && std::abs(map_y3.last() - stop_dy3) >= std::abs(stop_dy3*0.1) ) {
                     qDebug() << "emit stopData3" << std::abs(map_y3.last() - stop_dy3) << ">=" << std::abs(stop_dy3*0.1);
                     emit stopData3();
@@ -357,11 +343,9 @@ void Widget::realtimeDataSlot(QVariantList a) {
         }
         else {
             stop_dy3 = 0;
-            //if(!y3.isEmpty()) { y3.clear(); }
         }
 
         static double stop_dy4 = 0 ;
-        //static QVector<double> y4;
         if( isData( 4 ) && startWin->isChannel(4) ) {
             map_y4.insert(key, a[3].toDouble());
             if( key <= (map_y4.begin().key() + 4) ) {
@@ -369,7 +353,6 @@ void Widget::realtimeDataSlot(QVariantList a) {
                     qDebug() << "stop_dx4 = " << stop_dy4;
             }
             else {
-                //y4.push_back(a[4].toDouble());
                 if(  getMode() != Agr1_ID && getMode() != Agr2_ID && std::abs(map_y4.last() - stop_dy4) >= std::abs(stop_dy4*0.1) ) {
                     qDebug() << "emit stopData4" << std::abs(map_y4.last() - stop_dy4) << ">=" << std::abs(stop_dy4*0.1);
                     emit stopData4();
@@ -378,20 +361,7 @@ void Widget::realtimeDataSlot(QVariantList a) {
         }
         else {
             stop_dy4 = 0;
-            //if(!y4.isEmpty()) { y4.clear(); }
         }
-//        if( isData( 2 ) && startWin->isChannel(2) ) {
-//                map_y2.insert(key, a[1].toDouble());
-//        }
-
-//        if(isData( 3 ) && startWin->isChannel(3) ) {
-//                map_y3.insert(key, a[2].toDouble());
-//        }
-
-//        if(isData( 4 )  && startWin->isChannel(4) ) {
-//                map_y4.insert(key, a[3].toDouble());
-//        }
-
         lastPointKey = key;
     }
     // calculate frames per second:
@@ -487,6 +457,12 @@ void Widget::on_pushButton_clicked()
             startWin->hide();
             });
     }
+    if(getMode() == Level_ID) {
+        startData(1);
+        startData(2);
+        startData(3);
+        startData(4);
+    }
     else {
         startMeasurment();
     }
@@ -512,10 +488,13 @@ void Widget::startMeasurment()
     //qDebug() << "Widget::startMeasurment() start pressed";
     ui->pushButton->setEnabled(false);
     setupWidget();
-        if( getMode() == Agr1_ID ||getMode() == Agr2_ID ) {
-            startIncub(2);
-        }
-        else startIncub(1);
+    if( getMode() == Agr1_ID ||getMode() == Agr2_ID ) {
+//        Agregometr *a = new Agregometr(this);
+//        a->start();
+
+        startIncub(2);
+    }
+    else startIncub(1);
 }
 
 void Widget::startMeasurment(StartMeasurment *s)
@@ -556,7 +535,7 @@ void Widget::startData(int n)
 
 void Widget::stopData(int n)
 {
-    if(!isData()) return;
+    if(!isData()) {qDebug() << "stop"; return; }
     switch (n) {
     case 1:
         if(data1) {
@@ -635,18 +614,8 @@ void Widget::startIncub(int num)
     }
     else {
         QPointer<QMessageBox> imessageBox = new QMessageBox(this);
-        //connect(imessageBox.data(), SIGNAL(buttonClicked(QAbstractButton*)), imessageBox.data(), SLOT(deleteLater()));
         imessageBox->setText(QString("Время инкубации истекло, добавьте разведения плазмы в рабочие каналы и нажмите кнопку \"ОК\"" ));
-//        std::function<void ()> foo = [imessageBox, this]() {
-//            pBar1->Wait();
-//            pBar2->Wait();
-//            pBar3->Wait();
-//            pBar4->Wait();
-//            imessageBox->exec();
-//            //QMessageBox::exec(); //&Widget::incubeTimeout_0;
-//        };
         connect(imessageBox, SIGNAL(buttonClicked(QAbstractButton*)), this, SLOT(incubeTimeout_0()));
-        //std::function<void(void)> foo = std::bind(func, imessageBox.data());
         int time_ms = startWin->getTimeIncube(1) * 1000;
         pBar1->startProgress(QString("Инкубация 1 %p%"), time_ms, [imessageBox, this]() {
             pBar1->Wait();
@@ -654,7 +623,6 @@ void Widget::startIncub(int num)
             pBar3->Wait();
             pBar4->Wait();
             imessageBox->exec();
-            //QMessageBox::exec(); //&Widget::incubeTimeout_0;
         });
         pBar2->startProgress(QString("Инкубация 1 %p%"), time_ms);
         pBar3->startProgress(QString("Инкубация 1 %p%"), time_ms);
@@ -688,60 +656,53 @@ void Widget::incubeTimeout_0()
 
 void Widget::incubeTimeout()
 {
-    //setUserMessage("Время инкубации истекло, добавьте стартовый реагент!");
-    QPointer<ImpuleWaiter> iw = new ImpuleWaiter;
+        //setUserMessage("Время инкубации истекло, добавьте стартовый реагент!");
+        QPointer<ImpuleWaiter> iw = new ImpuleWaiter;
 
-    stopIncub();
-    if(startWin->isChannel(1)) {
-        setUserMessage("Канал 1 в ожидании введения стартового реагента");
-        ready1 = true;
-        iw->addWaiter(1);
-        pBar1->Wait();
-    }
-    if(startWin->isChannel(2)) {
-        setUserMessage("Канал 2 в ожидании введения стартового реагента");
-        ready2 = true;
-        iw->addWaiter(2);
-        pBar2->Wait();
-    }
-    if(startWin->isChannel(3)) {
-        setUserMessage("Канал 3 в ожидании введения стартового реагента");
-        ready3 = true;
-        iw->addWaiter(3);
-        pBar3->Wait();
-    }
-    if(startWin->isChannel(4)) {
-        setUserMessage("Канал 4 в ожидании введения стартового реагента");
-        ready4 = true;
-        iw->addWaiter(4);
-        pBar4->Wait();
-    }
-    connect(this, &Widget::hasPulse1, iw, &ImpuleWaiter::has_pulse_1);
-    connect(this, &Widget::hasPulse2, iw, &ImpuleWaiter::has_pulse_2);
-    connect(this, &Widget::hasPulse3, iw, &ImpuleWaiter::has_pulse_3);
-    connect(this, &Widget::hasPulse4, iw, &ImpuleWaiter::has_pulse_4);
+        stopIncub();
+        if(startWin->isChannel(1)) {
+            setUserMessage("Канал 1 в ожидании введения стартового реагента");
+            ready1 = true;
+            iw->addWaiter(1);
+            pBar1->Wait();
+        }
+        if(startWin->isChannel(2)) {
+            setUserMessage("Канал 2 в ожидании введения стартового реагента");
+            ready2 = true;
+            iw->addWaiter(2);
+            pBar2->Wait();
+        }
+        if(startWin->isChannel(3)) {
+            setUserMessage("Канал 3 в ожидании введения стартового реагента");
+            ready3 = true;
+            iw->addWaiter(3);
+            pBar3->Wait();
+        }
+        if(startWin->isChannel(4)) {
+            setUserMessage("Канал 4 в ожидании введения стартового реагента");
+            ready4 = true;
+            iw->addWaiter(4);
+            pBar4->Wait();
+        }
+        connect(this, &Widget::hasPulse1, iw, &ImpuleWaiter::has_pulse_1);
+        connect(this, &Widget::hasPulse2, iw, &ImpuleWaiter::has_pulse_2);
+        connect(this, &Widget::hasPulse3, iw, &ImpuleWaiter::has_pulse_3);
+        connect(this, &Widget::hasPulse4, iw, &ImpuleWaiter::has_pulse_4);
 
-    connect(iw, &ImpuleWaiter::press_1, [=](){
-        disconnect(this, &Widget::hasPulse1, iw, &ImpuleWaiter::has_pulse_1);
-        pulse1 = true;});
-    connect(iw, &ImpuleWaiter::press_2, [=](){
-        disconnect(this, &Widget::hasPulse2, iw, &ImpuleWaiter::has_pulse_2);
-        pulse2 = true;});
-    connect(iw, &ImpuleWaiter::press_3, [=](){
-        disconnect(this, &Widget::hasPulse3, iw, &ImpuleWaiter::has_pulse_3);
-        pulse3 = true;});
-    connect(iw, &ImpuleWaiter::press_4, [=](){
-        disconnect(this, &Widget::hasPulse4, iw, &ImpuleWaiter::has_pulse_4);
-        pulse4 = true;});
+        connect(iw, &ImpuleWaiter::press_1, [=](){
+            disconnect(this, &Widget::hasPulse1, iw, &ImpuleWaiter::has_pulse_1);
+            pulse1 = true;});
+        connect(iw, &ImpuleWaiter::press_2, [=](){
+            disconnect(this, &Widget::hasPulse2, iw, &ImpuleWaiter::has_pulse_2);
+            pulse2 = true;});
+        connect(iw, &ImpuleWaiter::press_3, [=](){
+            disconnect(this, &Widget::hasPulse3, iw, &ImpuleWaiter::has_pulse_3);
+            pulse3 = true;});
+        connect(iw, &ImpuleWaiter::press_4, [=](){
+            disconnect(this, &Widget::hasPulse4, iw, &ImpuleWaiter::has_pulse_4);
+            pulse4 = true;});
 
-    iw->startWait();
-//    QMessageBox::information(this, "Инкубация",
-//                             "Время инкубации истекло, добавьте стартовый реагент\n"
-//                             "и нажмите кнопку СТАРТ для соответствующего канала, если\n"
-//                             "измерение не запустилось автоматически. Нажмите ОК для продолжения.");
-//    emit status(QString("Время инкубации вышло"));
-    //запуск измерени
-    //startData();
+        iw->startWait();
 }
 
 double Widget::writeMapData(int n)
@@ -992,3 +953,84 @@ void Widget::setupWidget()
         }
     }
 }
+
+Agregometr::Agregometr(Widget *w)
+{
+    widget = w;
+}
+
+void Agregometr::start()
+{
+    widget->setUserMessage("Фиксация \"100%\" уровней");
+    QMessageBox *imessageBox = new QMessageBox(widget);
+    imessageBox->setText(QString("Фиксация «100%» и «0%» уровней. Подготовьте и пронумеруйте пробы с БТП и ОТП\
+                                 установите пробы с БТП в рабочие  каналы"));
+    imessageBox->exec();
+    widget->startIncub(1);
+    //auto fun = [this](){ qDebug() << "this->widget->startIncub(1)" ;this->widget->startIncub(1);};
+    //connect(imessageBox, &QMessageBox::buttonClicked, );
+
+//    int time_ms = widget->startWin->getTimeIncube(1) * 1000;
+//    widget->pBar1->startProgress(QString("Инкубация 1 %p%"), time_ms, [imessageBox, this]() {
+//        widget->pBar1->Wait();
+//        widget->pBar2->Wait();
+//        widget->pBar3->Wait();
+//        widget->pBar4->Wait();
+//        imessageBox->exec();
+//    });
+//    widget->pBar2->startProgress(QString("Инкубация 1 %p%"), time_ms);
+//    widget->pBar3->startProgress(QString("Инкубация 1 %p%"), time_ms);
+//    widget->pBar4->startProgress(QString("Инкубация 1 %p%"), time_ms);
+//    widget->setUserMessage(QString("Инкубация 1 (%1c)").arg(widget->startWin->getTimeIncube()));
+            //    emit widget->status(QString("Инкубация 1"));
+}
+
+//void Agregometr::getLevelBTP()
+//{
+//    //определение БТП
+//    centerWidget->setMode(Level_ID);
+//    centerWidget->setStartWindow(StartCalibrationAgr1::getBTP100());
+//    centerWidget->setUserMessage(QString("Установите пробы с БТП в рабочие  каналы и нажмите \"Старт\""), 0);
+
+//    auto savebtp2 = [&](int n, double d) {
+//        QStringList btp100;
+//        SaveFiles file_btp;
+//        qDebug() << QString("retavlue = %1, index = %2").arg(d).arg(n);
+//        file_btp.openBTP100(btp100);
+//        if (btp100.isEmpty() || btp100.count() != 4) {
+//            btp100 = QStringList({"0", "0", "0", "0"});
+//        }
+//        btp100.replace(n, QString("%1").arg(d));
+//        file_btp.saveBTP100(btp100);
+//    };
+
+//    connect(centerWidget, &Widget::ret_value1, std::bind(savebtp2, 0, _1));
+//    connect(centerWidget, &Widget::ret_value2, std::bind(savebtp2, 1, _1));
+//    connect(centerWidget, &Widget::ret_value3, std::bind(savebtp2, 2, _1));
+//    connect(centerWidget, &Widget::ret_value4, std::bind(savebtp2, 3, _1));
+//}
+
+//void Agregometr::getLevelOTP()
+//{
+//    //определение БТП
+//    centerWidget->setMode(Level_ID);
+//    centerWidget->setStartWindow(StartCalibrationAgr1::getOTP);
+//    centerWidget->setUserMessage(QString("Установите пробы с БТП в рабочие  каналы и нажмите \"Старт\""), 0);
+
+//    auto savebtp2 = [&](int n, double d) {
+//        QStringList btp100;
+//        SaveFiles file_btp;
+//        qDebug() << QString("retavlue = %1, index = %2").arg(d).arg(n);
+//        file_btp.openBTP100(btp100);
+//        if (btp100.isEmpty() || btp100.count() != 4) {
+//            btp100 = QStringList({"0", "0", "0", "0"});
+//        }
+//        btp100.replace(n, QString("%1").arg(d));
+//        file_btp.saveBTP100(btp100);
+//    };
+
+//    connect(centerWidget, &Widget::ret_value1, std::bind(savebtp2, 0, _1));
+//    connect(centerWidget, &Widget::ret_value2, std::bind(savebtp2, 1, _1));
+//    connect(centerWidget, &Widget::ret_value3, std::bind(savebtp2, 2, _1));
+//    connect(centerWidget, &Widget::ret_value4, std::bind(savebtp2, 3, _1));
+//}

@@ -23,6 +23,8 @@ public:
     ~MainWindow();
     void newShow(StartMeasurment*sw);
     void setupThread();
+    void getOTP();
+    void getBTP();
 
 private:
     bool eventFilter(QObject *watched, QEvent *event);
@@ -30,6 +32,9 @@ private:
 private slots:
     void on_menu_triggered();
     void on_plots_triggered();
+
+signals:
+    btp_done();
 
 private:
     Ui::MainWindow *ui;

@@ -33,6 +33,8 @@ public:
     void openKo4(QStringList &param);
     void openKo5(QStringList &param);
     void openStartWin(QStringList &param);
+    void openBTP100(QStringList &param);
+    void openBTP0(QStringList &param);
 
     void saveAgr1(QStringList param);
     void saveAgr2(QStringList param);
@@ -42,6 +44,8 @@ public:
     void saveKo4(QStringList param);
     void saveKo5(QStringList param);
     void saveStartWin(QStringList param);
+    void saveBTP100(QStringList &param);
+    void saveBTP0(QStringList &param);
 
 signals:
     value_changed(int);

@@ -48,6 +48,8 @@ class StartCalibrationAgr1 : public StartMeasurment
 public:
     StartCalibrationAgr1() = delete;
     static StartMeasurment *getStart();
+    static StartMeasurment *getBTP100();
+    static StartMeasurment *getOTP0();
 };
 
 #endif // AGR1_H

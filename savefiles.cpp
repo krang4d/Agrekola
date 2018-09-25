@@ -1,5 +1,8 @@
 #include "savefiles.h"
 #include <QThread>
+#include <QMutex>
+
+QMutex mut;
 
 SaveFiles::SaveFiles(QObject *parent) : QObject(parent)
 {
@@ -260,11 +263,6 @@ void SaveFiles::openParams(QString name, QStringList &param)
         str.remove("\n");
         param << str;
     }
-    //stream_settings >> param[1];
-    //stream_settings >> param[2];
-//    foreach (QString var, param) {
-//        stream_settings >> var;
-//    }
     stream_setting.flush();
     file_setting.flush();
     file_setting.close();
@@ -272,6 +270,7 @@ void SaveFiles::openParams(QString name, QStringList &param)
 
 void SaveFiles::saveParams(QString name, QStringList param)
 {
+    mut.lock();
     QDir::setCurrent(settingDir.path());
     //открываем файл настроек для записи параметров
     //if(QFile::exists(name)) {QFile::remove(name); qDebug() << "remove file";}
@@ -286,6 +285,7 @@ void SaveFiles::saveParams(QString name, QStringList param)
     }
     file_setting.flush();
     file_setting.close();
+    mut.unlock();
 }
 
 void SaveFiles::openAgr1(QStringList &param)
@@ -328,6 +328,16 @@ void SaveFiles::openStartWin(QStringList &param)
     openParams("StartWin.ini", param);
 }
 
+void SaveFiles::openBTP100(QStringList &param)
+{
+    openParams("BTP100.ini", param);
+}
+
+void SaveFiles::openBTP0(QStringList &param)
+{
+    openParams("BTP0.ini", param);
+}
+
 void SaveFiles::saveAgr1(QStringList param)
 {
     saveParams("Agr1.ini", param);
@@ -366,5 +376,15 @@ void SaveFiles::saveKo5(QStringList param)
 void SaveFiles::saveStartWin(QStringList param)
 {
     saveParams("StartWin.ini", param);
+}
+
+void SaveFiles::saveBTP100(QStringList &param)
+{
+    saveParams("BTP100.ini", param);
+}
+
+void SaveFiles::saveBTP0(QStringList &param)
+{
+    saveParams("BTP0.ini", param);
 }
 

@@ -87,3 +87,29 @@ StartMeasurment *StartCalibrationAgr1::getStart()
     //stKo2->cancel = false;
     return sm;
 }
+
+StartMeasurment *StartCalibrationAgr1::getBTP100()
+{
+    StartMeasurment *sm = new StartMeasurment(0);
+    sm->setChannels(true, true, true, true);
+    sm->setNum(1, "Фиксация БТП");
+    sm->setNum(2, "Фиксация БТП");
+    sm->setNum(3, "Фиксация БТП");
+    sm->setNum(4, "Фиксация БТП");
+    sm->setTime(10);
+    sm->setTimeIncube(1, 3);
+    return sm;
+}
+
+StartMeasurment *StartCalibrationAgr1::getOTP0()
+{
+    StartMeasurment *sm = new StartMeasurment(0);
+    sm->setChannels(true, true, true, true);
+    sm->setNum(1, "Фиксация ОТП");
+    sm->setNum(2, "Фиксация ОТП");
+    sm->setNum(3, "Фиксация ОТП");
+    sm->setNum(4, "Фиксация ОТП");
+    sm->setTime(10);
+    sm->setTimeIncube(1, 3);
+    return sm;
+}
