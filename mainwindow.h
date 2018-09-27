@@ -28,8 +28,8 @@ private:
     bool eventFilter(QObject *watched, QEvent *event);
 
 public slots:
-    void getOTP();
-    void getBTP();
+//    void getOTP();
+//    void getBTP();
 
 private slots:
     void on_menu_triggered();

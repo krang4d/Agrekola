@@ -424,10 +424,11 @@ void Widget::on_checkBox_L_stateChanged(int arg1)
 void Widget::on_pushButton_clicked()
 {
     if( termoSensor ) {
-        setUserMessage("Дождитесь нагрева термостата");
+        setUserMessage(QString("Дождитесь нагрева термостата"));
         pBar1->setFormat("В ожидании");
         pBar1->setValue(0);
         pBar2->setFormat("В ожидании");
+
         pBar2->setValue(0);
         pBar3->setFormat("В ожидании");
         pBar3->setValue(0);
@@ -542,8 +543,8 @@ void Widget::getLevelBTP()
     setUserMessage(QString("Установите пробы с БТП в рабочие  каналы и нажмите \"Старт\""), 0);
 
     auto savebtp2 = [&](int n, double d) {
-        static int i = 0;
-        i++;
+//        static int i = 0;
+//        i++;
         QStringList btp100;
         SaveFiles file_btp;
         qDebug() << QString("retavlue = %1, index = %2").arg(d).arg(n);
@@ -553,10 +554,10 @@ void Widget::getLevelBTP()
         }
         btp100.replace(n, QString("%1").arg(d));
         file_btp.saveBTP100(btp100);
-        if(i == startWin->num) {
-            i = 0;
-            emit btp_done();
-        }
+//        if(i == startWin->num) {
+//            i = 0;
+//            emit btp_done();
+//        }
     };
 
     connect(this, &Widget::ret_value1, [&](double x){ disconnect(this, &Widget::ret_value1, 0, 0);
@@ -577,8 +578,8 @@ void Widget::getLevelOTP()
     setUserMessage(QString("Установите пробы с ОТП в рабочие  каналы и нажмите \"Старт\""), 0);
 
     auto saveotp2 = [&](int n, double d) {
-        static int i = 0;
-        i++;
+//        static int i = 0;
+//        i++;
             QStringList otp0;
             SaveFiles file_otp;
             qDebug() << QString("retavlue = %1, index = %2").arg(d).arg(n);
@@ -589,10 +590,10 @@ void Widget::getLevelOTP()
             otp0.replace(n, QString("%1").arg(d));
             file_otp.saveBTP0(otp0);
         qDebug() << "Определение ОТП контрольной плазмы";
-        if(i == startWin->num) {
-            i = 0;
-            emit otp_done();
-        }
+//        if(i == startWin->num) {
+//            i = 0;
+//            emit otp_done();
+//        }
     };
 
     connect(this, &Widget::ret_value1, [&](double x){ disconnect(this, &Widget::ret_value1, 0, 0);
@@ -832,7 +833,7 @@ double Widget::writeMapData(int n)
                        .arg(retval)
                        .arg(p->info()));
         strList << QString("V1#%1\t").arg(startWin->getNum(1));
-        pBar->setMaximum(map_y1.count());
+        //pBar->setMaximum(map_y1.count());
         func(map_y1);
         map_y1.clear();
         emit ret_value1(retval);
@@ -843,7 +844,7 @@ double Widget::writeMapData(int n)
                        .arg(retval)
                        .arg(p->info()));
         strList << QString("V2#%1\t").arg(startWin->getNum(2));
-        pBar->setMaximum(map_y2.count());
+        //pBar->setMaximum(map_y2.count());
         func(map_y2);
         map_y2.clear();
         emit ret_value2(retval);
@@ -854,7 +855,7 @@ double Widget::writeMapData(int n)
                        .arg(retval)
                        .arg(p->info()));
         strList << QString("V3#%1\t").arg(startWin->getNum(3));
-        pBar->setMaximum(map_y3.count());
+        //pBar->setMaximum(map_y3.count());
         func(map_y3);
         map_y3.clear();
         emit ret_value3(retval);
@@ -865,14 +866,14 @@ double Widget::writeMapData(int n)
                        .arg(retval)
                        .arg(p->info()));
         strList << QString("V4#%1\t").arg(startWin->getNum(4));
-        pBar->setMaximum(map_y4.count());
+        //pBar->setMaximum(map_y4.count());
         func(map_y4);
         map_y4.clear();
         emit ret_value4(retval);
     }
     //emit ret_value(retval);
     //connect(&saveFiles, SIGNAL(value_changed(int)), pBar, SLOT(setValue(int)));
-    pBar->setFormat(QString("Запись данных %p%"));
+
     QString filename = saveFiles.writeData(strList, pBar);
     setUserMessage(filename, true, true);
     //std::function<QString(void)> f1= [=](){return SaveFiles::writeData(strList);};
@@ -919,8 +920,13 @@ void Widget::on_comboBox_currentIndexChanged(int index)
         setMode(Ko5_ID);
         break;
     case 8:
-        str = tr("Определение уровня, измерение (Ko5 7)");
-        startWin = QPointer<StartMeasurment>(StartCalibrationAgr1::getOTP0());
+        str = tr("Определение уровня БТП, измерение (8)");
+        setStartWindow(StartCalibrationAgr1::getBTP100());
+        setMode(Level_ID);
+        break;
+    case 9:
+        str = tr("Определение уровня, измерение (9)");
+        setStartWindow(StartCalibrationAgr1::getOTP0());
         setMode(Level_ID);
         break;
     default:
@@ -999,7 +1005,7 @@ void Widget::setupWidget()
             else {
                 ui->groupBox_f4->hide();
             }
-            setUserMessage(startWin->getStringStatus());
+            //setUserMessage(startWin->getStringStatus());
             ui->checkBox_L->setChecked(true); //включение лазеров
             setupRealtimeData();
         }

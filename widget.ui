@@ -148,7 +148,12 @@
           </item>
           <item>
            <property name="text">
-            <string>Level</string>
+            <string>LevelBTP</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>LevelOTP</string>
            </property>
           </item>
          </widget>

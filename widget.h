@@ -110,8 +110,8 @@ signals:
     void ret_value3(double);
     void ret_value4(double);
 
-    void btp_done();
-    void otp_done();
+//    void btp_done();
+//    void otp_done();
     void done();
 
 public slots:
@@ -170,8 +170,6 @@ public:
 
 public slots:
     void start();
-//    void getLevelBTP();
-//    void getLevelOTP();
 
 private:
     Widget *widget;

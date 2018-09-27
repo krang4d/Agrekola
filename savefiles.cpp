@@ -53,12 +53,14 @@ QString SaveFiles::writeData(QStringList dt, ProgressTimerBar* pb)
         i++;
     }
     int n = 0;
+    pb->setFormat(QString("Запись данных %p%"));
+    pb->setMaximum(dt.count());
     foreach (QString var, dt) {
         OnlyOneFile::Instance().stream_data << var;
         n++;
-        pb->setValue(n);
-        if(n%100 == 0) {
-
+        if(n == dt.count()) {
+            pb->setValue(n);
+            pb->Wait();
         }
             //emit value_changed(n);
     }
