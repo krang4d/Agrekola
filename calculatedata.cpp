@@ -63,73 +63,74 @@ double CalcData::calcKo(QMap<double, double> map)
 
 double CalcData::calcAgr(QMap<double, double> map)
 {
-    if(map.isEmpty()) { qDebug() << "error from CalcData::caalcAgr(): the map is empty!"; return 0; }
-    mix_t = 0;
-    QMap<double, double>::const_iterator it = map.begin();
-    QMap<double, double>::const_iterator state = map.end();
-    double sum = 0;
-    int num = 0;
+//    if(map.isEmpty()) { qDebug() << "error from CalcData::caalcAgr(): the map is empty!"; return 0; }
+//    mix_t = 0;
+//    QMap<double, double>::const_iterator it = map.begin();
+//    QMap<double, double>::const_iterator state = map.end();
+//    double sum = 0;
+//    int num = 0;
 
-    while(it != map.end()) {
-        if((it.key() - map.begin().key()) > mix_t) {
-            state = it;
-            //qDebug().noquote() << QString("key = %1, value = %2").arg(it.key()).arg(it.value());
-            break;
-        }
-        ++it;
-    }
+//    while(it != map.end()) {
+//        if((it.key() - map.begin().key()) > mix_t) {
+//            state = it;
+//            //qDebug().noquote() << QString("key = %1, value = %2").arg(it.key()).arg(it.value());
+//            break;
+//        }
+//        ++it;
+//    }
 
-    QMap<double, double>::const_iterator max_dx;
-    QMap<double, double> map_dx;
-    double max = it.value(), min = it.value(), last_value = it.value(), dx = 0;
-    while(it != map.end()) {
-        if(it.value() > max)
-            max = it.value();
-        if(it.value() < min)
-            min = it.value(); 
+//    QMap<double, double>::const_iterator max_dx;
+//    QMap<double, double> map_dx;
+//    double max = it.value(), min = it.value(), last_value = it.value(), dx = 0;
+//    while(it != map.end()) {
+//        if(it.value() > max)
+//            max = it.value();
+//        if(it.value() < min)
+//            min = it.value();
 
-        if((it.value() - last_value) > dx) {
-            dx = it.value() - last_value;
-            max_dx = it - 1;
-        }
-        map_dx.insert((it-1).key(), it.value() - last_value);
-        last_value = it.value();
+//        if((it.value() - last_value) > dx) {
+//            dx = it.value() - last_value;
+//            max_dx = it - 1;
+//        }
+//        map_dx.insert((it-1).key(), it.value() - last_value);
+//        last_value = it.value();
 
-        num ++;
-        sum += it.value();
-        ++it;
-    }
-    if(plot != NULL) {
-        static QCPGraph *g  = plot->addGraph();
-        g->setName("DX");
-        g->setData(map_dx.keys().toVector(), map_dx.values().toVector());
-    }
-    double avg = sum/num;
-    double over = avg*dx;
+//        num ++;
+//        sum += it.value();
+//        ++it;
+//    }
+//    if(plot != NULL) {
+//        static QCPGraph *g  = plot->addGraph();
+//        g->setName("DX");
+//        g->setData(map_dx.keys().toVector(), map_dx.values().toVector());
+//    }
+//    double avg = sum/num;
+//    double over = avg*dx;
 
-    double a = (max_dx+1).value() - max_dx.value();
-    double b = (max_dx+1).key() - max_dx.key();
-    double tgalfa = a/b;
-    if(plot != NULL) {
-        static QCPGraph *g = plot->addGraph();
-        QVector<double> key = {max_dx.key(), max_dx.key() + 1, max_dx.key() + 1};
-        QVector<double> value = {max_dx.value(), max_dx.value() + tgalfa, max_dx.value()};
-        g->setData(key, value);
-    }
-    qDebug() << QString("Max DX -->%1, Acceleration -->%2, a%3, b%4 ").arg(max_dx.key()).arg(tgalfa).arg(a).arg(b);
-    qDebug() << "Минимум --> " << min << "Максимум -->" << max;
+//    double a = (max_dx+1).value() - max_dx.value();
+//    double b = (max_dx+1).key() - max_dx.key();
+//    double tgalfa = a/b;
+//    if(plot != NULL) {
+//        static QCPGraph *g = plot->addGraph();
+//        QVector<double> key = {max_dx.key(), max_dx.key() + 1, max_dx.key() + 1};
+//        QVector<double> value = {max_dx.value(), max_dx.value() + tgalfa, max_dx.value()};
+//        g->setData(key, value);
+//    }
+//    qDebug() << QString("Max DX -->%1, Acceleration -->%2, a%3, b%4 ").arg(max_dx.key()).arg(tgalfa).arg(a).arg(b);
+//    qDebug() << "Минимум --> " << min << "Максимум -->" << max;
 
-    while(state != map.end()) {
-        if( avg-state.value() >= over ) {
-            qDebug() << "state != map.end()";
-            break;
-        }
-        //qDebug() << QString("%1").arg(avg - state.value());
-        ++state;
-    }
-    qDebug().noquote() << QString("sum = %1, ikey = %2, avg = %3")
-                          .arg(sum).arg(state.key()).arg(sum/num);
-    return tgalfa;
+//    while(state != map.end()) {
+//        if( avg-state.value() >= over ) {
+//            qDebug() << "state != map.end()";
+//            break;
+//        }
+//        //qDebug() << QString("%1").arg(avg - state.value());
+//        ++state;
+//    }
+//    qDebug().noquote() << QString("sum = %1, ikey = %2, avg = %3")
+//                          .arg(sum).arg(state.key()).arg(sum/num);
+//    return tgalfa;
+    return 1;
 }
 
 CalcData *CalcData::createCalc(Mode_ID  id)

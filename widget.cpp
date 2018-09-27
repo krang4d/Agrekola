@@ -423,8 +423,9 @@ void Widget::on_checkBox_L_stateChanged(int arg1)
 
 void Widget::on_pushButton_clicked()
 {
+    static bool test = false;
     if( termoSensor ) {
-        setUserMessage(QString("Дождитесь нагрева термостата"));
+        setUserMessage(QString("<div style='color:red'>Дождитесь нагрева термостата</div>"));
         pBar1->setFormat("В ожидании");
         pBar1->setValue(0);
         pBar2->setFormat("В ожидании");
@@ -435,7 +436,7 @@ void Widget::on_pushButton_clicked()
         pBar4->setFormat("В ожидании");
         pBar4->setValue(0);
     } else {
-        setUserMessage("Термостат нагрет до 37ºC");
+        setUserMessage("<div style='color:blue'>Термостат нагрет до 37ºC</div>");
         pBar1->setFormat("Готов");
         pBar1->setValue(pBar1->getMaximum());
         pBar2->setFormat("Готов");
@@ -447,26 +448,46 @@ void Widget::on_pushButton_clicked()
     }
 
     if(getMode() == Test_ID) {
-//        std::function<void(void)> foo = [=](){ startMeasurment();
-//        disconnect(startWin.data(), SIGNAL(startMeasurment(StartMeasurment*)), this, SLOT(startMeasurment()));
-//        };
+        test = true;
         startWin.clear();
         startWin = new StartMeasurment(0);
         startWin->setMode(getMode());
         startWin->show();
         connect(startWin.data(), &StartMeasurment::startMeasurment, [=](){ startMeasurment();
-            disconnect(startWin.data(), SIGNAL(startMeasurment(StartMeasurment*)), this, SLOT(startMeasurment()));
+            disconnect(startWin.data(), &StartMeasurment::startMeasurment, 0, 0);
             startWin->hide();
             });
     }
     if(getMode() == Level_ID) {
-        startData(1);
-        startData(2);
-        startData(3);
-        startData(4);
+        if(test) {
+            connect(startWin.data(), &StartMeasurment::startMeasurment, [=](StartMeasurment* sm){
+                setStartWindow(sm);
+                startData(1);
+                startData(2);
+                startData(3);
+                startData(4);
+                disconnect(startWin.data(), &StartMeasurment::startMeasurment, 0, 0);
+                startWin->hide();
+                });
+            startWin->show();
+        } else {
+            startData(1);
+            startData(2);
+            startData(3);
+            startData(4);
+        }
+
     }
     else {
-        startMeasurment();
+        if(test) {
+            connect(startWin.data(), &StartMeasurment::startMeasurment, [=](StartMeasurment* sm){
+                startMeasurment(sm);
+                disconnect(startWin.data(), &StartMeasurment::startMeasurment, 0, 0);
+            });
+            startWin->show();
+        } else {
+            startMeasurment();
+        }
     }
 }
 
@@ -491,9 +512,6 @@ void Widget::startMeasurment()
     ui->pushButton->setEnabled(false);
     setupWidget();
     if( getMode() == Agr1_ID ||getMode() == Agr2_ID ) {
-//        Agregometr *a = new Agregometr(this);
-//        a->start();
-
         startIncub(2);
     }
     else startIncub(1);
@@ -540,7 +558,7 @@ void Widget::getLevelBTP()
     //определение БТП
     setMode(Level_ID);
     setStartWindow(StartCalibrationAgr1::getBTP100());
-    setUserMessage(QString("Установите пробы с БТП в рабочие  каналы и нажмите \"Старт\""), 0);
+    setUserMessage(QString("<div style='color: blue'>Установите пробы с БТП в рабочие  каналы и нажмите \"Старт\"</div>"), 0);
 
     auto savebtp2 = [&](int n, double d) {
 //        static int i = 0;
@@ -575,7 +593,7 @@ void Widget::getLevelOTP()
     //определение ОТП
     setMode(Level_ID);
     setStartWindow(StartCalibrationAgr1::getOTP0());
-    setUserMessage(QString("Установите пробы с ОТП в рабочие  каналы и нажмите \"Старт\""), 0);
+    setUserMessage(QString("<div style='color: blue'>Установите пробы с ОТП в рабочие  каналы и нажмите \"Старт\"</div>"), 0);
 
     auto saveotp2 = [&](int n, double d) {
 //        static int i = 0;
@@ -674,22 +692,20 @@ bool Widget::isData(int n)
 void Widget::startIncub(int num)
 {
     incub = true;
-    //std::function<void(Widget*)> func = &Widget::incubeTimeout;
     if(num == 1) {
-        std::function<void(Widget*)> func = &Widget::incubeTimeout;
-        std::function<void(void)> foo = std::bind(func, this);
+        setUserMessage(QString("Инкубация (%1c)").arg(startWin->getTimeIncube()));
         int time_ms = startWin->getTimeIncube(1) * 1000;
-        pBar1->startProgress(QString("Инкубация %p%"), time_ms, foo);
+        pBar1->startProgress(QString("Инкубация %p%"), time_ms, [this](){ incubeTimeout(); });
         pBar2->startProgress(QString("Инкубация %p%"), time_ms);
         pBar3->startProgress(QString("Инкубация %p%"), time_ms);
         pBar4->startProgress(QString("Инкубация %p%"), time_ms);
-        setUserMessage(QString("Инкубация (%1c)").arg(startWin->getTimeIncube()));
+
         emit status(QString("Инкубация"));
     }
     else {
         QPointer<QMessageBox> imessageBox = new QMessageBox(this);
         imessageBox->setText(QString("Время инкубации истекло, добавьте разведения плазмы в рабочие каналы и нажмите кнопку \"ОК\"" ));
-        connect(imessageBox, SIGNAL(buttonClicked(QAbstractButton*)), this, SLOT(incubeTimeout_0()));
+        connect(imessageBox.data(), &QMessageBox::buttonClicked, this, &Widget::incubeTimeout_0);
         int time_ms = startWin->getTimeIncube(1) * 1000;
         pBar1->startProgress(QString("Инкубация 1 %p%"), time_ms, [imessageBox, this]() {
             pBar1->Wait();
@@ -790,25 +806,20 @@ double Widget::writeMapData(int n)
     ProgressTimerBar *pBar;
     switch (n) {
     case 1:
-        //ui->groupBox_f1->layout()->addWidget(pb);
         pBar = pBar1;
         break;
     case 2:
-        //ui->groupBox_f2->layout()->addWidget(pb);
         pBar = pBar2;
         break;
     case 3:
-        //ui->groupBox_f3->layout()->addWidget(pb);
         pBar = pBar3;
         break;
     case 4:
-        //ui->groupBox_f4->layout()->addWidget(pb);
         pBar = pBar4;
         break;
     default:
         break;
     }
-    //pb->show();
     qDebug().noquote() << QString("Запись данных по каналу %1").arg(n);
 
     QStringList strList;
@@ -819,12 +830,9 @@ double Widget::writeMapData(int n)
         int i = 0;
         auto it = map.constBegin();
         while(it != map.constEnd()) {
-            //pb->setMaximum(map.count());
-            //pb->setValue(i+1);//i*100/x.length());
             strList << QString("%1\t%2\t%3\n").arg(i).arg(it.value()).arg(it.key());
             ++it; ++i;
         }
-        //map.clear();
     };
     strList << QString("N\t");
     if( n == 1 && !map_y1.isEmpty() ) {
@@ -833,7 +841,6 @@ double Widget::writeMapData(int n)
                        .arg(retval)
                        .arg(p->info()));
         strList << QString("V1#%1\t").arg(startWin->getNum(1));
-        //pBar->setMaximum(map_y1.count());
         func(map_y1);
         map_y1.clear();
         emit ret_value1(retval);
@@ -844,7 +851,6 @@ double Widget::writeMapData(int n)
                        .arg(retval)
                        .arg(p->info()));
         strList << QString("V2#%1\t").arg(startWin->getNum(2));
-        //pBar->setMaximum(map_y2.count());
         func(map_y2);
         map_y2.clear();
         emit ret_value2(retval);
@@ -855,7 +861,6 @@ double Widget::writeMapData(int n)
                        .arg(retval)
                        .arg(p->info()));
         strList << QString("V3#%1\t").arg(startWin->getNum(3));
-        //pBar->setMaximum(map_y3.count());
         func(map_y3);
         map_y3.clear();
         emit ret_value3(retval);
@@ -866,14 +871,10 @@ double Widget::writeMapData(int n)
                        .arg(retval)
                        .arg(p->info()));
         strList << QString("V4#%1\t").arg(startWin->getNum(4));
-        //pBar->setMaximum(map_y4.count());
         func(map_y4);
         map_y4.clear();
         emit ret_value4(retval);
     }
-    //emit ret_value(retval);
-    //connect(&saveFiles, SIGNAL(value_changed(int)), pBar, SLOT(setValue(int)));
-
     QString filename = saveFiles.writeData(strList, pBar);
     setUserMessage(filename, true, true);
     //std::function<QString(void)> f1= [=](){return SaveFiles::writeData(strList);};
@@ -1050,71 +1051,4 @@ void Agregometr::start()
     imessageBox->setText(QString("Фиксация «100%» и «0%» уровней. Подготовьте и пронумеруйте пробы с БТП и ОТП\
                                  установите пробы с БТП в рабочие  каналы"));
     imessageBox->exec();
-    widget->startIncub(1);
-    //auto fun = [this](){ qDebug() << "this->widget->startIncub(1)" ;this->widget->startIncub(1);};
-    //connect(imessageBox, &QMessageBox::buttonClicked, );
-
-//    int time_ms = widget->startWin->getTimeIncube(1) * 1000;
-//    widget->pBar1->startProgress(QString("Инкубация 1 %p%"), time_ms, [imessageBox, this]() {
-//        widget->pBar1->Wait();
-//        widget->pBar2->Wait();
-//        widget->pBar3->Wait();
-//        widget->pBar4->Wait();
-//        imessageBox->exec();
-//    });
-//    widget->pBar2->startProgress(QString("Инкубация 1 %p%"), time_ms);
-//    widget->pBar3->startProgress(QString("Инкубация 1 %p%"), time_ms);
-//    widget->pBar4->startProgress(QString("Инкубация 1 %p%"), time_ms);
-//    widget->setUserMessage(QString("Инкубация 1 (%1c)").arg(widget->startWin->getTimeIncube()));
-            //    emit widget->status(QString("Инкубация 1"));
 }
-
-//void Agregometr::getLevelBTP()
-//{
-//    //определение БТП
-//    centerWidget->setMode(Level_ID);
-//    centerWidget->setStartWindow(StartCalibrationAgr1::getBTP100());
-//    centerWidget->setUserMessage(QString("Установите пробы с БТП в рабочие  каналы и нажмите \"Старт\""), 0);
-
-//    auto savebtp2 = [&](int n, double d) {
-//        QStringList btp100;
-//        SaveFiles file_btp;
-//        qDebug() << QString("retavlue = %1, index = %2").arg(d).arg(n);
-//        file_btp.openBTP100(btp100);
-//        if (btp100.isEmpty() || btp100.count() != 4) {
-//            btp100 = QStringList({"0", "0", "0", "0"});
-//        }
-//        btp100.replace(n, QString("%1").arg(d));
-//        file_btp.saveBTP100(btp100);
-//    };
-
-//    connect(centerWidget, &Widget::ret_value1, std::bind(savebtp2, 0, _1));
-//    connect(centerWidget, &Widget::ret_value2, std::bind(savebtp2, 1, _1));
-//    connect(centerWidget, &Widget::ret_value3, std::bind(savebtp2, 2, _1));
-//    connect(centerWidget, &Widget::ret_value4, std::bind(savebtp2, 3, _1));
-//}
-
-//void Agregometr::getLevelOTP()
-//{
-//    //определение БТП
-//    centerWidget->setMode(Level_ID);
-//    centerWidget->setStartWindow(StartCalibrationAgr1::getOTP);
-//    centerWidget->setUserMessage(QString("Установите пробы с БТП в рабочие  каналы и нажмите \"Старт\""), 0);
-
-//    auto savebtp2 = [&](int n, double d) {
-//        QStringList btp100;
-//        SaveFiles file_btp;
-//        qDebug() << QString("retavlue = %1, index = %2").arg(d).arg(n);
-//        file_btp.openBTP100(btp100);
-//        if (btp100.isEmpty() || btp100.count() != 4) {
-//            btp100 = QStringList({"0", "0", "0", "0"});
-//        }
-//        btp100.replace(n, QString("%1").arg(d));
-//        file_btp.saveBTP100(btp100);
-//    };
-
-//    connect(centerWidget, &Widget::ret_value1, std::bind(savebtp2, 0, _1));
-//    connect(centerWidget, &Widget::ret_value2, std::bind(savebtp2, 1, _1));
-//    connect(centerWidget, &Widget::ret_value3, std::bind(savebtp2, 2, _1));
-//    connect(centerWidget, &Widget::ret_value4, std::bind(savebtp2, 3, _1));
-//}
