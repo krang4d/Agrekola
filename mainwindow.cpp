@@ -47,15 +47,22 @@ void MainWindow::newShow(StartMeasurment* sw)
         str = tr("Определение параметров агрегации, измерение (1)");
         setWindowTitle(str);
         centerWidget->setUserMessage(str);
-        QMessageBox *imessageBox = new QMessageBox(this);
-        imessageBox->setText(QString("Фиксация «100%» и «0%» уровней. Подготовьте и пронумеруйте пробы с БТП и ОТП"));
 
         centerWidget->setStartWindow(StartCalibrationAgr1::getBTP100());
         centerWidget->setMode(Level_ID);
 
-        std::function<void(void)> fun = [this](){ qDebug() << "getBTP100() done";
+        QMessageBox *imessageBox = new QMessageBox(this);
+        imessageBox->setText(QString("Фиксация «100%» и «0%» уровней. Подготовьте и пронумеруйте пробы с БТП и ОТП"));
+        imessageBox->exec();
+
+        std::function<void(void)> fun = [this, sw, i](){ qDebug() << "getBTP100() done";
             centerWidget->setStartWindow(StartCalibrationAgr1::getOTP0());
             centerWidget->getLevelOTP();
+            disconnect(centerWidget, &Widget::done, 0, 0);
+            connect(centerWidget, &Widget::done, [&](){
+                centerWidget->setMode(i);
+                centerWidget->setStartWindow(sw);
+            });
         };
         connect(centerWidget, &Widget::done, fun);
 
