@@ -98,5 +98,5 @@ StartMeasurment *StartCalibrationKo2::getStart()
 
 void Ko2::on_toolBox_currentChanged(int index)
 {
-    open();
+    //open();
 }
