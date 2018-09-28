@@ -10,9 +10,9 @@
 #include <functional>
 #include "agr1.h"
 
-#define Start_DX 0.1f
-#define MIN -6.0f
-#define MAX 6.0f
+//#define Start_DX 0.1f
+//#define MIN -6.0f
+//#define MAX 6.0f
 
 Widget::Widget(QWidget *parent) :
     QWidget(parent),
@@ -20,9 +20,11 @@ Widget::Widget(QWidget *parent) :
     data1(false), data2(false), data3(false), data4(false),
     pulse1(false), pulse2(false), pulse3(false), pulse4(false),
     ready1(false), ready2(false), ready3(false), ready4(false),
+    termoSensor(false),
     incub(false),
     pBar1(new ProgressTimerBar), pBar2(new ProgressTimerBar),
-    pBar3(new ProgressTimerBar), pBar4(new ProgressTimerBar)
+    pBar3(new ProgressTimerBar), pBar4(new ProgressTimerBar),
+    Start_DX(0.1), MIN(-6.0), MAX(6.0)
 {
     ui->setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);

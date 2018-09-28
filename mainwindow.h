@@ -35,6 +35,8 @@ private slots:
     void on_menu_triggered();
     void on_plots_triggered();
 
+    void on_action_triggered();
+
 signals:
     btp_done();
     otp_done();

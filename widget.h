@@ -18,6 +18,7 @@
 #include "calculatedata.h"
 #include "impulewaiter.h"
 #include "startmeasurment.h"
+#include "options.h"
 
 namespace Ui {
 class Widget;
@@ -139,6 +140,11 @@ private slots:
 
     void on_comboBox_currentIndexChanged(int index);
 
+public:
+    QPointer<StartMeasurment> startWin;
+    QPointer<QCustomPlot> customPlot1, customPlot2, customPlot3, customPlot4;
+    QPointer<ProgressTimerBar> pBar1, pBar2, pBar3, pBar4;
+
 private:
     Ui::Widget *ui;
     QTimer plotTimer, currentTimer;
@@ -155,11 +161,9 @@ private:
     SaveFiles saveFiles;
     int mode;
     Mode_ID id;
-
-public:
-    QPointer<StartMeasurment> startWin;
-    QPointer<QCustomPlot> customPlot1, customPlot2, customPlot3, customPlot4;
-    QPointer<ProgressTimerBar> pBar1, pBar2, pBar3, pBar4;
+    double Start_DX;
+    double MIN, MAX;
+    friend class options;
 };
 
 class Agregometr  : public QObject

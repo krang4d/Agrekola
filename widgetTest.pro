@@ -44,7 +44,8 @@ SOURCES +=  main.cpp\
     calculatedata.cpp \
     progresstimerbar.cpp \
     impulewaiter.cpp \
-    incubation.cpp
+    incubation.cpp \
+    options.cpp
 
 HEADERS  += selectcalibrationagr1.h \
     selectinductor.h \
@@ -72,7 +73,8 @@ HEADERS  += selectcalibrationagr1.h \
     calculatedata.h \
     progresstimerbar.h \
     impulewaiter.h \
-    incubation.h
+    incubation.h \
+    options.h
 
 FORMS    += selectcalibrationagr1.ui \
     selectinductor.ui \
@@ -92,7 +94,8 @@ FORMS    += selectcalibrationagr1.ui \
     startmeasurment.ui \
     widget.ui \
     progresstimerbar.ui \
-    impulewaiter.ui
+    impulewaiter.ui \
+    options.ui
 
 RESOURCES += \
     rcfile.qrc

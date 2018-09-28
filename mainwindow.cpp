@@ -5,6 +5,7 @@
 #include <QThread>
 #include <memory>
 #include <functional>
+#include <options.h>
 
 using namespace std::placeholders;
 
@@ -238,4 +239,11 @@ void MainWindow::on_plots_triggered()
 {
     QPointer<ViewPlot> plots = new ViewPlot(this);
     plots->show();
+}
+
+void MainWindow::on_action_triggered()
+{
+    QPointer<options> opt(new options);
+    opt->setWidget(this->centerWidget);
+    opt->show();
 }
