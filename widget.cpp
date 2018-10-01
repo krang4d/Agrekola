@@ -24,7 +24,7 @@ Widget::Widget(QWidget *parent) :
     incub(false),
     pBar1(new ProgressTimerBar), pBar2(new ProgressTimerBar),
     pBar3(new ProgressTimerBar), pBar4(new ProgressTimerBar),
-    Start_DX(0.1), MIN(-6.0), MAX(6.0)
+    Start_DX(0.1), Stop_DX(0.1), MIN(-6.0), MAX(6.0)
 {
     ui->setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
@@ -302,8 +302,8 @@ void Widget::realtimeDataSlot(QVariantList a) {
                     qDebug() << "stop_dx1 = " << stop_dy1;
             }
             else {
-                if(  getMode() != Agr1_ID && getMode() != Agr2_ID && std::abs(map_y1.last() - stop_dy1) >= std::abs(stop_dy1*0.1) ) {
-                    qDebug() << "emit stopData1" << std::abs(map_y1.last() - stop_dy1) << ">=" << std::abs(stop_dy1*0.1);
+                if(  getMode() != Agr1_ID && getMode() != Agr2_ID && std::abs(map_y1.last() - stop_dy1) >= std::abs(stop_dy1*Stop_DX) ) {
+                    qDebug() << "emit stopData1" << std::abs(map_y1.last() - stop_dy1) << ">=" << std::abs(stop_dy1*Stop_DX);
                     emit stopData1();
                 }
             }
@@ -320,8 +320,8 @@ void Widget::realtimeDataSlot(QVariantList a) {
                     qDebug() << "stop_dx2 = " << stop_dy2;
             }
             else {
-                if(  getMode() != Agr1_ID && getMode() != Agr2_ID && std::abs(map_y2.last() - stop_dy2) >= std::abs(stop_dy2*0.1) ) {
-                    qDebug() << "emit stopData2" << std::abs(map_y2.last() - stop_dy2) << ">=" << std::abs(stop_dy2*0.1);
+                if(  getMode() != Agr1_ID && getMode() != Agr2_ID && std::abs(map_y2.last() - stop_dy2) >= std::abs(stop_dy2*Stop_DX) ) {
+                    qDebug() << "emit stopData2" << std::abs(map_y2.last() - stop_dy2) << ">=" << std::abs(stop_dy2*Stop_DX);
                     emit stopData2();
                 }
             }
@@ -338,8 +338,8 @@ void Widget::realtimeDataSlot(QVariantList a) {
                     qDebug() << "stop_dx3 = " << stop_dy3;
             }
             else {
-                if(  getMode() != Agr1_ID && getMode() != Agr2_ID && std::abs(map_y3.last() - stop_dy3) >= std::abs(stop_dy3*0.1) ) {
-                    qDebug() << "emit stopData3" << std::abs(map_y3.last() - stop_dy3) << ">=" << std::abs(stop_dy3*0.1);
+                if(  getMode() != Agr1_ID && getMode() != Agr2_ID && std::abs(map_y3.last() - stop_dy3) >= std::abs(stop_dy3*Stop_DX) ) {
+                    qDebug() << "emit stopData3" << std::abs(map_y3.last() - stop_dy3) << ">=" << std::abs(stop_dy3*Stop_DX);
                     emit stopData3();
                 }
             }
@@ -356,8 +356,8 @@ void Widget::realtimeDataSlot(QVariantList a) {
                     qDebug() << "stop_dx4 = " << stop_dy4;
             }
             else {
-                if(  getMode() != Agr1_ID && getMode() != Agr2_ID && std::abs(map_y4.last() - stop_dy4) >= std::abs(stop_dy4*0.1) ) {
-                    qDebug() << "emit stopData4" << std::abs(map_y4.last() - stop_dy4) << ">=" << std::abs(stop_dy4*0.1);
+                if(  getMode() != Agr1_ID && getMode() != Agr2_ID && std::abs(map_y4.last() - stop_dy4) >= std::abs(stop_dy4*Stop_DX) ) {
+                    qDebug() << "emit stopData4" << std::abs(map_y4.last() - stop_dy4) << ">=" << std::abs(stop_dy4*Stop_DX);
                     emit stopData4();
                 }
             }
