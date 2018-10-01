@@ -161,9 +161,10 @@ private:
     SaveFiles saveFiles;
     int mode;
     Mode_ID id;
-    double Start_DX;
+    double Start_DX; //порог запуска
+    double Stop_DX;  //порог остановки
     double MIN, MAX;
-    friend class options;
+    friend class Options;
 };
 
 class Agregometr  : public QObject

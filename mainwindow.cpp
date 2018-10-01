@@ -23,7 +23,9 @@ MainWindow::MainWindow(QWidget *parent) :
         QMessageBox test(QMessageBox::Critical, "qobject_cast", QString("qobject_cast in MainWindow::newShow()"), QMessageBox::Ok); test.exec();
     }
     installEventFilter(this);
-    connect(centerWidget, SIGNAL(status(QString)), this->statusBar(), SLOT(showMessage(QString)));
+
+    //connect(centerWidget, SIGNAL(status(QString)), this->statusBar(), SLOT(showMessage(QString)));
+    connect(centerWidget, &Widget::status, [this](QString str){ this->statusBar()->showMessage(str, 2000); });
     setupThread();
 }
 
@@ -243,7 +245,7 @@ void MainWindow::on_plots_triggered()
 
 void MainWindow::on_action_triggered()
 {
-    QPointer<options> opt(new options);
+    QPointer<Options> opt = new Options(this);
     opt->setWidget(this->centerWidget);
-    opt->show();
+    opt->exec();
 }
