@@ -47,16 +47,16 @@ void MainWindow::newShow(StartMeasurment* sw)
     QString str;
     switch (i) {
     case 1: {
-        str = tr("Определение параметров агрегации, измерение (1)");
+        str = tr("<div style='color: blue'>Определение параметров агрегации, тест (1)");
         setWindowTitle(str);
         centerWidget->setUserMessage(str);
 
         centerWidget->setStartWindow(StartCalibrationAgr1::getBTP100());
         centerWidget->setMode(Level_ID);
 
-        QMessageBox *imessageBox = new QMessageBox(this);
-        imessageBox->setText(QString("Фиксация «100%» и «0%» уровней. Подготовьте и пронумеруйте пробы с БТП и ОТП"));
-        imessageBox->exec();
+        //QMessageBox *imessageBox = new QMessageBox(this);
+        //imessageBox->setText(QString("Фиксация «100%» и «0%» уровней. Подготовьте и пронумеруйте пробы с БТП и ОТП"));
+        //imessageBox->exec();
 
         std::function<void(void)> fun = [this, sw, i](){ qDebug() << "getBTP100() done";
             centerWidget->setStartWindow(StartCalibrationAgr1::getOTP0());
@@ -75,44 +75,50 @@ void MainWindow::newShow(StartMeasurment* sw)
     case 2:
         centerWidget->setMode(i);
         centerWidget->setStartWindow(sw);
-        str = tr("Определение активности фактора Виллебранда, измерение (2)");
-        setWindowTitle(str);
-        centerWidget->setUserMessage(str);
+        //str = tr("<div style='color: blue'>Определение активности фактора Виллебранда, тест (2)");
+        setWindowTitle(tr("Определение активности фактора Виллебранда, тест (2)"));
+        centerWidget->setUserMessage(tr("Определение активности фактора Виллебранда, тест (2)"));
+        //centerWidget->setUserMessage(tr("<div style='color: blue'>Установите в рабочие каналы кюветы с пробами"));
         break;
     case 3:
         centerWidget->setMode(i);
         centerWidget->setStartWindow(sw);
-        str = tr("Время свертывания, измерение (3)");
-        setWindowTitle(str);
-        centerWidget->setUserMessage(str);
+        //str = tr("<div style='color: blue'>Время свертывания, тест (3)");
+        setWindowTitle("Время свертывания, тест (3)");
+        centerWidget->setUserMessage("<div style='color: blue'>Время свертывания, тест (3)");
+        centerWidget->setUserMessage(tr("<div style='color: blue'>Установите в рабочие каналы кюветы с пробами, после нажмите \"Старт\""));
         break;
     case 4:
         centerWidget->setMode(i);
         centerWidget->setStartWindow(sw);
-        str = tr("АЧТВ, измерение (4)");
-        setWindowTitle(str);
-        centerWidget->setUserMessage(str);
+        //str = tr("<div style='color: blue'>АЧТВ, тест (4)");
+        setWindowTitle("АЧТВ, тест (4)");
+        centerWidget->setUserMessage("<div style='color: blue'>АЧТВ, тест (4)");
+        centerWidget->setUserMessage(tr("<div style='color: blue'>Установите в рабочие каналы кюветы с пробами, после нажмите \"Старт\""));
         break;
     case 5:
         centerWidget->setMode(i);
         centerWidget->setStartWindow(sw);
-        str = tr("Фибриноген, измерение (5)");
-        setWindowTitle(str);
-        centerWidget->setUserMessage(tr("Установите в каналы кюветы с пробами и мешалками, укажите используемые каналы, выберите парные или одиночные пробы и введите номера проб. Для парных выберайте каналы 1 и 2, либо 3 и 4, номера проб в них должны быть одинаковыми. Измените, если нужно время инкубации затем нажмите кнопку Старт."));
+        //str = tr("<div style='color: blue'>Фибриноген, тест (5)");
+        setWindowTitle("Фибриноген, тест (5)");
+        centerWidget->setUserMessage("<div style='color: blue'>Фибриноген, тест (5)");
+        centerWidget->setUserMessage(tr("<div style='color: blue'>Установите в рабочие каналы кюветы с пробами, после нажмите \"Старт\""));
         break;
     case 6:
         centerWidget->setMode(i);
         centerWidget->setStartWindow(sw);
-        str = tr("Тромбин, измерние (6)");
-        setWindowTitle(str);
-        centerWidget->setUserMessage(str);
+        //str = tr("<div style='color: blue'>Тромбин, тест (6)");
+        setWindowTitle("Тромбин, тест (6)");
+        centerWidget->setUserMessage("<div style='color: blue'>Тромбин, тест (6)");
+        centerWidget->setUserMessage(tr("<div style='color: blue'>Установите в рабочие каналы кюветы с пробами, после нажмите \"Старт\""));
         break;
     case 7:
         centerWidget->setMode(i);
         centerWidget->setStartWindow(sw);
-        str = tr("Протромбиновый комплекс, измерение (7)");
-        setWindowTitle(str);
-        centerWidget->setUserMessage(str);
+        //str = tr("<div style='color: blue'>Протромбиновый комплекс, тест (7)");
+        setWindowTitle("Протромбиновый комплекс, тест (7)");
+        centerWidget->setUserMessage("<div style='color: blue'>Протромбиновый комплекс, тест (7)");
+        centerWidget->setUserMessage(tr("<div style='color: blue'>Установите в рабочие каналы кюветы с пробами, после нажмите \"Старт\""));
         break;
     default:
         break;

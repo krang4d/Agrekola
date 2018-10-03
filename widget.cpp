@@ -20,15 +20,14 @@ Widget::Widget(QWidget *parent) :
     data1(false), data2(false), data3(false), data4(false),
     pulse1(false), pulse2(false), pulse3(false), pulse4(false),
     ready1(false), ready2(false), ready3(false), ready4(false),
-    termoSensor(false),
-    incub(false),
+    termoSensor(false), incub(false), waitPulse(false),
     pBar1(new ProgressTimerBar), pBar2(new ProgressTimerBar),
     pBar3(new ProgressTimerBar), pBar4(new ProgressTimerBar),
     Start_DX(0.1), Stop_DX(0.1), MIN(-6.0), MAX(6.0)
 {
     ui->setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
-    setWindowTitle("Программы сбора данных с АЦП(E-154) по 4 каналам");
+    setWindowTitle("Программа сбора данных с АЦП(E-154) по 4 каналам");
     customPlot1 = ui->frame_1;
     ui->groupBox_f1->layout()->addWidget(pBar1);
     customPlot2 = ui->frame_2;
@@ -55,7 +54,6 @@ Widget::Widget(StartMeasurment *sw, QWidget *parent) : Widget(parent)
     startWin = QPointer<StartMeasurment>(sw);
     setupWidget();
 }
-
 
 void Widget::setStartWindow(StartMeasurment *sw)
 {
@@ -427,7 +425,7 @@ void Widget::on_pushButton_clicked()
 {
     static bool test = false;
     if( termoSensor ) {
-        setUserMessage(QString("<div style='color:red'>Дождитесь нагрева термостата</div>"));
+        setUserMessage(QString("<div style='color:red'>Дождитесь нагрева термостата"));
         pBar1->setFormat("В ожидании");
         pBar1->setValue(0);
         pBar2->setFormat("В ожидании");
@@ -438,7 +436,7 @@ void Widget::on_pushButton_clicked()
         pBar4->setFormat("В ожидании");
         pBar4->setValue(0);
     } else {
-        setUserMessage("<div style='color:blue'>Термостат нагрет до 37ºC</div>");
+        setUserMessage("<div style='color:blue'>Термостат нагрет до 37ºC");
         pBar1->setFormat("Готов");
         pBar1->setValue(pBar1->getMaximum());
         pBar2->setFormat("Готов");
@@ -560,7 +558,7 @@ void Widget::getLevelBTP()
     //определение БТП
     setMode(Level_ID);
     setStartWindow(StartCalibrationAgr1::getBTP100());
-    setUserMessage(QString("<div style='color: blue'>Установите пробы с БТП в рабочие  каналы и нажмите \"Старт\"</div>"), 0);
+    setUserMessage(QString("<div style='color: blue'>Установите пробы с БТП в рабочие  каналы и нажмите \"Старт\""), 0);
 
     auto savebtp2 = [&](int n, double d) {
 //        static int i = 0;
@@ -595,7 +593,7 @@ void Widget::getLevelOTP()
     //определение ОТП
     setMode(Level_ID);
     setStartWindow(StartCalibrationAgr1::getOTP0());
-    setUserMessage(QString("<div style='color: blue'>Установите пробы с ОТП в рабочие  каналы и нажмите \"Старт\"</div>"), 0);
+    setUserMessage(QString("<div style='color: blue'>Установите пробы с ОТП в рабочие  каналы и нажмите \"Старт\""), 0);
 
     auto saveotp2 = [&](int n, double d) {
 //        static int i = 0;
@@ -632,44 +630,37 @@ void Widget::stopData(int n)
     switch (n) {
     case 1:
         if(data1) {
-        data1 = false;
-        pulse1 = false;
-        ui->checkBox_1->setChecked(false); //включение перемешивания
-        writeMapData( 1 );
+            data1 = false;
+            pulse1 = false;
+            ui->checkBox_1->setChecked(false); //включение перемешивания
+            writeMapData( 1 );
         }
         break;
     case 2:
         if(data2) {
-        data2 = false;
-        pulse2 = false;
-        ui->checkBox_2->setChecked(false);
-        writeMapData( 2 );
+            data2 = false;
+            pulse2 = false;
+            ui->checkBox_2->setChecked(false);
+            writeMapData( 2 );
         }
         break;
     case 3:
         if(data3) {
-        data3 = false;
-        pulse3 = false;
-        ui->checkBox_3->setChecked(false);
-        writeMapData( 3 );
+            data3 = false;
+            pulse3 = false;
+            ui->checkBox_3->setChecked(false);
+            writeMapData( 3 );
         }
         break;
     case 4:
         if(data4) {
-        data4 = false;
-        pulse4 = false;
-        ui->checkBox_4->setChecked(false);
-        writeMapData( 4 );
+            data4 = false;
+            pulse4 = false;
+            ui->checkBox_4->setChecked(false);
+            writeMapData( 4 );
         }
         break;
     default: qDebug() << "n is out of data from Widget::stopData(n)";
-    }
-    std::function<bool(void)> isPulse = [this](){ return pulse1 || pulse2 || pulse3 || pulse4 ;};
-    if (!isData() && !isIncub() && !isPulse()) {
-        ui->checkBox_L->setChecked(false);
-        ui->pushButton->setEnabled(true);
-        setUserMessage(QString("Конец сбора данных"));
-        emit done();
     }
 }
 
@@ -706,7 +697,7 @@ void Widget::startIncub(int num)
     }
     else {
         QPointer<QMessageBox> imessageBox = new QMessageBox(this);
-        imessageBox->setText(QString("Время инкубации истекло, добавьте разведения плазмы в рабочие каналы и нажмите кнопку \"ОК\"" ));
+        imessageBox->setText(QString("<div style='color: blue'>Время инкубации истекло, добавьте разведения плазмы в рабочие каналы и нажмите кнопку \"ОК\"" ));
         connect(imessageBox.data(), &QMessageBox::buttonClicked, this, &Widget::incubeTimeout_0);
         int time_ms = startWin->getTimeIncube(1) * 1000;
         pBar1->startProgress(QString("Инкубация 1 %p%"), time_ms, [imessageBox, this]() {
@@ -743,30 +734,33 @@ void Widget::incubeTimeout_0()
     pBar2->startProgress(QString("Инкубация 2 %p%"), time_ms);
     pBar3->startProgress(QString("Инкубация 2 %p%"), time_ms);
     pBar4->startProgress(QString("Инкубация 2 %p%"), time_ms);
-    setUserMessage(QString("инкубация 2 (%1c)").arg(startWin->getTimeIncube(2)));
+    setUserMessage(QString("Инкубация 2 (%1c)").arg(startWin->getTimeIncube(2)));
 }
 
 void Widget::incubeTimeout()
 {
-        //setUserMessage("Время инкубации истекло, добавьте стартовый реагент!");
+        setUserMessage("<div style='color: blue'>Время инкубации истекло, добавьте стартовый реагент");
         QPointer<ImpuleWaiter> iw = new ImpuleWaiter;
 
         stopIncub();
         if(startWin->isChannel(1)) {
             setUserMessage("Канал 1 в ожидании введения стартового реагента");
             ready1 = true;
+            waitPulse = true;
             iw->addWaiter(1);
             pBar1->Wait();
         }
         if(startWin->isChannel(2)) {
             setUserMessage("Канал 2 в ожидании введения стартового реагента");
             ready2 = true;
+            waitPulse = true;
             iw->addWaiter(2);
             pBar2->Wait();
         }
         if(startWin->isChannel(3)) {
             setUserMessage("Канал 3 в ожидании введения стартового реагента");
             ready3 = true;
+            waitPulse = true;
             iw->addWaiter(3);
             pBar3->Wait();
         }
@@ -774,6 +768,7 @@ void Widget::incubeTimeout()
             setUserMessage("Канал 4 в ожидании введения стартового реагента");
             ready4 = true;
             iw->addWaiter(4);
+            waitPulse = true;
             pBar4->Wait();
         }
         connect(this, &Widget::hasPulse1, iw, &ImpuleWaiter::has_pulse_1);
@@ -794,7 +789,9 @@ void Widget::incubeTimeout()
             disconnect(this, &Widget::hasPulse4, iw, &ImpuleWaiter::has_pulse_4);
             pulse4 = true;});
 
+        connect(iw, &ImpuleWaiter::alldone, [this](){ waitPulse = false; });
         iw->startWait();
+
 }
 
 double Widget::writeMapData(int n)
@@ -839,7 +836,7 @@ double Widget::writeMapData(int n)
     strList << QString("N\t");
     if( n == 1 && !map_y1.isEmpty() ) {
         retval = p->calc(map_y1);
-        setUserMessage(QString("Рассчитанное значение = %1 по методике '%2'")
+        setUserMessage(QString("<div style='color: green'>Рассчитанное значение = %1 по методике '%2'")
                        .arg(retval)
                        .arg(p->info()));
         strList << QString("V1#%1\t").arg(startWin->getNum(1));
@@ -849,7 +846,7 @@ double Widget::writeMapData(int n)
     }
     if( n == 2 && !map_y2.isEmpty() ) {
         retval = p->calc(map_y2);
-        setUserMessage(QString("Рассчитанное значение = %1 по методике '%2'")
+        setUserMessage(QString("<div style='color: green'>Рассчитанное значение = %1 по методике '%2'")
                        .arg(retval)
                        .arg(p->info()));
         strList << QString("V2#%1\t").arg(startWin->getNum(2));
@@ -859,7 +856,7 @@ double Widget::writeMapData(int n)
     }
     if( n == 3 && !map_y3.isEmpty() ) {
         retval = p->calc(map_y3);
-        setUserMessage(QString("Рассчитанное значение = %1 по методике '%2'")
+        setUserMessage(QString("<div style='color: green'>Рассчитанное значение = %1 по методике '%2'")
                        .arg(retval)
                        .arg(p->info()));
         strList << QString("V3#%1\t").arg(startWin->getNum(3));
@@ -869,7 +866,7 @@ double Widget::writeMapData(int n)
     }
     if( n == 4 && !map_y4.isEmpty() ) {
         retval = p->calc(map_y4);
-        setUserMessage(QString("Рассчитанное значение = %1 по методике '%2'")
+        setUserMessage(QString("<div style='color: green'>Рассчитанное значение = %1 по методике '%2'")
                        .arg(retval)
                        .arg(p->info()));
         strList << QString("V4#%1\t").arg(startWin->getNum(4));
@@ -883,6 +880,15 @@ double Widget::writeMapData(int n)
     //std::function<QString(void)> foo = func();
     //QFuture<QString> result = QtConcurrent::run(f1);
     //QString filename = result.result();
+
+    //std::function<bool(void)> isPulse = [this](){ return pulse1 || pulse2 || pulse3 || pulse4 ;};
+    if (!isData() && !isIncub() && !isWaitPulse()) {
+        ui->checkBox_L->setChecked(false);
+        ui->pushButton->setEnabled(true);
+        setUserMessage(QString("Конец сбора данных"));
+        emit done();
+    }
+
     return retval;
 }
 
@@ -895,40 +901,40 @@ void Widget::on_comboBox_currentIndexChanged(int index)
         setMode(Test_ID);
         break;
     case 1:
-        str = tr("Определение параметров агрегации, измерение (Agr1 1)");
+        str = tr("Определение параметров агрегации, тест (Agr1 1)");
         setMode(Agr1_ID);
         break;
     case 2:
-        str = tr("Определение активности фактора Виллебранда, измерение (Agr2 2)");
+        str = tr("Определение активности фактора Виллебранда, тест (Agr2 2)");
         setMode(Agr2_ID);
         break;
     case 3:
-        str = tr("Время свертывания, измерение (Ko1 3)");
+        str = tr("Время свертывания, тест (Ko1 3)");
         setMode(Ko1_ID);
         break;
     case 4:
-        str = tr("АЧТВ, измерение (Ko2 4)");
+        str = tr("АЧТВ, тест (Ko2 4)");
         setMode(Ko2_ID);
         break;
     case 5:
-        str = tr("Фибриноген, измерение (Ko3 5)");
+        str = tr("Фибриноген, тест (Ko3 5)");
         setMode(Ko3_ID);
         break;
     case 6:
-        str = tr("Тромбин, измерние (Ko4 6)");
+        str = tr("Тромбин, тест (Ko4 6)");
         setMode(Ko4_ID);
         break;
     case 7:
-        str = tr("Протромбиновый комплекс, измерение (Ko5 7)");
+        str = tr("Протромбиновый комплекс, тест (Ko5 7)");
         setMode(Ko5_ID);
         break;
     case 8:
-        str = tr("Определение уровня БТП, измерение (8)");
+        str = tr("Определение уровня БТП, тест (8)");
         setStartWindow(StartCalibrationAgr1::getBTP100());
         setMode(Level_ID);
         break;
     case 9:
-        str = tr("Определение уровня, измерение (9)");
+        str = tr("Определение уровня, тест (9)");
         setStartWindow(StartCalibrationAgr1::getOTP0());
         setMode(Level_ID);
         break;
@@ -1041,16 +1047,3 @@ void Widget::setupWidget()
     }
 }
 
-Agregometr::Agregometr(Widget *w)
-{
-    widget = w;
-}
-
-void Agregometr::start()
-{
-    widget->setUserMessage("Фиксация \"100%\" уровней");
-    QMessageBox *imessageBox = new QMessageBox(widget);
-    imessageBox->setText(QString("Фиксация «100%» и «0%» уровней. Подготовьте и пронумеруйте пробы с БТП и ОТП\
-                                 установите пробы с БТП в рабочие  каналы"));
-    imessageBox->exec();
-}

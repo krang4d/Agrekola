@@ -77,6 +77,8 @@ public:
     void stopData(int);
     bool isData(int = 0);
 
+    inline bool isWaitPulse() { return waitPulse; }
+
 protected:
     bool eventFilter(QObject *watched, QEvent *event);
     void setupRealtimeData();
@@ -153,8 +155,7 @@ private:
     volatile bool data1, data2, data3, data4;
     bool pulse1, pulse2, pulse3, pulse4;
     bool ready1, ready2, ready3, ready4;
-    bool termoSensor;
-    bool incub;
+    bool termoSensor, incub, waitPulse;
 
     QMap<double, double> map_y1, map_y2, map_y3, map_y4 ;
     QVector<double> btp, otp;
@@ -165,19 +166,6 @@ private:
     double Stop_DX;  //порог остановки
     double MIN, MAX;
     friend class Options;
-};
-
-class Agregometr  : public QObject
-{
-    Q_OBJECT
-public:
-    Agregometr(Widget *);
-
-public slots:
-    void start();
-
-private:
-    Widget *widget;
 };
 
 #endif // WIDGET_H
