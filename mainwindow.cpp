@@ -54,10 +54,6 @@ void MainWindow::newShow(StartMeasurment* sw)
         centerWidget->setStartWindow(StartCalibrationAgr1::getBTP100());
         centerWidget->setMode(Level_ID);
 
-        //QMessageBox *imessageBox = new QMessageBox(this);
-        //imessageBox->setText(QString("Фиксация «100%» и «0%» уровней. Подготовьте и пронумеруйте пробы с БТП и ОТП"));
-        //imessageBox->exec();
-
         std::function<void(void)> fun = [this, sw, i](){ qDebug() << "getBTP100() done";
             centerWidget->setStartWindow(StartCalibrationAgr1::getOTP0());
             centerWidget->getLevelOTP();
@@ -75,50 +71,44 @@ void MainWindow::newShow(StartMeasurment* sw)
     case 2:
         centerWidget->setMode(i);
         centerWidget->setStartWindow(sw);
-        //str = tr("<div style='color: blue'>Определение активности фактора Виллебранда, тест (2)");
-        setWindowTitle(tr("Определение активности фактора Виллебранда, тест (2)"));
-        centerWidget->setUserMessage(tr("Определение активности фактора Виллебранда, тест (2)"));
-        //centerWidget->setUserMessage(tr("<div style='color: blue'>Установите в рабочие каналы кюветы с пробами"));
+        setWindowTitle("Определение активности фактора Виллебранда, тест (2)");
+        centerWidget->setUserMessage("Определение активности фактора Виллебранда, тест (2)");
+        //centerWidget->setUserMessage(tr("<div style='color: blue'>Установите в рабочие каналы кюветы с пробами и нажмите \"Старт\""));
         break;
     case 3:
         centerWidget->setMode(i);
         centerWidget->setStartWindow(sw);
-        //str = tr("<div style='color: blue'>Время свертывания, тест (3)");
         setWindowTitle("Время свертывания, тест (3)");
-        centerWidget->setUserMessage("<div style='color: blue'>Время свертывания, тест (3)");
-        centerWidget->setUserMessage(tr("<div style='color: blue'>Установите в рабочие каналы кюветы с пробами, после нажмите \"Старт\""));
+        centerWidget->setUserMessage("Время свертывания, тест (3)");
+        centerWidget->setUserMessage(tr("<div style='color: blue'>Установите в рабочие каналы кюветы с пробами и нажмите \"Старт\""));
         break;
     case 4:
         centerWidget->setMode(i);
         centerWidget->setStartWindow(sw);
-        //str = tr("<div style='color: blue'>АЧТВ, тест (4)");
         setWindowTitle("АЧТВ, тест (4)");
-        centerWidget->setUserMessage("<div style='color: blue'>АЧТВ, тест (4)");
-        centerWidget->setUserMessage(tr("<div style='color: blue'>Установите в рабочие каналы кюветы с пробами, после нажмите \"Старт\""));
+        centerWidget->setUserMessage("АЧТВ, тест (4)");
+        centerWidget->setUserMessage(tr("<div style='color: blue'>Установите в рабочие каналы кюветы с пробами и нажмите \"Старт\""));
         break;
     case 5:
         centerWidget->setMode(i);
         centerWidget->setStartWindow(sw);
-        //str = tr("<div style='color: blue'>Фибриноген, тест (5)");
         setWindowTitle("Фибриноген, тест (5)");
-        centerWidget->setUserMessage("<div style='color: blue'>Фибриноген, тест (5)");
-        centerWidget->setUserMessage(tr("<div style='color: blue'>Установите в рабочие каналы кюветы с пробами, после нажмите \"Старт\""));
+        centerWidget->setUserMessage("Фибриноген, тест (5)");
+        centerWidget->setUserMessage(tr("<div style='color: blue'>Установите в рабочие каналы кюветы с пробами и нажмите \"Старт\""));
         break;
     case 6:
         centerWidget->setMode(i);
         centerWidget->setStartWindow(sw);
-        //str = tr("<div style='color: blue'>Тромбин, тест (6)");
         setWindowTitle("Тромбин, тест (6)");
-        centerWidget->setUserMessage("<div style='color: blue'>Тромбин, тест (6)");
-        centerWidget->setUserMessage(tr("<div style='color: blue'>Установите в рабочие каналы кюветы с пробами, после нажмите \"Старт\""));
+        centerWidget->setUserMessage("Тромбин, тест (6)");
+        centerWidget->setUserMessage(tr("<div style='color: blue'>Установите в рабочие каналы кюветы с пробами и нажмите \"Старт\""));
         break;
     case 7:
         centerWidget->setMode(i);
         centerWidget->setStartWindow(sw);
-        //str = tr("<div style='color: blue'>Протромбиновый комплекс, тест (7)");
         setWindowTitle("Протромбиновый комплекс, тест (7)");
-        centerWidget->setUserMessage("<div style='color: blue'>Протромбиновый комплекс, тест (7)");
-        centerWidget->setUserMessage(tr("<div style='color: blue'>Установите в рабочие каналы кюветы с пробами, после нажмите \"Старт\""));
+        centerWidget->setUserMessage("Протромбиновый комплекс, тест (7)");
+        centerWidget->setUserMessage(tr("<div style='color: blue'>Установите в рабочие каналы кюветы с пробами и нажмите \"Старт\""));
         break;
     default:
         break;
@@ -143,77 +133,6 @@ void MainWindow::setupThread()
     QWidget::connect(agrekola, SIGNAL(finished()), agrekola, SLOT(deleteLater()));
     agrekola->start();
 }
-
-//void MainWindow::getOTP()
-//{
-//    //определение ОТП
-//    centerWidget->setMode(Level_ID);
-//    centerWidget->setStartWindow(StartCalibrationAgr1::getOTP0());
-//    centerWidget->setUserMessage(QString("Установите пробы с ОТП в рабочие  каналы и нажмите \"Старт\""), 0);
-
-//    auto saveotp2 = [&](int n, double d) {
-//        static int i = 0;
-//        i++;
-//            QStringList btp100;
-//            SaveFiles file_btp;
-//            qDebug() << QString("retavlue = %1, index = %2").arg(d).arg(n);
-//            file_btp.openBTP100(btp100);
-//            if (btp100.isEmpty() || btp100.count() != 4) {
-//                btp100 = QStringList({"0", "0", "0", "0"});
-//            }
-//            btp100.replace(n, QString("%1").arg(d));
-//            file_btp.saveBTP100(btp100);
-//        qDebug() << "Определение ОТП контрольной плазмы";
-//        if(i == 4) {
-//            i = 0;
-//            emit otp_done();
-//        }
-//    };
-
-//    connect(centerWidget, &Widget::ret_value1, [&](double x){ disconnect(centerWidget, &Widget::ret_value1, 0, 0);
-//            saveotp2(0, x); } );
-//    connect(centerWidget, &Widget::ret_value2, [&](double x){ disconnect(centerWidget, &Widget::ret_value2, 0, 0);
-//            saveotp2(1, x); } );
-//    connect(centerWidget, &Widget::ret_value3, [&](double x){ disconnect(centerWidget, &Widget::ret_value3, 0, 0);
-//            saveotp2(2, x); } );
-//    connect(centerWidget, &Widget::ret_value4, [&](double x){ disconnect(centerWidget, &Widget::ret_value4, 0, 0);
-//            saveotp2(3, x); } );
-//}
-
-//void MainWindow::getBTP()
-//{
-//    //определение БТП
-//    centerWidget->setMode(Level_ID);
-//    centerWidget->setStartWindow(StartCalibrationAgr1::getBTP100());
-//    centerWidget->setUserMessage(QString("Установите пробы с БТП в рабочие  каналы и нажмите \"Старт\""), 0);
-
-//    auto savebtp2 = [&](int n, double d) {
-//        static int i = 0;
-//        i++;
-//        QStringList btp100;
-//        SaveFiles file_btp;
-//        qDebug() << QString("retavlue = %1, index = %2").arg(d).arg(n);
-//        file_btp.openBTP100(btp100);
-//        if (btp100.isEmpty() || btp100.count() != 4) {
-//            btp100 = QStringList({"0", "0", "0", "0"});
-//        }
-//        btp100.replace(n, QString("%1").arg(d));
-//        file_btp.saveBTP100(btp100);
-//        if(i == 4) {
-//            i = 0;
-//            emit btp_done();
-//        }
-//    };
-
-//    connect(centerWidget, &Widget::ret_value1, [&](double x){ disconnect(centerWidget, &Widget::ret_value1, 0, 0);
-//            savebtp2(0, x); } );
-//    connect(centerWidget, &Widget::ret_value2, [&](double x){ disconnect(centerWidget, &Widget::ret_value2, 0, 0);
-//            savebtp2(1, x); } );
-//    connect(centerWidget, &Widget::ret_value3, [&](double x){ disconnect(centerWidget, &Widget::ret_value3, 0, 0);
-//            savebtp2(2, x); } );
-//    connect(centerWidget, &Widget::ret_value4, [&](double x){ disconnect(centerWidget, &Widget::ret_value4, 0, 0);
-//            savebtp2(3, x); } );
-//}
 
 bool MainWindow::eventFilter(QObject *watched, QEvent *event)
 {

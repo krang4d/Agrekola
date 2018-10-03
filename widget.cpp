@@ -219,7 +219,7 @@ void Widget::realtimeDataSlot(QVariantList a) {
         pulse1 = false;
         ready1 = false;
         emit hasPulse1();
-        setUserMessage("Канал 1 - введен стартовый реагент в кювету");
+        setUserMessage("Канал 1: Введен стартовый реагент в кювету");
         qDebug() << QString("The pulse is come! dx1=%1").arg(dx1);
         startData(1);
     }
@@ -228,7 +228,7 @@ void Widget::realtimeDataSlot(QVariantList a) {
         pulse2 = false;
         ready2 = false;
         emit hasPulse2();
-        setUserMessage("Канал 2 - введен стартовый реагент в кювету");
+        setUserMessage("Канал 2: Введен стартовый реагент в кювету");
         qDebug() << QString("The pulse is come! dx2=%1").arg(dx2);
         startData(2);
     }
@@ -237,7 +237,7 @@ void Widget::realtimeDataSlot(QVariantList a) {
         pulse3 = false;
         ready3 = false;
         emit hasPulse3();
-        setUserMessage("Канал 3 - введен стартовый реагент в кювету");
+        setUserMessage("Канал 3: Введен стартовый реагент в кювету");
         qDebug() << QString("The pulse is come! dx3=%1").arg(dx3);
         startData(3);
     }
@@ -246,7 +246,7 @@ void Widget::realtimeDataSlot(QVariantList a) {
         pulse4 = false;
         ready4 = false;
         emit hasPulse4();
-        setUserMessage("Канал 4 - введен стартовый реагент в кювету");
+        setUserMessage("Канал 4: Введен стартовый реагент в кювету");
         qDebug() << QString("The pulse is come! dx4=%1").arg(dx4);
         startData( 4 );
     }
@@ -424,6 +424,13 @@ void Widget::on_checkBox_L_stateChanged(int arg1)
 void Widget::on_pushButton_clicked()
 {
     static bool test = false;
+
+    if(startWin->isChannel(1)) { ui->checkBox_1->setChecked(true); } //включение перемешивания 1
+    if(startWin->isChannel(2)) { ui->checkBox_2->setChecked(true); }//включение перемешивания 2
+    if(startWin->isChannel(3)) { ui->checkBox_3->setChecked(true); }//включение перемешивания 3
+    if(startWin->isChannel(4)) { ui->checkBox_4->setChecked(true); }//включение перемешивания 4
+
+    ui->pushButton->setEnabled(false);
     if( termoSensor ) {
         setUserMessage(QString("<div style='color:red'>Дождитесь нагрева термостата"));
         pBar1->setFormat("В ожидании");
@@ -525,7 +532,7 @@ void Widget::startMeasurment(StartMeasurment *s)
 
 void Widget::startData(int n)
 {
-    QString str = QString("Измерение по каналу %1").arg(n);
+    QString str = QString("Канал %1: Измерение").arg(n);
     setUserMessage(str);
     emit status(str);
     std::function<void (int)> func = [this](int n){
@@ -705,6 +712,7 @@ void Widget::startIncub(int num)
             pBar2->Wait();
             pBar3->Wait();
             pBar4->Wait();
+            setUserMessage("Время инкубации 1 истекло");
             imessageBox->exec();
         });
         pBar2->startProgress(QString("Инкубация 1 %p%"), time_ms);
@@ -744,28 +752,28 @@ void Widget::incubeTimeout()
 
         stopIncub();
         if(startWin->isChannel(1)) {
-            setUserMessage("Канал 1 в ожидании введения стартового реагента");
+            setUserMessage("Канал 1: В ожидании введения стартового реагента");
             ready1 = true;
             waitPulse = true;
             iw->addWaiter(1);
             pBar1->Wait();
         }
         if(startWin->isChannel(2)) {
-            setUserMessage("Канал 2 в ожидании введения стартового реагента");
+            setUserMessage("Канал 2: В ожидании введения стартового реагента");
             ready2 = true;
             waitPulse = true;
             iw->addWaiter(2);
             pBar2->Wait();
         }
         if(startWin->isChannel(3)) {
-            setUserMessage("Канал 3 в ожидании введения стартового реагента");
+            setUserMessage("Канал 3: В ожидании введения стартового реагента");
             ready3 = true;
             waitPulse = true;
             iw->addWaiter(3);
             pBar3->Wait();
         }
         if(startWin->isChannel(4)) {
-            setUserMessage("Канал 4 в ожидании введения стартового реагента");
+            setUserMessage("Канал 4: В ожидании введения стартового реагента");
             ready4 = true;
             iw->addWaiter(4);
             waitPulse = true;
@@ -799,8 +807,8 @@ double Widget::writeMapData(int n)
     double retval;
     CalcData *p = CalcData::createCalc( getMode() );
     if(p == NULL) { qDebug() << "p is NULL"; }
-    setUserMessage(QString("Запись данных по каналу %1").arg(n));
-    emit status(QString("Запись данных по каналу %1").arg(n));
+    setUserMessage(QString("Канал %1: Запись данных").arg(n));
+    emit status(QString("Канал %1: Запись данных").arg(n));
 
     ProgressTimerBar *pBar;
     switch (n) {
@@ -819,7 +827,7 @@ double Widget::writeMapData(int n)
     default:
         break;
     }
-    qDebug().noquote() << QString("Запись данных по каналу %1").arg(n);
+    qDebug().noquote() << QString("Канал %1: Запись данных").arg(n);
 
     QStringList strList;
     auto func = [&](QMap<double, double> map) {
@@ -836,7 +844,7 @@ double Widget::writeMapData(int n)
     strList << QString("N\t");
     if( n == 1 && !map_y1.isEmpty() ) {
         retval = p->calc(map_y1);
-        setUserMessage(QString("<div style='color: green'>Рассчитанное значение = %1 по методике '%2'")
+        setUserMessage(QString("<div style='color: green'>Канал 1: Рассчитанно значение %1 по методике '%2'")
                        .arg(retval)
                        .arg(p->info()));
         strList << QString("V1#%1\t").arg(startWin->getNum(1));
@@ -846,7 +854,7 @@ double Widget::writeMapData(int n)
     }
     if( n == 2 && !map_y2.isEmpty() ) {
         retval = p->calc(map_y2);
-        setUserMessage(QString("<div style='color: green'>Рассчитанное значение = %1 по методике '%2'")
+        setUserMessage(QString("<div style='color: green'>Канал 2: Рассчитанно значение %1 по методике '%2'")
                        .arg(retval)
                        .arg(p->info()));
         strList << QString("V2#%1\t").arg(startWin->getNum(2));
@@ -856,7 +864,7 @@ double Widget::writeMapData(int n)
     }
     if( n == 3 && !map_y3.isEmpty() ) {
         retval = p->calc(map_y3);
-        setUserMessage(QString("<div style='color: green'>Рассчитанное значение = %1 по методике '%2'")
+        setUserMessage(QString("<div style='color: green'>Канал 3: Рассчитанно значение %1 по методике '%2'")
                        .arg(retval)
                        .arg(p->info()));
         strList << QString("V3#%1\t").arg(startWin->getNum(3));
@@ -866,7 +874,7 @@ double Widget::writeMapData(int n)
     }
     if( n == 4 && !map_y4.isEmpty() ) {
         retval = p->calc(map_y4);
-        setUserMessage(QString("<div style='color: green'>Рассчитанное значение = %1 по методике '%2'")
+        setUserMessage(QString("<div style='color: green'>Канал 4: Рассчитанно значение %1 по методике '%2'")
                        .arg(retval)
                        .arg(p->info()));
         strList << QString("V4#%1\t").arg(startWin->getNum(4));
@@ -881,14 +889,12 @@ double Widget::writeMapData(int n)
     //QFuture<QString> result = QtConcurrent::run(f1);
     //QString filename = result.result();
 
-    //std::function<bool(void)> isPulse = [this](){ return pulse1 || pulse2 || pulse3 || pulse4 ;};
     if (!isData() && !isIncub() && !isWaitPulse()) {
         ui->checkBox_L->setChecked(false);
         ui->pushButton->setEnabled(true);
         setUserMessage(QString("Конец сбора данных"));
         emit done();
     }
-
     return retval;
 }
 
@@ -934,7 +940,7 @@ void Widget::on_comboBox_currentIndexChanged(int index)
         setMode(Level_ID);
         break;
     case 9:
-        str = tr("Определение уровня, тест (9)");
+        str = tr("Определение уровня ОТП, тест (9)");
         setStartWindow(StartCalibrationAgr1::getOTP0());
         setMode(Level_ID);
         break;
@@ -980,7 +986,6 @@ void Widget::setupWidget()
     if(!startWin->isCancel()) {
         if(startWin->isSingle()) {
             if (startWin->isChannel(1)) {
-                ui->checkBox_1->setChecked(true); //включение перемешивания 1
                 ui->groupBox_f1->setTitle("Канал 1");
                 ui->groupBox_f1->show();
             }
@@ -989,7 +994,7 @@ void Widget::setupWidget()
             }
 
             if (startWin->isChannel(2)) {
-                ui->checkBox_2->setChecked(true); //включение перемешивания 2
+
                 ui->groupBox_f2->setTitle("Канал 2");
                 ui->groupBox_f2->show();
             }
@@ -998,7 +1003,7 @@ void Widget::setupWidget()
             }
 
             if (startWin->isChannel(3)) {
-                ui->checkBox_3->setChecked(true); //включение перемешивания 3
+
                 ui->groupBox_f3->setTitle("Канал 3");
                 ui->groupBox_f3->show();
             }
@@ -1007,7 +1012,7 @@ void Widget::setupWidget()
             }
 
             if (startWin->isChannel(4)) {
-                ui->checkBox_4->setChecked(true); //включение перемешивания 4
+
                 ui->groupBox_f4->setTitle("Канал 4");
                 ui->groupBox_f4->show();
             }
@@ -1023,8 +1028,6 @@ void Widget::setupWidget()
             if (startWin->isChannel(1)) {
                 ui->groupBox_f1->setTitle("Канал 1, 2");
                 ui->groupBox_f2->hide();
-                ui->checkBox_1->setChecked(true); //включение перемешивания 1
-                ui->checkBox_2->setChecked(true); //включение перемешивания 2
             }
             else {
                 ui->groupBox_f1->hide();
@@ -1034,9 +1037,6 @@ void Widget::setupWidget()
             if (startWin->isChannel(3)) {
                 ui->groupBox_f3->setTitle("Канал 3, 4");
                 ui->groupBox_f4->hide();
-                ui->checkBox_3->setChecked(true); //включение перемешивания 3
-                ui->checkBox_4->setChecked(true); //включение перемешивания 4
-
             }
             else {
                 ui->groupBox_f3->hide();
