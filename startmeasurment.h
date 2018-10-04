@@ -3,6 +3,8 @@
 
 #include <QDialog>
 #include <QString>
+#include <QCheckBox>
+#include <QMessageBox>
 #include "savefiles.h"
 
 namespace Ui {
@@ -48,7 +50,18 @@ public slots:
     void on_checkBox_ch4_stateChanged(int arg1);
     void on_radioButton_single_toggled(bool checked);
     void on_pushButton_next_clicked();
-//  void on_pushButton_cancel_clicked();
+    inline void setCheckState2(int i) {
+        //QMessageBox::information(0, "StartMeasurment", QString("setCheckState2(%1)").arg(i));
+        if(i == 0)
+            channel_2 = false;
+        else channel_2 = true;
+    }
+    inline void setCheckState4(int i) {
+        if(i == 0)
+            channel_4 = false;
+        else channel_4 = true;
+    }
+    //  void on_pushButton_cancel_clicked();
 
 signals:
     startMeasurment(StartMeasurment*);

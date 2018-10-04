@@ -10,7 +10,7 @@ StartMeasurment::StartMeasurment(QDialog *parent) :
 {
     ui->setupUi(this);
     setModal(true);
-    openData();
+
     cancel = true;
     single = true;
     channel_1 = false;
@@ -24,6 +24,7 @@ StartMeasurment::StartMeasurment(QDialog *parent) :
     time = 0;
     time_incube = 0;
 
+    openData();
     ui->label_iname->setVisible(false);
     ui->lineEdit_iname->setVisible(false);
 }
@@ -48,9 +49,13 @@ void StartMeasurment::saveData()
           << QString("%1").arg(static_cast<int>(ui->checkBox_ch2->checkState()))
           << QString("%1").arg(static_cast<int>(ui->checkBox_ch3->checkState()))
           << QString("%1").arg(static_cast<int>(ui->checkBox_ch4->checkState()))
-          << ui->lineEdit_ch1->text() << ui->lineEdit_ch2->text()
-          << ui->lineEdit_ch3->text() << ui->lineEdit_ch4->text()
-          << ui->lineEdit_incube->text() << ui->lineEdit_time->text() << ui->lineEdit_incube_2->text();
+          << ui->lineEdit_ch1->text()
+          << ui->lineEdit_ch2->text()
+          << ui->lineEdit_ch3->text()
+          << ui->lineEdit_ch4->text()
+          << ui->lineEdit_incube->text()
+          << ui->lineEdit_time->text()
+          << ui->lineEdit_incube_2->text();
     file.saveStartWin(param);
 }
 
@@ -58,7 +63,6 @@ void StartMeasurment::openData()
 {
     file.openStartWin(param);
     if( !param.isEmpty() && param.count() >= 11 ) {
-        QString(param.at(0)).toInt();
         ui->checkBox_ch1->setCheckState(static_cast<Qt::CheckState>(QString(param.at(0)).toInt()));
         ui->checkBox_ch2->setCheckState(static_cast<Qt::CheckState>(QString(param.at(1)).toInt()));
         ui->checkBox_ch3->setCheckState(static_cast<Qt::CheckState>(QString(param.at(2)).toInt()));
@@ -121,7 +125,6 @@ void StartMeasurment::setMode(int mode, bool s)
         ui->label_incube->setText(QString("Время инкубации 1"));
         ui->comboBox_inductor->setVisible(true);
         ui->label_itype->setVisible(true);
-
     }
     else {
         ui->lineEdit_incube_2->setVisible(false);
@@ -243,7 +246,7 @@ QString StartMeasurment::getStringStatus()
 //            msg = QString("Начало сбора данных, одиночные пробы (t = %1c, %2)")
 //                    .arg(startWin->getTime()).arg(msg);
 //        }
-        msg = QString("Начало сбора данных, одиночные пробы (t = %1c, %2)")
+        msg = QString("Одиночные пробы (t = %1c, %2)")
                 .arg(getTime()).arg(msg);
     }
     else {
@@ -260,7 +263,7 @@ QString StartMeasurment::getStringStatus()
         else {
             msg += QString("№3, 4 - выкл., ");
         }
-        msg = QString("Начало сбора данных, парные пробы (t = %1c, %2)")
+        msg = QString("Парные пробы (t = %1c, %2)")
                 .arg(getTime()).arg(msg);
     }
     return msg;
@@ -268,26 +271,50 @@ QString StartMeasurment::getStringStatus()
 
 void StartMeasurment::on_checkBox_ch1_stateChanged(int arg1)
 {
-    if(arg1) ui->lineEdit_ch1->setEnabled(true);
-    else ui->lineEdit_ch1->setEnabled(false);
+    if(arg1) {
+        ui->lineEdit_ch1->setEnabled(true);
+        channel_1 = true;
+    }
+    else {
+        ui->lineEdit_ch1->setEnabled(false);
+        channel_1 = false;
+    }
 }
 
 void StartMeasurment::on_checkBox_ch2_stateChanged(int arg1)
 {
-    if(arg1) ui->lineEdit_ch2->setEnabled(true);
-    else ui->lineEdit_ch2->setEnabled(false);
+    if(arg1) {
+        ui->lineEdit_ch2->setEnabled(true);
+        channel_2 = true;
+    }
+    else {
+        ui->lineEdit_ch2->setEnabled(false);
+        channel_2 = false;
+    }
 }
 
 void StartMeasurment::on_checkBox_ch3_stateChanged(int arg1)
 {
-    if(arg1) ui->lineEdit_ch3->setEnabled(true);
-    else ui->lineEdit_ch3->setEnabled(false);
+    if(arg1) {
+        ui->lineEdit_ch3->setEnabled(true);
+        channel_3 = true;
+    }
+    else {
+        ui->lineEdit_ch3->setEnabled(false);
+        channel_3 = false;
+    }
 }
 
 void StartMeasurment::on_checkBox_ch4_stateChanged(int arg1)
 {
-    if(arg1) ui->lineEdit_ch4->setEnabled(true);
-    else ui->lineEdit_ch4->setEnabled(false);
+    if(arg1) {
+        ui->lineEdit_ch4->setEnabled(true);
+        channel_4 = true;
+    }
+    else {
+        ui->lineEdit_ch4->setEnabled(false);
+        channel_4 = false;
+    }
 }
 
 void StartMeasurment::on_radioButton_single_toggled(bool checked)
@@ -296,8 +323,9 @@ void StartMeasurment::on_radioButton_single_toggled(bool checked)
     ui->checkBox_ch2->setCheckState(Qt::Unchecked);
     ui->checkBox_ch3->setCheckState(Qt::Unchecked);
     ui->checkBox_ch4->setCheckState(Qt::Unchecked);
-
+    //QMessageBox::information(0, "StartMeasurment", QString("on_radioButton_single_toggled(%1)").arg(checked));
     if(checked){
+        single = true;
         ui->checkBox_ch1->setText("Канал 1");
         ui->checkBox_ch2->setText("Канал 2");
         ui->checkBox_ch2->setVisible(true);
@@ -306,8 +334,11 @@ void StartMeasurment::on_radioButton_single_toggled(bool checked)
         ui->checkBox_ch4->setText("Канал 4");
         ui->checkBox_ch4->setVisible(true);
         ui->lineEdit_ch4->setVisible(true);
+        disconnect(ui->checkBox_ch1, SIGNAL(stateChanged(int)), this, SLOT(setCheckState2(int)));
+        disconnect(ui->checkBox_ch3, SIGNAL(stateChanged(int)), this, SLOT(setCheckState4(int)));
     }
     else{
+        single = false;
         ui->checkBox_ch1->setEnabled(true);
         ui->checkBox_ch1->setText("Канал 1, 2");
 
@@ -319,6 +350,8 @@ void StartMeasurment::on_radioButton_single_toggled(bool checked)
 
         ui->checkBox_ch4->setVisible(false);
         ui->lineEdit_ch4->setVisible(false);
+        connect(ui->checkBox_ch1, SIGNAL(stateChanged(int)), this, SLOT(setCheckState2(int)));
+        connect(ui->checkBox_ch3, SIGNAL(stateChanged(int)), this, SLOT(setCheckState4(int)));
     }
 }
 
@@ -333,22 +366,20 @@ void StartMeasurment::on_pushButton_next_clicked()
         mb.exec();
         return;
     }
-    single = ui->radioButton_single->isChecked();           //пробы одиночные?
-    channel_1 = ui->checkBox_ch1->isChecked();
     if(channel_1)
         num_1 = ui->lineEdit_ch1->text();
 
-    channel_2 = ui->checkBox_ch2->isChecked();
-    if(channel_2)
-        num_2 = ui->lineEdit_ch2->text();
-
-    channel_3 = ui->checkBox_ch3->isChecked();
+    if(channel_2) {
+        if(!single) num_2 = num_1;
+        else num_2 = ui->lineEdit_ch2->text();
+    }
     if(channel_3)
         num_3 = ui->lineEdit_ch3->text();
 
-    channel_4 = ui->checkBox_ch4->isChecked();
-    if(channel_4)
-        num_4 = ui->lineEdit_ch4->text();
+    if(channel_4) {
+        if(!single) num_4 = num_3;
+        else num_4 = ui->lineEdit_ch4->text();
+    }
 
     int t = ui->lineEdit_time->text().toInt();
     if( !(t>=5 && t<=900) ) {
@@ -376,13 +407,6 @@ void StartMeasurment::on_pushButton_next_clicked()
     }
     saveData();
 }
-
-//void StartMeasurment::on_pushButton_cancel_clicked()
-//{
-//    openData();
-//    cancel = true;
-//    hide();
-//}
 
 void StartMeasurment::on_comboBox_inductor_currentIndexChanged(const QString &arg1)
 {

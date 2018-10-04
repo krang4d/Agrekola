@@ -425,12 +425,20 @@ void Widget::on_pushButton_clicked()
 {
     static bool test = false;
 
-    if(startWin->isChannel(1)) { ui->checkBox_1->setChecked(true); } //включение перемешивания 1
-    if(startWin->isChannel(2)) { ui->checkBox_2->setChecked(true); }//включение перемешивания 2
-    if(startWin->isChannel(3)) { ui->checkBox_3->setChecked(true); }//включение перемешивания 3
-    if(startWin->isChannel(4)) { ui->checkBox_4->setChecked(true); }//включение перемешивания 4
+    if(startWin->isChannel(1)) ui->checkBox_1->setChecked(true); //включение перемешивания 1
+    else ui->checkBox_1->setChecked(false);
+
+    if(startWin->isChannel(2)) ui->checkBox_2->setChecked(true); //включение перемешивания 2
+    else ui->checkBox_2->setChecked(false);
+
+    if(startWin->isChannel(3)) ui->checkBox_3->setChecked(true); //включение перемешивания 3
+    else ui->checkBox_3->setChecked(false);
+
+    if(startWin->isChannel(4)) ui->checkBox_4->setChecked(true); //включение перемешивания 4
+    else ui->checkBox_4->setChecked(false);
 
     ui->pushButton->setEnabled(false);
+
     if( termoSensor ) {
         setUserMessage(QString("<div style='color:red'>Дождитесь нагрева термостата"));
         pBar1->setFormat("В ожидании");
@@ -458,7 +466,7 @@ void Widget::on_pushButton_clicked()
         test = true;
         startWin.clear();
         startWin = new StartMeasurment(0);
-        startWin->setMode(getMode());
+        startWin->setMode(Test_ID);
         startWin->show();
         connect(startWin.data(), &StartMeasurment::startMeasurment, [=](){ startMeasurment();
             disconnect(startWin.data(), &StartMeasurment::startMeasurment, 0, 0);
@@ -516,7 +524,8 @@ void Widget::updataTermo(bool td)
 void Widget::startMeasurment()
 {
     //qDebug() << "Widget::startMeasurment() start pressed";
-    ui->pushButton->setEnabled(false);
+    //ui->pushButton->setEnabled(false);
+    setUserMessage(startWin->getStringStatus());
     setupWidget();
     if( getMode() == Agr1_ID ||getMode() == Agr2_ID ) {
         startIncub(2);
