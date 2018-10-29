@@ -43,7 +43,7 @@ QString SaveFiles::writeData(QStringList dt, ProgressTimerBar* pb)
     static int i(0);
     for(;;)
     {
-        QString name = QString("%1_%2.txt").arg(d.toString("yyyyMMdd")).arg(i);
+        QString name = QString("data_%1_%2.txt").arg(d.toString("yyyyMMdd")).arg(i);
         if(!QFile::exists(name)) {
             OnlyOneFile::Instance().file_data.setFileName(name);
             if(!OnlyOneFile::Instance().file_data.open(QIODevice::ReadWrite | QIODevice::Append | QIODevice::Text)) qWarning() << "data file is't opened";

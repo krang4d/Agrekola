@@ -482,3 +482,18 @@ void ViewPlot::on_pushButton_calc_clicked()
         ui->label_average->setText(tr("Значение = %1").arg(value));
     }
 }
+
+void ViewPlot::on_pushButton_clicked()
+{
+    QList<double> new_v;
+    foreach (double var, v1) {
+        int a = var * 100;
+        qDebug() << "a =" << a;
+        double b = double(a) / 100;
+        qDebug() << "b =" << b;
+        new_v.push_back(b);
+    }
+    tb->clear();
+    v1 = new_v;
+    addData();
+}

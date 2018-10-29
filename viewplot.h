@@ -55,6 +55,8 @@ private slots:
     //void hasSelected(bool);
     void hasSelectedRect(QRect,QMouseEvent*);
 
+    void on_pushButton_clicked();
+
 private:
     Ui::ViewPlot *ui;
     QTableWidget *tb;

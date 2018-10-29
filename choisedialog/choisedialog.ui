@@ -305,22 +305,5 @@
   <tabstop>exitButton</tabstop>
  </tabstops>
  <resources/>
- <connections>
-  <connection>
-   <sender>exitButton</sender>
-   <signal>clicked()</signal>
-   <receiver>ChoiseDialog</receiver>
-   <slot>accept()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>308</x>
-     <y>287</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>340</x>
-     <y>263</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>

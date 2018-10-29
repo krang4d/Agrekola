@@ -23,7 +23,8 @@ Widget::Widget(QWidget *parent) :
     termoSensor(false), incub(false), waitPulse(false),
     pBar1(new ProgressTimerBar), pBar2(new ProgressTimerBar),
     pBar3(new ProgressTimerBar), pBar4(new ProgressTimerBar),
-    Start_DX(0.1), Stop_DX(0.1), MIN(-6.0), MAX(6.0)
+    Start_DX(0.1), Stop_DX(0.1), MIN(-6.0), MAX(6.0),
+    startWin(new StartMeasurment(0))
 {
     ui->setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
@@ -465,7 +466,7 @@ void Widget::on_pushButton_clicked()
     if(getMode() == Test_ID) {
         test = true;
         startWin.clear();
-        startWin = new StartMeasurment(0);
+        startWin = QPointer<StartMeasurment>(new StartMeasurment(0));
         startWin->setMode(Test_ID);
         startWin->show();
         connect(startWin.data(), &StartMeasurment::startMeasurment, [=](){ startMeasurment();
@@ -808,7 +809,6 @@ void Widget::incubeTimeout()
 
         connect(iw, &ImpuleWaiter::alldone, [this](){ waitPulse = false; });
         iw->startWait();
-
 }
 
 double Widget::writeMapData(int n)

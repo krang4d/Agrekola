@@ -16,7 +16,7 @@
 #include "widget.h"
 #include "mainwindow.h"
 #include "useE154.h"
-#include"viewplot.h"
+#include "viewplot.h"
 
 class MainWindow;
 
@@ -46,6 +46,8 @@ private slots:
     void on_ko5Button_clicked();
     void on_testButton_clicked();
     void on_viewPlotsButton_clicked();
+
+    void on_exitButton_clicked();
 
 private:
     QPointer<Agr1> agr1;

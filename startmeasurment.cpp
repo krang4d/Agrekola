@@ -10,7 +10,7 @@ StartMeasurment::StartMeasurment(QDialog *parent) :
 {
     ui->setupUi(this);
     setModal(true);
-
+    setMode(0);
     cancel = true;
     single = true;
     channel_1 = false;

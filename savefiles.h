@@ -84,9 +84,28 @@ private:
             qDebug() << "mkdir(Agrekola4k)";
         }
         else QDir::setCurrent(dir.path());
-        file_user.setFileName("user.txt");
-        if(!file_user.open(QIODevice::ReadWrite | QIODevice::Append | QIODevice::Text))
-                qDebug() << "user file is't opened";
+
+        if(!dir.cd("user")) {
+            if(dir.mkdir("user")) dir.cd("user");
+            QDir::setCurrent(dir.path());
+            qDebug() << "mkdir(user)";
+        }
+        else QDir::setCurrent(dir.path());
+
+        //имя файла формируется из текущей даты + число запуска программы в этот день
+        QDateTime d = QDateTime::currentDateTime();
+        static int i(0);
+        for(;;)
+        {
+            QString name = QString("user_%1_%2.txt").arg(d.toString("yyyyMMdd")).arg(i);
+            if(!QFile::exists(name)) {
+                file_user.setFileName(name);
+                if(!file_user.open(QIODevice::ReadWrite | QIODevice::Append | QIODevice::Text))
+                    qDebug() << "user file is't opened";
+                break;
+            }
+            i++;
+        }
         stream_user.setDevice(&file_user);
     }
     OnlyOneFile(const OnlyOneFile& root) = delete;

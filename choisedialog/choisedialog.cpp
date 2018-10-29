@@ -211,3 +211,9 @@ void ChoiseDialog::on_viewPlotsButton_clicked()
     QPointer<ViewPlot> vp = new ViewPlot(this);
     vp->show();
 }
+
+void ChoiseDialog::on_exitButton_clicked()
+{
+
+    accept();
+}
