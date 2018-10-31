@@ -154,7 +154,7 @@
      <item row="0" column="0">
       <widget class="QLabel" name="label_t">
        <property name="text">
-        <string>Время записи, сек</string>
+        <string>Время записи, сек.</string>
        </property>
        <property name="buddy">
         <cstring>lineEdit_time</cstring>
@@ -174,7 +174,7 @@
      <item row="1" column="0">
       <widget class="QLabel" name="label_incube">
        <property name="text">
-        <string>Время инкубации</string>
+        <string>Время инкубации, сек.</string>
        </property>
       </widget>
      </item>
@@ -191,7 +191,7 @@
      <item row="2" column="0">
       <widget class="QLabel" name="label_incube_2">
        <property name="text">
-        <string>Время инкубации 2</string>
+        <string>Время инкубации 2, сек.</string>
        </property>
       </widget>
      </item>

@@ -483,7 +483,7 @@ void ViewPlot::on_pushButton_calc_clicked()
     }
 }
 
-void ViewPlot::on_pushButton_clicked()
+void ViewPlot::on_pushButton_clicked() //округление чисел в массиве данных
 {
     QList<double> new_v;
     foreach (double var, v1) {

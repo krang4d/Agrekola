@@ -223,6 +223,11 @@ double CalcKo1::calc(QMap<double, double> map)
     return k;
 }
 
+QString CalcKo1::getParameters()
+{
+    return QString("CalcKo1 не имеет параметров калибровки");
+}
+
 QString CalcKo1::info()
 {
     return QString("Время свертывания");
@@ -259,6 +264,11 @@ QString CalcKo2::info()
     return QString("АЧТВ");
 }
 
+QString CalcKo2::getParameters()
+{
+    return QString("АЧТВ контрольной плазмы: t0 = %1").arg(t0);
+}
+
 //void CalcKo2::getCalibrationDeta(double &c1, double &c2, double &c3, double &c4)
 //{
 //}
@@ -280,7 +290,7 @@ CalcKo3::CalcKo3()
     t2 = d2.toDouble();
     t3 = d3.toDouble();
     t4 = d4.toDouble();
-    qDebug() << c2 << t1 << t2 << t3 << t4;
+    qDebug() << QString("параметры калибровки Фириногена") << c2 << t1 << t2 << t3 << t4;
 
     c1 = c2*200.0f/100.0f;              //(3)
     c3 = c2*50.0f/100.0f;               //(4)
@@ -317,14 +327,19 @@ QString CalcKo3::info()
     return QString("Фибриноген");
 }
 
+QString CalcKo3::getParameters()
+{
+    return QString("содержание фибриногена по Клауссу (100%) %1. Время свертывания для каждого разведения t1=%1, T2=%2, T3=%3, T4=%4").arg(c2).arg(t1).arg(t2).arg(t3).arg(t4);
+}
+
 CalcKo4::CalcKo4()
 {
     SaveFiles file;
     file.openKo4(param);
     qDebug() << "параметры CalcKo4" << param.count();
+    auto it = param.end();
 
     QString d1, d2, d3, d4;
-    auto it = param.end();
     d1 = *(it-4);
     d2 = *(it-3);
     d3 = *(it-2);
@@ -348,33 +363,54 @@ QString CalcKo4::info()
     return QString("Тромбин");
 }
 
+QString CalcKo4::getParameters()
+{
+    return QString("Тромбмн контрольной плазмы t0=%1").arg(t0);
+}
+
 CalcKo5::CalcKo5()
 {
     SaveFiles file;
     file.openKo5(param);
     qDebug() << "параметры CalcKo5";
-    for(auto it = param.begin(); it < param.end(); it++) {
+    auto it = param.begin();
+    for(; it < param.end(); it++) {
         qDebug() << *it;
     }
-    QString p = param.last();
-    a1 = p.toDouble();
-    qDebug() << "ТВ контрольной плазмы =" << a1;
+
+    QString d0 = *(it-7);
+    QString d1 = *(it-4);
+    QString d2 = *(it-3);
+    QString d3 = *(it-2);
+    QString d4 = *(it-1);
+
+    a100 = d0.toDouble();
+    t100 = d1.toDouble();
+    t50 = d2.toDouble();
+    t25 = d3.toDouble();
+    t12 = d4.toDouble();
+
+    // <-- првоерка даты проведения калибровки калибровки
+
+    //QString p = param.last();
+    //a1 = p.toDouble();
+    //qDebug() << "ТВ контрольной плазмы =" << a1;
 }
 
 double CalcKo5::calc(QMap<double, double> map)
 {
     // <-- проверка значений калибровки
-    a2 = a1*50.0f/100.0f;           //(12)
-    a3 = a1*25.0f/100.0f;           //(13)
-    a4 = a1*12.5f/100.0f;           //(14)
+    a50 = a100*50.0f/100.0f;           //(12)
+    a25 = a100*25.0f/100.0f;           //(13)
+    a12 = a100*12.5f/100.0f;           //(14)
 
-    tgalfa1 = (t2-t1)/std::log10(a1/a2);   //(16)
-    tgalfa2 = (t3-t2)/std::log10(a2/a3);   //(17)
-    tgalfa3 = (t3-t1)/std::log10(a1/a3);   //(18)
-    tgalfa4 = (t4-t2)/std::log10(a2/a4);   //(19)
-    tgalfa = ( tgalfa1 + tgalfa2 + tgalfa3 + tgalfa4 ) / k;         //(15)
+    tgalfa1 = (t50-t100)/std::log10(a100/a50);                  //(16)
+    tgalfa2 = (t25-t50)/std::log10(a50/a25);                    //(17)
+    tgalfa3 = (t25-t100)/std::log10(a100/a25);                  //(18)
+    tgalfa4 = (t12-t50)/std::log10(a50/a12);                    //(19)
+    tgalfa = ( tgalfa1 + tgalfa2 + tgalfa3 + tgalfa4 ) / k;     //(15)
 
-    lgax = ( t1 - CalcData::calcKo(map) + std::log10(a1) * tgalfa ) / tgalfa;   //(20)
+    lgax = ( t100 - CalcData::calcKo(map) + std::log10(a100) * tgalfa ) / tgalfa;   //(20)
 
     return qPow(10, lgax);
 }
@@ -384,14 +420,38 @@ QString CalcKo5::info()
     return QString("Протромбиновый комплекс");
 }
 
+QString CalcKo5::getParameters()
+{
+    return QString("ТВ контрольной плазмы t100=%1, t50=%2, t25=%3, t12.5=%4").arg(t100).arg(t50).arg(t25).arg(t12);
+}
+
 CalcAgr1::CalcAgr1()
 {
     SaveFiles file;
+    QStringList bt, ot;
     file.openAgr1(param);
+
     qDebug() << "параметры CalcAgr1";
-    for(auto it = param.begin(); it < param.end(); it++) {
+
+    for(auto it = param.begin(); it != param.end(); it++) {
         qDebug() << *it;
     }
+
+    file.openBTP0(bt);
+    for(auto it = bt.begin(); it != bt.end(); it++) {
+        QString s = *it;
+        btp += s.toDouble();
+    }
+    btp /= bt.count();
+
+    file.openBTP100(ot);
+    for(auto it = ot.begin(); it != ot.end(); it++) {
+        QString s = *it;
+        otp += s.toDouble();
+    }
+    otp /= ot.count();
+
+
 }
 
 CalcAgr1::CalcAgr1(QCustomPlot *p)
@@ -408,6 +468,11 @@ double CalcAgr1::calc(QMap<double, double> map)
 QString CalcAgr1::info()
 {
     return QString("Степень агрегации");
+}
+
+QString CalcAgr1::getParameters()
+{
+    return QString("");
 }
 
 CalcAgr2::CalcAgr2()
@@ -444,6 +509,11 @@ QString CalcAgr2::info()
     return QString("фактор Виллебранда");
 }
 
+QString CalcAgr2::getParameters()
+{
+    return QString("");
+}
+
 CalcLevel::CalcLevel()
 {
 
@@ -477,4 +547,9 @@ double CalcLevel::calc(QMap<double, double> map)
         ++it;
     }
     return sum/num;
+}
+
+QString CalcLevel::getParameters()
+{
+    return QString("CalcLevel не имеет параметров калибровки");
 }
