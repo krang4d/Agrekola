@@ -34,8 +34,8 @@ public slots:
 private slots:
     void on_menu_triggered();
     void on_plots_triggered();
-
     void on_action_triggered();
+    void on_action_propety_triggered();
 
 signals:
     btp_done();

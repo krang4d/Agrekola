@@ -46,7 +46,7 @@ SOURCES +=  main.cpp\
     impulewaiter.cpp \
     incubation.cpp \
     options.cpp \
-    choisedialog/parametersofcalibration.cpp
+    calibparam.cpp
 
 HEADERS  += selectcalibrationagr1.h \
     selectinductor.h \
@@ -76,7 +76,7 @@ HEADERS  += selectcalibrationagr1.h \
     impulewaiter.h \
     incubation.h \
     options.h \
-    choisedialog/parametersofcalibration.h
+    calibparam.h
 
 FORMS    += selectcalibrationagr1.ui \
     selectinductor.ui \
@@ -98,7 +98,7 @@ FORMS    += selectcalibrationagr1.ui \
     progresstimerbar.ui \
     impulewaiter.ui \
     options.ui \
-    choisedialog/parametersofcalibration.ui
+    calibparam.ui
 
 RESOURCES += \
     rcfile.qrc

@@ -6,6 +6,7 @@
 #include <memory>
 #include <functional>
 #include <options.h>
+#include <calibparam.h>
 
 using namespace std::placeholders;
 
@@ -173,4 +174,13 @@ void MainWindow::on_action_triggered()
     QPointer<Options> opt = new Options(this);
     opt->setWidget(this->centerWidget);
     opt->exec();
+}
+
+void MainWindow::on_action_propety_triggered()
+{
+    QPointer<CalibParam> par = new CalibParam(this);
+    CalcData *p = CalcData::createCalc( centerWidget->getMode() );
+    par->setText(p->getParameters());
+    par->show();
+    delete p;
 }

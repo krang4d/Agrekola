@@ -513,7 +513,6 @@ void Widget::updataTermo(bool td)
         ui->label_TD->setText(QString("Температура >37°C"));
         ui->label_TD->setStyleSheet("color: green");
         termoSensor = !td;
-
     }
     else {
         ui->label_TD->setText(QString("Температура <37°C"));
