@@ -225,7 +225,7 @@ double CalcKo1::calc(QMap<double, double> map)
 
 QString CalcKo1::getParameters()
 {
-    return QString("CalcKo1 не имеет параметров калибровки");
+    return QString("Тест на \"%1\" не имеет параметров калибровки.").arg(info());
 }
 
 QString CalcKo1::info()
@@ -290,7 +290,7 @@ CalcKo3::CalcKo3()
     t2 = d2.toDouble();
     t3 = d3.toDouble();
     t4 = d4.toDouble();
-    qDebug() << QString("параметры калибровки Фириногена") << c2 << t1 << t2 << t3 << t4;
+    qDebug() << QString("Параметры калибровки Фириногена") << c2 << t1 << t2 << t3 << t4;
 
     c1 = c2*200.0f/100.0f;              //(3)
     c3 = c2*50.0f/100.0f;               //(4)
@@ -329,7 +329,7 @@ QString CalcKo3::info()
 
 QString CalcKo3::getParameters()
 {
-    return QString("содержание фибриногена по Клауссу (100%) %1. Время свертывания для каждого разведения t1=%1, T2=%2, T3=%3, T4=%4").arg(c2).arg(t1).arg(t2).arg(t3).arg(t4);
+    return QString("Cодержание фибриногена по Клауссу (100%) = %1\nВремя свертывания для каждого разведения:\nt1 (200%) = %2\nt2 (100%) = %3\nt3 (50%) = %4\nt4 (25%) = %5").arg(c2).arg(t1).arg(t2).arg(t3).arg(t4);
 }
 
 CalcKo4::CalcKo4()
@@ -365,7 +365,7 @@ QString CalcKo4::info()
 
 QString CalcKo4::getParameters()
 {
-    return QString("Тромбмн контрольной плазмы t0=%1").arg(t0);
+    return QString("Тромбмн контрольной плазмы t0 = %1").arg(t0);
 }
 
 CalcKo5::CalcKo5()
@@ -400,6 +400,7 @@ CalcKo5::CalcKo5()
 double CalcKo5::calc(QMap<double, double> map)
 {
     // <-- проверка значений калибровки
+    double tx = CalcData::calcKo(map);
     a50 = a100*50.0f/100.0f;           //(12)
     a25 = a100*25.0f/100.0f;           //(13)
     a12 = a100*12.5f/100.0f;           //(14)
@@ -408,11 +409,14 @@ double CalcKo5::calc(QMap<double, double> map)
     tgalfa2 = (t25-t50)/std::log10(a50/a25);                    //(17)
     tgalfa3 = (t25-t100)/std::log10(a100/a25);                  //(18)
     tgalfa4 = (t12-t50)/std::log10(a50/a12);                    //(19)
-    tgalfa = ( tgalfa1 + tgalfa2 + tgalfa3 + tgalfa4 ) / k;     //(15)
+    tgalfa = (tgalfa1 + tgalfa2 + tgalfa3 + tgalfa4) / k;     //(15)
 
-    lgax = ( t100 - CalcData::calcKo(map) + std::log10(a100) * tgalfa ) / tgalfa;   //(20)
 
-    return qPow(10, lgax);
+    lgax = (t100 - tx + std::log10(a100) * tgalfa) / tgalfa;   //(20)
+    ax = qPow(10, lgax);
+    pox = ( tx/t100 ) * po1;
+    pix = ( t100/tx ) * pi1;
+    return ax;
 }
 
 QString CalcKo5::info()
@@ -422,7 +426,7 @@ QString CalcKo5::info()
 
 QString CalcKo5::getParameters()
 {
-    return QString("ТВ контрольной плазмы t100=%1, t50=%2, t25=%3, t12.5=%4").arg(t100).arg(t50).arg(t25).arg(t12);
+    return QString("ТВ контрольной плазмы для каждого разведения:\nt1 (100%) = %1\nt2 (50%) = %2\nt3 (25%) = %3\nt4 (12.5%) = %4").arg(t100).arg(t50).arg(t25).arg(t12);
 }
 
 CalcAgr1::CalcAgr1()
@@ -450,8 +454,6 @@ CalcAgr1::CalcAgr1()
         otp += s.toDouble();
     }
     otp /= ot.count();
-
-
 }
 
 CalcAgr1::CalcAgr1(QCustomPlot *p)
@@ -472,7 +474,7 @@ QString CalcAgr1::info()
 
 QString CalcAgr1::getParameters()
 {
-    return QString("");
+    return QString("Степень агрегации");
 }
 
 CalcAgr2::CalcAgr2()

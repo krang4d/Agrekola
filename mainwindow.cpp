@@ -180,7 +180,9 @@ void MainWindow::on_action_propety_triggered()
 {
     QPointer<CalibParam> par = new CalibParam(this);
     CalcData *p = CalcData::createCalc( centerWidget->getMode() );
-    par->setText(p->getParameters());
+    par->setCalc(p);
+    par->setText();
+    par->createPlot();
     par->show();
-    delete p;
+    //delete p;
 }

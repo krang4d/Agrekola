@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QString>
+#include <calculatedata.h>
 
 namespace Ui {
 class CalibParam;
@@ -16,10 +17,14 @@ public:
     explicit CalibParam(QWidget *parent = 0);
     ~CalibParam();
 
-    void setText(QString);
+    void setText();
+    void setPlot(void);
+    void setCalc(CalcData *);
+    void createPlot();
 
 private:
     Ui::CalibParam *ui;
+    CalcData *calc;
 };
 
 #endif // CALIBPARAM_H

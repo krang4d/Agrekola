@@ -26,6 +26,7 @@ public:
     //virtual void getCalibrationDeta(double &c1, double &c2,double &c3, double &c4);
     virtual double calc(QMap<double, double>) = 0;
     virtual QString info() = 0;
+    virtual Mode_ID getModeID() = 0;
     virtual QString getParameters() = 0;
 
     void setMix_t(double sec);
@@ -46,9 +47,16 @@ class CalcLevel : public CalcData
 {
 public:
     explicit CalcLevel();
+
+    // CalcData interface
+public:
     QString info() override;
     double calc(QMap<double, double>) override;
     QString getParameters() override;
+    Mode_ID getModeID() override
+    {
+        return Level_ID;
+    }
 };
 
 class CalcKo1 : public CalcData
@@ -65,6 +73,10 @@ public:
     QString info() override;
     double calc(QMap<double, double>) override;
     QString getParameters() override;
+    Mode_ID getModeID() override
+    {
+        return Ko1_ID;
+    }
 };
 
 class CalcKo2 : public CalcData
@@ -82,6 +94,10 @@ public:
     QString info() override;
    // void getCalibrationDeta(double &c1, double &c2, double &c3, double &c4) override;
     QString getParameters() override;
+    Mode_ID getModeID() override
+    {
+        return Ko2_ID;
+    }
 };
 
 class CalcKo3 : public CalcData
@@ -104,14 +120,16 @@ public:
     double calc(QMap<double, double>) override;
     QString info() override;
     QString getParameters() override;
+    Mode_ID getModeID() override
+    {
+        return Ko3_ID;
+    }
 };
 
 class CalcKo4 : public CalcData
 {
 public:
     explicit CalcKo4();
-    double calc(QMap<double, double>) override;
-    QString info() override;
 
     //параметры для определения Тромбина
 private:
@@ -119,22 +137,35 @@ private:
 
     // CalcData interface
 public:
+    double calc(QMap<double, double>) override;
+    QString info() override;
     QString getParameters() override;
+    Mode_ID getModeID() override
+    {
+        return Ko4_ID;
+    }
 };
 
 class CalcKo5 : public CalcData
 {
 public:
     explicit CalcKo5();
+    double getIndex() {
+        return pix;
+    }
+
+    double getOtn() {
+        return pox;
+    }
 
     //параметры для определения Протромбинового комплекса
 private:
     //константы (паспортные данные)
     const int k = 4;                //часло калибровочных точек
     //протромбиновое отношение плазмы калибратора
-    double a100;                      //протромбин по Квику (100%) контрольнной плазмы
-    double po1;                     //протромбиновое отношение
-    double pi1;                     //протромбиновый индекс
+    double a100;                    //протромбин по Квику (100%) контрольнной плазмы
+    double po1;                     //протромбиновое отношение плазмы калибратора
+    double pi1;                     //протромбиновый индекс плазмы калибратора
     //калибровочные параметры
     double t100, t50, t25, t12;          //время свертывания для каждого разведения, t100 - контр. плазма (протромбиновое время)
     //искомые величины
@@ -142,6 +173,7 @@ private:
     double tgalfa, tgalfa1, tgalfa2;
     double tgalfa3, tgalfa4;        //угол наклона k-ого участка калибровочной кривой
     double lgax;                    //искомая величиан ax = 10^lgax
+    double ax;
     double pox;                     //протромбиновое отношене
     double pix;                     //протромбиновый индекс
 
@@ -150,6 +182,10 @@ public:
     double calc(QMap<double, double>) override;
     QString info() override;
     QString getParameters() override;
+    Mode_ID getModeID() override
+    {
+        return Ko5_ID;
+    }
 };
 
 class CalcAgr1 : public CalcData
@@ -168,6 +204,10 @@ public:
     double calc(QMap<double, double>) override;
     QString info() override;
     QString getParameters() override;
+    Mode_ID getModeID() override
+    {
+        return Agr1_ID;
+    }
 };
 
 class CalcAgr2 : public CalcData
@@ -192,6 +232,10 @@ public:
     double calc(QMap<double, double>) override;
     QString info() override;
     QString getParameters() override;
+    Mode_ID getModeID() override
+    {
+        return Agr2_ID;
+    }
 };
 
 #endif // CALCULATEDATA_H

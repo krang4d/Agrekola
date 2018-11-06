@@ -44,6 +44,7 @@ private:
 class StartCalibrationKo5 : public StartMeasurment
 {
     Q_OBJECT
+
 public:
     StartCalibrationKo5() = delete;
     static StartMeasurment* getStart();

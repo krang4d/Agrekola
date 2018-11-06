@@ -12,9 +12,9 @@ SaveFiles::SaveFiles(QObject *parent) : QObject(parent)
 
 SaveFiles::~SaveFiles()
 {
-    //file_setting.flush();
-//    file_user.flush();
-//    file_user.close();
+//      file_setting.flush();
+//      file_user.flush();
+//      file_user.close();
 }
 
 QString SaveFiles::writeData(QStringList dt, ProgressTimerBar* pb)
