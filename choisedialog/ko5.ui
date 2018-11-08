@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>322</width>
-    <height>354</height>
+    <height>358</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -34,7 +34,7 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>287</width>
+        <width>304</width>
         <height>267</height>
        </rect>
       </property>
@@ -54,7 +54,7 @@
           <item row="1" column="0">
            <widget class="QLabel" name="label_9">
             <property name="text">
-             <string>Калибровка</string>
+             <string>Дата калибровки</string>
             </property>
            </widget>
           </item>
