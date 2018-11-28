@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>319</width>
-    <height>395</height>
+    <width>361</width>
+    <height>497</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -34,8 +34,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>301</width>
-        <height>304</height>
+        <width>343</width>
+        <height>406</height>
        </rect>
       </property>
       <attribute name="label">
@@ -62,69 +62,146 @@
            </spacer>
           </item>
           <item>
+           <widget class="QGroupBox" name="groupBox_2">
+            <property name="title">
+             <string>Выбор рабочих каналов</string>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout">
+             <item>
+              <widget class="QCheckBox" name="checkBox_1">
+               <property name="text">
+                <string>1 Канал</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QCheckBox" name="checkBox_2">
+               <property name="text">
+                <string>2 Канал</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QCheckBox" name="checkBox_3">
+               <property name="text">
+                <string>3 Канал</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QCheckBox" name="checkBox_4">
+               <property name="text">
+                <string>4 Канал</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
            <layout class="QFormLayout" name="formLayout">
             <item row="0" column="0">
-             <widget class="QLabel" name="label_4">
+             <widget class="QLabel" name="label_incube">
               <property name="text">
-               <string>Дата калибровки</string>
+               <string>Время инкубации (сек.)</string>
               </property>
              </widget>
             </item>
             <item row="0" column="1">
-             <widget class="QLabel" name="label_calibrationData">
-              <property name="minimumSize">
-               <size>
-                <width>40</width>
-                <height>0</height>
-               </size>
+             <widget class="QLineEdit" name="lineEdit_incube">
+              <property name="inputMethodHints">
+               <set>Qt::ImhDigitsOnly</set>
               </property>
               <property name="text">
-               <string>не проводилась</string>
+               <string/>
               </property>
              </widget>
             </item>
             <item row="1" column="0">
              <widget class="QLabel" name="label_1">
               <property name="text">
-               <string>Реагенты, серия №</string>
+               <string>Номер серии реагентов</string>
               </property>
               <property name="buddy">
                <cstring>lineEdit_1</cstring>
               </property>
              </widget>
             </item>
+            <item row="1" column="1">
+             <widget class="QLineEdit" name="lineEdit_1"/>
+            </item>
             <item row="2" column="0">
              <widget class="QLabel" name="label_2">
               <property name="text">
-               <string>Годен до</string>
-              </property>
-              <property name="buddy">
-               <cstring>lineEdit_2</cstring>
+               <string>Срок годности реагентов</string>
               </property>
              </widget>
             </item>
             <item row="2" column="1">
-             <widget class="QLineEdit" name="lineEdit_2"/>
+             <widget class="QDateEdit" name="dateEdit"/>
             </item>
             <item row="3" column="0">
+             <widget class="QLabel" name="label_4">
+              <property name="text">
+               <string>Номер серии контрольной
+плазмы</string>
+              </property>
+              <property name="buddy">
+               <cstring>lineEdit_1</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="1">
+             <widget class="QLineEdit" name="lineEdit_2"/>
+            </item>
+            <item row="4" column="0">
+             <widget class="QLabel" name="label_5">
+              <property name="text">
+               <string>Срок годности контрольной
+плазмы</string>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="1">
+             <widget class="QDateEdit" name="dateEdit_2"/>
+            </item>
+            <item row="5" column="0">
              <widget class="QLabel" name="label_3">
               <property name="text">
-               <string>Фибрмноген к/плазмы</string>
+               <string>Концентрация фибриногена
+контрольной плазмы (г/л)</string>
               </property>
               <property name="buddy">
                <cstring>lineEdit_3</cstring>
               </property>
              </widget>
             </item>
-            <item row="3" column="1">
+            <item row="5" column="1">
              <widget class="QLineEdit" name="lineEdit_3">
               <property name="enabled">
                <bool>true</bool>
               </property>
              </widget>
             </item>
-            <item row="1" column="1">
-             <widget class="QLineEdit" name="lineEdit_1"/>
+            <item row="6" column="0">
+             <widget class="QLabel" name="label_t">
+              <property name="text">
+               <string>Время записи (сек.)</string>
+              </property>
+              <property name="buddy">
+               <cstring>lineEdit_time</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="6" column="1">
+             <widget class="QLineEdit" name="lineEdit_time">
+              <property name="inputMethodHints">
+               <set>Qt::ImhDigitsOnly</set>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
             </item>
            </layout>
           </item>
@@ -142,6 +219,8 @@
            </spacer>
           </item>
          </layout>
+         <zorder>groupBox_2</zorder>
+         <zorder>verticalSpacer_2</zorder>
         </widget>
        </item>
        <item>
@@ -161,8 +240,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>301</width>
-        <height>304</height>
+        <width>343</width>
+        <height>406</height>
        </rect>
       </property>
       <attribute name="label">

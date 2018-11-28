@@ -30,7 +30,7 @@ void Ko4::calibrationDataCome(int n, double deta)
 {
     //один параметр контрольной нормальной плазмы
     QDateTime dt = QDateTime::currentDateTime();
-    ui->label_calibrationData->setText(dt.toString("dd.MM.yyyy ") + dt.toString("hh:mm:ss"));
+    //ui->label_calibrationData->setText(dt.toString("dd.MM.yyyy ") + dt.toString("hh:mm:ss"));
     if(param.count() <= n)
         param.push_back(QString("%1").arg(deta));
     else param.replace(n, QString("%1").arg(deta));
@@ -41,12 +41,12 @@ void Ko4::open()
 {
     file.openKo4(param);
     if( !param.isEmpty() && param.count() >= 10 ) {
-        ui->label_calibrationData->setText(param.at(0));
-        ui->lineEdit_1->setText(param.at(1));
-        ui->lineEdit_2->setText(param.at(2));
-        ui->lineEdit_3->setText(param.at(3));
-        ui->lineEdit_4->setText(param.at(4));
-        ui->lineEdit_5->setText(param.at(5));
+//        ui->label_calibrationData->setText(param.at(0));
+//        ui->lineEdit_1->setText(param.at(1));
+//        ui->lineEdit_2->setText(param.at(2));
+//        ui->lineEdit_3->setText(param.at(3));
+//        ui->lineEdit_4->setText(param.at(4));
+//        ui->lineEdit_5->setText(param.at(5));
     } else
         param = QStringList({0, 0, 0, 0, 0, 0, 0 , 0 , 0, 0});//10 параметров
 }
@@ -54,12 +54,12 @@ void Ko4::open()
 void Ko4::save()
 {
     //param.clear();
-    param.replace(0, ui->label_calibrationData->text());
-    param.replace(1, ui->lineEdit_1->text());
-    param.replace(2, ui->lineEdit_2->text());
-    param.replace(3, ui->lineEdit_3->text());
-    param.replace(4, ui->lineEdit_4->text());
-    param.replace(5, ui->lineEdit_5->text());
+//    param.replace(0, ui->label_calibrationData->text());
+//    param.replace(1, ui->lineEdit_1->text());
+//    param.replace(2, ui->lineEdit_2->text());
+//    param.replace(3, ui->lineEdit_3->text());
+//    param.replace(4, ui->lineEdit_4->text());
+//    param.replace(5, ui->lineEdit_5->text());
     file.saveKo4(param);
 }
 

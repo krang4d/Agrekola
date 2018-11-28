@@ -7,7 +7,7 @@ Agr1::Agr1(QWidget *parent) :
 {
     ui->setupUi(this);
     open();
-    connect(ui->page_2, &StartMeasurment::startMeasurment, this, &Agr1::measurement);
+    //connect(ui->page_2, &StartMeasurment::startMeasurment, this, &Agr1::measurement);
 }
 
 Agr1::~Agr1()
@@ -25,7 +25,7 @@ void Agr1::calibrationDataCome(int n, double deta)
 {
     //один параметр контрольной нормальной плазмы
     QDateTime dt = QDateTime::currentDateTime();
-    ui->label_calibrationData->setText(dt.toString("dd.MM.yyyy ") + dt.toString("hh:mm:ss"));
+    //ui->label_calibrationData->setText(dt.toString("dd.MM.yyyy ") + dt.toString("hh:mm:ss"));
     if(param.count() <= n)
         param.push_back(QString("%1").arg(deta));
     else param.replace(n, QString("%1").arg(deta));
@@ -34,23 +34,23 @@ void Agr1::calibrationDataCome(int n, double deta)
 
 void Agr1::open()
 {
-    ui->page_2->setMode(1);
-    file.openAgr1(param);
-    if( !param.isEmpty() && param.count() >= 7 ) { //7 парамеьров
-        ui->lineEdit_1->setText(param.at(0));
-        ui->lineEdit_2->setText(param.at(1));
-        ui->lineEdit_3->setText(param.at(2));
-    } else
-        param = QStringList({0, 0, 0, 0, 0, 0, 0});
+//    ui->page_2->setMode(1);
+//    file.openAgr1(param);
+//    if( !param.isEmpty() && param.count() >= 7 ) { //7 парамеьров
+//        ui->lineEdit_1->setText(param.at(0));
+//        ui->lineEdit_2->setText(param.at(1));
+//        ui->lineEdit_3->setText(param.at(2));
+//    } else
+//        param = QStringList({0, 0, 0, 0, 0, 0, 0});
 }
 
 void Agr1::save()
 {
     //param.clear();
-    param.replace(0, ui->lineEdit_1->text());
-    param.replace(1, ui->lineEdit_2->text());
-    param.replace(2, ui->lineEdit_3->text());
-    file.saveAgr1(param);
+//    param.replace(0, ui->lineEdit_1->text());
+//    param.replace(1, ui->lineEdit_2->text());
+//    param.replace(2, ui->lineEdit_3->text());
+//    file.saveAgr1(param);
 }
 
 void Agr1::calibrationData1Come(double t0)

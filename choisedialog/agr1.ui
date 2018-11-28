@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>360</width>
-    <height>338</height>
+    <width>272</width>
+    <height>194</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -25,140 +25,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QToolBox" name="toolBox">
-     <property name="currentIndex">
-      <number>0</number>
-     </property>
-     <widget class="QWidget" name="page_1">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>342</width>
-        <height>247</height>
-       </rect>
-      </property>
-      <attribute name="label">
-       <string>Калибровка</string>
-      </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout">
-       <item>
-        <widget class="QGroupBox" name="groupBox">
-         <property name="title">
-          <string>Параметры калибровка</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-         </property>
-         <layout class="QFormLayout" name="formLayout">
-          <item row="0" column="0">
-           <spacer name="verticalSpacer">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="label_1">
-            <property name="text">
-             <string>Реагенты, серия №</string>
-            </property>
-            <property name="buddy">
-             <cstring>lineEdit_1</cstring>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="QLineEdit" name="lineEdit_1"/>
-          </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="label_2">
-            <property name="text">
-             <string>Годен до:</string>
-            </property>
-            <property name="buddy">
-             <cstring>lineEdit_2</cstring>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="1">
-           <widget class="QLineEdit" name="lineEdit_2"/>
-          </item>
-          <item row="4" column="0">
-           <widget class="QLabel" name="label_3">
-            <property name="text">
-             <string>Концентрация тромбинов</string>
-            </property>
-            <property name="buddy">
-             <cstring>lineEdit_3</cstring>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="1">
-           <widget class="QLineEdit" name="lineEdit_3"/>
-          </item>
-          <item row="5" column="0">
-           <spacer name="verticalSpacer_2">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_4">
-            <property name="text">
-             <string>Дата калибровки</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QLabel" name="label_calibrationData">
-            <property name="text">
-             <string>не проводилась</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="kolibrButton">
-         <property name="text">
-          <string>Продолжить</string>
-         </property>
-         <property name="shortcut">
-          <string>Ctrl+Return</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="StartMeasurment" name="page_2">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>342</width>
-        <height>247</height>
-       </rect>
-      </property>
-      <attribute name="label">
-       <string>Тест</string>
-      </attribute>
-     </widget>
-    </widget>
+    <widget class="StartMeasurment" name="widget" native="true"/>
    </item>
   </layout>
  </widget>
