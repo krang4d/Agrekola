@@ -34,39 +34,39 @@ public:
     ~Widget();
     void setUserMessage(QString, bool withtime = 1, bool tofile = 1);
     inline void setMode(Mode_ID m)  { id = m; }
-    inline void setMode(int i) {
-        switch (i) {
-        case 0:
-            setMode(Test_ID);
-            break;
-        case 1:
-            setMode(Agr1_ID);
-            break;
-        case 2:
-            setMode(Agr2_ID);
-            break;
-        case 3:
-            setMode(Ko1_ID);
-            break;
-        case 4:
-            setMode(Ko2_ID);
-            break;
-        case 5:
-            setMode(Ko3_ID);
-            break;
-        case 6:
-            setMode(Ko4_ID);
-            break;
-        case 7:;
-            setMode(Ko5_ID);
-            break;
-        case 8:
-            setMode(Level_ID);
-            break;
-        default:
-            break;
-        }
-    }
+//    inline void setMode(int i) {
+//        switch (i) {
+//        case 0:
+//            setMode(Test_ID);
+//            break;
+//        case 1:
+//            setMode(Agr1_ID);
+//            break;
+//        case 2:
+//            setMode(Agr2_ID);
+//            break;
+//        case 3:
+//            setMode(Ko1_ID);
+//            break;
+//        case 4:
+//            setMode(Ko2_ID);
+//            break;
+//        case 5:
+//            setMode(Ko3_ID);
+//            break;
+//        case 6:
+//            setMode(Ko4_ID);
+//            break;
+//        case 7:;
+//            setMode(Ko5_ID);
+//            break;
+//        case 8:
+//            setMode(Level_ID);
+//            break;
+//        default:
+//            break;
+//        }
+//    }
     void setStartWindow(StartMeasurment*);
     inline Mode_ID getMode()     { return id; }
     inline bool isSensorReady()  { return termoSensor; } //проверка тепловой готовности

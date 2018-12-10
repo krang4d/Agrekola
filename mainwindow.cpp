@@ -7,6 +7,7 @@
 #include <functional>
 #include <options.h>
 #include <calibparam.h>
+#include "globalvalue.h"
 
 using namespace std::placeholders;
 

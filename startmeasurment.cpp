@@ -420,3 +420,8 @@ void StartMeasurment::on_comboBox_inductor_currentIndexChanged(const QString &ar
         ui->label_iname->setVisible(false);
     }
 }
+
+Mode_ID StartMeasurment::getMode() const
+{
+    return mode;
+}

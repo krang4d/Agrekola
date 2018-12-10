@@ -3,6 +3,7 @@
 #include <QDebug>
 #include <QThread>
 #include "startmeasurment.h"
+#include "globalvalue.h"
 
 ChoiseDialog::ChoiseDialog(QDialog *parent) :
     QDialog(parent),

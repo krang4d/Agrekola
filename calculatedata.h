@@ -9,8 +9,8 @@
 #include <numeric>
 #include <savefiles.h>
 #include <qcustomplot.h>
-
-enum Mode_ID {Test_ID = 0, Agr1_ID, Agr2_ID, Ko1_ID, Ko2_ID, Ko3_ID, Ko4_ID, Ko5_ID, Level_ID };
+#include "globalvalue.h"
+//enum Mode_ID {Test_ID = 0, Agr1_ID, Agr2_ID, Ko1_ID, Ko2_ID, Ko3_ID, Ko4_ID, Ko5_ID, Level_ID };
 
 class CalcData : public QObject
 {
@@ -75,7 +75,7 @@ public:
     QString getParameters() override;
     Mode_ID getModeID() override
     {
-        return Ko1_ID;
+        return TestKo1_ID;
     }
 };
 
@@ -96,7 +96,7 @@ public:
     QString getParameters() override;
     Mode_ID getModeID() override
     {
-        return Ko2_ID;
+        return TestKo2_ID;
     }
 };
 
@@ -122,7 +122,7 @@ public:
     QString getParameters() override;
     Mode_ID getModeID() override
     {
-        return Ko3_ID;
+        return TestKo3_ID;
     }
 };
 
@@ -142,7 +142,7 @@ public:
     QString getParameters() override;
     Mode_ID getModeID() override
     {
-        return Ko4_ID;
+        return TestKo4_ID;
     }
 };
 
@@ -184,7 +184,7 @@ public:
     QString getParameters() override;
     Mode_ID getModeID() override
     {
-        return Ko5_ID;
+        return TestKo5_ID;
     }
 };
 
@@ -206,7 +206,7 @@ public:
     QString getParameters() override;
     Mode_ID getModeID() override
     {
-        return Agr1_ID;
+        return TestAgr1_ID;
     }
 };
 
@@ -234,7 +234,7 @@ public:
     QString getParameters() override;
     Mode_ID getModeID() override
     {
-        return Agr2_ID;
+        return TestAgr2_ID;
     }
 };
 

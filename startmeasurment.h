@@ -6,6 +6,7 @@
 #include <QCheckBox>
 #include <QMessageBox>
 #include "savefiles.h"
+#include "globalvalue.h"
 
 namespace Ui {
 class StartMeasurment;
@@ -69,7 +70,7 @@ signals:
 private slots:
     void on_comboBox_inductor_currentIndexChanged(const QString &arg1);
 
-private:
+protected:
     Ui::StartMeasurment *ui;
     SaveFiles file;
     QStringList param;
@@ -79,6 +80,7 @@ private:
     QString num_1, num_2, num_3, num_4;
     int time;           //время записи
     int time_incube, time_incube_2; //время инкубации
+    Mode_ID mode;
 };
 
 #endif // STARTMEASURMENT_H

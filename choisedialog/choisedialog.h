@@ -17,6 +17,7 @@
 #include "mainwindow.h"
 #include "useE154.h"
 #include "viewplot.h"
+#include "globalvalue.h"
 
 class MainWindow;
 
