@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>577</width>
-    <height>561</height>
+    <width>660</width>
+    <height>586</height>
    </rect>
   </property>
   <property name="font">
@@ -22,13 +22,62 @@
    <string>Выбор режима</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="3" column="1">
-    <widget class="QPushButton" name="exitButton">
-     <property name="text">
-      <string>Выход</string>
+   <item row="0" column="1" rowspan="3">
+    <widget class="QStackedWidget" name="stackedWidget">
+     <property name="currentIndex">
+      <number>0</number>
      </property>
-     <property name="shortcut">
-      <string>Esc</string>
+     <widget class="QWidget" name="page_1">
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>Режим не выбран</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="Agr1" name="page_2">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="Agr2" name="page_3">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="Ko1" name="page_4">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="Ko2" name="page_5">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="Ko3" name="page_6">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="Ko4" name="page_7">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="Ko5" name="page_8"/>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QPushButton" name="viewPlotsButton">
+     <property name="text">
+      <string>Просмотр графиков</string>
      </property>
     </widget>
    </item>
@@ -39,6 +88,16 @@
      </property>
      <property name="shortcut">
       <string>Space</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1">
+    <widget class="QPushButton" name="exitButton">
+     <property name="text">
+      <string>Выход</string>
+     </property>
+     <property name="shortcut">
+      <string>Esc</string>
      </property>
     </widget>
    </item>
@@ -185,65 +244,6 @@
        </spacer>
       </item>
      </layout>
-    </widget>
-   </item>
-   <item row="2" column="0">
-    <widget class="QPushButton" name="viewPlotsButton">
-     <property name="text">
-      <string>Просмотр графиков</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="1" rowspan="3">
-    <widget class="QStackedWidget" name="stackedWidget">
-     <property name="currentIndex">
-      <number>0</number>
-     </property>
-     <widget class="QWidget" name="page_1">
-      <layout class="QVBoxLayout" name="verticalLayout_3">
-       <item>
-        <widget class="QLabel" name="label">
-         <property name="text">
-          <string>Режим не выбран</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="Agr1" name="page_2">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
-     </widget>
-     <widget class="Agr2" name="page_3">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
-     </widget>
-     <widget class="Ko1" name="page_4">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
-     </widget>
-     <widget class="Ko2" name="page_5">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
-     </widget>
-     <widget class="Ko3" name="page_6">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
-     </widget>
-     <widget class="Ko4" name="page_7">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
-     </widget>
-     <widget class="Ko5" name="page_8"/>
     </widget>
    </item>
   </layout>

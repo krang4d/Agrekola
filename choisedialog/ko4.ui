@@ -27,15 +27,15 @@
    <item>
     <widget class="QToolBox" name="toolBox">
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="page_1">
       <property name="geometry">
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>506</width>
-        <height>398</height>
+        <width>544</width>
+        <height>376</height>
        </rect>
       </property>
       <attribute name="label">
@@ -283,12 +283,93 @@
         <x>0</x>
         <y>0</y>
         <width>506</width>
-        <height>398</height>
+        <height>371</height>
        </rect>
       </property>
       <attribute name="label">
        <string>Тест</string>
       </attribute>
+     </widget>
+     <widget class="QWidget" name="page_2">
+      <attribute name="label">
+       <string>Тест без калибровки</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_4">
+       <item>
+        <layout class="QFormLayout" name="formLayout_2">
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_incube_2">
+           <property name="text">
+            <string>Время инкубации (сек.)</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="incube_incube_2">
+           <property name="inputMethodHints">
+            <set>Qt::ImhDigitsOnly</set>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="label_9">
+           <property name="text">
+            <string>Номер серии реагентов</string>
+           </property>
+           <property name="buddy">
+            <cstring>reagent_serial</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QLineEdit" name="reagent_serial_2"/>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="label_6">
+           <property name="text">
+            <string>Срок годности реагентов</string>
+           </property>
+           <property name="buddy">
+            <cstring>reagent_data</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QLineEdit" name="reagent_data_2"/>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="label_8">
+           <property name="text">
+            <string>Используемые активности
+тромбина</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <widget class="QComboBox" name="action_2">
+           <item>
+            <property name="text">
+             <string>активность тромбина 1 ___ [МЕ/мл], тромбиновое время ___ сек</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>активность тромбина 2 ___ [МЕ/мл], тромбиновое время ___ сек</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>активность тромбина 3 ___ [МЕ/мл], тромбиновое время ___ сек</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
      </widget>
     </widget>
    </item>
