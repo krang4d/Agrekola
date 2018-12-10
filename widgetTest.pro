@@ -76,7 +76,8 @@ HEADERS  += selectcalibrationagr1.h \
     impulewaiter.h \
     incubation.h \
     options.h \
-    calibparam.h
+    calibparam.h \
+    globalvalue.h
 
 FORMS    += selectcalibrationagr1.ui \
     selectinductor.ui \
