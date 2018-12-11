@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT += core gui
+QT += core gui xml
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport concurrent
 
@@ -46,7 +46,8 @@ SOURCES +=  main.cpp\
     impulewaiter.cpp \
     incubation.cpp \
     options.cpp \
-    calibparam.cpp
+    calibparam.cpp \
+    ../XML/KoAgrXML/koagrxml.cpp
 
 HEADERS  += selectcalibrationagr1.h \
     selectinductor.h \
@@ -77,7 +78,9 @@ HEADERS  += selectcalibrationagr1.h \
     incubation.h \
     options.h \
     calibparam.h \
-    globalvalue.h
+    globalvalue.h \
+    ../XML/KoAgrXML/koagrxml.h
+
 
 FORMS    += selectcalibrationagr1.ui \
     selectinductor.ui \

@@ -241,6 +241,14 @@
       </attribute>
      </widget>
      <widget class="QWidget" name="page_3">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>341</width>
+        <height>399</height>
+       </rect>
+      </property>
       <attribute name="label">
        <string>Тест без калибровки</string>
       </attribute>
@@ -286,6 +294,13 @@
          </item>
          <item row="2" column="1">
           <widget class="QDateEdit" name="dateEdit_3"/>
+         </item>
+         <item row="3" column="0" colspan="2">
+          <widget class="QPushButton" name="test2Button">
+           <property name="text">
+            <string>Продолить</string>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
