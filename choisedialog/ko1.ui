@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>245</width>
-    <height>102</height>
+    <height>134</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -30,19 +30,8 @@
      </property>
     </widget>
    </item>
-   <item>
-    <widget class="StartMeasurment" name="widget" native="true"/>
-   </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>StartMeasurment</class>
-   <extends>QWidget</extends>
-   <header location="global">startmeasurment.h</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>

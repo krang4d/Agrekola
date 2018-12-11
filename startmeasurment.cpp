@@ -421,7 +421,13 @@ void StartMeasurment::on_comboBox_inductor_currentIndexChanged(const QString &ar
     }
 }
 
-Mode_ID StartMeasurment::getMode() const
+Mode_ID StartMeasurment::getModeID() const
 {
-    return mode;
+    return modeID;
 }
+
+void StartMeasurment::setModeID(const Mode_ID &value)
+{
+    modeID = value;
+}
+

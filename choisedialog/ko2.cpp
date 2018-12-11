@@ -82,6 +82,11 @@ void Ko2::calibrationData4Come(double t0)
     calibrationDataCome(9, t0);
 }
 
+StartMeasurment *StartTestKo2::getStart()
+{
+
+}
+
 StartMeasurment *StartCalibrationKo2::getStart()
 {
     StartMeasurment *sm = new StartMeasurment(0);

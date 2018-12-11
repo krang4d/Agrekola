@@ -301,7 +301,7 @@ void Widget::realtimeDataSlot(QVariantList a) {
                     qDebug() << "stop_dx1 = " << stop_dy1;
             }
             else {
-                if(  getMode() != Agr1_ID && getMode() != Agr2_ID && std::abs(map_y1.last() - stop_dy1) >= std::abs(stop_dy1*Stop_DX) ) {
+                if(  getMode() != TestAgr1_ID && getMode() != TestAgr2_ID && std::abs(map_y1.last() - stop_dy1) >= std::abs(stop_dy1*Stop_DX) ) {
                     qDebug() << "emit stopData1" << std::abs(map_y1.last() - stop_dy1) << ">=" << std::abs(stop_dy1*Stop_DX);
                     emit stopData1();
                 }
@@ -319,7 +319,7 @@ void Widget::realtimeDataSlot(QVariantList a) {
                     qDebug() << "stop_dx2 = " << stop_dy2;
             }
             else {
-                if(  getMode() != Agr1_ID && getMode() != Agr2_ID && std::abs(map_y2.last() - stop_dy2) >= std::abs(stop_dy2*Stop_DX) ) {
+                if(  getMode() != TestAgr1_ID && getMode() != TestAgr2_ID && std::abs(map_y2.last() - stop_dy2) >= std::abs(stop_dy2*Stop_DX) ) {
                     qDebug() << "emit stopData2" << std::abs(map_y2.last() - stop_dy2) << ">=" << std::abs(stop_dy2*Stop_DX);
                     emit stopData2();
                 }
@@ -337,7 +337,7 @@ void Widget::realtimeDataSlot(QVariantList a) {
                     qDebug() << "stop_dx3 = " << stop_dy3;
             }
             else {
-                if(  getMode() != Agr1_ID && getMode() != Agr2_ID && std::abs(map_y3.last() - stop_dy3) >= std::abs(stop_dy3*Stop_DX) ) {
+                if(  getMode() != TestAgr1_ID && getMode() != TestAgr2_ID && std::abs(map_y3.last() - stop_dy3) >= std::abs(stop_dy3*Stop_DX) ) {
                     qDebug() << "emit stopData3" << std::abs(map_y3.last() - stop_dy3) << ">=" << std::abs(stop_dy3*Stop_DX);
                     emit stopData3();
                 }
@@ -355,7 +355,7 @@ void Widget::realtimeDataSlot(QVariantList a) {
                     qDebug() << "stop_dx4 = " << stop_dy4;
             }
             else {
-                if(  getMode() != Agr1_ID && getMode() != Agr2_ID && std::abs(map_y4.last() - stop_dy4) >= std::abs(stop_dy4*Stop_DX) ) {
+                if(  getMode() != TestAgr1_ID && getMode() != TestAgr2_ID && std::abs(map_y4.last() - stop_dy4) >= std::abs(stop_dy4*Stop_DX) ) {
                     qDebug() << "emit stopData4" << std::abs(map_y4.last() - stop_dy4) << ">=" << std::abs(stop_dy4*Stop_DX);
                     emit stopData4();
                 }
@@ -527,7 +527,7 @@ void Widget::startMeasurment()
     //ui->pushButton->setEnabled(false);
     setUserMessage(startWin->getStringStatus());
     setupWidget();
-    if( getMode() == Agr1_ID ||getMode() == Agr2_ID ) {
+    if( getMode() == TestAgr1_ID ||getMode() == TestAgr2_ID ) {
         startIncub(2);
     }
     else startIncub(1);
@@ -916,31 +916,31 @@ void Widget::on_comboBox_currentIndexChanged(int index)
         break;
     case 1:
         str = tr("Определение параметров агрегации, тест (Agr1 1)");
-        setMode(Agr1_ID);
+        setMode(TestAgr1_ID);
         break;
     case 2:
         str = tr("Определение активности фактора Виллебранда, тест (Agr2 2)");
-        setMode(Agr2_ID);
+        setMode(TestAgr2_ID);
         break;
     case 3:
         str = tr("Время свертывания, тест (Ko1 3)");
-        setMode(Ko1_ID);
+        setMode(TestKo1_ID);
         break;
     case 4:
         str = tr("АЧТВ, тест (Ko2 4)");
-        setMode(Ko2_ID);
+        setMode(TestKo2_ID);
         break;
     case 5:
         str = tr("Фибриноген, тест (Ko3 5)");
-        setMode(Ko3_ID);
+        setMode(TestKo3_ID);
         break;
     case 6:
         str = tr("Тромбин, тест (Ko4 6)");
-        setMode(Ko4_ID);
+        setMode(TestKo4_ID);
         break;
     case 7:
         str = tr("Протромбиновый комплекс, тест (Ko5 7)");
-        setMode(Ko5_ID);
+        setMode(TestKo5_ID);
         break;
     case 8:
         str = tr("Определение уровня БТП, тест (8)");

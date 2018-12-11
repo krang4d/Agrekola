@@ -34,6 +34,7 @@ public:
     ~Widget();
     void setUserMessage(QString, bool withtime = 1, bool tofile = 1);
     inline void setMode(Mode_ID m)  { id = m; }
+    inline Mode_ID getMode()     { return id; }
 //    inline void setMode(int i) {
 //        switch (i) {
 //        case 0:
@@ -68,7 +69,6 @@ public:
 //        }
 //    }
     void setStartWindow(StartMeasurment*);
-    inline Mode_ID getMode()     { return id; }
     inline bool isSensorReady()  { return termoSensor; } //проверка тепловой готовности
 
     void stopIncub();

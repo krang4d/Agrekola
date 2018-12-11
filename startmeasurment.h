@@ -44,6 +44,9 @@ public:
 
     int num;
 
+    Mode_ID getModeID() const;
+    void setModeID(const Mode_ID &value);
+
 public slots:
     void on_checkBox_ch1_stateChanged(int arg1);
     void on_checkBox_ch2_stateChanged(int arg1);
@@ -70,7 +73,7 @@ signals:
 private slots:
     void on_comboBox_inductor_currentIndexChanged(const QString &arg1);
 
-protected:
+private:
     Ui::StartMeasurment *ui;
     SaveFiles file;
     QStringList param;
@@ -80,7 +83,7 @@ protected:
     QString num_1, num_2, num_3, num_4;
     int time;           //время записи
     int time_incube, time_incube_2; //время инкубации
-    Mode_ID mode;
+    Mode_ID modeID;
 };
 
 #endif // STARTMEASURMENT_H

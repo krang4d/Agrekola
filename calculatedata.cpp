@@ -142,31 +142,31 @@ CalcData *CalcData::createCalc(Mode_ID  id)
         str = tr("Тест (Test 0)");
         p = new CalcLevel();
         break;
-    case Agr1_ID:
+    case TestAgr1_ID:
         str = tr("Определение параметров агрегации, измерение (Agr1 1)");
         p = new CalcAgr1();
         break;
-    case Agr2_ID:
+    case TestAgr2_ID:
         str = tr("Определение активности фактора Виллебранда, измерение (Agr2 2)");
         p = new CalcAgr2();
         break;
-    case Ko1_ID:
+    case TestKo1_ID:
         str = tr("Время свертывания, измерение (Ko1 3)");
         p = new CalcKo1();
         break;
-    case Ko2_ID:
+    case TestKo2_ID:
         str = tr("АЧТВ, измерение (Ko2 4)");
         p = new CalcKo2();
         break;
-    case Ko3_ID:
+    case TestKo3_ID:
         str = tr("Фибриноген, измерение (Ko3 5)");
         p = new CalcKo3();
         break;
-    case Ko4_ID:
+    case TestKo4_ID:
         str = tr("Тромбин, измерние (Ko4 6)");
         p = new CalcKo4();
         break;
-    case Ko5_ID:
+    case TestKo5_ID:
         str = tr("Протромбиновый комплекс, измерение (Ko5 7)");
         p = new CalcKo5();
         break;

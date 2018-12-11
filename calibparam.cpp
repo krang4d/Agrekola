@@ -26,22 +26,22 @@ void CalibParam::setCalc(CalcData *p)
 void CalibParam::createPlot()
 {
     switch (calc->getModeID() ) {
-    case Ko1_ID:
+    case TestKo1_ID:
         ui->frame->setVisible(false);
         break;
-    case Ko2_ID:
+    case TestKo2_ID:
         ui->frame->setVisible(false);
         break;
-    case Ko3_ID:
+    case TestKo3_ID:
         break;
-    case Ko4_ID:
+    case TestKo4_ID:
         ui->frame->setVisible(false);
         break;
-    case Ko5_ID:
+    case TestKo5_ID:
         break;
-    case Agr1_ID:
+    case TestAgr1_ID:
         break;
-    case Agr2_ID:
+    case TestAgr2_ID:
         break;
 
     default:
