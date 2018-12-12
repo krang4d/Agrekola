@@ -163,7 +163,6 @@ QString StartMeasurment::getNum(const int ch)
     default:
         return 0;
     }
-    return num_1;
 }
 
 void StartMeasurment::setNum(const int ch, const QString num)

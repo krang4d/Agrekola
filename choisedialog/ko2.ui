@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>359</width>
-    <height>517</height>
+    <width>406</width>
+    <height>503</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -34,8 +34,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>341</width>
-        <height>399</height>
+        <width>388</width>
+        <height>385</height>
        </rect>
       </property>
       <attribute name="label">
@@ -55,6 +55,9 @@
            <spacer name="verticalSpacer_2">
             <property name="orientation">
              <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Maximum</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
@@ -110,16 +113,6 @@
               </property>
              </widget>
             </item>
-            <item row="0" column="1">
-             <widget class="QLineEdit" name="lineEdit_incube">
-              <property name="inputMethodHints">
-               <set>Qt::ImhDigitsOnly</set>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-             </widget>
-            </item>
             <item row="1" column="0">
              <widget class="QLabel" name="label_1">
               <property name="text">
@@ -171,26 +164,10 @@
               </property>
              </widget>
             </item>
-            <item row="5" column="1">
-             <widget class="QLineEdit" name="lineEdit_5"/>
-            </item>
             <item row="6" column="0">
              <widget class="QLabel" name="label_t">
               <property name="text">
                <string>Время записи (сек.)</string>
-              </property>
-              <property name="buddy">
-               <cstring>lineEdit_time</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="6" column="1">
-             <widget class="QLineEdit" name="lineEdit_time">
-              <property name="inputMethodHints">
-               <set>Qt::ImhDigitsOnly</set>
-              </property>
-              <property name="text">
-               <string/>
               </property>
              </widget>
             </item>
@@ -199,6 +176,15 @@
             </item>
             <item row="4" column="1">
              <widget class="QDateEdit" name="dateEdit_2"/>
+            </item>
+            <item row="5" column="1">
+             <widget class="QDoubleSpinBox" name="doubleSpinBox"/>
+            </item>
+            <item row="6" column="1">
+             <widget class="QDoubleSpinBox" name="doubleSpinBox_2"/>
+            </item>
+            <item row="0" column="1">
+             <widget class="QDoubleSpinBox" name="doubleSpinBox_3"/>
             </item>
            </layout>
           </item>
@@ -227,17 +213,17 @@
        </item>
       </layout>
      </widget>
-     <widget class="StartMeasurment" name="page_2">
+     <widget class="QWidget" name="page_2">
       <property name="geometry">
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>341</width>
-        <height>399</height>
+        <width>388</width>
+        <height>385</height>
        </rect>
       </property>
       <attribute name="label">
-       <string>Тест</string>
+       <string>Тест с калибровкой</string>
       </attribute>
      </widget>
      <widget class="QWidget" name="page_3">
@@ -245,34 +231,133 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>341</width>
-        <height>399</height>
+        <width>388</width>
+        <height>385</height>
        </rect>
       </property>
       <attribute name="label">
        <string>Тест без калибровки</string>
       </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_4">
+      <layout class="QVBoxLayout" name="verticalLayout_7">
+       <item>
+        <widget class="QGroupBox" name="groupBox_probe">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="title">
+          <string notr="true">Режим измерния</string>
+         </property>
+         <property name="flat">
+          <bool>false</bool>
+         </property>
+         <property name="checkable">
+          <bool>false</bool>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <item>
+           <widget class="QRadioButton" name="radioButton_single">
+            <property name="text">
+             <string>Одинарные пробы</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="radioButton_double">
+            <property name="text">
+             <string>Парные пробы</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
        <item>
         <layout class="QFormLayout" name="formLayout_2">
          <item row="0" column="0">
-          <widget class="QLabel" name="label_incube_2">
-           <property name="text">
-            <string>Время инкубации (сек.)</string>
+          <widget class="QGroupBox" name="groupBox_ch">
+           <property name="title">
+            <string>Выбор каналов</string>
            </property>
+           <layout class="QVBoxLayout" name="verticalLayout_5">
+            <item>
+             <widget class="QCheckBox" name="checkBox_ch1_2">
+              <property name="text">
+               <string>Канал 1</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="checkBox_ch2_2">
+              <property name="text">
+               <string>Канал 2</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="checkBox_ch3_2">
+              <property name="text">
+               <string>Канал 3</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="checkBox_ch4_2">
+              <property name="text">
+               <string>Канал 4</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </widget>
          </item>
          <item row="0" column="1">
-          <widget class="QLineEdit" name="lineEdit_incube_2">
-           <property name="inputMethodHints">
-            <set>Qt::ImhDigitsOnly</set>
+          <widget class="QGroupBox" name="groupBox_3">
+           <property name="title">
+            <string>Номер пробы</string>
            </property>
-           <property name="text">
-            <string/>
-           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_6">
+            <item>
+             <widget class="QLineEdit" name="lineEdit_ch1">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="lineEdit_ch2">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="lineEdit_ch3">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="lineEdit_ch4">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </widget>
          </item>
-         <item row="1" column="0">
+        </layout>
+       </item>
+       <item>
+        <layout class="QFormLayout" name="formLayout_3">
+         <item row="0" column="0">
           <widget class="QLabel" name="label_6">
            <property name="text">
             <string>Номер серии реагентов</string>
@@ -282,27 +367,63 @@
            </property>
           </widget>
          </item>
-         <item row="1" column="1">
+         <item row="0" column="1">
           <widget class="QLineEdit" name="lineEdit_2"/>
          </item>
-         <item row="2" column="0">
+         <item row="1" column="0">
           <widget class="QLabel" name="label_7">
            <property name="text">
             <string>Срок годности реагентов</string>
            </property>
           </widget>
          </item>
-         <item row="2" column="1">
+         <item row="1" column="1">
           <widget class="QDateEdit" name="dateEdit_3"/>
          </item>
-         <item row="3" column="0" colspan="2">
-          <widget class="QPushButton" name="test2Button">
+         <item row="2" column="0">
+          <widget class="QLabel" name="label_incube_2">
            <property name="text">
-            <string>Продолить</string>
+            <string>Время инкубации (сек.)</string>
            </property>
           </widget>
          </item>
+         <item row="2" column="1">
+          <widget class="QDoubleSpinBox" name="doubleSpinBox_4"/>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="label_t_2">
+           <property name="text">
+            <string>Время записи (сек.)</string>
+           </property>
+           <property name="buddy">
+            <cstring>lineEdit_time</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <widget class="QDoubleSpinBox" name="doubleSpinBox_5"/>
+         </item>
         </layout>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>213</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="test2Button">
+         <property name="text">
+          <string>Продолить</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -310,14 +431,6 @@
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>StartMeasurment</class>
-   <extends>QWidget</extends>
-   <header location="global">startmeasurment.h</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>

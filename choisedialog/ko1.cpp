@@ -15,7 +15,9 @@ Ko1::Ko1(QWidget *parent) :
     ui->lineEdit_ch3->setText(t_ko1.getNum3());
     ui->checkBox_ch4->setChecked(t_ko1.getK4());
     ui->lineEdit_ch4->setText(t_ko1.getNum4());
-    t_ko1.getSingle() ? ui->radioButton_single->setChecked(true) : ui->radioButton_double->setChecked(false);
+
+    qDebug() << "RadioButton" << t_ko1.getSingle();
+    t_ko1.getSingle() ? ui->radioButton_single->setChecked(true) : ui->radioButton_double->setChecked(true);
 
 //    file.openKo1(param);
 //    if(!param.isEmpty() && param.count() >= 2) {
@@ -46,6 +48,8 @@ void Ko1::on_pushButton_clicked()
     t_ko1.setNum3(ui->lineEdit_ch3->text());
     t_ko1.setK4(ui->checkBox_ch4->isChecked());
     t_ko1.setNum4(ui->lineEdit_ch4->text());
+
+    qDebug() << "RadioButton" << t_ko1.getSingle();
     t_ko1.setSingle(ui->radioButton_single->isChecked());
     t_ko1.save();
     qDebug() << t_ko1.getK1();
@@ -73,19 +77,33 @@ void Ko1::on_checkBox_ch4_stateChanged(int arg1)
     ui->lineEdit_ch4->setEnabled(arg1);
 }
 
+void Ko1::on_radioButton_single_toggled(bool checked)
+{
+    if(checked)
+        ui->stackedWidget->setCurrentIndex(0);
+}
+
+void Ko1::on_radioButton_double_toggled(bool checked)
+{
+    if(checked)
+        ui->stackedWidget->setCurrentIndex(1);
+}
+
 StartMeasurment *StartTestKo1::getStart()
 {
-
+    TestKo1 t_ko1;
+    CalibrationKo1 k_ko1;
     StartMeasurment *sm = new StartMeasurment(0);
-    sm->setModeID(TestKo1_ID); //режим определение времени свертывания
-    sm->setMode(0, 1); //одиночные пробы
-    sm->setChannels(true, true, true, true);
-    sm->setNum(1, "Проверка");
-    sm->setNum(2, "Проверка");
-    sm->setNum(3, "Проверка");
-    sm->setNum(4, "Проверка");
-    sm->setTime(10);
-    sm->setTimeIncube(1, 3);
+    sm->setModeID(TestKo1_ID);  //режим определение времени свертывания
+    sm->setMode(0, 1);          //одиночные пробы
+    sm->setChannels(t_ko1.getK1(), t_ko1.getK2(), t_ko1.getK3(), t_ko1.getK4());
+    sm->setNum(1, t_ko1.getNum1());
+    sm->setNum(2, t_ko1.getNum2());
+    sm->setNum(3, t_ko1.getNum3());
+    sm->setNum(4, t_ko1.getNum4());
+
+    sm->setTime(k_ko1.getWrite_time());
+    sm->setTimeIncube(1, k_ko1.getIncube_time());
     //stKo2->cancel = false;
     return sm;
 }

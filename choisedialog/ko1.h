@@ -25,6 +25,10 @@ private slots:
     void on_checkBox_ch3_stateChanged(int arg1);
     void on_checkBox_ch4_stateChanged(int arg1);
 
+    void on_radioButton_single_toggled(bool checked);
+
+    void on_radioButton_double_toggled(bool checked);
+
 signals:
     void measurement(StartMeasurment*);
 
@@ -43,7 +47,6 @@ public:
     StartTestKo1() = delete;
     static StartMeasurment* getStart();
 };
-
 
 class StartCalibrationKo1 : public StartMeasurment
 {
