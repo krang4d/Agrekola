@@ -19,11 +19,11 @@ Ko1::Ko1(QWidget *parent) :
     qDebug() << "RadioButton" << t_ko1.getSingle();
     t_ko1.getSingle() ? ui->radioButton_single->setChecked(true) : ui->radioButton_double->setChecked(true);
 
-//    file.openKo1(param);
-//    if(!param.isEmpty() && param.count() >= 2) {
-//        ui->lineEdit_1->setText(param.at(0));
-//        ui->lineEdit_2->setText(param.at(1));
-//    }
+    //file.openKo1(param);
+    //if(!param.isEmpty() && param.count() >= 2) {
+    //  ui->lineEdit_1->setText(param.at(0));
+    //  ui->lineEdit_2->setText(param.at(1));
+    //}
     //startPar = ui->widget;
     //connect(ui->widget, SIGNAL(startMeasurment(StartMeasurment*)), this, SIGNAL(measurement(StartMeasurment*)));
     //connect(ui->widget, &StartMeasurment::startMeasurment, this, &Ko1::measurement);
@@ -32,9 +32,9 @@ Ko1::Ko1(QWidget *parent) :
 Ko1::~Ko1()
 {
     //param.clear();
-//    param.replace(0, ui->lineEdit_1->text());
-//    param.replace(1, ui->lineEdit_2->text());
-//    file.saveKo1(param);
+    //param.replace(0, ui->lineEdit_1->text());
+    //param.replace(1, ui->lineEdit_2->text());
+    //file.saveKo1(param);
     delete ui;
 }
 
@@ -110,5 +110,6 @@ StartMeasurment *StartTestKo1::getStart()
 
 StartMeasurment *StartCalibrationKo1::getStart()
 {
-
+    StartMeasurment *sm = new StartMeasurment(0);
+    sm->setModeID(Test_ID);  //для определения времени свертывания калибровка не проводится
 }

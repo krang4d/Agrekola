@@ -2,8 +2,7 @@
 #define KO2_H
 
 #include <QWidget>
-#include "savefiles.h"
-#include "startmeasurment.h"
+#include "globalvalue.h"
 
 namespace Ui {
 class Ko2;
@@ -24,8 +23,9 @@ private:
 
 private slots:
     void on_calibr1Button_clicked();
-
     void on_toolBox_currentChanged(int index);
+
+    void on_pushButton_clicked();
 
 public slots:
     void calibrationData1Come(double);
