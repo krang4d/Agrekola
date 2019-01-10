@@ -26,7 +26,6 @@ private slots:
     void on_checkBox_ch4_stateChanged(int arg1);
 
     void on_radioButton_single_toggled(bool checked);
-
     void on_radioButton_double_toggled(bool checked);
 
 signals:

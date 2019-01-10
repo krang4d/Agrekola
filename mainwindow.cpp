@@ -48,20 +48,20 @@ void MainWindow::newShow(StartMeasurment* sw)
     //else  {QMessageBox test(QMessageBox::Warning, "qobject_cast", QString("qobject_cast"), QMessageBox::Ok); test.exec();}
     QString str;
     switch (sw->getModeID()) {
-    case TestAgr1_ID: {
+    case Mode_ID::TestAgr1_ID: {
         str = tr("<div style='color: blue'>Определение параметров агрегации, тест (1)");
         setWindowTitle(str);
         centerWidget->setUserMessage(str);
 
         centerWidget->setStartWindow(StartCalibrationAgr1::getBTP100());
-        centerWidget->setMode(Level_ID);
+        centerWidget->setMode(Mode_ID::Level_ID);
 
         std::function<void(void)> fun = [this, sw](){ qDebug() << "getBTP100() done";
             centerWidget->setStartWindow(StartCalibrationAgr1::getOTP0());
             centerWidget->getLevelOTP();
             disconnect(centerWidget, &Widget::done, 0, 0);
             connect(centerWidget, &Widget::done, [&](){
-                centerWidget->setMode(TestAgr1_ID);
+                centerWidget->setMode(Mode_ID::TestAgr1_ID);
                 centerWidget->setStartWindow(sw);
             });
         };
@@ -70,43 +70,43 @@ void MainWindow::newShow(StartMeasurment* sw)
         centerWidget->getLevelBTP();
     }
         break;
-    case TestAgr2_ID:
-        centerWidget->setMode(TestAgr2_ID);
+    case Mode_ID::TestAgr2_ID:
+        centerWidget->setMode(Mode_ID::TestAgr2_ID);
         centerWidget->setStartWindow(sw);
         setWindowTitle("Определение активности фактора Виллебранда, тест (2)");
         centerWidget->setUserMessage("Определение активности фактора Виллебранда, тест (2)");
         //centerWidget->setUserMessage(tr("<div style='color: blue'>Установите в рабочие каналы кюветы с пробами и нажмите \"Старт\""));
         break;
-    case TestKo1_ID:
-        centerWidget->setMode(TestKo1_ID);
+    case Mode_ID::TestKo1_ID:
+        centerWidget->setMode(Mode_ID::TestKo1_ID);
         centerWidget->setStartWindow(sw);
         setWindowTitle("Время свертывания, тест (3)");
         centerWidget->setUserMessage("Время свертывания, тест (3)");
         centerWidget->setUserMessage(tr("<div style='color: blue'>Установите в рабочие каналы кюветы с пробами и нажмите \"Старт\""));
         break;
-    case TestKo2_ID:
-        centerWidget->setMode(TestKo2_ID);
+    case Mode_ID::TestKo2_ID:
+        centerWidget->setMode(Mode_ID::TestKo2_ID);
         centerWidget->setStartWindow(sw);
         setWindowTitle("АЧТВ, тест (4)");
         centerWidget->setUserMessage("АЧТВ, тест (4)");
         centerWidget->setUserMessage(tr("<div style='color: blue'>Установите в рабочие каналы кюветы с пробами и нажмите \"Старт\""));
         break;
-    case TestKo3_ID:
-        centerWidget->setMode(TestKo3_ID);
+    case Mode_ID::TestKo3_ID:
+        centerWidget->setMode(Mode_ID::TestKo3_ID);
         centerWidget->setStartWindow(sw);
         setWindowTitle("Фибриноген, тест (5)");
         centerWidget->setUserMessage("Фибриноген, тест (5)");
         centerWidget->setUserMessage(tr("<div style='color: blue'>Установите в рабочие каналы кюветы с пробами и нажмите \"Старт\""));
         break;
-    case TestKo4_ID:
-        centerWidget->setMode(TestKo4_ID);
+    case Mode_ID::TestKo4_ID:
+        centerWidget->setMode(Mode_ID::TestKo4_ID);
         centerWidget->setStartWindow(sw);
         setWindowTitle("Тромбин, тест (6)");
         centerWidget->setUserMessage("Тромбин, тест (6)");
         centerWidget->setUserMessage(tr("<div style='color: blue'>Установите в рабочие каналы кюветы с пробами и нажмите \"Старт\""));
         break;
-    case TestKo5_ID:
-        centerWidget->setMode(TestKo5_ID);
+    case Mode_ID::TestKo5_ID:
+        centerWidget->setMode(Mode_ID::TestKo5_ID);
         centerWidget->setStartWindow(sw);
         setWindowTitle("Протромбиновый комплекс, тест (7)");
         centerWidget->setUserMessage("Протромбиновый комплекс, тест (7)");

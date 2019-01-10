@@ -3,7 +3,6 @@
 
 #include  "../XML/KoAgrXML/koagrxml.h"
 #include "savefiles.h"
-#include "startmeasurment.h"
 
 enum Mode_ID { Test_ID = 0,
                TestAgr1_ID,

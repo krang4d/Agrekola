@@ -17,7 +17,7 @@ Ko1::Ko1(QWidget *parent) :
     ui->lineEdit_ch4->setText(t_ko1.getNum4());
 
     qDebug() << "RadioButton" << t_ko1.getSingle();
-    t_ko1.getSingle() ? ui->radioButton_single->setChecked(true) : ui->radioButton_double->setChecked(true);
+    t_ko1.getSingle() ? on_radioButton_single_toggled(true) : on_radioButton_double_toggled(true);
 
     //file.openKo1(param);
     //if(!param.isEmpty() && param.count() >= 2) {

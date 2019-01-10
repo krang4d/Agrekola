@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include "globalvalue.h"
+#include "startmeasurment.h"
 
 namespace Ui {
 class Ko2;
@@ -19,13 +20,11 @@ public:
 private:
     void calibrationDataCome(int n, double deta);
     void open();
-    void save();
+    void close();
 
 private slots:
-    void on_calibr1Button_clicked();
     void on_toolBox_currentChanged(int index);
-
-    void on_pushButton_clicked();
+    void on_pushButton_calib1_clicked();
 
 public slots:
     void calibrationData1Come(double);
@@ -41,6 +40,9 @@ private:
     Ui::Ko2 *ui;
     SaveFiles file;
     QStringList param;
+
+    TestKo2 t_ko2;
+    CalibrationKo2 c_ko2;
 };
 
 class StartTestKo2 : public StartMeasurment

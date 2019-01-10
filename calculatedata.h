@@ -55,7 +55,7 @@ public:
     QString getParameters() override;
     Mode_ID getModeID() override
     {
-        return Level_ID;
+        return Mode_ID::Level_ID;
     }
 };
 
@@ -75,7 +75,7 @@ public:
     QString getParameters() override;
     Mode_ID getModeID() override
     {
-        return TestKo1_ID;
+        return Mode_ID::TestKo1_ID;
     }
 };
 
@@ -96,7 +96,7 @@ public:
     QString getParameters() override;
     Mode_ID getModeID() override
     {
-        return TestKo2_ID;
+        return Mode_ID::TestKo2_ID;
     }
 };
 
@@ -122,7 +122,7 @@ public:
     QString getParameters() override;
     Mode_ID getModeID() override
     {
-        return TestKo3_ID;
+        return Mode_ID::TestKo3_ID;
     }
 };
 
@@ -142,7 +142,7 @@ public:
     QString getParameters() override;
     Mode_ID getModeID() override
     {
-        return TestKo4_ID;
+        return Mode_ID::TestKo4_ID;
     }
 };
 
@@ -184,7 +184,7 @@ public:
     QString getParameters() override;
     Mode_ID getModeID() override
     {
-        return TestKo5_ID;
+        return Mode_ID::TestKo5_ID;
     }
 };
 
@@ -206,7 +206,7 @@ public:
     QString getParameters() override;
     Mode_ID getModeID() override
     {
-        return TestAgr1_ID;
+        return Mode_ID::TestAgr1_ID;
     }
 };
 
@@ -234,7 +234,7 @@ public:
     QString getParameters() override;
     Mode_ID getModeID() override
     {
-        return TestAgr2_ID;
+        return Mode_ID::TestAgr2_ID;
     }
 };
 

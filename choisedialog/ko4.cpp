@@ -7,7 +7,7 @@ Ko4::Ko4(QWidget *parent) :
 {
     ui->setupUi(this);
     open();
-    connect(ui->page_2, &StartMeasurment::startMeasurment, this, &Ko4::measurement);
+    //connect(ui->page_2, &StartMeasurment::startMeasurment, this, &Ko4::measurement);
 }
 
 Ko4::~Ko4()
@@ -18,7 +18,7 @@ Ko4::~Ko4()
 
 void Ko4::on_startButton_clicked()
 {
-    emit measurement(ui->page_2);
+    //emit measurement(ui->page_2);
 }
 
 void Ko4::on_calibr1Button_clicked()

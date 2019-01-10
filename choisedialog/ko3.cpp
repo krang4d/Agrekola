@@ -8,7 +8,7 @@ Ko3::Ko3(QWidget *parent) :
 {
     ui->setupUi(this);
     open();
-    connect(ui->page_2, &StartMeasurment::startMeasurment, this, &Ko3::measurement);
+    //connect(ui->page_2, &StartMeasurment::startMeasurment, this, &Ko3::measurement);
 }
 
 Ko3::~Ko3()
@@ -77,6 +77,16 @@ void Ko3::calibrationData4Come(double t0)
 {
     //при разведении 25% контрольной нормальной плазмы
     calibrationDataCome(7, t0);
+}
+
+void Ko3::on_pushButton_test_clicked()
+{
+
+}
+
+void Ko3::on_pushButton_calib_clicked()
+{
+
 }
 
 StartMeasurment *StartCalibrationKo3::getStart()

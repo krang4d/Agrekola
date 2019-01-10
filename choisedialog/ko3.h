@@ -23,7 +23,8 @@ private:
     void save();
 
 private slots:
-    void on_calibr1Button_clicked();
+    void on_pushButton_test_clicked();
+    void on_pushButton_calib_clicked();
 
 public slots:
     void calibrationData1Come(double);

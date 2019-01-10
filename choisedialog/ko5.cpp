@@ -7,7 +7,7 @@ Ko5::Ko5(QWidget *parent) :
 {
     ui->setupUi(this);
     open();
-    connect(ui->page_2, &StartMeasurment::startMeasurment, this, &Ko5::measurement);
+    //connect(ui->page_2, &StartMeasurment::startMeasurment, this, &Ko5::measurement);
 }
 
 Ko5::~Ko5()
