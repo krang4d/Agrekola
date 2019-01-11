@@ -35,30 +35,31 @@ void Ko5::calibrationDataCome(int n, double deta)
 
 void Ko5::open()
 {
-    file.openKo5(param);
-    if( !param.isEmpty() && param.count() >= 11 ) {
-        //ui->label_calibrationData->setText(param.at(0));
-        ui->lineEdit_1->setText(param.at(1));
-        //ui->lineEdit_2->setText(param.at(2));
-        ui->lineEdit_3->setText(param.at(3));
-        ui->lineEdit_4->setText(param.at(4));
-        ui->lineEdit_5->setText(param.at(5));
-        ui->lineEdit_6->setText(param.at(6));
-    } else
-        param = QStringList({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}); //11 параметров
+/* Старый метод загрузки параметов из TXT*/
+//    file.openKo5(param);
+//    if( !param.isEmpty() && param.count() >= 11 ) {
+//        //ui->label_calibrationData->setText(param.at(0));
+//        ui->lineEdit_1->setText(param.at(1));
+//        //ui->lineEdit_2->setText(param.at(2));
+//        ui->lineEdit_3->setText(param.at(3));
+//        ui->lineEdit_4->setText(param.at(4));
+//        ui->lineEdit_5->setText(param.at(5));
+//        ui->lineEdit_6->setText(param.at(6));
+//    } else
+//        param = QStringList({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}); //11 параметров
 }
 
 void Ko5::save()
 {
     //param.clear();
     //param.replace(0, ui->label_calibrationData->text());
-    param.replace(1, ui->lineEdit_1->text());
-    //param.replace(2, ui->lineEdit_2->text());
-    param.replace(3, ui->lineEdit_3->text());
-    param.replace(4, ui->lineEdit_4->text());
-    param.replace(5, ui->lineEdit_5->text());
-    param.replace(6, ui->lineEdit_6->text());
-    file.saveKo5(param);
+//    param.replace(1, ui->lineEdit_1->text());
+//    //param.replace(2, ui->lineEdit_2->text());
+//    param.replace(3, ui->lineEdit_3->text());
+//    param.replace(4, ui->lineEdit_4->text());
+//    param.replace(5, ui->lineEdit_5->text());
+//    param.replace(6, ui->lineEdit_6->text());
+//    file.saveKo5(param);
 }
 
 void Ko5::calibrationData1Come(double t0)

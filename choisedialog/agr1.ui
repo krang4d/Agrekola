@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>559</width>
+    <width>437</width>
     <height>381</height>
    </rect>
   </property>
@@ -15,7 +15,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QLabel" name="label">
+    <widget class="QLabel" name="label_agr1">
      <property name="text">
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;Определение параметров агрегации&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
@@ -25,7 +25,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QGroupBox" name="groupBox_test1probe">
+    <widget class="QGroupBox" name="groupBox_testProbe">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
        <horstretch>0</horstretch>
@@ -43,14 +43,14 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_11">
       <item>
-       <widget class="QRadioButton" name="radioButton_test1single">
+       <widget class="QRadioButton" name="radioButton_testSingle">
         <property name="text">
          <string>Одиночные  пробы</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QRadioButton" name="radioButton_test1double">
+       <widget class="QRadioButton" name="radioButton_testDouble">
         <property name="text">
          <string>Парные пробы</string>
         </property>
@@ -62,34 +62,34 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QGroupBox" name="groupBox_test1chls">
+      <widget class="QGroupBox" name="groupBox_testChls">
        <property name="title">
         <string>Выбор каналов</string>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_9">
         <item>
-         <widget class="QCheckBox" name="checkBox_test1ch1">
+         <widget class="QCheckBox" name="checkBox_testCh1">
           <property name="text">
            <string>Канал 1</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QCheckBox" name="checkBox_test1ch2">
+         <widget class="QCheckBox" name="checkBox_testCh2">
           <property name="text">
            <string>Канал 2</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QCheckBox" name="checkBox_test1ch3">
+         <widget class="QCheckBox" name="checkBox_testCh3">
           <property name="text">
            <string>Канал 3</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QCheckBox" name="checkBox_test1ch4">
+         <widget class="QCheckBox" name="checkBox_testCh4">
           <property name="text">
            <string>Канал 4</string>
           </property>
@@ -99,34 +99,34 @@
       </widget>
      </item>
      <item>
-      <widget class="QGroupBox" name="groupBox_test1probs">
+      <widget class="QGroupBox" name="groupBox_testProbNum">
        <property name="title">
         <string>Номер пробы</string>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_10">
         <item>
-         <widget class="QLineEdit" name="lineEdit_test1ch1">
+         <widget class="QLineEdit" name="lineEdit_testCh1">
           <property name="enabled">
            <bool>false</bool>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="lineEdit_test1ch2">
+         <widget class="QLineEdit" name="lineEdit_testCh2">
           <property name="enabled">
            <bool>false</bool>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="lineEdit_test1ch3">
+         <widget class="QLineEdit" name="lineEdit_testCh3">
           <property name="enabled">
            <bool>false</bool>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="lineEdit_test1ch4">
+         <widget class="QLineEdit" name="lineEdit_testCh4">
           <property name="enabled">
            <bool>false</bool>
           </property>
@@ -138,7 +138,7 @@
     </layout>
    </item>
    <item>
-    <spacer name="verticalSpacer_test1">
+    <spacer name="verticalSpacer_test">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
      </property>
@@ -154,7 +154,7 @@
     </spacer>
    </item>
    <item>
-    <widget class="QPushButton" name="pushButton_test1">
+    <widget class="QPushButton" name="pushButton_test">
      <property name="text">
       <string>Продолжить</string>
      </property>

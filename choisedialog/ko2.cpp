@@ -56,7 +56,7 @@ void Ko2::open()
     QString str = QString("Номер серия реагентов %1\nСрок годности реагентов %2")
             .arg(c_ko2.getReagent_serial())
             .arg(c_ko2.getReagent_date().toString("dd.MM.yyyy"));
-    ui->label_test1calibr_data->setText(str);
+    ui->label_test1CalibString->setText(str);
     //connect(ui->page_1, SIGNAL(startMeasurment(StartMeasurment*)),this, SIGNAL(measurement(StartMeasurment*)));
 }
 
@@ -99,15 +99,27 @@ void Ko2::calibrationData4Come(double t0)
 void Ko2::on_pushButton_calib1_clicked()
 {
     c_ko2.setDate(QDate::currentDate());
-    c_ko2.setReagent_date(ui->dateEdit_reagent->date());
-    c_ko2.setReagent_serial(ui->lineEdit_test2reagentSerial->text());
+    qDebug() << "Дата " << c_ko2.getDate().toString("dd.MM.yyyy");
+    c_ko2.setReagent_date(ui->dateEdit_calibReagent->date());
+    qDebug() << "Дата реагентов " << c_ko2.getReagent_date().toString("dd.MM.yyyy");
+    c_ko2.setReagent_serial(ui->lineEdit_calibReagentSerial->text());
+    qDebug() << "Серия реагентов" << c_ko2.getReagent_serial();
     c_ko2.save();
     emit calibration(StartCalibrationKo2::getStart());
 }
 
 StartMeasurment *StartTestKo2::getStart()
 {
-
+    StartMeasurment *sm = new StartMeasurment(0);
+    sm->setChannels(true, true, true, true);
+    sm->setNum(1, "Измерение");
+    sm->setNum(2, "Измерение");
+    sm->setNum(3, "Измерение");
+    sm->setNum(4, "Измерение");
+    sm->setTime(10);
+    sm->setTimeIncube(1, 3);
+    //stKo2->cancel = false;
+    return sm;
 }
 
 StartMeasurment *StartCalibrationKo2::getStart()

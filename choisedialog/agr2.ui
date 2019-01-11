@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>439</width>
-    <height>540</height>
+    <width>412</width>
+    <height>467</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,7 +15,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
-    <widget class="QLabel" name="label">
+    <widget class="QLabel" name="label_agr2">
      <property name="text">
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;Определение активности фактора Виллебранда&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
@@ -29,13 +29,13 @@
      <property name="currentIndex">
       <number>0</number>
      </property>
-     <widget class="QWidget" name="page_1">
+     <widget class="QWidget" name="page_calib">
       <property name="geometry">
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>421</width>
-        <height>449</height>
+        <width>394</width>
+        <height>376</height>
        </rect>
       </property>
       <attribute name="label">
@@ -43,184 +43,170 @@
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
-        <widget class="QGroupBox" name="groupBox">
+        <widget class="QGroupBox" name="groupBox_calibChls">
          <property name="title">
-          <string>Параметры калибровки</string>
+          <string>Выбор рабочих каналов</string>
          </property>
-         <property name="alignment">
-          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-         </property>
-         <layout class="QFormLayout" name="formLayout">
-          <item row="1" column="0" colspan="2">
-           <spacer name="verticalSpacer">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item row="5" column="0">
-           <widget class="QLabel" name="label_2">
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <item>
+           <widget class="QCheckBox" name="checkBox_calibCh1">
             <property name="text">
-             <string>Номер серии реагентов</string>
-            </property>
-            <property name="buddy">
-             <cstring>lineEdit_1</cstring>
+             <string>1 Канал</string>
             </property>
            </widget>
           </item>
-          <item row="5" column="1">
-           <widget class="QLineEdit" name="lineEdit_1"/>
-          </item>
-          <item row="6" column="0">
-           <widget class="QLabel" name="label_3">
+          <item>
+           <widget class="QCheckBox" name="checkBox_calibCh2">
             <property name="text">
-             <string>Срок годности реагентов</string>
-            </property>
-            <property name="buddy">
-             <cstring>lineEdit_2</cstring>
+             <string>2 Канал</string>
             </property>
            </widget>
           </item>
-          <item row="6" column="1">
-           <widget class="QLineEdit" name="lineEdit_2"/>
-          </item>
-          <item row="7" column="0">
-           <widget class="QLabel" name="label_4">
+          <item>
+           <widget class="QCheckBox" name="checkBox_calibCh3">
             <property name="text">
-             <string>Номер серии контрольной
-плазмы</string>
-            </property>
-            <property name="buddy">
-             <cstring>lineEdit_5</cstring>
+             <string>3 Канал</string>
             </property>
            </widget>
           </item>
-          <item row="7" column="1">
-           <widget class="QLineEdit" name="lineEdit_3"/>
-          </item>
-          <item row="8" column="0">
-           <widget class="QLabel" name="label_5">
+          <item>
+           <widget class="QCheckBox" name="checkBox_calibCh4">
             <property name="text">
-             <string>Срок годности контрольной
-плазмы</string>
+             <string>4 Канал</string>
             </property>
-            <property name="buddy">
-             <cstring>lineEdit_4</cstring>
-            </property>
-           </widget>
-          </item>
-          <item row="8" column="1">
-           <widget class="QLineEdit" name="lineEdit_4"/>
-          </item>
-          <item row="9" column="0">
-           <widget class="QLabel" name="label_6">
-            <property name="text">
-             <string>Активность фактора Виллебранда
-контрольной плазмы (%)</string>
-            </property>
-            <property name="buddy">
-             <cstring>lineEdit_5</cstring>
-            </property>
-           </widget>
-          </item>
-          <item row="9" column="1">
-           <widget class="QLineEdit" name="lineEdit_5"/>
-          </item>
-          <item row="10" column="0">
-           <widget class="QLabel" name="label_7">
-            <property name="text">
-             <string>Время записи агрегатограмм (мин.)</string>
-            </property>
-            <property name="buddy">
-             <cstring>lineEdit_6</cstring>
-            </property>
-           </widget>
-          </item>
-          <item row="10" column="1">
-           <widget class="QLineEdit" name="lineEdit_6"/>
-          </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="label_incube">
-            <property name="text">
-             <string>Время инкубации I (сек.)</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="1">
-           <widget class="QLineEdit" name="lineEdit_incube">
-            <property name="inputMethodHints">
-             <set>Qt::ImhDigitsOnly</set>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="0">
-           <widget class="QLabel" name="label_incube_2">
-            <property name="text">
-             <string>Время инкубации II  (сек.)</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="1">
-           <widget class="QLineEdit" name="lineEdit_incube_2">
-            <property name="inputMethodHints">
-             <set>Qt::ImhDigitsOnly</set>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0" colspan="2">
-           <widget class="QGroupBox" name="groupBox_2">
-            <property name="title">
-             <string>Выбор рабочих каналов</string>
-            </property>
-            <layout class="QHBoxLayout" name="horizontalLayout">
-             <item>
-              <widget class="QCheckBox" name="checkBox_1">
-               <property name="text">
-                <string>1 Канал</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QCheckBox" name="checkBox_2">
-               <property name="text">
-                <string>2 Канал</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QCheckBox" name="checkBox_3">
-               <property name="text">
-                <string>3 Канал</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QCheckBox" name="checkBox_4">
-               <property name="text">
-                <string>4 Канал</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
            </widget>
           </item>
          </layout>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="calibrButton">
+        <layout class="QFormLayout" name="formLayout_calib">
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_calib_1">
+           <property name="text">
+            <string>Время инкубации I (сек.)</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="lineEdit_calibIncube1">
+           <property name="inputMethodHints">
+            <set>Qt::ImhDigitsOnly</set>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="label_calib_2">
+           <property name="text">
+            <string>Время инкубации II  (сек.)</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QLineEdit" name="lineEdit_calibIncube2">
+           <property name="inputMethodHints">
+            <set>Qt::ImhDigitsOnly</set>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="label_calib_3">
+           <property name="text">
+            <string>Номер серии реагентов</string>
+           </property>
+           <property name="buddy">
+            <cstring>lineEdit_calibReagentSerial</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QLineEdit" name="lineEdit_calibReagentSerial"/>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="label_calib_4">
+           <property name="text">
+            <string>Срок годности реагентов</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <widget class="QDateEdit" name="dateEdit_calibReagent"/>
+         </item>
+         <item row="4" column="0">
+          <widget class="QLabel" name="label_calib_5">
+           <property name="text">
+            <string>Номер серии контрольной
+плазмы</string>
+           </property>
+           <property name="buddy">
+            <cstring>lineEdit_calibVillebrand</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="1">
+          <widget class="QLineEdit" name="lineEdit_calibKPlazmaSerial"/>
+         </item>
+         <item row="5" column="0">
+          <widget class="QLabel" name="label_calib_6">
+           <property name="text">
+            <string>Срок годности контрольной
+плазмы</string>
+           </property>
+          </widget>
+         </item>
+         <item row="5" column="1">
+          <widget class="QDateEdit" name="dateEdit_calibKPlazma"/>
+         </item>
+         <item row="6" column="0">
+          <widget class="QLabel" name="label_calib_7">
+           <property name="text">
+            <string>Активность фактора Виллебранда
+контрольной плазмы (%)</string>
+           </property>
+           <property name="buddy">
+            <cstring>lineEdit_calibVillebrand</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="6" column="1">
+          <widget class="QLineEdit" name="lineEdit_calibVillebrand"/>
+         </item>
+         <item row="7" column="0">
+          <widget class="QLabel" name="label_calib_8">
+           <property name="text">
+            <string>Время записи агрегатограмм (мин.)</string>
+           </property>
+           <property name="buddy">
+            <cstring>lineEdit_calibWriteTime</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="7" column="1">
+          <widget class="QLineEdit" name="lineEdit_calibWriteTime"/>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>65</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_calib">
          <property name="text">
           <string>Продолжить</string>
          </property>
@@ -231,31 +217,161 @@
        </item>
       </layout>
      </widget>
-     <widget class="StartMeasurment" name="page_2">
+     <widget class="QWidget" name="page_test">
       <property name="geometry">
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>421</width>
-        <height>449</height>
+        <width>394</width>
+        <height>376</height>
        </rect>
       </property>
       <attribute name="label">
        <string>Тест</string>
       </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
+        <widget class="QGroupBox" name="groupBox_testProbe">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="title">
+          <string notr="true">Режим измерния</string>
+         </property>
+         <property name="flat">
+          <bool>false</bool>
+         </property>
+         <property name="checkable">
+          <bool>false</bool>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_11">
+          <item>
+           <widget class="QRadioButton" name="radioButton_testSingle">
+            <property name="text">
+             <string>Одиночные  пробы</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="radioButton_testDouble">
+            <property name="text">
+             <string>Парные пробы</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_test">
+         <item>
+          <widget class="QGroupBox" name="groupBox_testChls">
+           <property name="title">
+            <string>Выбор каналов</string>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_9">
+            <item>
+             <widget class="QCheckBox" name="checkBox_testCh1">
+              <property name="text">
+               <string>Канал 1</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="checkBox_testCh2">
+              <property name="text">
+               <string>Канал 2</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="checkBox_testCh3">
+              <property name="text">
+               <string>Канал 3</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="checkBox_testCh4">
+              <property name="text">
+               <string>Канал 4</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="groupBox_testProbNum">
+           <property name="title">
+            <string>Номер пробы</string>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_10">
+            <item>
+             <widget class="QLineEdit" name="lineEdit_testCh1">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="lineEdit_testCh2">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="lineEdit_testCh3">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="lineEdit_testCh4">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_test">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>108</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_test">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="text">
+          <string>Продолжить</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </widget>
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>StartMeasurment</class>
-   <extends>QWidget</extends>
-   <header location="global">startmeasurment.h</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>

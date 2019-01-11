@@ -7,14 +7,14 @@ Ko1::Ko1(QWidget *parent) :
 {
     ui->setupUi(this);
     qDebug() << "Current path: " << QDir::currentPath() << t_ko1.getK1();
-    ui->checkBox_ch1->setChecked(t_ko1.getK1());
-    ui->lineEdit_ch1->setText(t_ko1.getNum1());
-    ui->checkBox_ch2->setChecked(t_ko1.getK2());
-    ui->lineEdit_ch2->setText(t_ko1.getNum2());
-    ui->checkBox_ch3->setChecked(t_ko1.getK3());
-    ui->lineEdit_ch3->setText(t_ko1.getNum3());
-    ui->checkBox_ch4->setChecked(t_ko1.getK4());
-    ui->lineEdit_ch4->setText(t_ko1.getNum4());
+//    ui->checkBox_ch1->setChecked(t_ko1.getK1());
+//    ui->lineEdit_ch1->setText(t_ko1.getNum1());
+//    ui->checkBox_ch2->setChecked(t_ko1.getK2());
+//    ui->lineEdit_ch2->setText(t_ko1.getNum2());
+//    ui->checkBox_ch3->setChecked(t_ko1.getK3());
+//    ui->lineEdit_ch3->setText(t_ko1.getNum3());
+//    ui->checkBox_ch4->setChecked(t_ko1.getK4());
+//    ui->lineEdit_ch4->setText(t_ko1.getNum4());
 
     qDebug() << "RadioButton" << t_ko1.getSingle();
     t_ko1.getSingle() ? on_radioButton_single_toggled(true) : on_radioButton_double_toggled(true);
@@ -40,17 +40,17 @@ Ko1::~Ko1()
 
 void Ko1::on_pushButton_clicked()
 {
-    t_ko1.setK1(ui->checkBox_ch1->isChecked()); // int(ui->checkBox_ch1->isChecked()));
-    t_ko1.setNum1(ui->lineEdit_ch1->text());
-    t_ko1.setK2(ui->checkBox_ch2->isChecked());
-    t_ko1.setNum2(ui->lineEdit_ch2->text());
-    t_ko1.setK3(ui->checkBox_ch3->isChecked());
-    t_ko1.setNum3(ui->lineEdit_ch3->text());
-    t_ko1.setK4(ui->checkBox_ch4->isChecked());
-    t_ko1.setNum4(ui->lineEdit_ch4->text());
+//    t_ko1.setK1(ui->checkBox_ch1->isChecked()); // int(ui->checkBox_ch1->isChecked()));
+//    t_ko1.setNum1(ui->lineEdit_ch1->text());
+//    t_ko1.setK2(ui->checkBox_ch2->isChecked());
+//    t_ko1.setNum2(ui->lineEdit_ch2->text());
+//    t_ko1.setK3(ui->checkBox_ch3->isChecked());
+//    t_ko1.setNum3(ui->lineEdit_ch3->text());
+//    t_ko1.setK4(ui->checkBox_ch4->isChecked());
+//    t_ko1.setNum4(ui->lineEdit_ch4->text());
 
     qDebug() << "RadioButton" << t_ko1.getSingle();
-    t_ko1.setSingle(ui->radioButton_single->isChecked());
+    t_ko1.setSingle(ui->radioButton_testSingle->isChecked());
     t_ko1.save();
     qDebug() << t_ko1.getK1();
     qDebug() << "Current path: " << QDir::currentPath();
@@ -59,34 +59,32 @@ void Ko1::on_pushButton_clicked()
 
 void Ko1::on_checkBox_ch1_stateChanged(int arg1)
 {
-    ui->lineEdit_ch1->setEnabled(arg1);
+    ui->lineEdit_testCh1->setEnabled(arg1);
 }
 
 void Ko1::on_checkBox_ch2_stateChanged(int arg1)
 {
-    ui->lineEdit_ch2->setEnabled(arg1);
+    ui->lineEdit_testCh2->setEnabled(arg1);
 }
 
 void Ko1::on_checkBox_ch3_stateChanged(int arg1)
 {
-    ui->lineEdit_ch3->setEnabled(arg1);
+    ui->lineEdit_testCh3->setEnabled(arg1);
 }
 
 void Ko1::on_checkBox_ch4_stateChanged(int arg1)
 {
-    ui->lineEdit_ch4->setEnabled(arg1);
+    ui->lineEdit_testCh4->setEnabled(arg1);
 }
 
 void Ko1::on_radioButton_single_toggled(bool checked)
 {
-    if(checked)
-        ui->stackedWidget->setCurrentIndex(0);
+
 }
 
 void Ko1::on_radioButton_double_toggled(bool checked)
 {
-    if(checked)
-        ui->stackedWidget->setCurrentIndex(1);
+
 }
 
 StartMeasurment *StartTestKo1::getStart()

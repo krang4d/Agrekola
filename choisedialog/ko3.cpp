@@ -17,11 +17,6 @@ Ko3::~Ko3()
     delete ui;
 }
 
-void Ko3::on_calibr1Button_clicked()
-{
-    emit calibration(StartCalibrationKo3::getStart());
-}
-
 void Ko3::calibrationDataCome(int n, double deta)
 {
     //один параметр контрольной нормальной плазмы
@@ -35,24 +30,27 @@ void Ko3::calibrationDataCome(int n, double deta)
 
 void Ko3::open()
 {
-    file.openKo3(param);
-    if( !param.isEmpty() && param.count() >= 8 ) {
-        //ui->label_calibrationData->setText(param.at(0));
-        ui->lineEdit_1->setText(param.at(1));
-        ui->lineEdit_2->setText(param.at(2));
-        ui->lineEdit_3->setText(param.at(3));
-    } else
-        param = QStringList({0, 0, 0, 0, 0, 0, 0, 0}); //8 параметров
+/* Старый метод загрузки параметов из TXT*/
+//    file.openKo3(param);
+//    if( !param.isEmpty() && param.count() >= 8 ) {
+//        //ui->label_calibrationData->setText(param.at(0));
+//        ui->lineEdit_1->setText(param.at(1));
+//        ui->lineEdit_2->setText(param.at(2));
+//        ui->lineEdit_3->setText(param.at(3));
+//    } else
+//        param = QStringList({0, 0, 0, 0, 0, 0, 0, 0}); //8 параметров
+/* Новый метод загрузки параметров из XML */
+
 }
 
 void Ko3::save()
 {
     //param.clear();
     //param.replace(0, ui->label_calibrationData->text());
-    param.replace(1, ui->lineEdit_1->text());
-    param.replace(2, ui->lineEdit_2->text());
-    param.replace(3, ui->lineEdit_3->text());
-    file.saveKo3(param);
+//    param.replace(1, ui->lineEdit_1->text());
+//    param.replace(2, ui->lineEdit_2->text());
+//    param.replace(3, ui->lineEdit_3->text());
+//    file.saveKo3(param);
 }
 
 void Ko3::calibrationData1Come(double t0)
@@ -81,12 +79,12 @@ void Ko3::calibrationData4Come(double t0)
 
 void Ko3::on_pushButton_test_clicked()
 {
-
+    emit(StartTestKo3::getStart());
 }
 
 void Ko3::on_pushButton_calib_clicked()
 {
-
+    emit calibration(StartCalibrationKo3::getStart());
 }
 
 StartMeasurment *StartCalibrationKo3::getStart()
@@ -97,6 +95,19 @@ StartMeasurment *StartCalibrationKo3::getStart()
     sm->setNum(2, "Калибровка");
     sm->setNum(3, "Калибровка");
     sm->setNum(4, "Калибровка");
+    sm->setTime(10);
+    sm->setTimeIncube(1, 3);
+    return sm;
+}
+
+StartMeasurment *StartTestKo3::getStart()
+{
+    StartMeasurment *sm = new StartMeasurment(0);
+    sm->setChannels(true, true, true, true);
+    sm->setNum(1, "Измерение");
+    sm->setNum(2, "Измерение");
+    sm->setNum(3, "Измерение");
+    sm->setNum(4, "Измерение");
     sm->setTime(10);
     sm->setTimeIncube(1, 3);
     return sm;
