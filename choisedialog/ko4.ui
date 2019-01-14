@@ -383,8 +383,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>353</width>
-        <height>416</height>
+        <width>336</width>
+        <height>423</height>
        </rect>
       </property>
       <attribute name="label">
@@ -408,7 +408,7 @@
          <property name="checkable">
           <bool>false</bool>
          </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_4">
+         <layout class="QVBoxLayout" name="verticalLayout_5">
           <item>
            <widget class="QRadioButton" name="radioButton_test2Single">
             <property name="text">

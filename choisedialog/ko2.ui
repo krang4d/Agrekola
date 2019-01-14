@@ -27,7 +27,7 @@
    <item>
     <widget class="QToolBox" name="toolBox">
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="page_calib">
       <property name="geometry">
@@ -205,7 +205,7 @@
          <property name="checkable">
           <bool>false</bool>
          </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <layout class="QVBoxLayout" name="verticalLayout_10">
           <item>
            <widget class="QRadioButton" name="radioButton_testSingle">
             <property name="text">

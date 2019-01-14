@@ -34,8 +34,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>670</width>
-        <height>341</height>
+        <width>367</width>
+        <height>293</height>
        </rect>
       </property>
       <attribute name="label">
@@ -221,14 +221,7 @@
          <property name="checkable">
           <bool>false</bool>
          </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_2">
-          <item>
-           <widget class="QRadioButton" name="radioButton_testDouble">
-            <property name="text">
-             <string>Парные пробы</string>
-            </property>
-           </widget>
-          </item>
+         <layout class="QVBoxLayout" name="verticalLayout_6">
           <item>
            <widget class="QRadioButton" name="radioButton_testSingle">
             <property name="text">
@@ -236,6 +229,13 @@
             </property>
             <property name="checked">
              <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="radioButton_testDouble">
+            <property name="text">
+             <string>Парные пробы</string>
             </property>
            </widget>
           </item>
@@ -345,9 +345,6 @@
     </widget>
    </item>
   </layout>
-  <zorder>label</zorder>
-  <zorder>toolBox</zorder>
-  <zorder>pushButton_test</zorder>
  </widget>
  <resources/>
  <connections/>
