@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>548</width>
+    <width>355</width>
     <height>478</height>
    </rect>
   </property>
@@ -34,7 +34,7 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>530</width>
+        <width>337</width>
         <height>387</height>
        </rect>
       </property>
@@ -230,7 +230,7 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>530</width>
+        <width>337</width>
         <height>387</height>
        </rect>
       </property>
@@ -274,8 +274,8 @@
         </widget>
        </item>
        <item>
-        <layout class="QFormLayout" name="formLayout_test">
-         <item row="0" column="0">
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <item>
           <widget class="QGroupBox" name="groupBox_testChls">
            <property name="title">
             <string>Выбор каналов</string>
@@ -312,7 +312,7 @@
            </layout>
           </widget>
          </item>
-         <item row="0" column="1">
+         <item>
           <widget class="QGroupBox" name="groupBox_testProbs">
            <property name="title">
             <string>Номер пробы</string>
@@ -372,13 +372,10 @@
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
-         <property name="sizeType">
-          <enum>QSizePolicy::MinimumExpanding</enum>
-         </property>
          <property name="sizeHint" stdset="0">
           <size>
-           <width>419</width>
-           <height>55</height>
+           <width>20</width>
+           <height>40</height>
           </size>
          </property>
         </spacer>

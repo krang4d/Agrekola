@@ -9,28 +9,36 @@ Ko1::Ko1(QWidget *parent) :
     qDebug() << "Current path: " << QDir::currentPath() << t_ko1.getK1();
     if( t_ko1.getSingle() ) {
         ui->radioButton_testSingle->setChecked(true);
-        on_radioButton_double_toggled(true);
+        on_radioButton_single_toggled(true);
     }
     else {
         ui->radioButton_testDouble->setChecked(true);
-        on_radioButton_single_toggled(true);
+        on_radioButton_double_toggled(true);
     }
 
-    if( t_ko1.getK1() ) ui->checkBox_testCh1->setChecked(true);
+    if( t_ko1.getK1() ) {
+        ui->checkBox_testCh1->setChecked(true);
+        ui->lineEdit_testCh1->setText(t_ko1.getNum1());
+    }
     else ui->checkBox_testCh1->setChecked(false);
-    ui->lineEdit_testCh1->setText(t_ko1.getNum1());
 
-    if( t_ko1.getK2() ) ui->checkBox_testCh2->setChecked(true);
+    if( t_ko1.getK2() ) {
+        ui->checkBox_testCh2->setChecked(true);
+        ui->lineEdit_testCh2->setText(t_ko1.getNum2());
+    }
     else ui->checkBox_testCh2->setChecked(false);
-    ui->lineEdit_testCh2->setText(t_ko1.getNum2());
 
-    if( t_ko1.getK3() ) ui->checkBox_testCh3->setChecked(true);
+    if( t_ko1.getK3() ) {
+        ui->checkBox_testCh3->setChecked(true);
+        ui->lineEdit_testCh3->setText(t_ko1.getNum3());
+    }
     else ui->checkBox_testCh3->setChecked(false);
-    ui->lineEdit_testCh3->setText(t_ko1.getNum3());
 
-    if( t_ko1.getK4() ) ui->checkBox_testCh4->setChecked(true);
+    if( t_ko1.getK4() ) {
+        ui->checkBox_testCh4->setChecked(true);
+        ui->lineEdit_testCh4->setText(t_ko1.getNum4());
+    }
     else ui->checkBox_testCh4->setChecked(false);
-    ui->lineEdit_testCh4->setText(t_ko1.getNum4());
 
     ui->doubleSpinBox_testIncubeTime->setValue(c_ko1.getIncube_time());
     ui->doubleSpinBox_testWriteTime->setValue(c_ko1.getWrite_time());
