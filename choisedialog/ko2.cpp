@@ -93,7 +93,6 @@ void Ko2::open()
         ui->checkBox_test2Ch2->setChecked(false);
     }
 
-
     if( t_ko2.getK3() ) {
         ui->checkBox_test1Ch3->setChecked(true);
         ui->lineEdit_test1Ch3->setText(t_ko2.getNum3());
@@ -105,7 +104,6 @@ void Ko2::open()
         ui->checkBox_test2Ch3->setChecked(false);
     }
 
-
     if( t_ko2.getK4() ) {
         ui->checkBox_test1Ch4->setChecked(true);
         ui->lineEdit_test1Ch4->setText(t_ko2.getNum4());
@@ -116,7 +114,6 @@ void Ko2::open()
         ui->checkBox_test1Ch4->setChecked(false);
         ui->checkBox_test2Ch4->setChecked(false);
     }
-
 
     ui->doubleSpinBox_test2IncubeTime->setValue(c_ko2.getIncube_time());
     ui->doubleSpinBox_test2WriteTime->setValue(c_ko2.getWrite_time());
@@ -258,6 +255,17 @@ void Ko2::on_pushButton_test1_clicked()
     //emit measurement(StartTestKo2::getStart());
 }
 
+void Ko2::on_pushButton_calib_clicked()
+{
+    c_ko2.setDate(QDate::currentDate());
+    c_ko2.setK_plazma_date(ui->dateEdit_calibPlazma->date());
+    c_ko2.setK_plazma_serial(ui->lineEdit_calibKPlazmaSerial->text());
+    c_ko2.setReagent_date(ui->dateEdit_calibReagent->date());
+    c_ko2.setReagent_serial(ui->lineEdit_calibReagentSerial->text());
+    c_ko2.setIncube_time(ui->doubleSpinBox_calibIncube->value());
+    c_ko2.save();
+}
+
 void Ko2::on_pushButton_test2_clicked()
 {
     t_ko2.setK1(ui->checkBox_test2Ch1->isChecked());
@@ -307,15 +315,4 @@ StartMeasurment *StartCalibrationKo2::getStart()
     sm->setTimeIncube(1, 3);
     //stKo2->cancel = false;
     return sm;
-}
-
-void Ko2::on_pushButton_calib_clicked()
-{
-    c_ko2.setDate(QDate::currentDate());
-    c_ko2.setK_plazma_date(ui->dateEdit_calibPlazma->date());
-    c_ko2.setK_plazma_serial(ui->lineEdit_calibKPlazmaSerial->text());
-    c_ko2.setReagent_date(ui->dateEdit_calibReagent->date());
-    c_ko2.setReagent_serial(ui->lineEdit_calibReagentSerial->text());
-    c_ko2.setIncube_time(ui->doubleSpinBox_calibIncube->value());
-    c_ko2.save();
 }

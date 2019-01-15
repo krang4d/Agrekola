@@ -9,11 +9,9 @@ Ko1::Ko1(QWidget *parent) :
     qDebug() << "Current path: " << QDir::currentPath() << t_ko1.getK1();
     if( t_ko1.getSingle() ) {
         ui->radioButton_testSingle->setChecked(true);
-        on_radioButton_single_toggled(true);
     }
     else {
         ui->radioButton_testDouble->setChecked(true);
-        on_radioButton_double_toggled(true);
     }
 
     if( t_ko1.getK1() ) {
@@ -53,34 +51,64 @@ Ko1::~Ko1()
     delete ui;
 }
 
-void Ko1::on_radioButton_single_toggled(bool checked)
-{
-
-}
-
-void Ko1::on_radioButton_double_toggled(bool checked)
-{
-
-}
-
 void Ko1::on_checkBox_testCh1_toggled(bool checked)
 {
     ui->lineEdit_testCh1->setEnabled(checked);
+    if(ui->radioButton_testDouble->isChecked()) {
+        ui->checkBox_testCh2->setChecked(checked);
+    }
 }
 
 void Ko1::on_checkBox_testCh2_toggled(bool checked)
 {
-    ui->lineEdit_testCh2->setEnabled(checked);
+    if(ui->radioButton_testSingle->isChecked())
+        ui->lineEdit_testCh2->setEnabled(checked);
 }
 
 void Ko1::on_checkBox_testCh3_toggled(bool checked)
 {
     ui->lineEdit_testCh3->setEnabled(checked);
+    if(ui->radioButton_testDouble->isChecked()) {
+        ui->checkBox_testCh4->setChecked(checked);
+    }
 }
 
 void Ko1::on_checkBox_testCh4_toggled(bool checked)
 {
-    ui->lineEdit_testCh4->setEnabled(checked);
+    if(ui->radioButton_testSingle->isChecked())
+        ui->lineEdit_testCh4->setEnabled(checked);
+}
+
+void Ko1::on_radioButton_testSingle_toggled(bool checked)
+{
+    if(ui->radioButton_testDouble->isChecked()) {
+        ui->checkBox_testCh2->setEnabled(false);
+        ui->checkBox_testCh4->setEnabled(false);
+        ui->lineEdit_testCh2->setEnabled(false);
+        ui->lineEdit_testCh4->setEnabled(false);
+        ui->lineEdit_testCh2->setText(ui->lineEdit_testCh1->text());
+        ui->lineEdit_testCh4->setText(ui->lineEdit_testCh3->text());
+    }
+    if(ui->radioButton_testSingle->isChecked()) {
+        ui->checkBox_testCh2->setEnabled(true);
+        ui->checkBox_testCh4->setEnabled(true);
+        ui->lineEdit_testCh2->setEnabled(ui->checkBox_testCh2->isChecked());
+        ui->lineEdit_testCh4->setEnabled(ui->checkBox_testCh4->isChecked());
+    }
+}
+
+void Ko1::on_lineEdit_testCh1_textChanged(const QString &arg1)
+{
+    if(ui->radioButton_testDouble->isChecked()) {
+        ui->lineEdit_testCh2->setText(arg1);
+    }
+}
+
+void Ko1::on_lineEdit_testCh3_textChanged(const QString &arg1)
+{
+    if(ui->radioButton_testDouble->isChecked()) {
+        ui->lineEdit_testCh4->setText(arg1);
+    }
 }
 
 void Ko1::on_pushButton_test_clicked()
