@@ -29,33 +29,23 @@ private slots:
     void on_radioButton_test1Single_toggled(bool checked);
     void on_radioButton_test2Single_toggled(bool checked);
 
-
-
-    void on_radioButton_test1Double_toggled(bool checked);
-
-    void on_radioButton_test2Double_toggled(bool checked);
-
     void on_checkBox_test1Ch1_toggled(bool checked);
-
     void on_checkBox_test1Ch2_toggled(bool checked);
-
     void on_checkBox_test1Ch3_toggled(bool checked);
-
     void on_checkBox_test1Ch4_toggled(bool checked);
-
     void on_checkBox_test2Ch1_toggled(bool checked);
-
     void on_checkBox_test2Ch2_toggled(bool checked);
-
     void on_checkBox_test2Ch3_toggled(bool checked);
-
     void on_checkBox_test2Ch4_toggled(bool checked);
 
     void on_pushButton_test1_clicked();
-
     void on_pushButton_test2_clicked();
-
     void on_pushButton_calib_clicked();
+
+    void on_lineEdit_test1Ch1_textChanged(const QString &arg1);
+    void on_lineEdit_test1Ch3_textChanged(const QString &arg1);
+    void on_lineEdit_test2Ch1_textChanged(const QString &arg1);
+    void on_lineEdit_test2Ch3_textChanged(const QString &arg1);
 
 public slots:
     void calibrationData1Come(double);

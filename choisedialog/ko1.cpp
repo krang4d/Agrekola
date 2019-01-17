@@ -54,9 +54,8 @@ Ko1::~Ko1()
 void Ko1::on_checkBox_testCh1_toggled(bool checked)
 {
     ui->lineEdit_testCh1->setEnabled(checked);
-    if(ui->radioButton_testDouble->isChecked()) {
+    if(ui->radioButton_testDouble->isChecked())
         ui->checkBox_testCh2->setChecked(checked);
-    }
 }
 
 void Ko1::on_checkBox_testCh2_toggled(bool checked)
@@ -68,9 +67,8 @@ void Ko1::on_checkBox_testCh2_toggled(bool checked)
 void Ko1::on_checkBox_testCh3_toggled(bool checked)
 {
     ui->lineEdit_testCh3->setEnabled(checked);
-    if(ui->radioButton_testDouble->isChecked()) {
+    if(ui->radioButton_testDouble->isChecked())
         ui->checkBox_testCh4->setChecked(checked);
-    }
 }
 
 void Ko1::on_checkBox_testCh4_toggled(bool checked)
@@ -99,16 +97,14 @@ void Ko1::on_radioButton_testSingle_toggled(bool checked)
 
 void Ko1::on_lineEdit_testCh1_textChanged(const QString &arg1)
 {
-    if(ui->radioButton_testDouble->isChecked()) {
+    if(ui->radioButton_testDouble->isChecked())
         ui->lineEdit_testCh2->setText(arg1);
-    }
 }
 
 void Ko1::on_lineEdit_testCh3_textChanged(const QString &arg1)
 {
-    if(ui->radioButton_testDouble->isChecked()) {
+    if(ui->radioButton_testDouble->isChecked())
         ui->lineEdit_testCh4->setText(arg1);
-    }
 }
 
 void Ko1::on_pushButton_test_clicked()
