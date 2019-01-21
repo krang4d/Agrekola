@@ -40,7 +40,55 @@ void Ko3::open()
 //    } else
 //        param = QStringList({0, 0, 0, 0, 0, 0, 0, 0}); //8 параметров
 /* Новый метод загрузки параметров из XML */
+    QString str;
+        str = QString("Дата проведения %1\n").arg(c_ko3.getDate().toString("dd.MM.yyyy"))
+            + QString("Номер серия реагентов %1\n").arg(c_ko3.getReagent_serial())
+            + QString("Срок годности реагентов %1\n").arg(c_ko3.getReagent_date().toString("dd.MM.yyyy"));
+    ui->label_testCalibString->setText(str);
 
+    if( t_ko3.getSingle() ) {
+        ui->radioButton_testSingle->setChecked(true);
+    }
+    else {
+        ui->radioButton_testDouble->setChecked(true);
+    }
+
+    if( t_ko3.getK1() ) {
+        ui->checkBox_testCh1->setChecked(true);
+        ui->lineEdit_testCh1->setText(t_ko3.getNum1());
+    }
+    else {
+        ui->checkBox_testCh1->setChecked(false);
+    }
+
+    if( t_ko3.getK2() ) {
+        ui->checkBox_testCh2->setChecked(true);
+        ui->lineEdit_testCh2->setText(t_ko3.getNum2());
+    }
+    else {
+        ui->checkBox_testCh2->setChecked(false);
+    }
+
+    if( t_ko3.getK3() ) {
+        ui->checkBox_testCh3->setChecked(true);
+        ui->lineEdit_testCh3->setText(t_ko3.getNum3());
+
+    }
+    else {
+        ui->checkBox_testCh3->setChecked(false);
+    }
+
+    if( t_ko3.getK4() ) {
+        ui->checkBox_testCh4->setChecked(true);
+        ui->lineEdit_testCh4->setText(t_ko3.getNum4());
+
+    }
+    else {
+        ui->checkBox_testCh4->setChecked(false);
+    }
+
+    ui->doubleSpinBox_calibIncube->setValue(c_ko3.getIncube_time());
+    ui->doubleSpinBox_calibWriteTime->setValue(c_ko3.getWrite_time());
 }
 
 void Ko3::save()
@@ -79,12 +127,96 @@ void Ko3::calibrationData4Come(double t0)
 
 void Ko3::on_pushButton_test_clicked()
 {
-    emit(StartTestKo3::getStart());
+    t_ko3.setK1(ui->checkBox_testCh1->isChecked());
+    t_ko3.setK2(ui->checkBox_testCh2->isChecked());
+    t_ko3.setK3(ui->checkBox_testCh3->isChecked());
+    t_ko3.setK4(ui->checkBox_testCh4->isChecked());
+
+    t_ko3.setNum1(ui->lineEdit_testCh1->text());
+    t_ko3.setNum2(ui->lineEdit_testCh2->text());
+    t_ko3.setNum3(ui->lineEdit_testCh3->text());
+    t_ko3.setNum4(ui->lineEdit_testCh4->text());
+
+    t_ko3.setSingle(ui->radioButton_testSingle->isChecked());
+
+    t_ko3.save();
+    c_ko3.save();
+    //emit measurement(StartTestKo3::getStart());
 }
 
 void Ko3::on_pushButton_calib_clicked()
 {
-    emit calibration(StartCalibrationKo3::getStart());
+    c_ko3.setDate(QDate::currentDate());
+    c_ko3.setReagent_date(ui->dateEdit_calibReagent->date());
+    c_ko3.setReagent_serial(ui->lineEdit_calibReagentSerial->text());
+    c_ko3.setK_plazma_date(ui->dateEdit_calibPlazma->date());
+    c_ko3.setK_plazma_serial(ui->lineEdit_calibKPlazmaSerial->text());
+    c_ko3.setFibrinogen_k_plazma(ui->lineEdit_calibFibrinogenKPlazma->text().toDouble());
+    c_ko3.setIncube_time(ui->doubleSpinBox_calibIncube->value());
+    c_ko3.setWrite_time(ui->doubleSpinBox_calibWriteTime->value());
+    c_ko3.save();
+    //emit calibration(StartCalibrationKo3::getStart());
+}
+
+void Ko3::on_radioButton_testSingle_toggled(bool checked)
+{
+    if(ui->radioButton_testDouble->isChecked()) {
+        ui->checkBox_testCh2->setEnabled(false);
+        ui->checkBox_testCh4->setEnabled(false);
+        ui->lineEdit_testCh2->setEnabled(false);
+        ui->lineEdit_testCh4->setEnabled(false);
+        ui->lineEdit_testCh2->setText(ui->lineEdit_testCh1->text());
+        ui->lineEdit_testCh4->setText(ui->lineEdit_testCh3->text());
+
+        if(ui->checkBox_testCh1->isChecked()) ui->checkBox_testCh2->setChecked(true);
+        else ui->checkBox_testCh2->setChecked(false);
+        if(ui->checkBox_testCh3->isChecked()) ui->checkBox_testCh4->setChecked(true);
+        else ui->checkBox_testCh4->setChecked(false);
+    }
+    if(ui->radioButton_testSingle->isChecked()) {
+        ui->checkBox_testCh2->setEnabled(true);
+        ui->checkBox_testCh4->setEnabled(true);
+        ui->lineEdit_testCh2->setEnabled(ui->checkBox_testCh2->isChecked());
+        ui->lineEdit_testCh4->setEnabled(ui->checkBox_testCh4->isChecked());
+    }
+}
+
+void Ko3::on_checkBox_testCh1_toggled(bool checked)
+{
+    ui->lineEdit_testCh1->setEnabled(checked);
+    if( ui->radioButton_testDouble->isChecked())
+        ui->checkBox_testCh2->setChecked(checked);
+}
+
+void Ko3::on_checkBox_testCh2_toggled(bool checked)
+{
+    if(ui->radioButton_testSingle->isChecked())
+            ui->lineEdit_testCh2->setEnabled(checked);
+}
+
+void Ko3::on_checkBox_testCh3_toggled(bool checked)
+{
+    ui->lineEdit_testCh3->setEnabled(checked);
+    if(ui->radioButton_testDouble->isChecked())
+        ui->checkBox_testCh4->setChecked(checked);
+}
+
+void Ko3::on_checkBox_testCh4_toggled(bool checked)
+{
+    if( ui->radioButton_testSingle->isChecked() )
+        ui->lineEdit_testCh4->setEnabled(checked);
+}
+
+void Ko3::on_lineEdit_testCh1_textChanged(const QString &arg1)
+{
+    if(ui->radioButton_testDouble->isChecked())
+        ui->lineEdit_testCh2->setText(arg1);
+}
+
+void Ko3::on_lineEdit_testCh3_textChanged(const QString &arg1)
+{
+    if(ui->radioButton_testDouble->isChecked())
+        ui->lineEdit_testCh4->setText(arg1);
 }
 
 StartMeasurment *StartCalibrationKo3::getStart()

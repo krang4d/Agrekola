@@ -38,18 +38,17 @@ void Ko2::open()
 //    } else
 //        param = QStringList({0, 0, 0, 0, 0, 0, 0, 0, 0, 0}); //10 параметров
 /* Новый метод загрузки параметров из XML */
-
-    QString str1 = QString("Дата проведения %1\n").arg(c_ko2.getDate().toString("dd.MM.yyyy"));
-    QString str2 = QString("Номер серия реагентов %1\nСрок годности реагентов %2\nНомер серия контрольной плазмы %3\nСрок годности контрольной плазмы %4\nАЧТВ 1го канала %5\nАЧТВ 2го канала %6\nАЧТВ 3го канала %7\nАЧТВ 4го канала %8")
-            .arg(c_ko2.getReagent_serial())
-            .arg(c_ko2.getReagent_date().toString("dd.MM.yyyy"))
-            .arg(c_ko2.getK_plazma_serial())
-            .arg(c_ko2.getK_plazma_date().toString("dd.MM.yyyy"))
-            .arg(c_ko2.getA4tv_kp1())
-            .arg(c_ko2.getA4tv_kp2())
-            .arg(c_ko2.getA4tv_kp3())
-            .arg(c_ko2.getA4tv_kp4());
-    ui->label_test1CalibString->setText(str1 + str2);
+    QString str;
+        str = QString("Дата проведения %1\n").arg(c_ko2.getDate().toString("dd.MM.yyyy"))
+            + QString("Номер серия реагентов %1\n").arg(c_ko2.getReagent_serial())
+            + QString("Срок годности реагентов %1\n").arg(c_ko2.getReagent_date().toString("dd.MM.yyyy"))
+            + QString("Номер серия контрольной плазмы %1\n").arg(c_ko2.getK_plazma_serial())
+            + QString("Срок годности контрольной плазмы %1\n").arg(c_ko2.getK_plazma_date().toString("dd.MM.yyyy"))
+            + QString("АЧТВ 1го канала %1\n").arg(c_ko2.getA4tv_kp1())
+            + QString("АЧТВ 2го канала %1\n").arg(c_ko2.getA4tv_kp2())
+            + QString("АЧТВ 3го канала %1\n").arg(c_ko2.getA4tv_kp3())
+            + QString("АЧТВ 4го канала %8").arg(c_ko2.getA4tv_kp4());
+    ui->label_test1CalibString->setText(str);
     //connect(ui->page_1, SIGNAL(startMeasurment(StartMeasurment*)),this, SIGNAL(measurement(StartMeasurment*)));
 
     if( t_ko2.getSingle() ) {
@@ -69,7 +68,7 @@ void Ko2::open()
     }
     else {
         ui->checkBox_test1Ch1->setChecked(false);
-        ui->checkBox_test2Ch1->setEnabled(false);
+        ui->checkBox_test2Ch1->setChecked(false);
     }
 
     if( t_ko2.getK2() ) {
@@ -107,6 +106,7 @@ void Ko2::open()
 
     ui->doubleSpinBox_calibIncube->setValue(c_ko2.getIncube_time());
     ui->doubleSpinBox_test2IncubeTime->setValue(c_ko2.getIncube_time());
+    ui->doubleSpinBox_testWriteTime->setValue(c_ko2.getWrite_time());
     ui->doubleSpinBox_test2WriteTime->setValue(c_ko2.getWrite_time());
 }
 
@@ -159,18 +159,6 @@ void Ko2::calibrationData4Come(double t0)
 {
     c_ko2.setA4tv_kp4(t0);
     calibrationDataCome(4, t0);
-}
-
-void Ko2::on_pushButton_calib1_clicked()
-{
-    c_ko2.setDate(QDate::currentDate());
-    qDebug() << "Дата " << c_ko2.getDate().toString("dd.MM.yyyy");
-    c_ko2.setReagent_date(ui->dateEdit_calibReagent->date());
-    qDebug() << "Дата реагентов " << c_ko2.getReagent_date().toString("dd.MM.yyyy");
-    c_ko2.setReagent_serial(ui->lineEdit_calibReagentSerial->text());
-    qDebug() << "Серия реагентов" << c_ko2.getReagent_serial();
-    c_ko2.save();
-    emit calibration(StartCalibrationKo2::getStart());
 }
 
 void Ko2::on_checkBox_test1Ch1_toggled(bool checked)
@@ -234,6 +222,11 @@ void Ko2::on_radioButton_test1Single_toggled(bool checked)
         ui->lineEdit_test1Ch4->setEnabled(false);
         ui->lineEdit_test1Ch2->setText(ui->lineEdit_test1Ch1->text());
         ui->lineEdit_test1Ch4->setText(ui->lineEdit_test1Ch3->text());
+
+        if(ui->checkBox_test1Ch1->isChecked()) ui->checkBox_test1Ch2->setChecked(true);
+        else ui->checkBox_test1Ch2->setChecked(false);
+        if(ui->checkBox_test1Ch3->isChecked()) ui->checkBox_test1Ch4->setChecked(true);
+        else ui->checkBox_test1Ch4->setChecked(false);
     }
     if(ui->radioButton_test1Single->isChecked()) {
         ui->checkBox_test1Ch2->setEnabled(true);
@@ -252,6 +245,11 @@ void Ko2::on_radioButton_test2Single_toggled(bool checked)
         ui->lineEdit_test2Ch4->setEnabled(false);
         ui->lineEdit_test2Ch2->setText(ui->lineEdit_test2Ch1->text());
         ui->lineEdit_test2Ch4->setText(ui->lineEdit_test2Ch3->text());
+
+        if(ui->checkBox_test2Ch1->isChecked()) ui->checkBox_test2Ch2->setChecked(true);
+        else ui->checkBox_test2Ch2->setChecked(false);
+        if(ui->checkBox_test2Ch3->isChecked()) ui->checkBox_test2Ch4->setChecked(true);
+        else ui->checkBox_test2Ch4->setChecked(false);
     }
     if(ui->radioButton_test2Single->isChecked()) {
         ui->checkBox_test2Ch2->setEnabled(true);
@@ -337,6 +335,7 @@ void Ko2::on_pushButton_calib_clicked()
     c_ko2.setReagent_serial(ui->lineEdit_calibReagentSerial->text());
     c_ko2.setIncube_time(ui->doubleSpinBox_calibIncube->value());
     c_ko2.save();
+    emit calibration(StartCalibrationKo2::getStart());
 }
 
 StartMeasurment *StartTestKo2::getStart()

@@ -87,12 +87,12 @@
             <string>Номер серии реагентов</string>
            </property>
            <property name="buddy">
-            <cstring>lineEdit_reagentSerial</cstring>
+            <cstring>lineEdit_calibReagentSerial</cstring>
            </property>
           </widget>
          </item>
          <item row="0" column="1">
-          <widget class="QLineEdit" name="lineEdit_reagentSerial"/>
+          <widget class="QLineEdit" name="lineEdit_calibReagentSerial"/>
          </item>
          <item row="1" column="0">
           <widget class="QLabel" name="label_calib_2">
@@ -111,12 +111,12 @@
 плазмы</string>
            </property>
            <property name="buddy">
-            <cstring>lineEdit_KPlazmaSerial</cstring>
+            <cstring>lineEdit_calibKPlazmaSerial</cstring>
            </property>
           </widget>
          </item>
          <item row="2" column="1">
-          <widget class="QLineEdit" name="lineEdit_KPlazmaSerial">
+          <widget class="QLineEdit" name="lineEdit_calibKPlazmaSerial">
            <property name="enabled">
             <bool>true</bool>
            </property>
@@ -203,7 +203,7 @@
         </spacer>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_calib1">
+        <widget class="QPushButton" name="pushButton_calib">
          <property name="text">
           <string>Продолжить</string>
          </property>
@@ -228,7 +228,7 @@
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_4">
        <item>
-        <widget class="QGroupBox" name="groupBox_test1probe">
+        <widget class="QGroupBox" name="groupBox_test1Probe">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -246,14 +246,14 @@
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_11">
           <item>
-           <widget class="QRadioButton" name="radioButton_test1single">
+           <widget class="QRadioButton" name="radioButton_test1Single">
             <property name="text">
              <string>Одиночные  пробы</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QRadioButton" name="radioButton_test1double">
+           <widget class="QRadioButton" name="radioButton_test1Double">
             <property name="text">
              <string>Парные пробы</string>
             </property>
@@ -341,13 +341,13 @@
         </layout>
        </item>
        <item>
-        <widget class="QGroupBox" name="groupBox_test1calib">
+        <widget class="QGroupBox" name="groupBox_test1Calib">
          <property name="title">
           <string>Данные последней калибровки</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_2">
           <item>
-           <widget class="QLabel" name="label_test1calibr_data">
+           <widget class="QLabel" name="label_test1CalibrString">
             <property name="text">
              <string>Нет проводилась</string>
             </property>

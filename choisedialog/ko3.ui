@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>338</width>
-    <height>384</height>
+    <width>361</width>
+    <height>420</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -34,8 +34,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>320</width>
-        <height>293</height>
+        <width>343</width>
+        <height>329</height>
        </rect>
       </property>
       <attribute name="label">
@@ -88,28 +88,18 @@
            </property>
           </widget>
          </item>
-         <item row="0" column="1">
-          <widget class="QLineEdit" name="lineEdit_calibIncube">
-           <property name="inputMethodHints">
-            <set>Qt::ImhDigitsOnly</set>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-          </widget>
-         </item>
          <item row="1" column="0">
           <widget class="QLabel" name="label_calib_1">
            <property name="text">
             <string>Номер серии реагентов</string>
            </property>
            <property name="buddy">
-            <cstring>lineEdit_calibSerial</cstring>
+            <cstring>lineEdit_calibReagentSerial</cstring>
            </property>
           </widget>
          </item>
          <item row="1" column="1">
-          <widget class="QLineEdit" name="lineEdit_calibSerial"/>
+          <widget class="QLineEdit" name="lineEdit_calibReagentSerial"/>
          </item>
          <item row="2" column="0">
           <widget class="QLabel" name="label_calib_2">
@@ -119,7 +109,7 @@
           </widget>
          </item>
          <item row="2" column="1">
-          <widget class="QDateEdit" name="dateEdit_reagent"/>
+          <widget class="QDateEdit" name="dateEdit_calibReagent"/>
          </item>
          <item row="3" column="0">
           <widget class="QLabel" name="label_calib_4">
@@ -128,7 +118,7 @@
 плазмы</string>
            </property>
            <property name="buddy">
-            <cstring>lineEdit_calibSerial</cstring>
+            <cstring>lineEdit_calibReagentSerial</cstring>
            </property>
           </widget>
          </item>
@@ -144,7 +134,7 @@
           </widget>
          </item>
          <item row="4" column="1">
-          <widget class="QDateEdit" name="dateEdit_plazma"/>
+          <widget class="QDateEdit" name="dateEdit_calibPlazma"/>
          </item>
          <item row="5" column="0">
           <widget class="QLabel" name="label_calib_3">
@@ -163,6 +153,19 @@
             <bool>true</bool>
            </property>
           </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QDoubleSpinBox" name="doubleSpinBox_calibIncube"/>
+         </item>
+         <item row="6" column="0">
+          <widget class="QLabel" name="label_2">
+           <property name="text">
+            <string>Время записи (с)</string>
+           </property>
+          </widget>
+         </item>
+         <item row="6" column="1">
+          <widget class="QDoubleSpinBox" name="doubleSpinBox_calibWriteTime"/>
          </item>
         </layout>
        </item>
@@ -196,8 +199,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>254</width>
-        <height>293</height>
+        <width>343</width>
+        <height>329</height>
        </rect>
       </property>
       <attribute name="label">
@@ -251,28 +254,28 @@
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_4">
             <item>
-             <widget class="QCheckBox" name="checkBox_ch1_4">
+             <widget class="QCheckBox" name="checkBox_testCh1">
               <property name="text">
                <string>Канал 1</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QCheckBox" name="checkBox_ch2_4">
+             <widget class="QCheckBox" name="checkBox_testCh2">
               <property name="text">
                <string>Канал 2</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QCheckBox" name="checkBox_ch3_4">
+             <widget class="QCheckBox" name="checkBox_testCh3">
               <property name="text">
                <string>Канал 3</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QCheckBox" name="checkBox_ch4_4">
+             <widget class="QCheckBox" name="checkBox_testCh4">
               <property name="text">
                <string>Канал 4</string>
               </property>
@@ -288,28 +291,28 @@
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_5">
             <item>
-             <widget class="QLineEdit" name="lineEdit_ch1_2">
+             <widget class="QLineEdit" name="lineEdit_testCh1">
               <property name="enabled">
                <bool>false</bool>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="lineEdit_ch2_2">
+             <widget class="QLineEdit" name="lineEdit_testCh2">
               <property name="enabled">
                <bool>false</bool>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="lineEdit_ch3_2">
+             <widget class="QLineEdit" name="lineEdit_testCh3">
               <property name="enabled">
                <bool>false</bool>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="lineEdit_ch4_2">
+             <widget class="QLineEdit" name="lineEdit_testCh4">
               <property name="enabled">
                <bool>false</bool>
               </property>
@@ -319,6 +322,22 @@
           </widget>
          </item>
         </layout>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="groupBox_testCalib">
+         <property name="title">
+          <string>Последняя калибровка</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_11">
+          <item>
+           <widget class="QLabel" name="label_testCalibString">
+            <property name="text">
+             <string>Нет проводилась</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
        </item>
        <item>
         <spacer name="verticalSpacer">

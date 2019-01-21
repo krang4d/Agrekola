@@ -26,6 +26,16 @@ private slots:
     void on_pushButton_test_clicked();
     void on_pushButton_calib_clicked();
 
+    void on_radioButton_testSingle_toggled(bool checked);
+
+    void on_checkBox_testCh1_toggled(bool checked);
+    void on_checkBox_testCh2_toggled(bool checked);
+    void on_checkBox_testCh3_toggled(bool checked);
+    void on_checkBox_testCh4_toggled(bool checked);
+
+    void on_lineEdit_testCh1_textChanged(const QString &arg1);
+    void on_lineEdit_testCh3_textChanged(const QString &arg1);
+
 public slots:
     void calibrationData1Come(double);
     void calibrationData2Come(double);
@@ -40,6 +50,9 @@ private:
     Ui::Ko3 *ui;
     SaveFiles file;
     QStringList param;
+
+    TestKo3 t_ko3;
+    CalibrationKo3 c_ko3;
 };
 
 class StartTestKo3 : public StartMeasurment

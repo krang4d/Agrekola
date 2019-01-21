@@ -86,6 +86,11 @@ void Ko1::on_radioButton_testSingle_toggled(bool checked)
         ui->lineEdit_testCh4->setEnabled(false);
         ui->lineEdit_testCh2->setText(ui->lineEdit_testCh1->text());
         ui->lineEdit_testCh4->setText(ui->lineEdit_testCh3->text());
+
+        if(ui->checkBox_testCh1->isChecked()) ui->checkBox_testCh2->setChecked(true);
+        else ui->checkBox_testCh2->setChecked(false);
+        if(ui->checkBox_testCh3->isChecked()) ui->checkBox_testCh4->setChecked(true);
+        else ui->checkBox_testCh4->setChecked(false);
     }
     if(ui->radioButton_testSingle->isChecked()) {
         ui->checkBox_testCh2->setEnabled(true);

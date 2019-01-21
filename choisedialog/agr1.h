@@ -24,7 +24,17 @@ private:
     void save();
 
 private slots:
-    void on_kolibrButton_clicked();
+    void on_pushButton_test_clicked();
+
+    void on_radioButton_testSingle_toggled(bool checked);
+
+    void on_checkBox_testCh1_toggled(bool checked);
+    void on_checkBox_testCh2_toggled(bool checked);
+    void on_checkBox_testCh3_toggled(bool checked);
+    void on_checkBox_testCh4_toggled(bool checked);
+
+    void on_lineEdit_testCh1_textChanged(const QString &arg1);
+    void on_lineEdit_testCh3_textChanged(const QString &arg1);
 
 public slots:
     void calibrationData1Come(double);
@@ -40,6 +50,9 @@ private:
     Ui::Agr1 *ui;
     SaveFiles file;
     QStringList param;
+
+    TestAgr1 t_agr1;
+    CalibrationAgr1 c_agr1;
 };
 
 class StartCalibrationAgr1 : public StartMeasurment
