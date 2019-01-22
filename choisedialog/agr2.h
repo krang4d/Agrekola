@@ -44,6 +44,14 @@ private:
     QStringList param;
 };
 
+class StartTestAgr2 : public StartMeasurment
+{
+    Q_OBJECT
+public:
+    StartTestAgr2() = delete;
+    static StartMeasurment* getStart();
+};
+
 class StartCalibrationAgr2 : public StartMeasurment
 {
     Q_OBJECT

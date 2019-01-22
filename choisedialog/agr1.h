@@ -4,7 +4,6 @@
 #include <QWidget>
 #include <QStringList>
 #include "startmeasurment.h"
-#include "savefiles.h"
 
 namespace Ui {
 class Agr1;
@@ -48,9 +47,6 @@ signals:
 
 private:
     Ui::Agr1 *ui;
-    SaveFiles file;
-    QStringList param;
-
     TestAgr1 t_agr1;
     CalibrationAgr1 c_agr1;
 };

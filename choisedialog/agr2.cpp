@@ -25,7 +25,6 @@ void Agr2::on_calibrButton_clicked()
     //emit calibration(ui->page_2);
 }
 
-
 void Agr2::calibrationDataCome(int n, double deta)
 {
     //один параметр контрольной нормальной плазмы
@@ -83,6 +82,19 @@ void Agr2::calibrationData3Come(double t0)
 void Agr2::calibrationData4Come(double t0)
 {
     calibrationDataCome(10, t0);
+}
+
+StartMeasurment *StartTestAgr2::getStart()
+{
+    StartMeasurment *sm = new StartMeasurment(0);
+    sm->setChannels(true, true, true, true);
+    sm->setNum(1, "Измерение");
+    sm->setNum(2, "Измерение");
+    sm->setNum(3, "Измерение");
+    sm->setNum(4, "Измерение");
+    sm->setTime(10);
+    sm->setTimeIncube(1, 3);
+    return sm;
 }
 
 StartMeasurment *StartCalibrationAgr2::getStart()

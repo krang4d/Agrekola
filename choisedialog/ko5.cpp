@@ -19,17 +19,17 @@ Ko5::~Ko5()
 void Ko5::on_pushButton_calib_clicked()
 {
     //file.saveKo5(param);
-    t_ko5.setK1(ui->checkBox_testCh1->isChecked());
-    t_ko5.setK2(ui->checkBox_testCh2->isChecked());
-    t_ko5.setK3(ui->checkBox_testCh3->isChecked());
-    t_ko5.setK4(ui->checkBox_testCh4->isChecked());
+//    t_ko5.setK1(ui->checkBox_testCh1->isChecked());
+//    t_ko5.setK2(ui->checkBox_testCh2->isChecked());
+//    t_ko5.setK3(ui->checkBox_testCh3->isChecked());
+//    t_ko5.setK4(ui->checkBox_testCh4->isChecked());
 
-    t_ko5.setNum1(ui->lineEdit_testCh1->text());
-    t_ko5.setNum2(ui->lineEdit_testCh2->text());
-    t_ko5.setNum3(ui->lineEdit_testCh3->text());
-    t_ko5.setNum4(ui->lineEdit_testCh4->text());
+//    t_ko5.setNum1(ui->lineEdit_testCh1->text());
+//    t_ko5.setNum2(ui->lineEdit_testCh2->text());
+//    t_ko5.setNum3(ui->lineEdit_testCh3->text());
+//    t_ko5.setNum4(ui->lineEdit_testCh4->text());
 
-    t_ko5.setSingle(ui->radioButton_testSingle->isChecked());
+//    t_ko5.setSingle(ui->radioButton_testSingle->isChecked());
 
     c_ko5.setDate(QDate::currentDate());
     c_ko5.setReagent_date(ui->dateEdit_calibReagent->date());
@@ -46,25 +46,20 @@ void Ko5::on_pushButton_calib_clicked()
 
 void Ko5::on_pushButton_test_clicked()
 {
-    if(ui->radioButton_testDouble->isChecked()) {
-        ui->checkBox_testCh2->setEnabled(false);
-        ui->checkBox_testCh4->setEnabled(false);
-        ui->lineEdit_testCh2->setEnabled(false);
-        ui->lineEdit_testCh4->setEnabled(false);
-        ui->lineEdit_testCh2->setText(ui->lineEdit_testCh1->text());
-        ui->lineEdit_testCh4->setText(ui->lineEdit_testCh3->text());
+    t_ko5.setK1(ui->checkBox_testCh1->isChecked());
+    t_ko5.setK2(ui->checkBox_testCh2->isChecked());
+    t_ko5.setK3(ui->checkBox_testCh3->isChecked());
+    t_ko5.setK4(ui->checkBox_testCh4->isChecked());
 
-        if(ui->checkBox_testCh1->isChecked()) ui->checkBox_testCh2->setChecked(true);
-        else ui->checkBox_testCh2->setChecked(false);
-        if(ui->checkBox_testCh3->isChecked()) ui->checkBox_testCh4->setChecked(true);
-        else ui->checkBox_testCh4->setChecked(false);
-    }
-    if(ui->radioButton_testSingle->isChecked()) {
-        ui->checkBox_testCh2->setEnabled(true);
-        ui->checkBox_testCh4->setEnabled(true);
-        ui->lineEdit_testCh2->setEnabled(ui->checkBox_testCh2->isChecked());
-        ui->lineEdit_testCh4->setEnabled(ui->checkBox_testCh4->isChecked());
-    }
+    t_ko5.setNum1(ui->lineEdit_testCh1->text());
+    t_ko5.setNum2(ui->lineEdit_testCh2->text());
+    t_ko5.setNum3(ui->lineEdit_testCh3->text());
+    t_ko5.setNum4(ui->lineEdit_testCh4->text());
+
+    t_ko5.setSingle(ui->radioButton_testSingle->isChecked());
+
+    t_ko5.save();
+    c_ko5.save();
 }
 
 void Ko5::calibrationDataCome(int n, double deta)

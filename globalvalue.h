@@ -23,4 +23,5 @@ enum Calibr_ID { CalibrAgr1_ID  = 0,
                  CalibrKo5_ID
                };
 
+
 #endif // GLOBALVALUE_H

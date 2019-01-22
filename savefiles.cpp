@@ -7,7 +7,7 @@ QMutex mut;
 SaveFiles::SaveFiles(QObject *parent) : QObject(parent)
 {
     setupFiles();
-    qDebug() << "setting: " << settingDir.path() << "data: " << dataDir.path() << "user" << OnlyOneFile::Instance().file_user.fileName();
+    qDebug() << "SaveFiles::SaveFiles() setting path:" << settingDir.path() << "data path: " << dataDir.path() << "user path" << OnlyOneFile::Instance().file_user.fileName();
 }
 
 SaveFiles::~SaveFiles()

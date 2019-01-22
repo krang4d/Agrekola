@@ -18,7 +18,24 @@ Agr1::~Agr1()
 
 void Agr1::on_pushButton_test_clicked()
 {
+    t_agr1.setK1(ui->checkBox_testCh1->isChecked());
+    t_agr1.setK2(ui->checkBox_testCh2->isChecked());
+    t_agr1.setK3(ui->checkBox_testCh3->isChecked());
+    t_agr1.setK4(ui->checkBox_testCh4->isChecked());
 
+    t_agr1.setNum1(ui->lineEdit_testCh1->text());
+    t_agr1.setNum2(ui->lineEdit_testCh2->text());
+    t_agr1.setNum3(ui->lineEdit_testCh3->text());
+    t_agr1.setNum4(ui->lineEdit_testCh4->text());
+
+    t_agr1.setSingle(ui->radioButton_testSingle->isChecked());
+
+    c_agr1.setIncube_time(ui->doubleSpinBox_calibIncubeTime_1->value());
+    c_agr1.setIncube_time_2(ui->doubleSpinBox_calibIncubeTime_2->value());
+    c_agr1.setWrite_time(ui->doubleSpinBox_calibWriteTime->value());
+
+    t_agr1.save();
+    t_agr1.save();
 }
 
 void Agr1::open()
@@ -89,12 +106,12 @@ void Agr1::save()
 void Agr1::calibrationDataCome(int n, double deta)
 {
     //один параметр контрольной нормальной плазмы
-    QDateTime dt = QDateTime::currentDateTime();
-    //ui->label_calibrationData->setText(dt.toString("dd.MM.yyyy ") + dt.toString("hh:mm:ss"));
-    if(param.count() <= n)
-        param.push_back(QString("%1").arg(deta));
-    else param.replace(n, QString("%1").arg(deta));
-    file.saveAgr1(param);
+//    QDateTime dt = QDateTime::currentDateTime();
+//    //ui->label_calibrationData->setText(dt.toString("dd.MM.yyyy ") + dt.toString("hh:mm:ss"));
+//    if(param.count() <= n)
+//        param.push_back(QString("%1").arg(deta));
+//    else param.replace(n, QString("%1").arg(deta));
+//    file.saveAgr1(param);
 }
 
 void Agr1::calibrationData1Come(double t0)
@@ -119,37 +136,63 @@ void Agr1::calibrationData4Come(double t0)
 
 void Agr1::on_radioButton_testSingle_toggled(bool checked)
 {
+    if(ui->radioButton_testDouble->isChecked()) {
+        ui->checkBox_testCh2->setEnabled(false);
+        ui->checkBox_testCh4->setEnabled(false);
+        ui->lineEdit_testCh2->setEnabled(false);
+        ui->lineEdit_testCh4->setEnabled(false);
+        ui->lineEdit_testCh2->setText(ui->lineEdit_testCh1->text());
+        ui->lineEdit_testCh4->setText(ui->lineEdit_testCh3->text());
 
+        if(ui->checkBox_testCh1->isChecked()) ui->checkBox_testCh2->setChecked(true);
+        else ui->checkBox_testCh2->setChecked(false);
+        if(ui->checkBox_testCh3->isChecked()) ui->checkBox_testCh4->setChecked(true);
+        else ui->checkBox_testCh4->setChecked(false);
+    }
+    if(ui->radioButton_testSingle->isChecked()) {
+        ui->checkBox_testCh2->setEnabled(true);
+        ui->checkBox_testCh4->setEnabled(true);
+        ui->lineEdit_testCh2->setEnabled(ui->checkBox_testCh2->isChecked());
+        ui->lineEdit_testCh4->setEnabled(ui->checkBox_testCh4->isChecked());
+    }
 }
 
 void Agr1::on_checkBox_testCh1_toggled(bool checked)
 {
-
+    ui->lineEdit_testCh1->setEnabled(checked);
+    if( ui->radioButton_testDouble->isChecked())
+        ui->checkBox_testCh2->setChecked(checked);
 }
 
 void Agr1::on_checkBox_testCh2_toggled(bool checked)
 {
-
+    if(ui->radioButton_testSingle->isChecked())
+            ui->lineEdit_testCh2->setEnabled(checked);
 }
 
 void Agr1::on_checkBox_testCh3_toggled(bool checked)
 {
-
+    ui->lineEdit_testCh3->setEnabled(checked);
+    if(ui->radioButton_testDouble->isChecked())
+        ui->checkBox_testCh4->setChecked(checked);
 }
 
 void Agr1::on_checkBox_testCh4_toggled(bool checked)
 {
-
+    if( ui->radioButton_testSingle->isChecked() )
+        ui->lineEdit_testCh4->setEnabled(checked);
 }
 
 void Agr1::on_lineEdit_testCh1_textChanged(const QString &arg1)
 {
-
+    if(ui->radioButton_testDouble->isChecked())
+        ui->lineEdit_testCh2->setText(arg1);
 }
 
 void Agr1::on_lineEdit_testCh3_textChanged(const QString &arg1)
 {
-
+    if(ui->radioButton_testDouble->isChecked())
+        ui->lineEdit_testCh4->setText(arg1);
 }
 
 StartMeasurment *StartCalibrationAgr1::getStart()
