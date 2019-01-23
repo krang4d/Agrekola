@@ -22,10 +22,10 @@ void Ko3::calibrationDataCome(int n, double deta)
     //один параметр контрольной нормальной плазмы
     QDateTime dt = QDateTime::currentDateTime();
     //ui->label_calibrationData->setText(dt.toString("dd.MM.yyyy ") + dt.toString("hh:mm:ss"));
-    if(param.count() <= n)
-        param.push_back(QString("%1").arg(deta));
-    else param.replace(n, QString("%1").arg(deta));
-    file.saveKo2(param);
+//    if(param.count() <= n)
+//        param.push_back(QString("%1").arg(deta));
+//    else param.replace(n, QString("%1").arg(deta));
+//    file.saveKo2(param);
 }
 
 void Ko3::open()

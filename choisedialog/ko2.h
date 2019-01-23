@@ -58,8 +58,8 @@ signals:
 
 private:
     Ui::Ko2 *ui;
-    SaveFiles file;
-    QStringList param;
+//    SaveFiles file;
+//    QStringList param;
 
     TestKo2 t_ko2;
     CalibrationKo2 c_ko2;

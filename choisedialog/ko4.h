@@ -55,8 +55,8 @@ signals:
 
 private:
     Ui::Ko4 *ui;
-    SaveFiles file;
-    QStringList param;
+//    SaveFiles file;
+//    QStringList param;
 
     TestKo4 t_ko4;
     CalibrationKo4 c_ko4;

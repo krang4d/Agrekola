@@ -20,13 +20,19 @@ public:
     explicit Agr2(QWidget *parent = 0);
     ~Agr2();
 
-private:
-    void calibrationDataCome(int n, double deta);
-    void open();
-    void save();
-
 private slots:
-    void on_calibrButton_clicked();
+    void on_pushButton_calib_clicked();
+    void on_pushButton_test_clicked();
+
+    void on_checkBox_testCh1_toggled(bool checked);
+    void on_checkBox_testCh2_toggled(bool checked);
+    void on_checkBox_testCh3_toggled(bool checked);
+    void on_checkBox_testCh4_toggled(bool checked);
+
+    void on_lineEdit_testCh1_textChanged(const QString &arg1);
+    void on_lineEdit_testCh3_textChanged(const QString &arg1);
+
+    void on_radioButton_testSingle_toggled(bool checked);
 
 public slots:
     void calibrationData1Come(double);
@@ -34,14 +40,22 @@ public slots:
     void calibrationData3Come(double);
     void calibrationData4Come(double);
 
+private:
+    void calibrationDataCome(int n, double deta);
+    void open();
+    void save();
+
 signals:
     void measurement(StartMeasurment *);
     void calibration(StartMeasurment *);
 
 private:
     Ui::Agr2 *ui;
-    SaveFiles file;
-    QStringList param;
+//    SaveFiles file;
+//    QStringList param;
+
+    TestAgr2 t_agr2;
+    CalibrationAgr2 c_agr2;
 };
 
 class StartTestAgr2 : public StartMeasurment

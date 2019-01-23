@@ -128,6 +128,7 @@ void Ko1::on_pushButton_test_clicked()
 
     c_ko1.setIncube_time(ui->doubleSpinBox_testIncubeTime->value());
     c_ko1.setWrite_time(ui->doubleSpinBox_testWriteTime->value());
+    c_ko1.setDate(QDate::currentDate());
 
     t_ko1.save();
     c_ko1.save();

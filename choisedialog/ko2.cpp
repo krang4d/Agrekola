@@ -106,7 +106,7 @@ void Ko2::open()
 
     ui->doubleSpinBox_calibIncube->setValue(c_ko2.getIncube_time());
     ui->doubleSpinBox_test2IncubeTime->setValue(c_ko2.getIncube_time());
-    ui->doubleSpinBox_testWriteTime->setValue(c_ko2.getWrite_time());
+    ui->doubleSpinBox_calibWriteTime->setValue(c_ko2.getWrite_time());
     ui->doubleSpinBox_test2WriteTime->setValue(c_ko2.getWrite_time());
 }
 
@@ -329,11 +329,12 @@ void Ko2::on_pushButton_test2_clicked()
 void Ko2::on_pushButton_calib_clicked()
 {
     c_ko2.setDate(QDate::currentDate());
-    c_ko2.setK_plazma_date(ui->dateEdit_calibPlazma->date());
-    c_ko2.setK_plazma_serial(ui->lineEdit_calibKPlazmaSerial->text());
     c_ko2.setReagent_date(ui->dateEdit_calibReagent->date());
     c_ko2.setReagent_serial(ui->lineEdit_calibReagentSerial->text());
+    c_ko2.setK_plazma_date(ui->dateEdit_calibPlazma->date());
+    c_ko2.setK_plazma_serial(ui->lineEdit_calibKPlazmaSerial->text());
     c_ko2.setIncube_time(ui->doubleSpinBox_calibIncube->value());
+    c_ko2.setWrite_time(ui->doubleSpinBox_calibWriteTime->value());
     c_ko2.save();
     emit calibration(StartCalibrationKo2::getStart());
 }

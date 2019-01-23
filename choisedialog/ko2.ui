@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>351</width>
+    <width>478</width>
     <height>557</height>
    </rect>
   </property>
@@ -25,20 +25,12 @@
     </widget>
    </item>
    <item>
-    <widget class="QToolBox" name="toolBox">
+    <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
       <number>0</number>
      </property>
-     <widget class="QWidget" name="page_calib">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>333</width>
-        <height>439</height>
-       </rect>
-      </property>
-      <attribute name="label">
+     <widget class="QWidget" name="tabWidgetPage1">
+      <attribute name="title">
        <string>Калибровка</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout">
@@ -96,9 +88,6 @@
            <property name="text">
             <string>Номер серии реагентов</string>
            </property>
-           <property name="buddy">
-            <cstring>lineEdit_calibReagentSerial</cstring>
-           </property>
           </widget>
          </item>
          <item row="1" column="1">
@@ -118,9 +107,6 @@
           <widget class="QLabel" name="label_calib3">
            <property name="text">
             <string>Номер серии контрольной плазмы</string>
-           </property>
-           <property name="buddy">
-            <cstring>lineEdit_calibKPlazmaSerial</cstring>
            </property>
           </widget>
          </item>
@@ -149,7 +135,7 @@
           </widget>
          </item>
          <item row="5" column="1">
-          <widget class="QDoubleSpinBox" name="doubleSpinBox_testWriteTime"/>
+          <widget class="QDoubleSpinBox" name="doubleSpinBox_calibWriteTime"/>
          </item>
         </layout>
        </item>
@@ -175,17 +161,9 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="page_test1">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>333</width>
-        <height>439</height>
-       </rect>
-      </property>
-      <attribute name="label">
-       <string>Тест с калибровкой</string>
+     <widget class="QWidget" name="tabWidgetPage2">
+      <attribute name="title">
+       <string>Тест</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_4">
        <item>
@@ -342,16 +320,8 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="page_test2">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>333</width>
-        <height>439</height>
-       </rect>
-      </property>
-      <attribute name="label">
+     <widget class="QWidget" name="tabWidgetPage3">
+      <attribute name="title">
        <string>Тест без калибровки</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_7">
@@ -376,7 +346,7 @@
           <item>
            <widget class="QRadioButton" name="radioButton_test2Single">
             <property name="text">
-             <string>Одиночные  пробы</string>
+             <string>Одинарные пробы</string>
             </property>
            </widget>
           </item>
@@ -474,9 +444,6 @@
           <widget class="QLabel" name="label_test2_0">
            <property name="text">
             <string>Номер серии реагентов</string>
-           </property>
-           <property name="buddy">
-            <cstring>lineEdit_calibReagentSerial</cstring>
            </property>
           </widget>
          </item>

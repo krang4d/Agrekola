@@ -25,20 +25,12 @@
     </widget>
    </item>
    <item>
-    <widget class="QToolBox" name="toolBox_ko4">
+    <widget class="QTabWidget" name="tabWidget_ko4">
      <property name="currentIndex">
       <number>0</number>
      </property>
-     <widget class="QWidget" name="page_calib">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>353</width>
-        <height>435</height>
-       </rect>
-      </property>
-      <attribute name="label">
+     <widget class="QWidget" name="tabWidget_ko4Page1">
+      <attribute name="title">
        <string>Калибровка</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout">
@@ -86,9 +78,6 @@
            <property name="text">
             <string>Номер серии реагентов</string>
            </property>
-           <property name="buddy">
-            <cstring>lineEdit_calibReagentSerial</cstring>
-           </property>
           </widget>
          </item>
          <item row="0" column="1">
@@ -109,9 +98,6 @@
            <property name="text">
             <string>Номер серии контрольной
 плазмы</string>
-           </property>
-           <property name="buddy">
-            <cstring>lineEdit_calibKPlazmaSerial</cstring>
            </property>
           </widget>
          </item>
@@ -214,17 +200,9 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="page_test1">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>353</width>
-        <height>435</height>
-       </rect>
-      </property>
-      <attribute name="label">
-       <string>Тест с калибровкой</string>
+     <widget class="QWidget" name="tabWidget_ko4Page2">
+      <attribute name="title">
+       <string>Тест</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_4">
        <item>
@@ -248,7 +226,7 @@
           <item>
            <widget class="QRadioButton" name="radioButton_test1Single">
             <property name="text">
-             <string>Одиночные  пробы</string>
+             <string>Одинарные пробы</string>
             </property>
            </widget>
           </item>
@@ -378,16 +356,8 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="page_test2">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>353</width>
-        <height>435</height>
-       </rect>
-      </property>
-      <attribute name="label">
+     <widget class="QWidget" name="tabWidget_ko4Page3">
+      <attribute name="title">
        <string>Тест без калибровки</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_9">
@@ -514,9 +484,6 @@
            <property name="text">
             <string>Время инкубации (сек.)</string>
            </property>
-           <property name="buddy">
-            <cstring>doubleSpinBox_test2IncubeTime</cstring>
-           </property>
           </widget>
          </item>
          <item row="0" column="1">
@@ -526,9 +493,6 @@
           <widget class="QLabel" name="label_test2_3">
            <property name="text">
             <string>Номер серии реагентов</string>
-           </property>
-           <property name="buddy">
-            <cstring>lineEdit_test2ReagentSerial</cstring>
            </property>
           </widget>
          </item>
@@ -546,9 +510,6 @@
            <property name="text">
             <string>Срок годности реагентов</string>
            </property>
-           <property name="buddy">
-            <cstring>dateEdit_test2Reagent</cstring>
-           </property>
           </widget>
          </item>
          <item row="3" column="1">
@@ -565,9 +526,6 @@
            <property name="text">
             <string>Тромбиновое время</string>
            </property>
-           <property name="buddy">
-            <cstring>doubleSpinBox_test2Trombine</cstring>
-           </property>
           </widget>
          </item>
          <item row="4" column="1">
@@ -577,9 +535,6 @@
           <widget class="QLabel" name="label_test2_6">
            <property name="text">
             <string>Исползуемая активность [МЕ/мл]</string>
-           </property>
-           <property name="buddy">
-            <cstring>doubleSpinBox_test2Activity</cstring>
            </property>
           </widget>
          </item>

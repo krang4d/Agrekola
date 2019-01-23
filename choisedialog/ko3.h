@@ -48,8 +48,8 @@ signals:
 
 private:
     Ui::Ko3 *ui;
-    SaveFiles file;
-    QStringList param;
+//    SaveFiles file;
+//    QStringList param;
 
     TestKo3 t_ko3;
     CalibrationKo3 c_ko3;
