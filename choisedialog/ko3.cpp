@@ -87,6 +87,11 @@ void Ko3::open()
         ui->checkBox_testCh4->setChecked(false);
     }
 
+    ui->checkBox_calibCh1->setChecked(c_ko3.getK1());
+    ui->checkBox_calibCh2->setChecked(c_ko3.getK2());
+    ui->checkBox_calibCh3->setChecked(c_ko3.getK3());
+    ui->checkBox_calibCh4->setChecked(c_ko3.getK4());
+
     ui->doubleSpinBox_calibIncube->setValue(c_ko3.getIncube_time());
     ui->doubleSpinBox_calibWriteTime->setValue(c_ko3.getWrite_time());
 }
@@ -154,6 +159,12 @@ void Ko3::on_pushButton_calib_clicked()
     c_ko3.setFibrinogen_k_plazma(ui->lineEdit_calibFibrinogenKPlazma->text().toDouble());
     c_ko3.setIncube_time(ui->doubleSpinBox_calibIncube->value());
     c_ko3.setWrite_time(ui->doubleSpinBox_calibWriteTime->value());
+
+    c_ko3.setK1(ui->checkBox_calibCh1->isChecked());
+    c_ko3.setK2(ui->checkBox_calibCh2->isChecked());
+    c_ko3.setK3(ui->checkBox_calibCh3->isChecked());
+    c_ko3.setK4(ui->checkBox_calibCh4->isChecked());
+
     c_ko3.save();
     //emit calibration(StartCalibrationKo3::getStart());
 }

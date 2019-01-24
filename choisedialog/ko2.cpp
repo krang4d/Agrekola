@@ -47,7 +47,7 @@ void Ko2::open()
             + QString("АЧТВ 1го канала %1\n").arg(c_ko2.getA4tv_kp1())
             + QString("АЧТВ 2го канала %1\n").arg(c_ko2.getA4tv_kp2())
             + QString("АЧТВ 3го канала %1\n").arg(c_ko2.getA4tv_kp3())
-            + QString("АЧТВ 4го канала %8").arg(c_ko2.getA4tv_kp4());
+            + QString("АЧТВ 4го канала %1").arg(c_ko2.getA4tv_kp4());
     ui->label_test1CalibString->setText(str);
     //connect(ui->page_1, SIGNAL(startMeasurment(StartMeasurment*)),this, SIGNAL(measurement(StartMeasurment*)));
 
@@ -103,6 +103,11 @@ void Ko2::open()
         ui->checkBox_test1Ch4->setChecked(false);
         ui->checkBox_test2Ch4->setChecked(false);
     }
+
+    ui->checkBox_calibCh1->setChecked(c_ko2.getK1());
+    ui->checkBox_calibCh2->setChecked(c_ko2.getK2());
+    ui->checkBox_calibCh3->setChecked(c_ko2.getK3());
+    ui->checkBox_calibCh4->setChecked(c_ko2.getK4());
 
     ui->doubleSpinBox_calibIncube->setValue(c_ko2.getIncube_time());
     ui->doubleSpinBox_test2IncubeTime->setValue(c_ko2.getIncube_time());
@@ -333,8 +338,15 @@ void Ko2::on_pushButton_calib_clicked()
     c_ko2.setReagent_serial(ui->lineEdit_calibReagentSerial->text());
     c_ko2.setK_plazma_date(ui->dateEdit_calibPlazma->date());
     c_ko2.setK_plazma_serial(ui->lineEdit_calibKPlazmaSerial->text());
+    c_ko2.setK_plazma_a4tv(ui->doubleSpinBox_a4tv->value());
     c_ko2.setIncube_time(ui->doubleSpinBox_calibIncube->value());
     c_ko2.setWrite_time(ui->doubleSpinBox_calibWriteTime->value());
+
+    c_ko2.setK1(ui->checkBox_calibCh1->isChecked());
+    c_ko2.setK2(ui->checkBox_calibCh2->isChecked());
+    c_ko2.setK3(ui->checkBox_calibCh3->isChecked());
+    c_ko2.setK4(ui->checkBox_calibCh4->isChecked());
+
     c_ko2.save();
     emit calibration(StartCalibrationKo2::getStart());
 }

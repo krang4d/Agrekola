@@ -39,6 +39,11 @@ void Ko5::on_pushButton_calib_clicked()
     c_ko5.setIncube_time(ui->doubleSpinBox_calibIncubeTime->value());
     c_ko5.setWrite_time(ui->doubleSpinBox_calibWriteTime->value());
 
+    c_ko5.setK1(ui->checkBox_calibCh1->isChecked());
+    c_ko5.setK2(ui->checkBox_calibCh2->isChecked());
+    c_ko5.setK3(ui->checkBox_calibCh3->isChecked());
+    c_ko5.setK4(ui->checkBox_calibCh4->isChecked());
+
     t_ko5.save();
     c_ko5.save();
     emit calibration(StartCalibrationKo5::getStart());
@@ -134,6 +139,11 @@ void Ko5::open()
         else {
             ui->checkBox_testCh4->setChecked(false);
         }
+
+        ui->checkBox_calibCh1->setChecked(c_ko5.getK1());
+        ui->checkBox_calibCh2->setChecked(c_ko5.getK2());
+        ui->checkBox_calibCh3->setChecked(c_ko5.getK3());
+        ui->checkBox_calibCh4->setChecked(c_ko5.getK4());
 
         ui->doubleSpinBox_calibIncubeTime->setValue(c_ko5.getIncube_time());
         ui->doubleSpinBox_calibWriteTime->setValue(c_ko5.getWrite_time());

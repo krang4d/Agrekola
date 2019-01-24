@@ -105,6 +105,11 @@ void Ko4::open()
         ui->checkBox_test2Ch4->setChecked(false);
     }
 
+    ui->checkBox_calibCh1->setChecked(c_ko4.getK1());
+    ui->checkBox_calibCh2->setChecked(c_ko4.getK2());
+    ui->checkBox_calibCh3->setChecked(c_ko4.getK3());
+    ui->checkBox_calibCh4->setChecked(c_ko4.getK4());
+
     ui->doubleSpinBox_calibIncubeTime->setValue(c_ko4.getIncube_time());
     ui->doubleSpinBox_calibWriteTime->setValue(c_ko4.getWrite_time());
 }
@@ -310,6 +315,12 @@ void Ko4::on_pushButton_calib_clicked()
     c_ko4.setK_plazma_serial(ui->lineEdit_calibKPlazmaSerial->text());
     c_ko4.setIncube_time(ui->doubleSpinBox_calibIncubeTime->value());
     c_ko4.setWrite_time(ui->doubleSpinBox_calibWriteTime->value());
+
+    c_ko4.setK1(ui->checkBox_calibCh1->isChecked());
+    c_ko4.setK2(ui->checkBox_calibCh2->isChecked());
+    c_ko4.setK3(ui->checkBox_calibCh3->isChecked());
+    c_ko4.setK4(ui->checkBox_calibCh4->isChecked());
+
     c_ko4.save();
     //emit calibration(StartCalibrationKo4::getStart());
 }

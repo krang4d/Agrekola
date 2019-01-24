@@ -89,6 +89,11 @@ void Agr2::open()
         ui->checkBox_testCh4->setChecked(false);
     }
 
+    ui->checkBox_calibCh1->setChecked(c_agr2.getK1());
+    ui->checkBox_calibCh2->setChecked(c_agr2.getK2());
+    ui->checkBox_calibCh3->setChecked(c_agr2.getK3());
+    ui->checkBox_calibCh4->setChecked(c_agr2.getK4());
+
     ui->doubleSpinBox_calibIncubeTime_1->setValue(c_agr2.getIncube_time_1());
     ui->doubleSpinBox_calibIncubeTime_2->setValue(c_agr2.getIncube_time_2());
     ui->doubleSpinBox_calibWriteTime->setValue(c_agr2.getWrite_time());
@@ -130,7 +135,6 @@ void Agr2::calibrationData4Come(double t0)
 
 void Agr2::on_pushButton_calib_clicked()
 {
-
     c_agr2.setDate(QDate::currentDate());
     c_agr2.setReagent_date(ui->dateEdit_calibReagent->date());
     c_agr2.setReagent_serial(ui->lineEdit_calibReagentSerial->text());
@@ -139,9 +143,13 @@ void Agr2::on_pushButton_calib_clicked()
     //c_agr2.setIncube_time(ui->doubleSpinBox_calibIncubeTime_1->value());
     c_agr2.setWrite_time(ui->doubleSpinBox_calibWriteTime->value());
 
-    t_agr2.save();
+    c_agr2.setK1(ui->checkBox_calibCh1->isChecked());
+    c_agr2.setK2(ui->checkBox_calibCh2->isChecked());
+    c_agr2.setK3(ui->checkBox_calibCh3->isChecked());
+    c_agr2.setK4(ui->checkBox_calibCh4->isChecked());
+
     c_agr2.save();
-    emit calibration(StartCalibrationAgr2::getStart());
+    //emit calibration(StartCalibrationAgr2::getStart());
 }
 
 void Agr2::on_pushButton_test_clicked()
@@ -159,7 +167,6 @@ void Agr2::on_pushButton_test_clicked()
     t_agr2.setSingle(ui->radioButton_testSingle->isChecked());
 
     t_agr2.save();
-    c_agr2.save();
 }
 
 void Agr2::on_radioButton_testSingle_toggled(bool checked)
