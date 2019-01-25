@@ -1,5 +1,6 @@
 #include "agr1.h"
 #include "ui_agr1.h"
+#include "typeinfo"
 
 Agr1::Agr1(QWidget *parent) :
     QWidget(parent),
@@ -34,8 +35,9 @@ void Agr1::on_pushButton_test_clicked()
     c_agr1.setIncube_time_2(ui->doubleSpinBox_calibIncubeTime_2->value());
     c_agr1.setWrite_time(ui->doubleSpinBox_calibWriteTime->value());
 
+    c_agr1.save();
     t_agr1.save();
-    t_agr1.save();
+    emit measurement(StartTestAgr1::getStart(&t_agr1));
 }
 
 void Agr1::open()
@@ -105,7 +107,7 @@ void Agr1::save()
 
 void Agr1::calibrationDataCome(int n, double deta)
 {
-    //один параметр контрольной нормальной плазмы
+//    один параметр контрольной нормальной плазмы
 //    QDateTime dt = QDateTime::currentDateTime();
 //    //ui->label_calibrationData->setText(dt.toString("dd.MM.yyyy ") + dt.toString("hh:mm:ss"));
 //    if(param.count() <= n)
@@ -195,43 +197,68 @@ void Agr1::on_lineEdit_testCh3_textChanged(const QString &arg1)
         ui->lineEdit_testCh4->setText(arg1);
 }
 
-StartMeasurment *StartCalibrationAgr1::getStart()
+StartMeasurment *StartCalibrationAgr1::getStart(Calibration *c_agr1)
 {
-    StartMeasurment *sm = new StartMeasurment(0);
-    sm->setChannels(true, true, true, true);
-    sm->setNum(1, "Калибровка");
-    sm->setNum(2, "Калибровка");
-    sm->setNum(3, "Калибровка");
-    sm->setNum(4, "Калибровка");
-    sm->setTime(10);
-    sm->setTimeIncube(1, 3);
-    sm->setTimeIncube(2, 4);
+    StartMeasurment *start = new StartMeasurment(0);
+    start->setChannels(c_agr1->getK1(), c_agr1->getK2(), c_agr1->getK3(), c_agr1->getK4());
+    start->setNum(1, "Калибровка");
+    start->setNum(2, "Калибровка");
+    start->setNum(3, "Калибровка");
+    start->setNum(4, "Калибровка");
+    start->setTime(c_agr1->getWrite_time());
+    start->setTimeIncube(1, c_agr1->getIncube_time());
+    start->setTimeIncube(2, static_cast<CalibrationAgr1*>(c_agr1)->getIncube_time_2());
     //stKo2->cancel = false;
-    return sm;
+    return start;
 }
 
 StartMeasurment *StartCalibrationAgr1::getBTP100()
 {
-    StartMeasurment *sm = new StartMeasurment(0);
-    sm->setChannels(true, true, true, true);
-    sm->setNum(1, "БТП");
-    sm->setNum(2, "БТП");
-    sm->setNum(3, "БТП");
-    sm->setNum(4, "БТП");
-    sm->setTime(10);
-    sm->setTimeIncube(1, 3);
-    return sm;
+    StartMeasurment *start = new StartMeasurment(0);
+    start->setChannels(true, true, true, true);
+    start->setNum(1, "БТП");
+    start->setNum(2, "БТП");
+    start->setNum(3, "БТП");
+    start->setNum(4, "БТП");
+    start->setTime(10);
+    start->setTimeIncube(1, 3);
+    return start;
 }
 
 StartMeasurment *StartCalibrationAgr1::getOTP0()
 {
-    StartMeasurment *sm = new StartMeasurment(0);
-    sm->setChannels(true, true, true, true);
-    sm->setNum(1, "ОТП");
-    sm->setNum(2, "ОТП");
-    sm->setNum(3, "ОТП");
-    sm->setNum(4, "ОТП");
-    sm->setTime(10);
-    sm->setTimeIncube(1, 3);
-    return sm;
+    StartMeasurment *start = new StartMeasurment(0);
+    start->setChannels(true, true, true, true);
+    start->setNum(1, "ОТП");
+    start->setNum(2, "ОТП");
+    start->setNum(3, "ОТП");
+    start->setNum(4, "ОТП");
+    start->setTime(10);
+    start->setTimeIncube(1, 3);
+    return start;
+}
+
+StartMeasurment *StartTestAgr1::getStart(Test* t_agr1)
+{
+    //static_cast<CalibrationAgr1>(c_agr1).getIncube_time_2()
+    TestAgr1* obj = nullptr;
+    if(typeid(*t_agr1) == typeid(TestAgr1)) {
+        obj = dynamic_cast<TestAgr1*>(t_agr1);
+        qDebug() << QString("c_agr1 is pointer to an object of type: true, incube_time2 is %1").arg(obj->getIncubeTime2());
+    }
+    else {
+        throw Error_Agr1_Type_ID("c_agr1 is pointer to an object of type: false");
+    }
+    StartMeasurment *start = new StartMeasurment(0);
+    start->setChannels(t_agr1->getK1(), t_agr1->getK2(), t_agr1->getK3(), t_agr1->getK4());
+    start->setNum(1, t_agr1->getNum1());
+    start->setNum(2, t_agr1->getNum2());
+    start->setNum(3, t_agr1->getNum3());
+    start->setNum(4, t_agr1->getNum4());
+    start->setTime(t_agr1->getWriteTime());
+    start->setTimeIncube(1, t_agr1->getIncubeTime());
+    start->setTimeIncube(2, obj->getIncubeTime2());
+    start->setMode(1, t_agr1->getSingle());
+    start->setModeID(TestAgr1_ID);
+    return start;
 }

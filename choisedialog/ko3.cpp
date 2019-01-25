@@ -17,10 +17,34 @@ Ko3::~Ko3()
     delete ui;
 }
 
-void Ko3::calibrationDataCome(int n, double deta)
+void Ko3::calibrationDataCome(int n, double data)
 {
     //один параметр контрольной нормальной плазмы
-    QDateTime dt = QDateTime::currentDateTime();
+    static int i = 0;
+    QDate dt = QDate::currentDate();
+    c_ko3.setDate(dt);
+    switch (n) {
+    case 1:
+        c_ko3.setFibrinogen_200_plazma(data);
+        break;
+    case 2:
+        c_ko3.setFibrinogen_k_plazma(data);
+        break;
+    case 3:
+        c_ko3.setFibrinogen_50_plazma(data);
+        break;
+    case 4:
+        c_ko3.setFibrinogen_25_plazma(data);
+        break;
+    default:
+        break;
+    } i++;
+    if(i == 4) {
+        i = 0;
+        emit calibration_done();
+    }
+    c_ko3.save();
+
     //ui->label_calibrationData->setText(dt.toString("dd.MM.yyyy ") + dt.toString("hh:mm:ss"));
 //    if(param.count() <= n)
 //        param.push_back(QString("%1").arg(deta));
@@ -91,6 +115,11 @@ void Ko3::open()
     ui->checkBox_calibCh2->setChecked(c_ko3.getK2());
     ui->checkBox_calibCh3->setChecked(c_ko3.getK3());
     ui->checkBox_calibCh4->setChecked(c_ko3.getK4());
+    ui->dateEdit_calibReagent->setDate(c_ko3.getReagent_date());
+    ui->lineEdit_calibReagentSerial->setText(c_ko3.getReagent_serial());
+    ui->dateEdit_calibPlazma->setDate(c_ko3.getK_plazma_date());
+    ui->lineEdit_calibKPlazmaSerial->setText(c_ko3.getK_plazma_serial());
+    ui->doubleSpinBox_calibFibrinogenKPlazma->setValue(c_ko3.getFibrinogen_k_plazma());
 
     ui->doubleSpinBox_calibIncube->setValue(c_ko3.getIncube_time());
     ui->doubleSpinBox_calibWriteTime->setValue(c_ko3.getWrite_time());
@@ -109,25 +138,25 @@ void Ko3::save()
 void Ko3::calibrationData1Come(double t0)
 {
     //при разведении 200% контрольной нормальной плазмы
-    calibrationDataCome(4, t0);
+    calibrationDataCome(1, t0);
 }
 
 void Ko3::calibrationData2Come(double t0)
 {
     //при разведении 100% контрольной нормальной плазмы
-    calibrationDataCome(5, t0);
+    calibrationDataCome(2, t0);
 }
 
 void Ko3::calibrationData3Come(double t0)
 {
     //при разведении 50% контрольной нормальной плазмы
-    calibrationDataCome(6, t0);
+    calibrationDataCome(3, t0);
 }
 
 void Ko3::calibrationData4Come(double t0)
 {
     //при разведении 25% контрольной нормальной плазмы
-    calibrationDataCome(7, t0);
+    calibrationDataCome(4, t0);
 }
 
 void Ko3::on_pushButton_test_clicked()
@@ -145,8 +174,7 @@ void Ko3::on_pushButton_test_clicked()
     t_ko3.setSingle(ui->radioButton_testSingle->isChecked());
 
     t_ko3.save();
-    c_ko3.save();
-    //emit measurement(StartTestKo3::getStart());
+    emit measurement(StartTestKo3::getStart(&t_ko3));
 }
 
 void Ko3::on_pushButton_calib_clicked()
@@ -156,7 +184,7 @@ void Ko3::on_pushButton_calib_clicked()
     c_ko3.setReagent_serial(ui->lineEdit_calibReagentSerial->text());
     c_ko3.setK_plazma_date(ui->dateEdit_calibPlazma->date());
     c_ko3.setK_plazma_serial(ui->lineEdit_calibKPlazmaSerial->text());
-    c_ko3.setFibrinogen_k_plazma(ui->lineEdit_calibFibrinogenKPlazma->text().toDouble());
+    c_ko3.setFibrinogen_k_plazma(ui->doubleSpinBox_calibFibrinogenKPlazma->value());
     c_ko3.setIncube_time(ui->doubleSpinBox_calibIncube->value());
     c_ko3.setWrite_time(ui->doubleSpinBox_calibWriteTime->value());
 
@@ -166,7 +194,7 @@ void Ko3::on_pushButton_calib_clicked()
     c_ko3.setK4(ui->checkBox_calibCh4->isChecked());
 
     c_ko3.save();
-    //emit calibration(StartCalibrationKo3::getStart());
+    emit calibration(StartCalibrationKo3::getStart(&c_ko3));
 }
 
 void Ko3::on_radioButton_testSingle_toggled(bool checked)
@@ -230,28 +258,32 @@ void Ko3::on_lineEdit_testCh3_textChanged(const QString &arg1)
         ui->lineEdit_testCh4->setText(arg1);
 }
 
-StartMeasurment *StartCalibrationKo3::getStart()
+StartMeasurment* StartCalibrationKo3::getStart(Calibration* c_ko3)
 {
-    StartMeasurment *sm = new StartMeasurment(0);
-    sm->setChannels(true, true, true, true);
-    sm->setNum(1, "Калибровка");
-    sm->setNum(2, "Калибровка");
-    sm->setNum(3, "Калибровка");
-    sm->setNum(4, "Калибровка");
-    sm->setTime(10);
-    sm->setTimeIncube(1, 3);
-    return sm;
+    StartMeasurment *start = new StartMeasurment(0);
+    start->setChannels(c_ko3->getK1(), c_ko3->getK2(), c_ko3->getK3(), c_ko3->getK4());
+    start->setNum(1, "Калибровка");
+    start->setNum(2, "Калибровка");
+    start->setNum(3, "Калибровка");
+    start->setNum(4, "Калибровка");
+    start->setTime(c_ko3->getWrite_time());
+    start->setTimeIncube(1, c_ko3->getIncube_time());
+    start->setMode(0);
+    start->setModeID(CalibrKo3_ID);
+    return start;
 }
 
-StartMeasurment *StartTestKo3::getStart()
+StartMeasurment* StartTestKo3::getStart(Test* t_ko3)
 {
-    StartMeasurment *sm = new StartMeasurment(0);
-    sm->setChannels(true, true, true, true);
-    sm->setNum(1, "Измерение");
-    sm->setNum(2, "Измерение");
-    sm->setNum(3, "Измерение");
-    sm->setNum(4, "Измерение");
-    sm->setTime(10);
-    sm->setTimeIncube(1, 3);
-    return sm;
+    StartMeasurment *start = new StartMeasurment(0);
+    start->setChannels(t_ko3->getK1(), t_ko3->getK2(), t_ko3->getK3(), t_ko3->getK4());
+    start->setNum(1, t_ko3->getNum1());
+    start->setNum(2, t_ko3->getNum2());
+    start->setNum(3, t_ko3->getNum3());
+    start->setNum(4, t_ko3->getNum4());
+    start->setTime(t_ko3->getWriteTime());
+    start->setTimeIncube(1, t_ko3->getIncubeTime());
+    start->setMode(0, t_ko3->getSingle());
+    start->setModeID(TestKo3_ID);
+    return start;
 }

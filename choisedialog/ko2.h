@@ -18,7 +18,7 @@ public:
     ~Ko2();
 
 private:
-    void calibrationDataCome(int n, double deta);
+    void calibrationDataCome(int n, double data);
     void open();
     void close();
 
@@ -54,13 +54,11 @@ public slots:
 
 signals:
     void measurement(StartMeasurment*);
-    void calibration(StartMeasurment*);
+    void calibration(StartMeasurment*); 
+    void calibration_done();
 
 private:
     Ui::Ko2 *ui;
-//    SaveFiles file;
-//    QStringList param;
-
     TestKo2 t_ko2;
     CalibrationKo2 c_ko2;
 };
@@ -70,7 +68,7 @@ class StartTestKo2 : public StartMeasurment
     Q_OBJECT
 public:
     StartTestKo2() = delete;
-    static StartMeasurment* getStart();
+    static StartMeasurment* getStart(Test* );
 };
 
 
@@ -79,7 +77,7 @@ class StartCalibrationKo2 : public StartMeasurment
     Q_OBJECT
 public:
     StartCalibrationKo2() = delete;
-    static StartMeasurment* getStart();
+    static StartMeasurment* getStart(Calibration* );
 };
 
 #endif // KO2_H

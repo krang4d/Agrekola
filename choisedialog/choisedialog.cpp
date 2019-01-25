@@ -215,6 +215,5 @@ void ChoiseDialog::on_viewPlotsButton_clicked()
 
 void ChoiseDialog::on_exitButton_clicked()
 {
-
     accept();
 }

@@ -44,9 +44,8 @@ void Ko5::on_pushButton_calib_clicked()
     c_ko5.setK3(ui->checkBox_calibCh3->isChecked());
     c_ko5.setK4(ui->checkBox_calibCh4->isChecked());
 
-    t_ko5.save();
     c_ko5.save();
-    emit calibration(StartCalibrationKo5::getStart());
+    emit calibration(StartCalibrationKo5::getStart(&c_ko5));
 }
 
 void Ko5::on_pushButton_test_clicked()
@@ -64,7 +63,7 @@ void Ko5::on_pushButton_test_clicked()
     t_ko5.setSingle(ui->radioButton_testSingle->isChecked());
 
     t_ko5.save();
-    c_ko5.save();
+    emit measurement(StartTestKo5::getStart(&t_ko5));
 }
 
 void Ko5::calibrationDataCome(int n, double deta)
@@ -243,28 +242,32 @@ void Ko5::on_lineEdit_testCh3_textChanged(const QString &arg1)
         ui->lineEdit_testCh4->setText(arg1);
 }
 
-StartMeasurment *StartTestKo5::getStart()
+StartMeasurment *StartTestKo5::getStart(Test* t_ko5)
 {
-    StartMeasurment *sm = new StartMeasurment(0);
-    sm->setChannels(true, true, true, true);
-    sm->setNum(1, "Измерение");
-    sm->setNum(2, "Измерение");
-    sm->setNum(3, "Измерение");
-    sm->setNum(4, "Измерение");
-    sm->setTime(10);
-    sm->setTimeIncube(1, 3);
-    return sm;
+    StartMeasurment *start = new StartMeasurment(0);
+    start->setChannels(t_ko5->getK1(), t_ko5->getK2(), t_ko5->getK2(), t_ko5->getK4());
+    start->setNum(1, t_ko5->getNum1());
+    start->setNum(2, t_ko5->getNum2());
+    start->setNum(3, t_ko5->getNum3());
+    start->setNum(4, t_ko5->getNum4());
+    start->setTime(t_ko5->getWriteTime());
+    start->setTimeIncube(1, t_ko5->getIncubeTime());
+    start->setMode(0);
+    start->setModeID(TestKo5_ID);
+    return start;
 }
 
-StartMeasurment *StartCalibrationKo5::getStart()
+StartMeasurment *StartCalibrationKo5::getStart(Calibration* c_ko5)
 {
-    StartMeasurment *sm = new StartMeasurment(0);
-    sm->setChannels(true, true, true, true);
-    sm->setNum(1, "Калибровка");
-    sm->setNum(2, "Калибровка");
-    sm->setNum(3, "Калибровка");
-    sm->setNum(4, "Калибровка");
-    sm->setTime(10);
-    sm->setTimeIncube(1, 3);
-    return sm;
+    StartMeasurment *start = new StartMeasurment(0);
+    start->setChannels(c_ko5->getK1(), c_ko5->getK2(), c_ko5->getK3(), c_ko5->getK4());
+    start->setNum(1, "Калибровка");
+    start->setNum(2, "Калибровка");
+    start->setNum(3, "Калибровка");
+    start->setNum(4, "Калибровка");
+    start->setTime(c_ko5->getWrite_time());
+    start->setTimeIncube(1, c_ko5->getIncube_time());
+    start->setMode(0);
+    start->setModeID(CalibrKo5_ID);
+    return start;
 }

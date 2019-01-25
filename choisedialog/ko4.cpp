@@ -283,8 +283,7 @@ void Ko4::on_pushButton_test1_clicked()
     t_ko4.setSingle(ui->radioButton_test1Single->isChecked());
 
     t_ko4.save();
-    c_ko4.save();
-     //emit calibration(StartTestKo4::getStart());
+    emit calibration(StartTestKo4::getStart(&t_ko4));
 }
 
 void Ko4::on_pushButton_test2_clicked()
@@ -302,8 +301,7 @@ void Ko4::on_pushButton_test2_clicked()
     t_ko4.setSingle(ui->radioButton_test2Single->isChecked());
 
     t_ko4.save();
-    c_ko4.save();
-    //emit calibration(StartTestKo4::getStart());
+    emit calibration(StartTestKo4::getStart(&t_ko4));
 }
 
 void Ko4::on_pushButton_calib_clicked()
@@ -322,31 +320,36 @@ void Ko4::on_pushButton_calib_clicked()
     c_ko4.setK4(ui->checkBox_calibCh4->isChecked());
 
     c_ko4.save();
-    //emit calibration(StartCalibrationKo4::getStart());
+    emit calibration(StartCalibrationKo4::getStart(&c_ko4));
 }
 
-StartMeasurment *StartCalibrationKo4::getStart()
+StartMeasurment* StartCalibrationKo4::getStart(Calibration *c_ko4)
 {
-    StartMeasurment *sm = new StartMeasurment(0);
-    sm->setChannels(true, true, true, true);
-    sm->setNum(1, "Калибровка");
-    sm->setNum(2, "Калибровка");
-    sm->setNum(3, "Калибровка");
-    sm->setNum(4, "Калибровка");
-    sm->setTime(10);
-    sm->setTimeIncube(1, 3);
-    return sm;
+    StartMeasurment* start = new StartMeasurment(0);
+    start->setChannels(c_ko4->getK1(), c_ko4->getK2(), c_ko4->getK3(), c_ko4->getK4());
+    start->setNum(1, "Калибровка");
+    start->setNum(2, "Калибровка");
+    start->setNum(3, "Калибровка");
+    start->setNum(4, "Калибровка");
+    start->setTime(c_ko4->getWrite_time());
+    start->setTimeIncube(1, c_ko4->getIncube_time());
+    start->setMode(0);
+    start->setModeID(CalibrKo4_ID);
+    return start;
 }
 
-StartMeasurment *StartTestKo4::getStart()
+StartMeasurment* StartTestKo4::getStart(Test* t_ko4)
 {
-    StartMeasurment *sm = new StartMeasurment(0);
-    sm->setChannels(true, true, true, true);
-    sm->setNum(1, "Измерение");
-    sm->setNum(2, "Измерение");
-    sm->setNum(3, "Измерение");
-    sm->setNum(4, "Измерение");
-    sm->setTime(10);
-    sm->setTimeIncube(1, 3);
-    return sm;
+    StartMeasurment *start = new StartMeasurment(0);
+    start->setChannels(t_ko4->getK1(), t_ko4->getK2(), t_ko4->getK3(), t_ko4->getK4());
+    start->setNum(1, t_ko4->getNum1());
+    start->setNum(2, t_ko4->getNum2());
+    start->setNum(3, t_ko4->getNum3());
+    start->setNum(4, t_ko4->getNum4());
+    start->setTime(t_ko4->getWriteTime());
+    start->setTimeIncube(1, t_ko4->getIncubeTime());
+    start->setMode(0, t_ko4->getSingle());
+    start->setModeID(TestKo4_ID);
+    return start;
 }
+

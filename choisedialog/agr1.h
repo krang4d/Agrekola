@@ -5,6 +5,12 @@
 #include <QStringList>
 #include "startmeasurment.h"
 
+struct Error_Agr1_Type_ID
+{
+    QString err_msg;
+    Error_Agr1_Type_ID(const QString &m) : err_msg(m) {}
+};
+
 namespace Ui {
 class Agr1;
 }
@@ -56,9 +62,18 @@ class StartCalibrationAgr1 : public StartMeasurment
     Q_OBJECT
 public:
     StartCalibrationAgr1() = delete;
-    static StartMeasurment *getStart();
+    static StartMeasurment *getStart(Calibration*);
     static StartMeasurment *getBTP100();
     static StartMeasurment *getOTP0();
 };
+
+class StartTestAgr1 : public StartMeasurment
+{
+    Q_OBJECT
+public:
+    StartTestAgr1() = delete;
+    static StartMeasurment* getStart(Test* t_agr1);
+};
+
 
 #endif // AGR1_H

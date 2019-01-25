@@ -27,8 +27,8 @@ useE154::~useE154(void)
     pModule->STOP_ADC();
     SHORT AdcSample;
     double AdcVolt;
-    if(!pModule->ADC_SAMPLE(&AdcSample, (WORD)(ch  | (ADC_INPUT_RANGE_5000mV_E154 << 6)))) { throw Errore_E154("\n\n  ADC_SAMPLE(, 0) --> Bad\n"); }
-    if(!pModule->ProcessOnePoint(AdcSample, &AdcVolt, (WORD)(ch  | (ADC_INPUT_RANGE_5000mV_E154 << 6)), TRUE, TRUE)) { throw Errore_E154("\n\n  PreocessOnePoint() --> Bad\n"); }
+    if(!pModule->ADC_SAMPLE(&AdcSample, (WORD)(ch  | (ADC_INPUT_RANGE_5000mV_E154 << 6)))) { throw Error_E154("\n\n  ADC_SAMPLE(, 0) --> Bad\n"); }
+    if(!pModule->ProcessOnePoint(AdcSample, &AdcVolt, (WORD)(ch  | (ADC_INPUT_RANGE_5000mV_E154 << 6)), TRUE, TRUE)) { throw Error_E154("\n\n  PreocessOnePoint() --> Bad\n"); }
     pModule->STOP_ADC();
     return AdcVolt;
 }
@@ -40,9 +40,9 @@ QVariantList useE154::AdcKADR()
     pModule->STOP_ADC();
     //pModule->GET_MODULE_DESCRIPTION(&ModuleDescription);
     // получим текущие параметры работы АЦП
-    //if(!pModule->GET_ADC_PARS(&ap)) throw Errore_E154("GET_ADC_PARS() --> Bad\n");
-    if(!pModule->ADC_KADR(AdcBuffer)) throw Errore_E154("ADC_KADR() --> Bad\n");
-    if(!pModule->ProcessArray(AdcBuffer, volt, 0x4, TRUE, TRUE)) throw Errore_E154("ProcessArray() --> Bad\n");
+    //if(!pModule->GET_ADC_PARS(&ap)) throw Error_E154("GET_ADC_PARS() --> Bad\n");
+    if(!pModule->ADC_KADR(AdcBuffer)) throw Error_E154("ADC_KADR() --> Bad\n");
+    if(!pModule->ProcessArray(AdcBuffer, volt, 0x4, TRUE, TRUE)) throw Error_E154("ProcessArray() --> Bad\n");
     pModule->STOP_ADC();
     vec_data.clear();
     vec_data.push_back(volt[0]);
@@ -82,7 +82,7 @@ DoubleData useE154::AdcSynchroDouble()
     // выделим память под буфер
     SHORT *ReadBuffer = new SHORT[DataStep];
     pModule->STOP_ADC();
-    if(!ReadBuffer) throw Errore_E154("Ошибка выделения памяти под буфер данных\n");
+    if(!ReadBuffer) throw Error_E154("Ошибка выделения памяти под буфер данных\n");
 
     // формируем структуру IoReq
     IoReq.Buffer = ReadBuffer;					// буфер данных
@@ -92,15 +92,15 @@ DoubleData useE154::AdcSynchroDouble()
     IoReq.TimeOut = DataStep/ap.AdcRate + 1000;	// таймаут синхронного сбора данных
 
     pModule->GET_MODULE_DESCRIPTION(&ModuleDescription);
-    if(!pModule->START_ADC()) throw Errore_E154("Ошибка при запуске АЦП AdcSynchro()!\n");
-    if(!pModule->ReadData(&IoReq)) throw Errore_E154("Ошибка при чтении данных AdcSynchro()!\n");
+    if(!pModule->START_ADC()) throw Error_E154("Ошибка при запуске АЦП AdcSynchro()!\n");
+    if(!pModule->ReadData(&IoReq)) throw Error_E154("Ошибка при чтении данных AdcSynchro()!\n");
     DWORD Size = IoReq.NumberOfWordsPassed;
 
     if(!pDestination) {delete pDestination; pDestination = NULL;}
     pDestination = new double[Size];
     DoubleData data(pDestination, Size);
     SHORT *AdcData = IoReq.Buffer;
-    if(!pModule->ProcessArray(AdcData, pDestination, Size, TRUE, TRUE)) throw Errore_E154("Ошибка преобразования кода АЦП ProcessArray()\n");
+    if(!pModule->ProcessArray(AdcData, pDestination, Size, TRUE, TRUE)) throw Error_E154("Ошибка преобразования кода АЦП ProcessArray()\n");
     if(!ReadBuffer) {delete[] ReadBuffer; ReadBuffer = NULL;}
     return data;
 }

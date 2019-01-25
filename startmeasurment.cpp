@@ -116,10 +116,10 @@ void StartMeasurment::setChannels(bool ch1, bool ch2, bool ch3, bool ch4)
     }else cancel = true;
 }
 
-void StartMeasurment::setMode(int mode, bool s)
+void StartMeasurment::setMode(int KO_or_AGR, bool single_mode)
 {
-    single = s;
-    if(mode == 1 || mode == 2 ) {
+    single = single_mode;
+    if(KO_or_AGR == 1 || KO_or_AGR == 2 ) {
         ui->lineEdit_incube_2->setVisible(true);
         ui->label_incube_2->setVisible(true);
         ui->label_incube->setText(QString("Время инкубации 1"));
@@ -202,11 +202,11 @@ int StartMeasurment::getTimeIncube(int i)
     else return time_incube_2;
 }
 
-void StartMeasurment::setTimeIncube(int i, int ts)
+void StartMeasurment::setTimeIncube(int incube_number, int time_s)
 {
-    if(i == 1)
-        time_incube = ts;
-    else time_incube_2 = ts;
+    if(incube_number == 1)
+        time_incube = time_s;
+    else time_incube_2 = time_s;
 }
 
 QString StartMeasurment::getStringStatus()

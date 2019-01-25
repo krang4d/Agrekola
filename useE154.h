@@ -12,10 +12,10 @@
 
 #define MaxVirtualSoltsQuantity 127
 
-struct Errore_E154
+struct Error_E154
 {
     QString err_msg;
-    Errore_E154(const QString &m) : err_msg(m) {}
+    Error_E154(const QString &m) : err_msg(m) {}
 };
 
 struct DoubleData

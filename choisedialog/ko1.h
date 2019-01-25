@@ -21,12 +21,12 @@ public:
 private slots:
     void on_pushButton_test_clicked();
 
+    void on_radioButton_testSingle_toggled(bool checked);
+
     void on_checkBox_testCh1_toggled(bool checked);
     void on_checkBox_testCh2_toggled(bool checked);
     void on_checkBox_testCh3_toggled(bool checked);
     void on_checkBox_testCh4_toggled(bool checked);
-
-    void on_radioButton_testSingle_toggled(bool checked);
 
     void on_lineEdit_testCh1_textChanged(const QString &arg1);
     void on_lineEdit_testCh3_textChanged(const QString &arg1);
@@ -36,9 +36,6 @@ signals:
 
 private:
     Ui::Ko1 *ui;
-    //SaveFiles file;
-    //QStringList param;
-    //StartMeasurment *startPar;
     TestKo1 t_ko1;
     CalibrationKo1 c_ko1;
 };
@@ -48,15 +45,7 @@ class StartTestKo1 : public StartMeasurment
     Q_OBJECT
 public:
     StartTestKo1() = delete;
-    static StartMeasurment* getStart();
-};
-
-class StartCalibrationKo1 : public StartMeasurment
-{
-    Q_OBJECT
-public:
-    StartCalibrationKo1() = delete;
-    static StartMeasurment* getStart();
+    static StartMeasurment* getStart(Test* t_ko1);
 };
 
 #endif // KO1_H

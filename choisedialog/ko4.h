@@ -62,20 +62,20 @@ private:
     CalibrationKo4 c_ko4;
 };
 
-class StartTestKo4 : public StartMeasurment
-{
-    Q_OBJECT
-public:
-    StartTestKo4() = delete;
-    static StartMeasurment* getStart();
-};
-
 class StartCalibrationKo4 : public StartMeasurment
 {
     Q_OBJECT
 public:
     StartCalibrationKo4() = delete;
-    static StartMeasurment* getStart();
+    static StartMeasurment* getStart(Calibration* t_ko4);
+};
+
+class StartTestKo4 : public StartMeasurment
+{
+    Q_OBJECT
+public:
+    StartTestKo4() = delete;
+    static StartMeasurment* getStart(Test* c_ko4);
 };
 
 #endif // KO4_H

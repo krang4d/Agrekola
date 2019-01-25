@@ -12,16 +12,23 @@ enum Mode_ID { Test_ID = 0,
                TestKo3_ID,
                TestKo4_ID,
                TestKo5_ID,
-               Level_ID
+               Level_ID,
+               CalibrAgr1_ID,
+               CalibrAgr2_ID,
+               CalibrKo1_ID,
+               CalibrKo2_ID,
+               CalibrKo3_ID,
+               CalibrKo4_ID,
+               CalibrKo5_ID
              };
-enum Calibr_ID { CalibrAgr1_ID  = 0,
-                 CalibrAgr2_ID,
-                 CalibrKo1_ID,
-                 CalibrKo2_ID,
-                 CalibrKo3_ID,
-                 CalibrKo4_ID,
-                 CalibrKo5_ID
-               };
+//enum Calibr_ID { CalibrAgr1_ID  = 0,
+//                 CalibrAgr2_ID,
+//                 CalibrKo1_ID,
+//                 CalibrKo2_ID,
+//                 CalibrKo3_ID,
+//                 CalibrKo4_ID,
+//                 CalibrKo5_ID
+//               };
 
 
 #endif // GLOBALVALUE_H

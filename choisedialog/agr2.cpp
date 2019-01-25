@@ -94,7 +94,7 @@ void Agr2::open()
     ui->checkBox_calibCh3->setChecked(c_agr2.getK3());
     ui->checkBox_calibCh4->setChecked(c_agr2.getK4());
 
-    ui->doubleSpinBox_calibIncubeTime_1->setValue(c_agr2.getIncube_time_1());
+    ui->doubleSpinBox_calibIncubeTime_1->setValue(c_agr2.getIncube_time());
     ui->doubleSpinBox_calibIncubeTime_2->setValue(c_agr2.getIncube_time_2());
     ui->doubleSpinBox_calibWriteTime->setValue(c_agr2.getWrite_time());
 
@@ -230,19 +230,6 @@ void Agr2::on_lineEdit_testCh3_textChanged(const QString &arg1)
         ui->lineEdit_testCh4->setText(arg1);
 }
 
-StartMeasurment *StartTestAgr2::getStart()
-{
-    StartMeasurment *sm = new StartMeasurment(0);
-    sm->setChannels(true, true, true, true);
-    sm->setNum(1, "Измерение");
-    sm->setNum(2, "Измерение");
-    sm->setNum(3, "Измерение");
-    sm->setNum(4, "Измерение");
-    sm->setTime(10);
-    sm->setTimeIncube(1, 3);
-    return sm;
-}
-
 StartMeasurment *StartCalibrationAgr2::getStart()
 {
     StartMeasurment *sm = new StartMeasurment(0);
@@ -255,5 +242,18 @@ StartMeasurment *StartCalibrationAgr2::getStart()
     sm->setTimeIncube(1, 3);
     sm->setTimeIncube(2, 4);
     //stKo2->cancel = false;
+    return sm;
+}
+
+StartMeasurment *StartTestAgr2::getStart()
+{
+    StartMeasurment *sm = new StartMeasurment(0);
+    sm->setChannels(true, true, true, true);
+    sm->setNum(1, "Измерение");
+    sm->setNum(2, "Измерение");
+    sm->setNum(3, "Измерение");
+    sm->setNum(4, "Измерение");
+    sm->setTime(10);
+    sm->setTimeIncube(1, 3);
     return sm;
 }

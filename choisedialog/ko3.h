@@ -18,7 +18,7 @@ public:
     ~Ko3();
 
 private:
-    void calibrationDataCome(int n, double deta);
+    void calibrationDataCome(int n, double data);
     void open();
     void save();
 
@@ -43,14 +43,12 @@ public slots:
     void calibrationData4Come(double);
 
 signals:
-    void measurement(StartMeasurment *);
-    void calibration(StartMeasurment *);
+    void measurement(StartMeasurment*);
+    void calibration(StartMeasurment*);
+    void calibration_done();
 
 private:
     Ui::Ko3 *ui;
-//    SaveFiles file;
-//    QStringList param;
-
     TestKo3 t_ko3;
     CalibrationKo3 c_ko3;
 };
@@ -60,7 +58,7 @@ class StartTestKo3 : public StartMeasurment
     Q_OBJECT
 public:
     StartTestKo3() = delete;
-    static StartMeasurment* getStart();
+    static StartMeasurment* getStart(Test* t_ko3);
 };
 
 class StartCalibrationKo3 : public StartMeasurment
@@ -68,7 +66,7 @@ class StartCalibrationKo3 : public StartMeasurment
     Q_OBJECT
 public:
     StartCalibrationKo3() = delete;
-    static StartMeasurment* getStart();
+    static StartMeasurment* getStart(Calibration* c_ko3);
 };
 
 #endif // KO3_H

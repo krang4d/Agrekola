@@ -26,7 +26,7 @@ public:
     bool isChannel(int = 0);
     void setChannels(bool ch1, bool ch2, bool ch3, bool ch4);
 
-    void setMode(int, bool single = 1);
+    void setMode(int KO_or_AGR, bool single_mode = 1);
 
     QString getNum(const int ch);
     void setNum(const int ch, const QString num);
@@ -35,7 +35,7 @@ public:
     void setTime(int);
 
     int getTimeIncube(int = 1);
-    void setTimeIncube(int i, int ts);
+    void setTimeIncube(int incube_number, int time_s);
 
     QString getStringStatus();
 

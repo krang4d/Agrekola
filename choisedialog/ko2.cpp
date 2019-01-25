@@ -37,7 +37,8 @@ void Ko2::open()
 //        //ui->lineEdit_5->setText(param.at(5));
 //    } else
 //        param = QStringList({0, 0, 0, 0, 0, 0, 0, 0, 0, 0}); //10 параметров
-/* Новый метод загрузки параметров из XML */
+    /* Новый метод загрузки параметров из XML */
+    //окно тест
     QString str;
         str = QString("Дата проведения %1\n").arg(c_ko2.getDate().toString("dd.MM.yyyy"))
             + QString("Номер серия реагентов %1\n").arg(c_ko2.getReagent_serial())
@@ -103,16 +104,26 @@ void Ko2::open()
         ui->checkBox_test1Ch4->setChecked(false);
         ui->checkBox_test2Ch4->setChecked(false);
     }
+    //дополнительные параметры для окна тест без калибровки
+    ui->dateEdit_test2Reagent->setDate(c_ko2.getReagent_date());
+    ui->lineEdit_test2ReagentSerial->setText(c_ko2.getReagent_serial());
+    ui->doubleSpinBox_test2IncubeTime->setValue(c_ko2.getIncube_time());
+    ui->doubleSpinBox_test2WriteTime->setValue(c_ko2.getWrite_time());
 
+    //окно калибровка
     ui->checkBox_calibCh1->setChecked(c_ko2.getK1());
     ui->checkBox_calibCh2->setChecked(c_ko2.getK2());
     ui->checkBox_calibCh3->setChecked(c_ko2.getK3());
     ui->checkBox_calibCh4->setChecked(c_ko2.getK4());
 
     ui->doubleSpinBox_calibIncube->setValue(c_ko2.getIncube_time());
-    ui->doubleSpinBox_test2IncubeTime->setValue(c_ko2.getIncube_time());
     ui->doubleSpinBox_calibWriteTime->setValue(c_ko2.getWrite_time());
-    ui->doubleSpinBox_test2WriteTime->setValue(c_ko2.getWrite_time());
+
+    ui->lineEdit_calibKPlazmaSerial->setText(c_ko2.getK_plazma_serial());
+    ui->dateEdit_calibPlazma->setDate(c_ko2.getK_plazma_date());
+    ui->lineEdit_calibReagentSerial->setText(c_ko2.getReagent_serial());
+    ui->dateEdit_calibReagent->setDate(c_ko2.getReagent_date());
+    ui->doubleSpinBox_a4tv->setValue(c_ko2.getK_plazma_a4tv());
 }
 
 void Ko2::close()
@@ -128,12 +139,32 @@ void Ko2::close()
 
 }
 
-void Ko2::calibrationDataCome(int n , double deta)
+void Ko2::calibrationDataCome(int n , double data)
 {
     static int i = 0;
     //один параметр контрольной нормальной плазмы
     QDate dt = QDate::currentDate();
     c_ko2.setDate(dt);
+    switch (n) {
+    case 1:
+        c_ko2.setA4tv_kp1(data);
+        break;
+    case 2:
+        c_ko2.setA4tv_kp2(data);
+        break;
+    case 3:
+        c_ko2.setA4tv_kp3(data);
+        break;
+    case 4:
+        c_ko2.setA4tv_kp4(data);
+        break;
+    default:
+        break;
+    } i++;
+    if(i == 4) {
+        i = 0;
+        emit calibration_done();
+    }
     c_ko2.save();
     //ui->label_calibrationData->setText(dt.toString("dd.MM.yyyy ") + dt.toString("hh:mm:ss"));
 //    if(param.count() <= n)
@@ -305,7 +336,7 @@ void Ko2::on_pushButton_test1_clicked()
     t_ko2.save();
     c_ko2.save();
 
-    //emit measurement(StartTestKo2::getStart());
+    emit measurement(StartTestKo2::getStart(&t_ko2));
 }
 
 void Ko2::on_pushButton_test2_clicked()
@@ -328,7 +359,7 @@ void Ko2::on_pushButton_test2_clicked()
     t_ko2.save();
     c_ko2.save();
 
-    //emit measurement(StartTestKo2::getStart());
+    emit measurement(StartTestKo2::getStart(&t_ko2));
 }
 
 void Ko2::on_pushButton_calib_clicked()
@@ -348,33 +379,36 @@ void Ko2::on_pushButton_calib_clicked()
     c_ko2.setK4(ui->checkBox_calibCh4->isChecked());
 
     c_ko2.save();
-    emit calibration(StartCalibrationKo2::getStart());
+    emit calibration(StartCalibrationKo2::getStart(&c_ko2));
 }
 
-StartMeasurment *StartTestKo2::getStart()
+StartMeasurment* StartCalibrationKo2::getStart(Calibration* c_ko2)
 {
-    StartMeasurment *sm = new StartMeasurment(0);
-    sm->setChannels(true, true, true, true);
-    sm->setNum(1, "Измерение");
-    sm->setNum(2, "Измерение");
-    sm->setNum(3, "Измерение");
-    sm->setNum(4, "Измерение");
-    sm->setTime(10);
-    sm->setTimeIncube(1, 3);
+    StartMeasurment* start = new StartMeasurment(0);
+    start->setChannels(c_ko2->getK1(), c_ko2->getK2(), c_ko2->getK3(), c_ko2->getK4());
+    start->setNum(1, "Калибровка");
+    start->setNum(2, "Калибровка");
+    start->setNum(3, "Калибровка");
+    start->setNum(4, "Калибровка");
+    start->setTime(c_ko2->getWrite_time());
+    start->setTimeIncube(1, c_ko2->getIncube_time());
+    start->setMode(0);
+    start->setModeID(CalibrKo2_ID);
     //stKo2->cancel = false;
-    return sm;
+    return start;
 }
 
-StartMeasurment *StartCalibrationKo2::getStart()
+StartMeasurment* StartTestKo2::getStart(Test* t_ko2)
 {
-    StartMeasurment *sm = new StartMeasurment(0);
-    sm->setChannels(true, true, true, true);
-    sm->setNum(1, "Калибровка");
-    sm->setNum(2, "Калибровка");
-    sm->setNum(3, "Калибровка");
-    sm->setNum(4, "Калибровка");
-    sm->setTime(10);
-    sm->setTimeIncube(1, 3);
+    StartMeasurment* start = new StartMeasurment(0);
+    start->setChannels(t_ko2->getK1(), t_ko2->getK2(), t_ko2->getK3(), t_ko2->getK4());
+    start->setNum(1, t_ko2->getNum1());
+    start->setNum(2, t_ko2->getNum2());
+    start->setNum(3, t_ko2->getNum3());
+    start->setNum(4, t_ko2->getNum4());
+    start->setTime(t_ko2->getWriteTime());
+    start->setTimeIncube(1, t_ko2->getIncubeTime());
+    start->setModeID(TestKo2_ID);
     //stKo2->cancel = false;
-    return sm;
+    return start;
 }

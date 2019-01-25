@@ -133,43 +133,22 @@ void Ko1::on_pushButton_test_clicked()
     t_ko1.save();
     c_ko1.save();
 
-    emit measurement(StartTestKo1::getStart());
+    emit measurement(StartTestKo1::getStart(&t_ko1));
 }
 
-StartMeasurment *StartTestKo1::getStart()
+StartMeasurment* StartTestKo1::getStart(Test* t_ko1)
 {
-    TestKo1 t_ko1;
-    CalibrationKo1 c_ko1;
-    StartMeasurment *sm = new StartMeasurment(0);
-    sm->setModeID(TestKo1_ID);  //режим определение времени свертывания
-    sm->setMode(0, 1);          //одиночные пробы
-    sm->setChannels(t_ko1.getK1(), t_ko1.getK2(), t_ko1.getK3(), t_ko1.getK4());
-    sm->setNum(1, t_ko1.getNum1());
-    sm->setNum(2, t_ko1.getNum2());
-    sm->setNum(3, t_ko1.getNum3());
-    sm->setNum(4, t_ko1.getNum4());
+    StartMeasurment* start = new StartMeasurment(0);
+    start->setModeID(TestKo1_ID);  //режим определение времени свертывания
+    start->setMode(0, t_ko1->getSingle());          //одиночные пробы
+    start->setChannels(t_ko1->getK1(), t_ko1->getK2(), t_ko1->getK3(), t_ko1->getK4());
+    start->setNum(1, t_ko1->getNum1());
+    start->setNum(2, t_ko1->getNum2());
+    start->setNum(3, t_ko1->getNum3());
+    start->setNum(4, t_ko1->getNum4());
 
-    sm->setTime(c_ko1.getWrite_time());
-    sm->setTimeIncube(1, c_ko1.getIncube_time());
+    start->setTime(t_ko1->getWriteTime());
+    start->setTimeIncube(1, t_ko1->getIncubeTime());
     //stKo2->cancel = false;
-    return sm;
-}
-
-StartMeasurment *StartCalibrationKo1::getStart()
-{
-    StartMeasurment *sm = new StartMeasurment(0);
-    TestKo1 t_ko1;
-    CalibrationKo1 c_ko1;
-    sm->setModeID(TestKo1_ID);  //режим определение времени свертывания
-    sm->setMode(0, 1);          //одиночные пробы
-    sm->setChannels(t_ko1.getK1(), t_ko1.getK2(), t_ko1.getK3(), t_ko1.getK4());
-    sm->setNum(1, t_ko1.getNum1());
-    sm->setNum(2, t_ko1.getNum2());
-    sm->setNum(3, t_ko1.getNum3());
-    sm->setNum(4, t_ko1.getNum4());
-
-    sm->setTime(c_ko1.getWrite_time());
-    sm->setTimeIncube(1, c_ko1.getIncube_time());
-
-    return sm;
+    return start;
 }
