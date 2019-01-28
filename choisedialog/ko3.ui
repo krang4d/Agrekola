@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>361</width>
-    <height>420</height>
+    <width>359</width>
+    <height>436</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -27,7 +27,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tabWidgetPage1">
       <attribute name="title">
@@ -98,7 +98,15 @@
           </widget>
          </item>
          <item row="2" column="1">
-          <widget class="QDateEdit" name="dateEdit_calibReagent"/>
+          <widget class="QDateEdit" name="dateEdit_calibReagent">
+           <property name="date">
+            <date>
+             <year>2019</year>
+             <month>1</month>
+             <day>1</day>
+            </date>
+           </property>
+          </widget>
          </item>
          <item row="3" column="0">
           <widget class="QLabel" name="label_calib_4">
@@ -120,7 +128,15 @@
           </widget>
          </item>
          <item row="4" column="1">
-          <widget class="QDateEdit" name="dateEdit_calibPlazma"/>
+          <widget class="QDateEdit" name="dateEdit_calibPlazma">
+           <property name="date">
+            <date>
+             <year>2019</year>
+             <month>1</month>
+             <day>1</day>
+            </date>
+           </property>
+          </widget>
          </item>
          <item row="5" column="0">
           <widget class="QLabel" name="label_calib_3">
@@ -131,7 +147,14 @@
           </widget>
          </item>
          <item row="0" column="1">
-          <widget class="QDoubleSpinBox" name="doubleSpinBox_calibIncube"/>
+          <widget class="QDoubleSpinBox" name="doubleSpinBox_calibIncube">
+           <property name="minimum">
+            <double>1.000000000000000</double>
+           </property>
+           <property name="maximum">
+            <double>100.000000000000000</double>
+           </property>
+          </widget>
          </item>
          <item row="6" column="0">
           <widget class="QLabel" name="label_2">
@@ -141,7 +164,11 @@
           </widget>
          </item>
          <item row="6" column="1">
-          <widget class="QDoubleSpinBox" name="doubleSpinBox_calibWriteTime"/>
+          <widget class="QDoubleSpinBox" name="doubleSpinBox_calibWriteTime">
+           <property name="decimals">
+            <number>1</number>
+           </property>
+          </widget>
          </item>
          <item row="5" column="1">
           <widget class="QDoubleSpinBox" name="doubleSpinBox_calibFibrinogenKPlazma"/>

@@ -9,6 +9,7 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+    setlocale(LC_ALL, "Russian");
 //    QMap<double, double> map;
 //    SaveFiles file;
 //    file.openDataMap(map);

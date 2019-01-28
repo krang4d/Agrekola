@@ -20,9 +20,9 @@ Agr2::~Agr2()
 
 void Agr2::calibrationDataCome(int n, double deta)
 {
-    //один параметр контрольной нормальной плазмы
+//  один параметр контрольной нормальной плазмы
     QDateTime dt = QDateTime::currentDateTime();
-    //ui->label_calibrationData->setText(dt.toString("dd.MM.yyyy ") + dt.toString("hh:mm:ss"));
+//    ui->label_calibrationData->setText(dt.toString("dd.MM.yyyy ") + dt.toString("hh:mm:ss"));
 //    if(param.count() <= n)
 //        param.push_back(QString("%1").arg(deta));
 //    else param.replace(n, QString("%1").arg(deta));
@@ -97,7 +97,11 @@ void Agr2::open()
     ui->doubleSpinBox_calibIncubeTime_1->setValue(c_agr2.getIncube_time());
     ui->doubleSpinBox_calibIncubeTime_2->setValue(c_agr2.getIncube_time_2());
     ui->doubleSpinBox_calibWriteTime->setValue(c_agr2.getWrite_time());
-
+    ui->doubleSpinBox_calibVillebrand->setValue(c_agr2.getK_plazma());
+    ui->dateEdit_calibKPlazma->setDate(c_agr2.getK_plazma_date());
+    ui->lineEdit_calibKPlazmaSerial->setText(c_agr2.getK_plazma_serial());
+    ui->dateEdit_calibReagent->setDate(c_agr2.getReagent_date());
+    ui->lineEdit_calibReagentSerial->setText(c_agr2.getReagent_serial());
 }
 
 void Agr2::save()
@@ -111,6 +115,15 @@ void Agr2::save()
 //    param.replace(5, ui->lineEdit_5->text());
 //    param.replace(6, ui->lineEdit_6->text());
     //file.saveAgr2(param);
+
+    c_agr2.setIncube_time(ui->doubleSpinBox_calibIncubeTime_1->value());
+    c_agr2.setIncube_time_2(ui->doubleSpinBox_calibIncubeTime_2->value());
+    c_agr2.setWrite_time(ui->doubleSpinBox_calibWriteTime->value());
+    c_agr2.setK_plazma(ui->doubleSpinBox_calibVillebrand->value());
+    c_agr2.setK_plazma_date(ui->dateEdit_calibKPlazma->date());
+    c_agr2.setK_plazma_serial(ui->lineEdit_calibKPlazmaSerial->text());
+    c_agr2.setReagent_date(ui->dateEdit_calibReagent->date());
+    c_agr2.setReagent_serial(ui->lineEdit_calibReagentSerial->text());
 }
 
 void Agr2::calibrationData1Come(double t0)

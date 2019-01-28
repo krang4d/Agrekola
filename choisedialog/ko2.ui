@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>478</width>
-    <height>557</height>
+    <width>352</width>
+    <height>435</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -81,7 +81,14 @@
           </widget>
          </item>
          <item row="0" column="1">
-          <widget class="QDoubleSpinBox" name="doubleSpinBox_calibIncube"/>
+          <widget class="QDoubleSpinBox" name="doubleSpinBox_calibIncube">
+           <property name="decimals">
+            <number>1</number>
+           </property>
+           <property name="minimum">
+            <double>1.000000000000000</double>
+           </property>
+          </widget>
          </item>
          <item row="1" column="0">
           <widget class="QLabel" name="label_calib1">
@@ -101,7 +108,15 @@
           </widget>
          </item>
          <item row="2" column="1">
-          <widget class="QDateEdit" name="dateEdit_calibReagent"/>
+          <widget class="QDateEdit" name="dateEdit_calibReagent">
+           <property name="date">
+            <date>
+             <year>2019</year>
+             <month>1</month>
+             <day>1</day>
+            </date>
+           </property>
+          </widget>
          </item>
          <item row="3" column="0">
           <widget class="QLabel" name="label_calib3">
@@ -125,20 +140,35 @@
           </widget>
          </item>
          <item row="4" column="1">
-          <widget class="QDateEdit" name="dateEdit_calibPlazma"/>
+          <widget class="QDateEdit" name="dateEdit_calibPlazma">
+           <property name="date">
+            <date>
+             <year>2019</year>
+             <month>1</month>
+             <day>1</day>
+            </date>
+           </property>
+          </widget>
          </item>
          <item row="6" column="0">
-          <widget class="QLabel" name="label">
+          <widget class="QLabel" name="label_1">
            <property name="text">
             <string>Время записи (c)</string>
            </property>
           </widget>
          </item>
          <item row="6" column="1">
-          <widget class="QDoubleSpinBox" name="doubleSpinBox_calibWriteTime"/>
+          <widget class="QDoubleSpinBox" name="doubleSpinBox_calibWriteTime">
+           <property name="minimum">
+            <double>5.000000000000000</double>
+           </property>
+           <property name="maximum">
+            <double>100.000000000000000</double>
+           </property>
+          </widget>
          </item>
          <item row="5" column="0">
-          <widget class="QLabel" name="label_2">
+          <widget class="QLabel" name="label_0">
            <property name="text">
             <string>АЧТВ контрольной плазмы</string>
            </property>
@@ -468,7 +498,15 @@
           </widget>
          </item>
          <item row="1" column="1">
-          <widget class="QDateEdit" name="dateEdit_test2Reagent"/>
+          <widget class="QDateEdit" name="dateEdit_test2Reagent">
+           <property name="date">
+            <date>
+             <year>2019</year>
+             <month>1</month>
+             <day>1</day>
+            </date>
+           </property>
+          </widget>
          </item>
          <item row="2" column="0">
           <widget class="QLabel" name="label_test2_2">
@@ -478,7 +516,14 @@
           </widget>
          </item>
          <item row="2" column="1">
-          <widget class="QDoubleSpinBox" name="doubleSpinBox_test2IncubeTime"/>
+          <widget class="QDoubleSpinBox" name="doubleSpinBox_test2IncubeTime">
+           <property name="decimals">
+            <number>1</number>
+           </property>
+           <property name="minimum">
+            <double>1.000000000000000</double>
+           </property>
+          </widget>
          </item>
          <item row="3" column="0">
           <widget class="QLabel" name="label_test2_3">
@@ -488,7 +533,14 @@
           </widget>
          </item>
          <item row="3" column="1">
-          <widget class="QDoubleSpinBox" name="doubleSpinBox_test2WriteTime"/>
+          <widget class="QDoubleSpinBox" name="doubleSpinBox_test2WriteTime">
+           <property name="decimals">
+            <number>1</number>
+           </property>
+           <property name="minimum">
+            <double>5.000000000000000</double>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>

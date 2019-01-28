@@ -7,7 +7,6 @@ Ko4::Ko4(QWidget *parent) :
 {
     ui->setupUi(this);
     open();
-    //connect(ui->page_2, &StartMeasurment::startMeasurment, this, &Ko4::measurement);
 }
 
 Ko4::~Ko4()
@@ -48,8 +47,13 @@ void Ko4::open()
 
     ui->label_test1CalibrString->setText(str);
 
+    ui->lineEdit_test2ReagentSerial->setText(c_ko4.getReagent_serial());
+    ui->doubleSpinBox_test2Activity->setValue(c_ko4.getActivity());
+    ui->doubleSpinBox_test2Trombine->setValue(c_ko4.getTrombine_time());
     ui->doubleSpinBox_test2IncubeTime->setValue(c_ko4.getIncube_time());
     ui->doubleSpinBox_test2WriteTime->setValue(c_ko4.getWrite_time());
+    ui->dateEdit_test2Reagent->setDate(c_ko4.getReagent_date());
+
 
     if( t_ko4.getSingle() ) {
         ui->radioButton_test1Single->setChecked(true);
@@ -112,6 +116,31 @@ void Ko4::open()
 
     ui->doubleSpinBox_calibIncubeTime->setValue(c_ko4.getIncube_time());
     ui->doubleSpinBox_calibWriteTime->setValue(c_ko4.getWrite_time());
+
+    ui->checkBox_calibCh1->setChecked(c_ko4.getK1());
+    ui->checkBox_calibCh1->setChecked(c_ko4.getK2());
+    ui->checkBox_calibCh1->setChecked(c_ko4.getK3());
+    ui->checkBox_calibCh1->setChecked(c_ko4.getK4());
+
+    ui->dateEdit_calibReagent->setDate(c_ko4.getReagent_date());
+    ui->lineEdit_calibReagentSerial->setText(c_ko4.getReagent_serial());
+    ui->dateEdit_calibKPlazma->setDate(c_ko4.getK_plazma_date());
+    ui->lineEdit_calibKPlazmaSerial->setText(c_ko4.getK_plazma_serial());
+
+    int i = c_ko4.getActivity();
+    switch (i) {
+    case 1:
+        ui->radioButton_calibTrombine1->setChecked(true);
+        break;
+    case 2:
+        ui->radioButton_calibTrombine2->setChecked(true);
+        break;
+    case 3:
+        ui->radioButton_calibTrombine3->setChecked(true);
+        break;
+    default:
+        break;
+    }
 }
 
 void Ko4::save()
@@ -300,6 +329,12 @@ void Ko4::on_pushButton_test2_clicked()
 
     t_ko4.setSingle(ui->radioButton_test2Single->isChecked());
 
+    c_ko4.setReagent_serial(ui->lineEdit_test2ReagentSerial->text());
+    c_ko4.setActivity(ui->doubleSpinBox_test2Activity->value());
+    c_ko4.setTrombine_time(ui->doubleSpinBox_test2Trombine->value());
+    c_ko4.setIncube_time(ui->doubleSpinBox_test2IncubeTime->value());
+    c_ko4.setWrite_time(ui->doubleSpinBox_test2WriteTime->value());
+    c_ko4.setReagent_date(ui->dateEdit_test2Reagent->date());
     t_ko4.save();
     emit calibration(StartTestKo4::getStart(&t_ko4));
 }
@@ -308,9 +343,9 @@ void Ko4::on_pushButton_calib_clicked()
 {
     c_ko4.setDate(QDate::currentDate());
     c_ko4.setReagent_date(ui->dateEdit_calibReagent->date());
-    c_ko4.setReagent_serial(ui->lineEdit_calibReagentSerial->text());
+    c_ko4.setReagent_serial(ui->lineEdit_calibReagentSerial->text().toUtf8());
     c_ko4.setK_plazma_date(ui->dateEdit_calibKPlazma->date());
-    c_ko4.setK_plazma_serial(ui->lineEdit_calibKPlazmaSerial->text());
+    c_ko4.setK_plazma_serial(ui->lineEdit_calibKPlazmaSerial->text().toUtf8());
     c_ko4.setIncube_time(ui->doubleSpinBox_calibIncubeTime->value());
     c_ko4.setWrite_time(ui->doubleSpinBox_calibWriteTime->value());
 
@@ -353,3 +388,17 @@ StartMeasurment* StartTestKo4::getStart(Test* t_ko4)
     return start;
 }
 
+void Ko4::on_radioButton_calibTrombine1_toggled(bool checked)
+{
+    c_ko4.setActivity(1);
+}
+
+void Ko4::on_radioButton_calibTrombine2_toggled(bool checked)
+{
+    c_ko4.setActivity(2);
+}
+
+void Ko4::on_radioButton_calibTrombine3_toggled(bool checked)
+{
+    c_ko4.setActivity(3);
+}

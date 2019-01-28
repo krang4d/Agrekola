@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>353</width>
-    <height>474</height>
+    <width>350</width>
+    <height>447</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -27,7 +27,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tabWidgetPage1">
       <attribute name="title">
@@ -105,7 +105,15 @@
           </widget>
          </item>
          <item row="3" column="1">
-          <widget class="QDateEdit" name="dateEdit_calibReagent"/>
+          <widget class="QDateEdit" name="dateEdit_calibReagent">
+           <property name="date">
+            <date>
+             <year>2019</year>
+             <month>1</month>
+             <day>1</day>
+            </date>
+           </property>
+          </widget>
          </item>
          <item row="4" column="0">
           <widget class="QLabel" name="label_calib_5">
@@ -127,7 +135,15 @@
           </widget>
          </item>
          <item row="5" column="1">
-          <widget class="QDateEdit" name="dateEdit_calibKPlazma"/>
+          <widget class="QDateEdit" name="dateEdit_calibKPlazma">
+           <property name="date">
+            <date>
+             <year>2019</year>
+             <month>1</month>
+             <day>1</day>
+            </date>
+           </property>
+          </widget>
          </item>
          <item row="6" column="0">
           <widget class="QLabel" name="label_calib_7">
@@ -145,13 +161,34 @@
           </widget>
          </item>
          <item row="0" column="1">
-          <widget class="QDoubleSpinBox" name="doubleSpinBox_calibIncubeTime_1"/>
+          <widget class="QDoubleSpinBox" name="doubleSpinBox_calibIncubeTime_1">
+           <property name="decimals">
+            <number>1</number>
+           </property>
+           <property name="minimum">
+            <double>1.000000000000000</double>
+           </property>
+          </widget>
          </item>
          <item row="1" column="1">
-          <widget class="QDoubleSpinBox" name="doubleSpinBox_calibIncubeTime_2"/>
+          <widget class="QDoubleSpinBox" name="doubleSpinBox_calibIncubeTime_2">
+           <property name="decimals">
+            <number>1</number>
+           </property>
+           <property name="minimum">
+            <double>1.000000000000000</double>
+           </property>
+          </widget>
          </item>
          <item row="7" column="1">
-          <widget class="QDoubleSpinBox" name="doubleSpinBox_calibWriteTime"/>
+          <widget class="QDoubleSpinBox" name="doubleSpinBox_calibWriteTime">
+           <property name="minimum">
+            <double>5.000000000000000</double>
+           </property>
+           <property name="maximum">
+            <double>180.000000000000000</double>
+           </property>
+          </widget>
          </item>
          <item row="6" column="1">
           <widget class="QDoubleSpinBox" name="doubleSpinBox_calibVillebrand"/>

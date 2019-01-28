@@ -18,7 +18,7 @@ Ko5::~Ko5()
 
 void Ko5::on_pushButton_calib_clicked()
 {
-    //file.saveKo5(param);
+//    file.saveKo5(param);
 //    t_ko5.setK1(ui->checkBox_testCh1->isChecked());
 //    t_ko5.setK2(ui->checkBox_testCh2->isChecked());
 //    t_ko5.setK3(ui->checkBox_testCh3->isChecked());
@@ -39,10 +39,22 @@ void Ko5::on_pushButton_calib_clicked()
     c_ko5.setIncube_time(ui->doubleSpinBox_calibIncubeTime->value());
     c_ko5.setWrite_time(ui->doubleSpinBox_calibWriteTime->value());
 
+    c_ko5.setK_protrombine_index(ui->doubleSpinBox_calibMICh->value());
+    c_ko5.setK_protrombine_otn(ui->doubleSpinBox_calibOTN->value());
+    c_ko5.setProtrombine_k_Kvik(ui->doubleSpinBox_calibKvik->value());
+
     c_ko5.setK1(ui->checkBox_calibCh1->isChecked());
     c_ko5.setK2(ui->checkBox_calibCh2->isChecked());
     c_ko5.setK3(ui->checkBox_calibCh3->isChecked());
     c_ko5.setK4(ui->checkBox_calibCh4->isChecked());
+
+    c_ko5.setK_plazma_serial(ui->lineEdit_calibKPlazmaNum->text());
+    c_ko5.setTromboplastin_date(ui->dateEdit_calibKPlazma->date());
+    c_ko5.setReagent_serial(ui->lineEdit_calibReagentSerial->text());
+    c_ko5.setReagent_date(ui->dateEdit_calibReagent->date());
+
+    ui->doubleSpinBox_calibIncubeTime->setValue(c_ko5.getIncube_time());
+    ui->doubleSpinBox_calibWriteTime->setValue(c_ko5.getWrite_time());
 
     c_ko5.save();
     emit calibration(StartCalibrationKo5::getStart(&c_ko5));
@@ -70,7 +82,7 @@ void Ko5::calibrationDataCome(int n, double deta)
 {
     //один параметр контрольной нормальной плазмы
     QDateTime dt = QDateTime::currentDateTime();
-    //ui->label_calibrationData->setText(dt.toString("dd.MM.yyyy ") + dt.toString("hh:mm:ss"));
+//  ui->label_calibrationData->setText(dt.toString("dd.MM.yyyy ") + dt.toString("hh:mm:ss"));
 //    if(param.count() <= n)
 //        param.push_back(QString("%1").arg(deta));
 //    else param.replace(n, QString("%1").arg(deta));
@@ -82,16 +94,16 @@ void Ko5::open()
 /* Старый метод загрузки параметов из TXT*/
 //    file.openKo5(param);
 //    if( !param.isEmpty() && param.count() >= 11 ) {
-//        //ui->label_calibrationData->setText(param.at(0));
+//        ui->label_calibrationData->setText(param.at(0));
 //        ui->lineEdit_1->setText(param.at(1));
-//        //ui->lineEdit_2->setText(param.at(2));
+//        ui->lineEdit_2->setText(param.at(2));
 //        ui->lineEdit_3->setText(param.at(3));
 //        ui->lineEdit_4->setText(param.at(4));
 //        ui->lineEdit_5->setText(param.at(5));
 //        ui->lineEdit_6->setText(param.at(6));
 //    } else
 //        param = QStringList({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}); //11 параметров
-    /* Новый метод загрузки параметров из XML */
+        /* Новый метод загрузки параметров из XML */
         QString str;
             str = QString("Дата проведения %1\n").arg(c_ko5.getDate().toString("dd.MM.yyyy"))
                 + QString("Номер серия реагентов %1\n").arg(c_ko5.getReagent_serial())
@@ -124,7 +136,6 @@ void Ko5::open()
         if( t_ko5.getK3() ) {
             ui->checkBox_testCh3->setChecked(true);
             ui->lineEdit_testCh3->setText(t_ko5.getNum3());
-
         }
         else {
             ui->checkBox_testCh3->setChecked(false);
@@ -133,7 +144,6 @@ void Ko5::open()
         if( t_ko5.getK4() ) {
             ui->checkBox_testCh4->setChecked(true);
             ui->lineEdit_testCh4->setText(t_ko5.getNum4());
-
         }
         else {
             ui->checkBox_testCh4->setChecked(false);
@@ -144,6 +154,13 @@ void Ko5::open()
         ui->checkBox_calibCh3->setChecked(c_ko5.getK3());
         ui->checkBox_calibCh4->setChecked(c_ko5.getK4());
 
+        ui->lineEdit_calibKPlazmaNum->setText(c_ko5.getK_plazma_serial());
+        ui->dateEdit_calibKPlazma->setDate(c_ko5.getTromboplastin_date());
+        ui->lineEdit_calibReagentSerial->setText(c_ko5.getReagent_serial());
+        ui->dateEdit_calibReagent->setDate(c_ko5.getReagent_date());
+        ui->doubleSpinBox_calibKvik->setValue(c_ko5.getProtrombine_k_Kvik());
+        ui->doubleSpinBox_calibOTN->setValue(c_ko5.getK_protrombine_otn());
+        ui->doubleSpinBox_calibMICh->setValue(c_ko5.getK_protrombine_index());
         ui->doubleSpinBox_calibIncubeTime->setValue(c_ko5.getIncube_time());
         ui->doubleSpinBox_calibWriteTime->setValue(c_ko5.getWrite_time());
 }

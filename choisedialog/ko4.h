@@ -43,6 +43,12 @@ private slots:
     void on_lineEdit_test2Ch1_textChanged(const QString &arg1);
     void on_lineEdit_test2Ch3_textChanged(const QString &arg1);
 
+    void on_radioButton_calibTrombine1_toggled(bool checked);
+
+    void on_radioButton_calibTrombine2_toggled(bool checked);
+
+    void on_radioButton_calibTrombine3_toggled(bool checked);
+
 public slots:
     void calibrationData1Come(double);
     void calibrationData2Come(double);
