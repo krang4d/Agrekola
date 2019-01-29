@@ -29,15 +29,7 @@ Widget::Widget(QWidget *parent) :
     ui->setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
     setWindowTitle("Программа сбора данных с АЦП(E-154) по 4 каналам");
-    customPlot1 = ui->frame_1;
-    ui->groupBox_f1->layout()->addWidget(pBar1);
-    customPlot2 = ui->frame_2;
-    ui->groupBox_f2->layout()->addWidget(pBar2);
-    customPlot3 = ui->frame_3;
-    ui->groupBox_f3->layout()->addWidget(pBar3);
-    customPlot4 = ui->frame_4;
-    ui->groupBox_f4->layout()->addWidget(pBar4);
-    ui->groupBox_Mix->setVisible(false);
+
     setupRealtimeData();
     setupTimers();
     installEventFilter(this);
@@ -114,8 +106,19 @@ void Widget::setUserMessage(QString str, bool withtime, bool tofile)
 }
 
 void Widget::setupRealtimeData() {
-    auto foo = [this](){ return startWin.isNull() ? : startWin->isSingle(); };
+
+    auto foo = [this]() { return startWin.isNull() ? : startWin->isSingle(); };
     if(foo()) {
+        customPlot1 = ui->frame_1;
+        ui->groupBox_f1->layout()->addWidget(pBar1);
+        customPlot2 = ui->frame_2;
+        ui->groupBox_f2->layout()->addWidget(pBar2);
+        customPlot3 = ui->frame_3;
+        ui->groupBox_f3->layout()->addWidget(pBar3);
+        customPlot4 = ui->frame_4;
+        ui->groupBox_f4->layout()->addWidget(pBar4);
+        ui->groupBox_Mix->setVisible(false);
+
         QSharedPointer<QCPAxisTickerTime> timeTicker(new QCPAxisTickerTime);
         timeTicker->setTimeFormat("%m:%s");
 
@@ -171,6 +174,15 @@ void Widget::setupRealtimeData() {
 //        plotTimer.start(0); // Interval 0 means to refresh as fast as possible
     }
     else {
+        customPlot1 = ui->frame_1;
+        ui->groupBox_f1->layout()->addWidget(pBar1);
+        ui->groupBox_f1->layout()->addWidget(pBar2);
+        customPlot2 = ui->frame_2;
+        customPlot3 = ui->frame_3;
+        ui->groupBox_f3->layout()->addWidget(pBar3);
+        ui->groupBox_f3->layout()->addWidget(pBar4);
+        customPlot4 = ui->frame_4;
+        ui->groupBox_Mix->setVisible(false);
         QSharedPointer<QCPAxisTickerTime> timeTicker(new QCPAxisTickerTime);
         timeTicker->setTimeFormat("%m:%s");
 
@@ -283,14 +295,14 @@ void Widget::realtimeDataSlot(QVariantList a) {
           customPlot1->xAxis->setRange(key, 8, Qt::AlignRight);
           customPlot1->replot();
 
-          customPlot2->xAxis->setRange(key, 8, Qt::AlignRight);
-          customPlot2->replot();
+//          customPlot2->xAxis->setRange(key, 8, Qt::AlignRight);
+//          customPlot2->replot();
 
           customPlot3->xAxis->setRange(key, 8, Qt::AlignRight);
           customPlot3->replot();
 
-          customPlot4->xAxis->setRange(key, 8, Qt::AlignRight);
-          customPlot4->replot();
+//          customPlot4->xAxis->setRange(key, 8, Qt::AlignRight);
+//          customPlot4->replot();
         }
 
         static double stop_dy1 = 0 ;
@@ -426,18 +438,6 @@ void Widget::on_pushButton_clicked()
 {
     static bool test = false;
 
-    if(startWin->isChannel(1)) ui->checkBox_1->setChecked(true); //включение перемешивания 1
-    else ui->checkBox_1->setChecked(false);
-
-    if(startWin->isChannel(2)) ui->checkBox_2->setChecked(true); //включение перемешивания 2
-    else ui->checkBox_2->setChecked(false);
-
-    if(startWin->isChannel(3)) ui->checkBox_3->setChecked(true); //включение перемешивания 3
-    else ui->checkBox_3->setChecked(false);
-
-    if(startWin->isChannel(4)) ui->checkBox_4->setChecked(true); //включение перемешивания 4
-    else ui->checkBox_4->setChecked(false);
-
     ui->pushButton->setEnabled(false);
 
     if( termoSensor ) {
@@ -463,18 +463,106 @@ void Widget::on_pushButton_clicked()
         pBar4->setValue(pBar4->getMaximum());
     }
 
-    if(getMode() == Test_ID) {
+    switch (getMode()) {
+    case Test_ID:
         test = true;
-        startWin.clear();
-        startWin = QPointer<StartMeasurment>(new StartMeasurment(0));
-        startWin->setMode(Test_ID);
-        startWin->show();
-        connect(startWin.data(), &StartMeasurment::startMeasurment, [=](){ startMeasurment();
-            disconnect(startWin.data(), &StartMeasurment::startMeasurment, 0, 0);
-            startWin->hide();
-            });
-    }
-    if(getMode() == Level_ID) {
+        QMessageBox::StandardButton button;
+        //Проверка Перемешивания в канале 1
+        emit onmixch1(true);
+        setUserMessage(QString("Контроль включения перемешивания в канале 1"));
+
+        button = QMessageBox::question(this, "Канал 1 - проверка",
+                                       "Проконтролируте включение перемешивания в канале 1");
+        if(button == QMessageBox::Yes) {
+           emit onmixch1(false);
+           setUserMessage("Перемешивания в канале 1 - <span style='color:blue'>НОРМА</span>");
+        }
+        else {
+           setUserMessage(QString("Перемешивания в канале 1 - <span style='color:red'>БРАК</span>"));
+           return;
+        }
+        //Проверка Перемешивания в канале 2
+        emit onmixch2(true);
+        setUserMessage(QString("Контроль включения перемешивания в канале 2"));
+        button = QMessageBox::question(this, "Канал 2 - проверка",
+                                       "Проконтролируте включение перемешивания в канале 2");
+        if(button == QMessageBox::Yes) {
+          emit onmixch2(false);
+          setUserMessage("Перемешивания в канале 2 - <span style='color:blue'>НОРМА</span>");
+        }
+        else {
+            setUserMessage(QString("Перемешивания в канале 2 - <span style='color:red'>БРАК</span>"));
+            return;
+        }
+
+        //Проверка Перемешивания в канале 3
+        emit onmixch3(true);
+        setUserMessage(QString("Контроль включения перемешивания в канале 3"));
+        button = QMessageBox::question(this, "Канал 3 - проверка",
+                                       "Проконтролируте включение перемешивания в канале 3");
+        if(button == QMessageBox::Yes) {
+         emit onmixch3(false);
+         setUserMessage("Перемешивания в канале 3 - <span style='color:blue'>НОРМА</span>");
+        }
+        else {
+            setUserMessage(QString("Перемешивания в канале 3 - <span style='color:red'>БРАКa</span>"));
+            return;
+        }
+
+        //Проверка Перемешивания в канале 4
+        emit onmixch4(true);
+        setUserMessage(QString("Контроль включения перемешивания в канале 4"));
+        button = QMessageBox::question(this, "Канал 4 - проверка",
+                                       "Проконтролируте включение перемешивания в канале 4");
+        if(button == QMessageBox::Yes) {
+            emit onmixch4(false);
+            setUserMessage("Перемешивания в канале 4 - <span style='color:blue'>НОРМА</span>");
+        }
+        else {
+            setUserMessage(QString("Перемешивания в канале 4 - <span style='color:red'>БРАК</span>"));
+            return;
+        }
+        //Проверка Перемешивания в канале РР
+        emit onmixpp(true);
+        setUserMessage(QString("Контроль включения перемешивания в канале РР"));
+        button = QMessageBox::question(this, "Канал РР - проверка",
+                                       "Проконтролируте включение перемешивания в канале РР");
+        if(button == QMessageBox::Yes) {
+            emit onmixpp(false);
+            setUserMessage("Перемешивания в канале РР - <span style='color:blue'>НОРМА</span>");
+        }
+        else {
+            setUserMessage(QString("Перемешивания в канале РР - <span style='color:red'>БРАК</span>"));
+            return;
+        }
+
+        //Проверка включения лезерных излучателей
+        emit onlaser(true);
+        setUserMessage(QString("Контроль включения лазерных излучателей"));
+        button = QMessageBox::question(this, "Лазерные излучетели - проверка",
+                                       "Проконтролируте включение лазерных ихлучателей");
+        if(button == QMessageBox::Yes) {
+            emit onlaser(false);
+            setUserMessage("Лазерные излучатели - <span style='color:blue'>НОРМА</span>");
+        }
+        else {
+            setUserMessage(QString("Лазерные излучатели - <div style='color:red'>БРАК</span>"));
+            return;
+        }
+        break;
+    case Level_ID:
+        if(startWin->isChannel(1)) ui->checkBox_1->setChecked(true); //включение перемешивания 1
+        else ui->checkBox_1->setChecked(false);
+
+        if(startWin->isChannel(2)) ui->checkBox_2->setChecked(true); //включение перемешивания 2
+        else ui->checkBox_2->setChecked(false);
+
+        if(startWin->isChannel(3)) ui->checkBox_3->setChecked(true); //включение перемешивания 3
+        else ui->checkBox_3->setChecked(false);
+
+        if(startWin->isChannel(4)) ui->checkBox_4->setChecked(true); //включение перемешивания 4
+        else ui->checkBox_4->setChecked(false);
+
         if(test) {
             connect(startWin.data(), &StartMeasurment::startMeasurment, [=](StartMeasurment* sm){
                 setStartWindow(sm);
@@ -492,9 +580,19 @@ void Widget::on_pushButton_clicked()
             startData(3);
             startData(4);
         }
+        break;
+    default:
+        if(startWin->isChannel(1)) ui->checkBox_1->setChecked(true); //включение перемешивания 1
+        else ui->checkBox_1->setChecked(false);
 
-    }
-    else {
+        if(startWin->isChannel(2)) ui->checkBox_2->setChecked(true); //включение перемешивания 2
+        else ui->checkBox_2->setChecked(false);
+
+        if(startWin->isChannel(3)) ui->checkBox_3->setChecked(true); //включение перемешивания 3
+        else ui->checkBox_3->setChecked(false);
+
+        if(startWin->isChannel(4)) ui->checkBox_4->setChecked(true); //включение перемешивания 4
+        else ui->checkBox_4->setChecked(false);
         if(test) {
             connect(startWin.data(), &StartMeasurment::startMeasurment, [=](StartMeasurment* sm){
                 startMeasurment(sm);
@@ -504,7 +602,8 @@ void Widget::on_pushButton_clicked()
         } else {
             startMeasurment();
         }
-    }
+        break;
+    } //end switch(getMode())
 }
 
 void Widget::updataTermo(bool td)
