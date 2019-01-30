@@ -106,15 +106,15 @@ void Agr2::open()
 
 void Agr2::save()
 {
-    //param.clear();
-    //param.replace(0, ui->label_calibrationData->text());
+//    param.clear();
+//    param.replace(0, ui->label_calibrationData->text());
 //    param.replace(1, ui->lineEdit_1->text());
 //    param.replace(2, ui->lineEdit_2->text());
 //    param.replace(3, ui->lineEdit_3->text());
 //    param.replace(4, ui->lineEdit_4->text());
 //    param.replace(5, ui->lineEdit_5->text());
 //    param.replace(6, ui->lineEdit_6->text());
-    //file.saveAgr2(param);
+//    file.saveAgr2(param);
 
     c_agr2.setIncube_time(ui->doubleSpinBox_calibIncubeTime_1->value());
     c_agr2.setIncube_time_2(ui->doubleSpinBox_calibIncubeTime_2->value());
@@ -155,6 +155,7 @@ void Agr2::on_pushButton_calib_clicked()
     //c_agr2.setK_plazma_serial(ui->lineEdit_calibKPlazmaNum->text());
     //c_agr2.setIncube_time(ui->doubleSpinBox_calibIncubeTime_1->value());
     c_agr2.setWrite_time(ui->doubleSpinBox_calibWriteTime->value());
+    c_agr2.setIncube_time_2(ui->doubleSpinBox_calibIncubeTime_2->value());
 
     c_agr2.setK1(ui->checkBox_calibCh1->isChecked());
     c_agr2.setK2(ui->checkBox_calibCh2->isChecked());
@@ -162,7 +163,7 @@ void Agr2::on_pushButton_calib_clicked()
     c_agr2.setK4(ui->checkBox_calibCh4->isChecked());
 
     c_agr2.save();
-    //emit calibration(StartCalibrationAgr2::getStart());
+    emit calibration(StartCalibrationAgr2::getStart(&c_agr2));
 }
 
 void Agr2::on_pushButton_test_clicked()
@@ -180,6 +181,7 @@ void Agr2::on_pushButton_test_clicked()
     t_agr2.setSingle(ui->radioButton_testSingle->isChecked());
 
     t_agr2.save();
+    emit measurement(StartTestAgr2::getStart(&t_agr2));
 }
 
 void Agr2::on_radioButton_testSingle_toggled(bool checked)
@@ -243,30 +245,52 @@ void Agr2::on_lineEdit_testCh3_textChanged(const QString &arg1)
         ui->lineEdit_testCh4->setText(arg1);
 }
 
-StartMeasurment *StartCalibrationAgr2::getStart()
+StartMeasurement *StartCalibrationAgr2::getStart(Calibration* c_agr2)
 {
-    StartMeasurment *sm = new StartMeasurment(0);
-    sm->setChannels(true, true, true, true);
-    sm->setNum(1, "Калибровка");
-    sm->setNum(2, "Калибровка");
-    sm->setNum(3, "Калибровка");
-    sm->setNum(4, "Калибровка");
-    sm->setTime(10);
-    sm->setTimeIncube(1, 3);
-    sm->setTimeIncube(2, 4);
+    CalibrationAgr2* obj = nullptr;
+    if(typeid(*c_agr2) == typeid(CalibrationAgr2)) {
+        obj = dynamic_cast<CalibrationAgr2*>(c_agr2);
+        qDebug() << QString("c_agr2 get pointer to an object of type: true, incube_time2 is %1")
+                    .arg(obj->getIncube_time_2());
+    }
+    else {
+        throw Error_Agr2_Type_ID("c_agr2 get pointer to an object of type: false");
+    }
+
+    StartMeasurement *start = new StartMeasurement(0);
+    start->setChannels(c_agr2->getK1(), c_agr2->getK2(), c_agr2->getK3(), c_agr2->getK4());
+    start->setNum(1, "Калибровка");
+    start->setNum(2, "Калибровка");
+    start->setNum(3, "Калибровка");
+    start->setNum(4, "Калибровка");
+    start->setTime(c_agr2->getWrite_time());
+    start->setTimeIncube(1, c_agr2->getIncube_time());
+    start->setTimeIncube(2, obj->getIncube_time_2());
     //stKo2->cancel = false;
-    return sm;
+    return start;
 }
 
-StartMeasurment *StartTestAgr2::getStart()
+StartMeasurement *StartTestAgr2::getStart(Test* t_agr2)
 {
-    StartMeasurment *sm = new StartMeasurment(0);
-    sm->setChannels(true, true, true, true);
-    sm->setNum(1, "Измерение");
-    sm->setNum(2, "Измерение");
-    sm->setNum(3, "Измерение");
-    sm->setNum(4, "Измерение");
-    sm->setTime(10);
-    sm->setTimeIncube(1, 3);
-    return sm;
+    TestAgr2* obj = nullptr;
+    if(typeid(*t_agr2) == typeid(TestAgr2)) {
+        obj = dynamic_cast<TestAgr2*>(t_agr2);
+        qDebug() << QString("t_agr2 get pointer to an object of type: true, incube_time2 is %1")
+                    .arg(obj->getIncubeTime2());
+    }
+    else {
+        throw Error_Agr2_Type_ID("t_agr2 get pointer to an object of type: false");
+    }
+
+    StartMeasurement *start = new StartMeasurement(0);
+    start->setChannels(t_agr2->getK1(), t_agr2->getK2(), t_agr2->getK3(), t_agr2->getK4());
+    start->setNum(1, t_agr2->getNum1());
+    start->setNum(2, t_agr2->getNum2());
+    start->setNum(3, t_agr2->getNum3());
+    start->setNum(4, t_agr2->getNum4());
+    start->setTime(t_agr2->getWriteTime());
+    start->setMode(1, obj->getIncubeTime2());
+    start->setTimeIncube(1, t_agr2->getIncubeTime());
+    start->setTimeIncube(2, obj->getIncubeTime2());
+    return start;
 }

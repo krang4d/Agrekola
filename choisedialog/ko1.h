@@ -3,7 +3,7 @@
 
 #include <QWidget>
 #include "savefiles.h"
-#include "startmeasurment.h"
+#include "startmeasurement.h"
 #include "globalvalue.h"
 
 namespace Ui {
@@ -32,7 +32,7 @@ private slots:
     void on_lineEdit_testCh3_textChanged(const QString &arg1);
 
 signals:
-    void measurement(StartMeasurment*);
+    void measurement(StartMeasurement*);
 
 private:
     Ui::Ko1 *ui;
@@ -40,12 +40,12 @@ private:
     CalibrationKo1 c_ko1;
 };
 
-class StartTestKo1 : public StartMeasurment
+class StartTestKo1 : public StartMeasurement
 {
     Q_OBJECT
 public:
     StartTestKo1() = delete;
-    static StartMeasurment* getStart(Test* t_ko1);
+    static StartMeasurement* getStart(Test* t_ko1);
 };
 
 #endif // KO1_H

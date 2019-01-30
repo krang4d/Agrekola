@@ -3,7 +3,7 @@
 
 #include <QWidget>
 #include <QStringList>
-#include "startmeasurment.h"
+#include "startmeasurement.h"
 
 struct Error_Agr1_Type_ID
 {
@@ -48,8 +48,8 @@ public slots:
     void calibrationData4Come(double);
 
 signals:
-    void measurement(StartMeasurment*);
-    void calibration(StartMeasurment*);
+    void measurement(StartMeasurement*);
+    void calibration(StartMeasurement*);
 
 private:
     Ui::Agr1 *ui;
@@ -57,22 +57,22 @@ private:
     CalibrationAgr1 c_agr1;
 };
 
-class StartCalibrationAgr1 : public StartMeasurment
+class StartCalibrationAgr1 : public StartMeasurement
 {
     Q_OBJECT
 public:
     StartCalibrationAgr1() = delete;
-    static StartMeasurment *getStart(Calibration*);
-    static StartMeasurment *getBTP100();
-    static StartMeasurment *getOTP0();
+    static StartMeasurement *getStart(Calibration*);
+    static StartMeasurement *getBTP100();
+    static StartMeasurement *getOTP0();
 };
 
-class StartTestAgr1 : public StartMeasurment
+class StartTestAgr1 : public StartMeasurement
 {
     Q_OBJECT
 public:
     StartTestAgr1() = delete;
-    static StartMeasurment* getStart(Test* t_agr1);
+    static StartMeasurement* getStart(Test* t_agr1);
 };
 
 

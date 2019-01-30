@@ -3,7 +3,7 @@
 
 #include <QWidget>
 #include "savefiles.h"
-#include "startmeasurment.h"
+#include "startmeasurement.h"
 
 namespace Ui {
 class Ko4;
@@ -56,8 +56,8 @@ public slots:
     void calibrationData4Come(double);
 
 signals:
-    void measurement(StartMeasurment*);
-    void calibration(StartMeasurment*);
+    void measurement(StartMeasurement*);
+    void calibration(StartMeasurement*);
 
 private:
     Ui::Ko4 *ui;
@@ -68,20 +68,20 @@ private:
     CalibrationKo4 c_ko4;
 };
 
-class StartCalibrationKo4 : public StartMeasurment
+class StartCalibrationKo4 : public StartMeasurement
 {
     Q_OBJECT
 public:
     StartCalibrationKo4() = delete;
-    static StartMeasurment* getStart(Calibration* t_ko4);
+    static StartMeasurement* getStart(Calibration* t_ko4);
 };
 
-class StartTestKo4 : public StartMeasurment
+class StartTestKo4 : public StartMeasurement
 {
     Q_OBJECT
 public:
     StartTestKo4() = delete;
-    static StartMeasurment* getStart(Test* c_ko4);
+    static StartMeasurement* getStart(Test* c_ko4);
 };
 
 #endif // KO4_H

@@ -1,5 +1,5 @@
-#ifndef STARTMEASURMENT_H
-#define STARTMEASURMENT_H
+#ifndef STARTMEASUREMENT_H
+#define STARTMEASUREMENT_H
 
 #include <QDialog>
 #include <QString>
@@ -9,17 +9,17 @@
 #include "globalvalue.h"
 
 namespace Ui {
-class StartMeasurment;
+class StartMeasurement;
 }
 
-class StartMeasurment : public QDialog
+class StartMeasurement : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit StartMeasurment(QDialog *parent = 0);
-    StartMeasurment(int = 0, QDialog *parent = 0);
-    ~StartMeasurment();
+    explicit StartMeasurement(QDialog *parent = 0);
+    StartMeasurement(int = 0, QDialog *parent = 0);
+    ~StartMeasurement();
 
     bool isCancel();
     bool isSingle();
@@ -68,13 +68,13 @@ public slots:
     //  void on_pushButton_cancel_clicked();
 
 signals:
-    startMeasurment(StartMeasurment*);
+    startMeasurment(StartMeasurement*);
 
 private slots:
     void on_comboBox_inductor_currentIndexChanged(const QString &arg1);
 
 private:
-    Ui::StartMeasurment *ui;
+    Ui::StartMeasurement *ui;
     SaveFiles file;
     QStringList param;
     bool cancel;
@@ -86,4 +86,4 @@ private:
     Mode_ID modeID;
 };
 
-#endif // STARTMEASURMENT_H
+#endif // STARTMEASUREMENT_H

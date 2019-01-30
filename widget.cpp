@@ -24,7 +24,7 @@ Widget::Widget(QWidget *parent) :
     pBar1(new ProgressTimerBar), pBar2(new ProgressTimerBar),
     pBar3(new ProgressTimerBar), pBar4(new ProgressTimerBar),
     Start_DX(0.1), Stop_DX(0.1), MIN(-6.0), MAX(6.0),
-    startWin(new StartMeasurment(0))
+    startWin(new StartMeasurement(0))
 {
     ui->setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
@@ -41,17 +41,17 @@ Widget::Widget(QWidget *parent) :
     connect(this, &Widget::stopData4, [this](){  stopData( 4 ); qDebug() << "emit stopData4"; });
 }
 
-Widget::Widget(StartMeasurment *sw, QWidget *parent) : Widget(parent)
+Widget::Widget(StartMeasurement *sw, QWidget *parent) : Widget(parent)
 {
     startWin.clear();    
-    startWin = QPointer<StartMeasurment>(sw);
+    startWin = QPointer<StartMeasurement>(sw);
     setupWidget();
 }
 
-void Widget::setStartWindow(StartMeasurment *sw)
+void Widget::setStartWindow(StartMeasurement *sw)
 {
     startWin.clear();
-    startWin = QPointer<StartMeasurment>(sw);
+    startWin = QPointer<StartMeasurement>(sw);
     setupWidget();
 }
 
@@ -465,6 +465,7 @@ void Widget::on_pushButton_clicked()
 
     switch (getMode()) {
     case Test_ID:
+        setUserMessage("Проверка работопособности");
         test = true;
         QMessageBox::StandardButton button;
         //Проверка Перемешивания в канале 1
@@ -564,13 +565,13 @@ void Widget::on_pushButton_clicked()
         else ui->checkBox_4->setChecked(false);
 
         if(test) {
-            connect(startWin.data(), &StartMeasurment::startMeasurment, [=](StartMeasurment* sm){
+            connect(startWin.data(), &StartMeasurement::startMeasurment, [=](StartMeasurement* sm){
                 setStartWindow(sm);
                 startData(1);
                 startData(2);
                 startData(3);
                 startData(4);
-                disconnect(startWin.data(), &StartMeasurment::startMeasurment, 0, 0);
+                disconnect(startWin.data(), &StartMeasurement::startMeasurment, 0, 0);
                 startWin->hide();
                 });
             startWin->show();
@@ -594,9 +595,9 @@ void Widget::on_pushButton_clicked()
         if(startWin->isChannel(4)) ui->checkBox_4->setChecked(true); //включение перемешивания 4
         else ui->checkBox_4->setChecked(false);
         if(test) {
-            connect(startWin.data(), &StartMeasurment::startMeasurment, [=](StartMeasurment* sm){
+            connect(startWin.data(), &StartMeasurement::startMeasurment, [=](StartMeasurement* sm){
                 startMeasurment(sm);
-                disconnect(startWin.data(), &StartMeasurment::startMeasurment, 0, 0);
+                disconnect(startWin.data(), &StartMeasurement::startMeasurment, 0, 0);
             });
             startWin->show();
         } else {
@@ -632,9 +633,9 @@ void Widget::startMeasurment()
     else startIncub(1);
 }
 
-void Widget::startMeasurment(StartMeasurment *s)
+void Widget::startMeasurment(StartMeasurement *s)
 {
-    startWin  = QPointer<StartMeasurment>(s);
+    startWin  = QPointer<StartMeasurement>(s);
     startMeasurment();
 }
 

@@ -6,7 +6,13 @@
 #include "selectcalibrationagr1.h"
 #include "selectinductor.h"
 #include "savefiles.h"
-#include "startmeasurment.h"
+#include "startmeasurement.h"
+
+struct Error_Agr2_Type_ID
+{
+    QString err_msg;
+    Error_Agr2_Type_ID(const QString &m) : err_msg(m) {}
+};
 
 namespace Ui {
 class Agr2;
@@ -46,8 +52,8 @@ private:
     void save();
 
 signals:
-    void measurement(StartMeasurment *);
-    void calibration(StartMeasurment *);
+    void measurement(StartMeasurement *);
+    void calibration(StartMeasurement *);
 
 private:
     Ui::Agr2 *ui;
@@ -58,20 +64,20 @@ private:
     CalibrationAgr2 c_agr2;
 };
 
-class StartTestAgr2 : public StartMeasurment
+class StartTestAgr2 : public StartMeasurement
 {
     Q_OBJECT
 public:
     StartTestAgr2() = delete;
-    static StartMeasurment* getStart();
+    static StartMeasurement* getStart(Test *t_agr2);
 };
 
-class StartCalibrationAgr2 : public StartMeasurment
+class StartCalibrationAgr2 : public StartMeasurement
 {
     Q_OBJECT
 public:
     StartCalibrationAgr2() = delete;
-    static StartMeasurment *getStart();
+    static StartMeasurement *getStart(Calibration *c_agr2);
 };
 
 #endif // AGR2_H

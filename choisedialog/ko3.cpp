@@ -258,9 +258,9 @@ void Ko3::on_lineEdit_testCh3_textChanged(const QString &arg1)
         ui->lineEdit_testCh4->setText(arg1);
 }
 
-StartMeasurment* StartCalibrationKo3::getStart(Calibration* c_ko3)
+StartMeasurement* StartCalibrationKo3::getStart(Calibration* c_ko3)
 {
-    StartMeasurment *start = new StartMeasurment(0);
+    StartMeasurement *start = new StartMeasurement(0);
     start->setChannels(c_ko3->getK1(), c_ko3->getK2(), c_ko3->getK3(), c_ko3->getK4());
     start->setNum(1, "Калибровка");
     start->setNum(2, "Калибровка");
@@ -273,9 +273,9 @@ StartMeasurment* StartCalibrationKo3::getStart(Calibration* c_ko3)
     return start;
 }
 
-StartMeasurment* StartTestKo3::getStart(Test* t_ko3)
+StartMeasurement* StartTestKo3::getStart(Test* t_ko3)
 {
-    StartMeasurment *start = new StartMeasurment(0);
+    StartMeasurement *start = new StartMeasurement(0);
     start->setChannels(t_ko3->getK1(), t_ko3->getK2(), t_ko3->getK3(), t_ko3->getK4());
     start->setNum(1, t_ko3->getNum1());
     start->setNum(2, t_ko3->getNum2());

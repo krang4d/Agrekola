@@ -197,9 +197,9 @@ void Agr1::on_lineEdit_testCh3_textChanged(const QString &arg1)
         ui->lineEdit_testCh4->setText(arg1);
 }
 
-StartMeasurment *StartCalibrationAgr1::getStart(Calibration *c_agr1)
+StartMeasurement *StartCalibrationAgr1::getStart(Calibration *c_agr1)
 {
-    StartMeasurment *start = new StartMeasurment(0);
+    StartMeasurement *start = new StartMeasurement(0);
     start->setChannels(c_agr1->getK1(), c_agr1->getK2(), c_agr1->getK3(), c_agr1->getK4());
     start->setNum(1, "Калибровка");
     start->setNum(2, "Калибровка");
@@ -212,9 +212,9 @@ StartMeasurment *StartCalibrationAgr1::getStart(Calibration *c_agr1)
     return start;
 }
 
-StartMeasurment *StartCalibrationAgr1::getBTP100()
+StartMeasurement *StartCalibrationAgr1::getBTP100()
 {
-    StartMeasurment *start = new StartMeasurment(0);
+    StartMeasurement *start = new StartMeasurement(0);
     start->setChannels(true, true, true, true);
     start->setNum(1, "БТП");
     start->setNum(2, "БТП");
@@ -225,9 +225,9 @@ StartMeasurment *StartCalibrationAgr1::getBTP100()
     return start;
 }
 
-StartMeasurment *StartCalibrationAgr1::getOTP0()
+StartMeasurement *StartCalibrationAgr1::getOTP0()
 {
-    StartMeasurment *start = new StartMeasurment(0);
+    StartMeasurement *start = new StartMeasurement(0);
     start->setChannels(true, true, true, true);
     start->setNum(1, "ОТП");
     start->setNum(2, "ОТП");
@@ -238,18 +238,18 @@ StartMeasurment *StartCalibrationAgr1::getOTP0()
     return start;
 }
 
-StartMeasurment *StartTestAgr1::getStart(Test* t_agr1)
+StartMeasurement *StartTestAgr1::getStart(Test* t_agr1)
 {
     //static_cast<CalibrationAgr1>(c_agr1).getIncube_time_2()
     TestAgr1* obj = nullptr;
     if(typeid(*t_agr1) == typeid(TestAgr1)) {
         obj = dynamic_cast<TestAgr1*>(t_agr1);
-        qDebug() << QString("c_agr1 is pointer to an object of type: true, incube_time2 is %1").arg(obj->getIncubeTime2());
+        qDebug() << QString("c_agr1 get pointer to an object of type: true, incube_time2 is %1").arg(obj->getIncubeTime2());
     }
     else {
-        throw Error_Agr1_Type_ID("c_agr1 is pointer to an object of type: false");
+        throw Error_Agr1_Type_ID("c_agr1 get pointer to an object of type: false");
     }
-    StartMeasurment *start = new StartMeasurment(0);
+    StartMeasurement *start = new StartMeasurement(0);
     start->setChannels(t_agr1->getK1(), t_agr1->getK2(), t_agr1->getK3(), t_agr1->getK4());
     start->setNum(1, t_agr1->getNum1());
     start->setNum(2, t_agr1->getNum2());

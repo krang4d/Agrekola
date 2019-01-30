@@ -41,7 +41,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::newShow(StartMeasurment* sw)
+void MainWindow::newShow(StartMeasurement* sw)
 {
     show();
     int i = ch->getTypeOfWidget();

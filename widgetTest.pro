@@ -35,7 +35,6 @@ SOURCES +=  main.cpp\
     choisedialog/ko3.cpp \
     choisedialog/ko4.cpp \
     choisedialog/ko5.cpp \
-    startmeasurment.cpp  \
     widget.cpp \
     useE154.cpp \
     LoadDll.cpp \
@@ -47,7 +46,8 @@ SOURCES +=  main.cpp\
     incubation.cpp \
     options.cpp \
     calibparam.cpp \
-    ../XML/KoAgrXML/koagrxml.cpp
+    ../XML/KoAgrXML/koagrxml.cpp \
+    startmeasurement.cpp
 
 HEADERS  += selectcalibrationagr1.h \
     selectinductor.h \
@@ -64,7 +64,6 @@ HEADERS  += selectcalibrationagr1.h \
     choisedialog/ko3.h \
     choisedialog/ko4.h \
     choisedialog/ko5.h \
-    startmeasurment.h  \
     widget.h \
     useE154.h \
     LoadDll.h \
@@ -79,7 +78,8 @@ HEADERS  += selectcalibrationagr1.h \
     options.h \
     calibparam.h \
     globalvalue.h \
-    ../XML/KoAgrXML/koagrxml.h
+    ../XML/KoAgrXML/koagrxml.h \
+    startmeasurement.h
 
 
 FORMS    += selectcalibrationagr1.ui \
@@ -97,12 +97,12 @@ FORMS    += selectcalibrationagr1.ui \
     choisedialog/ko3.ui \
     choisedialog/ko4.ui \
     choisedialog/ko5.ui \
-    startmeasurment.ui \
     widget.ui \
     progresstimerbar.ui \
     impulewaiter.ui \
     options.ui \
-    calibparam.ui
+    calibparam.ui \
+    startmeasurement.ui
 
 RESOURCES += \
     rcfile.qrc

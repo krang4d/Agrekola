@@ -2,7 +2,7 @@
 #include "ui_choisedialog.h"
 #include <QDebug>
 #include <QThread>
-#include "startmeasurment.h"
+#include "startmeasurement.h"
 #include "globalvalue.h"
 
 ChoiseDialog::ChoiseDialog(QDialog *parent) :
@@ -30,20 +30,20 @@ ChoiseDialog::ChoiseDialog(QDialog *parent) :
     ko4 = static_cast<Ko4 *>(ui->stackedWidget->widget(6));
     ko5 = static_cast<Ko5 *>(ui->stackedWidget->widget(7));
 
-    connect(agr1, SIGNAL(measurement(StartMeasurment*)), SLOT(startMeasurement(StartMeasurment*)));
-    connect(agr2, SIGNAL(measurement(StartMeasurment*)), SLOT(startMeasurement(StartMeasurment*)));
-    connect(ko1, SIGNAL(measurement(StartMeasurment*)), SLOT(startMeasurement(StartMeasurment*)));
-    connect(ko2, SIGNAL(measurement(StartMeasurment*)), SLOT(startMeasurement(StartMeasurment*)));
-    connect(ko3, SIGNAL(measurement(StartMeasurment*)), SLOT(startMeasurement(StartMeasurment*)));
-    connect(ko4, SIGNAL(measurement(StartMeasurment*)), SLOT(startMeasurement(StartMeasurment*)));
-    connect(ko5, SIGNAL(measurement(StartMeasurment*)), SLOT(startMeasurement(StartMeasurment*)));
+    connect(agr1, SIGNAL(measurement(StartMeasurement*)), SLOT(startMeasurement(StartMeasurement*)));
+    connect(agr2, SIGNAL(measurement(StartMeasurement*)), SLOT(startMeasurement(StartMeasurement*)));
+    connect(ko1, SIGNAL(measurement(StartMeasurement*)), SLOT(startMeasurement(StartMeasurement*)));
+    connect(ko2, SIGNAL(measurement(StartMeasurement*)), SLOT(startMeasurement(StartMeasurement*)));
+    connect(ko3, SIGNAL(measurement(StartMeasurement*)), SLOT(startMeasurement(StartMeasurement*)));
+    connect(ko4, SIGNAL(measurement(StartMeasurement*)), SLOT(startMeasurement(StartMeasurement*)));
+    connect(ko5, SIGNAL(measurement(StartMeasurement*)), SLOT(startMeasurement(StartMeasurement*)));
 
-    connect(agr1, SIGNAL(calibration(StartMeasurment*)), SLOT(calibration(StartMeasurment*)));
-    connect(agr2, SIGNAL(calibration(StartMeasurment*)), SLOT(calibration(StartMeasurment*)));
-    connect(ko2, SIGNAL(calibration(StartMeasurment*)), SLOT(calibration(StartMeasurment*)));
-    connect(ko3, SIGNAL(calibration(StartMeasurment*)), SLOT(calibration(StartMeasurment*)));
-    connect(ko5, SIGNAL(calibration(StartMeasurment*)), SLOT(calibration(StartMeasurment*)));
-    connect(ko4, SIGNAL(calibration(StartMeasurment*)), SLOT(calibration(StartMeasurment*)));
+    connect(agr1, SIGNAL(calibration(StartMeasurement*)), SLOT(calibration(StartMeasurement*)));
+    connect(agr2, SIGNAL(calibration(StartMeasurement*)), SLOT(calibration(StartMeasurement*)));
+    connect(ko2, SIGNAL(calibration(StartMeasurement*)), SLOT(calibration(StartMeasurement*)));
+    connect(ko3, SIGNAL(calibration(StartMeasurement*)), SLOT(calibration(StartMeasurement*)));
+    connect(ko5, SIGNAL(calibration(StartMeasurement*)), SLOT(calibration(StartMeasurement*)));
+    connect(ko4, SIGNAL(calibration(StartMeasurement*)), SLOT(calibration(StartMeasurement*)));
     qDebug() << "ChoiseDialog thread ID: " << QThread::currentThreadId();
 }
 
@@ -52,7 +52,7 @@ int ChoiseDialog::getTypeOfWidget() const
     return ui->stackedWidget->currentIndex();
 }
 
-QPointer<Widget> ChoiseDialog::CreateWidgetThread(StartMeasurment *sm)
+QPointer<Widget> ChoiseDialog::CreateWidgetThread(StartMeasurement *sm)
 {
     QPointer<useE154> agrekola = new useE154;
     QPointer<Widget> widget;
@@ -95,14 +95,14 @@ void ChoiseDialog::on_testButton_clicked()
     hide();
 }
 
-void ChoiseDialog::startMeasurement(StartMeasurment* sw)
+void ChoiseDialog::startMeasurement(StartMeasurement* sw)
 {
     QPointer<MainWindow> mw = new MainWindow(this);
     mw->newShow(sw);
     hide();
 }
 
-void ChoiseDialog::calibration(StartMeasurment* sw)
+void ChoiseDialog::calibration(StartMeasurement* sw)
 {
     int i = ui->stackedWidget->currentIndex();
     QPointer<Widget> widget= CreateWidgetThread(sw);

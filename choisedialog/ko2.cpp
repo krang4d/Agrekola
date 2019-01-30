@@ -382,9 +382,9 @@ void Ko2::on_pushButton_calib_clicked()
     emit calibration(StartCalibrationKo2::getStart(&c_ko2));
 }
 
-StartMeasurment* StartCalibrationKo2::getStart(Calibration* c_ko2)
+StartMeasurement* StartCalibrationKo2::getStart(Calibration* c_ko2)
 {
-    StartMeasurment* start = new StartMeasurment(0);
+    StartMeasurement* start = new StartMeasurement(0);
     start->setChannels(c_ko2->getK1(), c_ko2->getK2(), c_ko2->getK3(), c_ko2->getK4());
     start->setNum(1, "Калибровка");
     start->setNum(2, "Калибровка");
@@ -398,9 +398,9 @@ StartMeasurment* StartCalibrationKo2::getStart(Calibration* c_ko2)
     return start;
 }
 
-StartMeasurment* StartTestKo2::getStart(Test* t_ko2)
+StartMeasurement* StartTestKo2::getStart(Test* t_ko2)
 {
-    StartMeasurment* start = new StartMeasurment(0);
+    StartMeasurement* start = new StartMeasurement(0);
     start->setChannels(t_ko2->getK1(), t_ko2->getK2(), t_ko2->getK3(), t_ko2->getK4());
     start->setNum(1, t_ko2->getNum1());
     start->setNum(2, t_ko2->getNum2());
@@ -408,6 +408,7 @@ StartMeasurment* StartTestKo2::getStart(Test* t_ko2)
     start->setNum(4, t_ko2->getNum4());
     start->setTime(t_ko2->getWriteTime());
     start->setTimeIncube(1, t_ko2->getIncubeTime());
+    start->setMode(0, t_ko2->getSingle());          //одиночные пробы
     start->setModeID(TestKo2_ID);
     //stKo2->cancel = false;
     return start;

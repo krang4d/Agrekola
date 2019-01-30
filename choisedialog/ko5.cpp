@@ -259,9 +259,9 @@ void Ko5::on_lineEdit_testCh3_textChanged(const QString &arg1)
         ui->lineEdit_testCh4->setText(arg1);
 }
 
-StartMeasurment *StartTestKo5::getStart(Test* t_ko5)
+StartMeasurement *StartTestKo5::getStart(Test* t_ko5)
 {
-    StartMeasurment *start = new StartMeasurment(0);
+    StartMeasurement *start = new StartMeasurement(0);
     start->setChannels(t_ko5->getK1(), t_ko5->getK2(), t_ko5->getK2(), t_ko5->getK4());
     start->setNum(1, t_ko5->getNum1());
     start->setNum(2, t_ko5->getNum2());
@@ -269,14 +269,14 @@ StartMeasurment *StartTestKo5::getStart(Test* t_ko5)
     start->setNum(4, t_ko5->getNum4());
     start->setTime(t_ko5->getWriteTime());
     start->setTimeIncube(1, t_ko5->getIncubeTime());
-    start->setMode(0);
+    start->setMode(0, t_ko5->getSingle());
     start->setModeID(TestKo5_ID);
     return start;
 }
 
-StartMeasurment *StartCalibrationKo5::getStart(Calibration* c_ko5)
+StartMeasurement *StartCalibrationKo5::getStart(Calibration* c_ko5)
 {
-    StartMeasurment *start = new StartMeasurment(0);
+    StartMeasurement *start = new StartMeasurement(0);
     start->setChannels(c_ko5->getK1(), c_ko5->getK2(), c_ko5->getK3(), c_ko5->getK4());
     start->setNum(1, "Калибровка");
     start->setNum(2, "Калибровка");

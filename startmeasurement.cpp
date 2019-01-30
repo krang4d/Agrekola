@@ -1,12 +1,12 @@
-#include "startmeasurment.h"
-#include "ui_startmeasurment.h"
+#include "startmeasurement.h"
+#include "ui_startmeasurement.h"
 
 #include <QMessageBox>
 #include <QString>
 
-StartMeasurment::StartMeasurment(QDialog *parent) :
+StartMeasurement::StartMeasurement(QDialog *parent) :
     QDialog(parent),
-    ui(new Ui::StartMeasurment)
+    ui(new Ui::StartMeasurement)
 {
     ui->setupUi(this);
     setModal(true);
@@ -29,20 +29,20 @@ StartMeasurment::StartMeasurment(QDialog *parent) :
     ui->lineEdit_iname->setVisible(false);
 }
 
-StartMeasurment::StartMeasurment(int mode, QDialog *parent) :
-    StartMeasurment(parent)
+StartMeasurement::StartMeasurement(int mode, QDialog *parent) :
+    StartMeasurement(parent)
 {
     setMode(mode);
 }
 
-StartMeasurment::~StartMeasurment()
+StartMeasurement::~StartMeasurement()
 {
     saveData();
     delete ui;
 }
 
 
-void StartMeasurment::saveData()
+void StartMeasurement::saveData()
 {
     param.clear();
     param << QString("%1").arg(static_cast<int>(ui->checkBox_ch1->checkState()))
@@ -59,7 +59,7 @@ void StartMeasurment::saveData()
     file.saveStartWin(param);
 }
 
-void StartMeasurment::openData()
+void StartMeasurement::openData()
 {
     file.openStartWin(param);
     if( !param.isEmpty() && param.count() >= 11 ) {
@@ -77,7 +77,7 @@ void StartMeasurment::openData()
     }
 }
 
-bool StartMeasurment::isChannel(int ch)
+bool StartMeasurement::isChannel(int ch)
 {
     switch (ch) {
     case 0:
@@ -100,7 +100,7 @@ bool StartMeasurment::isChannel(int ch)
     }
 }
 
-void StartMeasurment::setChannels(bool ch1, bool ch2, bool ch3, bool ch4)
+void StartMeasurement::setChannels(bool ch1, bool ch2, bool ch3, bool ch4)
 {
     num = 0;
     if(ch1) num++;
@@ -116,7 +116,7 @@ void StartMeasurment::setChannels(bool ch1, bool ch2, bool ch3, bool ch4)
     }else cancel = true;
 }
 
-void StartMeasurment::setMode(int KO_or_AGR, bool single_mode)
+void StartMeasurement::setMode(int KO_or_AGR, bool single_mode)
 {
     single = single_mode;
     if(KO_or_AGR == 1 || KO_or_AGR == 2 ) {
@@ -135,17 +135,17 @@ void StartMeasurment::setMode(int KO_or_AGR, bool single_mode)
     }
 }
 
-bool StartMeasurment::isCancel()
+bool StartMeasurement::isCancel()
 {
     return cancel;
 }
 
-bool StartMeasurment::isSingle()
+bool StartMeasurement::isSingle()
 {
     return single;
 }
 
-QString StartMeasurment::getNum(const int ch)
+QString StartMeasurement::getNum(const int ch)
 {
     switch ( ch ) {
     case 1:
@@ -165,7 +165,7 @@ QString StartMeasurment::getNum(const int ch)
     }
 }
 
-void StartMeasurment::setNum(const int ch, const QString num)
+void StartMeasurement::setNum(const int ch, const QString num)
 {
     switch ( ch ) {
     case 1:
@@ -185,31 +185,31 @@ void StartMeasurment::setNum(const int ch, const QString num)
     }
 }
 
-int StartMeasurment::getTime()
+int StartMeasurement::getTime()
 {
     return time;
 }
 
-void StartMeasurment::setTime(int ts)
+void StartMeasurement::setTime(int ts)
 {
     time = ts;
 }
 
-int StartMeasurment::getTimeIncube(int i)
+int StartMeasurement::getTimeIncube(int i)
 {
     if(i == 1)
         return time_incube;
     else return time_incube_2;
 }
 
-void StartMeasurment::setTimeIncube(int incube_number, int time_s)
+void StartMeasurement::setTimeIncube(int incube_number, int time_s)
 {
     if(incube_number == 1)
         time_incube = time_s;
     else time_incube_2 = time_s;
 }
 
-QString StartMeasurment::getStringStatus()
+QString StartMeasurement::getStringStatus()
 {
     QString msg;
     if(isSingle()) {
@@ -268,7 +268,7 @@ QString StartMeasurment::getStringStatus()
     return msg;
 }
 
-void StartMeasurment::on_checkBox_ch1_stateChanged(int arg1)
+void StartMeasurement::on_checkBox_ch1_stateChanged(int arg1)
 {
     if(arg1) {
         ui->lineEdit_ch1->setEnabled(true);
@@ -280,7 +280,7 @@ void StartMeasurment::on_checkBox_ch1_stateChanged(int arg1)
     }
 }
 
-void StartMeasurment::on_checkBox_ch2_stateChanged(int arg1)
+void StartMeasurement::on_checkBox_ch2_stateChanged(int arg1)
 {
     if(arg1) {
         ui->lineEdit_ch2->setEnabled(true);
@@ -292,7 +292,7 @@ void StartMeasurment::on_checkBox_ch2_stateChanged(int arg1)
     }
 }
 
-void StartMeasurment::on_checkBox_ch3_stateChanged(int arg1)
+void StartMeasurement::on_checkBox_ch3_stateChanged(int arg1)
 {
     if(arg1) {
         ui->lineEdit_ch3->setEnabled(true);
@@ -304,7 +304,7 @@ void StartMeasurment::on_checkBox_ch3_stateChanged(int arg1)
     }
 }
 
-void StartMeasurment::on_checkBox_ch4_stateChanged(int arg1)
+void StartMeasurement::on_checkBox_ch4_stateChanged(int arg1)
 {
     if(arg1) {
         ui->lineEdit_ch4->setEnabled(true);
@@ -316,7 +316,7 @@ void StartMeasurment::on_checkBox_ch4_stateChanged(int arg1)
     }
 }
 
-void StartMeasurment::on_radioButton_single_toggled(bool checked)
+void StartMeasurement::on_radioButton_single_toggled(bool checked)
 {
     ui->checkBox_ch1->setCheckState(Qt::Unchecked);
     ui->checkBox_ch2->setCheckState(Qt::Unchecked);
@@ -354,7 +354,7 @@ void StartMeasurment::on_radioButton_single_toggled(bool checked)
     }
 }
 
-void StartMeasurment::on_pushButton_next_clicked()
+void StartMeasurement::on_pushButton_next_clicked()
 {
     QMessageBox mb;
     mb.setIcon(QMessageBox::Information);
@@ -407,7 +407,7 @@ void StartMeasurment::on_pushButton_next_clicked()
     saveData();
 }
 
-void StartMeasurment::on_comboBox_inductor_currentIndexChanged(const QString &arg1)
+void StartMeasurement::on_comboBox_inductor_currentIndexChanged(const QString &arg1)
 {
     if(arg1 == "Другой") {
         ui->lineEdit_iname->setVisible(true);
@@ -420,12 +420,12 @@ void StartMeasurment::on_comboBox_inductor_currentIndexChanged(const QString &ar
     }
 }
 
-Mode_ID StartMeasurment::getModeID() const
+Mode_ID StartMeasurement::getModeID() const
 {
     return modeID;
 }
 
-void StartMeasurment::setModeID(const Mode_ID &value)
+void StartMeasurement::setModeID(const Mode_ID &value)
 {
     modeID = value;
 }

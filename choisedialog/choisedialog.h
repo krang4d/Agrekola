@@ -32,12 +32,12 @@ class ChoiseDialog : public QDialog
 public:
     explicit ChoiseDialog(QDialog *parent = 0);
     int getTypeOfWidget() const;
-    QPointer<Widget> CreateWidgetThread(StartMeasurment * = 0);
+    QPointer<Widget> CreateWidgetThread(StartMeasurement * = 0);
     ~ChoiseDialog();
 
 private slots:
-    void startMeasurement(StartMeasurment *);
-    void calibration(StartMeasurment *);
+    void startMeasurement(StartMeasurement *);
+    void calibration(StartMeasurement *);
     void on_agr1Button_clicked();
     void on_agr2Button_clicked();
     void on_ko1Button_clicked();

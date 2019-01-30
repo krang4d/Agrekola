@@ -358,36 +358,6 @@ void Ko4::on_pushButton_calib_clicked()
     emit calibration(StartCalibrationKo4::getStart(&c_ko4));
 }
 
-StartMeasurment* StartCalibrationKo4::getStart(Calibration *c_ko4)
-{
-    StartMeasurment* start = new StartMeasurment(0);
-    start->setChannels(c_ko4->getK1(), c_ko4->getK2(), c_ko4->getK3(), c_ko4->getK4());
-    start->setNum(1, "Калибровка");
-    start->setNum(2, "Калибровка");
-    start->setNum(3, "Калибровка");
-    start->setNum(4, "Калибровка");
-    start->setTime(c_ko4->getWrite_time());
-    start->setTimeIncube(1, c_ko4->getIncube_time());
-    start->setMode(0);
-    start->setModeID(CalibrKo4_ID);
-    return start;
-}
-
-StartMeasurment* StartTestKo4::getStart(Test* t_ko4)
-{
-    StartMeasurment *start = new StartMeasurment(0);
-    start->setChannels(t_ko4->getK1(), t_ko4->getK2(), t_ko4->getK3(), t_ko4->getK4());
-    start->setNum(1, t_ko4->getNum1());
-    start->setNum(2, t_ko4->getNum2());
-    start->setNum(3, t_ko4->getNum3());
-    start->setNum(4, t_ko4->getNum4());
-    start->setTime(t_ko4->getWriteTime());
-    start->setTimeIncube(1, t_ko4->getIncubeTime());
-    start->setMode(0, t_ko4->getSingle());
-    start->setModeID(TestKo4_ID);
-    return start;
-}
-
 void Ko4::on_radioButton_calibTrombine1_toggled(bool checked)
 {
     c_ko4.setActivity(1);
@@ -401,4 +371,34 @@ void Ko4::on_radioButton_calibTrombine2_toggled(bool checked)
 void Ko4::on_radioButton_calibTrombine3_toggled(bool checked)
 {
     c_ko4.setActivity(3);
+}
+
+StartMeasurement* StartCalibrationKo4::getStart(Calibration *c_ko4)
+{
+    StartMeasurement* start = new StartMeasurement(0);
+    start->setChannels(c_ko4->getK1(), c_ko4->getK2(), c_ko4->getK3(), c_ko4->getK4());
+    start->setNum(1, "Калибровка");
+    start->setNum(2, "Калибровка");
+    start->setNum(3, "Калибровка");
+    start->setNum(4, "Калибровка");
+    start->setTime(c_ko4->getWrite_time());
+    start->setTimeIncube(1, c_ko4->getIncube_time());
+    start->setMode(0);
+    start->setModeID(CalibrKo4_ID);
+    return start;
+}
+
+StartMeasurement* StartTestKo4::getStart(Test* t_ko4)
+{
+    StartMeasurement *start = new StartMeasurement(0);
+    start->setChannels(t_ko4->getK1(), t_ko4->getK2(), t_ko4->getK3(), t_ko4->getK4());
+    start->setNum(1, t_ko4->getNum1());
+    start->setNum(2, t_ko4->getNum2());
+    start->setNum(3, t_ko4->getNum3());
+    start->setNum(4, t_ko4->getNum4());
+    start->setTime(t_ko4->getWriteTime());
+    start->setTimeIncube(1, t_ko4->getIncubeTime());
+    start->setMode(0, t_ko4->getSingle());
+    start->setModeID(TestKo4_ID);
+    return start;
 }

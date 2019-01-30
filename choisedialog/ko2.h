@@ -3,7 +3,7 @@
 
 #include <QWidget>
 #include "globalvalue.h"
-#include "startmeasurment.h"
+#include "startmeasurement.h"
 
 namespace Ui {
 class Ko2;
@@ -53,8 +53,8 @@ public slots:
     void calibrationData4Come(double);
 
 signals:
-    void measurement(StartMeasurment*);
-    void calibration(StartMeasurment*); 
+    void measurement(StartMeasurement*);
+    void calibration(StartMeasurement*); 
     void calibration_done();
 
 private:
@@ -63,21 +63,21 @@ private:
     CalibrationKo2 c_ko2;
 };
 
-class StartTestKo2 : public StartMeasurment
+class StartTestKo2 : public StartMeasurement
 {
     Q_OBJECT
 public:
     StartTestKo2() = delete;
-    static StartMeasurment* getStart(Test* );
+    static StartMeasurement* getStart(Test* );
 };
 
 
-class StartCalibrationKo2 : public StartMeasurment
+class StartCalibrationKo2 : public StartMeasurement
 {
     Q_OBJECT
 public:
     StartCalibrationKo2() = delete;
-    static StartMeasurment* getStart(Calibration* );
+    static StartMeasurement* getStart(Calibration* );
 };
 
 #endif // KO2_H

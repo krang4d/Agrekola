@@ -136,9 +136,9 @@ void Ko1::on_pushButton_test_clicked()
     emit measurement(StartTestKo1::getStart(&t_ko1));
 }
 
-StartMeasurment* StartTestKo1::getStart(Test* t_ko1)
+StartMeasurement* StartTestKo1::getStart(Test* t_ko1)
 {
-    StartMeasurment* start = new StartMeasurment(0);
+    StartMeasurement* start = new StartMeasurement(0);
     start->setModeID(TestKo1_ID);  //режим определение времени свертывания
     start->setMode(0, t_ko1->getSingle());          //одиночные пробы
     start->setChannels(t_ko1->getK1(), t_ko1->getK2(), t_ko1->getK3(), t_ko1->getK4());
