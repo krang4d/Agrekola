@@ -199,17 +199,17 @@ void Widget::setupRealtimeData() {
         connect(customPlot1->xAxis, SIGNAL(rangeChanged(QCPRange)), customPlot1->xAxis2, SLOT(setRange(QCPRange)));
         connect(customPlot1->yAxis, SIGNAL(rangeChanged(QCPRange)), customPlot1->yAxis2, SLOT(setRange(QCPRange)));
 
-        customPlot2->addGraph();
-        customPlot2->graph(0)->setPen(QPen(QColor(255, 110, 200)));
-        customPlot2->graph(1)->setPen(QPen(QColor(255, 200, 40)));
-        customPlot2->xAxis->setTicker(timeTicker);
-        customPlot2->axisRect()->setupFullAxesBox();
-        customPlot2->xAxis->setLabel("сек");
-        customPlot2->yAxis2->setLabel("Вольт");
-        customPlot2->yAxis->setRange(MIN, MAX);
+        customPlot3->addGraph();
+        customPlot3->graph(0)->setPen(QPen(QColor(255, 10, 200)));
+        customPlot3->graph(1)->setPen(QPen(QColor(10, 100, 200)));
+        customPlot3->xAxis->setTicker(timeTicker);
+        customPlot3->axisRect()->setupFullAxesBox();
+        customPlot3->xAxis->setLabel("сек");
+        customPlot3->yAxis2->setLabel("Вольт");
+        customPlot3->yAxis->setRange(MIN, MAX);
 
-        connect(customPlot2->xAxis, SIGNAL(rangeChanged(QCPRange)), customPlot2->xAxis2, SLOT(setRange(QCPRange)));
-        connect(customPlot2->yAxis, SIGNAL(rangeChanged(QCPRange)), customPlot2->yAxis2, SLOT(setRange(QCPRange)));
+        connect(customPlot3->xAxis, SIGNAL(rangeChanged(QCPRange)), customPlot3->xAxis2, SLOT(setRange(QCPRange)));
+        connect(customPlot3->yAxis, SIGNAL(rangeChanged(QCPRange)), customPlot3->yAxis2, SLOT(setRange(QCPRange)));
     }
 }
 
@@ -288,8 +288,8 @@ void Widget::realtimeDataSlot(QVariantList a) {
         else {
           customPlot1->graph(0)->addData(key, a[0].toDouble());
           customPlot1->graph(1)->addData(key, a[1].toDouble());
-          customPlot2->graph(0)->addData(key, a[2].toDouble());
-          customPlot2->graph(1)->addData(key, a[3].toDouble());
+          customPlot3->graph(0)->addData(key, a[2].toDouble());
+          customPlot3->graph(1)->addData(key, a[3].toDouble());
 
           // make key axis range scroll with the data (at a constant range size of 8):
           customPlot1->xAxis->setRange(key, 8, Qt::AlignRight);
