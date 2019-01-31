@@ -432,29 +432,29 @@ QString CalcKo5::getParameters()
 
 CalcAgr1::CalcAgr1()
 {
-    SaveFiles file;
-    QStringList bt, ot;
-    file.openAgr1(param);
+//    SaveFiles file;
+//    QStringList bt, ot;
+//    file.openAgr1(param);
 
-    qDebug() << "параметры CalcAgr1";
+//    qDebug() << "параметры CalcAgr1";
 
-    for(auto it = param.begin(); it != param.end(); it++) {
-        qDebug() << *it;
-    }
+//    for(auto it = param.begin(); it != param.end(); it++) {
+//        qDebug() << *it;
+//    }
 
-    file.openBTP0(bt);
-    for(auto it = bt.begin(); it != bt.end(); it++) {
-        QString s = *it;
-        btp += s.toDouble();
-    }
-    btp /= bt.count();
+//    file.openBTP0(bt);
+//    for(auto it = bt.begin(); it != bt.end(); it++) {
+//        QString s = *it;
+//        btp += s.toDouble();
+//    }
+//    btp /= bt.count();
 
-    file.openBTP100(ot);
-    for(auto it = ot.begin(); it != ot.end(); it++) {
-        QString s = *it;
-        otp += s.toDouble();
-    }
-    otp /= ot.count();
+//    file.openBTP100(ot);
+//    for(auto it = ot.begin(); it != ot.end(); it++) {
+//        QString s = *it;
+//        otp += s.toDouble();
+//    }
+//    otp /= ot.count();
 }
 
 CalcAgr1::CalcAgr1(QCustomPlot *p)
@@ -464,8 +464,9 @@ CalcAgr1::CalcAgr1(QCustomPlot *p)
 
 double CalcAgr1::calc(QMap<double, double> map)
 {
-    double k = (btp - otp) / 100;
-    return CalcData::calcAgr(map)*k;
+//    double k = (btp - otp) / 100;
+//    return CalcData::calcAgr(map)*k;
+    return 1;
 }
 
 QString CalcAgr1::info()
@@ -480,12 +481,12 @@ QString CalcAgr1::getParameters()
 
 CalcAgr2::CalcAgr2()
 {
-    SaveFiles file;
-    file.openAgr2(param);
-    qDebug() << "параметры CalcAgr2";
-    for(auto it = param.begin(); it < param.end(); it++) {
-        qDebug() << *it;
-    }
+//    SaveFiles file;
+//    file.openAgr2(param);
+//    qDebug() << "параметры CalcAgr2";
+//    for(auto it = param.begin(); it < param.end(); it++) {
+//        qDebug() << *it;
+//    }
 }
 
 double CalcAgr2::calc(QMap<double, double> map)

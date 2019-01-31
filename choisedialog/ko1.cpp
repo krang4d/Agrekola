@@ -140,7 +140,7 @@ StartMeasurement* StartTestKo1::getStart(Test* t_ko1)
 {
     StartMeasurement* start = new StartMeasurement(0);
     start->setModeID(TestKo1_ID);  //режим определение времени свертывания
-    start->setMode(0, t_ko1->getSingle());          //одиночные пробы
+    start->setProbe(t_ko1->getSingle());          //одиночные пробы
     start->setChannels(t_ko1->getK1(), t_ko1->getK2(), t_ko1->getK3(), t_ko1->getK4());
     start->setNum(1, t_ko1->getNum1());
     start->setNum(2, t_ko1->getNum2());

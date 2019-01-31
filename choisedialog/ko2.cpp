@@ -392,8 +392,7 @@ StartMeasurement* StartCalibrationKo2::getStart(Calibration* c_ko2)
     start->setNum(4, "Калибровка");
     start->setTime(c_ko2->getWrite_time());
     start->setTimeIncube(1, c_ko2->getIncube_time());
-    start->setMode(0);
-    start->setModeID(CalibrKo2_ID);
+    start->setModeID(CalibKo2_ID);
     //stKo2->cancel = false;
     return start;
 }
@@ -408,7 +407,7 @@ StartMeasurement* StartTestKo2::getStart(Test* t_ko2)
     start->setNum(4, t_ko2->getNum4());
     start->setTime(t_ko2->getWriteTime());
     start->setTimeIncube(1, t_ko2->getIncubeTime());
-    start->setMode(0, t_ko2->getSingle());          //одиночные пробы
+    start->setProbe(t_ko2->getSingle());          //одиночные пробы
     start->setModeID(TestKo2_ID);
     //stKo2->cancel = false;
     return start;

@@ -24,7 +24,7 @@ Widget::Widget(QWidget *parent) :
     pBar1(new ProgressTimerBar), pBar2(new ProgressTimerBar),
     pBar3(new ProgressTimerBar), pBar4(new ProgressTimerBar),
     Start_DX(0.1), Stop_DX(0.1), MIN(-6.0), MAX(6.0),
-    startWin(new StartMeasurement(0))
+    startWin(new StartMeasurement)
 {
     ui->setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
@@ -441,7 +441,7 @@ void Widget::on_pushButton_clicked()
     ui->pushButton->setEnabled(false);
 
     if( termoSensor ) {
-        setUserMessage(QString("<div style='color:red'>Дождитесь нагрева термостата"));
+        setUserMessage(QString("<span style='color:red'>Дождитесь нагрева термостата</span>"));
         pBar1->setFormat("В ожидании");
         pBar1->setValue(0);
         pBar2->setFormat("В ожидании");
@@ -452,7 +452,7 @@ void Widget::on_pushButton_clicked()
         pBar4->setFormat("В ожидании");
         pBar4->setValue(0);
     } else {
-        setUserMessage("<div style='color:blue'>Термостат нагрет до 37ºC");
+        setUserMessage("<span style='color:blue'>Термостат нагрет до 37ºC</span>");
         pBar1->setFormat("Готов");
         pBar1->setValue(pBar1->getMaximum());
         pBar2->setFormat("Готов");
@@ -594,6 +594,11 @@ void Widget::on_pushButton_clicked()
             startData(3);
             startData(4);
         }
+        break;
+    case TestAgr1_ID:
+        //ui->pushButton->setEnabled(false);
+        //setUserMessage(startWin->getStringStatus());
+        startIncub(1);
         break;
     default:
         if(startWin->isChannel(1)) ui->checkBox_1->setChecked(true); //включение перемешивания 1
@@ -845,16 +850,6 @@ void Widget::startIncub(int num)
     }
 }
 
-void Widget::stopIncub()
-{
-    incub = false;
-}
-
-bool Widget::isIncub()
-{
-    return incub;
-}
-
 void Widget::incubeTimeout_0()
 {
     std::function<void(Widget*)> func = &Widget::incubeTimeout;
@@ -869,7 +864,6 @@ void Widget::incubeTimeout_0()
 
 void Widget::incubeTimeout()
 {
-        setUserMessage("<div style='color: blue'>Время инкубации истекло, добавьте стартовый реагент");
         QPointer<ImpuleWaiter> iw = new ImpuleWaiter;
 
         stopIncub();
@@ -901,6 +895,7 @@ void Widget::incubeTimeout()
             waitPulse = true;
             pBar4->Wait();
         }
+        setUserMessage("<div style='color: blue'>Время инкубации истекло, добавьте стартовый реагент");
         connect(this, &Widget::hasPulse1, iw, &ImpuleWaiter::has_pulse_1);
         connect(this, &Widget::hasPulse2, iw, &ImpuleWaiter::has_pulse_2);
         connect(this, &Widget::hasPulse3, iw, &ImpuleWaiter::has_pulse_3);

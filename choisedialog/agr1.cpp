@@ -222,6 +222,7 @@ StartMeasurement *StartCalibrationAgr1::getBTP100()
     start->setNum(4, "БТП");
     start->setTime(10);
     start->setTimeIncube(1, 3);
+    start->setModeID(Level_ID);
     return start;
 }
 
@@ -235,6 +236,7 @@ StartMeasurement *StartCalibrationAgr1::getOTP0()
     start->setNum(4, "ОТП");
     start->setTime(10);
     start->setTimeIncube(1, 3);
+    start->setModeID(Level_ID);
     return start;
 }
 
@@ -258,7 +260,7 @@ StartMeasurement *StartTestAgr1::getStart(Test* t_agr1)
     start->setTime(t_agr1->getWriteTime());
     start->setTimeIncube(1, t_agr1->getIncubeTime());
     start->setTimeIncube(2, obj->getIncubeTime2());
-    start->setMode(1, t_agr1->getSingle());
+    start->setProbe(t_agr1->getSingle());
     start->setModeID(TestAgr1_ID);
     return start;
 }

@@ -289,7 +289,7 @@ StartMeasurement *StartTestAgr2::getStart(Test* t_agr2)
     start->setNum(3, t_agr2->getNum3());
     start->setNum(4, t_agr2->getNum4());
     start->setTime(t_agr2->getWriteTime());
-    start->setMode(1, obj->getIncubeTime2());
+    start->setProbe(obj->getIncubeTime2());
     start->setTimeIncube(1, t_agr2->getIncubeTime());
     start->setTimeIncube(2, obj->getIncubeTime2());
     return start;

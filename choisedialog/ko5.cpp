@@ -259,21 +259,6 @@ void Ko5::on_lineEdit_testCh3_textChanged(const QString &arg1)
         ui->lineEdit_testCh4->setText(arg1);
 }
 
-StartMeasurement *StartTestKo5::getStart(Test* t_ko5)
-{
-    StartMeasurement *start = new StartMeasurement(0);
-    start->setChannels(t_ko5->getK1(), t_ko5->getK2(), t_ko5->getK2(), t_ko5->getK4());
-    start->setNum(1, t_ko5->getNum1());
-    start->setNum(2, t_ko5->getNum2());
-    start->setNum(3, t_ko5->getNum3());
-    start->setNum(4, t_ko5->getNum4());
-    start->setTime(t_ko5->getWriteTime());
-    start->setTimeIncube(1, t_ko5->getIncubeTime());
-    start->setMode(0, t_ko5->getSingle());
-    start->setModeID(TestKo5_ID);
-    return start;
-}
-
 StartMeasurement *StartCalibrationKo5::getStart(Calibration* c_ko5)
 {
     StartMeasurement *start = new StartMeasurement(0);
@@ -284,7 +269,21 @@ StartMeasurement *StartCalibrationKo5::getStart(Calibration* c_ko5)
     start->setNum(4, "Калибровка");
     start->setTime(c_ko5->getWrite_time());
     start->setTimeIncube(1, c_ko5->getIncube_time());
-    start->setMode(0);
-    start->setModeID(CalibrKo5_ID);
+    start->setModeID(CalibKo5_ID);
+    return start;
+}
+
+StartMeasurement *StartTestKo5::getStart(Test* t_ko5)
+{
+    StartMeasurement *start = new StartMeasurement(0);
+    start->setChannels(t_ko5->getK1(), t_ko5->getK2(), t_ko5->getK2(), t_ko5->getK4());
+    start->setNum(1, t_ko5->getNum1());
+    start->setNum(2, t_ko5->getNum2());
+    start->setNum(3, t_ko5->getNum3());
+    start->setNum(4, t_ko5->getNum4());
+    start->setTime(t_ko5->getWriteTime());
+    start->setTimeIncube(1, t_ko5->getIncubeTime());
+    start->setProbe(t_ko5->getSingle());
+    start->setModeID(TestKo5_ID);
     return start;
 }

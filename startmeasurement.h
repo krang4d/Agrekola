@@ -18,7 +18,6 @@ class StartMeasurement : public QDialog
 
 public:
     explicit StartMeasurement(QDialog *parent = 0);
-    StartMeasurement(int = 0, QDialog *parent = 0);
     ~StartMeasurement();
 
     bool isCancel();
@@ -26,7 +25,10 @@ public:
     bool isChannel(int = 0);
     void setChannels(bool ch1, bool ch2, bool ch3, bool ch4);
 
-    void setMode(int KO_or_AGR, bool single_mode = 1);
+    Mode_ID getModeID() const;
+    void setModeID(const Mode_ID &value);
+
+    void setProbe(bool is_single = true);
 
     QString getNum(const int ch);
     void setNum(const int ch, const QString num);
@@ -43,9 +45,6 @@ public:
     void openData();
 
     int num;
-
-    Mode_ID getModeID() const;
-    void setModeID(const Mode_ID &value);
 
 public slots:
     void on_checkBox_ch1_stateChanged(int arg1);

@@ -10,7 +10,7 @@ StartMeasurement::StartMeasurement(QDialog *parent) :
 {
     ui->setupUi(this);
     setModal(true);
-    setMode(0);
+    setModeID(Test_ID);
     cancel = true;
     single = true;
     channel_1 = false;
@@ -27,12 +27,6 @@ StartMeasurement::StartMeasurement(QDialog *parent) :
     openData();
     ui->label_iname->setVisible(false);
     ui->lineEdit_iname->setVisible(false);
-}
-
-StartMeasurement::StartMeasurement(int mode, QDialog *parent) :
-    StartMeasurement(parent)
-{
-    setMode(mode);
 }
 
 StartMeasurement::~StartMeasurement()
@@ -116,23 +110,9 @@ void StartMeasurement::setChannels(bool ch1, bool ch2, bool ch3, bool ch4)
     }else cancel = true;
 }
 
-void StartMeasurement::setMode(int KO_or_AGR, bool single_mode)
+void StartMeasurement::setProbe(bool is_single)
 {
-    single = single_mode;
-    if(KO_or_AGR == 1 || KO_or_AGR == 2 ) {
-        ui->lineEdit_incube_2->setVisible(true);
-        ui->label_incube_2->setVisible(true);
-        ui->label_incube->setText(QString("Время инкубации 1"));
-        ui->comboBox_inductor->setVisible(true);
-        ui->label_itype->setVisible(true);
-    }
-    else {
-        ui->lineEdit_incube_2->setVisible(false);
-        ui->label_incube_2->setVisible(false);
-        ui->label_incube->setText(QString("Время инкубации"));
-        ui->comboBox_inductor->setVisible(false);
-        ui->label_itype->setVisible(false);
-    }
+    single = is_single;
 }
 
 bool StartMeasurement::isCancel()
@@ -428,5 +408,19 @@ Mode_ID StartMeasurement::getModeID() const
 void StartMeasurement::setModeID(const Mode_ID &value)
 {
     modeID = value;
+    if (value == TestAgr1_ID || value == TestAgr2_ID )  {
+        ui->lineEdit_incube_2->setVisible(true);
+        ui->label_incube_2->setVisible(true);
+        ui->label_incube->setText(QString("Время инкубации 1"));
+        ui->comboBox_inductor->setVisible(true);
+        ui->label_itype->setVisible(true);
+    }
+    else {
+        ui->lineEdit_incube_2->setVisible(false);
+        ui->label_incube_2->setVisible(false);
+        ui->label_incube->setText(QString("Время инкубации"));
+        ui->comboBox_inductor->setVisible(false);
+        ui->label_itype->setVisible(false);
+    }
 }
 

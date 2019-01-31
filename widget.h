@@ -32,47 +32,30 @@ public:
     explicit Widget(QWidget *parent = 0);
     Widget(StartMeasurement *, QWidget *parent = 0);
     ~Widget();
+
     void setUserMessage(QString, bool withtime = 1, bool tofile = 1);
+
     inline void setMode(Mode_ID m)  { id = m; }
     inline Mode_ID getMode()     { return id; }
-//    inline void setMode(int i) {
-//        switch (i) {
-//        case 0:
-//            setMode(Test_ID);
-//            break;
-//        case 1:
-//            setMode(Agr1_ID);
-//            break;
-//        case 2:
-//            setMode(Agr2_ID);
-//            break;
-//        case 3:
-//            setMode(Ko1_ID);
-//            break;
-//        case 4:
-//            setMode(Ko2_ID);
-//            break;
-//        case 5:
-//            setMode(Ko3_ID);
-//            break;
-//        case 6:
-//            setMode(Ko4_ID);
-//            break;
-//        case 7:;
-//            setMode(Ko5_ID);
-//            break;
-//        case 8:
-//            setMode(Level_ID);
-//            break;
-//        default:
-//            break;
-//        }
-//    }
-    void setStartWindow(StartMeasurement*);
-    inline bool isSensorReady()  { return termoSensor; } //проверка тепловой готовности
 
-    void stopIncub();
-    bool isIncub();
+    void setStartWindow(StartMeasurement*);
+
+    inline bool isSensorReady()
+    {
+        return termoSensor;
+    } //проверка тепловой готовности
+
+
+    inline void stopIncub()
+    {
+        incub = false;
+    }
+
+    inline bool isIncub()
+    {
+        return incub;
+    }
+
 
     void stopData(int);
     bool isData(int = 0);
@@ -163,12 +146,32 @@ private:
     QMap<double, double> map_y1, map_y2, map_y3, map_y4 ;
     QVector<double> btp, otp;
     SaveFiles saveFiles;
-    int mode;
     Mode_ID id;
     double Start_DX; //порог запуска
     double Stop_DX;  //порог остановки
     double MIN, MAX;
+
     friend class Options;
+    friend class DoThis;
 };
+
+class DoThis {
+    QString name;
+    Widget *obj;
+
+public:
+    DoThis(QString name, Widget *obj) {
+        this->name = name;
+        this->obj = obj;
+    }
+    virtual ~DoThis();
+
+protected:
+    void output(QString text) {
+        obj->setUserMessage(name +": " + text);
+    }
+};
+
+
 
 #endif // WIDGET_H

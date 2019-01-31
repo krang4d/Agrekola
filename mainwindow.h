@@ -46,6 +46,8 @@ private:
     useE154 *agrekola;
     Widget *centerWidget;
     ChoiseDialog *ch;
+
+    friend class ChoiseDialog;
 };
 
 #endif // MAINWINDOW_H
