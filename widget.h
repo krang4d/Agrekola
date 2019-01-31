@@ -126,6 +126,9 @@ public slots:
     void getLevelOTP();
 
 private slots:
+
+    void on_pushButton_clicked();
+
     void realtimeDataSlot(QVariantList);
     double writeMapData(int n = 0);
 
@@ -135,7 +138,7 @@ private slots:
     void on_checkBox_4_stateChanged(int arg1);
     void on_checkBox_PP_stateChanged(int arg1);
     void on_checkBox_L_stateChanged(int arg1);
-    void on_pushButton_clicked();
+
 
     void updataTermo(bool);
     void updateTime();

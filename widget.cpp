@@ -91,7 +91,7 @@ bool Widget::eventFilter(QObject *watched, QEvent *event)
 void Widget::setUserMessage(QString str, bool withtime, bool tofile)
 {
     if(withtime) {
-        QString msg = QString(tr("%1,    Время %2"))
+        QString msg = QString(tr("%1, Время %2"))
                 .arg(str)
                 .arg(dt.toString("hh:mm:ss.zzz"));
         ui->textEdit->append(msg);
@@ -462,8 +462,16 @@ void Widget::on_pushButton_clicked()
         pBar4->setFormat("Готов");
         pBar4->setValue(pBar4->getMaximum());
     }
-
-    switch (getMode()) {
+    QPointer<QMessageBox> test_dialog = new QMessageBox(this);
+    //test_dialog->setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
+    QPushButton ok;
+    QPushButton cansel;
+    ok.setText("Норма");
+    cansel.setText("Брак");
+    test_dialog->addButton(&ok, QMessageBox::AcceptRole);
+    test_dialog->addButton(&cansel, QMessageBox::RejectRole);
+    test_dialog->setIcon(QMessageBox::Information);
+    switch(getMode()) {
     case Test_ID:
         setUserMessage("Проверка работопособности");
         test = true;
@@ -471,84 +479,89 @@ void Widget::on_pushButton_clicked()
         //Проверка Перемешивания в канале 1
         emit onmixch1(true);
         setUserMessage(QString("Контроль включения перемешивания в канале 1"));
-
-        button = QMessageBox::question(this, "Канал 1 - проверка",
-                                       "Проконтролируте включение перемешивания в канале 1");
-        if(button == QMessageBox::Yes) {
+        test_dialog->setWindowTitle("Канал 1 - проверка");
+        test_dialog->setText("Проконтролируте включение перемешивания в канале 1");
+        test_dialog->exec();
+        if(test_dialog->result() == 0) {
            emit onmixch1(false);
            setUserMessage("Перемешивания в канале 1 - <span style='color:blue'>НОРМА</span>");
         }
         else {
            setUserMessage(QString("Перемешивания в канале 1 - <span style='color:red'>БРАК</span>"));
-           return;
+           //return;
         }
         //Проверка Перемешивания в канале 2
         emit onmixch2(true);
         setUserMessage(QString("Контроль включения перемешивания в канале 2"));
-        button = QMessageBox::question(this, "Канал 2 - проверка",
-                                       "Проконтролируте включение перемешивания в канале 2");
-        if(button == QMessageBox::Yes) {
+        test_dialog->setWindowTitle("Канал 2 - проверка");
+        test_dialog->setText("Проконтролируте включение перемешивания в канале 2");
+        test_dialog->exec();
+        if(test_dialog->result() == 0) {
           emit onmixch2(false);
           setUserMessage("Перемешивания в канале 2 - <span style='color:blue'>НОРМА</span>");
         }
         else {
             setUserMessage(QString("Перемешивания в канале 2 - <span style='color:red'>БРАК</span>"));
-            return;
+            //return;
         }
 
         //Проверка Перемешивания в канале 3
         emit onmixch3(true);
         setUserMessage(QString("Контроль включения перемешивания в канале 3"));
-        button = QMessageBox::question(this, "Канал 3 - проверка",
-                                       "Проконтролируте включение перемешивания в канале 3");
-        if(button == QMessageBox::Yes) {
+        test_dialog->setWindowTitle("Канал 3 - проверка");
+        test_dialog->setText("Проконтролируте включение перемешивания в канале 3");
+        test_dialog->exec();
+        if(test_dialog->result() == 0) {
          emit onmixch3(false);
          setUserMessage("Перемешивания в канале 3 - <span style='color:blue'>НОРМА</span>");
         }
         else {
-            setUserMessage(QString("Перемешивания в канале 3 - <span style='color:red'>БРАКa</span>"));
-            return;
+            setUserMessage(QString("Перемешивания в канале 3 - <span style='color:red'>БРАК</span>"));
+            //return;
         }
 
         //Проверка Перемешивания в канале 4
         emit onmixch4(true);
         setUserMessage(QString("Контроль включения перемешивания в канале 4"));
-        button = QMessageBox::question(this, "Канал 4 - проверка",
-                                       "Проконтролируте включение перемешивания в канале 4");
-        if(button == QMessageBox::Yes) {
+        test_dialog->setWindowTitle("Канал 4 - проверка");
+        test_dialog->setText("Проконтролируте включение перемешивания в канале 4");
+        test_dialog->exec();
+        if(test_dialog->result() == 0) {
             emit onmixch4(false);
             setUserMessage("Перемешивания в канале 4 - <span style='color:blue'>НОРМА</span>");
         }
         else {
             setUserMessage(QString("Перемешивания в канале 4 - <span style='color:red'>БРАК</span>"));
-            return;
+            //return;
         }
         //Проверка Перемешивания в канале РР
         emit onmixpp(true);
         setUserMessage(QString("Контроль включения перемешивания в канале РР"));
-        button = QMessageBox::question(this, "Канал РР - проверка",
-                                       "Проконтролируте включение перемешивания в канале РР");
-        if(button == QMessageBox::Yes) {
+        test_dialog->setWindowTitle("Канал РР - проверка");
+        test_dialog->setText("Проконтролируте включение перемешивания в канале РР");
+        test_dialog->exec();
+        if(test_dialog->result() == 0) {
             emit onmixpp(false);
             setUserMessage("Перемешивания в канале РР - <span style='color:blue'>НОРМА</span>");
         }
         else {
             setUserMessage(QString("Перемешивания в канале РР - <span style='color:red'>БРАК</span>"));
-            return;
+            //return;
         }
 
         //Проверка включения лезерных излучателей
         emit onlaser(true);
         setUserMessage(QString("Контроль включения лазерных излучателей"));
-        button = QMessageBox::question(this, "Лазерные излучетели - проверка",
-                                       "Проконтролируте включение лазерных ихлучателей");
-        if(button == QMessageBox::Yes) {
+        test_dialog->setWindowTitle("Лазерные излучетели - проверка");
+        test_dialog->setText("Проконтролируте включение лазерных излучателей");
+        test_dialog->exec();
+        if(test_dialog->result() == 0) {
             emit onlaser(false);
             setUserMessage("Лазерные излучатели - <span style='color:blue'>НОРМА</span>");
         }
         else {
-            setUserMessage(QString("Лазерные излучатели - <div style='color:red'>БРАК</span>"));
-            return;
+            setUserMessage(QString("Лазерные излучатели - <span style='color:red'>БРАК</span>"));
+            //return;
         }
         break;
     case Level_ID:
@@ -952,7 +965,7 @@ double Widget::writeMapData(int n)
     strList << QString("N\t");
     if( n == 1 && !map_y1.isEmpty() ) {
         retval = p->calc(map_y1);
-        setUserMessage(QString("<div style='color: green'>Канал 1: Рассчитанно значение %1 по методике '%2'")
+        setUserMessage(QString("<div style='color: green'>Канал 1: %2 %1")
                        .arg(retval)
                        .arg(p->info()));
         strList << QString("V1#%1\t").arg(startWin->getNum(1));
@@ -962,7 +975,7 @@ double Widget::writeMapData(int n)
     }
     if( n == 2 && !map_y2.isEmpty() ) {
         retval = p->calc(map_y2);
-        setUserMessage(QString("<div style='color: green'>Канал 2: Рассчитанно значение %1 по методике '%2'")
+        setUserMessage(QString("<div style='color: green'>Канал 2: %2 %1")
                        .arg(retval)
                        .arg(p->info()));
         strList << QString("V2#%1\t").arg(startWin->getNum(2));
@@ -972,7 +985,7 @@ double Widget::writeMapData(int n)
     }
     if( n == 3 && !map_y3.isEmpty() ) {
         retval = p->calc(map_y3);
-        setUserMessage(QString("<div style='color: green'>Канал 3: Рассчитанно значение %1 по методике '%2'")
+        setUserMessage(QString("<div style='color: green'>Канал 3: %2 %1")
                        .arg(retval)
                        .arg(p->info()));
         strList << QString("V3#%1\t").arg(startWin->getNum(3));
@@ -982,7 +995,7 @@ double Widget::writeMapData(int n)
     }
     if( n == 4 && !map_y4.isEmpty() ) {
         retval = p->calc(map_y4);
-        setUserMessage(QString("<div style='color: green'>Канал 4: Рассчитанно значение %1 по методике '%2'")
+        setUserMessage(QString("<div style='color: green'>Канал 4: %2 %1")
                        .arg(retval)
                        .arg(p->info()));
         strList << QString("V4#%1\t").arg(startWin->getNum(4));

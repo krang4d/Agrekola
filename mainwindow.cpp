@@ -22,12 +22,17 @@ MainWindow::MainWindow(QWidget *parent) :
     setCentralWidget(centerWidget);
     ch = qobject_cast<ChoiseDialog *>(parentWidget());
     if (!ch){
-        QMessageBox test(QMessageBox::Critical, "qobject_cast", QString("qobject_cast in MainWindow::newShow()"), QMessageBox::Ok); test.exec();
+        QMessageBox test(QMessageBox::Critical,
+                         "qobject_cast",
+                         QString("qobject_cast in MainWindow::newShow()"),
+                         QMessageBox::Ok);
+        test.exec();
     }
     installEventFilter(this);
 
     //connect(centerWidget, SIGNAL(status(QString)), this->statusBar(), SLOT(showMessage(QString)));
-    connect(centerWidget, &Widget::status, [this](QString str){ this->statusBar()->showMessage(str, 2000); });
+    connect(centerWidget, &Widget::status,
+            [this](QString str){ this->statusBar()->showMessage(str, 2000); });
     setupThread();
 }
 

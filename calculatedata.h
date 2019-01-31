@@ -174,8 +174,8 @@ private:
     double tgalfa3, tgalfa4;        //угол наклона k-ого участка калибровочной кривой
     double lgax;                    //искомая величиан ax = 10^lgax
     double ax;
-    double pox;                     //протромбиновое отношене
-    double pix;                     //протромбиновый индекс
+    double pox;                     //протромбиновое отношене ОТН
+    double pix;                     //протромбиновый индекс ИНД
 
     // CalcData interface
 public:

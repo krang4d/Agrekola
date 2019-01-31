@@ -230,7 +230,7 @@ QString CalcKo1::getParameters()
 
 QString CalcKo1::info()
 {
-    return QString("Время свертывания");
+    return QString("Время свертывания (c)");
 }
 
 CalcKo2::CalcKo2()
@@ -261,7 +261,7 @@ double CalcKo2::calc(QMap<double, double> map)
 
 QString CalcKo2::info()
 {
-    return QString("АЧТВ");
+    return QString("АЧТВ (c)");
 }
 
 QString CalcKo2::getParameters()
@@ -324,7 +324,7 @@ double CalcKo3::calc(QMap<double, double> map)
 
 QString CalcKo3::info()
 {
-    return QString("Фибриноген");
+    return QString("Концентраци Фибриногена (г/л)");
 }
 
 QString CalcKo3::getParameters()
@@ -355,12 +355,13 @@ CalcKo4::CalcKo4()
 
 double CalcKo4::calc(QMap<double, double> map)
 {
+
     return CalcData::calcKo(map)/t0;    //ОТН Тромбин(2)
 }
 
 QString CalcKo4::info()
 {
-    return QString("Тромбин");
+    return QString("Тромбин (c)");
 }
 
 QString CalcKo4::getParameters()
