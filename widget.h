@@ -33,7 +33,7 @@ public:
     Widget(StartMeasurement *, QWidget *parent = 0);
     ~Widget();
 
-    void setUserMessage(QString, bool withtime = 1, bool tofile = 1);
+    void setUserMessage(QString, bool withtime = true, bool tofile = true);
 
     inline void setMode(Mode_ID m)  { id = m; }
     inline Mode_ID getMode()     { return id; }
@@ -68,8 +68,9 @@ protected:
     void setupTimers();
     void setupWidget();
 
-protected slots:
-    void incubeTimeout_0();
+public slots:
+    void incubeTimeout_1();
+    void incubeTimeout_2();
     void incubeTimeout();
 
 signals:
@@ -86,25 +87,17 @@ signals:
     void hasPulse3();
     void hasPulse4();
 
-    void stopData1();
-    void stopData2();
-    void stopData3();
-    void stopData4();
-
     void ret_value1(double);
     void ret_value2(double);
     void ret_value3(double);
     void ret_value4(double);
-
-//    void btp_done();
-//    void otp_done();
     void done();
 
 public slots:
-    void startMeasurment();
+    //void startMeasurment();
     void startMeasurment(StartMeasurement *);
     void startIncub(int num);
-    void startData(int);
+    void getData(int);
     void getLevelBTP();
     void getLevelOTP();
 
@@ -129,7 +122,7 @@ private slots:
     void on_comboBox_currentIndexChanged(int index);
 
 public:
-    QPointer<StartMeasurement> startWin;
+    StartMeasurement *startWin;
     QPointer<QCustomPlot> customPlot1, customPlot2, customPlot3, customPlot4;
     QPointer<ProgressTimerBar> pBar1, pBar2, pBar3, pBar4;
 
@@ -155,23 +148,26 @@ private:
     friend class DoThis;
 };
 
-class DoThis {
-    QString name;
-    Widget *obj;
+class DoThis{
 
-public:
-    DoThis(QString name, Widget *obj) {
-        this->name = name;
-        this->obj = obj;
-    }
-    virtual ~DoThis();
+//    Widget *obj;
+//    DoThis *self;
 
-protected:
-    void output(QString text) {
-        obj->setUserMessage(name +": " + text);
-    }
+//public:
+//    DoThis(Widget *obj);
+//    virtual ~DoThis();
+
+//protected:
+//    void output(QString text) {
+//        obj->setUserMessage(text);
+//    }
 };
 
+class Incubation : public DoThis {
+//    Incubation(Widget *obj);
+//    virtual ~Incubation();
+//    void Go();
 
+};
 
 #endif // WIDGET_H

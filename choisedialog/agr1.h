@@ -42,10 +42,30 @@ private slots:
     void on_lineEdit_testCh3_textChanged(const QString &arg1);
 
 public slots:
-    void calibrationData1Come(double);
-    void calibrationData2Come(double);
-    void calibrationData3Come(double);
-    void calibrationData4Come(double);
+    inline void btpData1Come(double d) {
+        c_agr1.setBTP1(d);
+    }
+    inline void btpData2Come(double d) {
+        c_agr1.setBTP2(d);
+    }
+    inline void btpData3Come(double d) {
+        c_agr1.setBTP3(d);
+    }
+    inline void btpData4Come(double d) {
+        c_agr1.setBTP4(d);
+    }
+    inline void otpData1Come(double d) {
+        c_agr1.setOTP1(d);
+    }
+    inline void otpData2Come(double d) {
+        c_agr1.setOTP2(d);
+    }
+    inline void otpData3Come(double d) {
+        c_agr1.setOTP3(d);
+    }
+    inline void otpData4Come(double d) {
+        c_agr1.setOTP4(d);
+    }
 
 signals:
     void measurement(StartMeasurement*);
@@ -63,8 +83,8 @@ class StartCalibrationAgr1 : public StartMeasurement
 public:
     StartCalibrationAgr1() = delete;
     static StartMeasurement *getStart(Calibration*);
-    static StartMeasurement *getBTP100();
-    static StartMeasurement *getOTP0();
+    static StartMeasurement *getBTP();
+    static StartMeasurement *getOTP();
 };
 
 class StartTestAgr1 : public StartMeasurement
@@ -74,6 +94,5 @@ public:
     StartTestAgr1() = delete;
     static StartMeasurement* getStart(Test* t_agr1);
 };
-
 
 #endif // AGR1_H

@@ -33,25 +33,17 @@ Widget::Widget(QWidget *parent) :
     setupRealtimeData();
     setupTimers();
     installEventFilter(this);
-
-    //std::function<void(void)> fun = [](){ qDebug() << "emit stopData1";};
-    connect(this, &Widget::stopData1, [this](){  stopData( 1 ); qDebug() << "emit stopData1"; });
-    connect(this, &Widget::stopData2, [this](){  stopData( 2 ); qDebug() << "emit stopData2"; });
-    connect(this, &Widget::stopData3, [this](){  stopData( 3 ); qDebug() << "emit stopData3"; });
-    connect(this, &Widget::stopData4, [this](){  stopData( 4 ); qDebug() << "emit stopData4"; });
 }
 
 Widget::Widget(StartMeasurement *sw, QWidget *parent) : Widget(parent)
 {
-    startWin.clear();    
-    startWin = QPointer<StartMeasurement>(sw);
+    startWin = sw;
     setupWidget();
 }
 
 void Widget::setStartWindow(StartMeasurement *sw)
 {
-    startWin.clear();
-    startWin = QPointer<StartMeasurement>(sw);
+    startWin = sw;
     setupWidget();
 }
 
@@ -107,7 +99,7 @@ void Widget::setUserMessage(QString str, bool withtime, bool tofile)
 
 void Widget::setupRealtimeData() {
 
-    auto foo = [this]() { return startWin.isNull() ? : startWin->isSingle(); };
+    auto foo = [this]() { return startWin == NULL ? : startWin->isSingle(); };
     if(foo()) {
         customPlot1 = ui->frame_1;
         ui->groupBox_f1->layout()->addWidget(pBar1);
@@ -234,7 +226,7 @@ void Widget::realtimeDataSlot(QVariantList a) {
         emit hasPulse1();
         setUserMessage("Канал 1: Введен стартовый реагент в кювету");
         qDebug() << QString("The pulse is come! dx1=%1").arg(dx1);
-        startData(1);
+        getData(1);
     }
     lastPointV2 = a[1].toDouble();
     if((dx2 > Start_DX || pulse2) && ready2) {
@@ -243,7 +235,7 @@ void Widget::realtimeDataSlot(QVariantList a) {
         emit hasPulse2();
         setUserMessage("Канал 2: Введен стартовый реагент в кювету");
         qDebug() << QString("The pulse is come! dx2=%1").arg(dx2);
-        startData(2);
+        getData(2);
     }
     lastPointV3 = a[2].toDouble();
     if((dx3 > Start_DX || pulse3) && ready3) {
@@ -252,7 +244,7 @@ void Widget::realtimeDataSlot(QVariantList a) {
         emit hasPulse3();
         setUserMessage("Канал 3: Введен стартовый реагент в кювету");
         qDebug() << QString("The pulse is come! dx3=%1").arg(dx3);
-        startData(3);
+        getData(3);
     }
     lastPointV4 = a[3].toDouble();
     if((dx4 > Start_DX || pulse4) && ready4) {
@@ -261,11 +253,11 @@ void Widget::realtimeDataSlot(QVariantList a) {
         emit hasPulse4();
         setUserMessage("Канал 4: Введен стартовый реагент в кювету");
         qDebug() << QString("The pulse is come! dx4=%1").arg(dx4);
-        startData( 4 );
+        getData( 4 );
     }
 
     if (key-lastPointKey > 0.01) {// at most add point every 10 ms
-        std::function<bool(void)> foo = [this](){ if(startWin.isNull()) return true; else return startWin->isSingle();};
+        std::function<bool(void)> foo = [this](){ if(startWin == NULL) return true; else return startWin->isSingle();};
         if(foo()) {
           customPlot1->graph(0)->addData(key, a[0].toDouble());
           customPlot2->graph(0)->addData(key, a[1].toDouble());
@@ -315,7 +307,7 @@ void Widget::realtimeDataSlot(QVariantList a) {
             else {
                 if(  getMode() != TestAgr1_ID && getMode() != TestAgr2_ID && std::abs(map_y1.last() - stop_dy1) >= std::abs(stop_dy1*Stop_DX) ) {
                     qDebug() << "emit stopData1" << std::abs(map_y1.last() - stop_dy1) << ">=" << std::abs(stop_dy1*Stop_DX);
-                    emit stopData1();
+                    emit stopData(1);
                 }
             }
         }
@@ -333,7 +325,7 @@ void Widget::realtimeDataSlot(QVariantList a) {
             else {
                 if(  getMode() != TestAgr1_ID && getMode() != TestAgr2_ID && std::abs(map_y2.last() - stop_dy2) >= std::abs(stop_dy2*Stop_DX) ) {
                     qDebug() << "emit stopData2" << std::abs(map_y2.last() - stop_dy2) << ">=" << std::abs(stop_dy2*Stop_DX);
-                    emit stopData2();
+                    emit stopData(2);
                 }
             }
         }
@@ -351,7 +343,7 @@ void Widget::realtimeDataSlot(QVariantList a) {
             else {
                 if(  getMode() != TestAgr1_ID && getMode() != TestAgr2_ID && std::abs(map_y3.last() - stop_dy3) >= std::abs(stop_dy3*Stop_DX) ) {
                     qDebug() << "emit stopData3" << std::abs(map_y3.last() - stop_dy3) << ">=" << std::abs(stop_dy3*Stop_DX);
-                    emit stopData3();
+                    emit stopData(3);
                 }
             }
         }
@@ -369,7 +361,7 @@ void Widget::realtimeDataSlot(QVariantList a) {
             else {
                 if(  getMode() != TestAgr1_ID && getMode() != TestAgr2_ID && std::abs(map_y4.last() - stop_dy4) >= std::abs(stop_dy4*Stop_DX) ) {
                     qDebug() << "emit stopData4" << std::abs(map_y4.last() - stop_dy4) << ">=" << std::abs(stop_dy4*Stop_DX);
-                    emit stopData4();
+                    emit stopData(4);
                 }
             }
         }
@@ -578,28 +570,59 @@ void Widget::on_pushButton_clicked()
         else ui->checkBox_4->setChecked(false);
 
         if(test) {
-            connect(startWin.data(), &StartMeasurement::startMeasurment, [=](StartMeasurement* sm){
+            connect(startWin, &StartMeasurement::startMeasurment, [=](StartMeasurement* sm){
                 setStartWindow(sm);
-                startData(1);
-                startData(2);
-                startData(3);
-                startData(4);
-                disconnect(startWin.data(), &StartMeasurement::startMeasurment, 0, 0);
+                getData(1);
+                getData(2);
+                getData(3);
+                getData(4);
+                disconnect(startWin, &StartMeasurement::startMeasurment, 0, 0);
                 startWin->hide();
                 });
             startWin->show();
         } else {
-            startData(1);
-            startData(2);
-            startData(3);
-            startData(4);
+            getData(1);
+            getData(2);
+            getData(3);
+            getData(4);
         }
         break;
     case TestAgr1_ID:
-        //ui->pushButton->setEnabled(false);
-        //setUserMessage(startWin->getStringStatus());
+        ui->pushButton->setEnabled(false);
+        setUserMessage(startWin->getStringStatus());
+        startIncub(2);
+        break;
+
+    case TestKo1_ID:
+        ui->pushButton->setEnabled(false);
+        setUserMessage(startWin->getStringStatus());
         startIncub(1);
         break;
+
+    case TestKo2_ID:
+        ui->pushButton->setEnabled(false);
+        setUserMessage(startWin->getStringStatus());
+        startIncub(1);
+        break;
+
+    case TestKo3_ID:
+        ui->pushButton->setEnabled(false);
+        setUserMessage(startWin->getStringStatus());
+        startIncub(1);
+        break;
+
+    case TestKo4_ID:
+        ui->pushButton->setEnabled(false);
+        setUserMessage(startWin->getStringStatus());
+        startIncub(1);
+        break;
+
+    case TestKo5_ID:
+        ui->pushButton->setEnabled(false);
+        setUserMessage(startWin->getStringStatus());
+        startIncub(1);
+        break;
+
     default:
         if(startWin->isChannel(1)) ui->checkBox_1->setChecked(true); //включение перемешивания 1
         else ui->checkBox_1->setChecked(false);
@@ -612,15 +635,12 @@ void Widget::on_pushButton_clicked()
 
         if(startWin->isChannel(4)) ui->checkBox_4->setChecked(true); //включение перемешивания 4
         else ui->checkBox_4->setChecked(false);
-        if(test) {
-            connect(startWin.data(), &StartMeasurement::startMeasurment, [=](StartMeasurement* sm){
-                startMeasurment(sm);
-                disconnect(startWin.data(), &StartMeasurement::startMeasurment, 0, 0);
-            });
-            startWin->show();
-        } else {
-            startMeasurment();
-        }
+        connect(startWin, &StartMeasurement::startMeasurment, [=](StartMeasurement* sm){
+            startMeasurment(sm);
+            disconnect(startWin, &StartMeasurement::startMeasurment, 0, 0);
+        });
+        startWin->show();
+        qDebug() << QString("called default startMeasurment()");
         break;
     } //end switch(getMode())
 }
@@ -639,59 +659,29 @@ void Widget::updataTermo(bool td)
     }
 }
 
-void Widget::startMeasurment()
-{
-    //qDebug() << "Widget::startMeasurment() start pressed";
-    //ui->pushButton->setEnabled(false);
-    setUserMessage(startWin->getStringStatus());
-    setupWidget();
-    if( getMode() == TestAgr1_ID ||getMode() == TestAgr2_ID ) {
-        startIncub(2);
-    }
-    else startIncub(1);
-}
+//void Widget::startMeasurment()
+//{
+//    //qDebug() << "Widget::startMeasurment() start pressed";
+//    //ui->pushButton->setEnabled(false);
+//    setUserMessage(startWin->getStringStatus());
+//    setupWidget();
+//    if( getMode() == TestAgr1_ID ||getMode() == TestAgr2_ID ) {
+//        startIncub(2);
+//    }
+//    else startIncub(1);
+//}
 
 void Widget::startMeasurment(StartMeasurement *s)
 {
-    startWin  = QPointer<StartMeasurement>(s);
-    startMeasurment();
-}
-
-void Widget::startData(int n)
-{
-    QString str = QString("Канал %1: Измерение").arg(n);
-    setUserMessage(str);
-    emit status(str);
-    std::function<void (int)> func = [this](int n){
-        stopData(n);
-    };
-    switch (n) {
-    case 1:
-        pBar1->startProgress(QString("%1 %p%").arg(str), startWin->getTime() * 1000, std::bind(func, n));
-        data1 = true;
-        break;
-    case 2:
-        pBar2->startProgress(QString("%1 %p%").arg(str), startWin->getTime() * 1000, std::bind(func, n));
-        data2 = true;
-        break;
-    case 3:
-        pBar3->startProgress(QString("%1 %p%").arg(str), startWin->getTime() * 1000, std::bind(func, n));
-        data3 = true;
-        break;
-    case 4:
-        pBar4->startProgress(QString("%1 %p%").arg(str), startWin->getTime() * 1000, std::bind(func, n));
-        data4 = true;
-        break;
-    default:
-        break;
-    }
+    startWin  = s;
+    on_pushButton_clicked();
 }
 
 void Widget::getLevelBTP()
 {
     //определение БТП
     setMode(Level_ID);
-    setStartWindow(StartCalibrationAgr1::getBTP100());
+    setStartWindow(StartCalibrationAgr1::getBTP());
     setUserMessage(QString("<div style='color: blue'>Установите пробы с БТП в рабочие  каналы и нажмите \"Старт\""), 0);
 
     auto savebtp2 = [&](int n, double d) {
@@ -726,7 +716,7 @@ void Widget::getLevelOTP()
 {
     //определение ОТП
     setMode(Level_ID);
-    setStartWindow(StartCalibrationAgr1::getOTP0());
+    setStartWindow(StartCalibrationAgr1::getOTP());
     setUserMessage(QString("<div style='color: blue'>Установите пробы с ОТП в рабочие  каналы и нажмите \"Старт\""), 0);
 
     auto saveotp2 = [&](int n, double d) {
@@ -756,6 +746,36 @@ void Widget::getLevelOTP()
             saveotp2(2, x); } );
     connect(this, &Widget::ret_value4, [&](double x){ disconnect(this, &Widget::ret_value4, 0, 0);
             saveotp2(3, x); } );
+}
+
+void Widget::getData(int n)
+{
+    QString str = QString("Канал %1: Измерение").arg(n);
+    setUserMessage(str);
+    emit status(str);
+    std::function<void (int)> func = [this](int n){
+        stopData(n);
+    };
+    switch (n) {
+    case 1:
+        pBar1->startProgress(QString("%1 %p%").arg(str), startWin->getTime() * 1000, std::bind(func, n));
+        data1 = true;
+        break;
+    case 2:
+        pBar2->startProgress(QString("%1 %p%").arg(str), startWin->getTime() * 1000, std::bind(func, n));
+        data2 = true;
+        break;
+    case 3:
+        pBar3->startProgress(QString("%1 %p%").arg(str), startWin->getTime() * 1000, std::bind(func, n));
+        data3 = true;
+        break;
+    case 4:
+        pBar4->startProgress(QString("%1 %p%").arg(str), startWin->getTime() * 1000, std::bind(func, n));
+        data4 = true;
+        break;
+    default:
+        break;
+    }
 }
 
 void Widget::stopData(int n)
@@ -832,7 +852,7 @@ void Widget::startIncub(int num)
     else {
         QPointer<QMessageBox> imessageBox = new QMessageBox(this);
         imessageBox->setText(QString("<div style='color: blue'>Время инкубации истекло, добавьте разведения плазмы в рабочие каналы и нажмите кнопку \"ОК\"" ));
-        connect(imessageBox.data(), &QMessageBox::buttonClicked, this, &Widget::incubeTimeout_0);
+        connect(imessageBox.data(), &QMessageBox::buttonClicked, this, &Widget::incubeTimeout_1);
         int time_ms = startWin->getTimeIncube(1) * 1000;
         pBar1->startProgress(QString("Инкубация 1 %p%"), time_ms, [imessageBox, this]() {
             pBar1->Wait();
@@ -848,18 +868,6 @@ void Widget::startIncub(int num)
         setUserMessage(QString("Инкубация 1 (%1c)").arg(startWin->getTimeIncube()));
         emit status(QString("Инкубация 1"));
     }
-}
-
-void Widget::incubeTimeout_0()
-{
-    std::function<void(Widget*)> func = &Widget::incubeTimeout;
-    int time_ms = startWin->getTimeIncube(2) * 1000;
-    //pBar1->setFormat("Инкубация 0");
-    pBar1->startProgress(QString("Инкубация 2 %p%"), time_ms, std::bind(func, this));
-    pBar2->startProgress(QString("Инкубация 2 %p%"), time_ms);
-    pBar3->startProgress(QString("Инкубация 2 %p%"), time_ms);
-    pBar4->startProgress(QString("Инкубация 2 %p%"), time_ms);
-    setUserMessage(QString("Инкубация 2 (%1c)").arg(startWin->getTimeIncube(2)));
 }
 
 void Widget::incubeTimeout()
@@ -916,6 +924,23 @@ void Widget::incubeTimeout()
 
         connect(iw, &ImpuleWaiter::alldone, [this](){ waitPulse = false; });
         iw->startWait();
+}
+
+void Widget::incubeTimeout_1()
+{
+    std::function<void(Widget*)> func = &Widget::incubeTimeout_2;
+    int time_ms = startWin->getTimeIncube(2) * 1000;
+    //pBar1->setFormat("Инкубация 0");
+    pBar1->startProgress(QString("Инкубация 2 %p%"), time_ms, std::bind(func, this));
+    pBar2->startProgress(QString("Инкубация 2 %p%"), time_ms);
+    pBar3->startProgress(QString("Инкубация 2 %p%"), time_ms);
+    pBar4->startProgress(QString("Инкубация 2 %p%"), time_ms);
+    setUserMessage(QString("Инкубация 2 (%1c)").arg(startWin->getTimeIncube(2)));
+}
+
+void Widget::incubeTimeout_2()
+{
+    incubeTimeout();
 }
 
 double Widget::writeMapData(int n)
@@ -1052,12 +1077,12 @@ void Widget::on_comboBox_currentIndexChanged(int index)
         break;
     case 8:
         str = tr("Определение уровня БТП, тест (8)");
-        setStartWindow(StartCalibrationAgr1::getBTP100());
+        setStartWindow(StartCalibrationAgr1::getBTP());
         setMode(Level_ID);
         break;
     case 9:
         str = tr("Определение уровня ОТП, тест (9)");
-        setStartWindow(StartCalibrationAgr1::getOTP0());
+        setStartWindow(StartCalibrationAgr1::getOTP());
         setMode(Level_ID);
         break;
     default:
@@ -1162,4 +1187,15 @@ void Widget::setupWidget()
         }
     }
 }
+
+//DoThis::DoThis(Widget *obj)
+//{
+//    this->obj = obj;
+//    self = NULL;
+//}
+
+//Incubation::Incubation(Widget *obj) : DoThis(obj)
+//{
+
+//}
 

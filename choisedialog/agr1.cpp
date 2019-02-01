@@ -76,7 +76,6 @@ void Agr1::open()
     if( t_agr1.getK3() ) {
         ui->checkBox_testCh3->setChecked(true);
         ui->lineEdit_testCh3->setText(t_agr1.getNum3());
-
     }
     else {
         ui->checkBox_testCh3->setChecked(false);
@@ -85,7 +84,6 @@ void Agr1::open()
     if( t_agr1.getK4() ) {
         ui->checkBox_testCh4->setChecked(true);
         ui->lineEdit_testCh4->setText(t_agr1.getNum4());
-
     }
     else {
         ui->checkBox_testCh4->setChecked(false);
@@ -98,42 +96,7 @@ void Agr1::open()
 
 void Agr1::save()
 {
-    //param.clear();
-//    param.replace(0, ui->lineEdit_1->text());
-//    param.replace(1, ui->lineEdit_2->text());
-//    param.replace(2, ui->lineEdit_3->text());
-//    file.saveAgr1(param);
-}
 
-void Agr1::calibrationDataCome(int n, double deta)
-{
-//    один параметр контрольной нормальной плазмы
-//    QDateTime dt = QDateTime::currentDateTime();
-//    //ui->label_calibrationData->setText(dt.toString("dd.MM.yyyy ") + dt.toString("hh:mm:ss"));
-//    if(param.count() <= n)
-//        param.push_back(QString("%1").arg(deta));
-//    else param.replace(n, QString("%1").arg(deta));
-//    file.saveAgr1(param);
-}
-
-void Agr1::calibrationData1Come(double t0)
-{
-    calibrationDataCome(3, t0);
-}
-
-void Agr1::calibrationData2Come(double t0)
-{
-    calibrationDataCome(4, t0);
-}
-
-void Agr1::calibrationData3Come(double t0)
-{
-    calibrationDataCome(5, t0);
-}
-
-void Agr1::calibrationData4Come(double t0)
-{
-    calibrationDataCome(6, t0);
 }
 
 void Agr1::on_radioButton_testSingle_toggled(bool checked)
@@ -212,7 +175,7 @@ StartMeasurement *StartCalibrationAgr1::getStart(Calibration *c_agr1)
     return start;
 }
 
-StartMeasurement *StartCalibrationAgr1::getBTP100()
+StartMeasurement *StartCalibrationAgr1::getBTP()
 {
     StartMeasurement *start = new StartMeasurement(0);
     start->setChannels(true, true, true, true);
@@ -226,7 +189,7 @@ StartMeasurement *StartCalibrationAgr1::getBTP100()
     return start;
 }
 
-StartMeasurement *StartCalibrationAgr1::getOTP0()
+StartMeasurement *StartCalibrationAgr1::getOTP()
 {
     StartMeasurement *start = new StartMeasurement(0);
     start->setChannels(true, true, true, true);
@@ -236,6 +199,7 @@ StartMeasurement *StartCalibrationAgr1::getOTP0()
     start->setNum(4, "ОТП");
     start->setTime(10);
     start->setTimeIncube(1, 3);
+    start->setTimeIncube(2, 4);
     start->setModeID(Level_ID);
     return start;
 }
