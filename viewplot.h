@@ -32,14 +32,15 @@ public:
 private slots:
     void on_pushButton_back_clicked();
     void on_pushButton_open_clicked();
+    void on_pushButton_round_clicked();
+    void on_pushButton_select_clicked();
+    void on_pushButton_print_clicked();
+    void on_pushButton_calc_clicked();
 
     void on_checkBox_1_stateChanged(int arg1);
     void on_checkBox_2_stateChanged(int arg1);
     void on_checkBox_3_stateChanged(int arg1);
     void on_checkBox_4_stateChanged(int arg1);
-    void on_pushButton_select_clicked();
-    void on_pushButton_print_clicked();
-    void on_pushButton_calc_clicked();
 
     void selectionChanged();
     void mousePress();
@@ -54,8 +55,6 @@ private slots:
     void hasSelected(QCP::SelectionType);
     //void hasSelected(bool);
     void hasSelectedRect(QRect,QMouseEvent*);
-
-    void on_pushButton_clicked();
 
 private:
     Ui::ViewPlot *ui;

@@ -18,8 +18,8 @@ Options::Options(QWidget *parent) :
 void Options::setWidget(Widget *w)
 {
     widget = w;
-    ui->lineEdit_StartDX->setText(QString("%1").arg(w->Start_DX));
-    ui->lineEdit_StopDX->setText(QString("%1").arg(w->Stop_DX));
+    ui->lineEdit_StartDX->setText(QString("%1").arg(w->START_DX));
+    ui->lineEdit_StopDX->setText(QString("%1").arg(w->STOP_DX));
     ui->lineEdit_MAX->setText(QString("%1").arg(w->MAX));
     ui->lineEdit_MIN->setText(QString("%1").arg(w->MIN));
 }
@@ -36,8 +36,8 @@ void Options::on_pushButton_Next_clicked()
     double start_dx = ui->lineEdit_StartDX->text().toDouble();
     double stop_dx = ui->lineEdit_StopDX->text().toDouble();
 
-    widget->Start_DX = start_dx;
-    widget->Stop_DX = stop_dx;
+    widget->START_DX = start_dx;
+    widget->STOP_DX = stop_dx;
     widget->MIN = min;
     widget->MAX =max;
     widget->customPlot1->yAxis->setRange(min, max);
@@ -48,6 +48,6 @@ void Options::on_pushButton_Next_clicked()
     widget->customPlot3->replot();
     widget->customPlot4->yAxis->setRange(min, max);
     widget->customPlot4->replot();
-    qDebug() << "Start_DX:" << widget->Start_DX<< "Stop_DX: " << widget->Stop_DX << "MAX:" << widget->MAX << "MIN:" << widget->MIN;
+    qDebug() << "Start_DX:" << widget->START_DX<< "Stop_DX: " << widget->STOP_DX << "MAX:" << widget->MAX << "MIN:" << widget->MIN;
     close();
 }

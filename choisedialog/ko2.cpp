@@ -109,6 +109,7 @@ void Ko2::open()
     ui->lineEdit_test2ReagentSerial->setText(c_ko2.getReagent_serial());
     ui->doubleSpinBox_test2IncubeTime->setValue(c_ko2.getIncube_time());
     ui->doubleSpinBox_test2WriteTime->setValue(c_ko2.getWrite_time());
+    ui->doubleSpinBox_test2a4tv->setValue(c_ko2.getK_plazma_a4tv());
 
     //окно калибровка
     ui->checkBox_calibCh1->setChecked(c_ko2.getK1());
@@ -123,7 +124,7 @@ void Ko2::open()
     ui->dateEdit_calibPlazma->setDate(c_ko2.getK_plazma_date());
     ui->lineEdit_calibReagentSerial->setText(c_ko2.getReagent_serial());
     ui->dateEdit_calibReagent->setDate(c_ko2.getReagent_date());
-    ui->doubleSpinBox_a4tv->setValue(c_ko2.getK_plazma_a4tv());
+    ui->doubleSpinBox_caliba4tv->setValue(c_ko2.getK_plazma_a4tv());
 }
 
 void Ko2::close()
@@ -334,8 +335,6 @@ void Ko2::on_pushButton_test1_clicked()
     t_ko2.setSingle(ui->radioButton_test1Single->isChecked());
 
     t_ko2.save();
-    c_ko2.save();
-
     emit measurement(StartTestKo2::getStart(&t_ko2));
 }
 
@@ -369,7 +368,7 @@ void Ko2::on_pushButton_calib_clicked()
     c_ko2.setReagent_serial(ui->lineEdit_calibReagentSerial->text());
     c_ko2.setK_plazma_date(ui->dateEdit_calibPlazma->date());
     c_ko2.setK_plazma_serial(ui->lineEdit_calibKPlazmaSerial->text());
-    c_ko2.setK_plazma_a4tv(ui->doubleSpinBox_a4tv->value());
+    c_ko2.setK_plazma_a4tv(ui->doubleSpinBox_test2a4tv->value());
     c_ko2.setIncube_time(ui->doubleSpinBox_calibIncube->value());
     c_ko2.setWrite_time(ui->doubleSpinBox_calibWriteTime->value());
 

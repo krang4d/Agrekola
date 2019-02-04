@@ -90,7 +90,7 @@ ChoiseDialog::~ChoiseDialog()
 void ChoiseDialog::on_testButton_clicked()
 {
     QPointer<Widget> widget = CreateWidgetThread();
-    widget->setMode(Test_ID); //Test
+    widget->startWin->setModeID(Test_ID); //Test
     widget->show();
     hide();
 }
@@ -99,11 +99,13 @@ void ChoiseDialog::startMeasurement(StartMeasurement* sw)
 {
     QPointer<MainWindow> mw = new MainWindow(this);
     Mode_ID mode = sw->getModeID();
-    mw->centerWidget->setMode(mode);
+    mw->centerWidget->setStartWindow(sw);
     switch (mode) {
     case TestAgr1_ID: //{
         mw->setWindowTitle("<div style='color: blue'>Определение параметров агрегации, тест (1)");
         mw->centerWidget->setUserMessage("<div style='color: blue'>Определение параметров агрегации, тест (1)");
+        mw->centerWidget->current_mode_id = sw->getModeID();
+//      connect(mw.data()->centerWidget, SIGNAL(ret_value1(double), agr1.data(), SLOT(btpData1Come(double)));
 //        centerWidget->setStartWindow(StartCalibrationAgr1::getBTP100());
 
 //        std::function<void(void)> fun = [this, sw](){ qDebug() << "getBTP100() done";
@@ -118,7 +120,7 @@ void ChoiseDialog::startMeasurement(StartMeasurement* sw)
 //        connect(centerWidget, &Widget::done, fun);
 
 //        centerWidget->getLevelBTP();
-    //}
+//      }
         break;
     case TestAgr2_ID:
         mw->centerWidget->setStartWindow(sw);
@@ -167,15 +169,15 @@ void ChoiseDialog::calibration(StartMeasurement* sw)
 {
     QPointer<Widget> widget= CreateWidgetThread(sw);
     Mode_ID mode = sw->getModeID();
-    widget->setMode(mode);
+    widget->startWin->setModeID(mode);
     switch (mode){
     case CalibAgr1_ID:{
         widget->setUserMessage(QString("Определение параметров агрегации, калибровка (Agr1 1)"), 0);
         widget->setUserMessage(QString("<div style='color: blue'>Установите кюветы с контрольной нормальной плазмой и нажмите \"Старт\""), 0);
-        connect(widget.data(), SIGNAL(ret_value1(double)), agr1.data(), SLOT(calibrationData1Come(double)));
-        connect(widget.data(), SIGNAL(ret_value2(double)), agr1.data(), SLOT(calibrationData2Come(double)));
-        connect(widget.data(), SIGNAL(ret_value3(double)), agr1.data(), SLOT(calibrationData3Come(double)));
-        connect(widget.data(), SIGNAL(ret_value4(double)), agr1.data(), SLOT(calibrationData4Come(double)));
+        connect(widget.data(), SIGNAL(ret_value1(double)), agr1.data(), SLOT(btpData1Come(double)));
+        connect(widget.data(), SIGNAL(ret_value2(double)), agr1.data(), SLOT(btpData2Come(double)));
+        connect(widget.data(), SIGNAL(ret_value3(double)), agr1.data(), SLOT(btpData3Come(double)));
+        connect(widget.data(), SIGNAL(ret_value4(double)), agr1.data(), SLOT(btpData4Come(double)));
     }break;
     case CalibAgr2_ID:{
         widget->setUserMessage(QString("<div style='color: blue'>Установите кюветы с контрольной нормальной плазмой и ее разведением, после нажмите \"Старт\""), 0);

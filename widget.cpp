@@ -10,7 +10,7 @@
 #include <functional>
 #include "agr1.h"
 
-//#define Start_DX 0.1f
+//#define STOP_DX 0.1f
 //#define MIN -6.0f
 //#define MAX 6.0f
 
@@ -23,7 +23,7 @@ Widget::Widget(QWidget *parent) :
     termoSensor(false), incub(false), waitPulse(false),
     pBar1(new ProgressTimerBar), pBar2(new ProgressTimerBar),
     pBar3(new ProgressTimerBar), pBar4(new ProgressTimerBar),
-    Start_DX(0.1), Stop_DX(0.1), MIN(-6.0), MAX(6.0),
+    START_DX(0.1), STOP_DX(0.1), MIN(-6.0), MAX(6.0),
     startWin(new StartMeasurement)
 {
     ui->setupUi(this);
@@ -219,41 +219,41 @@ void Widget::realtimeDataSlot(QVariantList a) {
     double dx2 = std::abs(a[1].toDouble() - lastPointV2);
     double dx3 = std::abs(a[2].toDouble() - lastPointV3);
     double dx4 = std::abs(a[3].toDouble() - lastPointV4);
-    lastPointV1 = a[0].toDouble();
-    if((dx1 > Start_DX || pulse1) && ready1) {
+
+    if((dx1 > START_DX || pulse1) && ready1) {
         pulse1 = false;
         ready1 = false;
         emit hasPulse1();
         setUserMessage("Канал 1: Введен стартовый реагент в кювету");
         qDebug() << QString("The pulse is come! dx1=%1").arg(dx1);
-        getData(1);
+        getData(1, startWin->getTime());
     }
     lastPointV2 = a[1].toDouble();
-    if((dx2 > Start_DX || pulse2) && ready2) {
+    if((dx2 > START_DX || pulse2) && ready2) {
         pulse2 = false;
         ready2 = false;
         emit hasPulse2();
         setUserMessage("Канал 2: Введен стартовый реагент в кювету");
         qDebug() << QString("The pulse is come! dx2=%1").arg(dx2);
-        getData(2);
+        getData(2, startWin->getTime());
     }
     lastPointV3 = a[2].toDouble();
-    if((dx3 > Start_DX || pulse3) && ready3) {
+    if((dx3 > START_DX || pulse3) && ready3) {
         pulse3 = false;
         ready3 = false;
         emit hasPulse3();
         setUserMessage("Канал 3: Введен стартовый реагент в кювету");
         qDebug() << QString("The pulse is come! dx3=%1").arg(dx3);
-        getData(3);
+        getData(3, startWin->getTime());
     }
     lastPointV4 = a[3].toDouble();
-    if((dx4 > Start_DX || pulse4) && ready4) {
+    if((dx4 > START_DX || pulse4) && ready4) {
         pulse4 = false;
         ready4 = false;
         emit hasPulse4();
         setUserMessage("Канал 4: Введен стартовый реагент в кювету");
         qDebug() << QString("The pulse is come! dx4=%1").arg(dx4);
-        getData( 4 );
+        getData(4, startWin->getTime());
     }
 
     if (key-lastPointKey > 0.01) {// at most add point every 10 ms
@@ -298,15 +298,18 @@ void Widget::realtimeDataSlot(QVariantList a) {
         }
 
         static double stop_dy1 = 0 ;
-        if( isData( 1 ) && startWin->isChannel(1) ) {
+        if( data1 ) {
             map_y1.insert(key, a[0].toDouble());
             if( key <= (map_y1.begin().key() + 4) ) {
                     stop_dy1 = map_y1.last();
-                    qDebug() << "stop_dx1 = " << stop_dy1;
+                    qDebug() << "STOP_DX1 = " << stop_dy1;
             }
             else {
-                if(  getMode() != TestAgr1_ID && getMode() != TestAgr2_ID && std::abs(map_y1.last() - stop_dy1) >= std::abs(stop_dy1*Stop_DX) ) {
-                    qDebug() << "emit stopData1" << std::abs(map_y1.last() - stop_dy1) << ">=" << std::abs(stop_dy1*Stop_DX);
+                if(current_mode_id != TestAgr1_ID &&
+                   current_mode_id != TestAgr2_ID &&
+                   std::abs(map_y1.last() - stop_dy1) >= std::abs(stop_dy1*STOP_DX))
+                {
+                    qDebug() << "emit stopData1" << std::abs(map_y1.last() - stop_dy1) << ">=" << std::abs(stop_dy1*STOP_DX);
                     emit stopData(1);
                 }
             }
@@ -316,15 +319,18 @@ void Widget::realtimeDataSlot(QVariantList a) {
         }
 
         static double stop_dy2 = 0 ;
-        if( isData( 2 ) && startWin->isChannel(2) ) {
+        if( data2 ) {
             map_y2.insert(key, a[1].toDouble());
             if( key <= (map_y2.begin().key() + 4) ) {
                     stop_dy2 = map_y2.last();
-                    qDebug() << "stop_dx2 = " << stop_dy2;
+                    qDebug() << "STOP_DX2 = " << stop_dy2;
             }
             else {
-                if(  getMode() != TestAgr1_ID && getMode() != TestAgr2_ID && std::abs(map_y2.last() - stop_dy2) >= std::abs(stop_dy2*Stop_DX) ) {
-                    qDebug() << "emit stopData2" << std::abs(map_y2.last() - stop_dy2) << ">=" << std::abs(stop_dy2*Stop_DX);
+                if(current_mode_id != TestAgr1_ID &&
+                   current_mode_id != TestAgr2_ID &&
+                   std::abs(map_y2.last() - stop_dy2) >= std::abs(stop_dy2*STOP_DX) )
+                {
+                    qDebug() << "emit stopData2" << std::abs(map_y2.last() - stop_dy2) << ">=" << std::abs(stop_dy2*STOP_DX);
                     emit stopData(2);
                 }
             }
@@ -334,15 +340,18 @@ void Widget::realtimeDataSlot(QVariantList a) {
         }
 
         static double stop_dy3 = 0 ;
-        if( isData( 3 ) && startWin->isChannel(3) ) {
+        if( data3 ) {
             map_y3.insert(key, a[2].toDouble());
             if( key <= (map_y3.begin().key() + 4) ) {
                     stop_dy3 = map_y3.last();
-                    qDebug() << "stop_dx3 = " << stop_dy3;
+                    qDebug() << "STOP_DX3 = " << stop_dy3;
             }
             else {
-                if(  getMode() != TestAgr1_ID && getMode() != TestAgr2_ID && std::abs(map_y3.last() - stop_dy3) >= std::abs(stop_dy3*Stop_DX) ) {
-                    qDebug() << "emit stopData3" << std::abs(map_y3.last() - stop_dy3) << ">=" << std::abs(stop_dy3*Stop_DX);
+                if(current_mode_id != TestAgr1_ID &&
+                   current_mode_id != TestAgr2_ID &&
+                   std::abs(map_y3.last() - stop_dy3) >= std::abs(stop_dy3*STOP_DX) )
+                {
+                    qDebug() << "emit stopData3" << std::abs(map_y3.last() - stop_dy3) << ">=" << std::abs(stop_dy3*STOP_DX);
                     emit stopData(3);
                 }
             }
@@ -352,15 +361,18 @@ void Widget::realtimeDataSlot(QVariantList a) {
         }
 
         static double stop_dy4 = 0 ;
-        if( isData( 4 ) && startWin->isChannel(4) ) {
+        if( data4 ) {
             map_y4.insert(key, a[3].toDouble());
             if( key <= (map_y4.begin().key() + 4) ) {
                     stop_dy4 = map_y4.last();
-                    qDebug() << "stop_dx4 = " << stop_dy4;
+                    qDebug() << "STOP_DX4 = " << stop_dy4;
             }
             else {
-                if(  getMode() != TestAgr1_ID && getMode() != TestAgr2_ID && std::abs(map_y4.last() - stop_dy4) >= std::abs(stop_dy4*Stop_DX) ) {
-                    qDebug() << "emit stopData4" << std::abs(map_y4.last() - stop_dy4) << ">=" << std::abs(stop_dy4*Stop_DX);
+                if(current_mode_id != TestAgr1_ID &&
+                   current_mode_id != TestAgr2_ID &&
+                   std::abs(map_y4.last() - stop_dy4) >= std::abs(stop_dy4*STOP_DX) )
+                {
+                    qDebug() << "emit stopData4" << std::abs(map_y4.last() - stop_dy4) << ">=" << std::abs(stop_dy4*STOP_DX);
                     emit stopData(4);
                 }
             }
@@ -429,7 +441,8 @@ void Widget::on_checkBox_L_stateChanged(int arg1)
 void Widget::on_pushButton_clicked()
 {
     static bool test = false;
-
+    static int i = 0;
+    //current_mode_id = startWin->getModeID();
     ui->pushButton->setEnabled(false);
 
     if( termoSensor ) {
@@ -463,11 +476,10 @@ void Widget::on_pushButton_clicked()
     test_dialog->addButton(&ok, QMessageBox::AcceptRole);
     test_dialog->addButton(&cansel, QMessageBox::RejectRole);
     test_dialog->setIcon(QMessageBox::Information);
-    switch(getMode()) {
+    switch(current_mode_id) {
     case Test_ID:
         setUserMessage("Проверка работопособности");
         test = true;
-        QMessageBox::StandardButton button;
         //Проверка Перемешивания в канале 1
         emit onmixch1(true);
         setUserMessage(QString("Контроль включения перемешивания в канале 1"));
@@ -572,25 +584,37 @@ void Widget::on_pushButton_clicked()
         if(test) {
             connect(startWin, &StartMeasurement::startMeasurment, [=](StartMeasurement* sm){
                 setStartWindow(sm);
-                getData(1);
-                getData(2);
-                getData(3);
-                getData(4);
+                getData(1, startWin->getTime());
+                getData(2, startWin->getTime());
+                getData(3, startWin->getTime());
+                getData(4, startWin->getTime());
                 disconnect(startWin, &StartMeasurement::startMeasurment, 0, 0);
                 startWin->hide();
                 });
             startWin->show();
         } else {
-            getData(1);
-            getData(2);
-            getData(3);
-            getData(4);
+            getData(1, startWin->getTime());
+            getData(2, startWin->getTime());
+            getData(3, startWin->getTime());
+            getData(4, startWin->getTime());
         }
         break;
     case TestAgr1_ID:
+        if(testAgr1_Vector.at(i) == TestAgr1_ID) {
+            setUserMessage(QString("<div style='color: blue'>Конец TestAgr1_ID"), 0);
+            ui->pushButton->setEnabled(true);
+            i = 0;
+            break;
+        }
         ui->pushButton->setEnabled(false);
         setUserMessage(startWin->getStringStatus());
-        startIncub(2);
+        //определение БТП
+        //QPointer<StartMeasurement> sm =  StartCalibrationAgr1::getBTP();
+        setUserMessage(QString("<div style='color: blue'>Установите пробы с БТП в рабочие  каналы и нажмите \"Старт\""), 0);
+        QMessageBox::information(this, "БТП", "<div style='color: blue'>Установите пробы с БТП в рабочие  каналы и нажмите \"Старт\"");
+        current_mode_id = testAgr1_Vector.at(i);
+        qDebug() << testAgr1_Vector.at(i);
+        ui->pushButton->setEnabled(true);
         break;
 
     case TestKo1_ID:
@@ -621,6 +645,37 @@ void Widget::on_pushButton_clicked()
         ui->pushButton->setEnabled(false);
         setUserMessage(startWin->getStringStatus());
         startIncub(1);
+        break;
+
+    case BTPTestAgr1_ID:
+        ui->pushButton->setEnabled(false);
+        setUserMessage(startWin->getStringStatus());
+        current_mode_id = Test_ID;
+        connect(this, &Widget::done, [this](){
+            current_mode_id = testAgr1_Vector.at(++i); ui->pushButton->setEnabled(true); });
+        getData(1, 5);
+        getData(2, 5);
+        getData(3, 5);
+        getData(4, 5);
+
+        //connect(this, &Widget::ret_value1, , &CalibrationAgr1::getBTP1);
+                //[&](double x){ disconnect(this, &Widget::ret_value1, 0, 0);
+                //c_agr1->setBTP1(x); } );
+//        connect(this, &Widget::ret_value1, [&](double x){ disconnect(this, &Widget::ret_value1, 0, 0);
+//                c_agr1->setBTP2(x); } );
+//        connect(this, &Widget::ret_value1, [&](double x){ disconnect(this, &Widget::ret_value1, 0, 0);
+//                c_agr1->setBTP3(x); } );
+//        connect(this, &Widget::ret_value1, [&](double x){ disconnect(this, &Widget::ret_value1, 0, 0);
+//                c_agr1->setBTP4(x); } );
+//        connect(this, &Widget::ret_value2, [&](double x){ disconnect(this, &Widget::ret_value2, 0, 0);
+//                savebtp2(1, x); } );
+//        connect(this, &Widget::ret_value3, [&](double x){ disconnect(this, &Widget::ret_value3, 0, 0);
+//                savebtp2(2, x); } );
+//        connect(this, &Widget::ret_value4, [&](double x){ disconnect(this, &Widget::ret_value4, 0, 0);
+//                savebtp2(3, x); } );
+        break;
+    case OTPTestAgr1_ID:
+
         break;
 
     default:
@@ -677,78 +732,43 @@ void Widget::startMeasurment(StartMeasurement *s)
     on_pushButton_clicked();
 }
 
-void Widget::getLevelBTP()
-{
-    //определение БТП
-    setMode(Level_ID);
-    setStartWindow(StartCalibrationAgr1::getBTP());
-    setUserMessage(QString("<div style='color: blue'>Установите пробы с БТП в рабочие  каналы и нажмите \"Старт\""), 0);
+//void Widget::getLevelOTP()
+//{
+//    //определение ОТП
+//    setMode(Level_ID);
+//    setStartWindow(StartCalibrationAgr1::getOTP());
+//    setUserMessage(QString("<div style='color: blue'>Установите пробы с ОТП в рабочие  каналы и нажмите \"Старт\""), 0);
 
-    auto savebtp2 = [&](int n, double d) {
-//        static int i = 0;
-//        i++;
-        QStringList btp100;
-        SaveFiles file_btp;
-        qDebug() << QString("retavlue = %1, index = %2").arg(d).arg(n);
-        file_btp.openBTP100(btp100);
-        if (btp100.isEmpty() || btp100.count() != 4) {
-            btp100 = QStringList({"0", "0", "0", "0"});
-        }
-        btp100.replace(n, QString("%1").arg(d));
-        file_btp.saveBTP100(btp100);
-//        if(i == startWin->num) {
-//            i = 0;
-//            emit btp_done();
-//        }
-    };
+//    auto saveotp2 = [&](int n, double d) {
+////        static int i = 0;
+////        i++;
+//            QStringList otp0;
+//            SaveFiles file_otp;
+//            qDebug() << QString("retavlue = %1, index = %2").arg(d).arg(n);
+//            file_otp.openBTP0(otp0);
+//            if (otp0.isEmpty() || otp0.count() != 4) {
+//                otp0 = QStringList({"0", "0", "0", "0"});
+//            }
+//            otp0.replace(n, QString("%1").arg(d));
+//            file_otp.saveBTP0(otp0);
+//        qDebug() << "Определение ОТП контрольной плазмы";
+////        if(i == startWin->num) {
+////            i = 0;
+////            emit otp_done();
+////        }
+//    };
 
-    connect(this, &Widget::ret_value1, [&](double x){ disconnect(this, &Widget::ret_value1, 0, 0);
-            savebtp2(0, x); } );
-    connect(this, &Widget::ret_value2, [&](double x){ disconnect(this, &Widget::ret_value2, 0, 0);
-            savebtp2(1, x); } );
-    connect(this, &Widget::ret_value3, [&](double x){ disconnect(this, &Widget::ret_value3, 0, 0);
-            savebtp2(2, x); } );
-    connect(this, &Widget::ret_value4, [&](double x){ disconnect(this, &Widget::ret_value4, 0, 0);
-            savebtp2(3, x); } );
-}
+//    connect(this, &Widget::ret_value1, [&](double x){ disconnect(this, &Widget::ret_value1, 0, 0);
+//            saveotp2(0, x); } );
+//    connect(this, &Widget::ret_value2, [&](double x){ disconnect(this, &Widget::ret_value2, 0, 0);
+//            saveotp2(1, x); } );
+//    connect(this, &Widget::ret_value3, [&](double x){ disconnect(this, &Widget::ret_value3, 0, 0);
+//            saveotp2(2, x); } );
+//    connect(this, &Widget::ret_value4, [&](double x){ disconnect(this, &Widget::ret_value4, 0, 0);
+//            saveotp2(3, x); } );
+//}
 
-void Widget::getLevelOTP()
-{
-    //определение ОТП
-    setMode(Level_ID);
-    setStartWindow(StartCalibrationAgr1::getOTP());
-    setUserMessage(QString("<div style='color: blue'>Установите пробы с ОТП в рабочие  каналы и нажмите \"Старт\""), 0);
-
-    auto saveotp2 = [&](int n, double d) {
-//        static int i = 0;
-//        i++;
-            QStringList otp0;
-            SaveFiles file_otp;
-            qDebug() << QString("retavlue = %1, index = %2").arg(d).arg(n);
-            file_otp.openBTP0(otp0);
-            if (otp0.isEmpty() || otp0.count() != 4) {
-                otp0 = QStringList({"0", "0", "0", "0"});
-            }
-            otp0.replace(n, QString("%1").arg(d));
-            file_otp.saveBTP0(otp0);
-        qDebug() << "Определение ОТП контрольной плазмы";
-//        if(i == startWin->num) {
-//            i = 0;
-//            emit otp_done();
-//        }
-    };
-
-    connect(this, &Widget::ret_value1, [&](double x){ disconnect(this, &Widget::ret_value1, 0, 0);
-            saveotp2(0, x); } );
-    connect(this, &Widget::ret_value2, [&](double x){ disconnect(this, &Widget::ret_value2, 0, 0);
-            saveotp2(1, x); } );
-    connect(this, &Widget::ret_value3, [&](double x){ disconnect(this, &Widget::ret_value3, 0, 0);
-            saveotp2(2, x); } );
-    connect(this, &Widget::ret_value4, [&](double x){ disconnect(this, &Widget::ret_value4, 0, 0);
-            saveotp2(3, x); } );
-}
-
-void Widget::getData(int n)
+void Widget::getData(int n, double time_s)
 {
     QString str = QString("Канал %1: Измерение").arg(n);
     setUserMessage(str);
@@ -758,25 +778,59 @@ void Widget::getData(int n)
     };
     switch (n) {
     case 1:
-        pBar1->startProgress(QString("%1 %p%").arg(str), startWin->getTime() * 1000, std::bind(func, n));
+        pBar1->startProgress(QString("%1 %p%").arg(str), time_s * 1000, std::bind(func, n));
         data1 = true;
         break;
     case 2:
-        pBar2->startProgress(QString("%1 %p%").arg(str), startWin->getTime() * 1000, std::bind(func, n));
+        pBar2->startProgress(QString("%1 %p%").arg(str), time_s * 1000, std::bind(func, n));
         data2 = true;
         break;
     case 3:
-        pBar3->startProgress(QString("%1 %p%").arg(str), startWin->getTime() * 1000, std::bind(func, n));
+        pBar3->startProgress(QString("%1 %p%").arg(str), time_s * 1000, std::bind(func, n));
         data3 = true;
         break;
     case 4:
-        pBar4->startProgress(QString("%1 %p%").arg(str), startWin->getTime() * 1000, std::bind(func, n));
+        pBar4->startProgress(QString("%1 %p%").arg(str), time_s * 1000, std::bind(func, n));
         data4 = true;
         break;
     default:
         break;
     }
 }
+
+//void Widget::getLevelBTP()
+//{
+//    //определение БТП
+//    setStartWindow(StartCalibrationAgr1::getBTP());
+//    setUserMessage(QString("<div style='color: blue'>Установите пробы с БТП в рабочие  каналы и нажмите \"Старт\""), 0);
+
+//    auto savebtp2 = [&](int n, double d) {
+////        static int i = 0;
+////        i++;
+//        QStringList btp100;
+//        SaveFiles file_btp;
+//        qDebug() << QString("retavlue = %1, index = %2").arg(d).arg(n);
+//        file_btp.openBTP100(btp100);
+//        if (btp100.isEmpty() || btp100.count() != 4) {
+//            btp100 = QStringList({"0", "0", "0", "0"});
+//        }
+//        btp100.replace(n, QString("%1").arg(d));
+//        file_btp.saveBTP100(btp100);
+////        if(i == startWin->num) {
+////            i = 0;
+////            emit btp_done();
+////        }
+//    };
+
+//    connect(this, &Widget::ret_value1, [&](double x){ disconnect(this, &Widget::ret_value1, 0, 0);
+//            savebtp2(0, x); } );
+//    connect(this, &Widget::ret_value2, [&](double x){ disconnect(this, &Widget::ret_value2, 0, 0);
+//            savebtp2(1, x); } );
+//    connect(this, &Widget::ret_value3, [&](double x){ disconnect(this, &Widget::ret_value3, 0, 0);
+//            savebtp2(2, x); } );
+//    connect(this, &Widget::ret_value4, [&](double x){ disconnect(this, &Widget::ret_value4, 0, 0);
+//            savebtp2(3, x); } );
+//}
 
 void Widget::stopData(int n)
 {
@@ -946,7 +1000,7 @@ void Widget::incubeTimeout_2()
 double Widget::writeMapData(int n)
 {
     double retval;
-    CalcData *p = CalcData::createCalc( getMode() );
+    CalcData *p = CalcData::createCalc( current_mode_id );
     if(p == NULL) { qDebug() << "p is NULL"; }
     setUserMessage(QString("Канал %1: Запись данных").arg(n));
     emit status(QString("Канал %1: Запись данных").arg(n));
@@ -1034,6 +1088,7 @@ double Widget::writeMapData(int n)
         ui->checkBox_L->setChecked(false);
         ui->pushButton->setEnabled(true);
         setUserMessage(QString("Конец сбора данных"));
+        status(QString("Конец сбора данных"));
         emit done();
     }
     return retval;
@@ -1045,45 +1100,45 @@ void Widget::on_comboBox_currentIndexChanged(int index)
     switch (index) {
     case 0:
         str = tr("Тест (Test 0)");
-        setMode(Test_ID);
+        startWin->setModeID(Test_ID);
         break;
     case 1:
         str = tr("Определение параметров агрегации, тест (Agr1 1)");
-        setMode(TestAgr1_ID);
+        startWin->setModeID(TestAgr1_ID);
         break;
     case 2:
         str = tr("Определение активности фактора Виллебранда, тест (Agr2 2)");
-        setMode(TestAgr2_ID);
+        startWin->setModeID(TestAgr2_ID);
         break;
     case 3:
         str = tr("Время свертывания, тест (Ko1 3)");
-        setMode(TestKo1_ID);
+        startWin->setModeID(TestKo1_ID);
         break;
     case 4:
         str = tr("АЧТВ, тест (Ko2 4)");
-        setMode(TestKo2_ID);
+        startWin->setModeID(TestKo2_ID);
         break;
     case 5:
         str = tr("Фибриноген, тест (Ko3 5)");
-        setMode(TestKo3_ID);
+        startWin->setModeID(TestKo3_ID);
         break;
     case 6:
         str = tr("Тромбин, тест (Ko4 6)");
-        setMode(TestKo4_ID);
+        startWin->setModeID(TestKo4_ID);
         break;
     case 7:
         str = tr("Протромбиновый комплекс, тест (Ko5 7)");
-        setMode(TestKo5_ID);
+        startWin->setModeID(TestKo5_ID);
         break;
     case 8:
         str = tr("Определение уровня БТП, тест (8)");
         setStartWindow(StartCalibrationAgr1::getBTP());
-        setMode(Level_ID);
+        startWin->setModeID(Level_ID);
         break;
     case 9:
         str = tr("Определение уровня ОТП, тест (9)");
         setStartWindow(StartCalibrationAgr1::getOTP());
-        setMode(Level_ID);
+        startWin->setModeID(Level_ID);
         break;
     default:
         break;

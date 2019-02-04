@@ -49,7 +49,7 @@ void Ko4::open()
 
     ui->lineEdit_test2ReagentSerial->setText(c_ko4.getReagent_serial());
     ui->doubleSpinBox_test2Activity->setValue(c_ko4.getActivity());
-    ui->doubleSpinBox_test2Trombine->setValue(c_ko4.getTrombine_time());
+    ui->doubleSpinBox_test2TrombineTime->setValue(c_ko4.getTrombine_time());
     ui->doubleSpinBox_test2IncubeTime->setValue(c_ko4.getIncube_time());
     ui->doubleSpinBox_test2WriteTime->setValue(c_ko4.getWrite_time());
     ui->dateEdit_test2Reagent->setDate(c_ko4.getReagent_date());
@@ -331,7 +331,7 @@ void Ko4::on_pushButton_test2_clicked()
 
     c_ko4.setReagent_serial(ui->lineEdit_test2ReagentSerial->text());
     c_ko4.setActivity(ui->doubleSpinBox_test2Activity->value());
-    c_ko4.setTrombine_time(ui->doubleSpinBox_test2Trombine->value());
+    c_ko4.setTrombine_time(ui->doubleSpinBox_test2TrombineTime->value());
     c_ko4.setIncube_time(ui->doubleSpinBox_test2IncubeTime->value());
     c_ko4.setWrite_time(ui->doubleSpinBox_test2WriteTime->value());
     c_ko4.setReagent_date(ui->dateEdit_test2Reagent->date());

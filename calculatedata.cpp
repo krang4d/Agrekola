@@ -139,6 +139,10 @@ CalcData *CalcData::createCalc(Mode_ID  id)
     CalcData *p;
     switch (id) {
     case Test_ID:
+    case BTPCalibAgr1_ID:
+    case BTPCalibAgr2_ID:
+    case BTPTestAgr1_ID:
+    case BTPTestAgr2_ID:
         str = tr("Тест (Test 0)");
         p = new CalcLevel();
         break;

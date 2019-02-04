@@ -44,10 +44,6 @@ Ko1::Ko1(QWidget *parent) :
 
 Ko1::~Ko1()
 {
-    //param.clear();
-    //param.replace(0, ui->lineEdit_1->text());
-    //param.replace(1, ui->lineEdit_2->text());
-    //file.saveKo1(param);
     delete ui;
 }
 

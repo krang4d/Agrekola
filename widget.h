@@ -35,8 +35,8 @@ public:
 
     void setUserMessage(QString, bool withtime = true, bool tofile = true);
 
-    inline void setMode(Mode_ID m)  { id = m; }
-    inline Mode_ID getMode()     { return id; }
+//    inline void setMode(Mode_ID m)  { id = m; }
+//    inline Mode_ID getMode()     { return id; }
 
     void setStartWindow(StartMeasurement*);
 
@@ -97,9 +97,9 @@ public slots:
     //void startMeasurment();
     void startMeasurment(StartMeasurement *);
     void startIncub(int num);
-    void getData(int);
-    void getLevelBTP();
-    void getLevelOTP();
+    void getData(int, double time_s);
+//    void getLevelBTP();
+//    void getLevelOTP();
 
 private slots:
 
@@ -125,6 +125,7 @@ public:
     StartMeasurement *startWin;
     QPointer<QCustomPlot> customPlot1, customPlot2, customPlot3, customPlot4;
     QPointer<ProgressTimerBar> pBar1, pBar2, pBar3, pBar4;
+    Mode_ID current_mode_id;
 
 private:
     Ui::Widget *ui;
@@ -139,9 +140,8 @@ private:
     QMap<double, double> map_y1, map_y2, map_y3, map_y4 ;
     QVector<double> btp, otp;
     SaveFiles saveFiles;
-    Mode_ID id;
-    double Start_DX; //порог запуска
-    double Stop_DX;  //порог остановки
+    double START_DX; //порог запуска
+    double STOP_DX;  //порог остановки
     double MIN, MAX;
 
     friend class Options;

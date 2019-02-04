@@ -28,16 +28,23 @@ class ChoiseDialog;
 class ChoiseDialog : public QDialog
 {
     Q_OBJECT
-
+    Ui::ChoiseDialog *ui;
 public:
     explicit ChoiseDialog(QDialog *parent = 0);
     int getTypeOfWidget() const;
     QPointer<Widget> CreateWidgetThread(StartMeasurement * = 0);
     ~ChoiseDialog();
 
+    QPointer<Agr1> agr1;
+    QPointer<Agr2> agr2;
+    QPointer<Ko1> ko1;
+    QPointer<Ko2> ko2;
+    QPointer<Ko3> ko3;
+    QPointer<Ko4> ko4;
+    QPointer<Ko5> ko5;
+
 private slots:
-    void startMeasurement(StartMeasurement *);
-    void calibration(StartMeasurement *);
+    void on_exitButton_clicked();
     void on_agr1Button_clicked();
     void on_agr2Button_clicked();
     void on_ko1Button_clicked();
@@ -48,17 +55,8 @@ private slots:
     void on_testButton_clicked();
     void on_viewPlotsButton_clicked();
 
-    void on_exitButton_clicked();
-
-private:
-    QPointer<Agr1> agr1;
-    QPointer<Agr2> agr2;
-    QPointer<Ko1> ko1;
-    QPointer<Ko2> ko2;
-    QPointer<Ko3> ko3;
-    QPointer<Ko4> ko4;
-    QPointer<Ko5> ko5;
-    Ui::ChoiseDialog *ui;
+    void startMeasurement(StartMeasurement *);
+    void calibration(StartMeasurement *);
 };
 
 #endif // CHOISEDIALOG_H

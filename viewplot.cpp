@@ -223,6 +223,57 @@ void ViewPlot::on_pushButton_open_clicked()
     addData();
 }
 
+void ViewPlot::on_pushButton_round_clicked()
+{
+    if(v1.isEmpty()) {
+        QMessageBox::information(this, "Округление", "Нет данных для округоения");
+        return;
+    }
+    QList<double> new_v;
+    foreach (double var, v1) {
+        int a = var * 100;
+        qDebug() << "a =" << a;
+        double b = double(a) / 100;
+        qDebug() << "b =" << b;
+        new_v.push_back(b);
+    }
+    tb->clear();
+    v1 = new_v;
+    addData();
+}
+
+void ViewPlot::on_pushButton_select_clicked()
+{
+    if(ui->checkBox_1->isChecked()) {
+        customPlot->graph(0)->setSelectable(QCP::stDataRange);
+        customPlot->setSelectionRectMode(QCP::srmSelect);
+    }
+    if(ui->checkBox_2->isChecked()) {
+        customPlot->graph(1)->setSelectable(QCP::stDataRange);
+        customPlot->setSelectionRectMode(QCP::srmSelect);
+    }
+    if(ui->checkBox_3->isChecked()) {
+        customPlot->graph(2)->setSelectable(QCP::stDataRange);
+        customPlot->setSelectionRectMode(QCP::srmSelect);
+    }
+    if(ui->checkBox_4->isChecked()) {
+        customPlot->graph(3)->setSelectable(QCP::stDataRange);
+        customPlot->setSelectionRectMode(QCP::srmSelect);
+    }
+    //customPlot->setInteraction(QCP::iMultiSelect);
+}
+
+void ViewPlot::on_pushButton_print_clicked()
+{
+    QString fileName = QFileDialog::getSaveFileName(this, "Сохранение графиков...", qApp->applicationDirPath(), "*.pdf;;*.jpg");
+    if (!fileName.isEmpty() || fileName.indexOf("*.pdf") > 0) {
+        customPlot->savePdf(fileName);
+    }
+    if (!fileName.isEmpty() || fileName.indexOf("*.jpg") > 0) {
+        customPlot->saveJpg(fileName);
+    }
+}
+
 void ViewPlot::on_checkBox_1_stateChanged(int arg1)
 {
     customPlot->graph(0)->setVisible(arg1);
@@ -257,38 +308,6 @@ void ViewPlot::on_checkBox_4_stateChanged(int arg1)
     if(arg1)    customPlot->graph(3)->setSelectable(QCP::stSingleData);
     else    customPlot->graph(3)->setSelectable(QCP::stNone);
     customPlot->replot();
-}
-
-void ViewPlot::on_pushButton_select_clicked()
-{
-    if(ui->checkBox_1->isChecked()) {
-        customPlot->graph(0)->setSelectable(QCP::stDataRange);
-        customPlot->setSelectionRectMode(QCP::srmSelect);
-    }
-    if(ui->checkBox_2->isChecked()) {
-        customPlot->graph(1)->setSelectable(QCP::stDataRange);
-        customPlot->setSelectionRectMode(QCP::srmSelect);
-    }
-    if(ui->checkBox_3->isChecked()) {
-        customPlot->graph(2)->setSelectable(QCP::stDataRange);
-        customPlot->setSelectionRectMode(QCP::srmSelect);
-    }
-    if(ui->checkBox_4->isChecked()) {
-        customPlot->graph(3)->setSelectable(QCP::stDataRange);
-        customPlot->setSelectionRectMode(QCP::srmSelect);
-    }
-    //customPlot->setInteraction(QCP::iMultiSelect);
-}
-
-void ViewPlot::on_pushButton_print_clicked()
-{
-    QString fileName = QFileDialog::getSaveFileName(this, "Сохранение графиков...", qApp->applicationDirPath(), "*.pdf;;*.jpg");
-    if (!fileName.isEmpty() || fileName.indexOf("*.pdf") > 0) {
-        customPlot->savePdf(fileName);
-    }
-    if (!fileName.isEmpty() || fileName.indexOf("*.jpg") > 0) {
-        customPlot->saveJpg(fileName);
-    }
 }
 
 void ViewPlot::selectionChanged()
@@ -449,51 +468,43 @@ void ViewPlot::hasSelectedRect(QRect r, QMouseEvent *e)
 
 void ViewPlot::on_pushButton_calc_clicked()
 {
-    if(ui->checkBox_1->isChecked()) {
-        QMap<double, double> data;
-        for(int i = 0; i < t.count(); ++i) {
-            data.insert(t.at(i), v1.at(i));
-        }
-        QSharedPointer<CalcData> calc;
-        int i = ui->comboBox->currentIndex();
-        switch (i) {
-        case 0: calc = QSharedPointer<CalcData>(new CalcAgr1(customPlot), &QObject::deleteLater);
-            break;
-        case 1: calc = QSharedPointer<CalcData>(new CalcAgr2(), &QObject::deleteLater);
-            break;
-        case 2: calc = QSharedPointer<CalcData>(new CalcKo1(customPlot), &QObject::deleteLater);
-            break;
-        case 3: calc = QSharedPointer<CalcData>(new CalcKo2(), &QObject::deleteLater);
-            break;
-        case 4: calc = QSharedPointer<CalcData>(new CalcKo3(), &QObject::deleteLater);
-            break;
-        case 5: calc = QSharedPointer<CalcData>(new CalcKo4(), &QObject::deleteLater);
-            break;
-        case 6: calc = QSharedPointer<CalcData>(new CalcKo5(), &QObject::deleteLater);
-            break;
-
-        default: qDebug().noquote() << QString("Неправильный индекс ViewPlot::on_pushButton_calc_clicked() %1").arg(i);
-            break;
-        }
-        //CalcKo1 calc(data);
-        if(calc.isNull()) qDebug() << "Ошибка выделения памяти ViewPlot::on_pushButton_calc_clicked()";
-        double value = calc->calc(data);
-        customPlot->replot();
-        ui->label_average->setText(tr("Значение = %1").arg(value));
+    //if(ui->checkBox_1->isChecked())
+    if(t.isEmpty() || v1.isEmpty()) {
+        QMessageBox::information(this, "Расчет", "Нет данных для вычисления");
+        return;
     }
-}
-
-void ViewPlot::on_pushButton_clicked() //округление чисел в массиве данных
-{
-    QList<double> new_v;
-    foreach (double var, v1) {
-        int a = var * 100;
-        qDebug() << "a =" << a;
-        double b = double(a) / 100;
-        qDebug() << "b =" << b;
-        new_v.push_back(b);
+    QMap<double, double> data;
+    for(int i = 0; i < t.count(); ++i) {
+        data.insert(t.at(i), v1.at(i));
     }
-    tb->clear();
-    v1 = new_v;
-    addData();
+    QSharedPointer<CalcData> calc;
+    int i = ui->comboBox->currentIndex();
+    switch (i) {
+    case 0: calc = QSharedPointer<CalcData>(new CalcAgr1(customPlot), &QObject::deleteLater);
+        break;
+    case 1: calc = QSharedPointer<CalcData>(new CalcAgr2(), &QObject::deleteLater);
+        break;
+    case 2: calc = QSharedPointer<CalcData>(new CalcKo1(customPlot), &QObject::deleteLater);
+        break;
+    case 3: calc = QSharedPointer<CalcData>(new CalcKo2(), &QObject::deleteLater);
+        break;
+    case 4: calc = QSharedPointer<CalcData>(new CalcKo3(), &QObject::deleteLater);
+        break;
+    case 5: calc = QSharedPointer<CalcData>(new CalcKo4(), &QObject::deleteLater);
+        break;
+    case 6: calc = QSharedPointer<CalcData>(new CalcKo5(), &QObject::deleteLater);
+        break;
+
+    default: qDebug().noquote() << QString("Неправильный индекс ViewPlot::on_pushButton_calc_clicked() %1").arg(i);
+        break;
+    }
+    //CalcKo1 calc(data);
+    if(calc.isNull()) {
+        qDebug() << "Ошибка выделения памяти ViewPlot::on_pushButton_calc_clicked()";
+        QMessageBox::warning(this,"Расчет", "Ошибка выделения памяти");
+        return;
+    }
+    double value = calc->calc(data);
+    customPlot->replot();
+    ui->label_average->setText(tr("Значение = %1").arg(value));
 }

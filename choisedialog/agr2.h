@@ -41,6 +41,30 @@ private slots:
     void on_radioButton_testSingle_toggled(bool checked);
 
 public slots:
+    inline void btpData1Come(double d) {
+        c_agr2.setBTP1(d);
+    }
+    inline void btpData2Come(double d) {
+        c_agr2.setBTP2(d);
+    }
+    inline void btpData3Come(double d) {
+        c_agr2.setBTP3(d);
+    }
+    inline void btpData4Come(double d) {
+        c_agr2.setBTP4(d);
+    }
+    inline void otpData1Come(double d) {
+        c_agr2.setOTP1(d);
+    }
+    inline void otpData2Come(double d) {
+        c_agr2.setOTP2(d);
+    }
+    inline void otpData3Come(double d) {
+        c_agr2.setOTP3(d);
+    }
+    inline void otpData4Come(double d) {
+        c_agr2.setOTP4(d);
+    }
     void calibrationData1Come(double);
     void calibrationData2Come(double);
     void calibrationData3Come(double);

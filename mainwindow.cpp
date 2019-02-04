@@ -46,11 +46,6 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::newShow(StartMeasurement* sw)
-{
-
-}
-
 void MainWindow::setupThread()
 {
     qDebug() << "MainWindow thread ID: " << QThread::currentThreadId();
@@ -114,7 +109,7 @@ void MainWindow::on_action_triggered()
 void MainWindow::on_action_propety_triggered()
 {
     QPointer<CalibParam> par = new CalibParam(this);
-    CalcData *p = CalcData::createCalc( centerWidget->getMode() );
+    CalcData *p = CalcData::createCalc( centerWidget->startWin->getModeID() );
     par->setCalc(p);
     par->setText();
     par->createPlot();

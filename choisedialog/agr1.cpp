@@ -8,7 +8,6 @@ Agr1::Agr1(QWidget *parent) :
 {
     ui->setupUi(this);
     open();
-    //connect(ui->page_2, &StartMeasurment::startMeasurment, this, &Agr1::measurement);
 }
 
 Agr1::~Agr1()
@@ -42,14 +41,6 @@ void Agr1::on_pushButton_test_clicked()
 
 void Agr1::open()
 {
-//    ui->page_2->setMode(1);
-//    file.openAgr1(param);
-//    if( !param.isEmpty() && param.count() >= 7 ) { //7 парамеьров
-//        ui->lineEdit_1->setText(param.at(0));
-//        ui->lineEdit_2->setText(param.at(1));
-//        ui->lineEdit_3->setText(param.at(2));
-//    } else
-//        param = QStringList({0, 0, 0, 0, 0, 0, 0});
     if( t_agr1.getSingle() ) {
         ui->radioButton_testSingle->setChecked(true);
     }
@@ -185,7 +176,7 @@ StartMeasurement *StartCalibrationAgr1::getBTP()
     start->setNum(4, "БТП");
     start->setTime(10);
     start->setTimeIncube(1, 3);
-    start->setModeID(Level_ID);
+    start->setModeID(BTPCalibAgr1_ID);
     return start;
 }
 
@@ -200,7 +191,7 @@ StartMeasurement *StartCalibrationAgr1::getOTP()
     start->setTime(10);
     start->setTimeIncube(1, 3);
     start->setTimeIncube(2, 4);
-    start->setModeID(Level_ID);
+    start->setModeID(OTPCalibAgr1_ID);
     return start;
 }
 

@@ -21,9 +21,9 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-    void newShow(StartMeasurement*sw);
     void setupThread();
 
+    Widget *centerWidget;
 private:
     bool eventFilter(QObject *watched, QEvent *event);
 
@@ -44,7 +44,6 @@ signals:
 private:
     Ui::MainWindow *ui;
     useE154 *agrekola;
-    Widget *centerWidget;
     ChoiseDialog *ch;
 
     friend class ChoiseDialog;
