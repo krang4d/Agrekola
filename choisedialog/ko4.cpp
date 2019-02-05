@@ -381,7 +381,7 @@ StartMeasurement* StartCalibrationKo4::getStart(Calibration *c_ko4)
     start->setNum(2, "Калибровка");
     start->setNum(3, "Калибровка");
     start->setNum(4, "Калибровка");
-    start->setTime(c_ko4->getWrite_time());
+    start->setTimeWrite(c_ko4->getWrite_time());
     start->setTimeIncube(1, c_ko4->getIncube_time());
     start->setModeID(CalibKo4_ID);
     return start;
@@ -395,7 +395,7 @@ StartMeasurement* StartTestKo4::getStart(Test* t_ko4)
     start->setNum(2, t_ko4->getNum2());
     start->setNum(3, t_ko4->getNum3());
     start->setNum(4, t_ko4->getNum4());
-    start->setTime(t_ko4->getWriteTime());
+    start->setTimeWrite(t_ko4->getWriteTime());
     start->setTimeIncube(1, t_ko4->getIncubeTime());
     start->setProbe(t_ko4->getSingle());
     start->setModeID(TestKo4_ID);

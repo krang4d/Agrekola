@@ -159,7 +159,7 @@ StartMeasurement *StartCalibrationAgr1::getStart(Calibration *c_agr1)
     start->setNum(2, "Калибровка");
     start->setNum(3, "Калибровка");
     start->setNum(4, "Калибровка");
-    start->setTime(c_agr1->getWrite_time());
+    start->setTimeWrite(c_agr1->getWrite_time());
     start->setTimeIncube(1, c_agr1->getIncube_time());
     start->setTimeIncube(2, static_cast<CalibrationAgr1*>(c_agr1)->getIncube_time_2());
     //stKo2->cancel = false;
@@ -174,7 +174,7 @@ StartMeasurement *StartCalibrationAgr1::getBTP()
     start->setNum(2, "БТП");
     start->setNum(3, "БТП");
     start->setNum(4, "БТП");
-    start->setTime(10);
+    start->setTimeWrite(10);
     start->setTimeIncube(1, 3);
     start->setModeID(BTPCalibAgr1_ID);
     return start;
@@ -188,7 +188,7 @@ StartMeasurement *StartCalibrationAgr1::getOTP()
     start->setNum(2, "ОТП");
     start->setNum(3, "ОТП");
     start->setNum(4, "ОТП");
-    start->setTime(10);
+    start->setTimeWrite(10);
     start->setTimeIncube(1, 3);
     start->setTimeIncube(2, 4);
     start->setModeID(OTPCalibAgr1_ID);
@@ -212,7 +212,7 @@ StartMeasurement *StartTestAgr1::getStart(Test* t_agr1)
     start->setNum(2, t_agr1->getNum2());
     start->setNum(3, t_agr1->getNum3());
     start->setNum(4, t_agr1->getNum4());
-    start->setTime(t_agr1->getWriteTime());
+    start->setTimeWrite(t_agr1->getWriteTime());
     start->setTimeIncube(1, t_agr1->getIncubeTime());
     start->setTimeIncube(2, obj->getIncubeTime2());
     start->setProbe(t_agr1->getSingle());

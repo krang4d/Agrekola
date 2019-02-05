@@ -101,31 +101,18 @@ void ChoiseDialog::startMeasurement(StartMeasurement* sw)
     Mode_ID mode = sw->getModeID();
     mw->centerWidget->setStartWindow(sw);
     switch (mode) {
-    case TestAgr1_ID: //{
+    case TestAgr1_ID:
         mw->setWindowTitle("<div style='color: blue'>Определение параметров агрегации, тест (1)");
         mw->centerWidget->setUserMessage("<div style='color: blue'>Определение параметров агрегации, тест (1)");
         mw->centerWidget->current_mode_id = sw->getModeID();
-//      connect(mw.data()->centerWidget, SIGNAL(ret_value1(double), agr1.data(), SLOT(btpData1Come(double)));
-//        centerWidget->setStartWindow(StartCalibrationAgr1::getBTP100());
-
-//        std::function<void(void)> fun = [this, sw](){ qDebug() << "getBTP100() done";
-//            disconnect(centerWidget, &Widget::done, 0, 0);
-//            connect(centerWidget, &Widget::done, [&](){
-//                centerWidget->setMode(Mode_ID::TestAgr1_ID);
-//                centerWidget->setStartWindow(sw);
-//            });
-//            centerWidget->setStartWindow(StartCalibrationAgr1::getOTP0());
-//            centerWidget->getLevelOTP();
-//        };
-//        connect(centerWidget, &Widget::done, fun);
-
-//        centerWidget->getLevelBTP();
-//      }
+        mw->centerWidget->state = StateBuilder::getStateAgr1();
         break;
     case TestAgr2_ID:
         mw->centerWidget->setStartWindow(sw);
         mw->setWindowTitle("Определение активности фактора Виллебранда, тест (2)");
         mw->centerWidget->setUserMessage("Определение активности фактора Виллебранда, тест (2)");
+        mw->centerWidget->current_mode_id = sw->getModeID();
+        ///mw->centerWidget->state = StateBuilder::getStateAgr1();
         //centerWidget->setUserMessage(tr("<div style='color: blue'>Установите в рабочие каналы кюветы с пробами и нажмите \"Старт\""));
         break;
     case TestKo1_ID:
@@ -133,30 +120,40 @@ void ChoiseDialog::startMeasurement(StartMeasurement* sw)
         mw->setWindowTitle("Время свертывания, тест (3)");
         mw->centerWidget->setUserMessage("Время свертывания, тест (3)");
         mw->centerWidget->setUserMessage(tr("<div style='color: blue'>Установите в рабочие каналы кюветы с пробами и нажмите \"Старт\""));
+        mw->centerWidget->current_mode_id = sw->getModeID();
+        ///mw->centerWidget->state = StateBuilder::getStateAgr1();
         break;
     case TestKo2_ID:
         mw->centerWidget->setStartWindow(sw);
         mw->setWindowTitle("АЧТВ, тест (4)");
         mw->centerWidget->setUserMessage("АЧТВ, тест (4)");
         mw->centerWidget->setUserMessage(tr("<div style='color: blue'>Установите в рабочие каналы кюветы с пробами и нажмите \"Старт\""));
+        mw->centerWidget->current_mode_id = sw->getModeID();
+        ///mw->centerWidget->state = StateBuilder::getStateAgr1();
         break;
     case TestKo3_ID:
         mw->centerWidget->setStartWindow(sw);
         mw->setWindowTitle("Фибриноген, тест (5)");
         mw->centerWidget->setUserMessage("Фибриноген, тест (5)");
         mw->centerWidget->setUserMessage(tr("<div style='color: blue'>Установите в рабочие каналы кюветы с пробами и нажмите \"Старт\""));
+        mw->centerWidget->current_mode_id = sw->getModeID();
+        ///mw->centerWidget->state = StateBuilder::getStateAgr1();
         break;
     case TestKo4_ID:
         mw->centerWidget->setStartWindow(sw);
         mw->setWindowTitle("Тромбин, тест (6)");
         mw->centerWidget->setUserMessage("Тромбин, тест (6)");
         mw->centerWidget->setUserMessage(tr("<div style='color: blue'>Установите в рабочие каналы кюветы с пробами и нажмите \"Старт\""));
+        mw->centerWidget->current_mode_id = sw->getModeID();
+        ///mw->centerWidget->state = StateBuilder::getStateAgr1();
         break;
     case TestKo5_ID:
         mw->centerWidget->setStartWindow(sw);
         mw->setWindowTitle("Протромбиновый комплекс, тест (7)");
         mw->centerWidget->setUserMessage("Протромбиновый комплекс, тест (7)");
         mw->centerWidget->setUserMessage(tr("<div style='color: blue'>Установите в рабочие каналы кюветы с пробами и нажмите \"Старт\""));
+        mw->centerWidget->current_mode_id = sw->getModeID();
+        ///mw->centerWidget->state = StateBuilder::getStateAgr1();
         break;
     default:
         break;

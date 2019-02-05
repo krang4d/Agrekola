@@ -143,7 +143,7 @@ StartMeasurement* StartTestKo1::getStart(Test* t_ko1)
     start->setNum(3, t_ko1->getNum3());
     start->setNum(4, t_ko1->getNum4());
 
-    start->setTime(t_ko1->getWriteTime());
+    start->setTimeWrite(t_ko1->getWriteTime());
     start->setTimeIncube(1, t_ko1->getIncubeTime());
     //stKo2->cancel = false;
     return start;

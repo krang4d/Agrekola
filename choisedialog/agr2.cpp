@@ -263,7 +263,7 @@ StartMeasurement *StartCalibrationAgr2::getStart(Calibration* c_agr2)
     start->setNum(2, "Калибровка");
     start->setNum(3, "Калибровка");
     start->setNum(4, "Калибровка");
-    start->setTime(c_agr2->getWrite_time());
+    start->setTimeWrite(c_agr2->getWrite_time());
     start->setTimeIncube(1, c_agr2->getIncube_time());
     start->setTimeIncube(2, obj->getIncube_time_2());
     //stKo2->cancel = false;
@@ -288,7 +288,7 @@ StartMeasurement *StartTestAgr2::getStart(Test* t_agr2)
     start->setNum(2, t_agr2->getNum2());
     start->setNum(3, t_agr2->getNum3());
     start->setNum(4, t_agr2->getNum4());
-    start->setTime(t_agr2->getWriteTime());
+    start->setTimeWrite(t_agr2->getWriteTime());
     start->setProbe(obj->getIncubeTime2());
     start->setTimeIncube(1, t_agr2->getIncubeTime());
     start->setTimeIncube(2, obj->getIncubeTime2());
