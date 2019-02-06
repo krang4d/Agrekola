@@ -33,11 +33,11 @@ public:
     QString getNum(const int ch);
     void setNum(const int ch, const QString num);
 
-    int getTime();
-    void setTime(int);
+    double getTimeWrite();
+    void setTimeWrite(double s);
 
-    int getTimeIncube(int = 1);
-    void setTimeIncube(int incube_number, int time_s);
+    double getTimeIncube(int = 1);
+    double setTimeIncube(int incube_number, double time_s);
 
     QString getStringStatus();
 
@@ -80,8 +80,8 @@ private:
     bool single;       //пробы одиночные?
     bool channel_1, channel_2, channel_3, channel_4;
     QString num_1, num_2, num_3, num_4;
-    int time;           //время записи
-    int time_incube, time_incube_2; //время инкубации
+    double time;                        //время записи
+    double time_incube, time_incube_2;  //время инкубации
     Mode_ID modeID;
 };
 

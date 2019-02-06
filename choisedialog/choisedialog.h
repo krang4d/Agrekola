@@ -32,7 +32,7 @@ class ChoiseDialog : public QDialog
 public:
     explicit ChoiseDialog(QDialog *parent = 0);
     int getTypeOfWidget() const;
-    QPointer<Widget> CreateWidgetThread(StartMeasurement * = 0);
+    QPointer<Widget> CreateWidgetThread();
     ~ChoiseDialog();
 
     QPointer<Agr1> agr1;

@@ -30,22 +30,87 @@ Widget::Widget(QWidget *parent) :
     setAttribute(Qt::WA_DeleteOnClose);
     setWindowTitle("Программа сбора данных с АЦП(E-154) по 4 каналам");
 
-    setupRealtimeData();
+    setupWidget();
     setupTimers();
     installEventFilter(this);
 }
 
-Widget::Widget(StartMeasurement *sw, QWidget *parent) : Widget(parent)
+void Widget::setupWidget()
 {
-    startWin = sw;
-    setupWidget();
+    setupRealtimeData(single);
+    if(!startWin->isCancel()) {
+        if(startWin->isSingle()) {
+            if (startWin->isChannel(1)) {
+                ui->groupBox_f1->setTitle("Канал 1");
+                ui->groupBox_f1->show();
+            }
+            else {
+                ui->groupBox_f1->hide();
+            }
+
+            if (startWin->isChannel(2)) {
+
+                ui->groupBox_f2->setTitle("Канал 2");
+                ui->groupBox_f2->show();
+            }
+            else {
+                ui->groupBox_f2->hide();
+            }
+
+            if (startWin->isChannel(3)) {
+
+                ui->groupBox_f3->setTitle("Канал 3");
+                ui->groupBox_f3->show();
+            }
+            else {
+                ui->groupBox_f3->hide();
+            }
+
+            if (startWin->isChannel(4)) {
+
+                ui->groupBox_f4->setTitle("Канал 4");
+                ui->groupBox_f4->show();
+            }
+            else {
+                ui->groupBox_f4->hide();
+            }
+            ui->checkBox_L->setChecked(true); //включение лазеров
+        }
+        else {
+
+            if (startWin->isChannel(1)) {
+                ui->groupBox_f1->setTitle("Канал 1, 2");
+                ui->groupBox_f2->hide();
+            }
+            else {
+                ui->groupBox_f1->hide();
+                ui->groupBox_f2->hide();
+            }
+
+            if (startWin->isChannel(3)) {
+                ui->groupBox_f3->setTitle("Канал 3, 4");
+                ui->groupBox_f4->hide();
+            }
+            else {
+                ui->groupBox_f3->hide();
+                ui->groupBox_f4->hide();
+            }
+            single = startWin->isSingle();
+        }
+    }
 }
 
-void Widget::setStartWindow(StartMeasurement *sw)
-{
-    startWin = sw;
-    setupWidget();
-}
+//Widget::Widget(StartMeasurement *sw, QWidget *parent) : Widget(parent)
+//{
+//    startWin = sw;
+//    setupWidget();
+//}
+
+//void Widget::setStartWindow(StartMeasurement *sw)
+//{
+//    startWin = sw;
+//    setupWidget();
+//}
 
 Widget::~Widget()
 {
@@ -59,7 +124,7 @@ bool Widget::eventFilter(QObject *watched, QEvent *event)
         qDebug() << "Close Event is emited in the Widget!";
         parentWidget()->show();
         emit stop();
-        return true;
+        return QWidget::eventFilter(watched, event);
     }
     if(event->type() == QEvent::KeyPress) {
         qDebug() << "Event kayPress";
@@ -75,32 +140,13 @@ bool Widget::eventFilter(QObject *watched, QEvent *event)
                 qDebug() << "setVisible(true)";
             }
         }
-        return true;
+        return QWidget::eventFilter(watched, event);
     }
     return QWidget::eventFilter(watched, event);
 }
 
-void Widget::setUserMessage(QString str, bool withtime, bool tofile)
-{
-    if(withtime) {
-        QString msg = QString(tr("%1, Время %2"))
-                .arg(str)
-                .arg(dt.toString("hh:mm:ss.zzz"));
-        ui->textEdit->append(msg);
-        if(tofile) saveFiles.writeUserMsg(msg);
-    }
-    else {
-        ui->textEdit->append(str);
-        if(tofile) saveFiles.writeUserMsg(str);
-    }
-    QScrollBar *b = ui->textEdit->verticalScrollBar();
-    b->triggerAction(QScrollBar::SliderToMaximum);
-}
-
-void Widget::setupRealtimeData() {
-
-    auto foo = [this]() { return startWin == NULL ? : startWin->isSingle(); };
-    if(foo()) {
+void Widget::setupRealtimeData(bool single) {
+    if(single) {
         customPlot1 = ui->frame_1;
         ui->groupBox_f1->layout()->addWidget(pBar1);
         customPlot2 = ui->frame_2;
@@ -226,7 +272,7 @@ void Widget::realtimeDataSlot(QVariantList a) {
         emit hasPulse1();
         setUserMessage("Канал 1: Введен стартовый реагент в кювету");
         qDebug() << QString("The pulse is come! dx1=%1").arg(dx1);
-        getData(1, startWin->getTime());
+        getData(1, startWin->getTimeWrite());
     }
     lastPointV2 = a[1].toDouble();
     if((dx2 > START_DX || pulse2) && ready2) {
@@ -235,7 +281,7 @@ void Widget::realtimeDataSlot(QVariantList a) {
         emit hasPulse2();
         setUserMessage("Канал 2: Введен стартовый реагент в кювету");
         qDebug() << QString("The pulse is come! dx2=%1").arg(dx2);
-        getData(2, startWin->getTime());
+        getData(2, startWin->getTimeWrite());
     }
     lastPointV3 = a[2].toDouble();
     if((dx3 > START_DX || pulse3) && ready3) {
@@ -244,7 +290,7 @@ void Widget::realtimeDataSlot(QVariantList a) {
         emit hasPulse3();
         setUserMessage("Канал 3: Введен стартовый реагент в кювету");
         qDebug() << QString("The pulse is come! dx3=%1").arg(dx3);
-        getData(3, startWin->getTime());
+        getData(3, startWin->getTimeWrite());
     }
     lastPointV4 = a[3].toDouble();
     if((dx4 > START_DX || pulse4) && ready4) {
@@ -253,12 +299,15 @@ void Widget::realtimeDataSlot(QVariantList a) {
         emit hasPulse4();
         setUserMessage("Канал 4: Введен стартовый реагент в кювету");
         qDebug() << QString("The pulse is come! dx4=%1").arg(dx4);
-        getData(4, startWin->getTime());
+        getData(4, startWin->getTimeWrite());
     }
 
     if (key-lastPointKey > 0.01) {// at most add point every 10 ms
-        std::function<bool(void)> foo = [this](){ if(startWin == NULL) return true; else return startWin->isSingle();};
-        if(foo()) {
+//        std::function<bool(void)> foo = [this](){
+//            if(startWin == NULL) return true;
+//            else return startWin->isSingle();
+//        };
+        if(single) {
           customPlot1->graph(0)->addData(key, a[0].toDouble());
           customPlot2->graph(0)->addData(key, a[1].toDouble());
           customPlot3->graph(0)->addData(key, a[2].toDouble());
@@ -438,268 +487,6 @@ void Widget::on_checkBox_L_stateChanged(int arg1)
     emit onlaser(arg1);
 }
 
-void Widget::on_pushButton_clicked()
-{
-    static bool test = false;
-    static int i = 0;
-    //current_mode_id = startWin->getModeID();
-    ui->pushButton->setEnabled(false);
-
-    if( termoSensor ) {
-        setUserMessage(QString("<span style='color:red'>Дождитесь нагрева термостата</span>"));
-        pBar1->setFormat("В ожидании");
-        pBar1->setValue(0);
-        pBar2->setFormat("В ожидании");
-
-        pBar2->setValue(0);
-        pBar3->setFormat("В ожидании");
-        pBar3->setValue(0);
-        pBar4->setFormat("В ожидании");
-        pBar4->setValue(0);
-    } else {
-        setUserMessage("<span style='color:blue'>Термостат нагрет до 37ºC</span>");
-        pBar1->setFormat("Готов");
-        pBar1->setValue(pBar1->getMaximum());
-        pBar2->setFormat("Готов");
-        pBar2->setValue(pBar2->getMaximum());
-        pBar3->setFormat("Готов");
-        pBar3->setValue(pBar3->getMaximum());
-        pBar4->setFormat("Готов");
-        pBar4->setValue(pBar4->getMaximum());
-    }
-    QPointer<QMessageBox> test_dialog = new QMessageBox(this);
-    //test_dialog->setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
-    QPushButton ok;
-    QPushButton cansel;
-    ok.setText("Норма");
-    cansel.setText("Брак");
-    test_dialog->addButton(&ok, QMessageBox::AcceptRole);
-    test_dialog->addButton(&cansel, QMessageBox::RejectRole);
-    test_dialog->setIcon(QMessageBox::Information);
-    switch(current_mode_id) {
-    case Test_ID:
-        setUserMessage("Проверка работопособности");
-        test = true;
-        //Проверка Перемешивания в канале 1
-        emit onmixch1(true);
-        setUserMessage(QString("Контроль включения перемешивания в канале 1"));
-        test_dialog->setWindowTitle("Канал 1 - проверка");
-        test_dialog->setText("Проконтролируте включение перемешивания в канале 1");
-        test_dialog->exec();
-        if(test_dialog->result() == 0) {
-           emit onmixch1(false);
-           setUserMessage("Перемешивания в канале 1 - <span style='color:blue'>НОРМА</span>");
-        }
-        else {
-           setUserMessage(QString("Перемешивания в канале 1 - <span style='color:red'>БРАК</span>"));
-           //return;
-        }
-        //Проверка Перемешивания в канале 2
-        emit onmixch2(true);
-        setUserMessage(QString("Контроль включения перемешивания в канале 2"));
-        test_dialog->setWindowTitle("Канал 2 - проверка");
-        test_dialog->setText("Проконтролируте включение перемешивания в канале 2");
-        test_dialog->exec();
-        if(test_dialog->result() == 0) {
-          emit onmixch2(false);
-          setUserMessage("Перемешивания в канале 2 - <span style='color:blue'>НОРМА</span>");
-        }
-        else {
-            setUserMessage(QString("Перемешивания в канале 2 - <span style='color:red'>БРАК</span>"));
-            //return;
-        }
-
-        //Проверка Перемешивания в канале 3
-        emit onmixch3(true);
-        setUserMessage(QString("Контроль включения перемешивания в канале 3"));
-        test_dialog->setWindowTitle("Канал 3 - проверка");
-        test_dialog->setText("Проконтролируте включение перемешивания в канале 3");
-        test_dialog->exec();
-        if(test_dialog->result() == 0) {
-         emit onmixch3(false);
-         setUserMessage("Перемешивания в канале 3 - <span style='color:blue'>НОРМА</span>");
-        }
-        else {
-            setUserMessage(QString("Перемешивания в канале 3 - <span style='color:red'>БРАК</span>"));
-            //return;
-        }
-
-        //Проверка Перемешивания в канале 4
-        emit onmixch4(true);
-        setUserMessage(QString("Контроль включения перемешивания в канале 4"));
-        test_dialog->setWindowTitle("Канал 4 - проверка");
-        test_dialog->setText("Проконтролируте включение перемешивания в канале 4");
-        test_dialog->exec();
-        if(test_dialog->result() == 0) {
-            emit onmixch4(false);
-            setUserMessage("Перемешивания в канале 4 - <span style='color:blue'>НОРМА</span>");
-        }
-        else {
-            setUserMessage(QString("Перемешивания в канале 4 - <span style='color:red'>БРАК</span>"));
-            //return;
-        }
-        //Проверка Перемешивания в канале РР
-        emit onmixpp(true);
-        setUserMessage(QString("Контроль включения перемешивания в канале РР"));
-        test_dialog->setWindowTitle("Канал РР - проверка");
-        test_dialog->setText("Проконтролируте включение перемешивания в канале РР");
-        test_dialog->exec();
-        if(test_dialog->result() == 0) {
-            emit onmixpp(false);
-            setUserMessage("Перемешивания в канале РР - <span style='color:blue'>НОРМА</span>");
-        }
-        else {
-            setUserMessage(QString("Перемешивания в канале РР - <span style='color:red'>БРАК</span>"));
-            //return;
-        }
-
-        //Проверка включения лезерных излучателей
-        emit onlaser(true);
-        setUserMessage(QString("Контроль включения лазерных излучателей"));
-        test_dialog->setWindowTitle("Лазерные излучетели - проверка");
-        test_dialog->setText("Проконтролируте включение лазерных излучателей");
-        test_dialog->exec();
-        if(test_dialog->result() == 0) {
-            emit onlaser(false);
-            setUserMessage("Лазерные излучатели - <span style='color:blue'>НОРМА</span>");
-        }
-        else {
-            setUserMessage(QString("Лазерные излучатели - <span style='color:red'>БРАК</span>"));
-            //return;
-        }
-        break;
-    case Level_ID:
-        if(startWin->isChannel(1)) ui->checkBox_1->setChecked(true); //включение перемешивания 1
-        else ui->checkBox_1->setChecked(false);
-
-        if(startWin->isChannel(2)) ui->checkBox_2->setChecked(true); //включение перемешивания 2
-        else ui->checkBox_2->setChecked(false);
-
-        if(startWin->isChannel(3)) ui->checkBox_3->setChecked(true); //включение перемешивания 3
-        else ui->checkBox_3->setChecked(false);
-
-        if(startWin->isChannel(4)) ui->checkBox_4->setChecked(true); //включение перемешивания 4
-        else ui->checkBox_4->setChecked(false);
-
-        if(test) {
-            connect(startWin, &StartMeasurement::startMeasurment, [=](StartMeasurement* sm){
-                setStartWindow(sm);
-                getData(1, startWin->getTime());
-                getData(2, startWin->getTime());
-                getData(3, startWin->getTime());
-                getData(4, startWin->getTime());
-                disconnect(startWin, &StartMeasurement::startMeasurment, 0, 0);
-                startWin->hide();
-                });
-            startWin->show();
-        } else {
-            getData(1, startWin->getTime());
-            getData(2, startWin->getTime());
-            getData(3, startWin->getTime());
-            getData(4, startWin->getTime());
-        }
-        break;
-    case TestAgr1_ID:
-        if(testAgr1_Vector.at(i) == TestAgr1_ID) {
-            setUserMessage(QString("<div style='color: blue'>Конец TestAgr1_ID"), 0);
-            ui->pushButton->setEnabled(true);
-            i = 0;
-            break;
-        }
-        ui->pushButton->setEnabled(false);
-        setUserMessage(startWin->getStringStatus());
-        //определение БТП
-        //QPointer<StartMeasurement> sm =  StartCalibrationAgr1::getBTP();
-        setUserMessage(QString("<div style='color: blue'>Установите пробы с БТП в рабочие  каналы и нажмите \"Старт\""), 0);
-        QMessageBox::information(this, "БТП", "<div style='color: blue'>Установите пробы с БТП в рабочие  каналы и нажмите \"Старт\"");
-        current_mode_id = testAgr1_Vector.at(i);
-        qDebug() << testAgr1_Vector.at(i);
-        ui->pushButton->setEnabled(true);
-        break;
-
-    case TestKo1_ID:
-        ui->pushButton->setEnabled(false);
-        setUserMessage(startWin->getStringStatus());
-        startIncub(1);
-        break;
-
-    case TestKo2_ID:
-        ui->pushButton->setEnabled(false);
-        setUserMessage(startWin->getStringStatus());
-        startIncub(1);
-        break;
-
-    case TestKo3_ID:
-        ui->pushButton->setEnabled(false);
-        setUserMessage(startWin->getStringStatus());
-        startIncub(1);
-        break;
-
-    case TestKo4_ID:
-        ui->pushButton->setEnabled(false);
-        setUserMessage(startWin->getStringStatus());
-        startIncub(1);
-        break;
-
-    case TestKo5_ID:
-        ui->pushButton->setEnabled(false);
-        setUserMessage(startWin->getStringStatus());
-        startIncub(1);
-        break;
-
-    case BTPTestAgr1_ID:
-        ui->pushButton->setEnabled(false);
-        setUserMessage(startWin->getStringStatus());
-        current_mode_id = Test_ID;
-        connect(this, &Widget::done, [this](){
-            current_mode_id = testAgr1_Vector.at(++i); ui->pushButton->setEnabled(true); });
-        getData(1, 5);
-        getData(2, 5);
-        getData(3, 5);
-        getData(4, 5);
-
-        //connect(this, &Widget::ret_value1, , &CalibrationAgr1::getBTP1);
-                //[&](double x){ disconnect(this, &Widget::ret_value1, 0, 0);
-                //c_agr1->setBTP1(x); } );
-//        connect(this, &Widget::ret_value1, [&](double x){ disconnect(this, &Widget::ret_value1, 0, 0);
-//                c_agr1->setBTP2(x); } );
-//        connect(this, &Widget::ret_value1, [&](double x){ disconnect(this, &Widget::ret_value1, 0, 0);
-//                c_agr1->setBTP3(x); } );
-//        connect(this, &Widget::ret_value1, [&](double x){ disconnect(this, &Widget::ret_value1, 0, 0);
-//                c_agr1->setBTP4(x); } );
-//        connect(this, &Widget::ret_value2, [&](double x){ disconnect(this, &Widget::ret_value2, 0, 0);
-//                savebtp2(1, x); } );
-//        connect(this, &Widget::ret_value3, [&](double x){ disconnect(this, &Widget::ret_value3, 0, 0);
-//                savebtp2(2, x); } );
-//        connect(this, &Widget::ret_value4, [&](double x){ disconnect(this, &Widget::ret_value4, 0, 0);
-//                savebtp2(3, x); } );
-        break;
-    case OTPTestAgr1_ID:
-
-        break;
-
-    default:
-        if(startWin->isChannel(1)) ui->checkBox_1->setChecked(true); //включение перемешивания 1
-        else ui->checkBox_1->setChecked(false);
-
-        if(startWin->isChannel(2)) ui->checkBox_2->setChecked(true); //включение перемешивания 2
-        else ui->checkBox_2->setChecked(false);
-
-        if(startWin->isChannel(3)) ui->checkBox_3->setChecked(true); //включение перемешивания 3
-        else ui->checkBox_3->setChecked(false);
-
-        if(startWin->isChannel(4)) ui->checkBox_4->setChecked(true); //включение перемешивания 4
-        else ui->checkBox_4->setChecked(false);
-        connect(startWin, &StartMeasurement::startMeasurment, [=](StartMeasurement* sm){
-            startMeasurment(sm);
-            disconnect(startWin, &StartMeasurement::startMeasurment, 0, 0);
-        });
-        startWin->show();
-        qDebug() << QString("called default startMeasurment()");
-        break;
-    } //end switch(getMode())
-}
-
 void Widget::updataTermo(bool td)
 {
     if(!td) {
@@ -714,63 +501,9 @@ void Widget::updataTermo(bool td)
     }
 }
 
-//void Widget::startMeasurment()
-//{
-//    //qDebug() << "Widget::startMeasurment() start pressed";
-//    //ui->pushButton->setEnabled(false);
-//    setUserMessage(startWin->getStringStatus());
-//    setupWidget();
-//    if( getMode() == TestAgr1_ID ||getMode() == TestAgr2_ID ) {
-//        startIncub(2);
-//    }
-//    else startIncub(1);
-//}
-
-void Widget::startMeasurment(StartMeasurement *s)
-{
-    startWin  = s;
-    on_pushButton_clicked();
-}
-
-//void Widget::getLevelOTP()
-//{
-//    //определение ОТП
-//    setMode(Level_ID);
-//    setStartWindow(StartCalibrationAgr1::getOTP());
-//    setUserMessage(QString("<div style='color: blue'>Установите пробы с ОТП в рабочие  каналы и нажмите \"Старт\""), 0);
-
-//    auto saveotp2 = [&](int n, double d) {
-////        static int i = 0;
-////        i++;
-//            QStringList otp0;
-//            SaveFiles file_otp;
-//            qDebug() << QString("retavlue = %1, index = %2").arg(d).arg(n);
-//            file_otp.openBTP0(otp0);
-//            if (otp0.isEmpty() || otp0.count() != 4) {
-//                otp0 = QStringList({"0", "0", "0", "0"});
-//            }
-//            otp0.replace(n, QString("%1").arg(d));
-//            file_otp.saveBTP0(otp0);
-//        qDebug() << "Определение ОТП контрольной плазмы";
-////        if(i == startWin->num) {
-////            i = 0;
-////            emit otp_done();
-////        }
-//    };
-
-//    connect(this, &Widget::ret_value1, [&](double x){ disconnect(this, &Widget::ret_value1, 0, 0);
-//            saveotp2(0, x); } );
-//    connect(this, &Widget::ret_value2, [&](double x){ disconnect(this, &Widget::ret_value2, 0, 0);
-//            saveotp2(1, x); } );
-//    connect(this, &Widget::ret_value3, [&](double x){ disconnect(this, &Widget::ret_value3, 0, 0);
-//            saveotp2(2, x); } );
-//    connect(this, &Widget::ret_value4, [&](double x){ disconnect(this, &Widget::ret_value4, 0, 0);
-//            saveotp2(3, x); } );
-//}
-
 void Widget::getData(int n, double time_s)
 {
-    QString str = QString("Канал %1: Измерение").arg(n);
+    QString str = QString("Канал %1: Измерение %2 (c)").arg(n).arg(time_s);
     setUserMessage(str);
     emit status(str);
     std::function<void (int)> func = [this](int n){
@@ -797,40 +530,6 @@ void Widget::getData(int n, double time_s)
         break;
     }
 }
-
-//void Widget::getLevelBTP()
-//{
-//    //определение БТП
-//    setStartWindow(StartCalibrationAgr1::getBTP());
-//    setUserMessage(QString("<div style='color: blue'>Установите пробы с БТП в рабочие  каналы и нажмите \"Старт\""), 0);
-
-//    auto savebtp2 = [&](int n, double d) {
-////        static int i = 0;
-////        i++;
-//        QStringList btp100;
-//        SaveFiles file_btp;
-//        qDebug() << QString("retavlue = %1, index = %2").arg(d).arg(n);
-//        file_btp.openBTP100(btp100);
-//        if (btp100.isEmpty() || btp100.count() != 4) {
-//            btp100 = QStringList({"0", "0", "0", "0"});
-//        }
-//        btp100.replace(n, QString("%1").arg(d));
-//        file_btp.saveBTP100(btp100);
-////        if(i == startWin->num) {
-////            i = 0;
-////            emit btp_done();
-////        }
-//    };
-
-//    connect(this, &Widget::ret_value1, [&](double x){ disconnect(this, &Widget::ret_value1, 0, 0);
-//            savebtp2(0, x); } );
-//    connect(this, &Widget::ret_value2, [&](double x){ disconnect(this, &Widget::ret_value2, 0, 0);
-//            savebtp2(1, x); } );
-//    connect(this, &Widget::ret_value3, [&](double x){ disconnect(this, &Widget::ret_value3, 0, 0);
-//            savebtp2(2, x); } );
-//    connect(this, &Widget::ret_value4, [&](double x){ disconnect(this, &Widget::ret_value4, 0, 0);
-//            savebtp2(3, x); } );
-//}
 
 void Widget::stopData(int n)
 {
@@ -890,17 +589,22 @@ bool Widget::isData(int n)
     return 0;
 }
 
-void Widget::startIncub(int num)
+void Widget::startIncub(int num, double time_s, std::function<void(void)> timeout_fun, QString message)
 {
+    int time_ms = time_s * 1000;
     incub = true;
     if(num == 1) {
-        setUserMessage(QString("Инкубация (%1c)").arg(startWin->getTimeIncube()));
-        int time_ms = startWin->getTimeIncube(1) * 1000;
-        pBar1->startProgress(QString("Инкубация %p%"), time_ms, [this](){ incubeTimeout(); });
-        pBar2->startProgress(QString("Инкубация %p%"), time_ms);
-        pBar3->startProgress(QString("Инкубация %p%"), time_ms);
-        pBar4->startProgress(QString("Инкубация %p%"), time_ms);
-
+        setUserMessage(QString("Инкубация %1 (c)").arg(time_s));
+        //int time_ms = startWin->getTimeIncube(1) * 1000;
+        //connect();
+        std::function<void(void)> call = [=, this](){
+            this->incub = false;
+            timeout_fun();
+        };
+        pBar1->startProgress(QString("Инкубация %1 (c) %p%").arg(time_s), time_ms, call);
+        pBar2->startProgress(QString("Инкубация %1 (c) %p%").arg(time_s), time_ms);
+        pBar3->startProgress(QString("Инкубация %1 (c) %p%").arg(time_s), time_ms);
+        pBar4->startProgress(QString("Инкубация %1 (c) %p%").arg(time_s), time_ms);
         emit status(QString("Инкубация"));
     }
     else {
@@ -924,40 +628,57 @@ void Widget::startIncub(int num)
     }
 }
 
-void Widget::incubeTimeout()
+void Widget::incubeTimeout_1()
+{
+    std::function<void(Widget*)> func = &Widget::incubeTimeout_2;
+    int time_ms = startWin->getTimeIncube(2) * 1000;
+    //pBar1->setFormat("Инкубация 0");
+    pBar1->startProgress(QString("Инкубация 2 %p%"), time_ms, std::bind(func, this));
+    pBar2->startProgress(QString("Инкубация 2 %p%"), time_ms);
+    pBar3->startProgress(QString("Инкубация 2 %p%"), time_ms);
+    pBar4->startProgress(QString("Инкубация 2 %p%"), time_ms);
+    setUserMessage(QString("Инкубация 2 (%1c)").arg(startWin->getTimeIncube(2)));
+}
+
+void Widget::incubeTimeout_2()
+{
+    waitImpulse();
+}
+
+void Widget::waitImpulse()
 {
         QPointer<ImpuleWaiter> iw = new ImpuleWaiter;
 
-        stopIncub();
+        //stopIncub();
         if(startWin->isChannel(1)) {
-            setUserMessage("Канал 1: В ожидании введения стартового реагента");
+            setUserMessage("Канал 1: В ожидании добавления стартового реагента");
             ready1 = true;
             waitPulse = true;
             iw->addWaiter(1);
             pBar1->Wait();
         }
         if(startWin->isChannel(2)) {
-            setUserMessage("Канал 2: В ожидании введения стартового реагента");
+            setUserMessage("Канал 2: В ожидании добавления стартового реагента");
             ready2 = true;
             waitPulse = true;
             iw->addWaiter(2);
             pBar2->Wait();
         }
         if(startWin->isChannel(3)) {
-            setUserMessage("Канал 3: В ожидании введения стартового реагента");
+            setUserMessage("Канал 3: В ожидании добавления стартового реагента");
             ready3 = true;
             waitPulse = true;
             iw->addWaiter(3);
             pBar3->Wait();
         }
         if(startWin->isChannel(4)) {
-            setUserMessage("Канал 4: В ожидании введения стартового реагента");
+            setUserMessage("Канал 4: В ожидании добавления стартового реагента");
             ready4 = true;
             iw->addWaiter(4);
             waitPulse = true;
             pBar4->Wait();
         }
-        setUserMessage("<div style='color: blue'>Время инкубации истекло, добавьте стартовый реагент");
+        setUserMessage("<div style='color: blue'>В ожидании добавления стартового реагента");
         connect(this, &Widget::hasPulse1, iw, &ImpuleWaiter::has_pulse_1);
         connect(this, &Widget::hasPulse2, iw, &ImpuleWaiter::has_pulse_2);
         connect(this, &Widget::hasPulse3, iw, &ImpuleWaiter::has_pulse_3);
@@ -978,23 +699,6 @@ void Widget::incubeTimeout()
 
         connect(iw, &ImpuleWaiter::alldone, [this](){ waitPulse = false; });
         iw->startWait();
-}
-
-void Widget::incubeTimeout_1()
-{
-    std::function<void(Widget*)> func = &Widget::incubeTimeout_2;
-    int time_ms = startWin->getTimeIncube(2) * 1000;
-    //pBar1->setFormat("Инкубация 0");
-    pBar1->startProgress(QString("Инкубация 2 %p%"), time_ms, std::bind(func, this));
-    pBar2->startProgress(QString("Инкубация 2 %p%"), time_ms);
-    pBar3->startProgress(QString("Инкубация 2 %p%"), time_ms);
-    pBar4->startProgress(QString("Инкубация 2 %p%"), time_ms);
-    setUserMessage(QString("Инкубация 2 (%1c)").arg(startWin->getTimeIncube(2)));
-}
-
-void Widget::incubeTimeout_2()
-{
-    incubeTimeout();
 }
 
 double Widget::writeMapData(int n)
@@ -1026,7 +730,7 @@ double Widget::writeMapData(int n)
 
     QStringList strList;
     auto func = [&](QMap<double, double> map) {
-        strList << QString("t#%5\tti#%6\tp#%7\n").arg(startWin->getTime())
+        strList << QString("t#%5\tti#%6\tp#%7\n").arg(startWin->getTimeWrite())
                                                  .arg(startWin->getTimeIncube())
                                                  .arg(startWin->isSingle());
         int i = 0;
@@ -1132,18 +836,24 @@ void Widget::on_comboBox_currentIndexChanged(int index)
         break;
     case 8:
         str = tr("Определение уровня БТП, тест (8)");
-        setStartWindow(StartCalibrationAgr1::getBTP());
+        startWin = StartCalibrationAgr1::getBTP();
         startWin->setModeID(Level_ID);
         break;
     case 9:
         str = tr("Определение уровня ОТП, тест (9)");
-        setStartWindow(StartCalibrationAgr1::getOTP());
+        startWin = StartCalibrationAgr1::getOTP();
         startWin->setModeID(Level_ID);
         break;
     default:
         break;
     }
     setUserMessage(str, 0);
+}
+
+void Widget::showEvent(QShowEvent *event)
+{
+    setupWidget();
+    event->accept();
 }
 
 void Widget::updateTime()
@@ -1177,80 +887,272 @@ void Widget::setupTimers()
                    .arg(dt.toString("dd.MM.yyyy")));
 }
 
-void Widget::setupWidget()
+void Widget::setUserMessage(QString str, bool withtime, bool tofile)
 {
-    if(!startWin->isCancel()) {
-        if(startWin->isSingle()) {
-            if (startWin->isChannel(1)) {
-                ui->groupBox_f1->setTitle("Канал 1");
-                ui->groupBox_f1->show();
-            }
-            else {
-                ui->groupBox_f1->hide();
-            }
-
-            if (startWin->isChannel(2)) {
-
-                ui->groupBox_f2->setTitle("Канал 2");
-                ui->groupBox_f2->show();
-            }
-            else {
-                ui->groupBox_f2->hide();
-            }
-
-            if (startWin->isChannel(3)) {
-
-                ui->groupBox_f3->setTitle("Канал 3");
-                ui->groupBox_f3->show();
-            }
-            else {
-                ui->groupBox_f3->hide();
-            }
-
-            if (startWin->isChannel(4)) {
-
-                ui->groupBox_f4->setTitle("Канал 4");
-                ui->groupBox_f4->show();
-            }
-            else {
-                ui->groupBox_f4->hide();
-            }
-            //setUserMessage(startWin->getStringStatus());
-            ui->checkBox_L->setChecked(true); //включение лазеров
-            setupRealtimeData();
-        }
-        else {
-
-            if (startWin->isChannel(1)) {
-                ui->groupBox_f1->setTitle("Канал 1, 2");
-                ui->groupBox_f2->hide();
-            }
-            else {
-                ui->groupBox_f1->hide();
-                ui->groupBox_f2->hide();
-            }
-
-            if (startWin->isChannel(3)) {
-                ui->groupBox_f3->setTitle("Канал 3, 4");
-                ui->groupBox_f4->hide();
-            }
-            else {
-                ui->groupBox_f3->hide();
-                ui->groupBox_f4->hide();
-            }
-            setupRealtimeData();
-        }
+    if(withtime) {
+        QString msg = QString(tr("%1, Время %2"))
+                .arg(str)
+                .arg(dt.toString("hh:mm:ss.zzz"));
+        ui->textEdit->append(msg);
+        if(tofile) saveFiles.writeUserMsg(msg);
     }
+    else {
+        ui->textEdit->append(str);
+        if(tofile) saveFiles.writeUserMsg(str);
+    }
+    QScrollBar *b = ui->textEdit->verticalScrollBar();
+    b->triggerAction(QScrollBar::SliderToMaximum);
 }
 
-//DoThis::DoThis(Widget *obj)
-//{
-//    this->obj = obj;
-//    self = NULL;
-//}
+void Widget::on_pushButton_clicked()
+{
+    //state = StateBuilder::getState(startWin->getModeID());
+    current_mode_id = state->current();
+    ui->pushButton->setEnabled(false);
 
-//Incubation::Incubation(Widget *obj) : DoThis(obj)
-//{
+    if( termoSensor ) {
+        setUserMessage(QString("<span style='color:red'>Дождитесь нагрева термостата</span>"));
+        pBar1->setFormat("В ожидании");
+        pBar1->setValue(0);
+        pBar2->setFormat("В ожидании");
 
-//}
+        pBar2->setValue(0);
+        pBar3->setFormat("В ожидании");
+        pBar3->setValue(0);
+        pBar4->setFormat("В ожидании");
+        pBar4->setValue(0);
+    } else {
+        setUserMessage("<span style='color:blue'>Термостат нагрет до 37ºC</span>");
+        pBar1->setFormat("Готов");
+        pBar1->setValue(pBar1->getMaximum());
+        pBar2->setFormat("Готов");
+        pBar2->setValue(pBar2->getMaximum());
+        pBar3->setFormat("Готов");
+        pBar3->setValue(pBar3->getMaximum());
+        pBar4->setFormat("Готов");
+        pBar4->setValue(pBar4->getMaximum());
+    }
+    QPointer<QMessageBox> test_dialog = new QMessageBox(this);
+    //test_dialog->setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
+    QPushButton ok;
+    QPushButton cansel;
+    ok.setText("Норма");
+    cansel.setText("Брак");
+    test_dialog->addButton(&ok, QMessageBox::AcceptRole);
+    test_dialog->addButton(&cansel, QMessageBox::RejectRole);
+    test_dialog->setIcon(QMessageBox::Information);
 
+    QString msg_state = state->getMessage();
+    switch(current_mode_id) {
+    case Test_ID:
+        setUserMessage("Проверка работопособности");
+        //Проверка Перемешивания в канале 1
+        emit onmixch1(true);
+        setUserMessage(QString("Контроль включения перемешивания в канале 1"));
+        test_dialog->setWindowTitle("Канал 1 - проверка");
+        test_dialog->setText("Проконтролируте включение перемешивания в канале 1");
+        test_dialog->exec();
+        if(test_dialog->result() == 0) {
+           emit onmixch1(false);
+           setUserMessage("Перемешивания в канале 1 - <span style='color:blue'>НОРМА</span>");
+        }
+        else {
+           setUserMessage(QString("Перемешивания в канале 1 - <span style='color:red'>БРАК</span>"));
+           //return;
+        }
+        //Проверка Перемешивания в канале 2
+        emit onmixch2(true);
+        setUserMessage(QString("Контроль включения перемешивания в канале 2"));
+        test_dialog->setWindowTitle("Канал 2 - проверка");
+        test_dialog->setText("Проконтролируте включение перемешивания в канале 2");
+        test_dialog->exec();
+        if(test_dialog->result() == 0) {
+          emit onmixch2(false);
+          setUserMessage("Перемешивания в канале 2 - <span style='color:blue'>НОРМА</span>");
+        }
+        else {
+            setUserMessage(QString("Перемешивания в канале 2 - <span style='color:red'>БРАК</span>"));
+            //return;
+        }
+
+        //Проверка Перемешивания в канале 3
+        emit onmixch3(true);
+        setUserMessage(QString("Контроль включения перемешивания в канале 3"));
+        test_dialog->setWindowTitle("Канал 3 - проверка");
+        test_dialog->setText("Проконтролируте включение перемешивания в канале 3");
+        test_dialog->exec();
+        if(test_dialog->result() == 0) {
+         emit onmixch3(false);
+         setUserMessage("Перемешивания в канале 3 - <span style='color:blue'>НОРМА</span>");
+        }
+        else {
+            setUserMessage(QString("Перемешивания в канале 3 - <span style='color:red'>БРАК</span>"));
+            //return;
+        }
+
+        //Проверка Перемешивания в канале 4
+        emit onmixch4(true);
+        setUserMessage(QString("Контроль включения перемешивания в канале 4"));
+        test_dialog->setWindowTitle("Канал 4 - проверка");
+        test_dialog->setText("Проконтролируте включение перемешивания в канале 4");
+        test_dialog->exec();
+        if(test_dialog->result() == 0) {
+            emit onmixch4(false);
+            setUserMessage("Перемешивания в канале 4 - <span style='color:blue'>НОРМА</span>");
+        }
+        else {
+            setUserMessage(QString("Перемешивания в канале 4 - <span style='color:red'>БРАК</span>"));
+            //return;
+        }
+        //Проверка Перемешивания в канале РР
+        emit onmixpp(true);
+        setUserMessage(QString("Контроль включения перемешивания в канале РР"));
+        test_dialog->setWindowTitle("Канал РР - проверка");
+        test_dialog->setText("Проконтролируте включение перемешивания в канале РР");
+        test_dialog->exec();
+        if(test_dialog->result() == 0) {
+            emit onmixpp(false);
+            setUserMessage("Перемешивания в канале РР - <span style='color:blue'>НОРМА</span>");
+        }
+        else {
+            setUserMessage(QString("Перемешивания в канале РР - <span style='color:red'>БРАК</span>"));
+            //return;
+        }
+
+        //Проверка включения лезерных излучателей
+        emit onlaser(true);
+        setUserMessage(QString("Контроль включения лазерных излучателей"));
+        test_dialog->setWindowTitle("Лазерные излучетели - проверка");
+        test_dialog->setText("Проконтролируте включение лазерных излучателей");
+        test_dialog->exec();
+        if(test_dialog->result() == 0) {
+            emit onlaser(false);
+            setUserMessage("Лазерные излучатели - <span style='color:blue'>НОРМА</span>");
+        }
+        else {
+            setUserMessage(QString("Лазерные излучатели - <span style='color:red'>БРАК</span>"));
+            //return;
+        }
+        break;
+    case Level_ID:
+        if(startWin->isChannel(1)) {
+            ui->checkBox_1->setChecked(true); //включение перемешивания 1
+            getData(1, startWin->getTimeWrite());
+        }
+        else ui->checkBox_1->setChecked(false);
+
+        if(startWin->isChannel(2)) {
+            ui->checkBox_2->setChecked(true); //включение перемешивания 2
+            getData(2, startWin->getTimeWrite());
+        }
+        else ui->checkBox_2->setChecked(false);
+
+        if(startWin->isChannel(3)) {
+            ui->checkBox_3->setChecked(true); //включение перемешивания 3
+            getData(3, startWin->getTimeWrite());
+        }
+        else ui->checkBox_3->setChecked(false);
+
+        if(startWin->isChannel(4)) {
+            ui->checkBox_4->setChecked(true); //включение перемешивания 4
+            getData(4, startWin->getTimeWrite());
+        }
+        else ui->checkBox_4->setChecked(false);
+        break;
+    case TestAgr1_ID:
+        waitImpulse();
+        setUserMessage(QString("<div style='color: blue'>Конец TestAgr1_ID"), 0);
+        ui->pushButton->setEnabled(true);
+        state->reset();
+        break;
+    case TestKo1_ID:
+        ui->pushButton->setEnabled(false);
+        setUserMessage(startWin->getStringStatus());
+        startIncub(1, startWin->getTimeIncube(), [this](){ waitImpulse();});
+        break;
+
+    case TestKo2_ID:
+        ui->pushButton->setEnabled(false);
+        setUserMessage(startWin->getStringStatus());
+        startIncub(1, startWin->getTimeIncube(), [this](){ waitImpulse();});
+        break;
+
+    case TestKo3_ID:
+        ui->pushButton->setEnabled(false);
+        setUserMessage(startWin->getStringStatus());
+        startIncub(1, startWin->getTimeIncube(), [this](){ waitImpulse();});
+        break;
+
+    case TestKo4_ID:
+        ui->pushButton->setEnabled(false);
+        setUserMessage(startWin->getStringStatus());
+        startIncub(1, startWin->getTimeIncube(), [this](){ waitImpulse();});
+        break;
+
+    case TestKo5_ID:
+        ui->pushButton->setEnabled(false);
+        setUserMessage(startWin->getStringStatus());
+        startIncub(1, startWin->getTimeIncube(), [this](){ waitImpulse();});
+        break;
+
+    case BTPTestAgr1_ID:
+        setUserMessage(msg_state);
+        //setUserMessage(startWin->getStringStatus());
+        current_mode_id = Test_ID;
+        connect(this, &Widget::done, [this](){
+            current_mode_id = state->current(); ui->pushButton->setEnabled(true); });
+        if (startWin->isChannel(1)) getData(1, 5);
+        if (startWin->isChannel(2)) getData(2, 5);
+        if (startWin->isChannel(3)) getData(3, 5);
+        if (startWin->isChannel(4)) getData(4, 5);
+        state->next();
+        break;
+    case OTPTestAgr1_ID:
+        setUserMessage(msg_state);
+        setUserMessage(QString("<span style = 'color: red'>OTPTestAgr1_ID</span>"));
+        //setUserMessage(QString("<div style='color: blue'>Установите пробы с ОТП в рабочие  каналы и нажмите \"Старт\""), 0);
+        ui->pushButton->setEnabled(false);
+        setUserMessage(startWin->getStringStatus());
+        current_mode_id = Test_ID;
+        connect(this, &Widget::done, [this](){
+            current_mode_id = state->current(); ui->pushButton->setEnabled(true); });
+        if (startWin->isChannel(1)) getData(1, 5);
+        if (startWin->isChannel(2)) getData(2, 5);
+        if (startWin->isChannel(3)) getData(3, 5);
+        if (startWin->isChannel(4)) getData(4, 5);
+        state->next();
+        break;
+    case Incubation1_ID:
+        setUserMessage(msg_state);
+        QMessageBox::information(this, "", msg_state);
+        current_mode_id = state->next();
+        startIncub(1, startWin->getTimeIncube(1), [this](){
+            setUserMessage(QString("<span style = 'color: red'>Время инкубации истекло</span>"));
+            on_pushButton_clicked();
+        });
+        break;
+    case Incubation2_ID:
+        break;
+    default:
+        if(startWin->isChannel(1)) ui->checkBox_1->setChecked(true); //включение перемешивания 1
+        else ui->checkBox_1->setChecked(false);
+
+        if(startWin->isChannel(2)) ui->checkBox_2->setChecked(true); //включение перемешивания 2
+        else ui->checkBox_2->setChecked(false);
+
+        if(startWin->isChannel(3)) ui->checkBox_3->setChecked(true); //включение перемешивания 3
+        else ui->checkBox_3->setChecked(false);
+
+        if(startWin->isChannel(4)) ui->checkBox_4->setChecked(true); //включение перемешивания 4
+        else ui->checkBox_4->setChecked(false);
+
+        connect(startWin, &StartMeasurement::startMeasurment, [=](StartMeasurement* sm){
+            startWin = sm;
+            disconnect(startWin, &StartMeasurement::startMeasurment, 0, 0);
+        });
+
+        startWin->show();
+        qDebug() << QString("called default startMeasurment()");
+        break;
+    } //end switch(getMode())
+}

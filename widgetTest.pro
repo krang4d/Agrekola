@@ -47,7 +47,8 @@ SOURCES +=  main.cpp\
     options.cpp \
     calibparam.cpp \
     ../XML/KoAgrXML/koagrxml.cpp \
-    startmeasurement.cpp
+    startmeasurement.cpp \
+    state.cpp
 
 HEADERS  += selectcalibrationagr1.h \
     selectinductor.h \
@@ -79,7 +80,8 @@ HEADERS  += selectcalibrationagr1.h \
     calibparam.h \
     globalvalue.h \
     ../XML/KoAgrXML/koagrxml.h \
-    startmeasurement.h
+    startmeasurement.h \
+    state.h
 
 
 FORMS    += selectcalibrationagr1.ui \

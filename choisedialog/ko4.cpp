@@ -40,10 +40,10 @@ void Ko4::open()
 //    } else
 //        param = QStringList({0, 0, 0, 0, 0, 0, 0 , 0 , 0, 0});//10 параметров
 /* Новый метод загрузки параметров из XML */
-    QString str;
-        str = QString("Дата проведения %1\n").arg(c_ko4.getDate().toString("dd.MM.yyyy"))
-            + QString("Номер серия реагентов %1\n").arg(c_ko4.getReagent_serial())
-            + QString("Срок годности реагентов %1\n").arg(c_ko4.getReagent_date().toString("dd.MM.yyyy"));
+    ui->groupBox_test1Calib->setTitle(QString("Последняя калибровка: %1\n").arg(c_ko4.getDate().toString("dd.MM.yyyy")));
+    QString str =
+              QString("Номер серия реагентов: %1\n").arg(c_ko4.getReagent_serial())
+            + QString("Срок годности реагентов: %1\n").arg(c_ko4.getReagent_date().toString("dd.MM.yyyy"));
 
     ui->label_test1CalibrString->setText(str);
 

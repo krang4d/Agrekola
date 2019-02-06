@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>332</width>
-    <height>491</height>
+    <width>342</width>
+    <height>503</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -37,7 +37,7 @@
        <item>
         <widget class="QGroupBox" name="groupBox_calibChls">
          <property name="title">
-          <string>Выбор рабочих каналов</string>
+          <string>Рабочие каналы</string>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout">
           <item>
@@ -82,6 +82,12 @@
          </item>
          <item row="0" column="1">
           <widget class="QDoubleSpinBox" name="doubleSpinBox_calibIncube">
+           <property name="prefix">
+            <string/>
+           </property>
+           <property name="suffix">
+            <string/>
+           </property>
            <property name="decimals">
             <number>1</number>
            </property>
@@ -121,7 +127,7 @@
          <item row="3" column="0">
           <widget class="QLabel" name="label_calib3">
            <property name="text">
-            <string>Номер серии контрольной плазмы</string>
+            <string>Номер серии к/плазмы</string>
            </property>
           </widget>
          </item>
@@ -135,7 +141,7 @@
          <item row="4" column="0">
           <widget class="QLabel" name="label_calib4">
            <property name="text">
-            <string>Срок годности контрольной плазмы</string>
+            <string>Срок годности к/ плазмы</string>
            </property>
           </widget>
          </item>
@@ -153,12 +159,15 @@
          <item row="6" column="0">
           <widget class="QLabel" name="label_calib6">
            <property name="text">
-            <string>Время записи (c)</string>
+            <string>Время записи (с)</string>
            </property>
           </widget>
          </item>
          <item row="6" column="1">
           <widget class="QDoubleSpinBox" name="doubleSpinBox_calibWriteTime">
+           <property name="suffix">
+            <string/>
+           </property>
            <property name="minimum">
             <double>5.000000000000000</double>
            </property>
@@ -170,7 +179,7 @@
          <item row="5" column="0">
           <widget class="QLabel" name="label_calib5">
            <property name="text">
-            <string>АЧТВ контрольной плазмы</string>
+            <string>АЧТВ к/плазмы</string>
            </property>
           </widget>
          </item>
@@ -249,7 +258,7 @@
          <item>
           <widget class="QGroupBox" name="groupBox_test1Chls">
            <property name="title">
-            <string>Выбор каналов</string>
+            <string>Рабочие каналы</string>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_9">
             <item>
@@ -286,7 +295,7 @@
          <item>
           <widget class="QGroupBox" name="groupBox_test1ProbNum">
            <property name="title">
-            <string>Номер пробы</string>
+            <string>Номера проб</string>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_3">
             <item>
@@ -405,7 +414,7 @@
          <item row="0" column="0">
           <widget class="QGroupBox" name="groupBox_test2Chls">
            <property name="title">
-            <string>Выбор каналов</string>
+            <string>Рабочие каналы</string>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_5">
             <item>
@@ -442,7 +451,7 @@
          <item row="0" column="1">
           <widget class="QGroupBox" name="groupBox_test2ProbNum">
            <property name="title">
-            <string>Номер пробы</string>
+            <string>Номера проб</string>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_6">
             <item>
@@ -511,12 +520,16 @@
          <item row="2" column="0">
           <widget class="QLabel" name="label_test2_2">
            <property name="text">
-            <string>АЧТВ контрольной плазмы</string>
+            <string>АЧТВ к/плазмы (с)</string>
            </property>
           </widget>
          </item>
          <item row="2" column="1">
-          <widget class="QDoubleSpinBox" name="doubleSpinBox_test2a4tv"/>
+          <widget class="QDoubleSpinBox" name="doubleSpinBox_test2a4tv">
+           <property name="decimals">
+            <number>1</number>
+           </property>
+          </widget>
          </item>
          <item row="3" column="0">
           <widget class="QLabel" name="label_test2_3">

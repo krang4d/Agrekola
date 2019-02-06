@@ -104,9 +104,9 @@ void Ko5::open()
 //    } else
 //        param = QStringList({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}); //11 параметров
         /* Новый метод загрузки параметров из XML */
+        ui->groupBox_testCalib->setTitle(QString("Последняя калибровка: %1\n").arg(c_ko5.getDate().toString("dd.MM.yyyy")));
         QString str;
-            str = QString("Дата проведения %1\n").arg(c_ko5.getDate().toString("dd.MM.yyyy"))
-                + QString("Номер серия реагентов %1\n").arg(c_ko5.getReagent_serial())
+                  QString("Номер серия реагентов %1\n").arg(c_ko5.getReagent_serial())
                 + QString("Срок годности реагентов %1\n").arg(c_ko5.getReagent_date().toString("dd.MM.yyyy"));
         ui->label_testCalibString->setText(str);
 

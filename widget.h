@@ -19,6 +19,7 @@
 #include "impulewaiter.h"
 #include "startmeasurement.h"
 #include "options.h"
+#include "state.h"
 
 namespace Ui {
 class Widget;
@@ -29,16 +30,16 @@ class Widget : public QWidget
     Q_OBJECT
 
 public:
+    //delete Widget(QWidget *parent = 0);
     explicit Widget(QWidget *parent = 0);
-    Widget(StartMeasurement *, QWidget *parent = 0);
     ~Widget();
-
+    void setupWidget();
     void setUserMessage(QString, bool withtime = true, bool tofile = true);
 
 //    inline void setMode(Mode_ID m)  { id = m; }
 //    inline Mode_ID getMode()     { return id; }
 
-    void setStartWindow(StartMeasurement*);
+    //void setStartWindow(StartMeasurement*);
 
     inline bool isSensorReady()
     {
@@ -63,15 +64,13 @@ public:
     inline bool isWaitPulse() { return waitPulse; }
 
 protected:
-    bool eventFilter(QObject *watched, QEvent *event);
-    void setupRealtimeData();
+    void setupRealtimeData(bool single);
     void setupTimers();
-    void setupWidget();
 
 public slots:
     void incubeTimeout_1();
     void incubeTimeout_2();
-    void incubeTimeout();
+    void waitImpulse();
 
 signals:
     void onmixch1(bool);
@@ -92,17 +91,13 @@ signals:
     void ret_value3(double);
     void ret_value4(double);
     void done();
+    void incube_timeout();
 
 public slots:
-    //void startMeasurment();
-    void startMeasurment(StartMeasurement *);
-    void startIncub(int num);
+    void startIncub(int num, double time_s, std::function<void(void)> timeout_fun, QString message = "Время инкубации истекло");
     void getData(int, double time_s);
-//    void getLevelBTP();
-//    void getLevelOTP();
 
 private slots:
-
     void on_pushButton_clicked();
 
     void realtimeDataSlot(QVariantList);
@@ -126,6 +121,7 @@ public:
     QPointer<QCustomPlot> customPlot1, customPlot2, customPlot3, customPlot4;
     QPointer<ProgressTimerBar> pBar1, pBar2, pBar3, pBar4;
     Mode_ID current_mode_id;
+    State *state;
 
 private:
     Ui::Widget *ui;
@@ -136,38 +132,20 @@ private:
     bool pulse1, pulse2, pulse3, pulse4;
     bool ready1, ready2, ready3, ready4;
     bool termoSensor, incub, waitPulse;
+    bool single;
 
     QMap<double, double> map_y1, map_y2, map_y3, map_y4 ;
-    QVector<double> btp, otp;
     SaveFiles saveFiles;
     double START_DX; //порог запуска
     double STOP_DX;  //порог остановки
-    double MIN, MAX;
+    double MIN, MAX; //минимум и максимум на графике
 
     friend class Options;
-    friend class DoThis;
-};
 
-class DoThis{
-
-//    Widget *obj;
-//    DoThis *self;
-
-//public:
-//    DoThis(Widget *obj);
-//    virtual ~DoThis();
-
-//protected:
-//    void output(QString text) {
-//        obj->setUserMessage(text);
-//    }
-};
-
-class Incubation : public DoThis {
-//    Incubation(Widget *obj);
-//    virtual ~Incubation();
-//    void Go();
-
+    // QWidget interface
+protected:
+    void showEvent(QShowEvent *event) override;
+    bool eventFilter(QObject *watched, QEvent *event) override;
 };
 
 #endif // WIDGET_H

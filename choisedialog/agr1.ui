@@ -74,7 +74,7 @@
          <item>
           <widget class="QGroupBox" name="groupBox_testChls">
            <property name="title">
-            <string>Выбор каналов</string>
+            <string>Рабочие каналы</string>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_9">
             <item>
@@ -111,7 +111,7 @@
          <item>
           <widget class="QGroupBox" name="groupBox_testProbNum">
            <property name="title">
-            <string>Номер пробы</string>
+            <string>Номера проб</string>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_10">
             <item>

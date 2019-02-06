@@ -165,24 +165,24 @@ void StartMeasurement::setNum(const int ch, const QString num)
     }
 }
 
-int StartMeasurement::getTime()
+double StartMeasurement::getTimeWrite()
 {
     return time;
 }
 
-void StartMeasurement::setTime(int ts)
+void StartMeasurement::setTimeWrite(double s)
 {
-    time = ts;
+    time = s;
 }
 
-int StartMeasurement::getTimeIncube(int i)
+double StartMeasurement::getTimeIncube(int i)
 {
     if(i == 1)
         return time_incube;
     else return time_incube_2;
 }
 
-void StartMeasurement::setTimeIncube(int incube_number, int time_s)
+double StartMeasurement::setTimeIncube(int incube_number, double time_s)
 {
     if(incube_number == 1)
         time_incube = time_s;
@@ -194,56 +194,56 @@ QString StartMeasurement::getStringStatus()
     QString msg;
     if(isSingle()) {
         if (isChannel(1)) {
-            msg += QString("№1 = %1, ").arg(getNum(1));
+            msg += QString("Номер пробы 1: %1, ").arg(getNum(1));
         }
         else {
-            msg += QString("№1 - выкл., ");
+            //msg += QString("№1 - выкл., ");
         }
 
         if (isChannel(2)) {
-            msg += QString("№2 = %1, ").arg(getNum(2));
+            msg += QString("Номер пробы 2: %1, ").arg(getNum(2));
         }
         else {
-            msg += QString("№2 - выкл., ");
+            //msg += QString("№2 - выкл., ");
         }
 
         if (isChannel(3)) {
-            msg += QString("№3 = %1, ").arg(getNum(3));
+            msg += QString("Номер пробы 3: %1, ").arg(getNum(3));
         }
         else {
-            msg += QString("№3 - выкл., ");
+            //msg += QString("№3 - выкл., ");
         }
 
         if (isChannel(4)) {
-            msg += QString("№4 = %1 ").arg(getNum(4));
+            msg += QString("Номер пробы 4: %1 ").arg(getNum(4));
         }
         else {
-            msg += QString("№4 - выкл. ");
+            //msg += QString("№4 - выкл. ");
         }
 //        //---->> магические числа для времени инкубации 2
 //        if(getMode() == 1 && getMode() == 2) {
 //            msg = QString("Начало сбора данных, одиночные пробы (t = %1c, %2)")
 //                    .arg(startWin->getTime()).arg(msg);
 //        }
-        msg = QString("Одиночные пробы (t = %1c, %2)")
-                .arg(getTime()).arg(msg);
+        msg = QString("Начало сбора данных (Одиночные пробы, Время записи %1c, %2)")
+                .arg(getTimeWrite()).arg(msg);
     }
     else {
         if (isChannel(1)) {
-            msg += QString("№1, 2 = %1, ").arg(getNum(1));
+            msg += QString("Номер пробы 1 и 2: %1, ").arg(getNum(1));
         }
         else {
-            msg += QString("№1, 2 - выкл., ");
+            //msg += QString("№1, 2 - выкл., ");
         }
 
         if (isChannel(3)) {
-            msg += QString("№3, 4 = %1, ").arg(getNum(3));
+            msg += QString("Номер пробы 3, 4: %1, ").arg(getNum(3));
         }
         else {
-            msg += QString("№3, 4 - выкл., ");
+            //msg += QString("№3, 4 - выкл., ");
         }
-        msg = QString("Парные пробы (t = %1c, %2)")
-                .arg(getTime()).arg(msg);
+        msg = QString("Начало сбора данных (Парные пробы, Время записи: %1c, %2)")
+                .arg(getTimeWrite()).arg(msg);
     }
     return msg;
 }
