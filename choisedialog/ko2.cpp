@@ -40,13 +40,12 @@ void Ko2::open()
     /* Новый метод загрузки параметров из XML */
     //окно тест
     ui->groupBox_test1Calib->setTitle(QString("Последняя калибровка: %1\n").arg(c_ko2.getDate().toString("dd.MM.yyyy")));
-    QString str =
-              QString("Реагенты: %1 (до %2)\n").arg(c_ko2.getReagent_serial()).arg(c_ko2.getReagent_date().toString("dd.MM.yyyy"))
-            + QString("Плазма «К»: %1 (до %2)\n").arg(c_ko2.getK_plazma_serial()).arg(c_ko2.getK_plazma_date().toString("dd.MM.yyyy"))
-            + QString("АЧТВ к/плазмы 1го канала: %1 с\n").arg(c_ko2.getA4tv_kp1())
-            + QString("АЧТВ к/плазмы 2го канала: %1 с\n").arg(c_ko2.getA4tv_kp2())
-            + QString("АЧТВ к/плазмы 3го канала: %1 с\n").arg(c_ko2.getA4tv_kp3())
-            + QString("АЧТВ к/плазмы 4го канала: %1 с").arg(c_ko2.getA4tv_kp4());
+    QString str = QString("Реагенты: %1 (до %2)\n").arg(c_ko2.getReagent_serial()).arg(c_ko2.getReagent_date().toString("dd.MM.yyyy"))
+                + QString("Плазма «К»: %1 (до %2)\n").arg(c_ko2.getK_plazma_serial()).arg(c_ko2.getK_plazma_date().toString("dd.MM.yyyy"))
+                + QString("АЧТВ к/плазмы 1го канала: %1 с\n").arg(c_ko2.getA4tv_kp1())
+                + QString("АЧТВ к/плазмы 2го канала: %1 с\n").arg(c_ko2.getA4tv_kp2())
+                + QString("АЧТВ к/плазмы 3го канала: %1 с\n").arg(c_ko2.getA4tv_kp3())
+                + QString("АЧТВ к/плазмы 4го канала: %1 с").arg(c_ko2.getA4tv_kp4());
     ui->label_test1CalibString->setText(str);
     //connect(ui->page_1, SIGNAL(startMeasurment(StartMeasurment*)),this, SIGNAL(measurement(StartMeasurment*)));
 

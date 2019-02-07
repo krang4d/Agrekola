@@ -42,9 +42,9 @@ void Agr2::open()
 //        ui->lineEdit_6->setText(param.at(6));
 //    } else
 //        param = QStringList({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
+    ui->groupBox_testCalib->setTitle(QString("Последняя калибровка: %1\n").arg(c_agr2.getDate().toString("dd.MM.yyyy")));
     QString str;
-        str = QString("Дата проведения %1\n").arg(c_agr2.getDate().toString("dd.MM.yyyy"))
-            + QString("Номер серия реагентов %1\n").arg(c_agr2.getReagent_serial())
+        str = QString("Номер серия реагентов %1\n").arg(c_agr2.getReagent_serial())
             + QString("Срок годности реагентов %1\n").arg(c_agr2.getReagent_date().toString("dd.MM.yyyy"));
     ui->label_testCalibString->setText(str);
 

@@ -140,7 +140,7 @@
           <widget class="QLabel" name="label_calib_6">
            <property name="text">
             <string>Протромбин по Квику
-к/ плазмы (%)</string>
+к/плазмы (%)</string>
            </property>
           </widget>
          </item>
