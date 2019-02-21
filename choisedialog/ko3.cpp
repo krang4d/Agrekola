@@ -161,6 +161,27 @@ void Ko3::calibrationData4Come(double t0)
 
 void Ko3::on_pushButton_test_clicked()
 {
+    bool a, b, c, d;
+    if(ui->checkBox_testCh1->isChecked() && !ui->lineEdit_testCh1->text().isEmpty()) a = true;
+    else a = false;
+    if(ui->checkBox_testCh2->isChecked() && !ui->lineEdit_testCh2->text().isEmpty()) b = true;
+    else b = false;
+    if(ui->checkBox_testCh3->isChecked() && !ui->lineEdit_testCh3->text().isEmpty()) c = true;
+    else c = false;
+    if(ui->checkBox_testCh4->isChecked() && !ui->lineEdit_testCh4->text().isEmpty()) d = true;
+    else d = false;
+    bool e = c_ko3.getFibrinogen_25_plazma() || c_ko3.getFibrinogen_50_plazma() || c_ko3.getFibrinogen_200_plazma() || c_ko3.getFibrinogen_k_plazma();
+    if( !(!c_ko3.getDate().toString("dd.MM.yyyy").isEmpty() && e) ) {
+        //QString str = QString("%1").arg(c_ko3.getDate().toString("dd/MM/yyyy"));
+        QMessageBox::information(this, "Внимание!", QString("Для того чтобы продолжить неоходимо провести калибровку."));
+        return;
+    }
+    //bool c = (ui->doubleSpinBox_testIncubeTime->value() != NULL) && (ui->doubleSpinBox_testWriteTime->value() != NULL);
+    if ( !(a || b || c || d) ) {
+        QMessageBox::information(this, "Внимание!", "Для того чтобы продолжить необходимо выбрать рабочие каналы и заполнить все поля с параметрами!");
+        return;
+    }
+
     t_ko3.setK1(ui->checkBox_testCh1->isChecked());
     t_ko3.setK2(ui->checkBox_testCh2->isChecked());
     t_ko3.setK3(ui->checkBox_testCh3->isChecked());
@@ -179,6 +200,39 @@ void Ko3::on_pushButton_test_clicked()
 
 void Ko3::on_pushButton_calib_clicked()
 {
+    bool a, b, c, d, e, f, g, i;
+    if(ui->checkBox_calibCh1->isChecked()) a = true;
+    else a = false;
+    if(ui->checkBox_calibCh2->isChecked()) b = true;
+    else b = false;
+    if(ui->checkBox_calibCh3->isChecked()) c = true;
+    else c = false;
+    if(ui->checkBox_calibCh4->isChecked()) d = true;
+    else d = false;
+
+    if(!ui->lineEdit_calibKPlazmaSerial->text().isEmpty()) e =true;
+    else e= false;
+
+    if(!ui->lineEdit_calibReagentSerial->text().isEmpty()) f =true;
+    else f= false;
+
+    QDate now = QDate::currentDate();
+    if (now <= ui->dateEdit_calibPlazma->date()) g = true;
+    else g = false;
+
+    if(now <= ui->dateEdit_calibReagent->date()) i = true;
+    else i = false;
+
+    if(!(g && i) ) {
+        QMessageBox::information(this, "Внимание!", "Проверьте срок годности используемых реагентов!");
+        return;
+    }
+    //bool c = (ui->doubleSpinBox_testIncubeTime->value() != NULL) && (ui->doubleSpinBox_testWriteTime->value() != NULL);
+    if( !((a || b || c || d ) && e && f && g && i) ) {
+        QMessageBox::information(this, "Внимание!", "Для того чтобы продолжить необходимо выбрать рабочие каналы и заполнить все поля с параметрами!");
+        return;
+    }
+
     c_ko3.setDate(QDate::currentDate());
     c_ko3.setReagent_date(ui->dateEdit_calibReagent->date());
     c_ko3.setReagent_serial(ui->lineEdit_calibReagentSerial->text());

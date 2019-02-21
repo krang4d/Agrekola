@@ -6,14 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>371</width>
-    <height>532</height>
+    <width>332</width>
+    <height>525</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_3">
+  <layout class="QVBoxLayout" name="verticalLayout_4">
    <item>
     <widget class="QLabel" name="label_ko4">
      <property name="text">
@@ -27,7 +27,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget_ko4">
      <property name="currentIndex">
-      <number>2</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tabWidget_ko4Page1">
       <attribute name="title">
@@ -144,26 +144,40 @@
           <item>
            <widget class="QRadioButton" name="radioButton_calibTrombine1">
             <property name="text">
-             <string>активность тромбина 1 ___ [МЕ/мл]</string>
+             <string>активность тромбина 1</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QRadioButton" name="radioButton_calibTrombine2">
             <property name="text">
-             <string>активность тромбина 2 ___ [МЕ/мл]</string>
+             <string>активность тромбина 2 </string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QRadioButton" name="radioButton_calibTrombine3">
             <property name="text">
-             <string>активность тромбина 3 ___ [МЕ/мл]</string>
+             <string>активность тромбина 3 </string>
             </property>
            </widget>
           </item>
          </layout>
         </widget>
+       </item>
+       <item>
+        <layout class="QFormLayout" name="formLayout">
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_test2_7">
+           <property name="text">
+            <string>Исползуемая активность [МЕ/мл]</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QDoubleSpinBox" name="doubleSpinBox_test2Activity_2"/>
+         </item>
+        </layout>
        </item>
        <item>
         <layout class="QFormLayout" name="formLayout_calib_2">
@@ -232,7 +246,7 @@
       <attribute name="title">
        <string>Тест</string>
       </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_4">
+      <layout class="QVBoxLayout" name="verticalLayout_3">
        <item>
         <widget class="QGroupBox" name="groupBox_test1Probe">
          <property name="sizePolicy">
@@ -345,6 +359,36 @@
           </widget>
          </item>
         </layout>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="groupBox_calibTrimbine_2">
+         <property name="title">
+          <string>Используемые активности тромбина</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_13">
+          <item>
+           <widget class="QRadioButton" name="radioButton_calibTrombine1_2">
+            <property name="text">
+             <string>активность тромбина 1</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="radioButton_calibTrombine2_2">
+            <property name="text">
+             <string>активность тромбина 2 </string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="radioButton_calibTrombine3_2">
+            <property name="text">
+             <string>активность тромбина 3 </string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
        </item>
        <item>
         <widget class="QGroupBox" name="groupBox_test1Calib">

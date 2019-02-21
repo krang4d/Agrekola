@@ -18,6 +18,33 @@ Agr1::~Agr1()
 
 void Agr1::on_pushButton_calib_clicked()
 {
+    bool a, b, c, d, e, g;
+    if(ui->checkBox_calibCh1->isChecked()) a = true;
+    else a = false;
+    if(ui->checkBox_calibCh2->isChecked()) b = true;
+    else b = false;
+    if(ui->checkBox_calibCh3->isChecked()) c = true;
+    else c = false;
+    if(ui->checkBox_calibCh4->isChecked()) d = true;
+    else d = false;
+
+    if(!ui->lineEdit_calibTrombotsitSerial->text().isEmpty()) e =true;
+    else e= false;
+
+    QDate now = QDate::currentDate();
+    if (now <= ui->dateEdit_calibTrombotsit->date()) g = true;
+    else g = false;
+
+    if(!(g) ) {
+        QMessageBox::information(this, "Внимание!", "Проверьте срок годности используемых реагентов!");
+        return;
+    }
+    //bool c = (ui->doubleSpinBox_testIncubeTime->value() != NULL) && (ui->doubleSpinBox_testWriteTime->value() != NULL);
+    if( !((a || b || c || d ) && e && g) ) {
+        QMessageBox::information(this, "Внимание!", "Для того чтобы продолжить необходимо выбрать рабочие каналы и заполнить все поля с параметрами!");
+        return;
+    }
+
     c_agr1.setDate(QDate::currentDate());
     c_agr1.setTrombotsit_date(ui->dateEdit_calibTrombotsit->date());
     c_agr1.setTrombotsit_serial(ui->lineEdit_calibTrombotsitSerial->text());
@@ -34,7 +61,27 @@ void Agr1::on_pushButton_calib_clicked()
 }
 
 void Agr1::on_pushButton_test_clicked()
-{
+{  
+    bool a, b, c, d;
+    if(ui->checkBox_testCh1->isChecked() && !ui->lineEdit_testCh1->text().isEmpty()) a = true;
+    else a = false;
+    if(ui->checkBox_testCh2->isChecked() && !ui->lineEdit_testCh2->text().isEmpty()) b = true;
+    else b = false;
+    if(ui->checkBox_testCh3->isChecked() && !ui->lineEdit_testCh3->text().isEmpty()) c = true;
+    else c = false;
+    if(ui->checkBox_testCh4->isChecked() && !ui->lineEdit_testCh4->text().isEmpty()) d = true;
+    else d = false;
+    bool e = c_agr1.getCkA1() || c_agr1.getCkA2() || c_agr1.getCkA3() || c_agr1.getCkA4();
+    if( !(!c_agr1.getDate().toString("dd.MM.yyyy").isEmpty() && e) ) {
+        //QString str = QString("%1").arg(c_ko2.getDate().toString("dd/MM/yyyy"));
+        QMessageBox::information(this, "Внимание!", QString("Для того чтобы продолжить неоходимо провести калибровку."));
+        return;
+    }
+    //bool c = (ui->doubleSpinBox_testIncubeTime->value() != NULL) && (ui->doubleSpinBox_testWriteTime->value() != NULL);
+    if ( !(a || b || c || d) ) {
+        QMessageBox::information(this, "Внимание!", "Для того чтобы продолжить необходимо выбрать рабочие каналы и заполнить все поля с параметрами.");
+        return;
+    }
     t_agr1.setK1(ui->checkBox_testCh1->isChecked());
     t_agr1.setK2(ui->checkBox_testCh2->isChecked());
     t_agr1.setK3(ui->checkBox_testCh3->isChecked());

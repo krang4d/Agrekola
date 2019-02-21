@@ -299,6 +299,27 @@ void Ko4::on_lineEdit_test2Ch3_textChanged(const QString &arg1)
 
 void Ko4::on_pushButton_test1_clicked()
 {
+    bool a, b, c, d;
+    if(ui->checkBox_test1Ch1->isChecked() && !ui->lineEdit_test1Ch1->text().isEmpty()) a = true;
+    else a = false;
+    if(ui->checkBox_test1Ch2->isChecked() && !ui->lineEdit_test1Ch2->text().isEmpty()) b = true;
+    else b = false;
+    if(ui->checkBox_test1Ch3->isChecked() && !ui->lineEdit_test1Ch3->text().isEmpty()) c = true;
+    else c = false;
+    if(ui->checkBox_test1Ch4->isChecked() && !ui->lineEdit_test1Ch4->text().isEmpty()) d = true;
+    else d = false;
+    bool e = c_ko4.getTv1_time() || c_ko4.getTv2_time() || c_ko4.getTv3_time() || c_ko4.getTrombine_time();
+    if( !(!c_ko4.getDate().toString("dd.MM.yyyy").isEmpty() && e) ) {
+        //QString str = QString("%1").arg(c_ko2.getDate().toString("dd/MM/yyyy"));
+        QMessageBox::information(this, "Внимание!", QString("Для того чтобы продолжить неоходимо провести калибровку."));
+        return;
+    }
+    //bool c = (ui->doubleSpinBox_testIncubeTime->value() != NULL) && (ui->doubleSpinBox_testWriteTime->value() != NULL);
+    if ( !(a || b || c || d) ) {
+        QMessageBox::information(this, "Внимание!", "Для того чтобы продолжить необходимо выбрать рабочие каналы и заполнить все поля с параметрами.");
+        return;
+    }
+
     t_ko4.setK1(ui->checkBox_test1Ch1->isChecked());
     t_ko4.setK2(ui->checkBox_test1Ch2->isChecked());
     t_ko4.setK3(ui->checkBox_test1Ch3->isChecked());
@@ -317,6 +338,25 @@ void Ko4::on_pushButton_test1_clicked()
 
 void Ko4::on_pushButton_test2_clicked()
 {
+    bool a, b, c, d, e;
+    if(ui->checkBox_test2Ch1->isChecked() && !ui->lineEdit_test2Ch1->text().isEmpty()) a = true;
+    else a = false;
+    if(ui->checkBox_test2Ch2->isChecked() && !ui->lineEdit_test2Ch2->text().isEmpty()) b = true;
+    else b = false;
+    if(ui->checkBox_test2Ch3->isChecked() && !ui->lineEdit_test2Ch3->text().isEmpty()) c = true;
+    else c = false;
+    if(ui->checkBox_test2Ch4->isChecked() && !ui->lineEdit_test2Ch4->text().isEmpty()) d = true;
+    else d = false;
+
+    if(!ui->lineEdit_test2ReagentSerial->text().isEmpty()) e = true;
+    else e = false;
+
+    //bool c = (ui->doubleSpinBox_testIncubeTime->value() != NULL) && (ui->doubleSpinBox_testWriteTime->value() != NULL);
+    if ( !((a || b || c || d ) && e) ) {
+        QMessageBox::information(this, "Внимание!", "Для того чтобы продолжить необходимо выбрать рабочие каналы и заполнить все поля с параметрами!");
+        return;
+    }
+
     t_ko4.setK1(ui->checkBox_test2Ch1->isChecked());
     t_ko4.setK2(ui->checkBox_test2Ch2->isChecked());
     t_ko4.setK3(ui->checkBox_test2Ch3->isChecked());
@@ -341,6 +381,39 @@ void Ko4::on_pushButton_test2_clicked()
 
 void Ko4::on_pushButton_calib_clicked()
 {
+    bool a, b, c, d, e, f, g, i;
+    if(ui->checkBox_calibCh1->isChecked()) a = true;
+    else a = false;
+    if(ui->checkBox_calibCh2->isChecked()) b = true;
+    else b = false;
+    if(ui->checkBox_calibCh3->isChecked()) c = true;
+    else c = false;
+    if(ui->checkBox_calibCh4->isChecked()) d = true;
+    else d = false;
+
+    if(!ui->lineEdit_calibKPlazmaSerial->text().isEmpty()) e =true;
+    else e= false;
+
+    if(!ui->lineEdit_calibReagentSerial->text().isEmpty()) f =true;
+    else f= false;
+
+    QDate now = QDate::currentDate();
+    if (now <= ui->dateEdit_calibKPlazma->date()) g = true;
+    else g = false;
+
+    if(now <= ui->dateEdit_calibReagent->date()) i = true;
+    else i = false;
+
+    if(!(g && i) ) {
+        QMessageBox::information(this, "Внимание!", "Проверьте срок годности используемых реагентов!");
+        return;
+    }
+    //bool c = (ui->doubleSpinBox_testIncubeTime->value() != NULL) && (ui->doubleSpinBox_testWriteTime->value() != NULL);
+    if( !((a || b || c || d ) && e && f && g && i) ) {
+        QMessageBox::information(this, "Внимание!", "Для того чтобы продолжить необходимо выбрать рабочие каналы и заполнить все поля с параметрами!");
+        return;
+    }
+
     c_ko4.setDate(QDate::currentDate());
     c_ko4.setReagent_date(ui->dateEdit_calibReagent->date());
     c_ko4.setReagent_serial(ui->lineEdit_calibReagentSerial->text().toUtf8());

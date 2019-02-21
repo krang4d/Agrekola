@@ -20,7 +20,7 @@ Widget::Widget(QWidget *parent) :
     data1(false), data2(false), data3(false), data4(false),
     pulse1(false), pulse2(false), pulse3(false), pulse4(false),
     ready1(false), ready2(false), ready3(false), ready4(false),
-    termoSensor(false), incub(false), waitPulse(false),
+    termoSensor(false), incub(false), waitPulse(false), single(true),
     pBar1(new ProgressTimerBar), pBar2(new ProgressTimerBar),
     pBar3(new ProgressTimerBar), pBar4(new ProgressTimerBar),
     START_DX(0.1), STOP_DX(0.1), MIN(-6.0), MAX(6.0),
@@ -33,11 +33,16 @@ Widget::Widget(QWidget *parent) :
     setupWidget();
     setupTimers();
     installEventFilter(this);
+
+    emit onmixch1(false);
+    emit onmixch2(false);
+    emit onmixch3(false);
+    emit onmixch4(false);
+    emit onlaser(false);
 }
 
 void Widget::setupWidget()
 {
-    setupRealtimeData(single);
     if(!startWin->isCancel()) {
         if(startWin->isSingle()) {
             if (startWin->isChannel(1)) {
@@ -98,6 +103,7 @@ void Widget::setupWidget()
             single = startWin->isSingle();
         }
     }
+    setupRealtimeData(single);
 }
 
 //Widget::Widget(StartMeasurement *sw, QWidget *parent) : Widget(parent)
@@ -703,6 +709,9 @@ void Widget::waitImpulse()
 
 double Widget::writeMapData(int n)
 {
+    if(startWin->isChannel(n)) {
+        onmixch1(false);
+    }
     double retval;
     CalcData *p = CalcData::createCalc( current_mode_id );
     if(p == NULL) { qDebug() << "p is NULL"; }
@@ -852,6 +861,8 @@ void Widget::on_comboBox_currentIndexChanged(int index)
 
 void Widget::showEvent(QShowEvent *event)
 {
+    single = startWin->isSingle();
+    state = StateBuilder::getState(startWin->getModeID());
     setupWidget();
     event->accept();
 }
@@ -945,7 +956,12 @@ void Widget::on_pushButton_clicked()
     QString msg_state = state->getMessage();
     switch(current_mode_id) {
     case Test_ID:
-        setUserMessage("Проверка работопособности");
+        emit onmixch1(false);
+        emit onmixch2(false);
+        emit onmixch3(false);
+        emit onmixch4(false);
+        emit onlaser(false);
+        setUserMessage("<br>Проверка работопособности</br>");
         //Проверка Перемешивания в канале 1
         emit onmixch1(true);
         setUserMessage(QString("Контроль включения перемешивания в канале 1"));
@@ -954,10 +970,10 @@ void Widget::on_pushButton_clicked()
         test_dialog->exec();
         if(test_dialog->result() == 0) {
            emit onmixch1(false);
-           setUserMessage("Перемешивания в канале 1 - <span style='color:blue'>НОРМА</span>");
+           setUserMessage("Перемешивание в канале 1 - <span style='color:blue'>НОРМА</span>");
         }
         else {
-           setUserMessage(QString("Перемешивания в канале 1 - <span style='color:red'>БРАК</span>"));
+           setUserMessage(QString("Перемешивание в канале 1 - <span style='color:red'>БРАК</span>"));
            //return;
         }
         //Проверка Перемешивания в канале 2
@@ -968,13 +984,12 @@ void Widget::on_pushButton_clicked()
         test_dialog->exec();
         if(test_dialog->result() == 0) {
           emit onmixch2(false);
-          setUserMessage("Перемешивания в канале 2 - <span style='color:blue'>НОРМА</span>");
+          setUserMessage("Перемешивание в канале 2 - <span style='color:blue'>НОРМА</span>");
         }
         else {
-            setUserMessage(QString("Перемешивания в канале 2 - <span style='color:red'>БРАК</span>"));
+            setUserMessage(QString("Перемешивание в канале 2 - <span style='color:red'>БРАК</span>"));
             //return;
         }
-
         //Проверка Перемешивания в канале 3
         emit onmixch3(true);
         setUserMessage(QString("Контроль включения перемешивания в канале 3"));
@@ -983,13 +998,12 @@ void Widget::on_pushButton_clicked()
         test_dialog->exec();
         if(test_dialog->result() == 0) {
          emit onmixch3(false);
-         setUserMessage("Перемешивания в канале 3 - <span style='color:blue'>НОРМА</span>");
+         setUserMessage("Перемешивание в канале 3 - <span style='color:blue'>НОРМА</span>");
         }
         else {
-            setUserMessage(QString("Перемешивания в канале 3 - <span style='color:red'>БРАК</span>"));
+            setUserMessage(QString("Перемешивание в канале 3 - <span style='color:red'>БРАК</span>"));
             //return;
         }
-
         //Проверка Перемешивания в канале 4
         emit onmixch4(true);
         setUserMessage(QString("Контроль включения перемешивания в канале 4"));
@@ -998,10 +1012,10 @@ void Widget::on_pushButton_clicked()
         test_dialog->exec();
         if(test_dialog->result() == 0) {
             emit onmixch4(false);
-            setUserMessage("Перемешивания в канале 4 - <span style='color:blue'>НОРМА</span>");
+            setUserMessage("Перемешивание в канале 4 - <span style='color:blue'>НОРМА</span>");
         }
         else {
-            setUserMessage(QString("Перемешивания в канале 4 - <span style='color:red'>БРАК</span>"));
+            setUserMessage(QString("Перемешивание в канале 4 - <span style='color:red'>БРАК</span>"));
             //return;
         }
         //Проверка Перемешивания в канале РР
@@ -1012,13 +1026,12 @@ void Widget::on_pushButton_clicked()
         test_dialog->exec();
         if(test_dialog->result() == 0) {
             emit onmixpp(false);
-            setUserMessage("Перемешивания в канале РР - <span style='color:blue'>НОРМА</span>");
+            setUserMessage("Перемешивание в канале РР - <span style='color:blue'>НОРМА</span>");
         }
         else {
-            setUserMessage(QString("Перемешивания в канале РР - <span style='color:red'>БРАК</span>"));
+            setUserMessage(QString("Перемешивание в канале РР - <span style='color:red'>БРАК</span>"));
             //return;
         }
-
         //Проверка включения лезерных излучателей
         emit onlaser(true);
         setUserMessage(QString("Контроль включения лазерных излучателей"));
@@ -1068,33 +1081,40 @@ void Widget::on_pushButton_clicked()
     case TestKo1_ID:
         ui->pushButton->setEnabled(false);
         setUserMessage(startWin->getStringStatus());
+        if(startWin->isChannel(1)) {
+            onmixch1(true);
+        }
+        if(startWin->isChannel(2)) {
+            onmixch1(true);
+        }
+        if(startWin->isChannel(3)) {
+            onmixch1(true);
+        }
+        if(startWin->isChannel(4)) {
+            onmixch1(true);
+        }
         startIncub(1, startWin->getTimeIncube(), [this](){ waitImpulse();});
         break;
-
     case TestKo2_ID:
         ui->pushButton->setEnabled(false);
         setUserMessage(startWin->getStringStatus());
         startIncub(1, startWin->getTimeIncube(), [this](){ waitImpulse();});
         break;
-
     case TestKo3_ID:
         ui->pushButton->setEnabled(false);
         setUserMessage(startWin->getStringStatus());
         startIncub(1, startWin->getTimeIncube(), [this](){ waitImpulse();});
         break;
-
     case TestKo4_ID:
         ui->pushButton->setEnabled(false);
         setUserMessage(startWin->getStringStatus());
         startIncub(1, startWin->getTimeIncube(), [this](){ waitImpulse();});
         break;
-
     case TestKo5_ID:
         ui->pushButton->setEnabled(false);
         setUserMessage(startWin->getStringStatus());
         startIncub(1, startWin->getTimeIncube(), [this](){ waitImpulse();});
         break;
-
     case BTPTestAgr1_ID:
         setUserMessage(msg_state);
         //setUserMessage(startWin->getStringStatus());

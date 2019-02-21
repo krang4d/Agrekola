@@ -27,7 +27,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tabWidgetPage1">
       <attribute name="title">
@@ -76,14 +76,14 @@
          <item row="0" column="0">
           <widget class="QLabel" name="label_calib_1">
            <property name="text">
-            <string>Время инкубации I (с)</string>
+            <string>Время инкубации №1 (с)</string>
            </property>
           </widget>
          </item>
          <item row="1" column="0">
           <widget class="QLabel" name="label_calib_2">
            <property name="text">
-            <string>Время инкубации II  (с)</string>
+            <string>Время инкубации №2  (с)</string>
            </property>
           </widget>
          </item>

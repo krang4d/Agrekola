@@ -45,6 +45,8 @@ public:
 
 private slots:
     void on_exitButton_clicked();
+    void on_testButton_clicked();
+
     void on_agr1Button_clicked();
     void on_agr2Button_clicked();
     void on_ko1Button_clicked();
@@ -52,7 +54,6 @@ private slots:
     void on_ko3Button_clicked();
     void on_ko4Button_clicked();
     void on_ko5Button_clicked();
-    void on_testButton_clicked();
     void on_viewPlotsButton_clicked();
 
     void startMeasurement(StartMeasurement *);

@@ -110,6 +110,21 @@ void Ko1::on_lineEdit_testCh3_textChanged(const QString &arg1)
 
 void Ko1::on_pushButton_test_clicked()
 {
+    bool a, b, c, d;
+    if(ui->checkBox_testCh1->isChecked() && !ui->lineEdit_testCh1->text().isEmpty()) a = true;
+    else a = false;
+    if(ui->checkBox_testCh2->isChecked() && !ui->lineEdit_testCh2->text().isEmpty()) b = true;
+    else b = false;
+    if(ui->checkBox_testCh3->isChecked() && !ui->lineEdit_testCh3->text().isEmpty()) c = true;
+    else c = false;
+    if(ui->checkBox_testCh4->isChecked() && !ui->lineEdit_testCh4->text().isEmpty()) d = true;
+    else d = false;
+    //bool c = (ui->doubleSpinBox_testIncubeTime->value() != NULL) && (ui->doubleSpinBox_testWriteTime->value() != NULL);
+    if ( !(a || b || c || d) ) {
+        QMessageBox::information(this, "Внимание!", "Для того чтобы продолжить необходимо выбрать рабочие каналы и заполнить все поля с параметрами!");
+        return;
+    }
+    //if()
     t_ko1.setK1(ui->checkBox_testCh1->isChecked());
     t_ko1.setK2(ui->checkBox_testCh2->isChecked());
     t_ko1.setK3(ui->checkBox_testCh3->isChecked());

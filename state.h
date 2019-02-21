@@ -24,7 +24,6 @@ class StateKo1 : public State
 {
 public:
     explicit StateKo1();
-    QString getMessage() override;
 };
 
 class StateKo2 : public State

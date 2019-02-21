@@ -87,7 +87,9 @@ ChoiseDialog::~ChoiseDialog()
 void ChoiseDialog::on_testButton_clicked()
 {
     QPointer<Widget> widget = CreateWidgetThread();
-    widget->startWin->setModeID(Test_ID); //Test
+    widget->startWin = new StartMeasurement; //Test
+    widget->startWin->setModeID(Test_ID);
+    widget->state = StateBuilder::getState(Test_ID);
     widget->show();
     hide();
 }
@@ -97,7 +99,7 @@ void ChoiseDialog::startMeasurement(StartMeasurement* sw)
     QPointer<MainWindow> mw = new MainWindow(this);
     Mode_ID mode = sw->getModeID();
     mw->centerWidget->startWin = sw;
-    mw->centerWidget->state = StateBuilder::getState(mode);
+    //mw->centerWidget->single = sw->isSingle();
     switch (mode) {
     case TestAgr1_ID:
         mw->setWindowTitle("<div style='color: blue'>Определение параметров агрегации, тест");

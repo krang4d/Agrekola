@@ -118,10 +118,11 @@ private slots:
 
 public:
     StartMeasurement *startWin;
-    QPointer<QCustomPlot> customPlot1, customPlot2, customPlot3, customPlot4;
+    QCustomPlot *customPlot1, *customPlot2, *customPlot3, *customPlot4;
     QPointer<ProgressTimerBar> pBar1, pBar2, pBar3, pBar4;
     Mode_ID current_mode_id;
     State *state;
+    bool single;
 
 private:
     Ui::Widget *ui;
@@ -132,7 +133,7 @@ private:
     bool pulse1, pulse2, pulse3, pulse4;
     bool ready1, ready2, ready3, ready4;
     bool termoSensor, incub, waitPulse;
-    bool single;
+
 
     QMap<double, double> map_y1, map_y2, map_y3, map_y4 ;
     SaveFiles saveFiles;
