@@ -19,7 +19,7 @@ public:
 
 private:
     void calibrationDataCome(int n, double deta);
-    void open();
+    void open(CalibrationKo4 *c_ko4);
     void save();
 
 private slots:
@@ -44,9 +44,7 @@ private slots:
     void on_lineEdit_test2Ch3_textChanged(const QString &arg1);
 
     void on_radioButton_calibTrombine1_toggled(bool checked);
-
     void on_radioButton_calibTrombine2_toggled(bool checked);
-
     void on_radioButton_calibTrombine3_toggled(bool checked);
 
 public slots:
@@ -65,7 +63,10 @@ private:
 //    QStringList param;
 
     TestKo4 t_ko4;
-    CalibrationKo4 c_ko4;
+    CalibrationKo4* c_ko4;
+    CalibrationKo4_1* c_ko4_1;
+    CalibrationKo4_2* c_ko4_2;
+    CalibrationKo4_3* c_ko4_3;
 };
 
 class StartCalibrationKo4 : public StartMeasurement
