@@ -62,7 +62,8 @@ private:
 //    SaveFiles file;
 //    QStringList param;
 
-    TestKo4 t_ko4;
+    TestKo4* t_ko4;
+    TestKo4* t_ko4_1;
     CalibrationKo4* c_ko4;
     CalibrationKo4_1* c_ko4_1;
     CalibrationKo4_2* c_ko4_2;

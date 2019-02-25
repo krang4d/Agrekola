@@ -6,6 +6,7 @@ Ko4::Ko4(QWidget *parent) :
     ui(new Ui::Ko4)
 {
     ui->setupUi(this);
+    ui->radioButton_calibTrombine1->setChecked(true);
     if(ui->radioButton_calibTrombine1->isChecked()) open(c_ko4_1);
     if(ui->radioButton_calibTrombine2->isChecked()) open(c_ko4_2);
     if(ui->radioButton_calibTrombine3->isChecked()) open(c_ko4_3);
@@ -42,6 +43,9 @@ void Ko4::open(CalibrationKo4 *c_ko4)
 //    } else
 //        param = QStringList({0, 0, 0, 0, 0, 0, 0 , 0 , 0, 0});//10 параметров
 /* Новый метод загрузки параметров из XML */
+    t_ko4 = new TestKo4(this);
+    t_ko4_1 = new TestKo4(WithoutCalibration(), this);
+
     ui->groupBox_test1Calib->setTitle(QString("Последняя калибровка: %1\n").arg(c_ko4->getDate().toString("dd.MM.yyyy")));
     QString str =
               QString("Номер серия реагентов: %1\n").arg(c_ko4->getReagent_serial())
@@ -49,69 +53,98 @@ void Ko4::open(CalibrationKo4 *c_ko4)
 
     ui->label_test1CalibrString->setText(str);
 
-    ui->lineEdit_test2ReagentSerial->setText(c_ko4->getReagent_serial());
-    //ui->doubleSpinBox_test2Activity->setValue(c_ko4->getActivity());
-    ui->doubleSpinBox_test2TrombineTime->setValue(c_ko4->getTrombine_time());
-    ui->doubleSpinBox_calibTrombine->setValue(c_ko4->getTrombine());
-    ui->doubleSpinBox_test2IncubeTime->setValue(c_ko4->getIncube_time());
-    ui->doubleSpinBox_test2WriteTime->setValue(c_ko4->getWrite_time());
-    ui->dateEdit_test2Reagent->setDate(c_ko4->getReagent_date());
-
-
-    if( t_ko4.getSingle() ) {
+    //параметры теста
+    if( t_ko4->getSingle() ) {
         ui->radioButton_test1Single->setChecked(true);
-        ui->radioButton_test2Single->setChecked(true);
     }
     else {
         ui->radioButton_test1Double->setChecked(true);
-        ui->radioButton_test2Double->setChecked(true);
     }
 
-    if( t_ko4.getK1() ) {
+    if( t_ko4->getK1() ) {
         ui->checkBox_test1Ch1->setChecked(true);
-        ui->lineEdit_test1Ch1->setText(t_ko4.getNum1());
-        ui->checkBox_test2Ch1->setChecked(true);
-        ui->lineEdit_test2Ch1->setText(t_ko4.getNum1());
+        ui->lineEdit_test1Ch1->setText(t_ko4->getNum1());
     }
     else {
         ui->checkBox_test1Ch1->setChecked(false);
-        ui->checkBox_test2Ch1->setChecked(false);
     }
 
-    if( t_ko4.getK2() ) {
+    if( t_ko4->getK2() ) {
         ui->checkBox_test1Ch2->setChecked(true);
-        ui->lineEdit_test1Ch2->setText(t_ko4.getNum2());
-        ui->checkBox_test2Ch2->setChecked(true);
-        ui->lineEdit_test2Ch2->setText(t_ko4.getNum2());
+        ui->lineEdit_test1Ch2->setText(t_ko4->getNum2());
     }
     else {
         ui->checkBox_test1Ch2->setChecked(false);
-        ui->checkBox_test2Ch2->setChecked(false);
     }
 
-    if( t_ko4.getK3() ) {
+    if( t_ko4->getK3() ) {
         ui->checkBox_test1Ch3->setChecked(true);
-        ui->lineEdit_test1Ch3->setText(t_ko4.getNum3());
-        ui->checkBox_test2Ch3->setChecked(true);
-        ui->lineEdit_test2Ch3->setText(t_ko4.getNum3());
+        ui->lineEdit_test1Ch3->setText(t_ko4->getNum3());
     }
     else {
         ui->checkBox_test1Ch3->setChecked(false);
-        ui->checkBox_test2Ch3->setChecked(false);
     }
 
-    if( t_ko4.getK4() ) {
+    if( t_ko4->getK4() ) {
         ui->checkBox_test1Ch4->setChecked(true);
-        ui->lineEdit_test1Ch4->setText(t_ko4.getNum4());
-        ui->checkBox_test2Ch4->setChecked(true);
-        ui->lineEdit_test2Ch4->setText(t_ko4.getNum4());
-
+        ui->lineEdit_test1Ch4->setText(t_ko4->getNum4());
     }
     else {
         ui->checkBox_test1Ch4->setChecked(false);
+    }
+
+    //параметры теста без калибровки
+    if( t_ko4_1->getSingle() ) {
+        ui->radioButton_test2Single->setChecked(true);
+    }
+    else {
+        ui->radioButton_test2Double->setChecked(true);
+    }
+
+    if( t_ko4_1->getK1() ) {
+        ui->checkBox_test2Ch1->setChecked(true);
+        ui->lineEdit_test2Ch1->setText(t_ko4_1->getNum1());
+    }
+    else {
+        ui->checkBox_test2Ch1->setChecked(false);
+    }
+
+    if( t_ko4_1->getK2() ) {
+        ui->checkBox_test2Ch2->setChecked(true);
+        ui->lineEdit_test2Ch2->setText(t_ko4_1->getNum2());
+    }
+    else {
+        ui->checkBox_test2Ch2->setChecked(false);
+    }
+
+    if( t_ko4_1->getK3() ) {
+        ui->checkBox_test2Ch3->setChecked(true);
+        ui->lineEdit_test2Ch3->setText(t_ko4_1->getNum3());
+    }
+    else {
+        ui->checkBox_test2Ch3->setChecked(false);
+    }
+
+    if( t_ko4_1->getK4() ) {
+        ui->checkBox_test2Ch4->setChecked(true);
+        ui->lineEdit_test2Ch4->setText(t_ko4_1->getNum4());
+
+    }
+    else {
         ui->checkBox_test2Ch4->setChecked(false);
     }
 
+    ui->lineEdit_test2ReagentSerial->setText(t_ko4_1->getReagent_serial());
+    ui->dateEdit_test2Reagent->setDate(t_ko4_1->getReagent_date());
+    //ui->doubleSpinBox_test2Activity->setValue(c_ko4->getActivity());
+    ui->doubleSpinBox_test2TrombineTime->setValue(t_ko4_1->getTrombine_time());
+    ui->doubleSpinBox_test2Trombine->setValue(t_ko4_1->getTrombine());
+
+    ui->doubleSpinBox_test2IncubeTime->setValue(t_ko4_1->getIncube_time());
+    ui->doubleSpinBox_test2WriteTime->setValue(t_ko4_1->getWrite_time());
+
+
+    //параметры калибровки
     ui->checkBox_calibCh1->setChecked(c_ko4->getK1());
     ui->checkBox_calibCh2->setChecked(c_ko4->getK2());
     ui->checkBox_calibCh3->setChecked(c_ko4->getK3());
@@ -126,7 +159,6 @@ void Ko4::open(CalibrationKo4 *c_ko4)
     ui->lineEdit_calibKPlazmaSerial->setText(c_ko4->getK_plazma_serial());
 
     ui->doubleSpinBox_calibTrombine->setValue(c_ko4->getTrombine());
-
 //    int i = c_ko4->getActivity();
 //    QMessageBox::information(this, "i",QString("c_ko4->getActivity() = %1").arg(i));
 //    switch (i) {
@@ -321,25 +353,25 @@ void Ko4::on_pushButton_test1_clicked()
         return;
     }
 
-    t_ko4.setK1(ui->checkBox_test1Ch1->isChecked());
-    t_ko4.setK2(ui->checkBox_test1Ch2->isChecked());
-    t_ko4.setK3(ui->checkBox_test1Ch3->isChecked());
-    t_ko4.setK4(ui->checkBox_test1Ch4->isChecked());
+    t_ko4->setK1(ui->checkBox_test1Ch1->isChecked());
+    t_ko4->setK2(ui->checkBox_test1Ch2->isChecked());
+    t_ko4->setK3(ui->checkBox_test1Ch3->isChecked());
+    t_ko4->setK4(ui->checkBox_test1Ch4->isChecked());
 
-    t_ko4.setNum1(ui->lineEdit_test1Ch1->text());
-    t_ko4.setNum2(ui->lineEdit_test1Ch2->text());
-    t_ko4.setNum3(ui->lineEdit_test1Ch3->text());
-    t_ko4.setNum4(ui->lineEdit_test1Ch4->text());
+    t_ko4->setNum1(ui->lineEdit_test1Ch1->text());
+    t_ko4->setNum2(ui->lineEdit_test1Ch2->text());
+    t_ko4->setNum3(ui->lineEdit_test1Ch3->text());
+    t_ko4->setNum4(ui->lineEdit_test1Ch4->text());
 
-    t_ko4.setSingle(ui->radioButton_test1Single->isChecked());
+    t_ko4->setSingle(ui->radioButton_test1Single->isChecked());
 
-    t_ko4.save();
-    emit calibration(StartTestKo4::getStart(&t_ko4));
+    t_ko4->save();
+    emit calibration(StartTestKo4::getStart(t_ko4));
 }
 
 void Ko4::on_pushButton_test2_clicked()
 {
-    bool a, b, c, d, e;
+    bool a, b, c, d, e, f;
     if(ui->checkBox_test2Ch1->isChecked() && !ui->lineEdit_test2Ch1->text().isEmpty()) a = true;
     else a = false;
     if(ui->checkBox_test2Ch2->isChecked() && !ui->lineEdit_test2Ch2->text().isEmpty()) b = true;
@@ -352,31 +384,43 @@ void Ko4::on_pushButton_test2_clicked()
     if(!ui->lineEdit_test2ReagentSerial->text().isEmpty()) e = true;
     else e = false;
 
+    QDate now = QDate::currentDate();
+    if (now <= ui->dateEdit_test2Reagent->date()) f = true;
+    else f = false;
+
     //bool c = (ui->doubleSpinBox_testIncubeTime->value() != NULL) && (ui->doubleSpinBox_testWriteTime->value() != NULL);
+    if(!f ) {
+        QMessageBox::information(this, "Внимание!", "Проверьте срок годности используемых реагентов!");
+        return;
+    }
+
     if ( !((a || b || c || d ) && e) ) {
         QMessageBox::information(this, "Внимание!", "Для того чтобы продолжить необходимо выбрать рабочие каналы и заполнить все поля с параметрами!");
         return;
     }
 
-    t_ko4.setK1(ui->checkBox_test2Ch1->isChecked());
-    t_ko4.setK2(ui->checkBox_test2Ch2->isChecked());
-    t_ko4.setK3(ui->checkBox_test2Ch3->isChecked());
-    t_ko4.setK4(ui->checkBox_test2Ch4->isChecked());
+    t_ko4_1->setK1(ui->checkBox_test2Ch1->isChecked());
+    t_ko4_1->setK2(ui->checkBox_test2Ch2->isChecked());
+    t_ko4_1->setK3(ui->checkBox_test2Ch3->isChecked());
+    t_ko4_1->setK4(ui->checkBox_test2Ch4->isChecked());
 
-    t_ko4.setNum1(ui->lineEdit_test2Ch1->text());
-    t_ko4.setNum2(ui->lineEdit_test2Ch2->text());
-    t_ko4.setNum3(ui->lineEdit_test2Ch3->text());
-    t_ko4.setNum4(ui->lineEdit_test2Ch4->text());
+    t_ko4_1->setNum1(ui->lineEdit_test2Ch1->text());
+    t_ko4_1->setNum2(ui->lineEdit_test2Ch2->text());
+    t_ko4_1->setNum3(ui->lineEdit_test2Ch3->text());
+    t_ko4_1->setNum4(ui->lineEdit_test2Ch4->text());
 
-    t_ko4.setSingle(ui->radioButton_test2Single->isChecked());
+    t_ko4_1->setSingle(ui->radioButton_test2Single->isChecked());
 
-    c_ko4->setReagent_serial(ui->lineEdit_test2ReagentSerial->text());
-    c_ko4->setTrombine_time(ui->doubleSpinBox_test2TrombineTime->value());
-    c_ko4->setIncube_time(ui->doubleSpinBox_test2IncubeTime->value());
-    c_ko4->setWrite_time(ui->doubleSpinBox_test2WriteTime->value());
-    c_ko4->setReagent_date(ui->dateEdit_test2Reagent->date());
-    t_ko4.save();
-    emit calibration(StartTestKo4::getStart(&t_ko4));
+    t_ko4_1->setReagent_serial(ui->lineEdit_test2ReagentSerial->text());
+    t_ko4_1->setReagent_date(ui->dateEdit_test2Reagent->date());
+    t_ko4_1->setTrombine(ui->doubleSpinBox_test2Trombine->value());
+    t_ko4_1->setTrombine_time(ui->doubleSpinBox_test2TrombineTime->value());
+    t_ko4_1->setIncube_time(ui->doubleSpinBox_test2IncubeTime->value());
+    t_ko4_1->setWrite_time(ui->doubleSpinBox_test2WriteTime->value());
+    t_ko4_1->setDate(QDate::currentDate());
+
+    t_ko4_1->save();
+    emit calibration(StartTestKo4::getStart(t_ko4_1));
 }
 
 void Ko4::on_pushButton_calib_clicked()
