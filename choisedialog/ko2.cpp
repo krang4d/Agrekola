@@ -39,89 +39,118 @@ void Ko2::open()
 //        param = QStringList({0, 0, 0, 0, 0, 0, 0, 0, 0, 0}); //10 параметров
     /* Новый метод загрузки параметров из XML */
     //окно тест
-    ui->groupBox_test1Calib->setTitle(QString("Последняя калибровка: %1\n").arg(c_ko2.getDate().toString("dd.MM.yyyy")));
-    QString str = QString("Реагенты: %1 (до %2)\n").arg(c_ko2.getReagent_serial()).arg(c_ko2.getReagent_date().toString("dd.MM.yyyy"))
-                + QString("Плазма «К»: %1 (до %2)\n").arg(c_ko2.getK_plazma_serial()).arg(c_ko2.getK_plazma_date().toString("dd.MM.yyyy"))
-                + QString("АЧТВ к/плазмы 1го канала: %1 с\n").arg(c_ko2.getA4tv_kp1())
-                + QString("АЧТВ к/плазмы 2го канала: %1 с\n").arg(c_ko2.getA4tv_kp2())
-                + QString("АЧТВ к/плазмы 3го канала: %1 с\n").arg(c_ko2.getA4tv_kp3())
-                + QString("АЧТВ к/плазмы 4го канала: %1 с").arg(c_ko2.getA4tv_kp4());
+    t_ko2 = new TestKo2(this);
+    t_ko2_1 = new TestKo2(WithoutCalibration(), this);
+    c_ko2 = new CalibrationKo2(this);
+
+    ui->groupBox_test1Calib->setTitle(QString("Последняя калибровка: %1\n").arg(c_ko2->getDate().toString("dd.MM.yyyy")));
+    QString str = QString("Реагенты: %1 (до %2)\n").arg(c_ko2->getReagent_serial()).arg(c_ko2->getReagent_date().toString("dd.MM.yyyy"))
+                + QString("Плазма «К»: %1 (до %2)\n").arg(c_ko2->getK_plazma_serial()).arg(c_ko2->getK_plazma_date().toString("dd.MM.yyyy"))
+                + QString("АЧТВ к/плазмы 1го канала: %1 с\n").arg(c_ko2->getA4tv_kp1())
+                + QString("АЧТВ к/плазмы 2го канала: %1 с\n").arg(c_ko2->getA4tv_kp2())
+                + QString("АЧТВ к/плазмы 3го канала: %1 с\n").arg(c_ko2->getA4tv_kp3())
+                + QString("АЧТВ к/плазмы 4го канала: %1 с").arg(c_ko2->getA4tv_kp4());
     ui->label_test1CalibString->setText(str);
     //connect(ui->page_1, SIGNAL(startMeasurment(StartMeasurment*)),this, SIGNAL(measurement(StartMeasurment*)));
 
-    if( t_ko2.getSingle() ) {
+    if( t_ko2->getSingle() ) {
         ui->radioButton_test1Single->setChecked(true);
-        ui->radioButton_test2Single->setChecked(true);
     }
     else {
         ui->radioButton_test1Double->setChecked(true);
-        ui->radioButton_test2Double->setChecked(true);
     }
 
-    if( t_ko2.getK1() ) {
+    if( t_ko2->getK1() ) {
         ui->checkBox_test1Ch1->setChecked(true);
-        ui->checkBox_test2Ch1->setChecked(true);
-        ui->lineEdit_test1Ch1->setText(t_ko2.getNum1());
-        ui->lineEdit_test2Ch1->setText(t_ko2.getNum1());
+        ui->lineEdit_test1Ch1->setText(t_ko2->getNum1());
     }
     else {
         ui->checkBox_test1Ch1->setChecked(false);
-        ui->checkBox_test2Ch1->setChecked(false);
     }
 
-    if( t_ko2.getK2() ) {
+    if( t_ko2->getK2() ) {
         ui->checkBox_test1Ch2->setChecked(true);
-        ui->lineEdit_test1Ch2->setText(t_ko2.getNum2());
-        ui->checkBox_test2Ch2->setChecked(true);
-        ui->lineEdit_test2Ch2->setText(t_ko2.getNum2());
+        ui->lineEdit_test1Ch2->setText(t_ko2->getNum2());
     }
     else {
         ui->checkBox_test1Ch2->setChecked(false);
-        ui->checkBox_test2Ch2->setChecked(false);
     }
 
-    if( t_ko2.getK3() ) {
+    if( t_ko2->getK3() ) {
         ui->checkBox_test1Ch3->setChecked(true);
-        ui->lineEdit_test1Ch3->setText(t_ko2.getNum3());
-        ui->checkBox_test2Ch3->setChecked(true);
-        ui->lineEdit_test2Ch3->setText(t_ko2.getNum3());
+        ui->lineEdit_test1Ch3->setText(t_ko2->getNum3());
     }
     else {
         ui->checkBox_test1Ch3->setChecked(false);
-        ui->checkBox_test2Ch3->setChecked(false);
     }
 
-    if( t_ko2.getK4() ) {
+    if( t_ko2->getK4() ) {
         ui->checkBox_test1Ch4->setChecked(true);
-        ui->lineEdit_test1Ch4->setText(t_ko2.getNum4());
-        ui->checkBox_test2Ch4->setChecked(true);
-        ui->lineEdit_test2Ch4->setText(t_ko2.getNum4());
+        ui->lineEdit_test1Ch4->setText(t_ko2->getNum4());
     }
     else {
         ui->checkBox_test1Ch4->setChecked(false);
+    }
+
+    //дополнительные параметры для окна тест без калибровки
+    if( t_ko2_1->getSingle() ) {
+        ui->radioButton_test2Single->setChecked(true);
+    }
+    else {
+        ui->radioButton_test2Double->setChecked(true);
+    }
+
+    if( t_ko2_1->getK1() ) {
+        ui->checkBox_test2Ch1->setChecked(true);
+        ui->lineEdit_test2Ch1->setText(t_ko2_1->getNum1());
+    }
+    else {
+        ui->checkBox_test2Ch1->setChecked(false);
+    }
+
+    if( t_ko2_1->getK2() ) {
+        ui->checkBox_test2Ch2->setChecked(true);
+        ui->lineEdit_test2Ch2->setText(t_ko2_1->getNum2());
+    }
+    else {
+        ui->checkBox_test2Ch2->setChecked(false);
+    }
+
+    if( t_ko2_1->getK3() ) {
+        ui->checkBox_test2Ch3->setChecked(true);
+        ui->lineEdit_test2Ch3->setText(t_ko2_1->getNum3());
+    }
+    else {
+        ui->checkBox_test2Ch3->setChecked(false);
+    }
+
+    if( t_ko2_1->getK4() ) {
+        ui->checkBox_test2Ch4->setChecked(true);
+        ui->lineEdit_test2Ch4->setText(t_ko2_1->getNum4());
+    }
+    else {
         ui->checkBox_test2Ch4->setChecked(false);
     }
-    //дополнительные параметры для окна тест без калибровки
-    ui->dateEdit_test2Reagent->setDate(c_ko2.getReagent_date());
-    ui->lineEdit_test2ReagentSerial->setText(c_ko2.getReagent_serial());
-    ui->doubleSpinBox_test2IncubeTime->setValue(c_ko2.getIncube_time());
-    ui->doubleSpinBox_test2WriteTime->setValue(c_ko2.getWrite_time());
-    ui->doubleSpinBox_test2a4tv->setValue(c_ko2.getK_plazma_a4tv());
+    ui->dateEdit_test2Reagent->setDate(t_ko2_1->getReagent_date());
+    ui->lineEdit_test2ReagentSerial->setText(t_ko2_1->getReagent_serial());
+    ui->doubleSpinBox_test2IncubeTime->setValue(t_ko2_1->getIncube_time());
+    ui->doubleSpinBox_test2WriteTime->setValue(t_ko2_1->getWrite_time());
+    ui->doubleSpinBox_test2a4tv->setValue(t_ko2_1->getA4tv_kp());
 
     //окно калибровка
-    ui->checkBox_calibCh1->setChecked(c_ko2.getK1());
-    ui->checkBox_calibCh2->setChecked(c_ko2.getK2());
-    ui->checkBox_calibCh3->setChecked(c_ko2.getK3());
-    ui->checkBox_calibCh4->setChecked(c_ko2.getK4());
+    ui->checkBox_calibCh1->setChecked(c_ko2->getK1());
+    ui->checkBox_calibCh2->setChecked(c_ko2->getK2());
+    ui->checkBox_calibCh3->setChecked(c_ko2->getK3());
+    ui->checkBox_calibCh4->setChecked(c_ko2->getK4());
 
-    ui->doubleSpinBox_calibIncube->setValue(c_ko2.getIncube_time());
-    ui->doubleSpinBox_calibWriteTime->setValue(c_ko2.getWrite_time());
+    ui->doubleSpinBox_calibIncube->setValue(c_ko2->getIncube_time());
+    ui->doubleSpinBox_calibWriteTime->setValue(c_ko2->getWrite_time());
 
-    ui->lineEdit_calibKPlazmaSerial->setText(c_ko2.getK_plazma_serial());
-    ui->dateEdit_calibPlazma->setDate(c_ko2.getK_plazma_date());
-    ui->lineEdit_calibReagentSerial->setText(c_ko2.getReagent_serial());
-    ui->dateEdit_calibReagent->setDate(c_ko2.getReagent_date());
-    ui->doubleSpinBox_caliba4tv->setValue(c_ko2.getK_plazma_a4tv());
+    ui->lineEdit_calibKPlazmaSerial->setText(c_ko2->getK_plazma_serial());
+    ui->dateEdit_calibPlazma->setDate(c_ko2->getK_plazma_date());
+    ui->lineEdit_calibReagentSerial->setText(c_ko2->getReagent_serial());
+    ui->dateEdit_calibReagent->setDate(c_ko2->getReagent_date());
+    ui->doubleSpinBox_caliba4tv->setValue(c_ko2->getK_plazma_a4tv());
 }
 
 void Ko2::close()
@@ -142,19 +171,19 @@ void Ko2::calibrationDataCome(int n , double data)
     static int i = 0;
     //один параметр контрольной нормальной плазмы
     QDate dt = QDate::currentDate();
-    c_ko2.setDate(dt);
+    c_ko2->setDate(dt);
     switch (n) {
     case 1:
-        c_ko2.setA4tv_kp1(data);
+        c_ko2->setA4tv_kp1(data);
         break;
     case 2:
-        c_ko2.setA4tv_kp2(data);
+        c_ko2->setA4tv_kp2(data);
         break;
     case 3:
-        c_ko2.setA4tv_kp3(data);
+        c_ko2->setA4tv_kp3(data);
         break;
     case 4:
-        c_ko2.setA4tv_kp4(data);
+        c_ko2->setA4tv_kp4(data);
         break;
     default:
         break;
@@ -163,7 +192,7 @@ void Ko2::calibrationDataCome(int n , double data)
         i = 0;
         emit calibration_done();
     }
-    c_ko2.save();
+    c_ko2->save();
     //ui->label_calibrationData->setText(dt.toString("dd.MM.yyyy ") + dt.toString("hh:mm:ss"));
 //    if(param.count() <= n)
 //        param.push_back(QString("%1").arg(deta));
@@ -173,25 +202,25 @@ void Ko2::calibrationDataCome(int n , double data)
 
 void Ko2::calibrationData1Come(double t0)
 {
-    c_ko2.setA4tv_kp1(t0);
+    c_ko2->setA4tv_kp1(t0);
     calibrationDataCome(1, t0);
 }
 
 void Ko2::calibrationData2Come(double t0)
 {
-    c_ko2.setA4tv_kp2(t0);
+    c_ko2->setA4tv_kp2(t0);
     calibrationDataCome(2, t0);
 }
 
 void Ko2::calibrationData3Come(double t0)
 {
-    c_ko2.setA4tv_kp3(t0);
+    c_ko2->setA4tv_kp3(t0);
     calibrationDataCome(3, t0);
 }
 
 void Ko2::calibrationData4Come(double t0)
 {
-    c_ko2.setA4tv_kp4(t0);
+    c_ko2->setA4tv_kp4(t0);
     calibrationDataCome(4, t0);
 }
 
@@ -328,9 +357,9 @@ void Ko2::on_pushButton_test1_clicked()
     else c = false;
     if(ui->checkBox_test1Ch4->isChecked() && !ui->lineEdit_test1Ch4->text().isEmpty()) d = true;
     else d = false;
-    bool e = c_ko2.getA4tv_kp1() || c_ko2.getA4tv_kp2() || c_ko2.getA4tv_kp3() || c_ko2.getA4tv_kp4();
-    if( !(!c_ko2.getDate().toString("dd.MM.yyyy").isEmpty() && e) ) {
-        //QString str = QString("%1").arg(c_ko2.getDate().toString("dd/MM/yyyy"));
+    bool e = c_ko2->getA4tv_kp1() || c_ko2->getA4tv_kp2() || c_ko2->getA4tv_kp3() || c_ko2->getA4tv_kp4();
+    if( !(!c_ko2->getDate().toString("dd.MM.yyyy").isEmpty() && e) ) {
+        //QString str = QString("%1").arg(c_ko2->getDate().toString("dd/MM/yyyy"));
         QMessageBox::information(this, "Внимание!", QString("Для того чтобы продолжить неоходимо провести калибровку."));
         return;
     }
@@ -340,20 +369,20 @@ void Ko2::on_pushButton_test1_clicked()
         return;
     }
 
-    t_ko2.setK1(ui->checkBox_test1Ch1->isChecked());
-    t_ko2.setK2(ui->checkBox_test1Ch2->isChecked());
-    t_ko2.setK3(ui->checkBox_test1Ch3->isChecked());
-    t_ko2.setK4(ui->checkBox_test1Ch4->isChecked());
+    t_ko2->setK1(ui->checkBox_test1Ch1->isChecked());
+    t_ko2->setK2(ui->checkBox_test1Ch2->isChecked());
+    t_ko2->setK3(ui->checkBox_test1Ch3->isChecked());
+    t_ko2->setK4(ui->checkBox_test1Ch4->isChecked());
 
-    t_ko2.setNum1(ui->lineEdit_test1Ch1->text());
-    t_ko2.setNum2(ui->lineEdit_test1Ch2->text());
-    t_ko2.setNum3(ui->lineEdit_test1Ch3->text());
-    t_ko2.setNum4(ui->lineEdit_test1Ch4->text());
+    t_ko2->setNum1(ui->lineEdit_test1Ch1->text());
+    t_ko2->setNum2(ui->lineEdit_test1Ch2->text());
+    t_ko2->setNum3(ui->lineEdit_test1Ch3->text());
+    t_ko2->setNum4(ui->lineEdit_test1Ch4->text());
 
-    t_ko2.setSingle(ui->radioButton_test1Single->isChecked());
+    t_ko2->setSingle(ui->radioButton_test1Single->isChecked());
 
-    t_ko2.save();
-    emit measurement(StartTestKo2::getStart(&t_ko2));
+    t_ko2->save();
+    emit measurement(StartTestKo2::getStart(t_ko2));
 }
 
 void Ko2::on_pushButton_test2_clicked()
@@ -377,25 +406,28 @@ void Ko2::on_pushButton_test2_clicked()
         return;
     }
 
-    t_ko2.setK1(ui->checkBox_test2Ch1->isChecked());
-    t_ko2.setK2(ui->checkBox_test2Ch2->isChecked());
-    t_ko2.setK3(ui->checkBox_test2Ch3->isChecked());
-    t_ko2.setK4(ui->checkBox_test2Ch4->isChecked());
+    t_ko2_1->setK1(ui->checkBox_test2Ch1->isChecked());
+    t_ko2_1->setK2(ui->checkBox_test2Ch2->isChecked());
+    t_ko2_1->setK3(ui->checkBox_test2Ch3->isChecked());
+    t_ko2_1->setK4(ui->checkBox_test2Ch4->isChecked());
 
-    t_ko2.setNum1(ui->lineEdit_test2Ch1->text());
-    t_ko2.setNum2(ui->lineEdit_test2Ch2->text());
-    t_ko2.setNum3(ui->lineEdit_test2Ch3->text());
-    t_ko2.setNum4(ui->lineEdit_test2Ch4->text());
+    t_ko2_1->setNum1(ui->lineEdit_test2Ch1->text());
+    t_ko2_1->setNum2(ui->lineEdit_test2Ch2->text());
+    t_ko2_1->setNum3(ui->lineEdit_test2Ch3->text());
+    t_ko2_1->setNum4(ui->lineEdit_test2Ch4->text());
 
-    t_ko2.setSingle(ui->radioButton_test2Single->isChecked());
+    t_ko2_1->setSingle(ui->radioButton_test2Single->isChecked());
 
-    c_ko2.setIncube_time(ui->doubleSpinBox_test2IncubeTime->value());
-    c_ko2.setWrite_time(ui->doubleSpinBox_test2WriteTime->value());
+    t_ko2_1->setIncube_time(ui->doubleSpinBox_test2IncubeTime->value());
+    t_ko2_1->setWrite_time(ui->doubleSpinBox_test2WriteTime->value());
+    t_ko2_1->setA4tv_kp(ui->doubleSpinBox_test2a4tv->value());
+    t_ko2_1->setReagent_date(ui->dateEdit_test2Reagent->date());
+    t_ko2_1->setReagent_serial(ui->lineEdit_test2ReagentSerial->text());
+    t_ko2_1->setDate(QDate::currentDate());
 
-    t_ko2.save();
-    c_ko2.save();
+    t_ko2_1->save();
 
-    emit measurement(StartTestKo2::getStart(&t_ko2));
+    emit measurement(StartTestKo2::getStart(t_ko2_1));
 }
 
 void Ko2::on_pushButton_calib_clicked()
@@ -433,22 +465,22 @@ void Ko2::on_pushButton_calib_clicked()
         return;
     }
 
-    c_ko2.setDate(QDate::currentDate());
-    c_ko2.setReagent_date(ui->dateEdit_calibReagent->date());
-    c_ko2.setReagent_serial(ui->lineEdit_calibReagentSerial->text());
-    c_ko2.setK_plazma_date(ui->dateEdit_calibPlazma->date());
-    c_ko2.setK_plazma_serial(ui->lineEdit_calibKPlazmaSerial->text());
-    c_ko2.setK_plazma_a4tv(ui->doubleSpinBox_test2a4tv->value());
-    c_ko2.setIncube_time(ui->doubleSpinBox_calibIncube->value());
-    c_ko2.setWrite_time(ui->doubleSpinBox_calibWriteTime->value());
+    c_ko2->setDate(QDate::currentDate());
+    c_ko2->setReagent_date(ui->dateEdit_calibReagent->date());
+    c_ko2->setReagent_serial(ui->lineEdit_calibReagentSerial->text());
+    c_ko2->setK_plazma_date(ui->dateEdit_calibPlazma->date());
+    c_ko2->setK_plazma_serial(ui->lineEdit_calibKPlazmaSerial->text());
+    c_ko2->setK_plazma_a4tv(ui->doubleSpinBox_test2a4tv->value());
+    c_ko2->setIncube_time(ui->doubleSpinBox_calibIncube->value());
+    c_ko2->setWrite_time(ui->doubleSpinBox_calibWriteTime->value());
 
-    c_ko2.setK1(ui->checkBox_calibCh1->isChecked());
-    c_ko2.setK2(ui->checkBox_calibCh2->isChecked());
-    c_ko2.setK3(ui->checkBox_calibCh3->isChecked());
-    c_ko2.setK4(ui->checkBox_calibCh4->isChecked());
+    c_ko2->setK1(ui->checkBox_calibCh1->isChecked());
+    c_ko2->setK2(ui->checkBox_calibCh2->isChecked());
+    c_ko2->setK3(ui->checkBox_calibCh3->isChecked());
+    c_ko2->setK4(ui->checkBox_calibCh4->isChecked());
 
-    c_ko2.save();
-    emit calibration(StartCalibrationKo2::getStart(&c_ko2));
+    c_ko2->save();
+    emit calibration(StartCalibrationKo2::getStart(c_ko2));
 }
 
 StartMeasurement* StartCalibrationKo2::getStart(Calibration* c_ko2)

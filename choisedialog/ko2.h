@@ -59,8 +59,9 @@ signals:
 
 private:
     Ui::Ko2 *ui;
-    TestKo2 t_ko2;
-    CalibrationKo2 c_ko2;
+    TestKo2 *t_ko2;
+    TestKo2 *t_ko2_1;
+    CalibrationKo2 *c_ko2;
 };
 
 class StartTestKo2 : public StartMeasurement
