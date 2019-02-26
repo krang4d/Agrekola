@@ -21,6 +21,15 @@
 #include "options.h"
 #include "state.h"
 
+enum Channel_ID {
+    Channel1_ID     = 1,
+    Channel2_ID     = 2,
+    Channel3_ID     = 3,
+    Channel4_ID     = 4,
+    ChannelPP_ID    = 5,
+    ChannelAll_ID   = 0
+};
+
 namespace Ui {
 class Widget;
 }
@@ -36,41 +45,22 @@ public:
     void setupWidget();
     void setUserMessage(QString, bool withtime = true, bool tofile = true);
 
-//    inline void setMode(Mode_ID m)  { id = m; }
-//    inline Mode_ID getMode()     { return id; }
-
-    //void setStartWindow(StartMeasurement*);
-
-    inline bool isSensorReady()
-    {
+    inline bool isSensorReady() {
         return termoSensor;
     } //проверка тепловой готовности
 
-
-    inline void stopIncub()
-    {
+    inline void stopIncub() {
         incub = false;
     }
 
-    inline bool isIncub()
-    {
+    inline bool isIncub() {
         return incub;
     }
 
-
-    void stopData(int);
-    bool isData(int = 0);
+    void stopData(Channel_ID);
+    bool isData(Channel_ID);
 
     inline bool isWaitPulse() { return waitPulse; }
-
-protected:
-    void setupRealtimeData(bool single);
-    void setupTimers();
-
-public slots:
-    void incubeTimeout_1();
-    void incubeTimeout_2();
-    void waitImpulse();
 
 signals:
     void onmixch1(bool);
@@ -95,26 +85,26 @@ signals:
 
 public slots:
     void startIncub(int num, double time_s, std::function<void(void)> timeout_fun, QString message = "Время инкубации истекло");
-    void getData(int, double time_s);
+    void getData(Channel_ID, double time_s);
+    double calcData(Channel_ID);
+    void writeMapData(Channel_ID);
+    void incubeTimeout_1();
+    void incubeTimeout_2();
+    void waitImpulse();
+
+    void onMotor(Channel_ID, bool arg);
+    void onLazer(bool arg);
 
 private slots:
     void on_pushButton_clicked();
+    void on_comboBox_currentIndexChanged(int index);
 
     void realtimeDataSlot(QVariantList);
-    double writeMapData(int n = 0);
-
-    void on_checkBox_1_stateChanged(int arg1);
-    void on_checkBox_2_stateChanged(int arg1);
-    void on_checkBox_3_stateChanged(int arg1);
-    void on_checkBox_4_stateChanged(int arg1);
-    void on_checkBox_PP_stateChanged(int arg1);
-    void on_checkBox_L_stateChanged(int arg1);
-
-
     void updataTermo(bool);
     void updateTime();
 
-    void on_comboBox_currentIndexChanged(int index);
+    void setupRealtimeData(bool single);
+    void setupTimers();
 
 public:
     StartMeasurement *startWin;

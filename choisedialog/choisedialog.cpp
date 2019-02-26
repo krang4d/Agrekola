@@ -150,11 +150,11 @@ void ChoiseDialog::calibration(StartMeasurement* sw)
     switch (mode) {
     case CalibAgr1_ID:
         widget->setUserMessage(QString("Определение параметров агрегации, калибровка (Agr1 1)"), 0);
-        widget->setUserMessage(QString("<div style='color: blue'>Установите кюветы с контрольной нормальной плазмой и нажмите \"Старт\""), 0);
-        connect(widget.data(), SIGNAL(ret_value1(double)), agr1.data(), SLOT(btpData1Come(double)));
-        connect(widget.data(), SIGNAL(ret_value2(double)), agr1.data(), SLOT(btpData2Come(double)));
-        connect(widget.data(), SIGNAL(ret_value3(double)), agr1.data(), SLOT(btpData3Come(double)));
-        connect(widget.data(), SIGNAL(ret_value4(double)), agr1.data(), SLOT(btpData4Come(double)));
+        //widget->setUserMessage(QString("<div style='color: blue'>Установите кюветы с контрольной нормальной плазмой и нажмите \"Старт\""), 0);
+//        connect(widget.data(), SIGNAL(ret_value1(double)), agr1.data(), SLOT(btpData1Come(double)));
+//        connect(widget.data(), SIGNAL(ret_value2(double)), agr1.data(), SLOT(btpData2Come(double)));
+//        connect(widget.data(), SIGNAL(ret_value3(double)), agr1.data(), SLOT(btpData3Come(double)));
+//        connect(widget.data(), SIGNAL(ret_value4(double)), agr1.data(), SLOT(btpData4Come(double)));
         break;
     case CalibAgr2_ID:
         widget->setUserMessage(QString("<div style='color: blue'>Установите кюветы с контрольной нормальной плазмой и ее разведением, после нажмите \"Старт\""), 0);
@@ -165,6 +165,7 @@ void ChoiseDialog::calibration(StartMeasurement* sw)
         connect(widget.data(), SIGNAL(ret_value4(double)), agr2.data(), SLOT(calibrationData4Come(double)));
         break;
     case CalibKo2_ID:
+        widget->setWindowTitle("АЧТВ, калибровка (Ko2 4)");
         widget->setUserMessage("АЧТВ, калибровка (Ko2 4)", 0);
         widget->setUserMessage(QString("<div style='color: blue'>Установите кюветы с контрольной нормальной плазмой и нажмите \"Старт\""), 0);
         connect(widget.data(), SIGNAL(ret_value1(double)), ko2.data(), SLOT(calibrationData1Come(double)));

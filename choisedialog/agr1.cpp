@@ -232,7 +232,7 @@ StartMeasurement *StartCalibrationAgr1::getStart(Calibration *c_agr1)
     start->setTimeWrite(c_agr1->getWrite_time());
     start->setTimeIncube(1, c_agr1->getIncube_time());
     start->setTimeIncube(2, static_cast<CalibrationAgr1*>(c_agr1)->getIncube_time_2());
-    //stKo2->cancel = false;
+    start->setModeID(CalibAgr1_ID);
     return start;
 }
 

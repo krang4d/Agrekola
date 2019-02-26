@@ -30,6 +30,7 @@ private:
 
 private slots:
     void on_pushButton_test_clicked();
+    void on_pushButton_calib_clicked();
 
     void on_radioButton_testSingle_toggled(bool checked);
 
@@ -41,7 +42,7 @@ private slots:
     void on_lineEdit_testCh1_textChanged(const QString &arg1);
     void on_lineEdit_testCh3_textChanged(const QString &arg1);
 
-    void on_pushButton_calib_clicked();
+
 
 public slots:
     inline void btpData1Come(double d) {

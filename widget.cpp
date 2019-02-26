@@ -43,64 +43,61 @@ Widget::Widget(QWidget *parent) :
 
 void Widget::setupWidget()
 {
-    if(!startWin->isCancel()) {
-        if(startWin->isSingle()) {
-            if (startWin->isChannel(1)) {
-                ui->groupBox_f1->setTitle("Канал 1");
-                ui->groupBox_f1->show();
-            }
-            else {
-                ui->groupBox_f1->hide();
-            }
-
-            if (startWin->isChannel(2)) {
-
-                ui->groupBox_f2->setTitle("Канал 2");
-                ui->groupBox_f2->show();
-            }
-            else {
-                ui->groupBox_f2->hide();
-            }
-
-            if (startWin->isChannel(3)) {
-
-                ui->groupBox_f3->setTitle("Канал 3");
-                ui->groupBox_f3->show();
-            }
-            else {
-                ui->groupBox_f3->hide();
-            }
-
-            if (startWin->isChannel(4)) {
-
-                ui->groupBox_f4->setTitle("Канал 4");
-                ui->groupBox_f4->show();
-            }
-            else {
-                ui->groupBox_f4->hide();
-            }
-            ui->checkBox_L->setChecked(true); //включение лазеров
+    single = startWin->isSingle();
+    if(single) {
+        if (startWin->isChannel(1)) {
+            ui->groupBox_f1->setTitle("Канал 1");
+            ui->groupBox_f1->show();
         }
         else {
+            ui->groupBox_f1->hide();
+        }
 
-            if (startWin->isChannel(1)) {
-                ui->groupBox_f1->setTitle("Канал 1, 2");
-                ui->groupBox_f2->hide();
-            }
-            else {
-                ui->groupBox_f1->hide();
-                ui->groupBox_f2->hide();
-            }
+        if (startWin->isChannel(2)) {
 
-            if (startWin->isChannel(3)) {
-                ui->groupBox_f3->setTitle("Канал 3, 4");
-                ui->groupBox_f4->hide();
-            }
-            else {
-                ui->groupBox_f3->hide();
-                ui->groupBox_f4->hide();
-            }
-            single = startWin->isSingle();
+            ui->groupBox_f2->setTitle("Канал 2");
+            ui->groupBox_f2->show();
+        }
+        else {
+            ui->groupBox_f2->hide();
+        }
+
+        if (startWin->isChannel(3)) {
+
+            ui->groupBox_f3->setTitle("Канал 3");
+            ui->groupBox_f3->show();
+        }
+        else {
+            ui->groupBox_f3->hide();
+        }
+
+        if (startWin->isChannel(4)) {
+
+            ui->groupBox_f4->setTitle("Канал 4");
+            ui->groupBox_f4->show();
+        }
+        else {
+            ui->groupBox_f4->hide();
+        }
+    }
+    else {
+
+        if (startWin->isChannel(1)) {
+            ui->groupBox_f1->setTitle("Канал 1, 2");
+            ui->groupBox_f2->hide();
+        }
+        else {
+            ui->groupBox_f1->hide();
+            ui->groupBox_f2->hide();
+        }
+
+        if (startWin->isChannel(3)) {
+            ui->groupBox_f3->setTitle("Канал 3, 4");
+            ui->groupBox_f4->hide();
+        }
+        else {
+            ui->groupBox_f3->hide();
+            ui->groupBox_f4->hide();
         }
     }
     setupRealtimeData(single);
@@ -132,22 +129,22 @@ bool Widget::eventFilter(QObject *watched, QEvent *event)
         emit stop();
         return QWidget::eventFilter(watched, event);
     }
-    if(event->type() == QEvent::KeyPress) {
-        qDebug() << "Event kayPress";
-        QKeyEvent *kayEvent = static_cast<QKeyEvent *>(event);
-        if(kayEvent->key() == Qt::Key_Enter) {
-            bool b = ui->groupBox_Mix->isVisible();
-            if(b) {
-                ui->groupBox_Mix->setVisible(false);
-                qDebug() << "setVisible(false)";
-            }
-            else {
-                ui->groupBox_Mix->setVisible(true);
-                qDebug() << "setVisible(true)";
-            }
-        }
-        return QWidget::eventFilter(watched, event);
-    }
+//    if(event->type() == QEvent::KeyPress) {
+//        qDebug() << "Event kayPress";
+//        QKeyEvent *kayEvent = static_cast<QKeyEvent *>(event);
+//        if(kayEvent->key() == Qt::Key_Enter) {
+//            bool b = ui->groupBox_Mix->isVisible();
+//            if(b) {
+//                ui->groupBox_Mix->setVisible(false);
+//                qDebug() << "setVisible(false)";
+//            }
+//            else {
+//                ui->groupBox_Mix->setVisible(true);
+//                qDebug() << "setVisible(true)";
+//            }
+//        }
+//        return QWidget::eventFilter(watched, event);
+//    }
     return QWidget::eventFilter(watched, event);
 }
 
@@ -161,7 +158,6 @@ void Widget::setupRealtimeData(bool single) {
         ui->groupBox_f3->layout()->addWidget(pBar3);
         customPlot4 = ui->frame_4;
         ui->groupBox_f4->layout()->addWidget(pBar4);
-        ui->groupBox_Mix->setVisible(false);
 
         QSharedPointer<QCPAxisTickerTime> timeTicker(new QCPAxisTickerTime);
         timeTicker->setTimeFormat("%m:%s");
@@ -226,7 +222,6 @@ void Widget::setupRealtimeData(bool single) {
         ui->groupBox_f3->layout()->addWidget(pBar3);
         ui->groupBox_f3->layout()->addWidget(pBar4);
         customPlot4 = ui->frame_4;
-        ui->groupBox_Mix->setVisible(false);
         QSharedPointer<QCPAxisTickerTime> timeTicker(new QCPAxisTickerTime);
         timeTicker->setTimeFormat("%m:%s");
 
@@ -278,7 +273,7 @@ void Widget::realtimeDataSlot(QVariantList a) {
         emit hasPulse1();
         setUserMessage("Канал 1: Введен стартовый реагент в кювету");
         qDebug() << QString("The pulse is come! dx1=%1").arg(dx1);
-        getData(1, startWin->getTimeWrite());
+        getData(Channel1_ID, startWin->getTimeWrite());
     }
     lastPointV2 = a[1].toDouble();
     if((dx2 > START_DX || pulse2) && ready2) {
@@ -287,7 +282,7 @@ void Widget::realtimeDataSlot(QVariantList a) {
         emit hasPulse2();
         setUserMessage("Канал 2: Введен стартовый реагент в кювету");
         qDebug() << QString("The pulse is come! dx2=%1").arg(dx2);
-        getData(2, startWin->getTimeWrite());
+        getData(Channel2_ID, startWin->getTimeWrite());
     }
     lastPointV3 = a[2].toDouble();
     if((dx3 > START_DX || pulse3) && ready3) {
@@ -296,7 +291,7 @@ void Widget::realtimeDataSlot(QVariantList a) {
         emit hasPulse3();
         setUserMessage("Канал 3: Введен стартовый реагент в кювету");
         qDebug() << QString("The pulse is come! dx3=%1").arg(dx3);
-        getData(3, startWin->getTimeWrite());
+        getData(Channel3_ID, startWin->getTimeWrite());
     }
     lastPointV4 = a[3].toDouble();
     if((dx4 > START_DX || pulse4) && ready4) {
@@ -305,7 +300,7 @@ void Widget::realtimeDataSlot(QVariantList a) {
         emit hasPulse4();
         setUserMessage("Канал 4: Введен стартовый реагент в кювету");
         qDebug() << QString("The pulse is come! dx4=%1").arg(dx4);
-        getData(4, startWin->getTimeWrite());
+        getData(Channel4_ID, startWin->getTimeWrite());
     }
 
     if (key-lastPointKey > 0.01) {// at most add point every 10 ms
@@ -365,7 +360,7 @@ void Widget::realtimeDataSlot(QVariantList a) {
                    std::abs(map_y1.last() - stop_dy1) >= std::abs(stop_dy1*STOP_DX))
                 {
                     qDebug() << "emit stopData1" << std::abs(map_y1.last() - stop_dy1) << ">=" << std::abs(stop_dy1*STOP_DX);
-                    emit stopData(1);
+                    emit stopData(Channel1_ID);
                 }
             }
         }
@@ -386,7 +381,7 @@ void Widget::realtimeDataSlot(QVariantList a) {
                    std::abs(map_y2.last() - stop_dy2) >= std::abs(stop_dy2*STOP_DX) )
                 {
                     qDebug() << "emit stopData2" << std::abs(map_y2.last() - stop_dy2) << ">=" << std::abs(stop_dy2*STOP_DX);
-                    emit stopData(2);
+                    emit stopData(Channel2_ID);
                 }
             }
         }
@@ -407,7 +402,7 @@ void Widget::realtimeDataSlot(QVariantList a) {
                    std::abs(map_y3.last() - stop_dy3) >= std::abs(stop_dy3*STOP_DX) )
                 {
                     qDebug() << "emit stopData3" << std::abs(map_y3.last() - stop_dy3) << ">=" << std::abs(stop_dy3*STOP_DX);
-                    emit stopData(3);
+                    emit stopData(Channel3_ID);
                 }
             }
         }
@@ -428,7 +423,7 @@ void Widget::realtimeDataSlot(QVariantList a) {
                    std::abs(map_y4.last() - stop_dy4) >= std::abs(stop_dy4*STOP_DX) )
                 {
                     qDebug() << "emit stopData4" << std::abs(map_y4.last() - stop_dy4) << ">=" << std::abs(stop_dy4*STOP_DX);
-                    emit stopData(4);
+                    emit stopData(Channel4_ID);
                 }
             }
         }
@@ -451,46 +446,45 @@ void Widget::realtimeDataSlot(QVariantList a) {
     }
 }
 
-void Widget::on_checkBox_1_stateChanged(int arg1)
+void Widget::onMotor(Channel_ID c, bool arg)
 {
-    if(arg1) setUserMessage("Канал 1: Включение двигателя магнитной мешалки");
-    else setUserMessage("Канал 1: Выключение двигателя магнитной мешалки");
-    emit onmixch1(arg1);
+    switch(c) {
+    case Channel1_ID:
+        if(arg) setUserMessage("Канал 1: Включение двигателя магнитной мешалки");
+        else setUserMessage("Канал 1: Выключение двигателя магнитной мешалки");
+        emit onmixch1(arg);
+        break;
+    case Channel2_ID:
+        if(arg) setUserMessage("Канал 2: Включение двигателя магнитной мешалки");
+        else setUserMessage("Канал 2: Выключение двигателя магнитной мешалки");
+        emit onmixch2(arg);
+        break;
+    case Channel3_ID:
+        if(arg) setUserMessage("Канал 3: Включение двигателя магнитной мешалки");
+        else setUserMessage("Канал 3: Выключение двигателя магнитной мешалки");
+        emit onmixch3(arg);
+        break;
+    case Channel4_ID:
+        if(arg) setUserMessage("Канал 4: Включение двигателя магнитной мешалки");
+        else setUserMessage("Канал 4: Выключение двигателя магнитной мешалки");
+        emit onmixch4(arg);
+        break;
+    case ChannelPP_ID:
+        if(arg) setUserMessage("Канал РР: Включение двигателя магнитной мешалки");
+        else setUserMessage("Канал РР: Выключение двигателя магнитной мешалки");
+        emit onmixpp(arg);
+        break;
+    case ChannelAll_ID:
+
+        break;
+    }
 }
 
-void Widget::on_checkBox_2_stateChanged(int arg1)
+void Widget::onLazer(bool arg)
 {
-    if(arg1) setUserMessage("Канал 2: Включение двигателя магнитной мешалки");
-    else setUserMessage("Канал 2: Выключение двигателя магнитной мешалки");
-    emit onmixch2(arg1);
-}
-
-void Widget::on_checkBox_3_stateChanged(int arg1)
-{
-    if(arg1) setUserMessage("Канал 3: Включение двигателя магнитной мешалки");
-    else setUserMessage("Канал 3: Выключение двигателя магнитной мешалки");
-    emit onmixch3(arg1);
-}
-
-void Widget::on_checkBox_4_stateChanged(int arg1)
-{
-    if(arg1) setUserMessage("Канал 4: Включение двигателя магнитной мешалки");
-    else setUserMessage("Канал 4: Выключение двигателя магнитной мешалки");
-    emit onmixch4(arg1);
-}
-
-void Widget::on_checkBox_PP_stateChanged(int arg1)
-{
-    if(arg1) setUserMessage("Канал РР: Включение двигателя магнитной мешалки");
-    else setUserMessage("Канал РР: Выключение двигателя магнитной мешалки");
-    emit onmixpp(arg1);
-}
-
-void Widget::on_checkBox_L_stateChanged(int arg1)
-{
-    if(arg1) setUserMessage("Включение питания лазеров каждого из каналов");
+    if(arg) setUserMessage("Включение питания лазеров каждого из каналов");
     else setUserMessage("Выключение питания лазеров каждого из каналов");
-    emit onlaser(arg1);
+    emit onlaser(arg);
 }
 
 void Widget::updataTermo(bool td)
@@ -507,29 +501,29 @@ void Widget::updataTermo(bool td)
     }
 }
 
-void Widget::getData(int n, double time_s)
+void Widget::getData(Channel_ID c, double time_s)
 {
-    QString str = QString("Канал %1: Измерение %2 (c)").arg(n).arg(time_s);
+    QString str = QString("Канал %1: Измерение %2 (c)").arg(c).arg(time_s);
     setUserMessage(str);
     emit status(str);
-    std::function<void (int)> func = [this](int n){
-        stopData(n);
+    std::function<void (Channel_ID)> func = [this](Channel_ID c){
+        stopData(c);
     };
-    switch (n) {
-    case 1:
-        pBar1->startProgress(QString("%1 %p%").arg(str), time_s * 1000, std::bind(func, n));
+    switch (c) {
+    case Channel1_ID:
+        pBar1->startProgress(QString("%1 %p%").arg(str), time_s * 1000, std::bind(func, c));
         data1 = true;
         break;
-    case 2:
-        pBar2->startProgress(QString("%1 %p%").arg(str), time_s * 1000, std::bind(func, n));
+    case Channel2_ID:
+        pBar2->startProgress(QString("%1 %p%").arg(str), time_s * 1000, std::bind(func, c));
         data2 = true;
         break;
-    case 3:
-        pBar3->startProgress(QString("%1 %p%").arg(str), time_s * 1000, std::bind(func, n));
+    case Channel3_ID:
+        pBar3->startProgress(QString("%1 %p%").arg(str), time_s * 1000, std::bind(func, c));
         data3 = true;
         break;
-    case 4:
-        pBar4->startProgress(QString("%1 %p%").arg(str), time_s * 1000, std::bind(func, n));
+    case Channel4_ID:
+        pBar4->startProgress(QString("%1 %p%").arg(str), time_s * 1000, std::bind(func, c));
         data4 = true;
         break;
     default:
@@ -537,58 +531,58 @@ void Widget::getData(int n, double time_s)
     }
 }
 
-void Widget::stopData(int n)
+void Widget::stopData(Channel_ID c)
 {
-    if(!isData()) {qDebug() << "stop"; return; }
-    switch (n) {
-    case 1:
+    if(!isData(ChannelAll_ID)) {qDebug() << "stop"; return; }
+    switch (c) {
+    case Channel1_ID:
         if(data1) {
             data1 = false;
             pulse1 = false;
-            ui->checkBox_1->setChecked(false); //включение перемешивания
-            writeMapData( 1 );
+            onMotor(c, false); //выключение перемешивания
+            writeMapData( Channel1_ID );
         }
         break;
-    case 2:
+    case Channel2_ID:
         if(data2) {
             data2 = false;
             pulse2 = false;
-            ui->checkBox_2->setChecked(false);
-            writeMapData( 2 );
+            onMotor(c, false); //выключение перемешивания
+            writeMapData( Channel2_ID );
         }
         break;
-    case 3:
+    case Channel3_ID:
         if(data3) {
             data3 = false;
             pulse3 = false;
-            ui->checkBox_3->setChecked(false);
-            writeMapData( 3 );
+            onMotor(c, false); //выключение перемешивания
+            writeMapData( Channel3_ID );
         }
         break;
-    case 4:
+    case Channel4_ID:
         if(data4) {
             data4 = false;
             pulse4 = false;
-            ui->checkBox_4->setChecked(false);
-            writeMapData( 4 );
+            onMotor(c, false); //выключение перемешивания
+            writeMapData( Channel4_ID );
         }
         break;
     default: qDebug() << "n is out of data from Widget::stopData(n)";
     }
 }
 
-bool Widget::isData(int n)
+bool Widget::isData(Channel_ID n)
 {
     switch (n) {
-    case 0:
+    case ChannelAll_ID:
         return (data1 || data2 ||data3 || data4);
-    case 1:
+    case Channel1_ID:
         return data1;
-    case 2:
+    case Channel2_ID:
         return data2;
-    case 3:
+    case Channel3_ID:
         return data3;
-    case 4:
+    case Channel4_ID:
         return data4;
     default: qDebug() << "n is out of data from Widget::isData(n)";
     }
@@ -707,35 +701,93 @@ void Widget::waitImpulse()
         iw->startWait();
 }
 
-double Widget::writeMapData(int n)
+double Widget::calcData(Channel_ID c)
 {
-    if(startWin->isChannel(n)) {
-        onmixch1(false);
-    }
     double retval;
     CalcData *p = CalcData::createCalc( current_mode_id );
-    if(p == NULL) { qDebug() << "p is NULL"; }
-    setUserMessage(QString("Канал %1: Запись данных").arg(n));
-    emit status(QString("Канал %1: Запись данных").arg(n));
+    if(!p) { setUserMessage(QString("Ошибка при выделении памяти под класс CalcData")); return -1; }
+    switch(c) {
+    case Channel1_ID:
+        if(!map_y1.isEmpty()) {
+            retval = p->calc(map_y1);
+            setUserMessage(QString("<div style='color: green'>Канал 1: %2 %1")
+                           .arg(retval)
+                           .arg(p->info()));
+            emit ret_value1(retval);
+        }
+        else {
+            setUserMessage(QString("Массив данных не заполнен!"));
+            return -1;
+        }
+        break;
+    case Channel2_ID:
+        if(!map_y2.isEmpty()) {
+            retval = p->calc(map_y2);
+            setUserMessage(QString("<div style='color: green'>Канал 2: %2 %1")
+                           .arg(retval)
+                           .arg(p->info()));
+            emit ret_value2(retval);
+        }
+        else {
+            setUserMessage(QString("Массив данных не заполнен!"));
+            return -1;
+        }
+        break;
+    case Channel3_ID:
+        if(!map_y3.isEmpty()) {
+            retval = p->calc(map_y3);
+            setUserMessage(QString("<div style='color: green'>Канал 3: %2 %1")
+                           .arg(retval)
+                           .arg(p->info()));
+            emit ret_value3(retval);
+        }
+        else {
+            setUserMessage(QString("Массив данных не заполнен!"));
+            return -1;
+        }
+        break;
+    case Channel4_ID:
+        if(map_y4.isEmpty()) {
+            retval = p->calc(map_y4);
+            setUserMessage(QString("<div style='color: green'>Канал 4: %2 %1")
+                           .arg(retval)
+                           .arg(p->info()));
+            emit ret_value4(retval);
+        }
+        else {
+            setUserMessage(QString("Массив данных не заполнен!"));
+            return -1;
+        }
+        break;
+    }
+    delete p;
+    return retval;
+}
+
+void Widget::writeMapData(Channel_ID c)
+{
+    CalcData *p = CalcData::createCalc( current_mode_id );
+    if(p == NULL) { qDebug() << "CalcData is NULL"; return;}
+    setUserMessage(QString("Канал %1: Запись данных").arg(c));
+    emit status(QString("Канал %1: Запись данных").arg(c));
 
     ProgressTimerBar *pBar;
-    switch (n) {
-    case 1:
+    switch (c) {
+    case Channel1_ID:
         pBar = pBar1;
         break;
-    case 2:
+    case Channel2_ID:
         pBar = pBar2;
         break;
-    case 3:
+    case Channel3_ID:
         pBar = pBar3;
         break;
-    case 4:
+    case Channel4_ID:
         pBar = pBar4;
         break;
     default:
         break;
     }
-    qDebug().noquote() << QString("Канал %1: Запись данных").arg(n);
 
     QStringList strList;
     auto func = [&](QMap<double, double> map) {
@@ -750,61 +802,45 @@ double Widget::writeMapData(int n)
         }
     };
     strList << QString("N\t");
-    if( n == 1 && !map_y1.isEmpty() ) {
-        retval = p->calc(map_y1);
-        setUserMessage(QString("<div style='color: green'>Канал 1: %2 %1")
-                       .arg(retval)
-                       .arg(p->info()));
+    if( c == Channel1_ID && !map_y1.isEmpty() ) {
         strList << QString("V1#%1\t").arg(startWin->getNum(1));
         func(map_y1);
         map_y1.clear();
-        emit ret_value1(retval);
+        QString filename = saveFiles.writeData(strList, pBar);
+        setUserMessage(QString("Канал %1: %2").arg(c).arg(filename), true, true);
     }
-    if( n == 2 && !map_y2.isEmpty() ) {
-        retval = p->calc(map_y2);
-        setUserMessage(QString("<div style='color: green'>Канал 2: %2 %1")
-                       .arg(retval)
-                       .arg(p->info()));
+    if( c == Channel2_ID && !map_y2.isEmpty() ) {
         strList << QString("V2#%1\t").arg(startWin->getNum(2));
         func(map_y2);
         map_y2.clear();
-        emit ret_value2(retval);
+        QString filename = saveFiles.writeData(strList, pBar);
+        setUserMessage(QString("Канал %1: %2").arg(c).arg(filename), true, true);
     }
-    if( n == 3 && !map_y3.isEmpty() ) {
-        retval = p->calc(map_y3);
-        setUserMessage(QString("<div style='color: green'>Канал 3: %2 %1")
-                       .arg(retval)
-                       .arg(p->info()));
+    if( c == Channel3_ID && !map_y3.isEmpty() ) {
         strList << QString("V3#%1\t").arg(startWin->getNum(3));
         func(map_y3);
         map_y3.clear();
-        emit ret_value3(retval);
+        QString filename = saveFiles.writeData(strList, pBar);
+        setUserMessage(QString("Канал %1: %2").arg(c).arg(filename), true, true);
     }
-    if( n == 4 && !map_y4.isEmpty() ) {
-        retval = p->calc(map_y4);
-        setUserMessage(QString("<div style='color: green'>Канал 4: %2 %1")
-                       .arg(retval)
-                       .arg(p->info()));
+    if( c == Channel4_ID && !map_y4.isEmpty() ) {
         strList << QString("V4#%1\t").arg(startWin->getNum(4));
         func(map_y4);
         map_y4.clear();
-        emit ret_value4(retval);
+        QString filename = saveFiles.writeData(strList, pBar);
+        setUserMessage(QString("Канал %1: %2").arg(c).arg(filename), true, true);
     }
-    QString filename = saveFiles.writeData(strList, pBar);
-    setUserMessage(filename, true, true);
     //std::function<QString(void)> f1= [=](){return SaveFiles::writeData(strList);};
     //std::function<QString(void)> foo = func();
     //QFuture<QString> result = QtConcurrent::run(f1);
     //QString filename = result.result();
 
-    if (!isData() && !isIncub() && !isWaitPulse()) {
-        ui->checkBox_L->setChecked(false);
+    if (!isData(ChannelAll_ID) && !isIncub() && !isWaitPulse()) {
         ui->pushButton->setEnabled(true);
         setUserMessage(QString("Конец сбора данных"));
         status(QString("Конец сбора данных"));
         emit done();
     }
-    return retval;
 }
 
 void Widget::on_comboBox_currentIndexChanged(int index)
@@ -1049,28 +1085,24 @@ void Widget::on_pushButton_clicked()
         break;
     case Level_ID:
         if(startWin->isChannel(1)) {
-            ui->checkBox_1->setChecked(true); //включение перемешивания 1
-            getData(1, startWin->getTimeWrite());
+            onMotor(Channel1_ID, true); //включение перемешивания 1
+            getData(Channel1_ID, startWin->getTimeWrite());
         }
-        else ui->checkBox_1->setChecked(false);
 
         if(startWin->isChannel(2)) {
-            ui->checkBox_2->setChecked(true); //включение перемешивания 2
-            getData(2, startWin->getTimeWrite());
+            onMotor(Channel2_ID, true); //включение перемешивания 2
+            getData(Channel2_ID, startWin->getTimeWrite());
         }
-        else ui->checkBox_2->setChecked(false);
 
         if(startWin->isChannel(3)) {
-            ui->checkBox_3->setChecked(true); //включение перемешивания 3
-            getData(3, startWin->getTimeWrite());
+            onMotor(Channel3_ID, true); //включение перемешивания 1
+            getData(Channel3_ID, startWin->getTimeWrite());
         }
-        else ui->checkBox_3->setChecked(false);
 
         if(startWin->isChannel(4)) {
-            ui->checkBox_4->setChecked(true); //включение перемешивания 4
-            getData(4, startWin->getTimeWrite());
+            onMotor(Channel4_ID, true); //включение перемешивания 4
+            getData(Channel4_ID, startWin->getTimeWrite());
         }
-        else ui->checkBox_4->setChecked(false);
         break;
     case TestAgr1_ID:
         waitImpulse();
@@ -1081,18 +1113,10 @@ void Widget::on_pushButton_clicked()
     case TestKo1_ID:
         ui->pushButton->setEnabled(false);
         setUserMessage(startWin->getStringStatus());
-        if(startWin->isChannel(1)) {
-            onmixch1(true);
-        }
-        if(startWin->isChannel(2)) {
-            onmixch1(true);
-        }
-        if(startWin->isChannel(3)) {
-            onmixch1(true);
-        }
-        if(startWin->isChannel(4)) {
-            onmixch1(true);
-        }
+        if(startWin->isChannel(1)) onMotor(Channel1_ID, true); //включение перемешивания 1
+        if(startWin->isChannel(2)) onMotor(Channel2_ID, true); //включение перемешивания 2
+        if(startWin->isChannel(3)) onMotor(Channel3_ID, true); //включение перемешивания 3
+        if(startWin->isChannel(4)) onMotor(Channel4_ID, true); //включение перемешивания 4
         startIncub(1, startWin->getTimeIncube(), [this](){ waitImpulse();});
         break;
     case TestKo2_ID:
@@ -1121,10 +1145,10 @@ void Widget::on_pushButton_clicked()
         current_mode_id = Test_ID;
         connect(this, &Widget::done, [this](){
             current_mode_id = state->current(); ui->pushButton->setEnabled(true); });
-        if (startWin->isChannel(1)) getData(1, 5);
-        if (startWin->isChannel(2)) getData(2, 5);
-        if (startWin->isChannel(3)) getData(3, 5);
-        if (startWin->isChannel(4)) getData(4, 5);
+        if (startWin->isChannel(1)) getData(Channel1_ID, 5);
+        if (startWin->isChannel(2)) getData(Channel2_ID, 5);
+        if (startWin->isChannel(3)) getData(Channel3_ID, 5);
+        if (startWin->isChannel(4)) getData(Channel4_ID, 5);
         state->next();
         break;
     case OTPTestAgr1_ID:
@@ -1136,10 +1160,10 @@ void Widget::on_pushButton_clicked()
         current_mode_id = Test_ID;
         connect(this, &Widget::done, [this](){
             current_mode_id = state->current(); ui->pushButton->setEnabled(true); });
-        if (startWin->isChannel(1)) getData(1, 5);
-        if (startWin->isChannel(2)) getData(2, 5);
-        if (startWin->isChannel(3)) getData(3, 5);
-        if (startWin->isChannel(4)) getData(4, 5);
+        if (startWin->isChannel(1)) getData(Channel1_ID, 5);
+        if (startWin->isChannel(2)) getData(Channel2_ID, 5);
+        if (startWin->isChannel(3)) getData(Channel3_ID, 5);
+        if (startWin->isChannel(4)) getData(Channel4_ID, 5);
         state->next();
         break;
     case Incubation1_ID:
@@ -1153,18 +1177,26 @@ void Widget::on_pushButton_clicked()
         break;
     case Incubation2_ID:
         break;
+
+    case CalibKo2_ID:
+//        connect(this, SIGNAL(ret_value1(double)), , SLOT(calibrationData1Come(double)));
+//        connect(widget.data(), SIGNAL(ret_value2(double)), ko2.data(), SLOT(calibrationData2Come(double)));
+//        connect(widget.data(), SIGNAL(ret_value3(double)), ko2.data(), SLOT(calibrationData3Come(double)));
+//        connect(widget.data(), SIGNAL(ret_value4(double)), ko2.data(), SLOT(calibrationData4Come(double)));
+        setUserMessage(msg_state);
+        ui->pushButton->setEnabled(false);
+        setUserMessage(startWin->getStringStatus());
+        if(startWin->isChannel(1)) onMotor(Channel1_ID, true); //включение перемешивания 1
+        if(startWin->isChannel(2)) onMotor(Channel2_ID, true); //включение перемешивания 2
+        if(startWin->isChannel(3)) onMotor(Channel3_ID, true); //включение перемешивания 3
+        if(startWin->isChannel(4)) onMotor(Channel4_ID, true); //включение перемешивания 4
+        startIncub(1, startWin->getTimeIncube(), [this](){ waitImpulse();});
+        break;
     default:
-        if(startWin->isChannel(1)) ui->checkBox_1->setChecked(true); //включение перемешивания 1
-        else ui->checkBox_1->setChecked(false);
-
-        if(startWin->isChannel(2)) ui->checkBox_2->setChecked(true); //включение перемешивания 2
-        else ui->checkBox_2->setChecked(false);
-
-        if(startWin->isChannel(3)) ui->checkBox_3->setChecked(true); //включение перемешивания 3
-        else ui->checkBox_3->setChecked(false);
-
-        if(startWin->isChannel(4)) ui->checkBox_4->setChecked(true); //включение перемешивания 4
-        else ui->checkBox_4->setChecked(false);
+        if(startWin->isChannel(1)) onMotor(Channel1_ID, true); //включение перемешивания 1
+        if(startWin->isChannel(2)) onMotor(Channel2_ID, true); //включение перемешивания 2
+        if(startWin->isChannel(3)) onMotor(Channel3_ID, true); //включение перемешивания 3
+        if(startWin->isChannel(4)) onMotor(Channel4_ID, true); //включение перемешивания 4
 
         connect(startWin, &StartMeasurement::startMeasurment, [=](StartMeasurement* sm){
             startWin = sm;
