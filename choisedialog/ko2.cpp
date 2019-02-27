@@ -382,7 +382,7 @@ void Ko2::on_pushButton_test1_clicked()
     t_ko2->setSingle(ui->radioButton_test1Single->isChecked());
 
     t_ko2->save();
-    emit measurement(StartTestKo2::getStart(t_ko2));
+    emit measurement(StartTestKo2::getStart(this));
 }
 
 void Ko2::on_pushButton_test2_clicked()
@@ -427,7 +427,7 @@ void Ko2::on_pushButton_test2_clicked()
 
     t_ko2_1->save();
 
-    emit measurement(StartTestKo2::getStart(t_ko2_1));
+    emit measurement(StartTestKo2::getStart(this));
 }
 
 void Ko2::on_pushButton_calib_clicked()
@@ -480,11 +480,12 @@ void Ko2::on_pushButton_calib_clicked()
     c_ko2->setK4(ui->checkBox_calibCh4->isChecked());
 
     c_ko2->save();
-    emit calibration(StartCalibrationKo2::getStart(c_ko2));
+    emit calibration(StartCalibrationKo2::getStart(this));
 }
 
-StartMeasurement* StartCalibrationKo2::getStart(Calibration* c_ko2)
+StartMeasurement* StartCalibrationKo2::getStart(Ko2* widget)
 {
+    CalibrationKo2* c_ko2 = widget->c_ko2;
     StartMeasurement* start = new StartMeasurement(0);
     start->setChannels(c_ko2->getK1(), c_ko2->getK2(), c_ko2->getK3(), c_ko2->getK4());
     start->setNum(1, "Калибровка");
@@ -498,16 +499,18 @@ StartMeasurement* StartCalibrationKo2::getStart(Calibration* c_ko2)
     return start;
 }
 
-StartMeasurement* StartTestKo2::getStart(Test* t_ko2)
+StartMeasurement* StartTestKo2::getStart(Ko2 *widget)
 {
+    TestKo2* t_ko2 = widget->t_ko2;
+    CalibrationKo2* c_ko2 = widget->c_ko2;
     StartMeasurement* start = new StartMeasurement(0);
     start->setChannels(t_ko2->getK1(), t_ko2->getK2(), t_ko2->getK3(), t_ko2->getK4());
     start->setNum(1, t_ko2->getNum1());
     start->setNum(2, t_ko2->getNum2());
     start->setNum(3, t_ko2->getNum3());
     start->setNum(4, t_ko2->getNum4());
-    start->setTimeWrite(t_ko2->getWriteTime());
-    start->setTimeIncube(1, t_ko2->getIncubeTime());
+    start->setTimeWrite(c_ko2->getWrite_time());
+    start->setTimeIncube(1, c_ko2->getIncube_time());
     start->setProbe(t_ko2->getSingle());          //одиночные пробы
     start->setModeID(TestKo2_ID);
     //stKo2->cancel = false;

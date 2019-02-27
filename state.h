@@ -13,9 +13,10 @@ protected:
 
 public:
     explicit State(QObject *parent = 0);
-    virtual ~State() {}
+    virtual ~State();
     Mode_ID current();
     Mode_ID next();
+    bool hasNext();
     void reset();
     virtual QString getMessage();
 };

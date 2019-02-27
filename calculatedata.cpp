@@ -164,7 +164,7 @@ CalcData *CalcData::createCalc(Mode_ID  id)
     case TestKo2_ID:
     case CalibKo2_ID:
         str = tr("АЧТВ, измерение (Ko2 4)");
-        p = new CalcKo1();
+        p = new CalcKo2();
         break;
     case TestKo3_ID:
     case CalibKo3_ID:
@@ -213,12 +213,12 @@ double CalcData::getDx()
 
 CalcKo1::CalcKo1()
 {
-    SaveFiles file;
-    file.openKo1(param);
-    qDebug() << "параметры CalcKo1";
-    for(auto it = param.begin(); it < param.end(); it++) {
-        qDebug() << *it;
-    }
+//    SaveFiles file;
+//    file.openKo1(param);
+//    qDebug() << "параметры CalcKo1";
+//    for(auto it = param.begin(); it < param.end(); it++) {
+//        qDebug() << *it;
+//    }
 }
 
 CalcKo1::CalcKo1(QCustomPlot *p)
@@ -229,9 +229,8 @@ CalcKo1::CalcKo1(QCustomPlot *p)
 
 double CalcKo1::calc(QMap<double, double> map)
 {
-    double k = CalcData::calcKo(map);
-    qDebug() << "CalcKo1::calc() " << k;
-    return k;
+    //qDebug() << "CalcKo1::calc() " << k;
+    return CalcData::calcKo(map);
 }
 
 QString CalcKo1::getParameters()
@@ -246,23 +245,22 @@ QString CalcKo1::info()
 
 CalcKo2::CalcKo2()
 {
-    SaveFiles file;
-    file.openKo2(param);
-    qDebug() << "параметры CalcKo2 " << param.count();
-    QString d1, d2, d3, d4;
-    auto it = param.end();
-    d1 = *(it-4);
-    d2 = *(it-3);
-    d3 = *(it-2);
-    d4 = *(it-1);
+//    QString d1, d2, d3, d4;
+//    SaveFiles file;
+//    file.openKo2(param);
+//    qDebug() << "параметры CalcKo2 " << param.count();
+//    auto it = param.end();
+//    d1 = *(it-4);
+//    d2 = *(it-3);
+//    d3 = *(it-2);
+//    d4 = *(it-1);
+//    qDebug() << d1 << d2 << d3 << d4;
+//    t0 = (d1.toDouble() + d2.toDouble() + d3.toDouble() + d4.toDouble())/4;
+//    qDebug() << "АЧТВ контрольной плазмы =" << t0;
 
-    qDebug() << d1 << d2 << d3 << d4;
-//    auto it = param.end() - 4;
-//    for(; it < param.end(); it++) {
-//        qDebug() << *it;
-//    }
-    t0 = (d1.toDouble() + d2.toDouble() + d3.toDouble() + d4.toDouble())/4;
-    qDebug() << "АЧТВ контрольной плазмы =" << t0;
+    t0 = (c_ko2.getA4tv_kp1() + c_ko2.getA4tv_kp2() + c_ko2.getA4tv_kp3() + c_ko2.getA4tv_kp4())/4;
+    //QMessageBox::information(nullptr, "CalcKo2", QString("АЧТВ = %1").arg(t0));
+    qDebug() << QString("АЧТВ = %1").arg(t0);
 }
 
 double CalcKo2::calc(QMap<double, double> map)
@@ -277,7 +275,7 @@ QString CalcKo2::info()
 
 QString CalcKo2::getParameters()
 {
-    return QString("АЧТВ контрольной плазмы: t0 = %1").arg(t0);
+    return QString("АЧТВ контрольной плазмы: t0 = %1 (c)").arg(t0);
 }
 
 //void CalcKo2::getCalibrationDeta(double &c1, double &c2, double &c3, double &c4)
@@ -286,6 +284,7 @@ QString CalcKo2::getParameters()
 
 CalcKo3::CalcKo3()
 {
+    /*
     SaveFiles file;
     file.openKo3(param);
     qDebug() << "параметры CalcKo3" << param.count();
@@ -303,6 +302,17 @@ CalcKo3::CalcKo3()
     t4 = d4.toDouble();
     qDebug() << QString("Параметры калибровки Фириногена") << c2 << t1 << t2 << t3 << t4;
 
+    c1 = c2*200.0f/100.0f;              //(3)
+    c3 = c2*50.0f/100.0f;               //(4)
+    c4 = c2*25.0f/100.0f;               //(5)
+    */
+
+    t1 = c_ko3.getFibrinogen_200_plazma();
+    t2 = c_ko3.getTime_k_plazma();
+    t3 = c_ko3.getTime_50_plazma();
+    t4 = c_ko3.getTime_25_plazma();
+
+    c2 = c_ko3.getFibrinogen_k_plazma();
     c1 = c2*200.0f/100.0f;              //(3)
     c3 = c2*50.0f/100.0f;               //(4)
     c4 = c2*25.0f/100.0f;               //(5)
@@ -340,11 +350,15 @@ QString CalcKo3::info()
 
 QString CalcKo3::getParameters()
 {
-    return QString("Cодержание фибриногена по Клауссу (100%) = %1\nВремя свертывания для каждого разведения:\nt1 (200%) = %2\nt2 (100%) = %3\nt3 (50%) = %4\nt4 (25%) = %5").arg(c2).arg(t1).arg(t2).arg(t3).arg(t4);
+    return QString("Cодержание фибриногена по Клауссу (100%) = %1\n"
+                   "Время свертывания для каждого разведения:\n"
+                   "t1 (200%) = %2\nt2 (100%) = %3\nt3 (50%) = %4\nt4 (25%) = %5")
+            .arg(c2).arg(t1).arg(t2).arg(t3).arg(t4);
 }
 
 CalcKo4::CalcKo4()
 {
+    /*
     SaveFiles file;
     file.openKo4(param);
     qDebug() << "параметры CalcKo4" << param.count();
@@ -356,11 +370,15 @@ CalcKo4::CalcKo4()
     d3 = *(it-2);
     d4 = *(it-1);
     qDebug() << d1 << d2 << d3 << d4;
+    */
+
+    t0 = c_ko4.getTrombine_time();
+
 //    auto it = param.end() - 4;
 //    for(; it < param.end(); it++) {
 //        qDebug() << *it;
 //    }
-    t0 = (d1.toDouble() + d2.toDouble() + d3.toDouble() + d4.toDouble())/4;
+    //t0 = (d1.toDouble() + d2.toDouble() + d3.toDouble() + d4.toDouble())/4;
     qDebug() << "Тромбин контрольной плазмы =" << t0;
 }
 

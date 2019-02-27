@@ -1,4 +1,5 @@
 #include "state.h"
+#include "QmessageBox"
 
 State::State(QObject *parent) : QObject(parent)
 {
@@ -9,6 +10,11 @@ State::State(QObject *parent) : QObject(parent)
     };
 }
 
+State::~State()
+{
+
+}
+
 Mode_ID State::current()
 {
     return state.at(index);
@@ -16,8 +22,21 @@ Mode_ID State::current()
 
 Mode_ID State::next()
 {
-    index++;
-    return state.at(index);
+    if( hasNext() ) {
+        index++;
+        return state.at(index);
+    }
+    else {
+        QMessageBox::warning(0, "Errore", "State::Index is out of date!");
+        return current();
+    }
+}
+
+bool State::hasNext()
+{
+    if( 0 <= index && (index + 1) < state.size() )
+        return true;
+    else return false;
 }
 
 void State::reset()
@@ -40,7 +59,10 @@ StateKo1::StateKo1()
 
 StateKo2::StateKo2()
 {
-    State::state = { Incubation1_ID, TestKo2_ID };
+    State::state = { TestKo2_ID };
+    State::state_map = {
+        { 0,  QString("«Установите в каналы кюветы с пробами»") }
+    };
 }
 
 StateKo3::StateKo3()

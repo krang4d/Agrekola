@@ -341,7 +341,7 @@ void Ko4::on_pushButton_test1_clicked()
     else c = false;
     if(ui->checkBox_test1Ch4->isChecked() && !ui->lineEdit_test1Ch4->text().isEmpty()) d = true;
     else d = false;
-    bool e = c_ko4->getTv1_time() || c_ko4->getTv2_time() || c_ko4->getTv3_time() || c_ko4->getTrombine_time();
+    bool e = c_ko4->getTrombine_time();
     if( !(!c_ko4->getDate().toString("dd.MM.yyyy").isEmpty() && e) ) {
         //QString str = QString("%1").arg(c_ko2.getDate().toString("dd/MM/yyyy"));
         QMessageBox::information(this, "Внимание!", QString("Для того чтобы продолжить неоходимо провести калибровку."));

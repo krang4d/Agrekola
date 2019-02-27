@@ -62,6 +62,9 @@ private:
     TestKo2 *t_ko2;
     TestKo2 *t_ko2_1;
     CalibrationKo2 *c_ko2;
+
+    friend class StartTestKo2;
+    friend class StartCalibrationKo2;
 };
 
 class StartTestKo2 : public StartMeasurement
@@ -69,7 +72,7 @@ class StartTestKo2 : public StartMeasurement
     Q_OBJECT
 public:
     StartTestKo2() = delete;
-    static StartMeasurement* getStart(Test* );
+    static StartMeasurement* getStart(Ko2 *widget);
 };
 
 
@@ -78,7 +81,7 @@ class StartCalibrationKo2 : public StartMeasurement
     Q_OBJECT
 public:
     StartCalibrationKo2() = delete;
-    static StartMeasurement* getStart(Calibration* );
+    static StartMeasurement* getStart(Ko2 *widget);
 };
 
 #endif // KO2_H

@@ -21,15 +21,6 @@
 #include "options.h"
 #include "state.h"
 
-enum Channel_ID {
-    Channel1_ID     = 1,
-    Channel2_ID     = 2,
-    Channel3_ID     = 3,
-    Channel4_ID     = 4,
-    ChannelPP_ID    = 5,
-    ChannelAll_ID   = 0
-};
-
 namespace Ui {
 class Widget;
 }
@@ -39,7 +30,6 @@ class Widget : public QWidget
     Q_OBJECT
 
 public:
-    //delete Widget(QWidget *parent = 0);
     explicit Widget(QWidget *parent = 0);
     ~Widget();
     void setupWidget();
@@ -90,14 +80,14 @@ public slots:
     void writeMapData(Channel_ID);
     void incubeTimeout_1();
     void incubeTimeout_2();
-    void waitImpulse();
+    void waitImpulse(ImpuleWaiter *iw);
 
     void onMotor(Channel_ID, bool arg);
     void onLazer(bool arg);
+    void test();
 
 private slots:
     void on_pushButton_clicked();
-    void on_comboBox_currentIndexChanged(int index);
 
     void realtimeDataSlot(QVariantList);
     void updataTermo(bool);
@@ -124,9 +114,10 @@ private:
     bool ready1, ready2, ready3, ready4;
     bool termoSensor, incub, waitPulse;
 
-
     QMap<double, double> map_y1, map_y2, map_y3, map_y4 ;
     SaveFiles saveFiles;
+
+    //опциональные параметры
     double START_DX; //порог запуска
     double STOP_DX;  //порог остановки
     double MIN, MAX; //минимум и максимум на графике
@@ -138,5 +129,4 @@ protected:
     void showEvent(QShowEvent *event) override;
     bool eventFilter(QObject *watched, QEvent *event) override;
 };
-
 #endif // WIDGET_H

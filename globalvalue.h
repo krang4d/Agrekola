@@ -33,6 +33,14 @@ enum Mode_ID {
     Incubation2_ID
 };
 
+enum Channel_ID {
+    Channel1_ID     = 1,
+    Channel2_ID     = 2,
+    Channel3_ID     = 3,
+    Channel4_ID     = 4,
+    ChannelPP_ID    = 5,
+    ChannelAll_ID   = 0
+};
 //enum State_ID {
 //    Level_ID,
 //    Incubation_ID
