@@ -811,7 +811,7 @@ double Widget::calcData(Channel_ID c)
             emit ret_value1(retval);
         }
         else {
-            setUserMessage(QString("Массив данных не заполнен!"));
+            setUserMessage(QString("Канал 1: Массив данных не заполнен!"));
             return -1;
         }
         break;
@@ -824,7 +824,7 @@ double Widget::calcData(Channel_ID c)
             emit ret_value2(retval);
         }
         else {
-            setUserMessage(QString("Массив данных не заполнен!"));
+            setUserMessage(QString("Канал 2: Массив данных не заполнен!"));
             return -1;
         }
         break;
@@ -837,12 +837,12 @@ double Widget::calcData(Channel_ID c)
             emit ret_value3(retval);
         }
         else {
-            setUserMessage(QString("Массив данных не заполнен!"));
+            setUserMessage(QString("Канал 3: Массив данных не заполнен!"));
             return -1;
         }
         break;
     case Channel4_ID:
-        if(map_y4.isEmpty()) {
+        if(!map_y4.isEmpty()) {
             retval = p->calc(map_y4);
             setUserMessage(QString("<div style='color: green'>Канал 4: %2 %1")
                            .arg(retval)
@@ -850,7 +850,7 @@ double Widget::calcData(Channel_ID c)
             emit ret_value4(retval);
         }
         else {
-            setUserMessage(QString("Массив данных не заполнен!"));
+            setUserMessage(QString("Канал 4: Массив данных не заполнен!"));
             return -1;
         }
         break;

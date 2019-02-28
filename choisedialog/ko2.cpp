@@ -488,10 +488,10 @@ StartMeasurement* StartCalibrationKo2::getStart(Ko2* widget)
     CalibrationKo2* c_ko2 = widget->c_ko2;
     StartMeasurement* start = new StartMeasurement(0);
     start->setChannels(c_ko2->getK1(), c_ko2->getK2(), c_ko2->getK3(), c_ko2->getK4());
-    start->setNum(1, "Калибровка");
-    start->setNum(2, "Калибровка");
-    start->setNum(3, "Калибровка");
-    start->setNum(4, "Калибровка");
+    start->setNum(1, "к/плазма");
+    start->setNum(2, "к/плазма");
+    start->setNum(3, "к/плазма");
+    start->setNum(4, "к/плазма");
     start->setTimeWrite(c_ko2->getWrite_time());
     start->setTimeIncube(1, c_ko2->getIncube_time());
     start->setModeID(CalibKo2_ID);
