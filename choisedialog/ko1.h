@@ -20,7 +20,6 @@ public:
 
 private slots:
     void on_pushButton_test_clicked();
-
     void on_radioButton_testSingle_toggled(bool checked);
 
     void on_checkBox_testCh1_toggled(bool checked);

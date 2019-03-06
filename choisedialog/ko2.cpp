@@ -26,32 +26,23 @@ void Ko2::on_toolBox_currentChanged(int index)
 
 void Ko2::open()
 {
-/* Старый метод загрузки параметов из TXT*/
-//    file.openKo2(param);
-//    if( !param.isEmpty() && param.count() >= 10 ) {
-//        //ui->label_calibrationData->setText(param.at(0));
-//        ui->lineEdit_1->setText(param.at(1));
-//        //ui->lineEdit_2->setText(param.at(2));
-//        ui->lineEdit_3->setText(param.at(3));
-//        //ui->lineEdit_4->setText(param.at(4));
-//        //ui->lineEdit_5->setText(param.at(5));
-//    } else
-//        param = QStringList({0, 0, 0, 0, 0, 0, 0, 0, 0, 0}); //10 параметров
-    /* Новый метод загрузки параметров из XML */
     //окно тест
     t_ko2 = new TestKo2(this);
     t_ko2_1 = new TestKo2(WithoutCalibration(), this);
     c_ko2 = new CalibrationKo2(this);
 
-    ui->groupBox_test1Calib->setTitle(QString("Последняя калибровка: %1\n").arg(c_ko2->getDate().toString("dd.MM.yyyy")));
-    QString str = QString("Реагенты: %1 (до %2)\n").arg(c_ko2->getReagent_serial()).arg(c_ko2->getReagent_date().toString("dd.MM.yyyy"))
-                + QString("Плазма «К»: %1 (до %2)\n").arg(c_ko2->getK_plazma_serial()).arg(c_ko2->getK_plazma_date().toString("dd.MM.yyyy"))
+    ui->groupBox_test1Calib->setTitle(QString("Последняя калибровка: %1\n")
+                                        .arg(c_ko2->getDate().toString("dd.MM.yyyy")));
+    QString str = QString("Реагенты: %1 (до %2)\n").arg(c_ko2->getReagent_serial())
+                            .arg(c_ko2->getReagent_date().toString("dd.MM.yyyy"))
+                + QString("Плазма «К»: %1 (до %2)\n")
+                            .arg(c_ko2->getK_plazma_serial())
+                            .arg(c_ko2->getK_plazma_date().toString("dd.MM.yyyy"))
                 + QString("АЧТВ к/плазмы 1го канала: %1 с\n").arg(c_ko2->getA4tv_kp1())
                 + QString("АЧТВ к/плазмы 2го канала: %1 с\n").arg(c_ko2->getA4tv_kp2())
                 + QString("АЧТВ к/плазмы 3го канала: %1 с\n").arg(c_ko2->getA4tv_kp3())
                 + QString("АЧТВ к/плазмы 4го канала: %1 с").arg(c_ko2->getA4tv_kp4());
     ui->label_test1CalibString->setText(str);
-    //connect(ui->page_1, SIGNAL(startMeasurment(StartMeasurment*)),this, SIGNAL(measurement(StartMeasurment*)));
 
     if( t_ko2->getSingle() ) {
         ui->radioButton_test1Single->setChecked(true);
@@ -202,25 +193,21 @@ void Ko2::calibrationDataCome(int n , double data)
 
 void Ko2::calibrationData1Come(double t0)
 {
-    c_ko2->setA4tv_kp1(t0);
     calibrationDataCome(1, t0);
 }
 
 void Ko2::calibrationData2Come(double t0)
 {
-    c_ko2->setA4tv_kp2(t0);
     calibrationDataCome(2, t0);
 }
 
 void Ko2::calibrationData3Come(double t0)
 {
-    c_ko2->setA4tv_kp3(t0);
     calibrationDataCome(3, t0);
 }
 
 void Ko2::calibrationData4Come(double t0)
 {
-    c_ko2->setA4tv_kp4(t0);
     calibrationDataCome(4, t0);
 }
 
@@ -349,23 +336,41 @@ void Ko2::on_lineEdit_test2Ch3_textChanged(const QString &arg1)
 void Ko2::on_pushButton_test1_clicked()
 {
     bool a, b, c, d;
-    if(ui->checkBox_test1Ch1->isChecked() && !ui->lineEdit_test1Ch1->text().isEmpty()) a = true;
-    else a = false;
-    if(ui->checkBox_test1Ch2->isChecked() && !ui->lineEdit_test1Ch2->text().isEmpty()) b = true;
-    else b = false;
-    if(ui->checkBox_test1Ch3->isChecked() && !ui->lineEdit_test1Ch3->text().isEmpty()) c = true;
-    else c = false;
-    if(ui->checkBox_test1Ch4->isChecked() && !ui->lineEdit_test1Ch4->text().isEmpty()) d = true;
-    else d = false;
-    bool e = c_ko2->getA4tv_kp1() || c_ko2->getA4tv_kp2() || c_ko2->getA4tv_kp3() || c_ko2->getA4tv_kp4();
-    if( !(!c_ko2->getDate().toString("dd.MM.yyyy").isEmpty() && e) ) {
-        //QString str = QString("%1").arg(c_ko2->getDate().toString("dd/MM/yyyy"));
-        QMessageBox::information(this, "Внимание!", QString("Для того чтобы продолжить неоходимо провести калибровку."));
+    if(ui->checkBox_test1Ch1->isChecked()) {
+        if(!ui->lineEdit_test1Ch1->text().isEmpty()) a = true;
+        else a = false;
+    }
+    else a = true;
+    if(ui->checkBox_test1Ch2->isChecked()) {
+        if(!ui->lineEdit_test1Ch2->text().isEmpty()) b = true;
+        else b = false;
+    }
+    else b = true;
+    if(ui->checkBox_test1Ch3->isChecked()) {
+        if(!ui->lineEdit_test1Ch3->text().isEmpty()) c = true;
+        else b = false;
+    }
+    else c = true;
+    if(ui->checkBox_test1Ch4->isChecked()) {
+        if(!ui->lineEdit_test1Ch4->text().isEmpty()) d = true;
+        else d = false;
+    }
+    else d = true;
+    bool e = ui->checkBox_test1Ch1->isChecked() || ui->checkBox_test1Ch2->isChecked()
+            || ui->checkBox_test1Ch3->isChecked() || ui->checkBox_test1Ch4->isChecked();
+
+    if (  !(a && b && c && d && e ) ) {
+        QMessageBox::information(this,"Внимание!","Для того чтобы продолжить необходимо"
+                                                  " выбрать рабочие каналы и заполнить"
+                                                  " все поля с параметрами.");
         return;
     }
-    //bool c = (ui->doubleSpinBox_testIncubeTime->value() != NULL) && (ui->doubleSpinBox_testWriteTime->value() != NULL);
-    if ( !(a || b || c || d) ) {
-        QMessageBox::information(this, "Внимание!", "Для того чтобы продолжить необходимо выбрать рабочие каналы и заполнить все поля с параметрами.");
+
+    bool f = c_ko2->getA4tv_kp1() || c_ko2->getA4tv_kp2()
+            || c_ko2->getA4tv_kp3() || c_ko2->getA4tv_kp4();
+
+    if( !(!c_ko2->getDate().toString("dd.MM.yyyy").isEmpty() && f) ) {
+        QMessageBox::information(this, "Внимание!", QString("Для того чтобы продолжить неоходимо провести калибровку."));
         return;
     }
 
@@ -387,22 +392,37 @@ void Ko2::on_pushButton_test1_clicked()
 
 void Ko2::on_pushButton_test2_clicked()
 {
-    bool a, b, c, d, e;
-    if(ui->checkBox_test2Ch1->isChecked() && !ui->lineEdit_test2Ch1->text().isEmpty()) a = true;
-    else a = false;
-    if(ui->checkBox_test2Ch2->isChecked() && !ui->lineEdit_test2Ch2->text().isEmpty()) b = true;
-    else b = false;
-    if(ui->checkBox_test2Ch3->isChecked() && !ui->lineEdit_test2Ch3->text().isEmpty()) c = true;
-    else c = false;
-    if(ui->checkBox_test2Ch4->isChecked() && !ui->lineEdit_test2Ch4->text().isEmpty()) d = true;
-    else d = false;
+    bool a, b, c, d;
+    if(ui->checkBox_test2Ch1->isChecked()) {
+        if(!ui->lineEdit_test2Ch1->text().isEmpty()) a = true;
+        else a = false;
+    }
+    else a = true;
+    if(ui->checkBox_test2Ch2->isChecked()) {
+        if(!ui->lineEdit_test2Ch2->text().isEmpty()) b = true;
+        else b = false;
+    }
+    else b = true;
+    if(ui->checkBox_test2Ch3->isChecked()) {
+        if(!ui->lineEdit_test2Ch3->text().isEmpty()) c = true;
+        else b = false;
+    }
+    else c = true;
+    if(ui->checkBox_test2Ch4->isChecked()) {
+        if(!ui->lineEdit_test2Ch4->text().isEmpty()) d = true;
+        else d = false;
+    }
+    else d = true;
 
-    if(!ui->lineEdit_test2ReagentSerial->text().isEmpty()) e = true;
-    else e = false;
+    bool e = ui->checkBox_test2Ch1->isChecked() || ui->checkBox_test2Ch2->isChecked()
+            || ui->checkBox_test2Ch3->isChecked() || ui->checkBox_test2Ch4->isChecked();
 
-    //bool c = (ui->doubleSpinBox_testIncubeTime->value() != NULL) && (ui->doubleSpinBox_testWriteTime->value() != NULL);
-    if ( !((a || b || c || d ) && e) ) {
-        QMessageBox::information(this, "Внимание!", "Для того чтобы продолжить необходимо выбрать рабочие каналы и заполнить все поля с параметрами!");
+    bool f = !ui->lineEdit_test2ReagentSerial->text().isEmpty();
+
+    if ( !( a && b && c && d && e && f) ) {
+        QMessageBox::information(this, "Внимание!", "Для того чтобы продолжить необходимо"
+                                                    " выбрать рабочие каналы"
+                                                    " и заполнить все поля с параметрами!");
         return;
     }
 
@@ -432,36 +452,28 @@ void Ko2::on_pushButton_test2_clicked()
 
 void Ko2::on_pushButton_calib_clicked()
 {
-    bool a, b, c, d, e, f, g, i;
-    if(ui->checkBox_calibCh1->isChecked()) a = true;
-    else a = false;
-    if(ui->checkBox_calibCh2->isChecked()) b = true;
-    else b = false;
-    if(ui->checkBox_calibCh3->isChecked()) c = true;
-    else c = false;
-    if(ui->checkBox_calibCh4->isChecked()) d = true;
-    else d = false;
+    bool a = ui->checkBox_calibCh1->isChecked();
+    bool b = ui->checkBox_calibCh2->isChecked();
+    bool c = ui->checkBox_calibCh3->isChecked();
+    bool d = ui->checkBox_calibCh4->isChecked();
 
-    if(!ui->lineEdit_calibKPlazmaSerial->text().isEmpty()) e =true;
-    else e= false;
+    bool e = !ui->lineEdit_calibKPlazmaSerial->text().isEmpty();
+    bool f = !ui->lineEdit_calibReagentSerial->text().isEmpty();
 
-    if(!ui->lineEdit_calibReagentSerial->text().isEmpty()) f =true;
-    else f= false;
+    if( !((a || b || c || d ) && e && f) ) {
+        QMessageBox::information(this, "Внимание!", "Для того чтобы продолжить необходимо"
+                                                    " выбрать рабочие каналы"
+                                                    " и заполнить все поля с параметрами!");
+        return;
+    }
 
     QDate now = QDate::currentDate();
-    if (now <= ui->dateEdit_calibPlazma->date()) g = true;
-    else g = false;
+    bool g = now <= ui->dateEdit_calibPlazma->date();
 
-    if(now <= ui->dateEdit_calibReagent->date()) i = true;
-    else i = false;
+    bool i = now <= ui->dateEdit_calibReagent->date();
 
     if(!(g && i) ) {
         QMessageBox::information(this, "Внимание!", "Проверьте срок годности используемых реагентов!");
-        return;
-    }
-    //bool c = (ui->doubleSpinBox_testIncubeTime->value() != NULL) && (ui->doubleSpinBox_testWriteTime->value() != NULL);
-    if( !((a || b || c || d ) && e && f && g && i) ) {
-        QMessageBox::information(this, "Внимание!", "Для того чтобы продолжить необходимо выбрать рабочие каналы и заполнить все поля с параметрами!");
         return;
     }
 
@@ -487,6 +499,7 @@ StartMeasurement* StartCalibrationKo2::getStart(Ko2* widget)
 {
     CalibrationKo2* c_ko2 = widget->c_ko2;
     StartMeasurement* start = new StartMeasurement(0);
+    //start->setObj(widget);
     start->setChannels(c_ko2->getK1(), c_ko2->getK2(), c_ko2->getK3(), c_ko2->getK4());
     start->setNum(1, "к/плазма");
     start->setNum(2, "к/плазма");

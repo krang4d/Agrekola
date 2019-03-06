@@ -47,6 +47,10 @@ private slots:
     void on_radioButton_calibTrombine2_toggled(bool checked);
     void on_radioButton_calibTrombine3_toggled(bool checked);
 
+    void on_radioButton_testTrombine1_toggled(bool checked);
+    void on_radioButton_testTrombine2_toggled(bool checked);
+    void on_radioButton_testTrombine3_toggled(bool checked);
+
 public slots:
     void calibrationData1Come(double);
     void calibrationData2Come(double);

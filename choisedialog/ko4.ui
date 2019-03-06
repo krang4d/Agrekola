@@ -27,7 +27,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget_ko4">
      <property name="currentIndex">
-      <number>2</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tabWidget_ko4Page1">
       <attribute name="title">

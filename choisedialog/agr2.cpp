@@ -148,35 +148,24 @@ void Agr2::calibrationData4Come(double t0)
 
 void Agr2::on_pushButton_calib_clicked()
 {
-    bool a, b, c, d, e, f, g, i;
-    if(ui->checkBox_calibCh1->isChecked()) a = true;
-    else a = false;
-    if(ui->checkBox_calibCh2->isChecked()) b = true;
-    else b = false;
-    if(ui->checkBox_calibCh3->isChecked()) c = true;
-    else c = false;
-    if(ui->checkBox_calibCh4->isChecked()) d = true;
-    else d = false;
+    bool a = ui->checkBox_calibCh1->isChecked();
+    bool b = ui->checkBox_calibCh2->isChecked();
+    bool c = ui->checkBox_calibCh3->isChecked();
+    bool d = ui->checkBox_calibCh4->isChecked();
 
-    if(!ui->lineEdit_calibKPlazmaSerial->text().isEmpty()) e =true;
-    else e= false;
-
-    if(!ui->lineEdit_calibReagentSerial->text().isEmpty()) f =true;
-    else f= false;
+    bool e = !ui->lineEdit_calibKPlazmaSerial->text().isEmpty();
+    bool f = !ui->lineEdit_calibReagentSerial->text().isEmpty();
 
     QDate now = QDate::currentDate();
-    if (now <= ui->dateEdit_calibKPlazma->date()) g = true;
-    else g = false;
-
-    if(now <= ui->dateEdit_calibReagent->date()) i = true;
-    else i = false;
+    bool g = now <= ui->dateEdit_calibKPlazma->date();
+    bool i = now <= ui->dateEdit_calibReagent->date();
 
     if(!(g && i) ) {
         QMessageBox::information(this, "Внимание!", "Проверьте срок годности используемых реагентов!");
         return;
     }
     //bool c = (ui->doubleSpinBox_testIncubeTime->value() != NULL) && (ui->doubleSpinBox_testWriteTime->value() != NULL);
-    if( !((a || b || c || d ) && e && f && g && i) ) {
+    if( !((a || b || c || d ) && e && f) ) {
         QMessageBox::information(this, "Внимание!", "Для того чтобы продолжить необходимо выбрать рабочие каналы и заполнить все поля с параметрами!");
         return;
     }

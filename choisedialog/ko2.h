@@ -75,7 +75,6 @@ public:
     static StartMeasurement* getStart(Ko2 *widget);
 };
 
-
 class StartCalibrationKo2 : public StartMeasurement
 {
     Q_OBJECT

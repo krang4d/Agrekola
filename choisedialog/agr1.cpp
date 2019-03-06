@@ -18,7 +18,7 @@ Agr1::~Agr1()
 
 void Agr1::on_pushButton_calib_clicked()
 {
-    bool a, b, c, d, e, g;
+    bool a, b, c, d;
     if(ui->checkBox_calibCh1->isChecked()) a = true;
     else a = false;
     if(ui->checkBox_calibCh2->isChecked()) b = true;
@@ -28,20 +28,19 @@ void Agr1::on_pushButton_calib_clicked()
     if(ui->checkBox_calibCh4->isChecked()) d = true;
     else d = false;
 
-    if(!ui->lineEdit_calibTrombotsitSerial->text().isEmpty()) e =true;
-    else e= false;
+    bool e = !ui->lineEdit_calibTrombotsitSerial->text().isEmpty();
 
-    QDate now = QDate::currentDate();
-    if (now <= ui->dateEdit_calibTrombotsit->date()) g = true;
-    else g = false;
-
-    if(!(g) ) {
-        QMessageBox::information(this, "Внимание!", "Проверьте срок годности используемых реагентов!");
+    //bool c = (ui->doubleSpinBox_testIncubeTime->value() != NULL) && (ui->doubleSpinBox_testWriteTime->value() != NULL);
+    if( !((a || b || c || d ) && e ) ) {
+        QMessageBox::information(this, "Внимание!", "Для того чтобы продолжить необходимо выбрать рабочие каналы и заполнить все поля с параметрами!");
         return;
     }
-    //bool c = (ui->doubleSpinBox_testIncubeTime->value() != NULL) && (ui->doubleSpinBox_testWriteTime->value() != NULL);
-    if( !((a || b || c || d ) && e && g) ) {
-        QMessageBox::information(this, "Внимание!", "Для того чтобы продолжить необходимо выбрать рабочие каналы и заполнить все поля с параметрами!");
+
+    QDate now = QDate::currentDate();
+    bool f = now <= ui->dateEdit_calibTrombotsit->date();
+
+    if(!(f) ) {
+        QMessageBox::information(this, "Внимание!", "Проверьте срок годности используемых реагентов!");
         return;
     }
 
@@ -63,15 +62,38 @@ void Agr1::on_pushButton_calib_clicked()
 void Agr1::on_pushButton_test_clicked()
 {  
     bool a, b, c, d;
-    if(ui->checkBox_testCh1->isChecked() && !ui->lineEdit_testCh1->text().isEmpty()) a = true;
-    else a = false;
-    if(ui->checkBox_testCh2->isChecked() && !ui->lineEdit_testCh2->text().isEmpty()) b = true;
-    else b = false;
-    if(ui->checkBox_testCh3->isChecked() && !ui->lineEdit_testCh3->text().isEmpty()) c = true;
-    else c = false;
-    if(ui->checkBox_testCh4->isChecked() && !ui->lineEdit_testCh4->text().isEmpty()) d = true;
-    else d = false;
-    bool e = c_agr1.getCkA1() || c_agr1.getCkA2() || c_agr1.getCkA3() || c_agr1.getCkA4();
+    if(ui->checkBox_testCh1->isChecked()) {
+        if(!ui->lineEdit_testCh1->text().isEmpty()) a = true;
+        else a = false;
+    }
+    else a = true;
+    if(ui->checkBox_testCh2->isChecked()) {
+        if(!ui->lineEdit_testCh2->text().isEmpty()) b = true;
+        else b = false;
+    }
+    else b = true;
+    if(ui->checkBox_testCh3->isChecked()) {
+        if(!ui->lineEdit_testCh3->text().isEmpty()) c = true;
+        else b = false;
+    }
+    else c = true;
+    if(ui->checkBox_testCh4->isChecked()) {
+        if(!ui->lineEdit_testCh4->text().isEmpty()) d = true;
+        else d = false;
+    }
+    else d = true;
+
+    bool e = ui->checkBox_testCh1->isChecked() || ui->checkBox_testCh2->isChecked()
+            || ui->checkBox_testCh3->isChecked() || ui->checkBox_testCh4->isChecked();
+
+    if (  !( a && b && c && d && e ) ) {
+        QMessageBox::information(this,"Внимание!","Для того чтобы продолжить необходимо"
+                                                  " выбрать рабочие каналы и заполнить"
+                                                  " все поля с параметрами.");
+        return;
+    }
+
+    bool f = c_agr1.getCkA1() || c_agr1.getCkA2() || c_agr1.getCkA3() || c_agr1.getCkA4();
     if( !(!c_agr1.getDate().toString("dd.MM.yyyy").isEmpty() && e) ) {
         //QString str = QString("%1").arg(c_ko2.getDate().toString("dd/MM/yyyy"));
         QMessageBox::information(this, "Внимание!", QString("Для того чтобы продолжить неоходимо провести калибровку."));
@@ -94,10 +116,6 @@ void Agr1::on_pushButton_test_clicked()
 
     t_agr1.setSingle(ui->radioButton_testSingle->isChecked());
     t_agr1.save();
-//    c_agr1.setIncube_time(ui->doubleSpinBox_calibIncubeTime_1->value());
-//    c_agr1.setIncube_time_2(ui->doubleSpinBox_calibIncubeTime_2->value());
-//    c_agr1.setWrite_time(ui->doubleSpinBox_calibWriteTime->value());
-//    c_agr1.save();
     emit measurement(StartTestAgr1::getStart(&t_agr1));
 }
 
@@ -225,10 +243,10 @@ StartMeasurement *StartCalibrationAgr1::getStart(Calibration *c_agr1)
 {
     StartMeasurement *start = new StartMeasurement(0);
     start->setChannels(c_agr1->getK1(), c_agr1->getK2(), c_agr1->getK3(), c_agr1->getK4());
-    start->setNum(1, "Калибровка");
-    start->setNum(2, "Калибровка");
-    start->setNum(3, "Калибровка");
-    start->setNum(4, "Калибровка");
+    start->setNum(1, "к/плазма");
+    start->setNum(2, "к/плазма");
+    start->setNum(3, "к/плазма");
+    start->setNum(4, "к/плазма");
     start->setTimeWrite(c_agr1->getWrite_time());
     start->setTimeIncube(1, c_agr1->getIncube_time());
     start->setTimeIncube(2, static_cast<CalibrationAgr1*>(c_agr1)->getIncube_time_2());
