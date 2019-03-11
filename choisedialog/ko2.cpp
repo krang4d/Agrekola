@@ -5,6 +5,7 @@
 
 Ko2::Ko2(QWidget *parent) :
     QWidget(parent),
+    Ko_impl(),
     ui(new Ui::Ko2)
 {
     ui->setupUi(this);

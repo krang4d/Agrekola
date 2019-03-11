@@ -14,17 +14,17 @@
 #include "savefiles.h"
 #include "startmeasurement.h"
 #include "QCustomPlot/qcustomplot.h"
-#include <progresstimerbar.h>
+#include "progresstimerbar.h"
 #include "calculatedata.h"
 #include "impulewaiter.h"
 #include "startmeasurement.h"
 #include "options.h"
 #include "state.h"
+#include "globalvalue.h"
 
 namespace Ui {
 class Widget;
 }
-
 class Widget : public QWidget
 {
     Q_OBJECT

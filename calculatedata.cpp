@@ -63,73 +63,73 @@ double CalcData::calcKo(QMap<double, double> map)
 
 double CalcData::calcAgr(QMap<double, double> map)
 {
-//    if(map.isEmpty()) { qDebug() << "error from CalcData::caalcAgr(): the map is empty!"; return 0; }
-//    mix_t = 0;
-//    QMap<double, double>::const_iterator it = map.begin();
-//    QMap<double, double>::const_iterator state = map.end();
-//    double sum = 0;
-//    int num = 0;
+    if(map.isEmpty()) { qDebug() << "error from CalcData::caalcAgr(): the map is empty!"; return 0; }
+    mix_t = 0;
+    QMap<double, double>::const_iterator it = map.begin();
+    QMap<double, double>::const_iterator state = map.end();
+    double sum = 0;
+    int num = 0;
 
-//    while(it != map.end()) {
-//        if((it.key() - map.begin().key()) > mix_t) {
-//            state = it;
-//            //qDebug().noquote() << QString("key = %1, value = %2").arg(it.key()).arg(it.value());
-//            break;
-//        }
-//        ++it;
-//    }
+    while(it != map.end()) {
+        if((it.key() - map.begin().key()) > mix_t) {
+            state = it;
+            //qDebug().noquote() << QString("key = %1, value = %2").arg(it.key()).arg(it.value());
+            break;
+        }
+        ++it;
+    }
 
-//    QMap<double, double>::const_iterator max_dx;
-//    QMap<double, double> map_dx;
-//    double max = it.value(), min = it.value(), last_value = it.value(), dx = 0;
-//    while(it != map.end()) {
-//        if(it.value() > max)
-//            max = it.value();
-//        if(it.value() < min)
-//            min = it.value();
+    QMap<double, double>::const_iterator max_dx;
+    QMap<double, double> map_dx;
+    double max = it.value(), min = it.value(), last_value = it.value();
+    while(it != map.end()) {
+        if(it.value() > max)
+            max = it.value();
+        if(it.value() < min)
+            min = it.value();
 
-//        if((it.value() - last_value) > dx) {
-//            dx = it.value() - last_value;
-//            max_dx = it - 1;
-//        }
-//        map_dx.insert((it-1).key(), it.value() - last_value);
-//        last_value = it.value();
+        if((it.value() - last_value) > dx) {
+            dx = it.value() - last_value;
+            max_dx = it - 1;
+        }
+        map_dx.insert((it-1).key(), it.value() - last_value);
+        last_value = it.value();
 
-//        num ++;
-//        sum += it.value();
-//        ++it;
-//    }
-//    if(plot != NULL) {
-//        static QCPGraph *g  = plot->addGraph();
-//        g->setName("DX");
-//        g->setData(map_dx.keys().toVector(), map_dx.values().toVector());
-//    }
-//    double avg = sum/num;
-//    double over = avg*dx;
+        num ++;
+        sum += it.value();
+        ++it;
+    }
+    if(plot != NULL) {
+        static QCPGraph *g  = plot->addGraph();
+        g->setName("DX");
+        g->setData(map_dx.keys().toVector(), map_dx.values().toVector());
+    }
+    double avg = sum/num;
+    double over = avg*dx;
 
-//    double a = (max_dx+1).value() - max_dx.value();
-//    double b = (max_dx+1).key() - max_dx.key();
-//    double tgalfa = a/b;
-//    if(plot != NULL) {
-//        static QCPGraph *g = plot->addGraph();
-//        QVector<double> key = {max_dx.key(), max_dx.key() + 1, max_dx.key() + 1};
-//        QVector<double> value = {max_dx.value(), max_dx.value() + tgalfa, max_dx.value()};
-//        g->setData(key, value);
-//    }
-//    qDebug() << QString("Max DX -->%1, Acceleration -->%2, a%3, b%4 ").arg(max_dx.key()).arg(tgalfa).arg(a).arg(b);
-//    qDebug() << "Минимум --> " << min << "Максимум -->" << max;
+    double a = (max_dx+1).value() - max_dx.value();
+    double b = (max_dx+1).key() - max_dx.key();
+    double tgalfa = a/b;
+    if(plot != NULL) {
+        static QCPGraph *g = plot->addGraph();
+        QVector<double> key = { max_dx.key(), max_dx.key() + 1, max_dx.key() + 1 };
+        QVector<double> value = { max_dx.value(), max_dx.value() + tgalfa, max_dx.value() };
+        g->setData(key, value);
+    }
+    qDebug() << QString("Max DX -->%1, Acceleration -->%2, a%3, b%4 ").arg(max_dx.key()).arg(tgalfa).arg(a).arg(b);
+    qDebug() << "Минимум --> " << min << "Максимум -->" << max;
 
-//    while(state != map.end()) {
-//        if( avg-state.value() >= over ) {
-//            qDebug() << "state != map.end()";
-//            break;
-//        }
-//        //qDebug() << QString("%1").arg(avg - state.value());
-//        ++state;
-//    }
-//    qDebug().noquote() << QString("sum = %1, ikey = %2, avg = %3")
-//                          .arg(sum).arg(state.key()).arg(sum/num);
-//    return tgalfa;
+    while(state != map.end()) {
+        if( avg-state.value() >= over ) {
+            qDebug() << "state != map.end()";
+            break;
+        }
+        //qDebug() << QString("%1").arg(avg - state.value());
+        ++state;
+    }
+    qDebug().noquote() << QString("sum = %1, ikey = %2, avg = %3")
+                          .arg(sum).arg(state.key()).arg(sum/num);
+    return tgalfa;
     return 1;
 }
 
@@ -139,11 +139,11 @@ CalcData *CalcData::createCalc(Mode_ID  id)
     CalcData *p;
     switch (id) {
     case Test_ID:
-    case BTPCalibAgr1_ID:
-    case BTPCalibAgr2_ID:
-    case BTPTestAgr1_ID:
-    case BTPTestAgr2_ID:
         str = tr("Тест (Test 0)");
+        p = new CalcLevel();
+        break;
+    case Level_ID:
+        str = tr("Измерение уровня");
         p = new CalcLevel();
         break;
     case TestAgr1_ID:
@@ -164,7 +164,7 @@ CalcData *CalcData::createCalc(Mode_ID  id)
     case TestKo2_ID:
     case CalibKo2_ID:
         str = tr("АЧТВ, измерение (Ko2 4)");
-        p = new CalcKo2();
+        p = new CalcKo1();
         break;
     case TestKo3_ID:
     case CalibKo3_ID:
@@ -180,10 +180,6 @@ CalcData *CalcData::createCalc(Mode_ID  id)
     case CalibKo5_ID:
         str = tr("Протромбиновый комплекс, измерение (Ko5 7)");
         p = new CalcKo5();
-        break;
-    case Level_ID:
-        str = tr("Измерение уровня");
-        p = new CalcLevel();
         break;
     default: p = NULL;
         break;
@@ -400,28 +396,30 @@ QString CalcKo4::getParameters()
 
 CalcKo5::CalcKo5()
 {
-    SaveFiles file;
-    file.openKo5(param);
-    qDebug() << "параметры CalcKo5";
-    auto it = param.begin();
-    for(; it < param.end(); it++) {
-        qDebug() << *it;
-    }
+//    SaveFiles file;
+//    file.openKo5(param);
+//    qDebug() << "параметры CalcKo5";
+//    auto it = param.begin();
+//    for(; it < param.end(); it++) {
+//        qDebug() << *it;
+//    }
 
-    QString d0 = *(it-7);
-    QString d1 = *(it-4);
-    QString d2 = *(it-3);
-    QString d3 = *(it-2);
-    QString d4 = *(it-1);
+//    QString d0 = *(it-7);
+//    QString d1 = *(it-4);
+//    QString d2 = *(it-3);
+//    QString d3 = *(it-2);
+//    QString d4 = *(it-1);
 
-    a100 = d0.toDouble();
-    t100 = d1.toDouble();
-    t50 = d2.toDouble();
-    t25 = d3.toDouble();
-    t12 = d4.toDouble();
 
-    // <-- првоерка даты проведения калибровки калибровки
-
+    a100 = c_ko5.getProtrombine_k_Kvik();
+    t100 = c_ko5.getTime_k_Kvik();
+    t50 = c_ko5.getTime_50_Kvik();
+    a50 = a100*50.0f/100.0f;           //(12)
+    t25 = c_ko5.getTime_25_Kvik();
+    a25 = a100*25.0f/100.0f;           //(13)
+    t12 = c_ko5.getTime_12_Kvik();
+    a12 = a100*12.5f/100.0f;           //(14)
+    // <-- првоерка даты проведения калибровки
     //QString p = param.last();
     //a1 = p.toDouble();
     //qDebug() << "ТВ контрольной плазмы =" << a1;
@@ -431,10 +429,6 @@ double CalcKo5::calc(QMap<double, double> map)
 {
     // <-- проверка значений калибровки
     double tx = CalcData::calcKo(map);
-    a50 = a100*50.0f/100.0f;           //(12)
-    a25 = a100*25.0f/100.0f;           //(13)
-    a12 = a100*12.5f/100.0f;           //(14)
-
     tgalfa1 = (t50-t100)/std::log10(a100/a50);                  //(16)
     tgalfa2 = (t25-t50)/std::log10(a50/a25);                    //(17)
     tgalfa3 = (t25-t100)/std::log10(a100/a25);                  //(18)
@@ -516,11 +510,22 @@ CalcAgr2::CalcAgr2()
 //    for(auto it = param.begin(); it < param.end(); it++) {
 //        qDebug() << *it;
 //    }
+    c1 = c_agr2.getC1();
+    ck1 = c_agr2.getCk1();
+    c2 = c_agr2.getC2();
+    ck2 = c_agr2.getCk2();
+    c3 = c_agr2.getC3();
+    ck3 = c_agr2.getCk3();
+    c4 = c_agr2.getC4();
+    ck4 = c_agr2.getCk4();
 }
 
 double CalcAgr2::calc(QMap<double, double> map)
 {
     // <-- проверка значений калибровки
+    btp = ( c_agr2.getBTP1() + c_agr2.getBTP2() + c_agr2.getBTP3() + c_agr2.getBTP4() ) / 4;
+    otp = ( c_agr2.getOTP1() + c_agr2.getOTP2() + c_agr2.getOTP3() + c_agr2.getOTP4() ) / 4;
+
     c1 = c2*200.0f/100.0f;          //(21)
     c3 = c2*50.0f/100.0f;           //(22)
     c4 = c2*25.0f/100.0f;           //(23)

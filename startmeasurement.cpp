@@ -71,22 +71,22 @@ void StartMeasurement::openData()
     }
 }
 
-bool StartMeasurement::isChannel(int ch)
+bool StartMeasurement::isChannel(Channel_ID ch)
 {
     switch (ch) {
-    case 0:
+    case ChannelAll_ID:
         return channel_1 || channel_2 ||channel_3 || channel_4;
         break;
-    case 1:
+    case Channel1_ID:
         return channel_1;
         break;
-    case 2:
+    case Channel2_ID:
         return channel_2;
         break;
-    case 3:
+    case Channel3_ID:
         return channel_3;
         break;
-    case 4:
+    case Channel4_ID:
         return channel_4;
         break;
     default:
@@ -193,56 +193,56 @@ QString StartMeasurement::getStringStatus()
 {
     QString msg;
     if(isSingle()) {
-        if (isChannel(1)) {
-            msg += QString("Номер пробы 1: %1, ").arg(getNum(1));
+        if (isChannel(Channel1_ID)) {
+            msg += QString("№1 %1 ").arg(getNum(1));
         }
         else {
-            //msg += QString("№1 - выкл., ");
+            msg += QString(" ");
         }
 
-        if (isChannel(2)) {
-            msg += QString("Номер пробы 2: %1, ").arg(getNum(2));
+        if (isChannel(Channel2_ID)) {
+            msg += QString("№2 %1 ").arg(getNum(2));
         }
         else {
-            //msg += QString("№2 - выкл., ");
+            msg += QString(" ");
         }
 
-        if (isChannel(3)) {
-            msg += QString("Номер пробы 3: %1, ").arg(getNum(3));
+        if (isChannel(Channel3_ID)) {
+            msg += QString("№3 %1 ").arg(getNum(3));
         }
         else {
-            //msg += QString("№3 - выкл., ");
+            msg += QString(" ");
         }
 
-        if (isChannel(4)) {
-            msg += QString("Номер пробы 4: %1 ").arg(getNum(4));
+        if (isChannel(Channel4_ID)) {
+            msg += QString("№4 %1 ").arg(getNum(4));
         }
         else {
-            //msg += QString("№4 - выкл. ");
+            msg += QString(" ");
         }
 //        //---->> магические числа для времени инкубации 2
 //        if(getMode() == 1 && getMode() == 2) {
 //            msg = QString("Начало сбора данных, одиночные пробы (t = %1c, %2)")
 //                    .arg(startWin->getTime()).arg(msg);
 //        }
-        msg = QString("Начало сбора данных (Одиночные пробы, Время записи %1c, %2)")
+        msg = QString("Одиночные пробы %2, Время записи %1c")
                 .arg(getTimeWrite()).arg(msg);
     }
     else {
-        if (isChannel(1)) {
-            msg += QString("Номер пробы 1 и 2: %1, ").arg(getNum(1));
+        if (isChannel(Channel1_ID)) {
+            msg += QString("№1, 2: %1 ").arg(getNum(1));
         }
         else {
-            //msg += QString("№1, 2 - выкл., ");
+            msg += QString(" ");
         }
 
-        if (isChannel(3)) {
-            msg += QString("Номер пробы 3, 4: %1, ").arg(getNum(3));
+        if (isChannel(Channel3_ID)) {
+            msg += QString("№3, 4: %1 ").arg(getNum(3));
         }
         else {
-            //msg += QString("№3, 4 - выкл., ");
+            msg += QString(" ");
         }
-        msg = QString("Начало сбора данных (Парные пробы, Время записи: %1c, %2)")
+        msg = QString("Парные пробы %2, Время записи %1c")
                 .arg(getTimeWrite()).arg(msg);
     }
     return msg;
@@ -398,6 +398,52 @@ void StartMeasurement::on_comboBox_inductor_currentIndexChanged(const QString &a
         ui->lineEdit_iname->setVisible(false);
         ui->label_iname->setVisible(false);
     }
+}
+
+QWidget *StartMeasurement::getWgt() const
+{
+//    if(wgt) {
+//        QMessageBox::information(this, "Error", "StartMeasurement::getWgt(): the wgt pointer is null");
+//        return NULL;
+//    }
+//    switch(modeID) {
+//    case TestAgr1_ID:
+
+//        break;
+//    case TestAgr2_ID:
+//        break;
+//    case TestKo1_ID:
+//        break;
+//    case TestKo2_ID:
+//        break;
+//    case TestKo3_ID:
+//        break;
+//    case TestKo4_ID:
+//        break;
+//    case TestKo5_ID:
+//        break;
+//    case CalibAgr1_ID:
+//        break;
+//    case CalibAgr2_ID:
+//        break;
+//    case CalibKo1_ID:
+//        break;
+//    case CalibKo2_ID:
+//        break;
+//    case CalibKo3_ID:
+//        break;
+//    case CalibKo4_ID:
+//        break;
+//    case CalibKo5_ID:
+//        break;
+//    }
+
+    return wgt;
+}
+
+void StartMeasurement::setWgt(QWidget *value)
+{
+    wgt = value;
 }
 
 Mode_ID StartMeasurement::getModeID() const

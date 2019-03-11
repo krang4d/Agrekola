@@ -3,18 +3,18 @@
 
 #include  "../XML/KoAgrXML/koagrxml.h"
 #include "savefiles.h"
-#include <QVector>
 
+//Тип исследовани
 enum Mode_ID {
-    Test_ID = 0,
-    TestAgr1_ID,
-    TestAgr2_ID,
-    TestKo1_ID,
-    TestKo2_ID,
-    TestKo3_ID,
-    TestKo4_ID,
-    TestKo5_ID,
-    Level_ID,
+    Level_ID = 0,   //Определение средненго значения
+    Test_ID,        //Проверка
+    TestAgr1_ID,    //Определение параметров агрегации
+    TestAgr2_ID,    //Определение активности фактора Виллебранда
+    TestKo1_ID,     //Время свертывания
+    TestKo2_ID,     //АЧТВ
+    TestKo3_ID,     //Фибриноген
+    TestKo4_ID,     //Тромбин
+    TestKo5_ID,     //Протромбиновый комплекс
     CalibAgr1_ID,
     CalibAgr2_ID,
     CalibKo1_ID,
@@ -22,17 +22,21 @@ enum Mode_ID {
     CalibKo3_ID,
     CalibKo4_ID,
     CalibKo5_ID,
-    BTPTestAgr1_ID,
-    BTPCalibAgr1_ID,
-    OTPTestAgr1_ID,
-    OTPCalibAgr1_ID,
-    BTPTestAgr2_ID,
-    BTPCalibAgr2_ID,
-    OTPCalibAgr2_ID,
-    Incubation1_ID,
-    Incubation2_ID
 };
 
+//Состония
+enum State_ID{
+    Motor_ID,       //вкл.выкл моторов
+    Laser_ID,       //вкл.выкл лазеров
+    Ko_ID,          //измерение в режиме коаг
+    Agr_ID,         //измерение в режиме агр
+    Avg_ID,         //определение урвоня (БТП, ОТП и т.д.)
+    Calc_ID,        //расчет параметров
+    Incubation1_ID, //инкубация 1
+    Incubation2_ID  //инкубация 2
+};
+
+//Каналы
 enum Channel_ID {
     Channel1_ID     = 1,
     Channel2_ID     = 2,
@@ -41,20 +45,5 @@ enum Channel_ID {
     ChannelPP_ID    = 5,
     ChannelAll_ID   = 0
 };
-//enum State_ID {
-//    Level_ID,
-//    Incubation_ID
-//};
-
-
-//enum Calibr_ID { CalibrAgr1_ID  = 0,
-//                 CalibrAgr2_ID,
-//                 CalibrKo1_ID,
-//                 CalibrKo2_ID,
-//                 CalibrKo3_ID,
-//                 CalibrKo4_ID,
-//                 CalibrKo5_ID
-//               };
-
 
 #endif // GLOBALVALUE_H

@@ -81,7 +81,9 @@ HEADERS  += selectcalibrationagr1.h \
     globalvalue.h \
     ../XML/KoAgrXML/koagrxml.h \
     startmeasurement.h \
-    state.h
+    state.h \
+    choisedialog/agr_impl.h \
+    choisedialog/ko_impl.h
 
 
 FORMS    += selectcalibrationagr1.ui \

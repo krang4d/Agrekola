@@ -86,8 +86,8 @@ class StartCalibrationAgr1 : public StartMeasurement
 public:
     StartCalibrationAgr1() = delete;
     static StartMeasurement *getStart(Calibration*);
-    static StartMeasurement *getBTP();
-    static StartMeasurement *getOTP();
+//    static StartMeasurement *getBTP();
+//    static StartMeasurement *getOTP();
 };
 
 class StartTestAgr1 : public StartMeasurement

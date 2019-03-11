@@ -7,11 +7,12 @@
 #include <functional>
 
 #define TIMER_PERIOD_MS 100
-enum State_ID { Busy_ID = 0, Ready_ID };
+
 //typedef void (*Function)(void);
 
 namespace Ui {
 class ProgressTimerBar;
+enum State_ID { Busy_ID = 0, Ready_ID };
 }
 
 class ProgressTimerBar : public QWidget
@@ -28,11 +29,11 @@ public:
     void setFormat(QString format);
     void Wait();
 
-    inline State_ID getState() {
+    inline Ui::State_ID getState() {
         return state;
     }
 
-    inline void setState(State_ID s) {
+    inline void setState(Ui::State_ID s) {
         state = s;
     }
 
@@ -47,7 +48,7 @@ private:
     Ui::ProgressTimerBar *ui;
     std::function<void (void)> func;
     QTimer progressTimer;
-    State_ID state;
+    Ui::State_ID state;
 };
 
 #endif // PROGRESSTIMERBAR_H

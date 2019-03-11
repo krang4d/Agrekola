@@ -4,12 +4,13 @@
 #include <QWidget>
 #include "globalvalue.h"
 #include "startmeasurement.h"
+#include "ko_impl.h"
 
 namespace Ui {
 class Ko2;
 }
 
-class Ko2 : public QWidget
+class Ko2 : public QWidget, public Ko_impl
 {
     Q_OBJECT
 

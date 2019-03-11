@@ -254,34 +254,34 @@ StartMeasurement *StartCalibrationAgr1::getStart(Calibration *c_agr1)
     return start;
 }
 
-StartMeasurement *StartCalibrationAgr1::getBTP()
-{
-    StartMeasurement *start = new StartMeasurement(0);
-    start->setChannels(true, true, true, true);
-    start->setNum(1, "БТП");
-    start->setNum(2, "БТП");
-    start->setNum(3, "БТП");
-    start->setNum(4, "БТП");
-    start->setTimeWrite(10);
-    start->setTimeIncube(1, 3);
-    start->setModeID(BTPCalibAgr1_ID);
-    return start;
-}
+//StartMeasurement *StartCalibrationAgr1::getBTP()
+//{
+//    StartMeasurement *start = new StartMeasurement(0);
+//    start->setChannels(true, true, true, true);
+//    start->setNum(1, "БТП");
+//    start->setNum(2, "БТП");
+//    start->setNum(3, "БТП");
+//    start->setNum(4, "БТП");
+//    start->setTimeWrite(10);
+//    start->setTimeIncube(1, 3);
+//    start->setModeID(BTPCalibAgr1_ID);
+//    return start;
+//}
 
-StartMeasurement *StartCalibrationAgr1::getOTP()
-{
-    StartMeasurement *start = new StartMeasurement(0);
-    start->setChannels(true, true, true, true);
-    start->setNum(1, "ОТП");
-    start->setNum(2, "ОТП");
-    start->setNum(3, "ОТП");
-    start->setNum(4, "ОТП");
-    start->setTimeWrite(10);
-    start->setTimeIncube(1, 3);
-    start->setTimeIncube(2, 4);
-    start->setModeID(OTPCalibAgr1_ID);
-    return start;
-}
+//StartMeasurement *StartCalibrationAgr1::getOTP()
+//{
+//    StartMeasurement *start = new StartMeasurement(0);
+//    start->setChannels(true, true, true, true);
+//    start->setNum(1, "ОТП");
+//    start->setNum(2, "ОТП");
+//    start->setNum(3, "ОТП");
+//    start->setNum(4, "ОТП");
+//    start->setTimeWrite(10);
+//    start->setTimeIncube(1, 3);
+//    start->setTimeIncube(2, 4);
+//    start->setModeID(OTPCalibAgr1_ID);
+//    return start;
+//}
 
 StartMeasurement *StartTestAgr1::getStart(Test* t_agr1)
 {

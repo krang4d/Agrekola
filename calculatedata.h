@@ -228,13 +228,13 @@ public:
     //параметры для определения ф-ра Виллебранда
 private:
     TestAgr2 t_agr2;
-    CalibrationKo2 c_ko2;
+    CalibrationAgr2 c_agr2;
     const int kt = 3;               //часло калибровочных точек
     double btp;                     //богатая тромбоцитами плазма
     double otp;                     //обогащенная тромбоцитами плазма
     double c1;                      //активность фактора Виллебранда контр. плазмы (100%)
     double c2, c3, c4;              //активность фактора Виллебранда других разведений 200% 50%, 25%
-    double ck1, ck2, ck3;           //значение скорости агрегации
+    double ck1, ck2, ck3, ck4;           //значение скорости агрегации
     double tgalfa, tgalfa1;
     double tgalfa2, tgalfa3;        //угол наклона k-ого участка калибровочной кривой
     double lgcx;                    //искомая величиан ax = 10^lgcx

@@ -22,7 +22,7 @@ public:
 
     bool isCancel();
     bool isSingle();
-    bool isChannel(int = 0);
+    bool isChannel(Channel_ID = ChannelAll_ID);
     void setChannels(bool ch1, bool ch2, bool ch3, bool ch4);
 
     Mode_ID getModeID() const;
@@ -45,6 +45,12 @@ public:
     void openData();
 
     int num;
+
+    QObject *getObj() const;
+    void setObj(QObject *value);
+
+    QWidget *getWgt() const;
+    void setWgt(QWidget *value);
 
 public slots:
     void on_checkBox_ch1_stateChanged(int arg1);
@@ -83,6 +89,7 @@ private:
     double time;                        //время записи
     double time_incube, time_incube_2;  //время инкубации
     Mode_ID modeID;
+    QWidget *wgt;
 };
 
 #endif // STARTMEASUREMENT_H

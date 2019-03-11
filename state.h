@@ -6,19 +6,22 @@
 
 class State : public QObject
 {
+    Q_OBJECT
 protected:
-    QVector<Mode_ID> state;
+    QVector<State_ID> state;
     QMap<int, QString> state_map;
     int index;
 
 public:
     explicit State(QObject *parent = 0);
     virtual ~State();
-    Mode_ID current();
-    Mode_ID next();
+    State_ID current();
+    State_ID next();
     bool hasNext();
     void reset();
     virtual QString getMessage();
+signals:
+    void stateChanged();
 };
 
 class StateKo1 : public State
