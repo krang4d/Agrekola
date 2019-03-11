@@ -608,42 +608,46 @@ void Widget::getData(Channel_ID c, double time_s)
 
 void Widget::stopData(Channel_ID c)
 {
-    if(!isData(ChannelAll_ID)) {qDebug() << "stop"; return; }
+    if(!isData(ChannelAll_ID)) {qDebug() << "stoped"; return; }
     switch (c) {
     case Channel1_ID:
         if(data1) {
             data1 = false;
             pulse1 = false;
-            onMotor(c, false); //выключение перемешивания
-            calcData(c);
-            writeMapData(c);
+            emit done1();
+            //onMotor(c, false); //выключение перемешивания
+            //calcData(c);
+            //writeMapData(c);
         }
         break;
     case Channel2_ID:
         if(data2) {
             data2 = false;
             pulse2 = false;
-            onMotor(c, false); //выключение перемешивания
-            calcData(c);
-            writeMapData(c);
+            emit done2();
+            //onMotor(c, false); //выключение перемешивания
+            //calcData(c);
+            //writeMapData(c);
         }
         break;
     case Channel3_ID:
         if(data3) {
             data3 = false;
             pulse3 = false;
-            onMotor(c, false); //выключение перемешивания
-            calcData(c);
-            writeMapData(c);
+            emit done3();
+            //onMotor(c, false); //выключение перемешивания
+            //calcData(c);
+            //writeMapData(c);
         }
         break;
     case Channel4_ID:
         if(data4) {
             data4 = false;
             pulse4 = false;
-            onMotor(c, false); //выключение перемешивания
-            calcData(c);
-            writeMapData(c);
+            emit done4();
+            //onMotor(c, false); //выключение перемешивания
+            //calcData(c);
+            //writeMapData(c);
         }
         break;
     default: qDebug() << "n is out of data from Widget::stopData(n)";
@@ -851,6 +855,7 @@ void Widget::writeMapData(Channel_ID c)
 
     QStringList strList;
     auto func = [&](QMap<double, double> map) {
+        if(map.isEmpty()) QMessageBox::information(this, "writeMapData", "Массив не заполнен!");
         strList << QString("t#%5\tti#%6\tp#%7\n").arg(startWin->getTimeWrite())
                                                  .arg(startWin->getTimeIncube())
                                                  .arg(startWin->isSingle());
@@ -953,6 +958,7 @@ void Widget::setUserMessage(QString str, bool withtime, bool tofile)
 
 void Widget::on_pushButton_clicked()
 {
+    connect(state, SIGNAL(stateChanged()), this, SLOT(doScenario()));
     ui->pushButton->setEnabled(false);
     if( termoSensor ) {
         setUserMessage(QString("<span style='color:red'>Дождитесь нагрева термостата</span>"));
@@ -982,42 +988,87 @@ void Widget::on_pushButton_clicked()
         test();
         return;
     }
+    ui->pushButton->setEnabled(false);
+    doScenario();
+}
 
-    QPointer<ImpuleWaiter> iw = new ImpuleWaiter;
-    //state = StateBuilder::getState(startWin->getModeID());
-    static State_ID current_state_id = state->current();
-    QString msg_state = state->getMessage();
+void Widget::doScenario()
+{
+    static QPointer<ImpuleWaiter> iw;
+    static State_ID current_state_id;
+    static QString msg_state;
+    current_state_id = state->current();
     switch(current_state_id) {
-    case Motor_ID:
+    case MotorON_ID:
+        msg_state = state->getMessage();
         setUserMessage(msg_state);
+        QMessageBox::information(this, "MotorON_ID", msg_state);
         if(startWin->isChannel(Channel1_ID)) onMotor(Channel1_ID, true);
         if(startWin->isChannel(Channel2_ID)) onMotor(Channel2_ID, true);
         if(startWin->isChannel(Channel3_ID)) onMotor(Channel3_ID, true);
         if(startWin->isChannel(Channel4_ID)) onMotor(Channel4_ID, true);
-        if(state->hasNext()) state->next();
-        //else setUserMessage("Конец!!!");
+        state->next();
         break;
-    case Laser_ID:
+    case MotorOFF_ID:
+        msg_state = state->getMessage();
         setUserMessage(msg_state);
+        QMessageBox::information(this, "MotorOFF_ID", msg_state);
+        if(startWin->isChannel(Channel1_ID)) onMotor(Channel1_ID, false);
+        if(startWin->isChannel(Channel2_ID)) onMotor(Channel2_ID, false);
+        if(startWin->isChannel(Channel3_ID)) onMotor(Channel3_ID, false);
+        if(startWin->isChannel(Channel4_ID)) onMotor(Channel4_ID, false);
+        state->next();
+        break;
+    case LaserON_ID:
+        msg_state = state->getMessage();
+        setUserMessage(msg_state);
+        QMessageBox::information(this, "LaserON_ID", msg_state);
         onlaser(true);
-        if(state->hasNext()) state->next();
-        //else setUserMessage("Конец!!!");
+        state->next();
+        break;
+    case LaserOFF_ID:
+        msg_state = state->getMessage();
+        setUserMessage(msg_state);
+        QMessageBox::information(this, "LaserOFF_ID", msg_state);
+        onlaser(true);
+        state->next();
         break;
     case Ko_ID:
+        msg_state = state->getMessage();
         QMessageBox::information(this, "Ko_ID", msg_state);
-        setUserMessage(startWin->getStringStatus());
-        startIncub(1, startWin->getTimeIncube(), [=](){ waitImpulse(iw);});
+        setUserMessage(msg_state);
+        iw = QPointer<ImpuleWaiter> (new ImpuleWaiter);
+        //startIncub(1, startWin->getTimeIncube(), [=](){ waitImpulse(iw);});
+        connect(this, &Widget::done1, [=](){ if (!isData(ChannelAll_ID)) state->next();});
+        connect(this, &Widget::done2, [=](){ if (!isData(ChannelAll_ID)) state->next();});
+        connect(this, &Widget::done3, [=](){ if (!isData(ChannelAll_ID)) state->next();});
+        connect(this, &Widget::done4, [=](){ if (!isData(ChannelAll_ID)) state->next();});
+        waitImpulse(iw);
         break;
     case Calc_ID:
+        msg_state = state->getMessage();
+        QMessageBox::information(this, "Calc_ID", msg_state);
+        setUserMessage(msg_state);
         if( startWin->isChannel(Channel1_ID) ) calcData(Channel1_ID);
         if( startWin->isChannel(Channel2_ID) ) calcData(Channel2_ID);
         if( startWin->isChannel(Channel3_ID) ) calcData(Channel3_ID);
         if( startWin->isChannel(Channel4_ID) ) calcData(Channel4_ID);
-        if(state->hasNext()) state->next();
-        else setUserMessage("Конец!!!");
+        state->next();
+        break;
+    case Write_ID:
+        msg_state = state->getMessage();
+        QMessageBox::information(this, "Write_ID", msg_state);
+        setUserMessage(msg_state);
+        if( startWin->isChannel(Channel1_ID) ) writeMapData(Channel1_ID);
+        if( startWin->isChannel(Channel2_ID) ) writeMapData(Channel2_ID);
+        if( startWin->isChannel(Channel3_ID) ) writeMapData(Channel3_ID);
+        if( startWin->isChannel(Channel4_ID) ) writeMapData(Channel4_ID);
+        state->next();
         break;
     case Avg_ID:
+        msg_state = state->getMessage();
         setUserMessage(msg_state);
+        QMessageBox::information(this, "Avg_ID", msg_state);
         connect(this, &Widget::done, [this](){ ui->pushButton->setEnabled(true);
         });
         if (startWin->isChannel(Channel1_ID)) getData(Channel1_ID, startWin->getTimeWrite());
@@ -1026,28 +1077,21 @@ void Widget::on_pushButton_clicked()
         if (startWin->isChannel(Channel4_ID)) getData(Channel4_ID, startWin->getTimeWrite());
         break;
     case Agr_ID:
+        msg_state = state->getMessage();
+        QMessageBox::information(this, "Agr_ID", msg_state);
+        iw = QPointer<ImpuleWaiter> (new ImpuleWaiter);
         waitImpulse(iw);
         setUserMessage(QString("<div style='color: blue'>Конец TestAgr1_ID"), 0);
         ui->pushButton->setEnabled(true);
         state->reset();
         break;
-        //    case TestKo1_ID:
-        //        ui->pushButton->setEnabled(false);
-        //        setUserMessage(startWin->getStringStatus());
-        //        if(startWin->isChannel(1)) onMotor(Channel1_ID, true); //включение перемешивания 1
-        //        if(startWin->isChannel(2)) onMotor(Channel2_ID, true); //включение перемешивания 2
-        //        if(startWin->isChannel(3)) onMotor(Channel3_ID, true); //включение перемешивания 3
-        //        if(startWin->isChannel(4)) onMotor(Channel4_ID, true); //включение перемешивания 4
-        //        startIncub(1, startWin->getTimeIncube(), [=](){ waitImpulse(iw);});
-        //        ////connect(iw.data(), ImpuleWaiter::alldone, [](){});
-        //        break;
-
     case Incubation1_ID:
+        msg_state = state->getMessage();
+        QMessageBox::information(this, "Incubation1_ID", msg_state);
         setUserMessage(msg_state);
-        QMessageBox::information(this, "", msg_state);
         startIncub(1, startWin->getTimeIncube(1), [this](){
             setUserMessage(QString("<span style = 'color: red'>Время инкубации истекло</span>"));
-            on_pushButton_clicked();
+            state->next();
         });
         break;
     case Incubation2_ID:
@@ -1071,5 +1115,4 @@ void Widget::on_pushButton_clicked()
         qDebug() << QString("called default startMeasurment()");
         break;
     } //end switch
-    ui->pushButton->setEnabled(true);
 }

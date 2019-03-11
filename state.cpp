@@ -34,7 +34,7 @@ State_ID State::next()
 
 bool State::hasNext()
 {
-    if( 0 <= index && (index + 1) < state.size() )
+    if( 0 <= index && index + 1  < state.size() )
         return true;
     else return false;
 }
@@ -59,11 +59,16 @@ StateKo1::StateKo1()
 
 StateKo2::StateKo2()
 {
-    State::state = { Laser_ID, Motor_ID, Avg_ID };
+    State::state = { LaserON_ID, MotorON_ID, Incubation1_ID, Ko_ID, LaserOFF_ID, MotorOFF_ID, Calc_ID, Write_ID };
     State::state_map = {
         { 0,  QString("Включение лазеров") },
         { 1,  QString("Включение двигателей") },
-        { 2,  QString("Установите в каналы 1,2,3,4 пробы с контрольной плазмой и нажмите СТАРТ") }
+        { 2,  QString("Инкубация") },
+        { 3,  QString("Установите в рабочие каналы пробы") },
+        { 4,  QString("Выключение лазеров") },
+        { 5,  QString("Выключение двигателей") },
+        { 6,  QString("Расчет") },
+        { 7,  QString("Запись") }
     };
 }
 
@@ -105,11 +110,15 @@ StateCalKo1::StateCalKo1()
 
 StateCalKo2::StateCalKo2()
 {
-    State::state = { Laser_ID, Motor_ID, Ko_ID };
+    State::state = { LaserON_ID, MotorON_ID, Incubation1_ID, Ko_ID, MotorOFF_ID, LaserOFF_ID, Calc_ID };
     State::state_map = {
         { 0,  QString("Включение лазеров") },
         { 1,  QString("Включение двигателей") },
-        { 2,  QString("Установите в каналы 1,2,3,4 пробы с контрольной плазмой и нажмите СТАРТ") }
+        { 2,  QString("Инкубация") },
+        { 3,  QString("Установите в рабочие каналы пробы с контрольной плазмой и нажмите OK") },
+        { 4,  QString("Выключение лазеров") },
+        { 5,  QString("Выключение двигателей") },
+        { 6,  QString("Расчет") }
     };
 }
 

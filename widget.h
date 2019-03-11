@@ -70,6 +70,10 @@ signals:
     void ret_value2(double);
     void ret_value3(double);
     void ret_value4(double);
+    void done1();
+    void done2();
+    void done3();
+    void done4();
     void done();
     void incube_timeout();
 
@@ -92,7 +96,7 @@ private slots:
     void realtimeDataSlot(QVariantList);
     void updataTermo(bool);
     void updateTime();
-
+    void doScenario();
     void setupRealtimeData(bool single);
     void setupTimers();
 

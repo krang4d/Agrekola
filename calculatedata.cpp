@@ -241,19 +241,6 @@ QString CalcKo1::info()
 
 CalcKo2::CalcKo2()
 {
-//    QString d1, d2, d3, d4;
-//    SaveFiles file;
-//    file.openKo2(param);
-//    qDebug() << "параметры CalcKo2 " << param.count();
-//    auto it = param.end();
-//    d1 = *(it-4);
-//    d2 = *(it-3);
-//    d3 = *(it-2);
-//    d4 = *(it-1);
-//    qDebug() << d1 << d2 << d3 << d4;
-//    t0 = (d1.toDouble() + d2.toDouble() + d3.toDouble() + d4.toDouble())/4;
-//    qDebug() << "АЧТВ контрольной плазмы =" << t0;
-
     t0 = (c_ko2.getA4tv_kp1() + c_ko2.getA4tv_kp2() + c_ko2.getA4tv_kp3() + c_ko2.getA4tv_kp4())/4;
     //QMessageBox::information(nullptr, "CalcKo2", QString("АЧТВ = %1").arg(t0));
     qDebug() << QString("АЧТВ = %1").arg(t0);
@@ -261,6 +248,7 @@ CalcKo2::CalcKo2()
 
 double CalcKo2::calc(QMap<double, double> map)
 {
+    if(!t0) QMessageBox::information(0, "CalcKo2", "Деление наноль");
     return CalcData::calcKo(map)/t0; // ОТН АЧТВ(1)
 }
 

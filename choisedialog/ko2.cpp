@@ -32,6 +32,26 @@ void Ko2::open()
     t_ko2_1 = new TestKo2(WithoutCalibration(), this);
     c_ko2 = new CalibrationKo2(this);
 
+    int i = 0;
+    double sum = 0;
+    if(c_ko2->getK1()) {
+        i++;
+        sum+= c_ko2->getA4tv_kp1();
+    }
+    if(c_ko2->getK2()) {
+        i++;
+        sum+= c_ko2->getA4tv_kp2();
+    }
+    if(c_ko2->getK3()) {
+        i++;
+        sum+= c_ko2->getA4tv_kp3();
+    }
+    if(c_ko2->getK4()) {
+        i++;
+        sum+= c_ko2->getA4tv_kp4();
+    }
+
+    sum/=i;
     ui->groupBox_test1Calib->setTitle(QString("Последняя калибровка: %1\n")
                                         .arg(c_ko2->getDate().toString("dd.MM.yyyy")));
     QString str = QString("Реагенты: %1 (до %2)\n").arg(c_ko2->getReagent_serial())
@@ -39,10 +59,11 @@ void Ko2::open()
                 + QString("Плазма «К»: %1 (до %2)\n")
                             .arg(c_ko2->getK_plazma_serial())
                             .arg(c_ko2->getK_plazma_date().toString("dd.MM.yyyy"))
-                + QString("АЧТВ к/плазмы 1го канала: %1 с\n").arg(c_ko2->getA4tv_kp1())
-                + QString("АЧТВ к/плазмы 2го канала: %1 с\n").arg(c_ko2->getA4tv_kp2())
-                + QString("АЧТВ к/плазмы 3го канала: %1 с\n").arg(c_ko2->getA4tv_kp3())
-                + QString("АЧТВ к/плазмы 4го канала: %1 с").arg(c_ko2->getA4tv_kp4());
+//                + QString("АЧТВ к/плазмы 1го канала: %1 с\n").arg(c_ko2->getA4tv_kp1())
+//                + QString("АЧТВ к/плазмы 2го канала: %1 с\n").arg(c_ko2->getA4tv_kp2())
+//                + QString("АЧТВ к/плазмы 3го канала: %1 с\n").arg(c_ko2->getA4tv_kp3())
+//                + QString("АЧТВ к/плазмы 4го канала: %1 с\n").arg(c_ko2->getA4tv_kp4())
+                + QString("АЧТВ к/плазмы: %1").arg(sum);
     ui->label_test1CalibString->setText(str);
 
     if( t_ko2->getSingle() ) {
