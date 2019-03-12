@@ -165,8 +165,8 @@ void ChoiseDialog::calibration(StartMeasurement* sw)
         connect(widget.data(), SIGNAL(ret_value4(double)), agr2.data(), SLOT(calibrationData4Come(double)));
         break;
     case CalibKo2_ID:
-        widget->setWindowTitle("АЧТВ, калибровка (Ko2 4)");
-        widget->setUserMessage("АЧТВ, калибровка (Ko2 4)", 0);
+        widget->setWindowTitle("АЧТВ, калибровка (Ko2)");
+        widget->setUserMessage("АЧТВ, калибровка (Ko2)", 0);
         widget->setUserMessage(QString("<div style='color: blue'>Установите кюветы с контрольной нормальной плазмой и нажмите \"Старт\""), 0);
         connect(widget.data(), SIGNAL(ret_value1(double)), ko2.data(), SLOT(calibrationData1Come(double)));
         connect(widget.data(), SIGNAL(ret_value2(double)), ko2.data(), SLOT(calibrationData2Come(double)));
@@ -174,16 +174,17 @@ void ChoiseDialog::calibration(StartMeasurement* sw)
         connect(widget.data(), SIGNAL(ret_value4(double)), ko2.data(), SLOT(calibrationData4Come(double)));
         break;
     case CalibKo3_ID:
-        widget->setUserMessage("Фибриноген, калибровка (Ko3 5)", 0);
+        widget->setUserMessage("Фибриноген, калибровка (Ko3)", 0);
         widget->setUserMessage(QString("<div style='color: blue'>Установите кюветы с контрольной нормальной плазмой и ее разведением, после нажмите \"Старт\""), 0);
-        widget->setUserMessage(QString("<div style='color: blue'>Разведения: Канал 1 - 200%, Канал 2 - 100%, Канал 3 - 50%, Канал 4 - 25%"), 0);
+        widget->setUserMessage(QString("<div style='color: blue'>Первый этап разведения: Канал 1,2 - 200%, Канал 2,3 - 100%\n"
+                                       "Второй этап разведения: Канал 1,2 - 50%, Канал 3,4 - 25%"), 0);
         connect(widget.data(), SIGNAL(ret_value1(double)), ko3.data(), SLOT(calibrationData1Come(double)));
         connect(widget.data(), SIGNAL(ret_value2(double)), ko3.data(), SLOT(calibrationData2Come(double)));
         connect(widget.data(), SIGNAL(ret_value3(double)), ko3.data(), SLOT(calibrationData3Come(double)));
         connect(widget.data(), SIGNAL(ret_value4(double)), ko3.data(), SLOT(calibrationData4Come(double)));
         break;
     case CalibKo4_ID:
-        widget->setUserMessage("Тромбин, калибровка (Ko4 6)", 0);
+        widget->setUserMessage("Тромбин, калибровка (Ko4)", 0);
         widget->setUserMessage(QString("<div style='color: blue'>Установите кюветы с контрольной нормальной плазмой и нажмите \"Старт\""), 0);
         connect(widget.data(), SIGNAL(ret_value1(double)), ko4.data(), SLOT(calibrationData1Come(double)));
         connect(widget.data(), SIGNAL(ret_value2(double)), ko4.data(), SLOT(calibrationData2Come(double)));
@@ -191,7 +192,7 @@ void ChoiseDialog::calibration(StartMeasurement* sw)
         connect(widget.data(), SIGNAL(ret_value4(double)), ko4.data(), SLOT(calibrationData4Come(double)));
         break;
     case CalibKo5_ID:
-        widget->setUserMessage(QString("Протромбиновый комплекс, калибровка (Ko5 7)"), 0);
+        widget->setUserMessage(QString("Протромбиновый комплекс, калибровка (Ko5)"), 0);
         widget->setUserMessage(QString("<div style='color: blue'>Установите кюветы с контрольной нормальной плазмой и ее разведением, после нажмите \"Старт\""), 0);
         widget->setUserMessage(QString("<div style='color: blue'>Разведения: Канал 1 - 100%, Канал 2 - 50%, Канал 3 - 25%, Канал 4 - 12.5%"), 0);
         connect(widget.data(), SIGNAL(ret_value1(double)), ko5.data(), SLOT(calibrationData1Come(double)));

@@ -329,6 +329,7 @@ StartMeasurement* StartCalibrationKo3::getStart(Calibration* c_ko3)
     start->setNum(4, "к/плазма");
     start->setTimeWrite(c_ko3->getWrite_time());
     start->setTimeIncube(1, c_ko3->getIncube_time());
+    start->setProbe(false);
     start->setModeID(CalibKo3_ID);
     return start;
 }

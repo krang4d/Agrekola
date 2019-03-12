@@ -330,7 +330,7 @@ void Widget::realtimeDataSlot(QVariantList a) {
                    std::abs(map_y1.last() - stop_dy1) >= std::abs(stop_dy1*STOP_DX))
                 {
                     //qDebug() << "emit stopData1" << std::abs(map_y1.last() - stop_dy1) << ">=" << std::abs(stop_dy1*STOP_DX);
-                    emit stopData(Channel1_ID);
+                    data1 = false; //stopData(Channel1_ID);
                 }
             }
         }
@@ -351,7 +351,7 @@ void Widget::realtimeDataSlot(QVariantList a) {
                    std::abs(map_y2.last() - stop_dy2) >= std::abs(stop_dy2*STOP_DX) )
                 {
                     //qDebug() << "emit stopData2" << std::abs(map_y2.last() - stop_dy2) << ">=" << std::abs(stop_dy2*STOP_DX);
-                    emit stopData(Channel2_ID);
+                    data2 = false; //stopData(Channel2_ID);
                 }
             }
         }
@@ -372,7 +372,7 @@ void Widget::realtimeDataSlot(QVariantList a) {
                    std::abs(map_y3.last() - stop_dy3) >= std::abs(stop_dy3*STOP_DX) )
                 {
                     //qDebug() << "emit stopData3" << std::abs(map_y3.last() - stop_dy3) << ">=" << std::abs(stop_dy3*STOP_DX);
-                    emit stopData(Channel3_ID);
+                    data3 = false; //stopData(Channel3_ID);
                 }
             }
         }
@@ -393,7 +393,7 @@ void Widget::realtimeDataSlot(QVariantList a) {
                    std::abs(map_y4.last() - stop_dy4) >= std::abs(stop_dy4*STOP_DX) )
                 {
                     //qDebug() << "emit stopData4" << std::abs(map_y4.last() - stop_dy4) << ">=" << std::abs(stop_dy4*STOP_DX);
-                    emit stopData(Channel4_ID);
+                    data4 =false; //stopData(Channel4_ID);
                 }
             }
         }
@@ -582,7 +582,27 @@ void Widget::getData(Channel_ID c, double time_s)
     setUserMessage(str);
     emit status(str);
     std::function<void (Channel_ID)> func = [this](Channel_ID c){
-        stopData(c);
+        switch (c) {
+        case Channel1_ID:
+            data1 = false;
+            emit done1();
+            break;
+        case Channel2_ID:
+            data2 = false;
+            emit done2();
+            break;
+        case Channel3_ID:
+            data3 = false;
+            emit done3();
+            break;
+        case Channel4_ID:
+            data4 = false;
+            emit done4();
+            break;
+        default:
+            break;
+        }
+        //stopData(c);
     };
     switch (c) {
     case Channel1_ID:
@@ -615,9 +635,6 @@ void Widget::stopData(Channel_ID c)
             data1 = false;
             pulse1 = false;
             emit done1();
-            //onMotor(c, false); //выключение перемешивания
-            //calcData(c);
-            //writeMapData(c);
         }
         break;
     case Channel2_ID:
@@ -625,9 +642,6 @@ void Widget::stopData(Channel_ID c)
             data2 = false;
             pulse2 = false;
             emit done2();
-            //onMotor(c, false); //выключение перемешивания
-            //calcData(c);
-            //writeMapData(c);
         }
         break;
     case Channel3_ID:
@@ -635,9 +649,6 @@ void Widget::stopData(Channel_ID c)
             data3 = false;
             pulse3 = false;
             emit done3();
-            //onMotor(c, false); //выключение перемешивания
-            //calcData(c);
-            //writeMapData(c);
         }
         break;
     case Channel4_ID:
@@ -645,9 +656,6 @@ void Widget::stopData(Channel_ID c)
             data4 = false;
             pulse4 = false;
             emit done4();
-            //onMotor(c, false); //выключение перемешивания
-            //calcData(c);
-            //writeMapData(c);
         }
         break;
     default: qDebug() << "n is out of data from Widget::stopData(n)";
@@ -730,7 +738,6 @@ void Widget::incubeTimeout_2()
 
 void Widget::waitImpulse(ImpuleWaiter *iw)
 {
-        //stopIncub();
         if(startWin->isChannel(Channel1_ID)) {
             setUserMessage("Канал 1: В ожидании добавления стартового реагента");
             ready1 = true;
@@ -848,7 +855,7 @@ double Widget::calcData(Channel_ID c)
 void Widget::writeMapData(Channel_ID c)
 {
     ProgressTimerBar *pBar;
-    CalcData *p = CalcData::createCalc( current_mode_id );
+    CalcData *p = CalcData::createCalc( startWin->getModeID() );
     if(p == NULL) { qDebug() << "CalcData is NULL"; return; }
     setUserMessage(QString("Канал %1: Запись данных").arg(c));
     emit status(QString("Канал %1: Запись данных").arg(c));
@@ -905,12 +912,12 @@ void Widget::writeMapData(Channel_ID c)
         break;
     }
 
-    if (!isData(ChannelAll_ID) && !isIncub() && !isWaitPulse()) {
-        ui->pushButton->setEnabled(true);
-        setUserMessage(QString("Конец сбора данных"));
-        status(QString("Конец сбора данных"));
-        emit done();
-    }
+//    if (!isData(ChannelAll_ID) && !isIncub() && !isWaitPulse()) {
+//        ui->pushButton->setEnabled(true);
+//        setUserMessage(QString("Конец сбора данных"));
+//        status(QString("Конец сбора данных"));
+//        emit done();
+//    }
 }
 
 void Widget::showEvent(QShowEvent *event)
@@ -994,9 +1001,10 @@ void Widget::on_pushButton_clicked()
 
 void Widget::doScenario()
 {
-    static QPointer<ImpuleWaiter> iw;
+    //static QPointer<ImpuleWaiter> iw;
     static State_ID current_state_id;
     static QString msg_state;
+    static int i = 0;
     current_state_id = state->current();
     switch(current_state_id) {
     case MotorON_ID:
@@ -1035,15 +1043,38 @@ void Widget::doScenario()
         break;
     case Ko_ID:
         msg_state = state->getMessage();
-        QMessageBox::information(this, "Ko_ID", msg_state);
+        QMessageBox::information(this, "Ko_ID", msg_state + QString("d1 %1 d2 %2 D3 %3 D4 %4").arg(data1).arg(data2).arg(data3).arg(data4));
         setUserMessage(msg_state);
-        iw = QPointer<ImpuleWaiter> (new ImpuleWaiter);
-        //startIncub(1, startWin->getTimeIncube(), [=](){ waitImpulse(iw);});
-        connect(this, &Widget::done1, [=](){ if (!isData(ChannelAll_ID)) state->next();});
-        connect(this, &Widget::done2, [=](){ if (!isData(ChannelAll_ID)) state->next();});
-        connect(this, &Widget::done3, [=](){ if (!isData(ChannelAll_ID)) state->next();});
-        connect(this, &Widget::done4, [=](){ if (!isData(ChannelAll_ID)) state->next();});
-        waitImpulse(iw);
+        if (startWin->isChannel(Channel1_ID)) {
+            i++;
+            connect(this, &Widget::done1, [this]() {
+                i--;
+                if (!i) state->next(); qDebug() << "done1";
+                 disconnect(this, &Widget::done1, 0, 0);});
+        }
+        if (startWin->isChannel(Channel2_ID)) {
+            i++;
+            connect(this, &Widget::done2, [this]() {
+                i--;
+                if (!i) state->next(); qDebug() << "done2";
+                disconnect(this, &Widget::done2, 0, 0);
+            });
+        }
+        if (startWin->isChannel(Channel3_ID)) {
+            i++;
+            connect(this, &Widget::done3, [this]() {
+                i--;
+                if (!i) state->next(); qDebug() << "done3";
+                disconnect(this, &Widget::done3, 0, 0);});
+        }
+        if (startWin->isChannel(Channel4_ID)) {
+            i++;
+            connect(this, &Widget::done4, [this]() {
+                i--;
+                if (!i) state->next(); qDebug() << "done4";
+                disconnect(this, &Widget::done4, 0, 0);});
+        }
+        waitImpulse(new ImpuleWaiter);
         break;
     case Calc_ID:
         msg_state = state->getMessage();
@@ -1069,18 +1100,44 @@ void Widget::doScenario()
         msg_state = state->getMessage();
         setUserMessage(msg_state);
         QMessageBox::information(this, "Avg_ID", msg_state);
-        connect(this, &Widget::done, [this](){ ui->pushButton->setEnabled(true);
-        });
-        if (startWin->isChannel(Channel1_ID)) getData(Channel1_ID, startWin->getTimeWrite());
-        if (startWin->isChannel(Channel2_ID)) getData(Channel2_ID, startWin->getTimeWrite());
-        if (startWin->isChannel(Channel3_ID)) getData(Channel3_ID, startWin->getTimeWrite());
-        if (startWin->isChannel(Channel4_ID)) getData(Channel4_ID, startWin->getTimeWrite());
+        if (startWin->isChannel(Channel1_ID)) {
+            i++;
+            getData(Channel1_ID, startWin->getTimeWrite());
+            connect(this, &Widget::done1, [this]() {
+                i--;
+                if (!i) state->next(); qDebug() << "done1";
+                 disconnect(this, &Widget::done1, 0, 0);});
+        }
+        if (startWin->isChannel(Channel2_ID)) {
+            i++;
+            getData(Channel2_ID, startWin->getTimeWrite());
+            connect(this, &Widget::done2, [this]() {
+                i--;
+                if (!i) state->next(); qDebug() << "done2";
+                disconnect(this, &Widget::done2, 0, 0);
+            });
+        }
+        if (startWin->isChannel(Channel3_ID)) {
+            i++;
+            getData(Channel3_ID, startWin->getTimeWrite());
+            connect(this, &Widget::done3, [this]() {
+                i--;
+                if (!i) state->next(); qDebug() << "done3";
+                disconnect(this, &Widget::done3, 0, 0);});
+        }
+        if (startWin->isChannel(Channel4_ID)) {
+            i++;
+            getData(Channel4_ID, startWin->getTimeWrite());
+            connect(this, &Widget::done4, [this]() {
+                i--;
+                if (!i) state->next(); qDebug() << "done4";
+                disconnect(this, &Widget::done4, 0, 0);});
+        }
         break;
     case Agr_ID:
         msg_state = state->getMessage();
         QMessageBox::information(this, "Agr_ID", msg_state);
-        iw = QPointer<ImpuleWaiter> (new ImpuleWaiter);
-        waitImpulse(iw);
+        waitImpulse(new ImpuleWaiter);
         setUserMessage(QString("<div style='color: blue'>Конец TestAgr1_ID"), 0);
         ui->pushButton->setEnabled(true);
         state->reset();
@@ -1095,12 +1152,14 @@ void Widget::doScenario()
         });
         break;
     case Incubation2_ID:
+        msg_state = state->getMessage();
+        QMessageBox::information(this, "Incubation1_ID", msg_state);
+        setUserMessage(msg_state);
+        startIncub(2, startWin->getTimeIncube(1), [this](){
+            setUserMessage(QString("<span style = 'color: red'>Время инкубации истекло</span>"));
+            state->next();
+        });
         break;
-        //          case CalibKo_ID:
-        ////        connect(this, SIGNAL(ret_value1(double)), static_cast<Ko2*>(startWin->parentWidget()), SLOT(calibrationData1Come(double)));
-        ////        connect(this, SIGNAL(ret_value2(double)), ko2.data(), SLOT(calibrationData2Come(double)));
-        ////        connect(this, SIGNAL(ret_value3(double)), ko2.data(), SLOT(calibrationData3Come(double)));
-        ////        connect(this, SIGNAL(ret_value4(double)), ko2.data(), SLOT(calibrationData4Come(double)));
     default:
         if(startWin->isChannel(Channel1_ID)) onMotor(Channel1_ID, true); //включение перемешивания 1
         if(startWin->isChannel(Channel2_ID)) onMotor(Channel2_ID, true); //включение перемешивания 2

@@ -111,8 +111,7 @@
          <item row="3" column="0">
           <widget class="QLabel" name="label_calib_4">
            <property name="text">
-            <string>Номер серии контрольной
-плазмы</string>
+            <string>Номер серии к/плазмы</string>
            </property>
           </widget>
          </item>
@@ -122,8 +121,7 @@
          <item row="4" column="0">
           <widget class="QLabel" name="label_calib_5">
            <property name="text">
-            <string>Срок годности контрольной
-плазмы</string>
+            <string>Срок годности к/плазмы</string>
            </property>
           </widget>
          </item>
@@ -142,7 +140,7 @@
           <widget class="QLabel" name="label_calib_3">
            <property name="text">
             <string>Концентрация фибриногена
-контрольной плазмы (г/л)</string>
+к/плазмы (г/л)</string>
            </property>
           </widget>
          </item>

@@ -199,12 +199,13 @@ void Agr2::on_pushButton_test_clicked()
     else c = false;
     if(ui->checkBox_testCh4->isChecked() && !ui->lineEdit_testCh4->text().isEmpty()) d = true;
     else d = false;
-    bool e = c_agr2.getCk1() || c_agr2.getCk2() || c_agr2.getCk3() || c_agr2.getCk4();
-    if( !(!c_agr2.getDate().toString("dd.MM.yyyy").isEmpty() && e) ) {
-        //QString str = QString("%1").arg(c_ko2.getDate().toString("dd/MM/yyyy"));
-        QMessageBox::information(this, "Внимание!", QString("Для того чтобы продолжить неоходимо провести калибровку."));
-        return;
-    }
+
+//    bool e = c_agr2.getCk1() || c_agr2.getCk2() || c_agr2.getCk3() || c_agr2.getCk4();
+//    if( !(!c_agr2.getDate().toString("dd.MM.yyyy").isEmpty() && e) ) {
+//        //QString str = QString("%1").arg(c_ko2.getDate().toString("dd/MM/yyyy"));
+//        QMessageBox::information(this, "Внимание!", QString("Для того чтобы продолжить неоходимо провести калибровку."));
+//        return;
+//    }
     //bool c = (ui->doubleSpinBox_testIncubeTime->value() != NULL) && (ui->doubleSpinBox_testWriteTime->value() != NULL);
     if ( !(a || b || c || d) ) {
         QMessageBox::information(this, "Внимание!", "Для того чтобы продолжить необходимо выбрать рабочие каналы и заполнить все поля с параметрами.");
@@ -309,6 +310,7 @@ StartMeasurement *StartCalibrationAgr2::getStart(Calibration* c_agr2)
     start->setTimeWrite(c_agr2->getWrite_time());
     start->setTimeIncube(1, c_agr2->getIncube_time());
     start->setTimeIncube(2, obj->getIncube_time_2());
+    start->setModeID(CalibAgr2_ID);
     //stKo2->cancel = false;
     return start;
 }
@@ -335,5 +337,6 @@ StartMeasurement *StartTestAgr2::getStart(Test* t_agr2)
     start->setProbe(obj->getIncubeTime2());
     start->setTimeIncube(1, t_agr2->getIncubeTime());
     start->setTimeIncube(2, obj->getIncubeTime2());
+    start->setModeID(TestAgr2_ID);
     return start;
 }

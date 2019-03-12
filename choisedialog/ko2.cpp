@@ -50,8 +50,8 @@ void Ko2::open()
         i++;
         sum+= c_ko2->getA4tv_kp4();
     }
-
     sum/=i;
+
     ui->groupBox_test1Calib->setTitle(QString("Последняя калибровка: %1\n")
                                         .arg(c_ko2->getDate().toString("dd.MM.yyyy")));
     QString str = QString("Реагенты: %1 (до %2)\n").arg(c_ko2->getReagent_serial())

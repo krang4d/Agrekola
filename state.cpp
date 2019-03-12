@@ -51,9 +51,15 @@ QString State::getMessage()
 
 StateKo1::StateKo1()
 {
-    State::state = { Ko_ID };
+    State::state = { Incubation1_ID, Ko_ID, Calc_ID, Incubation1_ID,  Ko_ID, Calc_ID };
+//    State::state = { Incubation1_ID, Ko_ID, Incubation1_ID,  Ko_ID, Calc_ID };
     State::state_map = {
-        { 0,  QString("«Установите в каналы кюветы с пробами»") }
+        { 0,  QString("Инкубация 1") },
+        { 1,  QString("Измерение 1") },
+        { 2,  QString("Расчет") },
+        { 3,  QString("Инкубация 2") },
+        { 4,  QString("Измерение 2") },
+        { 5,  QString("Расчет") }
     };
 }
 
@@ -64,7 +70,7 @@ StateKo2::StateKo2()
         { 0,  QString("Включение лазеров") },
         { 1,  QString("Включение двигателей") },
         { 2,  QString("Инкубация") },
-        { 3,  QString("Установите в рабочие каналы пробы") },
+        { 3,  QString("Сбор данных") },
         { 4,  QString("Выключение лазеров") },
         { 5,  QString("Выключение двигателей") },
         { 6,  QString("Расчет") },
@@ -74,17 +80,47 @@ StateKo2::StateKo2()
 
 StateKo3::StateKo3()
 {
-    State::state = { Incubation1_ID, Ko_ID };
+    State::state = { LaserON_ID, MotorON_ID, Incubation1_ID, Ko_ID, LaserOFF_ID, MotorOFF_ID, Calc_ID, Write_ID };
+    State::state_map = {
+        { 0,  QString("Включение лазеров") },
+        { 1,  QString("Включение двигателей") },
+        { 2,  QString("Инкубация") },
+        { 3,  QString("Сбор данных") },
+        { 4,  QString("Выключение лазеров") },
+        { 5,  QString("Выключение двигателей") },
+        { 6,  QString("Расчет") },
+        { 7,  QString("Запись") }
+    };
 }
 
 StateKo4::StateKo4()
 {
-    State::state = { Incubation1_ID, Ko_ID };
+    State::state = { LaserON_ID, MotorON_ID, Incubation1_ID, Ko_ID, LaserOFF_ID, MotorOFF_ID, Calc_ID, Write_ID };
+    State::state_map = {
+        { 0,  QString("Включение лазеров") },
+        { 1,  QString("Включение двигателей") },
+        { 2,  QString("Инкубация") },
+        { 3,  QString("Сбор данных") },
+        { 4,  QString("Выключение лазеров") },
+        { 5,  QString("Выключение двигателей") },
+        { 6,  QString("Расчет") },
+        { 7,  QString("Запись") }
+    };
 }
 
 StateKo5::StateKo5()
 {
-    State::state = { Incubation1_ID, Ko_ID };
+    State::state = { LaserON_ID, MotorON_ID, Incubation1_ID, Ko_ID, LaserOFF_ID, MotorOFF_ID, Calc_ID, Write_ID };
+    State::state_map = {
+        { 0,  QString("Включение лазеров") },
+        { 1,  QString("Включение двигателей") },
+        { 2,  QString("Инкубация") },
+        { 3,  QString("Сбор данных") },
+        { 4,  QString("Выключение лазеров") },
+        { 5,  QString("Выключение двигателей") },
+        { 6,  QString("Расчет") },
+        { 7,  QString("Запись") }
+    };
 }
 
 StateAgr1::StateAgr1()
@@ -115,7 +151,7 @@ StateCalKo2::StateCalKo2()
         { 0,  QString("Включение лазеров") },
         { 1,  QString("Включение двигателей") },
         { 2,  QString("Инкубация") },
-        { 3,  QString("Установите в рабочие каналы пробы с контрольной плазмой и нажмите OK") },
+        { 3,  QString("Сбор данных") },
         { 4,  QString("Выключение лазеров") },
         { 5,  QString("Выключение двигателей") },
         { 6,  QString("Расчет") }
@@ -124,17 +160,46 @@ StateCalKo2::StateCalKo2()
 
 StateCalKo3::StateCalKo3()
 {
-
+    State::state = { LaserON_ID, MotorON_ID, Incubation1_ID, Ko_ID, Incubation1_ID, Ko_ID, MotorOFF_ID, LaserOFF_ID, Calc_ID };
+    State::state_map = {
+        { 0,  QString("Включение лазеров") },
+        { 1,  QString("Включение двигателей") },
+        { 2,  QString("Инкубация") },
+        { 3,  QString("Сбор данных Канал 1,2 - 200%, Канал 3,4 - 100%") },
+        { 4,  QString("Инкубация") },
+        { 5,  QString("Сбор данных Канал 1,2 - 50%, Канал 3,4 - 25%") },
+        { 6,  QString("Выключение лазеров") },
+        { 7,  QString("Выключение двигателей") },
+        { 8,  QString("Расчет") }
+    };
 }
 
 StateCalKo4::StateCalKo4()
 {
-
+    State::state = { LaserON_ID, MotorON_ID, Incubation1_ID, Ko_ID, MotorOFF_ID, LaserOFF_ID, Calc_ID };
+    State::state_map = {
+        { 0,  QString("Включение лазеров") },
+        { 1,  QString("Включение двигателей") },
+        { 2,  QString("Инкубация") },
+        { 3,  QString("Сбор данных") },
+        { 4,  QString("Выключение лазеров") },
+        { 5,  QString("Выключение двигателей") },
+        { 6,  QString("Расчет") }
+    };
 }
 
 StateCalKo5::StateCalKo5()
 {
-
+    State::state = { LaserON_ID, MotorON_ID, Incubation1_ID, Ko_ID, MotorOFF_ID, LaserOFF_ID, Calc_ID };
+    State::state_map = {
+        { 0,  QString("Включение лазеров") },
+        { 1,  QString("Включение двигателей") },
+        { 2,  QString("Инкубация") },
+        { 3,  QString("Сбор данных") },
+        { 4,  QString("Выключение лазеров") },
+        { 5,  QString("Выключение двигателей") },
+        { 6,  QString("Расчет") }
+    };
 }
 
 StateCalAgr1::StateCalAgr1()
@@ -150,26 +215,12 @@ StateCalAgr1::StateCalAgr1()
 
 QString StateAgr1::getMessage()
 {
-
     return state_map.take(index);
-//    const Mode_ID localAt = state.at(index);
-//    switch ( index  ) {
-//    case BTPTestAgr1_ID:
-//        return QString("Фиксация «100%» уровней");
-//    case OTPTestAgr1_ID:
-//        return QString("Фиксация «0%» уровней");
-//    case Incubation1_ID:
-//        return QString("Установите пробы с БТП в рабочие  каналы");
-//    case Incubation2_ID:
-//        return QString("Установите пробы с ОТП в рабочие  каналы");
-//    default:
-//        return "default message";
-//    }
 }
 
 StateAgr2::StateAgr2()
 {
-    State::state = { Agr_ID };
+    State::state = { Incubation2_ID };
 }
 
 State *StateBuilder::getStateTestKo1()
