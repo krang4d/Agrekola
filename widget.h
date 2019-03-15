@@ -103,7 +103,7 @@ private slots:
 public:
     StartMeasurement *startWin;
     QCustomPlot *customPlot1, *customPlot2, *customPlot3, *customPlot4;
-    QPointer<ProgressTimerBar> pBar1, pBar2, pBar3, pBar4;
+    ProgressTimerBar *pBar1, *pBar2, *pBar3, *pBar4;
     Mode_ID current_mode_id;
     State *state;
     bool single;

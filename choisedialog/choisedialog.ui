@@ -25,7 +25,7 @@
    <item row="0" column="1" rowspan="3">
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>5</number>
      </property>
      <widget class="QWidget" name="page_1">
       <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -72,13 +72,6 @@
       </property>
      </widget>
      <widget class="Ko5" name="page_8"/>
-    </widget>
-   </item>
-   <item row="2" column="0">
-    <widget class="QPushButton" name="viewPlotsButton">
-     <property name="text">
-      <string>Просмотр графиков</string>
-     </property>
     </widget>
    </item>
    <item row="3" column="0">
@@ -300,7 +293,6 @@
   <tabstop>ko5Button</tabstop>
   <tabstop>agr1Button</tabstop>
   <tabstop>agr2Button</tabstop>
-  <tabstop>viewPlotsButton</tabstop>
   <tabstop>testButton</tabstop>
   <tabstop>exitButton</tabstop>
  </tabstops>

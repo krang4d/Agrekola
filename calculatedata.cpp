@@ -169,7 +169,7 @@ CalcData *CalcData::createCalc(Mode_ID  id)
     case TestKo3_ID:
     case CalibKo3_ID:
         str = tr("Фибриноген, измерение (Ko3 5)");
-        p = new CalcKo3();
+        p = new CalcKo1();
         break;
     case TestKo4_ID:
     case CalibKo4_ID:

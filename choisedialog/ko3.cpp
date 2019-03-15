@@ -133,28 +133,43 @@ void Ko3::save()
 //    param.replace(3, ui->lineEdit_3->text());
 //    file.saveKo3(param);
 }
-
+////парные пробы при калибровке, два этапа калибровки
+//// 1 этап 1,2 канал - 200% 3,4 канал  - 100%
+//// 2 этап 1,2 канал - 50% 3,4 канал  - 25%
 void Ko3::calibrationData1Come(double t0)
 {
     //при разведении 200% контрольной нормальной плазмы
-    calibrationDataCome(1, t0);
+    static QList<double> calData1List;
+    calData1List.push_back(t0);
+    double sum;
+    foreach (double val, calData1List) {
+        sum += val;
+        qDebug() << QString("calibrationData1Come %1").arg(val);
+    }
+    calibrationDataCome(1, sum);
 }
 
 void Ko3::calibrationData2Come(double t0)
 {
     //при разведении 100% контрольной нормальной плазмы
+    static QList<double> calData2List;
+    calData2List.push_back(t0);
     calibrationDataCome(2, t0);
 }
 
 void Ko3::calibrationData3Come(double t0)
 {
     //при разведении 50% контрольной нормальной плазмы
+    static QList<double> calData3List;
+    calData3List.push_back(t0);
     calibrationDataCome(3, t0);
 }
 
 void Ko3::calibrationData4Come(double t0)
 {
     //при разведении 25% контрольной нормальной плазмы
+    static QList<double> calData4List;
+    calData4List.push_back(t0);
     calibrationDataCome(4, t0);
 }
 

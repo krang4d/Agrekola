@@ -160,17 +160,18 @@ StateCalKo2::StateCalKo2()
 
 StateCalKo3::StateCalKo3()
 {
-    State::state = { LaserON_ID, MotorON_ID, Incubation1_ID, Ko_ID, Incubation1_ID, Ko_ID, MotorOFF_ID, LaserOFF_ID, Calc_ID };
+    State::state = { LaserON_ID, MotorON_ID, Incubation1_ID, Ko_ID, Calc_ID, Incubation1_ID, Ko_ID, MotorOFF_ID, LaserOFF_ID, Calc_ID };
     State::state_map = {
         { 0,  QString("Включение лазеров") },
         { 1,  QString("Включение двигателей") },
         { 2,  QString("Инкубация") },
         { 3,  QString("Сбор данных Канал 1,2 - 200%, Канал 3,4 - 100%") },
-        { 4,  QString("Инкубация") },
-        { 5,  QString("Сбор данных Канал 1,2 - 50%, Канал 3,4 - 25%") },
-        { 6,  QString("Выключение лазеров") },
-        { 7,  QString("Выключение двигателей") },
-        { 8,  QString("Расчет") }
+        { 4,  QString("Расчет") },
+        { 5,  QString("Инкубация") },
+        { 6,  QString("Сбор данных Канал 1,2 - 50%, Канал 3,4 - 25%") },
+        { 7,  QString("Выключение лазеров") },
+        { 8,  QString("Выключение двигателей") },
+        { 9,  QString("Расчет") }
     };
 }
 

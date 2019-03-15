@@ -87,3 +87,17 @@ void ProgressTimerBar::updateProgress()
         //hide();
     }
 }
+
+void ProgressTimerBar::stopProgress()
+{
+    progressTimer.stop();
+    //ui->progressBar->setFormat("Готово");
+    //ui->progressBar->setValue(0);
+    setState(Ui::Ready_ID);
+    emit done();
+    if(func) {
+        func();
+        qDebug() << "Выплнение func";
+    }
+    //hide();
+}

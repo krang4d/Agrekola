@@ -392,7 +392,7 @@ void Ko2::on_pushButton_test1_clicked()
             || c_ko2->getA4tv_kp3() || c_ko2->getA4tv_kp4();
 
     if( !(!c_ko2->getDate().toString("dd.MM.yyyy").isEmpty() && f) ) {
-        QMessageBox::information(this, "Внимание!", QString("Для того чтобы продолжить неоходимо провести калибровку."));
+        QMessageBox::information(this, "Внимание!", QString("Для того чтобы продолжить необходимо провести калибровку."));
         return;
     }
 

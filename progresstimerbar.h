@@ -43,6 +43,7 @@ signals:
 public slots:
     void updateProgress();
     void setValue(int value);
+    void stopProgress();
 
 private:
     Ui::ProgressTimerBar *ui;
