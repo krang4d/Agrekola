@@ -20,6 +20,8 @@ public:
 
     double calcKo(QMap<double, double>);
     double calcAgr(QMap<double, double>);
+
+    //factory method
     static CalcData* createCalc( Mode_ID );
 
     //virtual void getCalibrationDeta(double &c1, double &c2,double &c3, double &c4);
@@ -37,7 +39,7 @@ public:
 protected:
     QMap<double, double> mdata;
     QCustomPlot *plot;
-    QStringList param;
+    //QStringList param;
     double dx;                    //скачек величиной 4-10% от среднего уровня сигнала базовое значение для определения времени свертывания
     double mix_t;                 //время в течение которго происходит перемешивание реагента с плазмой и успокоение жидкости
 };

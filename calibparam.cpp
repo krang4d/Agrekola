@@ -1,15 +1,21 @@
 #include "calibparam.h"
 #include "ui_calibparam.h"
 
-CalibParam::CalibParam(QWidget *parent) :
+CalibParam::CalibParam(CalcData *p, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::CalibParam)
 {
     ui->setupUi(this);
+    setAttribute(Qt::WA_DeleteOnClose);
+    customPlot = ui->frame;
+    setCalc(p);
+    setText();
+    createPlot();
 }
 
 CalibParam::~CalibParam()
 {
+    delete calc;
     delete ui;
 }
 
@@ -21,21 +27,32 @@ void CalibParam::setText()
 void CalibParam::setCalc(CalcData *p)
 {
     calc = p;
-}
-
-void CalibParam::createPlot()
-{
-    switch (calc->getModeID() ) {
+    mode = calc->getModeID();
+    switch ( mode ) {
+    case CalibAgr1_ID:
+        break;
+    case CalibAgr2_ID:
+        break;
+    case CalibKo1_ID:
+        break;
+    case CalibKo2_ID:
+        break;
+    case CalibKo3_ID:
+        break;
+    case CalibKo4_ID:
+        break;
+    case CalibKo5_ID:
+        break;
     case TestKo1_ID:
-        ui->frame->setVisible(false);
+        customPlot->setVisible(false);
         break;
     case TestKo2_ID:
-        ui->frame->setVisible(false);
+        customPlot->setVisible(false);
         break;
     case TestKo3_ID:
         break;
     case TestKo4_ID:
-        ui->frame->setVisible(false);
+        customPlot->setVisible(false);
         break;
     case TestKo5_ID:
         break;
@@ -43,12 +60,13 @@ void CalibParam::createPlot()
         break;
     case TestAgr2_ID:
         break;
-
     default:
         break;
     }
-    QString demoName = "Quadratic Demo";
-    QCustomPlot *customPlot = ui->frame;
+}
+
+void CalibParam::createPlot()
+{
     // generate some data:
     QVector<double> x(101), y(101); // initialize with entries 0..100
     for (int i=0; i<101; ++i)
@@ -65,6 +83,5 @@ void CalibParam::createPlot()
     // set axes ranges, so we see all data:
     customPlot->xAxis->setRange(-1, 1);
     customPlot->yAxis->setRange(0, 1);
+    customPlot->replot();
 }
-
-

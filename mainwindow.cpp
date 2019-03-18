@@ -95,24 +95,20 @@ void MainWindow::on_menu_triggered()
 
 void MainWindow::on_plots_triggered()
 {
-    QPointer<ViewPlot> plots = new ViewPlot(this);
+    QPointer<ViewPlot> plots(new ViewPlot(this));
     plots->show();
 }
 
 void MainWindow::on_action_triggered()
 {
-    QPointer<Options> opt = new Options(this);
+    QPointer<Options> opt(new Options(this));
     opt->setWidget(this->centerWidget);
-    opt->exec();
+    opt->show();
 }
 
 void MainWindow::on_action_propety_triggered()
 {
-    QPointer<CalibParam> par = new CalibParam(this);
-    CalcData *p = CalcData::createCalc( centerWidget->startWin->getModeID() );
-    par->setCalc(p);
-    par->setText();
-    par->createPlot();
-    par->show();
-    //delete p;
+    Mode_ID mode = centerWidget->startWin->getModeID();
+    QPointer<CalibParam> bar(new CalibParam(CalcData::createCalc(mode), this));
+    bar->show();
 }

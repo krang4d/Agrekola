@@ -14,17 +14,19 @@ class CalibParam : public QDialog
     Q_OBJECT
 
 public:
-    explicit CalibParam(QWidget *parent = 0);
+    explicit CalibParam(CalcData *p, QWidget *parent = 0);
     ~CalibParam();
 
-    void setText();
-    void setPlot(void);
+protected:
     void setCalc(CalcData *);
     void createPlot();
+    void setText();
 
 private:
     Ui::CalibParam *ui;
     CalcData *calc;
+    QCustomPlot *customPlot;
+    Mode_ID mode;
 };
 
 #endif // CALIBPARAM_H
