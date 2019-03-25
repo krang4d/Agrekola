@@ -1101,15 +1101,15 @@ void Widget::doScenario()
             getData(Channel1_ID, startWin->getTimeWrite());
             connect(this, &Widget::done1, [this]() {
                 i--;
-                    if (!i) {state->next(); qDebug() << "done1";}
-                 disconnect(this, &Widget::done1, 0, 0);});
+                if (!i) {state->next(); qDebug() << "done1";}
+                disconnect(this, &Widget::done1, 0, 0);});
         }
         if (startWin->isChannel(Channel2_ID)) {
             i++;
             getData(Channel2_ID, startWin->getTimeWrite());
             connect(this, &Widget::done2, [this]() {
                 i--;
-                    if (!i) {state->next(); qDebug() << "done2";}
+                if (!i) {state->next(); qDebug() << "done2";}
                 disconnect(this, &Widget::done2, 0, 0);
             });
         }
@@ -1118,7 +1118,7 @@ void Widget::doScenario()
             getData(Channel3_ID, startWin->getTimeWrite());
             connect(this, &Widget::done3, [this]() {
                 i--;
-                    if (!i) {state->next(); qDebug() << "done3";}
+                if (!i) {state->next(); qDebug() << "done3";}
                 disconnect(this, &Widget::done3, 0, 0);});
         }
         if (startWin->isChannel(Channel4_ID)) {
@@ -1126,7 +1126,7 @@ void Widget::doScenario()
             getData(Channel4_ID, startWin->getTimeWrite());
             connect(this, &Widget::done4, [this]() {
                 i--;
-                    if (!i) {state->next(); qDebug() << "done4";}
+                if (!i) {state->next(); qDebug() << "done4";}
                 disconnect(this, &Widget::done4, 0, 0);});
         }
         break;

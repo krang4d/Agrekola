@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QStringList>
 #include "startmeasurement.h"
+#include "agr_impl.h"
 
 struct Error_Agr1_Type_ID
 {
@@ -15,7 +16,7 @@ namespace Ui {
 class Agr1;
 }
 
-class Agr1 : public QWidget
+class Agr1 : public QWidget, public Agr_impl
 {
     Q_OBJECT
 
@@ -24,7 +25,6 @@ public:
     ~Agr1();
 
 private:
-    void calibrationDataCome(int n, double deta);
     void open();
     void save();
 
@@ -42,33 +42,28 @@ private slots:
     void on_lineEdit_testCh1_textChanged(const QString &arg1);
     void on_lineEdit_testCh3_textChanged(const QString &arg1);
 
-
-
 public slots:
-    inline void btpData1Come(double d) {
-        c_agr1.setBTP1(d);
-    }
-    inline void btpData2Come(double d) {
-        c_agr1.setBTP2(d);
-    }
-    inline void btpData3Come(double d) {
-        c_agr1.setBTP3(d);
-    }
-    inline void btpData4Come(double d) {
-        c_agr1.setBTP4(d);
-    }
-    inline void otpData1Come(double d) {
-        c_agr1.setOTP1(d);
-    }
-    inline void otpData2Come(double d) {
-        c_agr1.setOTP2(d);
-    }
-    inline void otpData3Come(double d) {
-        c_agr1.setOTP3(d);
-    }
-    inline void otpData4Come(double d) {
-        c_agr1.setOTP4(d);
-    }
+    QString t_print() override;
+    void setT1(double) override;
+    void setT2(double) override;
+    void setT3(double) override;
+    void setT4(double) override;
+
+    QString c_print() override;
+    void calibrationData1Come(double) override;
+    void calibrationData2Come(double) override;
+    void calibrationData3Come(double) override;
+    void calibrationData4Come(double) override;
+
+    void btp1Come(double) override;
+    void btp2Come(double) override;
+    void btp3Come(double) override;
+    void btp4Come(double) override;
+
+    void otp1Come(double) override;
+    void otp2Come(double) override;
+    void otp3Come(double) override;
+    void otp4Come(double) override;
 
 signals:
     void measurement(StartMeasurement*);
@@ -76,8 +71,8 @@ signals:
 
 private:
     Ui::Agr1 *ui;
-    TestAgr1 t_agr1;
-    CalibrationAgr1 c_agr1;
+    TestAgr1 *t_agr1;
+    CalibrationAgr1 *c_agr1;
 };
 
 class StartCalibrationAgr1 : public StartMeasurement

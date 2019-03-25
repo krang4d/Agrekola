@@ -7,6 +7,7 @@
 #include "selectinductor.h"
 #include "savefiles.h"
 #include "startmeasurement.h"
+#include "agr_impl.h"
 
 struct Error_Agr2_Type_ID
 {
@@ -18,7 +19,7 @@ namespace Ui {
 class Agr2;
 }
 
-class Agr2 : public QWidget
+class Agr2 : public QWidget, public Agr_impl
 {
     Q_OBJECT
 
@@ -41,34 +42,28 @@ private slots:
     void on_radioButton_testSingle_toggled(bool checked);
 
 public slots:
-    inline void btpData1Come(double d) {
-        c_agr2.setBTP1(d);
-    }
-    inline void btpData2Come(double d) {
-        c_agr2.setBTP2(d);
-    }
-    inline void btpData3Come(double d) {
-        c_agr2.setBTP3(d);
-    }
-    inline void btpData4Come(double d) {
-        c_agr2.setBTP4(d);
-    }
-    inline void otpData1Come(double d) {
-        c_agr2.setOTP1(d);
-    }
-    inline void otpData2Come(double d) {
-        c_agr2.setOTP2(d);
-    }
-    inline void otpData3Come(double d) {
-        c_agr2.setOTP3(d);
-    }
-    inline void otpData4Come(double d) {
-        c_agr2.setOTP4(d);
-    }
-    void calibrationData1Come(double);
-    void calibrationData2Come(double);
-    void calibrationData3Come(double);
-    void calibrationData4Come(double);
+
+    virtual QString t_print() override;
+    virtual void setT1(double) override;
+    virtual void setT2(double) override;
+    virtual void setT3(double) override;
+    virtual void setT4(double) override;
+
+    virtual QString c_print() override;
+    void calibrationData1Come(double) override;
+    void calibrationData2Come(double) override;
+    void calibrationData3Come(double) override;
+    void calibrationData4Come(double) override;
+
+    void btp1Come(double) override;
+    void btp2Come(double) override;
+    void btp3Come(double) override;
+    void btp4Come(double) override;
+
+    void otp1Come(double) override;
+    void otp2Come(double) override;
+    void otp3Come(double) override;
+    void otp4Come(double) override;
 
 private:
     void calibrationDataCome(int n, double deta);
@@ -84,8 +79,8 @@ private:
 //    SaveFiles file;
 //    QStringList param;
 
-    TestAgr2 t_agr2;
-    CalibrationAgr2 c_agr2;
+    TestAgr2 *t_agr2;
+    CalibrationAgr2 *c_agr2;
 };
 
 class StartTestAgr2 : public StartMeasurement

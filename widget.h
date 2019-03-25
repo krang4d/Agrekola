@@ -70,6 +70,17 @@ signals:
     void ret_value2(double);
     void ret_value3(double);
     void ret_value4(double);
+
+    void btp_value1(double);
+    void btp_value2(double);
+    void btp_value3(double);
+    void btp_value4(double);
+
+    void otp_value1(double);
+    void otp_value2(double);
+    void otp_value3(double);
+    void otp_value4(double);
+
     void done1();
     void done2();
     void done3();

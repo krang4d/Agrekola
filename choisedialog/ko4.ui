@@ -27,7 +27,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget_ko4">
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="tabWidget_ko4Page1">
       <attribute name="title">
@@ -256,7 +256,7 @@
           </sizepolicy>
          </property>
          <property name="title">
-          <string notr="true">Режим измерния</string>
+          <string notr="true">Парные пробы</string>
          </property>
          <property name="flat">
           <bool>false</bool>
@@ -266,16 +266,22 @@
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_11">
           <item>
-           <widget class="QRadioButton" name="radioButton_test1Single">
+           <widget class="QRadioButton" name="radioButton_test1Double">
             <property name="text">
-             <string>Одинарные пробы</string>
+             <string>Вкл</string>
+            </property>
+            <property name="checked">
+             <bool>false</bool>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QRadioButton" name="radioButton_test1Double">
+           <widget class="QRadioButton" name="radioButton_test1Single">
             <property name="text">
-             <string>Парные пробы</string>
+             <string>Выкл</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -442,7 +448,7 @@
           </sizepolicy>
          </property>
          <property name="title">
-          <string notr="true">Режим измерния</string>
+          <string notr="true">Парные пробы</string>
          </property>
          <property name="flat">
           <bool>false</bool>
@@ -452,19 +458,19 @@
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_5">
           <item>
-           <widget class="QRadioButton" name="radioButton_test2Single">
+           <widget class="QRadioButton" name="radioButton_test2Double">
             <property name="text">
-             <string>Одинарные пробы</string>
-            </property>
-            <property name="checked">
-             <bool>true</bool>
+             <string>Вкл</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QRadioButton" name="radioButton_test2Double">
+           <widget class="QRadioButton" name="radioButton_test2Single">
             <property name="text">
-             <string>Парные пробы</string>
+             <string>Выкл</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
             </property>
            </widget>
           </item>

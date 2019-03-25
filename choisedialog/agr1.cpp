@@ -4,6 +4,8 @@
 
 Agr1::Agr1(QWidget *parent) :
     QWidget(parent),
+    c_agr1(new CalibrationAgr1),
+    t_agr1(new TestAgr1),
     ui(new Ui::Agr1)
 {
     ui->setupUi(this);
@@ -13,6 +15,8 @@ Agr1::Agr1(QWidget *parent) :
 Agr1::~Agr1()
 {
     save();
+    delete t_agr1;
+    delete c_agr1;
     delete ui;
 }
 
@@ -44,19 +48,19 @@ void Agr1::on_pushButton_calib_clicked()
         return;
     }
 
-    c_agr1.setDate(QDate::currentDate());
-    c_agr1.setTrombotsit_date(ui->dateEdit_calibTrombotsit->date());
-    c_agr1.setTrombotsit_serial(ui->lineEdit_calibTrombotsitSerial->text());
-    c_agr1.setTrombotsit_concentration(ui->doubleSpinBox_calibTrombotsit->value());
-    c_agr1.setIncube_time(ui->doubleSpinBox_calibIncubeTime->value());
-    c_agr1.setWrite_time(ui->doubleSpinBox_calibWriteTime->value());
+    c_agr1->setDate(QDate::currentDate());
+    c_agr1->setTrombotsit_date(ui->dateEdit_calibTrombotsit->date());
+    c_agr1->setTrombotsit_serial(ui->lineEdit_calibTrombotsitSerial->text());
+    c_agr1->setTrombotsit_concentration(ui->doubleSpinBox_calibTrombotsit->value());
+    c_agr1->setIncube_time(ui->doubleSpinBox_calibIncubeTime->value());
+    c_agr1->setWrite_time(ui->doubleSpinBox_calibWriteTime->value());
 
-    c_agr1.setK1(ui->checkBox_calibCh1->isChecked());
-    c_agr1.setK2(ui->checkBox_calibCh2->isChecked());
-    c_agr1.setK3(ui->checkBox_calibCh3->isChecked());
-    c_agr1.setK4(ui->checkBox_calibCh4->isChecked());
-    c_agr1.save();
-    emit calibration(StartCalibrationAgr1::getStart(&c_agr1));
+    c_agr1->setK1(ui->checkBox_calibCh1->isChecked());
+    c_agr1->setK2(ui->checkBox_calibCh2->isChecked());
+    c_agr1->setK3(ui->checkBox_calibCh3->isChecked());
+    c_agr1->setK4(ui->checkBox_calibCh4->isChecked());
+    c_agr1->save();
+    emit calibration(StartCalibrationAgr1::getStart(c_agr1));
 }
 
 void Agr1::on_pushButton_test_clicked()
@@ -93,8 +97,8 @@ void Agr1::on_pushButton_test_clicked()
         return;
     }
 
-    bool f = c_agr1.getCkA1() || c_agr1.getCkA2() || c_agr1.getCkA3() || c_agr1.getCkA4();
-    if( !(!c_agr1.getDate().toString("dd.MM.yyyy").isEmpty() && e) ) {
+    bool f = c_agr1->getCkA1() || c_agr1->getCkA2() || c_agr1->getCkA3() || c_agr1->getCkA4();
+    if( !(!c_agr1->getDate().toString("dd.MM.yyyy").isEmpty() && e) ) {
         //QString str = QString("%1").arg(c_ko2.getDate().toString("dd/MM/yyyy"));
         QMessageBox::information(this, "Внимание!", QString("Для того чтобы продолжить неоходимо провести калибровку."));
         return;
@@ -104,78 +108,79 @@ void Agr1::on_pushButton_test_clicked()
         QMessageBox::information(this, "Внимание!", "Для того чтобы продолжить необходимо выбрать рабочие каналы и заполнить все поля с параметрами.");
         return;
     }
-    t_agr1.setK1(ui->checkBox_testCh1->isChecked());
-    t_agr1.setK2(ui->checkBox_testCh2->isChecked());
-    t_agr1.setK3(ui->checkBox_testCh3->isChecked());
-    t_agr1.setK4(ui->checkBox_testCh4->isChecked());
+    t_agr1->setK1(ui->checkBox_testCh1->isChecked());
+    t_agr1->setK2(ui->checkBox_testCh2->isChecked());
+    t_agr1->setK3(ui->checkBox_testCh3->isChecked());
+    t_agr1->setK4(ui->checkBox_testCh4->isChecked());
 
-    t_agr1.setNum1(ui->lineEdit_testCh1->text());
-    t_agr1.setNum2(ui->lineEdit_testCh2->text());
-    t_agr1.setNum3(ui->lineEdit_testCh3->text());
-    t_agr1.setNum4(ui->lineEdit_testCh4->text());
+    t_agr1->setNum1(ui->lineEdit_testCh1->text());
+    t_agr1->setNum2(ui->lineEdit_testCh2->text());
+    t_agr1->setNum3(ui->lineEdit_testCh3->text());
+    t_agr1->setNum4(ui->lineEdit_testCh4->text());
 
-    t_agr1.setSingle(ui->radioButton_testSingle->isChecked());
-    t_agr1.save();
-    emit measurement(StartTestAgr1::getStart(&t_agr1));
+    t_agr1->setSingle(ui->radioButton_testSingle->isChecked());
+    t_agr1->save();
+    emit measurement(StartTestAgr1::getStart(t_agr1));
 }
 
 void Agr1::open()
 {
-    if( t_agr1.getSingle() ) {
+    if( t_agr1->getSingle() ) {
         ui->radioButton_testSingle->setChecked(true);
     }
     else {
         ui->radioButton_testDouble->setChecked(true);
     }
 
-    if( t_agr1.getK1() ) {
+    if( t_agr1->getK1() ) {
         ui->checkBox_testCh1->setChecked(true);
-        ui->lineEdit_testCh1->setText(t_agr1.getNum1());
+        ui->lineEdit_testCh1->setText(t_agr1->getNum1());
     }
     else {
         ui->checkBox_testCh1->setChecked(false);
     }
 
-    if( t_agr1.getK2() ) {
+    if( t_agr1->getK2() ) {
         ui->checkBox_testCh2->setChecked(true);
-        ui->lineEdit_testCh2->setText(t_agr1.getNum2());
+        ui->lineEdit_testCh2->setText(t_agr1->getNum2());
     }
     else {
         ui->checkBox_testCh2->setChecked(false);
     }
 
-    if( t_agr1.getK3() ) {
+    if( t_agr1->getK3() ) {
         ui->checkBox_testCh3->setChecked(true);
-        ui->lineEdit_testCh3->setText(t_agr1.getNum3());
+        ui->lineEdit_testCh3->setText(t_agr1->getNum3());
     }
     else {
         ui->checkBox_testCh3->setChecked(false);
     }
 
-    if( t_agr1.getK4() ) {
+    if( t_agr1->getK4() ) {
         ui->checkBox_testCh4->setChecked(true);
-        ui->lineEdit_testCh4->setText(t_agr1.getNum4());
+        ui->lineEdit_testCh4->setText(t_agr1->getNum4());
     }
     else {
         ui->checkBox_testCh4->setChecked(false);
     }
-    ui->groupBox_testCalib->setTitle(QString("Последняя калибровка: %1\n").arg(c_agr1.getDate().toString("dd.MM.yyyy")));
-    QString str = QString("Номер серия тромбоцитов %1\n").arg(c_agr1.getTrombotsit_serial())
-                + QString("Срок годности тромбоцитов %1\n").arg(c_agr1.getTrombotsit_date().toString("dd.MM.yyyy"))
-                + QString("Концентрация тромбоцитов в калибровочном растворе %1 (тромбоцитов/мкл)").arg(c_agr1.getTrombotsit_concentration());
+    ui->groupBox_testCalib->setTitle(QString("Последняя калибровка: %1\n").arg(c_agr1->getDate().toString("dd.MM.yyyy")));
+    QString str = QString("Номер серия тромбоцитов %1\n").arg(c_agr1->getTrombotsit_serial())
+                + QString("Срок годности тромбоцитов %1\n").arg(c_agr1->getTrombotsit_date().toString("dd.MM.yyyy"))
+                + QString("Концентрация тромбоцитов в калибровочном растворе %1 (тромбоцитов/мкл)").arg(c_agr1->getTrombotsit_concentration());
     ui->label_testCalibString->setText(str);
-//    ui->doubleSpinBox_calibIncubeTime_1->setValue(c_agr1.getIncube_time());
-//    ui->doubleSpinBox_calibIncubeTime_2->setValue(c_agr1.getIncube_time_2());
-    ui->doubleSpinBox_calibWriteTime->setValue(c_agr1.getWrite_time());
-    ui->doubleSpinBox_calibIncubeTime->setValue(c_agr1.getIncube_time());
-    ui->doubleSpinBox_calibTrombotsit->setValue(c_agr1.getTrombotsit_concentration());
-    ui->lineEdit_calibTrombotsitSerial->setText(c_agr1.getTrombotsit_serial());
-    ui->dateEdit_calibTrombotsit->setDate(c_agr1.getTrombotsit_date());
+//    ui->doubleSpinBox_calibIncubeTime_1->setValue(c_agr1->getIncube_time());
+//    ui->doubleSpinBox_calibIncubeTime_2->setValue(c_agr1->getIncube_time_2());
+    ui->doubleSpinBox_calibWriteTime->setValue(c_agr1->getWrite_time());
+    ui->doubleSpinBox_calibIncubeTime->setValue(c_agr1->getIncube_time());
+    ui->doubleSpinBox_calibTrombotsit->setValue(c_agr1->getTrombotsit_concentration());
+    ui->lineEdit_calibTrombotsitSerial->setText(c_agr1->getTrombotsit_serial());
+    ui->dateEdit_calibTrombotsit->setDate(c_agr1->getTrombotsit_date());
 }
 
 void Agr1::save()
 {
-
+    t_agr1->save();
+    c_agr1->save();
 }
 
 void Agr1::on_radioButton_testSingle_toggled(bool checked)
@@ -237,6 +242,96 @@ void Agr1::on_lineEdit_testCh3_textChanged(const QString &arg1)
 {
     if(ui->radioButton_testDouble->isChecked())
         ui->lineEdit_testCh4->setText(arg1);
+}
+
+QString Agr1::t_print()
+{
+    return t_agr1->print();
+}
+
+void Agr1::setT1(double value)
+{
+    t_agr1->setT1(value);
+}
+
+void Agr1::setT2(double value)
+{
+    t_agr1->setT2(value);
+}
+
+void Agr1::setT3(double value)
+{
+    t_agr1->setT3(value);
+}
+
+void Agr1::setT4(double value)
+{
+    t_agr1->setT4(value);
+}
+
+QString Agr1::c_print()
+{
+    return c_agr1->print();
+}
+
+void Agr1::calibrationData1Come(double value)
+{
+    c_agr1->setCkA1(value);
+}
+
+void Agr1::calibrationData2Come(double value)
+{
+    c_agr1->setCkA2(value);
+}
+
+void Agr1::calibrationData3Come(double value)
+{
+    c_agr1->setCkA3(value);
+}
+
+void Agr1::calibrationData4Come(double value)
+{
+    c_agr1->setCkA4(value);
+}
+
+void Agr1::btp1Come(double value)
+{
+    c_agr1->setBTP1(value);
+}
+
+void Agr1::btp2Come(double value)
+{
+    c_agr1->setBTP2(value);
+}
+
+void Agr1::btp3Come(double value)
+{
+    c_agr1->setBTP3(value);
+}
+
+void Agr1::btp4Come(double value)
+{
+    c_agr1->setBTP4(value);
+}
+
+void Agr1::otp1Come(double value)
+{
+    c_agr1->setOTP1(value);
+}
+
+void Agr1::otp2Come(double value)
+{
+    c_agr1->setOTP2(value);
+}
+
+void Agr1::otp3Come(double value)
+{
+    c_agr1->setOTP3(value);
+}
+
+void Agr1::otp4Come(double value)
+{
+    c_agr1->setOTP4(value);
 }
 
 StartMeasurement *StartCalibrationAgr1::getStart(Calibration *c_agr1)

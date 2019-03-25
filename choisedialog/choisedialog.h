@@ -20,6 +20,7 @@
 #include "globalvalue.h"
 
 class MainWindow;
+typedef QMetaObject::Connection MetaObj;
 
 namespace Ui {
 class ChoiseDialog;
@@ -57,15 +58,12 @@ private slots:
     void on_ko3Button_clicked();
     void on_ko4Button_clicked();
     void on_ko5Button_clicked();
-    void on_viewPlotsButton_clicked();
+    //void on_viewPlotsButton_clicked();
 
-    void t_singeShotConntection(QMetaObject::Connection *p, QMetaObject::Connection *t1,
-                                QMetaObject::Connection *t2, QMetaObject::Connection *t3,
-                                QMetaObject::Connection *t4, Ko_impl *ko);
-
-    void c_singeShotConntection(QMetaObject::Connection *p, QMetaObject::Connection *t1,
-                                QMetaObject::Connection *t2, QMetaObject::Connection *t3,
-                                QMetaObject::Connection *t4, Ko_impl *ko);
+    void t_singeShotConntection(MetaObj *p, MetaObj *t1,MetaObj *t2, MetaObj *t3, MetaObj *t4, Ko_impl *ko);
+    void c_singeShotConntection(MetaObj *p, MetaObj *t1, MetaObj *t2, MetaObj *t3, MetaObj *t4, Ko_impl *ko);
+    void btp_singeShotConntection(MetaObj *btp1, MetaObj *btp2, MetaObj *btp3, MetaObj *btp4, Agr_impl *agr);
+    void otp_singeShotConntection(MetaObj *otp1, MetaObj *otp2, MetaObj *otp3, MetaObj *otp4, Agr_impl *agr);
 
     void startMeasurement(StartMeasurement *);
     void calibration(StartMeasurement *);

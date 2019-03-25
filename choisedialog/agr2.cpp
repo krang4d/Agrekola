@@ -3,6 +3,8 @@
 
 Agr2::Agr2(QWidget *parent) :
     QWidget(parent),
+    c_agr2(new CalibrationAgr2),
+    t_agr2(new TestAgr2),
     ui(new Ui::Agr2)
 {
     ui->setupUi(this);
@@ -15,6 +17,8 @@ Agr2::Agr2(QWidget *parent) :
 Agr2::~Agr2()
 {
     save();
+    delete t_agr2;
+    delete c_agr2;
     delete ui;
 }
 
@@ -42,67 +46,67 @@ void Agr2::open()
 //        ui->lineEdit_6->setText(param.at(6));
 //    } else
 //        param = QStringList({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
-    ui->groupBox_testCalib->setTitle(QString("Последняя калибровка: %1\n").arg(c_agr2.getDate().toString("dd.MM.yyyy")));
+    ui->groupBox_testCalib->setTitle(QString("Последняя калибровка: %1\n").arg(c_agr2->getDate().toString("dd.MM.yyyy")));
     QString str;
-        str = QString("Номер серия реагентов %1\n").arg(c_agr2.getReagent_serial())
-            + QString("Срок годности реагентов %1\n").arg(c_agr2.getReagent_date().toString("dd.MM.yyyy"));
+        str = QString("Номер серия реагентов %1\n").arg(c_agr2->getReagent_serial())
+            + QString("Срок годности реагентов %1\n").arg(c_agr2->getReagent_date().toString("dd.MM.yyyy"));
 
-    ui->label_testCalibString->setText(c_agr2.print());
+    ui->label_testCalibString->setText(c_agr2->print());
 
-    if( t_agr2.getSingle() ) {
+    if( t_agr2->getSingle() ) {
         ui->radioButton_testSingle->setChecked(true);
     }
     else {
         ui->radioButton_testDouble->setChecked(true);
     }
 
-    if( t_agr2.getK1() ) {
+    if( t_agr2->getK1() ) {
         ui->checkBox_testCh1->setChecked(true);
-        ui->lineEdit_testCh1->setText(t_agr2.getNum1());
+        ui->lineEdit_testCh1->setText(t_agr2->getNum1());
     }
     else {
         ui->checkBox_testCh1->setChecked(false);
     }
 
-    if( t_agr2.getK2() ) {
+    if( t_agr2->getK2() ) {
         ui->checkBox_testCh2->setChecked(true);
-        ui->lineEdit_testCh2->setText(t_agr2.getNum2());
+        ui->lineEdit_testCh2->setText(t_agr2->getNum2());
     }
     else {
         ui->checkBox_testCh2->setChecked(false);
     }
 
-    if( t_agr2.getK3() ) {
+    if( t_agr2->getK3() ) {
         ui->checkBox_testCh3->setChecked(true);
-        ui->lineEdit_testCh3->setText(t_agr2.getNum3());
+        ui->lineEdit_testCh3->setText(t_agr2->getNum3());
 
     }
     else {
         ui->checkBox_testCh3->setChecked(false);
     }
 
-    if( t_agr2.getK4() ) {
+    if( t_agr2->getK4() ) {
         ui->checkBox_testCh4->setChecked(true);
-        ui->lineEdit_testCh4->setText(t_agr2.getNum4());
+        ui->lineEdit_testCh4->setText(t_agr2->getNum4());
 
     }
     else {
         ui->checkBox_testCh4->setChecked(false);
     }
 
-    ui->checkBox_calibCh1->setChecked(c_agr2.getK1());
-    ui->checkBox_calibCh2->setChecked(c_agr2.getK2());
-    ui->checkBox_calibCh3->setChecked(c_agr2.getK3());
-    ui->checkBox_calibCh4->setChecked(c_agr2.getK4());
+    ui->checkBox_calibCh1->setChecked(c_agr2->getK1());
+    ui->checkBox_calibCh2->setChecked(c_agr2->getK2());
+    ui->checkBox_calibCh3->setChecked(c_agr2->getK3());
+    ui->checkBox_calibCh4->setChecked(c_agr2->getK4());
 
-    ui->doubleSpinBox_calibIncubeTime_1->setValue(c_agr2.getIncube_time());
-    ui->doubleSpinBox_calibIncubeTime_2->setValue(c_agr2.getIncube_time_2());
-    ui->doubleSpinBox_calibWriteTime->setValue(c_agr2.getWrite_time());
-    ui->doubleSpinBox_calibVillebrand->setValue(c_agr2.getK_plazma());
-    ui->dateEdit_calibKPlazma->setDate(c_agr2.getK_plazma_date());
-    ui->lineEdit_calibKPlazmaSerial->setText(c_agr2.getK_plazma_serial());
-    ui->dateEdit_calibReagent->setDate(c_agr2.getReagent_date());
-    ui->lineEdit_calibReagentSerial->setText(c_agr2.getReagent_serial());
+    ui->doubleSpinBox_calibIncubeTime_1->setValue(c_agr2->getIncube_time());
+    ui->doubleSpinBox_calibIncubeTime_2->setValue(c_agr2->getIncube_time_2());
+    ui->doubleSpinBox_calibWriteTime->setValue(c_agr2->getWrite_time());
+    ui->doubleSpinBox_calibVillebrand->setValue(c_agr2->getK_plazma());
+    ui->dateEdit_calibKPlazma->setDate(c_agr2->getK_plazma_date());
+    ui->lineEdit_calibKPlazmaSerial->setText(c_agr2->getK_plazma_serial());
+    ui->dateEdit_calibReagent->setDate(c_agr2->getReagent_date());
+    ui->lineEdit_calibReagentSerial->setText(c_agr2->getReagent_serial());
 }
 
 void Agr2::save()
@@ -117,34 +121,50 @@ void Agr2::save()
 //    param.replace(6, ui->lineEdit_6->text());
 //    file.saveAgr2(param);
 
-    c_agr2.setIncube_time(ui->doubleSpinBox_calibIncubeTime_1->value());
-    c_agr2.setIncube_time_2(ui->doubleSpinBox_calibIncubeTime_2->value());
-    c_agr2.setWrite_time(ui->doubleSpinBox_calibWriteTime->value());
-    c_agr2.setK_plazma(ui->doubleSpinBox_calibVillebrand->value());
-    c_agr2.setK_plazma_date(ui->dateEdit_calibKPlazma->date());
-    c_agr2.setK_plazma_serial(ui->lineEdit_calibKPlazmaSerial->text());
-    c_agr2.setReagent_date(ui->dateEdit_calibReagent->date());
-    c_agr2.setReagent_serial(ui->lineEdit_calibReagentSerial->text());
+    c_agr2->setIncube_time(ui->doubleSpinBox_calibIncubeTime_1->value());
+    c_agr2->setIncube_time_2(ui->doubleSpinBox_calibIncubeTime_2->value());
+    c_agr2->setWrite_time(ui->doubleSpinBox_calibWriteTime->value());
+    c_agr2->setK_plazma(ui->doubleSpinBox_calibVillebrand->value());
+    c_agr2->setK_plazma_date(ui->dateEdit_calibKPlazma->date());
+    c_agr2->setK_plazma_serial(ui->lineEdit_calibKPlazmaSerial->text());
+    c_agr2->setReagent_date(ui->dateEdit_calibReagent->date());
+    c_agr2->setReagent_serial(ui->lineEdit_calibReagentSerial->text());
 }
 
-void Agr2::calibrationData1Come(double t0)
+void Agr2::calibrationData1Come(double value)
 {
-    calibrationDataCome(7, t0);
+    QDateTime dt = QDateTime::currentDateTime();
+    c_agr2->setDate(dt.date());
+    //c_agr2->setTime(dt.time());
+    c_agr2->setCk1(value);
+    //calibrationDataCome(7, t0);
 }
 
-void Agr2::calibrationData2Come(double t0)
+void Agr2::calibrationData2Come(double value)
 {
-    calibrationDataCome(8, t0);
+    QDateTime dt = QDateTime::currentDateTime();
+    c_agr2->setDate(dt.date());
+    //c_agr2->setTime(dt.time());
+    c_agr2->setCk2(value);
+    //calibrationDataCome(7, t0);
 }
 
-void Agr2::calibrationData3Come(double t0)
+void Agr2::calibrationData3Come(double value)
 {
-    calibrationDataCome(9, t0);
+    QDateTime dt = QDateTime::currentDateTime();
+    c_agr2->setDate(dt.date());
+    //c_agr2->setTime(dt.time());
+    c_agr2->setCk3(value);
+    //calibrationDataCome(7, t0);
 }
 
-void Agr2::calibrationData4Come(double t0)
+void Agr2::calibrationData4Come(double value)
 {
-    calibrationDataCome(10, t0);
+    QDateTime dt = QDateTime::currentDateTime();
+    c_agr2->setDate(dt.date());
+    //c_agr2->setTime(dt.time());
+    c_agr2->setCk4(value);
+    //calibrationDataCome(7, t0);
 }
 
 void Agr2::on_pushButton_calib_clicked()
@@ -171,22 +191,22 @@ void Agr2::on_pushButton_calib_clicked()
         return;
     }
 
-    c_agr2.setDate(QDate::currentDate());
-    c_agr2.setReagent_date(ui->dateEdit_calibReagent->date());
-    c_agr2.setReagent_serial(ui->lineEdit_calibReagentSerial->text());
-    c_agr2.setK_plazma_date(ui->dateEdit_calibKPlazma->date());
-    //c_agr2.setK_plazma_serial(ui->lineEdit_calibKPlazmaNum->text());
-    //c_agr2.setIncube_time(ui->doubleSpinBox_calibIncubeTime_1->value());
-    c_agr2.setWrite_time(ui->doubleSpinBox_calibWriteTime->value());
-    c_agr2.setIncube_time_2(ui->doubleSpinBox_calibIncubeTime_2->value());
+    c_agr2->setDate(QDate::currentDate());
+    c_agr2->setReagent_date(ui->dateEdit_calibReagent->date());
+    c_agr2->setReagent_serial(ui->lineEdit_calibReagentSerial->text());
+    c_agr2->setK_plazma_date(ui->dateEdit_calibKPlazma->date());
+    //c_agr2->setK_plazma_serial(ui->lineEdit_calibKPlazmaNum->text());
+    //c_agr2->setIncube_time(ui->doubleSpinBox_calibIncubeTime_1->value());
+    c_agr2->setWrite_time(ui->doubleSpinBox_calibWriteTime->value());
+    c_agr2->setIncube_time_2(ui->doubleSpinBox_calibIncubeTime_2->value());
 
-    c_agr2.setK1(ui->checkBox_calibCh1->isChecked());
-    c_agr2.setK2(ui->checkBox_calibCh2->isChecked());
-    c_agr2.setK3(ui->checkBox_calibCh3->isChecked());
-    c_agr2.setK4(ui->checkBox_calibCh4->isChecked());
+    c_agr2->setK1(ui->checkBox_calibCh1->isChecked());
+    c_agr2->setK2(ui->checkBox_calibCh2->isChecked());
+    c_agr2->setK3(ui->checkBox_calibCh3->isChecked());
+    c_agr2->setK4(ui->checkBox_calibCh4->isChecked());
 
-    c_agr2.save();
-    emit calibration(StartCalibrationAgr2::getStart(&c_agr2));
+    c_agr2->save();
+    emit calibration(StartCalibrationAgr2::getStart(c_agr2));
 }
 
 void Agr2::on_pushButton_test_clicked()
@@ -201,8 +221,8 @@ void Agr2::on_pushButton_test_clicked()
     if(ui->checkBox_testCh4->isChecked() && !ui->lineEdit_testCh4->text().isEmpty()) d = true;
     else d = false;
 
-//    bool e = c_agr2.getCk1() || c_agr2.getCk2() || c_agr2.getCk3() || c_agr2.getCk4();
-//    if( !(!c_agr2.getDate().toString("dd.MM.yyyy").isEmpty() && e) ) {
+//    bool e = c_agr2->getCk1() || c_agr2->getCk2() || c_agr2->getCk3() || c_agr2->getCk4();
+//    if( !(!c_agr2->getDate().toString("dd.MM.yyyy").isEmpty() && e) ) {
 //        //QString str = QString("%1").arg(c_ko2.getDate().toString("dd/MM/yyyy"));
 //        QMessageBox::information(this, "Внимание!", QString("Для того чтобы продолжить неоходимо провести калибровку."));
 //        return;
@@ -213,20 +233,20 @@ void Agr2::on_pushButton_test_clicked()
         return;
     }
 
-    t_agr2.setK1(ui->checkBox_testCh1->isChecked());
-    t_agr2.setK2(ui->checkBox_testCh2->isChecked());
-    t_agr2.setK3(ui->checkBox_testCh3->isChecked());
-    t_agr2.setK4(ui->checkBox_testCh4->isChecked());
+    t_agr2->setK1(ui->checkBox_testCh1->isChecked());
+    t_agr2->setK2(ui->checkBox_testCh2->isChecked());
+    t_agr2->setK3(ui->checkBox_testCh3->isChecked());
+    t_agr2->setK4(ui->checkBox_testCh4->isChecked());
 
-    t_agr2.setNum1(ui->lineEdit_testCh1->text());
-    t_agr2.setNum2(ui->lineEdit_testCh2->text());
-    t_agr2.setNum3(ui->lineEdit_testCh3->text());
-    t_agr2.setNum4(ui->lineEdit_testCh4->text());
+    t_agr2->setNum1(ui->lineEdit_testCh1->text());
+    t_agr2->setNum2(ui->lineEdit_testCh2->text());
+    t_agr2->setNum3(ui->lineEdit_testCh3->text());
+    t_agr2->setNum4(ui->lineEdit_testCh4->text());
 
-    t_agr2.setSingle(ui->radioButton_testSingle->isChecked());
+    t_agr2->setSingle(ui->radioButton_testSingle->isChecked());
 
-    t_agr2.save();
-    emit measurement(StartTestAgr2::getStart(&t_agr2));
+    t_agr2->save();
+    emit measurement(StartTestAgr2::getStart(t_agr2));
 }
 
 void Agr2::on_radioButton_testSingle_toggled(bool checked)
@@ -250,6 +270,76 @@ void Agr2::on_radioButton_testSingle_toggled(bool checked)
         ui->lineEdit_testCh2->setEnabled(ui->checkBox_testCh2->isChecked());
         ui->lineEdit_testCh4->setEnabled(ui->checkBox_testCh4->isChecked());
     }
+}
+
+QString Agr2::t_print()
+{
+    return t_agr2->print();
+}
+
+void Agr2::setT1(double value)
+{
+    t_agr2->setT1(value);
+}
+
+void Agr2::setT2(double value)
+{
+    t_agr2->setT2(value);
+}
+
+void Agr2::setT3(double value)
+{
+    t_agr2->setT3(value);
+}
+
+void Agr2::setT4(double value)
+{
+    t_agr2->setT4(value);
+}
+
+QString Agr2::c_print()
+{
+    return c_agr2->print();
+}
+
+void Agr2::btp1Come(double value)
+{
+    c_agr2->setBTP1(value);
+}
+
+void Agr2::btp2Come(double value)
+{
+    c_agr2->setBTP2(value);
+}
+
+void Agr2::btp3Come(double value)
+{
+    c_agr2->setBTP3(value);
+}
+
+void Agr2::btp4Come(double value)
+{
+    c_agr2->setBTP4(value);
+}
+
+void Agr2::otp1Come(double value)
+{
+    c_agr2->setOTP1(value);
+}
+
+void Agr2::otp2Come(double value)
+{
+    c_agr2->setOTP2(value);
+}
+
+void Agr2::otp3Come(double value)
+{
+    c_agr2->setOTP3(value);
+}
+
+void Agr2::otp4Come(double value)
+{
+    c_agr2->setOTP4(value);
 }
 
 void Agr2::on_checkBox_testCh1_toggled(bool checked)
