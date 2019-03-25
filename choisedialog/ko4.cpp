@@ -2,19 +2,42 @@
 #include "ui_ko4.h"
 
 Ko4::Ko4(QWidget *parent) :
-    QWidget(parent), c_ko4(new CalibrationKo4), c_ko4_1(new CalibrationKo4_1), c_ko4_2(new CalibrationKo4_2), c_ko4_3(new CalibrationKo4_3),
+    QWidget(parent),
+    t_ko4_1(new TestKo4),
+    t_ko4_2(new TestKo4(WithoutCalibration(), this)),
+    c_ko4(new CalibrationKo4),
+    c_ko4_1(new CalibrationKo4_1),
+    c_ko4_2(new CalibrationKo4_2),
+    c_ko4_3(new CalibrationKo4_3),
     ui(new Ui::Ko4)
 {
     ui->setupUi(this);
-    ui->radioButton_calibTrombine1->setChecked(true);
-    if(ui->radioButton_calibTrombine1->isChecked()) open(c_ko4_1);
-    if(ui->radioButton_calibTrombine2->isChecked()) open(c_ko4_2);
-    if(ui->radioButton_calibTrombine3->isChecked()) open(c_ko4_3);
+    t_ko4 = t_ko4_1;
+    ui->tabWidget_ko4->setTabEnabled(0, true);
+    open(c_ko4);
+    ui->radioButton_calibActivity1->setChecked(true);
+    if(ui->radioButton_calibActivity1->isChecked()) open(c_ko4_1);
+    if(ui->radioButton_calibActivity2->isChecked()) open(c_ko4_2);
+    if(ui->radioButton_calibActivity3->isChecked()) open(c_ko4_3);
+}
+
+void Ko4::on_tabWidget_ko4_currentChanged(int index)
+{
+    if(index == 1)
+        t_ko4 = t_ko4_1;
+    if(index == 2)
+        t_ko4 = t_ko4_2;
 }
 
 Ko4::~Ko4()
 {
     save();
+    delete t_ko4_1,
+    delete t_ko4_2,
+    //delete c_ko4,
+    delete c_ko4_1;
+    delete c_ko4_2;
+    delete c_ko4_3;
     delete ui;
 }
 
@@ -43,15 +66,15 @@ void Ko4::open(CalibrationKo4 *c_ko4)
 //    } else
 //        param = QStringList({0, 0, 0, 0, 0, 0, 0 , 0 , 0, 0});//10 параметров
 /* Новый метод загрузки параметров из XML */
-    t_ko4 = new TestKo4(this);
-    t_ko4_1 = new TestKo4(WithoutCalibration(), this);
+    //t_ko4 = new TestKo4(this);
+    //t_ko4_1 = new TestKo4(WithoutCalibration(), this);
 
     ui->groupBox_test1Calib->setTitle(QString("Последняя калибровка: %1\n").arg(c_ko4->getDate().toString("dd.MM.yyyy")));
     QString str =
               QString("Номер серия реагентов: %1\n").arg(c_ko4->getReagent_serial())
             + QString("Срок годности реагентов: %1\n").arg(c_ko4->getReagent_date().toString("dd.MM.yyyy"));
 
-    ui->label_test1CalibrString->setText(str);
+    ui->label_test1CalibrString->setText(c_ko4->print());
 
     //параметры теста
     if( t_ko4->getSingle() ) {
@@ -138,7 +161,7 @@ void Ko4::open(CalibrationKo4 *c_ko4)
     ui->dateEdit_test2Reagent->setDate(t_ko4_1->getReagent_date());
     //ui->doubleSpinBox_test2Activity->setValue(c_ko4->getActivity());
     ui->doubleSpinBox_test2TrombineTime->setValue(t_ko4_1->getTrombine_time());
-    ui->doubleSpinBox_test2Trombine->setValue(t_ko4_1->getTrombine());
+    ui->doubleSpinBox_test2Activity->setValue(t_ko4_1->getActivity());
 
     ui->doubleSpinBox_test2IncubeTime->setValue(t_ko4_1->getIncube_time());
     ui->doubleSpinBox_test2WriteTime->setValue(t_ko4_1->getWrite_time());
@@ -157,7 +180,7 @@ void Ko4::open(CalibrationKo4 *c_ko4)
     ui->dateEdit_calibKPlazma->setDate(c_ko4->getK_plazma_date());
     ui->lineEdit_calibKPlazmaSerial->setText(c_ko4->getK_plazma_serial());
 
-    ui->doubleSpinBox_calibTrombine->setValue(c_ko4->getTrombine());
+    ui->doubleSpinBox_calibActivity->setValue(c_ko4->getActivity());
 //    int i = c_ko4->getActivity();
 //    QMessageBox::information(this, "i",QString("c_ko4->getActivity() = %1").arg(i));
 //    switch (i) {
@@ -205,6 +228,37 @@ void Ko4::calibrationData3Come(double t0)
 void Ko4::calibrationData4Come(double t0)
 {
     calibrationDataCome(9, t0);
+}
+
+QString Ko4::t_print()
+{
+    t_ko4->setDate(QDate::currentDate());
+    return t_ko4->print();
+}
+
+void Ko4::setT1(double value)
+{
+    t_ko4->setT1(value);
+}
+
+void Ko4::setT2(double value)
+{
+    t_ko4->setT2(value);
+}
+
+void Ko4::setT3(double value)
+{
+    t_ko4->setT3(value);
+}
+
+void Ko4::setT4(double value)
+{
+    t_ko4->setT4(value);
+}
+
+QString Ko4::c_print()
+{
+    return c_ko4->print();
 }
 
 void Ko4::on_radioButton_test1Single_toggled(bool checked)
@@ -362,7 +416,7 @@ void Ko4::on_pushButton_test1_clicked()
         return;
     }
 
-    bool f = c_ko4->getTrombine_time();
+    bool f = c_ko4->getTv1() && c_ko4->getTv2() && c_ko4->getK3() && c_ko4->getTv4();
     if( !(!c_ko4->getDate().toString("dd.MM.yyyy").isEmpty() && f) ) {
         QMessageBox::information(this, "Внимание!", QString("Для того чтобы продолжить неоходимо провести калибровку."));
         return;
@@ -438,7 +492,7 @@ void Ko4::on_pushButton_test2_clicked()
 
     t_ko4_1->setReagent_serial(ui->lineEdit_test2ReagentSerial->text());
     t_ko4_1->setReagent_date(ui->dateEdit_test2Reagent->date());
-    t_ko4_1->setTrombine(ui->doubleSpinBox_test2Trombine->value());
+    t_ko4_1->setActivity(ui->doubleSpinBox_test2Activity->value());
     t_ko4_1->setTrombine_time(ui->doubleSpinBox_test2TrombineTime->value());
     t_ko4_1->setIncube_time(ui->doubleSpinBox_test2IncubeTime->value());
     t_ko4_1->setWrite_time(ui->doubleSpinBox_test2WriteTime->value());
@@ -481,7 +535,7 @@ void Ko4::on_pushButton_calib_clicked()
     c_ko4->setK_plazma_serial(ui->lineEdit_calibKPlazmaSerial->text().toUtf8());
     c_ko4->setIncube_time(ui->doubleSpinBox_calibIncubeTime->value());
     c_ko4->setWrite_time(ui->doubleSpinBox_calibWriteTime->value());
-    c_ko4->setTrombine(ui->doubleSpinBox_calibTrombine->value());
+    c_ko4->setActivity(ui->doubleSpinBox_calibActivity->value());
 
     c_ko4->setK1(ui->checkBox_calibCh1->isChecked());
     c_ko4->setK2(ui->checkBox_calibCh2->isChecked());

@@ -32,16 +32,19 @@ class ChoiseDialog : public QDialog
 public:
     explicit ChoiseDialog(QDialog *parent = 0);
     int getTypeOfWidget() const;
-    QPointer<Widget> CreateWidgetThread();
+    void CreateWidgetThread();
     ~ChoiseDialog();
 
-    QPointer<Agr1> agr1;
-    QPointer<Agr2> agr2;
-    QPointer<Ko1> ko1;
-    QPointer<Ko2> ko2;
-    QPointer<Ko3> ko3;
-    QPointer<Ko4> ko4;
-    QPointer<Ko5> ko5;
+    Agr1 *agr1;     //Определение параметров агрегации
+    Agr2 *agr2;     //Определение активности фактора Виллебранда
+    Ko1 *ko1;       //Время свертывания
+    Ko2 *ko2;       //АЧТВ
+    Ko3 *ko3;       //Фибриноген
+    Ko4 *ko4;       //Тромбин
+    Ko5 *ko5;       //Протромбиновый комплекс
+
+    QSharedPointer<useE154> agrekola;
+    QSharedPointer<Widget> widget;
 
 private slots:
     void on_exitButton_clicked();
@@ -55,6 +58,14 @@ private slots:
     void on_ko4Button_clicked();
     void on_ko5Button_clicked();
     void on_viewPlotsButton_clicked();
+
+    void t_singeShotConntection(QMetaObject::Connection *p, QMetaObject::Connection *t1,
+                                QMetaObject::Connection *t2, QMetaObject::Connection *t3,
+                                QMetaObject::Connection *t4, Ko_impl *ko);
+
+    void c_singeShotConntection(QMetaObject::Connection *p, QMetaObject::Connection *t1,
+                                QMetaObject::Connection *t2, QMetaObject::Connection *t3,
+                                QMetaObject::Connection *t4, Ko_impl *ko);
 
     void startMeasurement(StartMeasurement *);
     void calibration(StartMeasurement *);

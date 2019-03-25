@@ -5,12 +5,13 @@
 #include "savefiles.h"
 #include "startmeasurement.h"
 #include "globalvalue.h"
+#include "ko_impl.h"
 
 namespace Ui {
 class Ko1;
 }
 
-class Ko1 : public QWidget
+class Ko1 : public QWidget, public Ko_impl
 {
     Q_OBJECT
 
@@ -29,6 +30,20 @@ private slots:
 
     void on_lineEdit_testCh1_textChanged(const QString &arg1);
     void on_lineEdit_testCh3_textChanged(const QString &arg1);
+
+    // Ko_impl interface
+public slots:
+    QString t_print() override;
+    void setT1(double value) override;
+    void setT2(double value) override;
+    void setT3(double value) override;
+    void setT4(double value) override;
+
+    QString c_print() override { return 0; }
+    void calibrationData1Come(double) override {}
+    void calibrationData2Come(double) override {}
+    void calibrationData3Come(double) override {}
+    void calibrationData4Come(double) override {}
 
 signals:
     void measurement(StartMeasurement*);

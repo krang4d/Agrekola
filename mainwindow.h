@@ -33,10 +33,10 @@ private slots:
     void on_action_propety_triggered();
 
 private:
-    Ui::MainWindow *ui;
     Widget *centerWidget;
     useE154 *agrekola;
     ChoiseDialog *ch;
+    Ui::MainWindow *ui;
 
     friend class ChoiseDialog;
 };

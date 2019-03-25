@@ -28,7 +28,7 @@ Widget::Widget(QWidget *parent) :
     startWin(new StartMeasurement)
 {
     ui->setupUi(this);
-    setAttribute(Qt::WA_DeleteOnClose);
+    //setAttribute(Qt::WA_DeleteOnClose);
     setWindowTitle("Программа сбора данных с АЦП(E-154) по 4 каналам");
 
     setupWidget();
@@ -105,9 +105,11 @@ bool Widget::eventFilter(QObject *watched, QEvent *event)
 {
     if(event->type() == QEvent::Close) {
         qDebug() << "Close Event is emited in the Widget!";
+        if(!parentWidget()) qDebug() <<"parent Widget do not set in constroctor";
         parentWidget()->show();
-        emit stop();
-        return QWidget::eventFilter(watched, event);
+        setUserMessage("Выход");
+        //emit stop();
+        return true; //QWidget::eventFilter(watched, event);
     }
 //    if(event->type() == QEvent::KeyPress) {
 //        qDebug() << "Event kayPress";
@@ -934,13 +936,6 @@ void Widget::writeMapData(Channel_ID c)
     default:
         break;
     }
-
-//    if (!isData(ChannelAll_ID) && !isIncub() && !isWaitPulse()) {
-//        ui->pushButton->setEnabled(true);
-//        setUserMessage(QString("Конец сбора данных"));
-//        status(QString("Конец сбора данных"));
-//        emit done();
-//    }
 }
 
 void Widget::showEvent(QShowEvent *event)
@@ -1025,15 +1020,12 @@ void Widget::on_pushButton_clicked()
 void Widget::doScenario()
 {
     //static QPointer<ImpuleWaiter> iw;
-    static State_ID current_state_id;
-    static QString msg_state;
     static int i = 0;
-    current_state_id = state->current();
-    switch(current_state_id) {
+    QString s =  state->getMessage();
+    setUserMessage(s);
+    QMessageBox::information(this, "", s);
+    switch(state->current()) {
     case MotorON_ID:
-        msg_state = state->getMessage();
-        setUserMessage(msg_state);
-        QMessageBox::information(this, "MotorON_ID", msg_state);
         if(startWin->isChannel(Channel1_ID)) onMotor(Channel1_ID, true);
         if(startWin->isChannel(Channel2_ID)) onMotor(Channel2_ID, true);
         if(startWin->isChannel(Channel3_ID)) onMotor(Channel3_ID, true);
@@ -1041,9 +1033,6 @@ void Widget::doScenario()
         state->next();
         break;
     case MotorOFF_ID:
-        msg_state = state->getMessage();
-        setUserMessage(msg_state);
-        QMessageBox::information(this, "MotorOFF_ID", msg_state);
         if(startWin->isChannel(Channel1_ID)) onMotor(Channel1_ID, false);
         if(startWin->isChannel(Channel2_ID)) onMotor(Channel2_ID, false);
         if(startWin->isChannel(Channel3_ID)) onMotor(Channel3_ID, false);
@@ -1051,35 +1040,28 @@ void Widget::doScenario()
         state->next();
         break;
     case LaserON_ID:
-        msg_state = state->getMessage();
-        setUserMessage(msg_state);
-        QMessageBox::information(this, "LaserON_ID", msg_state);
         onlaser(true);
         state->next();
         break;
     case LaserOFF_ID:
-        msg_state = state->getMessage();
-        setUserMessage(msg_state);
-        QMessageBox::information(this, "LaserOFF_ID", msg_state);
+        setUserMessage(state->getMessage());
+        QMessageBox::information(this, "LaserOFF_ID", state->getMessage());
         onlaser(true);
         state->next();
         break;
     case Ko_ID:
-        msg_state = state->getMessage();
-        QMessageBox::information(this, "Ko_ID", msg_state + QString("d1 %1 d2 %2 D3 %3 D4 %4").arg(data1).arg(data2).arg(data3).arg(data4));
-        setUserMessage(msg_state);
         if (startWin->isChannel(Channel1_ID)) {
             i++;
             connect(this, &Widget::done1, [this]() {
                 i--;
-                    if (!i) {state->next(); qDebug() << "done1";}
+                if (!i) { state->next(); qDebug() << "done1"; }
                 disconnect(this, &Widget::done1, 0, 0);});
         }
         if (startWin->isChannel(Channel2_ID)) {
             i++;
             connect(this, &Widget::done2, [this]() {
                 i--;
-                    if (!i) {state->next(); qDebug() << "done2";}
+                if (!i) { state->next(); qDebug() << "done2"; }
                 disconnect(this, &Widget::done2, 0, 0);
             });
         }
@@ -1087,22 +1069,19 @@ void Widget::doScenario()
             i++;
             connect(this, &Widget::done3, [this]() {
                 i--;
-                    if (!i) {state->next(); qDebug() << "done3";}
+                if (!i) { state->next(); qDebug() << "done3"; }
                 disconnect(this, &Widget::done3, 0, 0);});
         }
         if (startWin->isChannel(Channel4_ID)) {
             i++;
             connect(this, &Widget::done4, [this]() {
                 i--;
-                    if (!i) {state->next(); qDebug() << "done4";}
+                if (!i) { state->next(); qDebug() << "done4"; }
                 disconnect(this, &Widget::done4, 0, 0);});
         }
         waitImpulse(new ImpuleWaiter);
         break;
     case Calc_ID:
-        msg_state = state->getMessage();
-        QMessageBox::information(this, "Calc_ID", msg_state);
-        setUserMessage(msg_state);
         if( startWin->isChannel(Channel1_ID) ) calcData(Channel1_ID);
         if( startWin->isChannel(Channel2_ID) ) calcData(Channel2_ID);
         if( startWin->isChannel(Channel3_ID) ) calcData(Channel3_ID);
@@ -1110,9 +1089,6 @@ void Widget::doScenario()
         state->next();
         break;
     case Write_ID:
-        msg_state = state->getMessage();
-        QMessageBox::information(this, "Write_ID", msg_state);
-        setUserMessage(msg_state);
         if( startWin->isChannel(Channel1_ID) ) writeMapData(Channel1_ID);
         if( startWin->isChannel(Channel2_ID) ) writeMapData(Channel2_ID);
         if( startWin->isChannel(Channel3_ID) ) writeMapData(Channel3_ID);
@@ -1120,9 +1096,6 @@ void Widget::doScenario()
         state->next();
         break;
     case Avg_ID:
-        msg_state = state->getMessage();
-        setUserMessage(msg_state);
-        QMessageBox::information(this, "Avg_ID", msg_state);
         if (startWin->isChannel(Channel1_ID)) {
             i++;
             getData(Channel1_ID, startWin->getTimeWrite());
@@ -1158,43 +1131,28 @@ void Widget::doScenario()
         }
         break;
     case Agr_ID:
-        msg_state = state->getMessage();
-        QMessageBox::information(this, "Agr_ID", msg_state);
         waitImpulse(new ImpuleWaiter);
-        setUserMessage(QString("<div style='color: blue'>Конец TestAgr1_ID"), 0);
-        ui->pushButton->setEnabled(true);
         state->reset();
         break;
     case Incubation1_ID:
-        msg_state = state->getMessage();
-        QMessageBox::information(this, "Incubation1_ID", msg_state);
-        setUserMessage(msg_state);
         startIncub(1, startWin->getTimeIncube(1), [this](){
             setUserMessage(QString("<span style = 'color: red'>Время инкубации истекло</span>"));
             state->next();
         });
         break;
     case Incubation2_ID:
-        msg_state = state->getMessage();
-        QMessageBox::information(this, "Incubation1_ID", msg_state);
-        setUserMessage(msg_state);
         startIncub(2, startWin->getTimeIncube(1), [this](){
             setUserMessage(QString("<span style = 'color: red'>Время инкубации истекло</span>"));
             state->next();
         });
         break;
+    case End_ID:
+        emit end();
+        ui->pushButton->setEnabled(true);
+        break;
     default:
-        if(startWin->isChannel(Channel1_ID)) onMotor(Channel1_ID, true); //включение перемешивания 1
-        if(startWin->isChannel(Channel2_ID)) onMotor(Channel2_ID, true); //включение перемешивания 2
-        if(startWin->isChannel(Channel3_ID)) onMotor(Channel3_ID, true); //включение перемешивания 3
-        if(startWin->isChannel(Channel4_ID)) onMotor(Channel4_ID, true); //включение перемешивания 4
-
-        connect(startWin, &StartMeasurement::startMeasurment, [=](StartMeasurement* sm){
-            startWin = sm;
-            disconnect(startWin, &StartMeasurement::startMeasurment, 0, 0);
-        });
-        startWin->show();
         qDebug() << QString("called default startMeasurment()");
+        QMessageBox::information(this, "Alert", "called default startMeasurment()");
         break;
     } //end switch
 }

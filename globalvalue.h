@@ -36,7 +36,8 @@ enum State_ID{
     Calc_ID,        //расчет параметров
     Write_ID,        //запись данных в файл
     Incubation1_ID, //инкубация 1
-    Incubation2_ID  //инкубация 2
+    Incubation2_ID,  //инкубация 2
+    End_ID          //вывод результатов
 };
 
 //Каналы

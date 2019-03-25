@@ -27,7 +27,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget_ko4">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tabWidget_ko4Page1">
       <attribute name="title">
@@ -136,27 +136,27 @@
         </layout>
        </item>
        <item>
-        <widget class="QGroupBox" name="groupBox_calibTrimbine">
+        <widget class="QGroupBox" name="groupBox_calibActivity">
          <property name="title">
           <string>Используемые активности тромбина</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_6">
           <item>
-           <widget class="QRadioButton" name="radioButton_calibTrombine1">
+           <widget class="QRadioButton" name="radioButton_calibActivity1">
             <property name="text">
              <string>активность тромбина 1</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QRadioButton" name="radioButton_calibTrombine2">
+           <widget class="QRadioButton" name="radioButton_calibActivity2">
             <property name="text">
              <string>активность тромбина 2 </string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QRadioButton" name="radioButton_calibTrombine3">
+           <widget class="QRadioButton" name="radioButton_calibActivity3">
             <property name="text">
              <string>активность тромбина 3 </string>
             </property>
@@ -175,7 +175,7 @@
           </widget>
          </item>
          <item row="0" column="1">
-          <widget class="QDoubleSpinBox" name="doubleSpinBox_calibTrombine"/>
+          <widget class="QDoubleSpinBox" name="doubleSpinBox_calibActivity"/>
          </item>
         </layout>
        </item>
@@ -361,27 +361,27 @@
         </layout>
        </item>
        <item>
-        <widget class="QGroupBox" name="groupBox_testTrimbine">
+        <widget class="QGroupBox" name="groupBox_testActivity">
          <property name="title">
           <string>Используемые активности тромбина</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_13">
           <item>
-           <widget class="QRadioButton" name="radioButton_testTrombine1">
+           <widget class="QRadioButton" name="radioButton_testActivity1">
             <property name="text">
              <string>активность тромбина 1</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QRadioButton" name="radioButton_testTrombine2">
+           <widget class="QRadioButton" name="radioButton_testActivity2">
             <property name="text">
              <string>активность тромбина 2 </string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QRadioButton" name="radioButton_testTrombine3">
+           <widget class="QRadioButton" name="radioButton_testActivity3">
             <property name="text">
              <string>активность тромбина 3 </string>
             </property>
@@ -640,7 +640,7 @@
           </widget>
          </item>
          <item row="5" column="1">
-          <widget class="QDoubleSpinBox" name="doubleSpinBox_test2Trombine"/>
+          <widget class="QDoubleSpinBox" name="doubleSpinBox_test2Activity"/>
          </item>
          <item row="1" column="1">
           <widget class="QDoubleSpinBox" name="doubleSpinBox_test2WriteTime">

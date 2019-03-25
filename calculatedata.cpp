@@ -342,27 +342,7 @@ QString CalcKo3::getParameters()
 
 CalcKo4::CalcKo4()
 {
-    /*
-    SaveFiles file;
-    file.openKo4(param);
-    qDebug() << "параметры CalcKo4" << param.count();
-    auto it = param.end();
-
-    QString d1, d2, d3, d4;
-    d1 = *(it-4);
-    d2 = *(it-3);
-    d3 = *(it-2);
-    d4 = *(it-1);
-    qDebug() << d1 << d2 << d3 << d4;
-    */
-
-    t0 = c_ko4.getTrombine_time();
-
-//    auto it = param.end() - 4;
-//    for(; it < param.end(); it++) {
-//        qDebug() << *it;
-//    }
-    //t0 = (d1.toDouble() + d2.toDouble() + d3.toDouble() + d4.toDouble())/4;
+    t0 = (c_ko4.getTv1() + c_ko4.getTv2() + c_ko4.getTv3() + c_ko4.getTv4())/4;
     qDebug() << "Тромбин контрольной плазмы =" << t0;
 }
 

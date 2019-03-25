@@ -28,8 +28,6 @@ private slots:
     void on_pushButton_test2_clicked();
     void on_pushButton_calib_clicked();
 
-    void on_toolBox_currentChanged(int index);
-
     void on_radioButton_test1Single_toggled(bool checked);
     void on_radioButton_test2Single_toggled(bool checked);
 
@@ -47,11 +45,20 @@ private slots:
     void on_lineEdit_test2Ch1_textChanged(const QString &arg1);
     void on_lineEdit_test2Ch3_textChanged(const QString &arg1);
 
+    void on_tabWidget_currentChanged(int index);
+
 public slots:
-    void calibrationData1Come(double);
-    void calibrationData2Come(double);
-    void calibrationData3Come(double);
-    void calibrationData4Come(double);
+    QString t_print() override;
+    void setT1(double value) override;
+    void setT2(double value) override;
+    void setT3(double value) override;
+    void setT4(double value) override;
+
+    QString c_print() override;
+    void calibrationData1Come(double) override;
+    void calibrationData2Come(double) override;
+    void calibrationData3Come(double) override;
+    void calibrationData4Come(double) override;
 
 signals:
     void measurement(StartMeasurement*);
@@ -60,8 +67,7 @@ signals:
 
 private:
     Ui::Ko2 *ui;
-    TestKo2 *t_ko2;
-    TestKo2 *t_ko2_1;
+    TestKo2 *t_ko2, *t_ko2_1, *t_ko2_2;
     CalibrationKo2 *c_ko2;
 
     friend class StartTestKo2;

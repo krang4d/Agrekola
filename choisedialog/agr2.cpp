@@ -46,7 +46,8 @@ void Agr2::open()
     QString str;
         str = QString("Номер серия реагентов %1\n").arg(c_agr2.getReagent_serial())
             + QString("Срок годности реагентов %1\n").arg(c_agr2.getReagent_date().toString("dd.MM.yyyy"));
-    ui->label_testCalibString->setText(str);
+
+    ui->label_testCalibString->setText(c_agr2.print());
 
     if( t_agr2.getSingle() ) {
         ui->radioButton_testSingle->setChecked(true);

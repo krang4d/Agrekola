@@ -16,7 +16,7 @@ public:
     explicit State(QObject *parent = 0);
     virtual ~State();
     State_ID current();
-    State_ID next();
+    int next();
     bool hasNext();
     void reset();
     virtual QString getMessage();

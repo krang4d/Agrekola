@@ -5,33 +5,41 @@
 
 Ko2::Ko2(QWidget *parent) :
     QWidget(parent),
-    Ko_impl(),
+    t_ko2_1(new TestKo2(this)),
+    t_ko2_2(new TestKo2(WithoutCalibration(), this)),
+    c_ko2(new CalibrationKo2),
     ui(new Ui::Ko2)
 {
     ui->setupUi(this);
+    t_ko2 = t_ko2_1;
+    ui->tabWidget->setTabEnabled(0, true);
     open();
     //connect(ui->page_1, SIGNAL(startMeasurment(StartMeasurment*)), this, SIGNAL(measurement(StartMeasurment*)));
     //connect(ui->page_2, &StartMeasurment::startMeasurment, this, &Ko2::measurement);
 }
 
+void Ko2::on_tabWidget_currentChanged(int index)
+{
+    if(index == 1)
+        t_ko2 = t_ko2_1;
+    if(index == 2)
+        t_ko2 = t_ko2_2;
+}
+
 Ko2::~Ko2()
 {
     close();
+    delete t_ko2_1;
+    delete t_ko2_2;
+    delete c_ko2;
     delete ui;
-}
-
-void Ko2::on_toolBox_currentChanged(int index)
-{
-    //open();
 }
 
 void Ko2::open()
 {
     //окно тест
-    t_ko2 = new TestKo2(this);
-    t_ko2_1 = new TestKo2(WithoutCalibration(), this);
-    c_ko2 = new CalibrationKo2(this);
-
+//    t_ko2_1 = new TestKo2(WithoutCalibration(), this);
+//    c_ko2 = new CalibrationKo2(this);
     int i = 0;
     double sum = 0;
     if(c_ko2->getK1()) {
@@ -64,7 +72,8 @@ void Ko2::open()
 //                + QString("АЧТВ к/плазмы 3го канала: %1 с\n").arg(c_ko2->getA4tv_kp3())
 //                + QString("АЧТВ к/плазмы 4го канала: %1 с\n").arg(c_ko2->getA4tv_kp4())
                 + QString("АЧТВ к/плазмы: %1").arg(sum);
-    ui->label_test1CalibString->setText(str);
+
+    ui->label_test1CalibString->setText(c_ko2->print());
 
     if( t_ko2->getSingle() ) {
         ui->radioButton_test1Single->setChecked(true);
@@ -168,6 +177,9 @@ void Ko2::open()
 
 void Ko2::close()
 {
+    c_ko2->save();
+    t_ko2_1->save();
+    t_ko2_2->save();
     //param.clear();
     //param.replace(0, ui->label_calibrationData->text());
     //param.replace(1, ui->lineEdit_1->text());
@@ -176,7 +188,6 @@ void Ko2::close()
     //param.replace(4, ui->lineEdit_4->text());
     //param.replace(5, ui->lineEdit_5->text());
     //file.saveKo2(param);
-
 }
 
 void Ko2::calibrationDataCome(int n , double data)
@@ -211,6 +222,37 @@ void Ko2::calibrationDataCome(int n , double data)
 //        param.push_back(QString("%1").arg(deta));
 //    else param.replace(n, QString("%1").arg(deta));
     //file.saveKo2(param);
+}
+
+QString Ko2::t_print()
+{
+    t_ko2->setDate(QDate::currentDate());
+    return t_ko2->print();
+}
+
+void Ko2::setT1(double value)
+{
+    t_ko2->setT1(value);
+}
+
+void Ko2::setT2(double value)
+{
+    t_ko2->setT2(value);
+}
+
+void Ko2::setT3(double value)
+{
+    t_ko2->setT3(value);
+}
+
+void Ko2::setT4(double value)
+{
+    t_ko2->setT4(value);
+}
+
+QString Ko2::c_print()
+{
+    return c_ko2->print();
 }
 
 void Ko2::calibrationData1Come(double t0)
@@ -381,7 +423,7 @@ void Ko2::on_pushButton_test1_clicked()
     bool e = ui->checkBox_test1Ch1->isChecked() || ui->checkBox_test1Ch2->isChecked()
             || ui->checkBox_test1Ch3->isChecked() || ui->checkBox_test1Ch4->isChecked();
 
-    if (  !(a && b && c && d && e ) ) {
+    if (  !( a && b && c && d && e ) ) {
         QMessageBox::information(this,"Внимание!","Для того чтобы продолжить необходимо"
                                                   " выбрать рабочие каналы и заполнить"
                                                   " все поля с параметрами.");

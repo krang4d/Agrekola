@@ -85,7 +85,6 @@ HEADERS  += selectcalibrationagr1.h \
     choisedialog/agr_impl.h \
     choisedialog/ko_impl.h
 
-
 FORMS    += selectcalibrationagr1.ui \
     selectinductor.ui \
     testkoagr.ui \

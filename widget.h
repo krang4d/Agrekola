@@ -76,6 +76,7 @@ signals:
     void done4();
     void done();
     void incube_timeout();
+    void end();
 
 public slots:
     void startIncub(int num, double time_s, std::function<void(void)> timeout_fun, QString message = "Время инкубации истекло");

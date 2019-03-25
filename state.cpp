@@ -19,16 +19,17 @@ State_ID State::current()
     return state.at(index);
 }
 
-State_ID State::next()
+int State::next()
 {
     if( hasNext() ) {
         index++;
         emit stateChanged();
-        return state.at(index);
+        return index;
     }
     else {
-        QMessageBox::warning(0, "Errore", "State::Index is out of date!");
-        return current();
+       qDebug() << "Errore", "State::Index is out of date!";
+        //emit stateChanged();
+       return -1;
     }
 }
 
@@ -51,15 +52,13 @@ QString State::getMessage()
 
 StateKo1::StateKo1()
 {
-    State::state = { Incubation1_ID, Ko_ID, Calc_ID, Incubation1_ID,  Ko_ID, Calc_ID };
+    State::state = { Incubation1_ID, Ko_ID, Calc_ID, End_ID};
 //    State::state = { Incubation1_ID, Ko_ID, Incubation1_ID,  Ko_ID, Calc_ID };
     State::state_map = {
         { 0,  QString("Инкубация 1") },
         { 1,  QString("Измерение 1") },
         { 2,  QString("Расчет") },
-        { 3,  QString("Инкубация 2") },
-        { 4,  QString("Измерение 2") },
-        { 5,  QString("Расчет") }
+        { 3,  QString("Конец") }
     };
 }
 

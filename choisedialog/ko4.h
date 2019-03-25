@@ -4,12 +4,13 @@
 #include <QWidget>
 #include "savefiles.h"
 #include "startmeasurement.h"
+#include "ko_impl.h"
 
 namespace Ui {
 class Ko4;
 }
 
-class Ko4 : public QWidget
+class Ko4 : public QWidget, public Ko_impl
 {
     Q_OBJECT
 
@@ -51,11 +52,20 @@ private slots:
     void on_radioButton_testTrombine2_toggled(bool checked);
     void on_radioButton_testTrombine3_toggled(bool checked);
 
+    void on_tabWidget_ko4_currentChanged(int index);
+
 public slots:
-    void calibrationData1Come(double);
-    void calibrationData2Come(double);
-    void calibrationData3Come(double);
-    void calibrationData4Come(double);
+    QString t_print() override;
+    void setT1(double value) override;
+    void setT2(double value) override;
+    void setT3(double value) override;
+    void setT4(double value) override;
+
+    QString c_print() override;
+    void calibrationData1Come(double) override;
+    void calibrationData2Come(double) override;
+    void calibrationData3Come(double) override;
+    void calibrationData4Come(double) override;
 
 signals:
     void measurement(StartMeasurement*);
@@ -66,12 +76,13 @@ private:
 //    SaveFiles file;
 //    QStringList param;
 
-    TestKo4* t_ko4;
-    TestKo4* t_ko4_1;
-    CalibrationKo4* c_ko4;
-    CalibrationKo4_1* c_ko4_1;
-    CalibrationKo4_2* c_ko4_2;
-    CalibrationKo4_3* c_ko4_3;
+    TestKo4 *t_ko4;
+    TestKo4 *t_ko4_1;
+    TestKo4 *t_ko4_2;
+    CalibrationKo4 *c_ko4;
+    CalibrationKo4_1 *c_ko4_1;
+    CalibrationKo4_2 *c_ko4_2;
+    CalibrationKo4_3 *c_ko4_3;
 };
 
 class StartCalibrationKo4 : public StartMeasurement

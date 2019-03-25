@@ -108,6 +108,33 @@ void Ko1::on_lineEdit_testCh3_textChanged(const QString &arg1)
         ui->lineEdit_testCh4->setText(arg1);
 }
 
+QString Ko1::t_print()
+{
+    //QMessageBox::information(this, "Распечатка", t_ko1.print());
+    t_ko1.setDate(QDate::currentDate());
+    return t_ko1.print();
+}
+
+void Ko1::setT1(double value)
+{
+    t_ko1.setT1(value);
+}
+
+void Ko1::setT2(double value)
+{
+    t_ko1.setT2(value);
+}
+
+void Ko1::setT3(double value)
+{
+    t_ko1.setT3(value);
+}
+
+void Ko1::setT4(double value)
+{
+    t_ko1.setT4(value);
+}
+
 void Ko1::on_pushButton_test_clicked()
 {
     bool a, b, c, d;
@@ -163,8 +190,8 @@ void Ko1::on_pushButton_test_clicked()
 StartMeasurement* StartTestKo1::getStart(Test* t_ko1)
 {
     StartMeasurement* start = new StartMeasurement(0);
-    start->setModeID(TestKo1_ID);  //режим определение времени свертывания
-    start->setProbe(t_ko1->getSingle());          //одиночные пробы
+    start->setModeID(TestKo1_ID);                   //режим определение времени свертывания
+    start->setProbe(t_ko1->getSingle());            //одиночные пробы
     start->setChannels(t_ko1->getK1(), t_ko1->getK2(), t_ko1->getK3(), t_ko1->getK4());
     start->setNum(1, t_ko1->getNum1());
     start->setNum(2, t_ko1->getNum2());

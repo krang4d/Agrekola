@@ -12,14 +12,7 @@ ChoiseDialog::ChoiseDialog(QDialog *parent) :
     ui->setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
     setWindowFlags(Qt::Window | Qt::MSWindowsFixedSizeDialogHint);
-
-    //    Agr1 *agr1; //Определение параметров агрегации
-    //    Agr2 *agr2; //Определение активности фактора Виллебранда
-    //    Ko1 *ko1;   //Время свертывания
-    //    Ko2 *ko2;   //АЧТВ
-    //    Ko3 *ko3;   //Фибриноген
-    //    Ko4 *ko4;   //Тромбин
-    //    Ko5 *ko5;   //Протромбиновый комплекс
+    CreateWidgetThread();
 
     agr1 = static_cast<Agr1 *>(ui->stackedWidget->widget(1));
     agr2 = static_cast<Agr2 *>(ui->stackedWidget->widget(2));
@@ -52,29 +45,29 @@ int ChoiseDialog::getTypeOfWidget() const
     return ui->stackedWidget->currentIndex();
 }
 
-QPointer<Widget> ChoiseDialog::CreateWidgetThread()
+void ChoiseDialog::CreateWidgetThread()
 {
-    QPointer<useE154> agrekola = new useE154;
-    QPointer<Widget> widget = QPointer<Widget>(new Widget(this));
+    agrekola = QSharedPointer<useE154>(new useE154, &ChoiseDialog::deleteLater);
+    widget = QSharedPointer<Widget>(new Widget(this), &ChoiseDialog::deleteLater);
 
     widget->setWindowFlags(Qt::Dialog);
 
-    QWidget::connect(widget, SIGNAL(onmixch1(bool)), agrekola, SLOT(onMixCh1(bool)));
-    QWidget::connect(widget, SIGNAL(onmixch2(bool)), agrekola, SLOT(onMixCh2(bool)));
-    QWidget::connect(widget, SIGNAL(onmixch3(bool)), agrekola, SLOT(onMixCh3(bool)));
-    QWidget::connect(widget, SIGNAL(onmixch4(bool)), agrekola, SLOT(onMixCh4(bool)));
-    QWidget::connect(widget, SIGNAL(onmixpp(bool)), agrekola, SLOT(onMixPP(bool)));
-    QWidget::connect(widget, SIGNAL(onlaser(bool)), agrekola, SLOT(onLaser(bool)));
-    QObject::connect(widget, SIGNAL(stop()), agrekola, SLOT(stopThread()));
-    QObject::connect(widget, SIGNAL(stop()), widget, SLOT(deleteLater()));
+    QWidget::connect(widget.data(), SIGNAL(onmixch1(bool)), agrekola.data(), SLOT(onMixCh1(bool)));
+    QWidget::connect(widget.data(), SIGNAL(onmixch2(bool)), agrekola.data(), SLOT(onMixCh2(bool)));
+    QWidget::connect(widget.data(), SIGNAL(onmixch3(bool)), agrekola.data(), SLOT(onMixCh3(bool)));
+    QWidget::connect(widget.data(), SIGNAL(onmixch4(bool)), agrekola.data(), SLOT(onMixCh4(bool)));
+    QWidget::connect(widget.data(), SIGNAL(onmixpp(bool)), agrekola.data(), SLOT(onMixPP(bool)));
+    QWidget::connect(widget.data(), SIGNAL(onlaser(bool)), agrekola.data(), SLOT(onLaser(bool)));
+    QObject::connect(widget.data(), SIGNAL(stop()), agrekola.data(), SLOT(stopThread()));
+    QObject::connect(widget.data(), SIGNAL(stop()), widget.data(), SLOT(deleteLater()));
 
-    QWidget::connect(agrekola, SIGNAL(update_termo(bool)), widget, SLOT(updataTermo(bool)));
-    QWidget::connect(agrekola, SIGNAL(value_come(QVariantList)), widget, SLOT(realtimeDataSlot(QVariantList)));
-    QWidget::connect(agrekola, SIGNAL(finished()), agrekola, SLOT(deleteLater()));
-    QWidget::connect(widget, SIGNAL(destroyed(QObject*)), agrekola, SLOT(deleteLater()));
+    QWidget::connect(agrekola.data(), SIGNAL(update_termo(bool)), widget.data(), SLOT(updataTermo(bool)));
+    QWidget::connect(agrekola.data(), SIGNAL(value_come(QVariantList)), widget.data(), SLOT(realtimeDataSlot(QVariantList)));
+    QWidget::connect(agrekola.data(), SIGNAL(finished()), agrekola.data(), SLOT(deleteLater()));
+
+    QWidget::connect(widget.data(), SIGNAL(destroyed(QObject*)), agrekola.data(), SLOT(deleteLater()));
     agrekola->start();
     //widget->setUserMessage(agrekola->GetInformation());
-    return widget;
 }
 
 ChoiseDialog::~ChoiseDialog()
@@ -86,7 +79,6 @@ ChoiseDialog::~ChoiseDialog()
 
 void ChoiseDialog::on_testButton_clicked()
 {
-    QPointer<Widget> widget = CreateWidgetThread();
     widget->startWin = new StartMeasurement; //Test
     widget->startWin->setModeID(Test_ID);
     widget->state = StateBuilder::getState(Test_ID);
@@ -94,63 +86,185 @@ void ChoiseDialog::on_testButton_clicked()
     hide();
 }
 
+void ChoiseDialog::t_singeShotConntection(QMetaObject::Connection *p, QMetaObject::Connection *t1,
+                                          QMetaObject::Connection *t2, QMetaObject::Connection *t3,
+                                          QMetaObject::Connection *t4, Ko_impl *ko)
+{
+    *p = connect(widget.data(), &Widget::end, [=]() {
+        widget->setUserMessage(ko->t_print());
+        QObject::disconnect(*p);
+        delete p;
+    });
+    *t1 = connect(widget.data(), &Widget::ret_value1, [=](double d){
+        ko->setT1(d);
+        QObject::disconnect(*t1);
+        delete t1;
+    });
+    *t2 = connect(widget.data(), &Widget::ret_value2, [=](double d){
+        ko->setT2(d);
+        QObject::disconnect(*t2);
+        delete t2;
+    });
+    *t3 = connect(widget.data(), &Widget::ret_value3, [=](double d){
+        ko->setT3(d);
+        QObject::disconnect(*t3);
+        delete t3;
+    });
+
+    *t4 = connect(widget.data(), &Widget::ret_value4, [=](double d){
+        ko->setT4(d);
+        QObject::disconnect(*t4);
+        delete t4;
+    });
+}
+
 void ChoiseDialog::startMeasurement(StartMeasurement* sw)
 {
-    QPointer<MainWindow> mw = new MainWindow(this);
     Mode_ID mode = sw->getModeID();
-    mw->centerWidget->startWin = sw;
-    //mw->centerWidget->single = sw->isSingle();
+    widget->startWin = sw;
+    this->hide();
+    widget->show();
+    //QPointer<MainWindow> mw = new MainWindow(this);
+    //widget->centerWidget->single = sw->isSingle();
+    QMetaObject::Connection *printConnection = new QMetaObject::Connection;
+    QMetaObject::Connection *t1Connection = new QMetaObject::Connection;
+    QMetaObject::Connection *t2Connection = new QMetaObject::Connection;
+    QMetaObject::Connection *t3Connection = new QMetaObject::Connection;
+    QMetaObject::Connection *t4Connection = new QMetaObject::Connection;
+
     switch (mode) {
-    case TestAgr1_ID:
-        mw->setWindowTitle("<div style='color: blue'>Определение параметров агрегации, тест");
-        mw->centerWidget->setUserMessage("<div style='color: blue'>Определение параметров агрегации, тест");
-        break;
-    case TestAgr2_ID:
-        mw->setWindowTitle("Определение активности фактора Виллебранда, тест");
-        mw->centerWidget->setUserMessage("Определение активности фактора Виллебранда, тест");
-        //centerWidget->setUserMessage(tr("<div style='color: blue'>Установите в рабочие каналы кюветы с пробами и нажмите \"Старт\""));
-        break;
     case TestKo1_ID:
-        mw->setWindowTitle("Время свертывания, тест");
-        mw->centerWidget->setUserMessage("Время свертывания, тест");
-        mw->centerWidget->setUserMessage(tr("<div style='color: blue'>Установите в рабочие каналы кюветы с пробами и нажмите \"Старт\""));
+        widget->setWindowTitle("Время свертывания, тест");
+        widget->setUserMessage("Время свертывания, тест");
+        widget->setUserMessage(tr("<div style='color: blue'>Установите в рабочие каналы кюветы с пробами и нажмите \"Старт\""));
+        t_singeShotConntection(printConnection, t1Connection, t2Connection, t3Connection, t4Connection, ko1);
         break;
     case TestKo2_ID:
-        mw->setWindowTitle("АЧТВ, тест");
-        mw->centerWidget->setUserMessage("АЧТВ, тест");
-        mw->centerWidget->setUserMessage(tr("<div style='color: blue'>Установите в рабочие каналы кюветы с пробами и нажмите \"Старт\""));
+        widget->setWindowTitle("АЧТВ, тест");
+        widget->setUserMessage("АЧТВ, тест");
+        widget->setUserMessage(tr("<div style='color: blue'>Установите в рабочие каналы кюветы с пробами и нажмите \"Старт\""));
+        t_singeShotConntection(printConnection, t1Connection, t2Connection, t3Connection, t4Connection, ko2);
         break;
     case TestKo3_ID:
-        mw->setWindowTitle("Фибриноген, тест");
-        mw->centerWidget->setUserMessage("Фибриноген, тест)");
-        mw->centerWidget->setUserMessage(tr("<div style='color: blue'>Установите в рабочие каналы кюветы с пробами и нажмите \"Старт\""));
+        widget->setWindowTitle("Фибриноген, тест");
+        widget->setUserMessage("Фибриноген, тест)");
+        widget->setUserMessage(tr("<div style='color: blue'>Установите в рабочие каналы кюветы с пробами и нажмите \"Старт\""));
+        t_singeShotConntection(printConnection, t1Connection, t2Connection, t3Connection, t4Connection, ko3);
         break;
     case TestKo4_ID:
-        mw->setWindowTitle("Тромбин, тест");
-        mw->centerWidget->setUserMessage("Тромбин, тест");
-        mw->centerWidget->setUserMessage(tr("<div style='color: blue'>Установите в рабочие каналы кюветы с пробами и нажмите \"Старт\""));
+        widget->setWindowTitle("Тромбин, тест");
+        widget->setUserMessage("Тромбин, тест");
+        widget->setUserMessage(tr("<div style='color: blue'>Установите в рабочие каналы кюветы с пробами и нажмите \"Старт\""));
+        t_singeShotConntection(printConnection, t1Connection, t2Connection, t3Connection, t4Connection, ko4);
         break;
     case TestKo5_ID:
-        mw->setWindowTitle("Протромбиновый комплекс, тест");
-        mw->centerWidget->setUserMessage("Протромбиновый комплекс, тест");
-        mw->centerWidget->setUserMessage(tr("<div style='color: blue'>Установите в рабочие каналы кюветы с пробами и нажмите \"Старт\""));
+        widget->setWindowTitle("Протромбиновый комплекс, тест");
+        widget->setUserMessage("Протромбиновый комплекс, тест");
+        widget->setUserMessage(tr("<div style='color: blue'>Установите в рабочие каналы кюветы с пробами и нажмите \"Старт\""));
+        t_singeShotConntection(printConnection, t1Connection, t2Connection, t3Connection, t4Connection, ko5);
+        break;
+    case TestAgr1_ID:
+        widget->setWindowTitle("<div style='color: blue'>Определение параметров агрегации, тест");
+        widget->setUserMessage("<div style='color: blue'>Определение параметров агрегации, тест");
+
+        break;
+    case TestAgr2_ID:
+        widget->setWindowTitle("Определение активности фактора Виллебранда, тест");
+        widget->setUserMessage("Определение активности фактора Виллебранда, тест");
+        //centerWidget->setUserMessage(tr("<div style='color: blue'>Установите в рабочие каналы кюветы с пробами и нажмите \"Старт\""));
         break;
     default:
         break;
     }
-    this->hide();
-    mw->show();
+}
+
+void ChoiseDialog::c_singeShotConntection(QMetaObject::Connection *p, QMetaObject::Connection *t1,
+                                          QMetaObject::Connection *t2, QMetaObject::Connection *t3,
+                                          QMetaObject::Connection *t4, Ko_impl *ko)
+{
+    *p = connect(widget.data(), &Widget::end, [=]() {
+        widget->setUserMessage(ko->c_print());
+        QObject::disconnect(*p);
+        delete p;
+    });
+    *t1 = connect(widget.data(), &Widget::ret_value1, [=](double d){
+        ko->calibrationData1Come(d);
+        QObject::disconnect(*t1);
+        delete t1;
+    });
+    *t2 = connect(widget.data(), &Widget::ret_value2, [=](double d){
+        ko->calibrationData2Come(d);
+        QObject::disconnect(*t2);
+        delete t2;
+    });
+    *t3 = connect(widget.data(), &Widget::ret_value3, [=](double d){
+        ko->calibrationData3Come(d);
+        QObject::disconnect(*t3);
+        delete t3;
+    });
+
+    *t4 = connect(widget.data(), &Widget::ret_value4, [=](double d){
+        ko->calibrationData4Come(d);
+        QObject::disconnect(*t4);
+        delete t4;
+    });
 }
 
 void ChoiseDialog::calibration(StartMeasurement* sw)
 {
-    QPointer<Widget> widget= CreateWidgetThread();
     widget->startWin = sw;
     Mode_ID mode = sw->getModeID();
+
+    QMetaObject::Connection *printConnection = new QMetaObject::Connection;
+    QMetaObject::Connection *t1Connection = new QMetaObject::Connection;
+    QMetaObject::Connection *t2Connection = new QMetaObject::Connection;
+    QMetaObject::Connection *t3Connection = new QMetaObject::Connection;
+    QMetaObject::Connection *t4Connection = new QMetaObject::Connection;
+
     switch (mode) {
+    case CalibKo2_ID:
+        widget->setWindowTitle("АЧТВ, калибровка (Ko2)");
+        widget->setUserMessage("АЧТВ, калибровка (Ko2)", 0);
+        widget->setUserMessage(QString("<div style='color: blue'>Установите кюветы с контрольной нормальной плазмой и нажмите \"Старт\""), 0);
+        c_singeShotConntection(printConnection, t1Connection, t2Connection, t3Connection, t4Connection, ko2);
+//        connect(widget.data(), SIGNAL(ret_value1(double)), ko2, SLOT(calibrationData1Come(double)));
+//        connect(widget.data(), SIGNAL(ret_value2(double)), ko2, SLOT(calibrationData2Come(double)));
+//        connect(widget.data(), SIGNAL(ret_value3(double)), ko2, SLOT(calibrationData3Come(double)));
+//        connect(widget.data(), SIGNAL(ret_value4(double)), ko2, SLOT(calibrationData4Come(double)));
+        break;
+    case CalibKo3_ID:
+        widget->setUserMessage("Фибриноген, калибровка (Ko3)", 0);
+        widget->setUserMessage(QString("<div style='color: blue'>Установите кюветы с контрольной нормальной плазмой и ее разведением, после нажмите \"Старт\""), 0);
+        widget->setUserMessage(QString("<div style='color: blue'>Первый этап разведения: Канал 1,2 - 200%, Канал 2,3 - 100%\n"
+                                       "Второй этап разведения: Канал 1,2 - 50%, Канал 3,4 - 25%"), 0);
+        c_singeShotConntection(printConnection, t1Connection, t2Connection, t3Connection, t4Connection, ko3);
+//        connect(widget.data(), SIGNAL(ret_value1(double)), ko3, SLOT(calibrationData1Come(double)));
+//        connect(widget.data(), SIGNAL(ret_value2(double)), ko3, SLOT(calibrationData2Come(double)));
+//        connect(widget.data(), SIGNAL(ret_value3(double)), ko3, SLOT(calibrationData3Come(double)));
+//        connect(widget.data(), SIGNAL(ret_value4(double)), ko3, SLOT(calibrationData4Come(double)));
+        break;
+    case CalibKo4_ID:
+        widget->setUserMessage("Тромбин, калибровка (Ko4)", 0);
+        widget->setUserMessage(QString("<div style='color: blue'>Установите кюветы с контрольной нормальной плазмой и нажмите \"Старт\""), 0);
+        c_singeShotConntection(printConnection, t1Connection, t2Connection, t3Connection, t4Connection, ko4);
+//        connect(widget.data(), SIGNAL(ret_value1(double)), ko4, SLOT(calibrationData1Come(double)));
+//        connect(widget.data(), SIGNAL(ret_value2(double)), ko4, SLOT(calibrationData2Come(double)));
+//        connect(widget.data(), SIGNAL(ret_value3(double)), ko4, SLOT(calibrationData3Come(double)));
+//        connect(widget.data(), SIGNAL(ret_value4(double)), ko4, SLOT(calibrationData4Come(double)));
+        break;
+    case CalibKo5_ID:
+        widget->setUserMessage(QString("Протромбиновый комплекс, калибровка (Ko5)"), 0);
+        widget->setUserMessage(QString("<div style='color: blue'>Установите кюветы с контрольной нормальной плазмой и ее разведением, после нажмите \"Старт\""), 0);
+        widget->setUserMessage(QString("<div style='color: blue'>Разведения: Канал 1 - 100%, Канал 2 - 50%, Канал 3 - 25%, Канал 4 - 12.5%"), 0);
+        c_singeShotConntection(printConnection, t1Connection, t2Connection, t3Connection, t4Connection, ko5);
+//        connect(widget.data(), SIGNAL(ret_value1(double)), ko5, SLOT(calibrationData1Come(double)));
+//        connect(widget.data(), SIGNAL(ret_value2(double)), ko5, SLOT(calibrationData2Come(double)));
+//        connect(widget.data(), SIGNAL(ret_value3(double)), ko5, SLOT(calibrationData3Come(double)));
+//        connect(widget.data(), SIGNAL(ret_value4(double)), ko5, SLOT(calibrationData4Come(double)));
+        break;
     case CalibAgr1_ID:
         widget->setUserMessage(QString("Определение параметров агрегации, калибровка (Agr1 1)"), 0);
-        //widget->setUserMessage(QString("<div style='color: blue'>Установите кюветы с контрольной нормальной плазмой и нажмите \"Старт\""), 0);
+        widget->setUserMessage(QString("<div style='color: blue'>Установите кюветы с контрольной нормальной плазмой и нажмите \"Старт\""), 0);
 //        connect(widget.data(), SIGNAL(ret_value1(double)), agr1.data(), SLOT(btpData1Come(double)));
 //        connect(widget.data(), SIGNAL(ret_value2(double)), agr1.data(), SLOT(btpData2Come(double)));
 //        connect(widget.data(), SIGNAL(ret_value3(double)), agr1.data(), SLOT(btpData3Come(double)));
@@ -159,46 +273,10 @@ void ChoiseDialog::calibration(StartMeasurement* sw)
     case CalibAgr2_ID:
         widget->setUserMessage(QString("<div style='color: blue'>Установите кюветы с контрольной нормальной плазмой и ее разведением, после нажмите \"Старт\""), 0);
         widget->setUserMessage(QString("<div style='color: blue'>Разведения: Канал 1 - 200%, Канал 2 - 100%, Канал 3 - 50%, Канал 4 - 25%"), 0);
-        connect(widget.data(), SIGNAL(ret_value1(double)), agr2.data(), SLOT(calibrationData1Come(double)));
-        connect(widget.data(), SIGNAL(ret_value2(double)), agr2.data(), SLOT(calibrationData2Come(double)));
-        connect(widget.data(), SIGNAL(ret_value3(double)), agr2.data(), SLOT(calibrationData3Come(double)));
-        connect(widget.data(), SIGNAL(ret_value4(double)), agr2.data(), SLOT(calibrationData4Come(double)));
-        break;
-    case CalibKo2_ID:
-        widget->setWindowTitle("АЧТВ, калибровка (Ko2)");
-        widget->setUserMessage("АЧТВ, калибровка (Ko2)", 0);
-        widget->setUserMessage(QString("<div style='color: blue'>Установите кюветы с контрольной нормальной плазмой и нажмите \"Старт\""), 0);
-        connect(widget.data(), SIGNAL(ret_value1(double)), ko2.data(), SLOT(calibrationData1Come(double)));
-        connect(widget.data(), SIGNAL(ret_value2(double)), ko2.data(), SLOT(calibrationData2Come(double)));
-        connect(widget.data(), SIGNAL(ret_value3(double)), ko2.data(), SLOT(calibrationData3Come(double)));
-        connect(widget.data(), SIGNAL(ret_value4(double)), ko2.data(), SLOT(calibrationData4Come(double)));
-        break;
-    case CalibKo3_ID:
-        widget->setUserMessage("Фибриноген, калибровка (Ko3)", 0);
-        widget->setUserMessage(QString("<div style='color: blue'>Установите кюветы с контрольной нормальной плазмой и ее разведением, после нажмите \"Старт\""), 0);
-        widget->setUserMessage(QString("<div style='color: blue'>Первый этап разведения: Канал 1,2 - 200%, Канал 2,3 - 100%\n"
-                                       "Второй этап разведения: Канал 1,2 - 50%, Канал 3,4 - 25%"), 0);
-        connect(widget.data(), SIGNAL(ret_value1(double)), ko3.data(), SLOT(calibrationData1Come(double)));
-        connect(widget.data(), SIGNAL(ret_value2(double)), ko3.data(), SLOT(calibrationData2Come(double)));
-        connect(widget.data(), SIGNAL(ret_value3(double)), ko3.data(), SLOT(calibrationData3Come(double)));
-        connect(widget.data(), SIGNAL(ret_value4(double)), ko3.data(), SLOT(calibrationData4Come(double)));
-        break;
-    case CalibKo4_ID:
-        widget->setUserMessage("Тромбин, калибровка (Ko4)", 0);
-        widget->setUserMessage(QString("<div style='color: blue'>Установите кюветы с контрольной нормальной плазмой и нажмите \"Старт\""), 0);
-        connect(widget.data(), SIGNAL(ret_value1(double)), ko4.data(), SLOT(calibrationData1Come(double)));
-        connect(widget.data(), SIGNAL(ret_value2(double)), ko4.data(), SLOT(calibrationData2Come(double)));
-        connect(widget.data(), SIGNAL(ret_value3(double)), ko4.data(), SLOT(calibrationData3Come(double)));
-        connect(widget.data(), SIGNAL(ret_value4(double)), ko4.data(), SLOT(calibrationData4Come(double)));
-        break;
-    case CalibKo5_ID:
-        widget->setUserMessage(QString("Протромбиновый комплекс, калибровка (Ko5)"), 0);
-        widget->setUserMessage(QString("<div style='color: blue'>Установите кюветы с контрольной нормальной плазмой и ее разведением, после нажмите \"Старт\""), 0);
-        widget->setUserMessage(QString("<div style='color: blue'>Разведения: Канал 1 - 100%, Канал 2 - 50%, Канал 3 - 25%, Канал 4 - 12.5%"), 0);
-        connect(widget.data(), SIGNAL(ret_value1(double)), ko5.data(), SLOT(calibrationData1Come(double)));
-        connect(widget.data(), SIGNAL(ret_value2(double)), ko5.data(), SLOT(calibrationData2Come(double)));
-        connect(widget.data(), SIGNAL(ret_value3(double)), ko5.data(), SLOT(calibrationData3Come(double)));
-        connect(widget.data(), SIGNAL(ret_value4(double)), ko5.data(), SLOT(calibrationData4Come(double)));
+//        connect(widget.data(), SIGNAL(ret_value1(double)), agr2, SLOT(calibrationData1Come(double)));
+//        connect(widget.data(), SIGNAL(ret_value2(double)), agr2, SLOT(calibrationData2Come(double)));
+//        connect(widget.data(), SIGNAL(ret_value3(double)), agr2, SLOT(calibrationData3Come(double)));
+//        connect(widget.data(), SIGNAL(ret_value4(double)), agr2, SLOT(calibrationData4Come(double)));
         break;
     default:
         break;

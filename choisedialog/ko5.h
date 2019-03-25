@@ -4,12 +4,13 @@
 #include <QWidget>
 #include "savefiles.h"
 #include "startmeasurement.h"
+#include "ko_impl.h"
 
 namespace Ui {
 class Ko5;
 }
 
-class Ko5 : public QWidget
+class Ko5 : public QWidget, public Ko_impl
 {
     Q_OBJECT
 
@@ -36,10 +37,17 @@ private slots:
     void on_lineEdit_testCh3_textChanged(const QString &arg1);
 
 public slots:
-    void calibrationData1Come(double);
-    void calibrationData2Come(double);
-    void calibrationData3Come(double);
-    void calibrationData4Come(double);
+    QString t_print() override;
+    void setT1(double value) override;
+    void setT2(double value) override;
+    void setT3(double value) override;
+    void setT4(double value) override;
+
+    QString c_print() override;
+    void calibrationData1Come(double) override;
+    void calibrationData2Come(double) override;
+    void calibrationData3Come(double) override;
+    void calibrationData4Come(double) override;
 
 signals:
     void measurement(StartMeasurement*);
@@ -47,8 +55,8 @@ signals:
 
 private:
     Ui::Ko5 *ui;
-    TestKo5 t_ko5;
-    CalibrationKo5 c_ko5;
+    TestKo5 *t_ko5;
+    CalibrationKo5 *c_ko5;
 };
 
 class StartTestKo5 : public StartMeasurement
