@@ -22,6 +22,7 @@ class Agr1 : public QWidget, public Agr_impl
 
 public:
     explicit Agr1(QWidget *parent = 0);
+    void setTab(int);
     ~Agr1();
 
 private:

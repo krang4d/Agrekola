@@ -627,7 +627,7 @@ void Widget::getData(Channel_ID c, double time_s)
         default:
             break;
         }
-        //stopData(c);
+        stopData(c);
     };
     switch (c) {
     case Channel1_ID:
@@ -653,7 +653,7 @@ void Widget::getData(Channel_ID c, double time_s)
 
 void Widget::stopData(Channel_ID c)
 {
-    if(!isData(ChannelAll_ID)) {qDebug() << "stoped"; return; }
+    if(!isData(ChannelAll_ID)) { qDebug() << "stoped"; return; }
     switch (c) {
     case Channel1_ID:
         if(data1) {
@@ -814,10 +814,10 @@ void Widget::waitImpulse(ImpuleWaiter *iw)
         iw->startWait();
 }
 
-double Widget::calcData(Channel_ID c)
+double Widget::calcData(Channel_ID c, Mode_ID mode)
 {
     double retval;
-    CalcData *p = CalcData::createCalc( startWin->getModeID() );
+    CalcData *p = CalcData::createCalc( mode );
     if(!p) { setUserMessage(QString("Ошибка при выделении памяти под класс CalcData")); return -1; }
     switch(c) {
     case Channel1_ID:
@@ -826,7 +826,7 @@ double Widget::calcData(Channel_ID c)
             setUserMessage(QString("<div style='color: green'>Канал 1: %2 %1")
                            .arg(retval)
                            .arg(p->info()));
-            emit ret_value1(retval);
+            //emit ret_value1(retval);
         }
         else {
             setUserMessage(QString("Канал 1: Массив данных не заполнен!"));
@@ -839,7 +839,7 @@ double Widget::calcData(Channel_ID c)
             setUserMessage(QString("<div style='color: green'>Канал 2: %2 %1")
                            .arg(retval)
                            .arg(p->info()));
-            emit ret_value2(retval);
+            //emit ret_value2(retval);
         }
         else {
             setUserMessage(QString("Канал 2: Массив данных не заполнен!"));
@@ -852,7 +852,7 @@ double Widget::calcData(Channel_ID c)
             setUserMessage(QString("<div style='color: green'>Канал 3: %2 %1")
                            .arg(retval)
                            .arg(p->info()));
-            emit ret_value3(retval);
+            //emit ret_value3(retval);
         }
         else {
             setUserMessage(QString("Канал 3: Массив данных не заполнен!"));
@@ -865,7 +865,7 @@ double Widget::calcData(Channel_ID c)
             setUserMessage(QString("<div style='color: green'>Канал 4: %2 %1")
                            .arg(retval)
                            .arg(p->info()));
-            emit ret_value4(retval);
+            //emit ret_value4(retval);
         }
         else {
             setUserMessage(QString("Канал 4: Массив данных не заполнен!"));
@@ -880,8 +880,8 @@ double Widget::calcData(Channel_ID c)
 void Widget::writeMapData(Channel_ID c)
 {
     ProgressTimerBar *pBar;
-    CalcData *p = CalcData::createCalc( startWin->getModeID() );
-    if(p == NULL) { qDebug() << "CalcData is NULL"; return; }
+//    CalcData *p = CalcData::createCalc( startWin->getModeID() );
+//    if(p == NULL) { qDebug() << "CalcData is NULL"; return; }
     setUserMessage(QString("Канал %1: Запись данных").arg(c));
     emit status(QString("Канал %1: Запись данных").arg(c));
 
@@ -1082,10 +1082,14 @@ void Widget::doScenario()
         waitImpulse(new ImpuleWaiter);
         break;
     case Calc_ID:
-        if( startWin->isChannel(Channel1_ID) ) calcData(Channel1_ID);
-        if( startWin->isChannel(Channel2_ID) ) calcData(Channel2_ID);
-        if( startWin->isChannel(Channel3_ID) ) calcData(Channel3_ID);
-        if( startWin->isChannel(Channel4_ID) ) calcData(Channel4_ID);
+        if( startWin->isChannel(Channel1_ID) )
+            emit ret_value1(calcData(Channel1_ID, startWin->getModeID()));
+        if( startWin->isChannel(Channel2_ID) )
+            emit ret_value2(calcData(Channel2_ID, startWin->getModeID()));
+        if( startWin->isChannel(Channel3_ID) )
+            emit ret_value3(calcData(Channel3_ID, startWin->getModeID()));
+        if( startWin->isChannel(Channel4_ID) )
+            emit ret_value4(calcData(Channel4_ID, startWin->getModeID()));
         state->next();
         break;
     case Write_ID:
@@ -1101,7 +1105,7 @@ void Widget::doScenario()
             getData(Channel1_ID, startWin->getTimeWrite());
             connect(this, &Widget::done1, [this]() {
                 i--;
-                if (!i) {state->next(); qDebug() << "done1";}
+                if (!i) { state->next(); qDebug() << "done1"; }
                 disconnect(this, &Widget::done1, 0, 0);});
         }
         if (startWin->isChannel(Channel2_ID)) {
@@ -1109,7 +1113,7 @@ void Widget::doScenario()
             getData(Channel2_ID, startWin->getTimeWrite());
             connect(this, &Widget::done2, [this]() {
                 i--;
-                if (!i) {state->next(); qDebug() << "done2";}
+                if (!i) { state->next(); qDebug() << "done2"; }
                 disconnect(this, &Widget::done2, 0, 0);
             });
         }
@@ -1118,7 +1122,7 @@ void Widget::doScenario()
             getData(Channel3_ID, startWin->getTimeWrite());
             connect(this, &Widget::done3, [this]() {
                 i--;
-                if (!i) {state->next(); qDebug() << "done3";}
+                if (!i) { state->next(); qDebug() << "done3"; }
                 disconnect(this, &Widget::done3, 0, 0);});
         }
         if (startWin->isChannel(Channel4_ID)) {
@@ -1126,7 +1130,7 @@ void Widget::doScenario()
             getData(Channel4_ID, startWin->getTimeWrite());
             connect(this, &Widget::done4, [this]() {
                 i--;
-                if (!i) {state->next(); qDebug() << "done4";}
+                if (!i) { state->next(); qDebug() << "done4"; }
                 disconnect(this, &Widget::done4, 0, 0);});
         }
         break;
@@ -1135,13 +1139,13 @@ void Widget::doScenario()
         state->reset();
         break;
     case Incubation1_ID:
-        startIncub(1, startWin->getTimeIncube(1), [this](){
+        startIncub(1, startWin->getTimeIncube(1), [this]() {
             setUserMessage(QString("<span style = 'color: red'>Время инкубации истекло</span>"));
             state->next();
         });
         break;
     case Incubation2_ID:
-        startIncub(2, startWin->getTimeIncube(1), [this](){
+        startIncub(2, startWin->getTimeIncube(1), [this]() {
             setUserMessage(QString("<span style = 'color: red'>Время инкубации истекло</span>"));
             state->next();
         });

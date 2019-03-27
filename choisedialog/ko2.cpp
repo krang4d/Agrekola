@@ -18,6 +18,11 @@ Ko2::Ko2(QWidget *parent) :
     //connect(ui->page_2, &StartMeasurment::startMeasurment, this, &Ko2::measurement);
 }
 
+void Ko2::setTab(int i)
+{
+    ui->tabWidget->setCurrentIndex(i);
+}
+
 void Ko2::on_tabWidget_currentChanged(int index)
 {
     if(index == 1)

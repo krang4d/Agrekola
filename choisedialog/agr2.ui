@@ -27,7 +27,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tabWidgetPage1">
       <attribute name="title">
@@ -245,19 +245,19 @@
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_11">
           <item>
-           <widget class="QRadioButton" name="radioButton_testDouble">
-            <property name="text">
-             <string>Вкл</string>
-            </property>
-           </widget>
-          </item>
-          <item>
            <widget class="QRadioButton" name="radioButton_testSingle">
             <property name="text">
              <string>Выкл</string>
             </property>
             <property name="checked">
              <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="radioButton_testDouble">
+            <property name="text">
+             <string>Вкл</string>
             </property>
            </widget>
           </item>

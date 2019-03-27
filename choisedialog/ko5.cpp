@@ -12,6 +12,11 @@ Ko5::Ko5(QWidget *parent) :
     //connect(ui->page_2, &StartMeasurment::startMeasurment, this, &Ko5::measurement);
 }
 
+void Ko5::setTab(int i)
+{
+    ui->tabWidget->setCurrentIndex(i);
+}
+
 Ko5::~Ko5()
 {
     save();

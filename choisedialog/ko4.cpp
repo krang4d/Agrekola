@@ -13,12 +13,17 @@ Ko4::Ko4(QWidget *parent) :
 {
     ui->setupUi(this);
     t_ko4 = t_ko4_1;
-    ui->tabWidget_ko4->setTabEnabled(0, true);
+    ui->tabWidget->setTabEnabled(0, true);
     open(c_ko4);
     ui->radioButton_calibActivity1->setChecked(true);
     if(ui->radioButton_calibActivity1->isChecked()) open(c_ko4_1);
     if(ui->radioButton_calibActivity2->isChecked()) open(c_ko4_2);
     if(ui->radioButton_calibActivity3->isChecked()) open(c_ko4_3);
+}
+
+void Ko4::setTab(int i)
+{
+    ui->tabWidget->setCurrentIndex(i);
 }
 
 void Ko4::on_tabWidget_ko4_currentChanged(int index)

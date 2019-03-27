@@ -25,11 +25,11 @@
     </widget>
    </item>
    <item>
-    <widget class="QTabWidget" name="tabWidget_ko4">
+    <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
       <number>2</number>
      </property>
-     <widget class="QWidget" name="tabWidget_ko4Page1">
+     <widget class="QWidget" name="tabWidgetPage1">
       <attribute name="title">
        <string>Калибровка</string>
       </attribute>
@@ -242,7 +242,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tabWidget_ko4Page2">
+     <widget class="QWidget" name="tabWidgetPage2">
       <attribute name="title">
        <string>Тест</string>
       </attribute>
@@ -266,22 +266,22 @@
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_11">
           <item>
-           <widget class="QRadioButton" name="radioButton_test1Double">
-            <property name="text">
-             <string>Вкл</string>
-            </property>
-            <property name="checked">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
            <widget class="QRadioButton" name="radioButton_test1Single">
             <property name="text">
              <string>Выкл</string>
             </property>
             <property name="checked">
              <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="radioButton_test1Double">
+            <property name="text">
+             <string>Вкл</string>
+            </property>
+            <property name="checked">
+             <bool>false</bool>
             </property>
            </widget>
           </item>
@@ -434,7 +434,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tabWidget_ko4Page3">
+     <widget class="QWidget" name="tabWidgetPage3">
       <attribute name="title">
        <string>Тест без калибровки</string>
       </attribute>
@@ -458,19 +458,19 @@
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_5">
           <item>
-           <widget class="QRadioButton" name="radioButton_test2Double">
-            <property name="text">
-             <string>Вкл</string>
-            </property>
-           </widget>
-          </item>
-          <item>
            <widget class="QRadioButton" name="radioButton_test2Single">
             <property name="text">
              <string>Выкл</string>
             </property>
             <property name="checked">
              <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="radioButton_test2Double">
+            <property name="text">
+             <string>Вкл</string>
             </property>
            </widget>
           </item>

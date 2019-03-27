@@ -11,7 +11,12 @@ Agr2::Agr2(QWidget *parent) :
     open();
 //    selcalibrAgr1 = new SelectCalibrationAgr1();
 //    selInductor = new SelectInductor();
-//    connect(ui->page_2, &StartMeasurment::startMeasurment, this, &Agr2::measurement);
+    //    connect(ui->page_2, &StartMeasurment::startMeasurment, this, &Agr2::measurement);
+}
+
+void Agr2::setTab(int i)
+{
+    ui->tabWidget->setCurrentIndex(i);
 }
 
 Agr2::~Agr2()

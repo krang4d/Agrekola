@@ -25,6 +25,7 @@ class Agr2 : public QWidget, public Agr_impl
 
 public:
     explicit Agr2(QWidget *parent = 0);
+    void setTab(int);
     ~Agr2();
 
 private slots:

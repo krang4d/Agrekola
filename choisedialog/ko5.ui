@@ -25,11 +25,11 @@
     </widget>
    </item>
    <item>
-    <widget class="QTabWidget" name="tabWidget_ko5">
+    <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
       <number>1</number>
      </property>
-     <widget class="QWidget" name="tabWidget_ko5Page1">
+     <widget class="QWidget" name="tabWidgetPage1">
       <attribute name="title">
        <string>Калибровка</string>
       </attribute>
@@ -240,7 +240,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tabWidget_ko5Page2">
+     <widget class="QWidget" name="groupBox_Page2">
       <attribute name="title">
        <string>Тест</string>
       </attribute>
@@ -264,19 +264,19 @@
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_11">
           <item>
-           <widget class="QRadioButton" name="radioButton_testDouble">
-            <property name="text">
-             <string>Вкл</string>
-            </property>
-           </widget>
-          </item>
-          <item>
            <widget class="QRadioButton" name="radioButton_testSingle">
             <property name="text">
              <string>Выкл</string>
             </property>
             <property name="checked">
              <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="radioButton_testDouble">
+            <property name="text">
+             <string>Вкл</string>
             </property>
            </widget>
           </item>

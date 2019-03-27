@@ -16,6 +16,7 @@ class Ko3 : public QWidget, public Ko_impl
 
 public:
     explicit Ko3(QWidget *parent = 0);
+    void setTab(int);
     ~Ko3();
 
 private:

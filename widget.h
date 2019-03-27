@@ -92,7 +92,7 @@ signals:
 public slots:
     void startIncub(int num, double time_s, std::function<void(void)> timeout_fun, QString message = "Время инкубации истекло");
     void getData(Channel_ID, double time_s);
-    double calcData(Channel_ID);
+    double calcData(Channel_ID, Mode_ID);
     void writeMapData(Channel_ID);
     void incubeTimeout_1();
     void incubeTimeout_2();

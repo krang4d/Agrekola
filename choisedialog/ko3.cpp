@@ -12,6 +12,11 @@ Ko3::Ko3(QWidget *parent) :
     open();
 }
 
+void Ko3::setTab(int i)
+{
+    ui->tabWidget->setCurrentIndex(i);
+}
+
 Ko3::~Ko3()
 {
     save();

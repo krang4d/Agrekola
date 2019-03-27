@@ -16,6 +16,7 @@ class Ko5 : public QWidget, public Ko_impl
 
 public:
     explicit Ko5(QWidget *parent = 0);
+    void setTab(int);
     ~Ko5();
 
 private:

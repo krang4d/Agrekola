@@ -17,6 +17,7 @@ class Ko1 : public QWidget, public Ko_impl
 
 public:
     explicit Ko1(QWidget *parent = 0);
+    void setTab(int);
     ~Ko1();
 
 private slots:
@@ -50,8 +51,8 @@ signals:
 
 private:
     Ui::Ko1 *ui;
-    TestKo1 t_ko1;
-    CalibrationKo1 c_ko1;
+    TestKo1 *t_ko1;
+    CalibrationKo1 *c_ko1;
 };
 
 class StartTestKo1 : public StartMeasurement

@@ -364,36 +364,44 @@ void ChoiseDialog::calibration(StartMeasurement* sw)
 void ChoiseDialog::on_agr1Button_clicked()
 {
     ui->stackedWidget->setCurrentIndex(1);
+    agr1->setTab(1);
 }
 
 void ChoiseDialog::on_agr2Button_clicked()
 {
     ui->stackedWidget->setCurrentIndex(2);
+    agr2->setTab(1);
 }
 
 void ChoiseDialog::on_ko1Button_clicked()
 {
     ui->stackedWidget->setCurrentIndex(3);
+    ko1->setTab(1);
 }
 
 void ChoiseDialog::on_ko2Button_clicked()
 {
     ui->stackedWidget->setCurrentIndex(4);
+    ko2->setTab(1);
 }
 
 void ChoiseDialog::on_ko3Button_clicked()
 {
     ui->stackedWidget->setCurrentIndex(5);
+    ko3->setTab(1);
+
 }
 
 void ChoiseDialog::on_ko4Button_clicked()
 {
     ui->stackedWidget->setCurrentIndex(6);
+    ko4->setTab(1);
 }
 
 void ChoiseDialog::on_ko5Button_clicked()
 {
     ui->stackedWidget->setCurrentIndex(7);
+    ko5->setTab(1);
 }
 
 //void ChoiseDialog::on_viewPlotsButton_clicked()

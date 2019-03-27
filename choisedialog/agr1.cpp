@@ -12,6 +12,11 @@ Agr1::Agr1(QWidget *parent) :
     open();
 }
 
+void Agr1::setTab(int i)
+{
+    ui->tabWidget->setCurrentIndex(i);
+}
+
 Agr1::~Agr1()
 {
     save();
