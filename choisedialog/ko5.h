@@ -21,8 +21,6 @@ public:
 
 private:
     void calibrationDataCome(int n, double deta);
-    void open();
-    void save();
 
 private slots:
     void on_pushButton_calib_clicked();
@@ -37,7 +35,11 @@ private slots:
     void on_lineEdit_testCh1_textChanged(const QString &arg1);
     void on_lineEdit_testCh3_textChanged(const QString &arg1);
 
+    // Ko_impl interface
 public slots:
+    void open();
+    void close();
+
     QString t_print() override;
     void setT1(double value) override;
     void setT2(double value) override;

@@ -11,7 +11,7 @@ Agr2::Agr2(QWidget *parent) :
     open();
 //    selcalibrAgr1 = new SelectCalibrationAgr1();
 //    selInductor = new SelectInductor();
-    //    connect(ui->page_2, &StartMeasurment::startMeasurment, this, &Agr2::measurement);
+//    connect(ui->page_2, &StartMeasurment::startMeasurment, this, &Agr2::measurement);
 }
 
 void Agr2::setTab(int i)
@@ -21,7 +21,7 @@ void Agr2::setTab(int i)
 
 Agr2::~Agr2()
 {
-    save();
+    close();
     delete t_agr2;
     delete c_agr2;
     delete ui;
@@ -114,7 +114,7 @@ void Agr2::open()
     ui->lineEdit_calibReagentSerial->setText(c_agr2->getReagent_serial());
 }
 
-void Agr2::save()
+void Agr2::close()
 {
 //    param.clear();
 //    param.replace(0, ui->label_calibrationData->text());

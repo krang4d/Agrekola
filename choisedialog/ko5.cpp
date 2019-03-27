@@ -19,7 +19,7 @@ void Ko5::setTab(int i)
 
 Ko5::~Ko5()
 {
-    save();
+    close();
     delete ui;
     delete c_ko5;
     delete t_ko5;
@@ -222,8 +222,10 @@ void Ko5::open()
         ui->doubleSpinBox_calibWriteTime->setValue(c_ko5->getWrite_time());
 }
 
-void Ko5::save()
+void Ko5::close()
 {
+    c_ko5->save();
+    t_ko5->save();
     //param.clear();
     //param.replace(0, ui->label_calibrationData->text());
 //    param.replace(1, ui->lineEdit_1->text());

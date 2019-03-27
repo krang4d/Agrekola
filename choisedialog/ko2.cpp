@@ -551,7 +551,7 @@ void Ko2::on_pushButton_calib_clicked()
     c_ko2->setReagent_serial(ui->lineEdit_calibReagentSerial->text());
     c_ko2->setK_plazma_date(ui->dateEdit_calibPlazma->date());
     c_ko2->setK_plazma_serial(ui->lineEdit_calibKPlazmaSerial->text());
-    c_ko2->setK_plazma_a4tv(ui->doubleSpinBox_test2a4tv->value());
+    c_ko2->setK_plazma_a4tv(ui->doubleSpinBox_caliba4tv->value());
     c_ko2->setIncube_time(ui->doubleSpinBox_calibIncube->value());
     c_ko2->setWrite_time(ui->doubleSpinBox_calibWriteTime->value());
 

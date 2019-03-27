@@ -42,7 +42,10 @@ private slots:
 
     void on_radioButton_testSingle_toggled(bool checked);
 
+    // Ko_impl interface
 public slots:
+    void open();
+    void close();
 
     virtual QString t_print() override;
     virtual void setT1(double) override;
@@ -68,8 +71,6 @@ public slots:
 
 private:
     void calibrationDataCome(int n, double deta);
-    void open();
-    void save();
 
 signals:
     void measurement(StartMeasurement *);

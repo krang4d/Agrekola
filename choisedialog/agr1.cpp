@@ -19,7 +19,7 @@ void Agr1::setTab(int i)
 
 Agr1::~Agr1()
 {
-    save();
+    close();
     delete t_agr1;
     delete c_agr1;
     delete ui;
@@ -182,7 +182,7 @@ void Agr1::open()
     ui->dateEdit_calibTrombotsit->setDate(c_agr1->getTrombotsit_date());
 }
 
-void Agr1::save()
+void Agr1::close()
 {
     t_agr1->save();
     c_agr1->save();

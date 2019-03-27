@@ -383,6 +383,7 @@ void ChoiseDialog::on_ko2Button_clicked()
 {
     ui->stackedWidget->setCurrentIndex(4);
     ko2->setTab(1);
+    ko2->open();
 }
 
 void ChoiseDialog::on_ko3Button_clicked()

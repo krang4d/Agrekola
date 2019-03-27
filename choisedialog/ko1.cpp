@@ -9,39 +9,7 @@ Ko1::Ko1(QWidget *parent) :
 {
     ui->setupUi(this);
     qDebug() << "Current path: " << QDir::currentPath() << t_ko1->getK1();
-    if( t_ko1->getSingle() ) {
-        ui->radioButton_testSingle->setChecked(true);
-    }
-    else {
-        ui->radioButton_testDouble->setChecked(false);
-    }
-
-    if( t_ko1->getK1() ) {
-        ui->checkBox_testCh1->setChecked(true);
-        ui->lineEdit_testCh1->setText(t_ko1->getNum1());
-    }
-    else ui->checkBox_testCh1->setChecked(false);
-
-    if( t_ko1->getK2() ) {
-        ui->checkBox_testCh2->setChecked(true);
-        ui->lineEdit_testCh2->setText(t_ko1->getNum2());
-    }
-    else ui->checkBox_testCh2->setChecked(false);
-
-    if( t_ko1->getK3() ) {
-        ui->checkBox_testCh3->setChecked(true);
-        ui->lineEdit_testCh3->setText(t_ko1->getNum3());
-    }
-    else ui->checkBox_testCh3->setChecked(false);
-
-    if( t_ko1->getK4() ) {
-        ui->checkBox_testCh4->setChecked(true);
-        ui->lineEdit_testCh4->setText(t_ko1->getNum4());
-    }
-    else ui->checkBox_testCh4->setChecked(false);
-
-    ui->doubleSpinBox_testIncubeTime->setValue(c_ko1->getIncube_time());
-    ui->doubleSpinBox_testWriteTime->setValue(c_ko1->getWrite_time());
+    open();
 }
 
 void Ko1::setTab(int i)
@@ -51,6 +19,9 @@ void Ko1::setTab(int i)
 
 Ko1::~Ko1()
 {
+    close();
+    delete t_ko1;
+    delete c_ko1;
     delete ui;
 }
 
@@ -113,6 +84,49 @@ void Ko1::on_lineEdit_testCh3_textChanged(const QString &arg1)
 {
     if(ui->radioButton_testDouble->isChecked())
         ui->lineEdit_testCh4->setText(arg1);
+}
+
+void Ko1::open()
+{
+    if( t_ko1->getSingle() ) {
+        ui->radioButton_testSingle->setChecked(true);
+    }
+    else {
+        ui->radioButton_testDouble->setChecked(false);
+    }
+
+    if( t_ko1->getK1() ) {
+        ui->checkBox_testCh1->setChecked(true);
+        ui->lineEdit_testCh1->setText(t_ko1->getNum1());
+    }
+    else ui->checkBox_testCh1->setChecked(false);
+
+    if( t_ko1->getK2() ) {
+        ui->checkBox_testCh2->setChecked(true);
+        ui->lineEdit_testCh2->setText(t_ko1->getNum2());
+    }
+    else ui->checkBox_testCh2->setChecked(false);
+
+    if( t_ko1->getK3() ) {
+        ui->checkBox_testCh3->setChecked(true);
+        ui->lineEdit_testCh3->setText(t_ko1->getNum3());
+    }
+    else ui->checkBox_testCh3->setChecked(false);
+
+    if( t_ko1->getK4() ) {
+        ui->checkBox_testCh4->setChecked(true);
+        ui->lineEdit_testCh4->setText(t_ko1->getNum4());
+    }
+    else ui->checkBox_testCh4->setChecked(false);
+
+    ui->doubleSpinBox_testIncubeTime->setValue(c_ko1->getIncube_time());
+    ui->doubleSpinBox_testWriteTime->setValue(c_ko1->getWrite_time());
+}
+
+void Ko1::close()
+{
+    c_ko1->save();
+    t_ko1->save();
 }
 
 QString Ko1::t_print()

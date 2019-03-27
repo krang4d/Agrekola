@@ -22,7 +22,6 @@ public:
 private:
     void calibrationDataCome(int n, double deta);
     void open(CalibrationKo4 *c_ko4);
-    void save();
 
 private slots:
     void on_pushButton_test1_clicked();
@@ -53,9 +52,13 @@ private slots:
     void on_radioButton_testTrombine2_toggled(bool checked);
     void on_radioButton_testTrombine3_toggled(bool checked);
 
-    void on_tabWidget_ko4_currentChanged(int index);
+    void on_tabWidget_currentChanged(int index);
 
+    // Ko_impl interface
 public slots:
+    void open();
+    void close();
+
     QString t_print() override;
     void setT1(double value) override;
     void setT2(double value) override;

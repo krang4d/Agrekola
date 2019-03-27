@@ -34,6 +34,9 @@ private slots:
 
     // Ko_impl interface
 public slots:
+    void open();
+    void close();
+
     QString t_print() override;
     void setT1(double value) override;
     void setT2(double value) override;

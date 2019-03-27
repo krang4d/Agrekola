@@ -5,20 +5,20 @@ Ko4::Ko4(QWidget *parent) :
     QWidget(parent),
     t_ko4_1(new TestKo4),
     t_ko4_2(new TestKo4(WithoutCalibration(), this)),
-    c_ko4(new CalibrationKo4),
     c_ko4_1(new CalibrationKo4_1),
     c_ko4_2(new CalibrationKo4_2),
     c_ko4_3(new CalibrationKo4_3),
     ui(new Ui::Ko4)
 {
     ui->setupUi(this);
-    t_ko4 = t_ko4_1;
     ui->tabWidget->setTabEnabled(0, true);
-    open(c_ko4);
+    t_ko4 = t_ko4_1;
+
     ui->radioButton_calibActivity1->setChecked(true);
-    if(ui->radioButton_calibActivity1->isChecked()) open(c_ko4_1);
-    if(ui->radioButton_calibActivity2->isChecked()) open(c_ko4_2);
-    if(ui->radioButton_calibActivity3->isChecked()) open(c_ko4_3);
+    if(ui->radioButton_calibActivity1->isChecked()) c_ko4 = c_ko4_1;
+    if(ui->radioButton_calibActivity2->isChecked()) c_ko4 = c_ko4_2;
+    if(ui->radioButton_calibActivity3->isChecked()) c_ko4 = c_ko4_3;
+    open();
 }
 
 void Ko4::setTab(int i)
@@ -26,20 +26,25 @@ void Ko4::setTab(int i)
     ui->tabWidget->setCurrentIndex(i);
 }
 
-void Ko4::on_tabWidget_ko4_currentChanged(int index)
+void Ko4::on_tabWidget_currentChanged(int index)
 {
     if(index == 1)
         t_ko4 = t_ko4_1;
     if(index == 2)
         t_ko4 = t_ko4_2;
+    open();
+}
+
+void Ko4::open()
+{
+    open(c_ko4);
 }
 
 Ko4::~Ko4()
 {
-    save();
+    close();
     delete t_ko4_1,
     delete t_ko4_2,
-    //delete c_ko4,
     delete c_ko4_1;
     delete c_ko4_2;
     delete c_ko4_3;
@@ -203,8 +208,13 @@ void Ko4::open(CalibrationKo4 *c_ko4)
 //    }
 }
 
-void Ko4::save()
+void Ko4::close()
 {
+    t_ko4_1->save();
+    t_ko4_2->save();
+    c_ko4_1->save();
+    c_ko4_2->save();
+    c_ko4_3->save();
 //    param.clear();
 //    param.replace(0, ui->label_calibrationData->text());
 //    param.replace(1, ui->lineEdit_1->text());

@@ -21,8 +21,6 @@ public:
 
 private:
     void calibrationDataCome(int n, double data);
-    void open();
-    void close();
 
 private slots:
     void on_pushButton_test1_clicked();
@@ -48,7 +46,11 @@ private slots:
 
     void on_tabWidget_currentChanged(int index);
 
+   // Ko_impl interface
 public slots:
+    void open();
+    void close();
+
     QString t_print() override;
     void setT1(double value) override;
     void setT2(double value) override;

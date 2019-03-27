@@ -19,7 +19,7 @@ void Ko3::setTab(int i)
 
 Ko3::~Ko3()
 {
-    save();
+    close();
     delete t_ko3;
     delete c_ko3;
     delete ui;
@@ -134,8 +134,10 @@ void Ko3::open()
     ui->doubleSpinBox_calibWriteTime->setValue(c_ko3->getWrite_time());
 }
 
-void Ko3::save()
+void Ko3::close()
 {
+    t_ko3->save();
+    c_ko3->save();
     //param.clear();
     //param.replace(0, ui->label_calibrationData->text());
 //    param.replace(1, ui->lineEdit_1->text());
