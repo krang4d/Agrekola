@@ -27,50 +27,13 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tabWidgetPage1">
       <attribute name="title">
        <string>Калибровка</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout">
-       <item>
-        <widget class="QGroupBox" name="groupBox_calibChls">
-         <property name="title">
-          <string>Рабочие каналы</string>
-         </property>
-         <layout class="QHBoxLayout" name="horizontalLayout">
-          <item>
-           <widget class="QCheckBox" name="checkBox_calibCh1">
-            <property name="text">
-             <string>1 Канал</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QCheckBox" name="checkBox_calibCh2">
-            <property name="text">
-             <string>2 Канал</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QCheckBox" name="checkBox_calibCh3">
-            <property name="text">
-             <string>3 Канал</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QCheckBox" name="checkBox_calibCh4">
-            <property name="text">
-             <string>4 Канал</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
        <item>
         <layout class="QFormLayout" name="formLayout_calib_1">
          <item row="0" column="0">

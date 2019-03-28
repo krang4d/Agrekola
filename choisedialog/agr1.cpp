@@ -27,20 +27,20 @@ Agr1::~Agr1()
 
 void Agr1::on_pushButton_calib_clicked()
 {
-    bool a, b, c, d;
-    if(ui->checkBox_calibCh1->isChecked()) a = true;
-    else a = false;
-    if(ui->checkBox_calibCh2->isChecked()) b = true;
-    else b = false;
-    if(ui->checkBox_calibCh3->isChecked()) c = true;
-    else c = false;
-    if(ui->checkBox_calibCh4->isChecked()) d = true;
-    else d = false;
+//    bool a, b, c, d;
+//    if(ui->checkBox_calibCh1->isChecked()) a = true;
+//    else a = false;
+//    if(ui->checkBox_calibCh2->isChecked()) b = true;
+//    else b = false;
+//    if(ui->checkBox_calibCh3->isChecked()) c = true;
+//    else c = false;
+//    if(ui->checkBox_calibCh4->isChecked()) d = true;
+//    else d = false;
 
     bool e = !ui->lineEdit_calibTrombotsitSerial->text().isEmpty();
 
     //bool c = (ui->doubleSpinBox_testIncubeTime->value() != NULL) && (ui->doubleSpinBox_testWriteTime->value() != NULL);
-    if( !((a || b || c || d ) && e ) ) {
+    if( !e ) {
         QMessageBox::information(this, "Внимание!", "Для того чтобы продолжить необходимо выбрать рабочие каналы и заполнить все поля с параметрами!");
         return;
     }
@@ -60,10 +60,10 @@ void Agr1::on_pushButton_calib_clicked()
     c_agr1->setIncube_time(ui->doubleSpinBox_calibIncubeTime->value());
     c_agr1->setWrite_time(ui->doubleSpinBox_calibWriteTime->value());
 
-    c_agr1->setK1(ui->checkBox_calibCh1->isChecked());
-    c_agr1->setK2(ui->checkBox_calibCh2->isChecked());
-    c_agr1->setK3(ui->checkBox_calibCh3->isChecked());
-    c_agr1->setK4(ui->checkBox_calibCh4->isChecked());
+//    c_agr1->setK1(ui->checkBox_calibCh1->isChecked());
+//    c_agr1->setK2(ui->checkBox_calibCh2->isChecked());
+//    c_agr1->setK3(ui->checkBox_calibCh3->isChecked());
+//    c_agr1->setK4(ui->checkBox_calibCh4->isChecked());
     c_agr1->save();
     emit calibration(StartCalibrationAgr1::getStart(c_agr1));
 }
@@ -342,46 +342,19 @@ void Agr1::otp4Come(double value)
 StartMeasurement *StartCalibrationAgr1::getStart(Calibration *c_agr1)
 {
     StartMeasurement *start = new StartMeasurement(0);
-    start->setChannels(c_agr1->getK1(), c_agr1->getK2(), c_agr1->getK3(), c_agr1->getK4());
-    start->setNum(1, "к/плазма");
-    start->setNum(2, "к/плазма");
-    start->setNum(3, "к/плазма");
-    start->setNum(4, "к/плазма");
+    start->setChannels(1, 1, 1, 1);
+    start->setNum(1, "200% к/плазма");
+    start->setNum(2, "100% к/плазма");
+    start->setNum(3, "50% к/плазма");
+    start->setNum(4, "25% к/плазма");
     start->setTimeWrite(c_agr1->getWrite_time());
     start->setTimeIncube(1, c_agr1->getIncube_time());
     start->setTimeIncube(2, static_cast<CalibrationAgr1*>(c_agr1)->getIncube_time_2());
     start->setModeID(CalibAgr1_ID);
+    start->setBtp_time(5);
+    start->setOtp_time(5);
     return start;
 }
-
-//StartMeasurement *StartCalibrationAgr1::getBTP()
-//{
-//    StartMeasurement *start = new StartMeasurement(0);
-//    start->setChannels(true, true, true, true);
-//    start->setNum(1, "БТП");
-//    start->setNum(2, "БТП");
-//    start->setNum(3, "БТП");
-//    start->setNum(4, "БТП");
-//    start->setTimeWrite(10);
-//    start->setTimeIncube(1, 3);
-//    start->setModeID(BTPCalibAgr1_ID);
-//    return start;
-//}
-
-//StartMeasurement *StartCalibrationAgr1::getOTP()
-//{
-//    StartMeasurement *start = new StartMeasurement(0);
-//    start->setChannels(true, true, true, true);
-//    start->setNum(1, "ОТП");
-//    start->setNum(2, "ОТП");
-//    start->setNum(3, "ОТП");
-//    start->setNum(4, "ОТП");
-//    start->setTimeWrite(10);
-//    start->setTimeIncube(1, 3);
-//    start->setTimeIncube(2, 4);
-//    start->setModeID(OTPCalibAgr1_ID);
-//    return start;
-//}
 
 StartMeasurement *StartTestAgr1::getStart(Test* t_agr1)
 {
@@ -405,5 +378,7 @@ StartMeasurement *StartTestAgr1::getStart(Test* t_agr1)
     start->setTimeIncube(2, obj->getIncubeTime2());
     start->setProbe(t_agr1->getSingle());
     start->setModeID(TestAgr1_ID);
+    start->setBtp_time(5);
+    start->setOtp_time(5);
     return start;
 }

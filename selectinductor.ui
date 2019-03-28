@@ -6,49 +6,22 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>543</width>
-    <height>240</height>
+    <width>271</width>
+    <height>226</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Выбор индуктора</string>
   </property>
-  <widget class="QComboBox" name="comboBox">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>260</x>
-     <y>100</y>
-     <width>161</width>
-     <height>22</height>
+     <x>0</x>
+     <y>0</y>
+     <width>268</width>
+     <height>222</height>
     </rect>
    </property>
-   <item>
-    <property name="text">
-     <string>Коллаген</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>АДФ</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>Ристомицин</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>Адреналин</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>Другой</string>
-    </property>
-   </item>
-  </widget>
-  <widget class="QWidget" name="">
    <layout class="QVBoxLayout" name="verticalLayout_1">
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout_1">

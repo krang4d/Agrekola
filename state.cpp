@@ -52,14 +52,13 @@ QString State::getMessage()
 
 StateKo1::StateKo1()
 {
-    State::state = { Incubation1_ID, Ko_ID, Calc_ID, End_ID};
+    state = { Incubation1_ID, Ko_ID, Calc_ID, Write_ID, End_ID };
 //    State::state = { Incubation1_ID, Ko_ID, Incubation1_ID,  Ko_ID, Calc_ID };
-    State::state_map = {
-        { 0,  QString("Инкубация 1") },
-        { 1,  QString("Измерение 1") },
-        { 2,  QString("Расчет") },
-        { 3,  QString("Конец") }
-    };
+    state_map.insert(0, "Инкубация 1");
+    state_map.insert(1, "Измерение 1");
+    state_map.insert(2, "Расчет");
+    state_map.insert(3, "Запись");
+    state_map.insert(4, "Конец");
 }
 
 StateKo2::StateKo2()
@@ -204,12 +203,14 @@ StateCalKo5::StateCalKo5()
 
 StateCalAgr1::StateCalAgr1()
 {
-    State::state = { Incubation1_ID , Avg_ID ,Incubation1_ID, Avg_ID, Agr_ID };
+    State::state = { Btp_ID , Otp_ID, Incubation1_ID, Agr_ID };
     State::state_map = {
-        { 0,  QString("Установите пробы с БТП в рабочие  каналы и нажмите СТАРТ") },
-        { 1,  QString("Фиксация «100%» уровней") },
-        { 2,  QString("Установите пробы с ОТП в рабочие  каналым и нажмите СТАРТ") },
-        { 3,  QString("Фиксация «0%» уровней") }
+        //{ 0,  QString("Установите пробы с БТП в рабочие  каналы и нажмите СТАРТ") },
+        { 0,  QString("Фиксация «100%» уровней") },
+        //{ 2,  QString("Установите пробы с ОТП в рабочие  каналым и нажмите СТАРТ") },
+        { 1,  QString("Фиксация «0%» уровней") },
+        { 2,  QString("Инкубация") },
+        { 3,  QString("Определение параметров агрегации") },
     };
 }
 

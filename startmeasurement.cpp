@@ -400,10 +400,30 @@ void StartMeasurement::on_comboBox_inductor_currentIndexChanged(const QString &a
     }
 }
 
+double StartMeasurement::getOtp_time() const
+{
+    return otp_time;
+}
+
+void StartMeasurement::setOtp_time(double value)
+{
+    otp_time = value;
+}
+
+double StartMeasurement::getBtp_time() const
+{
+    return btp_time;
+}
+
+void StartMeasurement::setBtp_time(double value)
+{
+    btp_time = value;
+}
+
 QWidget *StartMeasurement::getWgt() const
 {
-//    if(wgt) {
-//        QMessageBox::information(this, "Error", "StartMeasurement::getWgt(): the wgt pointer is null");
+    //    if(wgt) {
+    //        QMessageBox::information(this, "Error", "StartMeasurement::getWgt(): the wgt pointer is null");
 //        return NULL;
 //    }
 //    switch(modeID) {

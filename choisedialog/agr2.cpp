@@ -99,10 +99,10 @@ void Agr2::open()
         ui->checkBox_testCh4->setChecked(false);
     }
 
-    ui->checkBox_calibCh1->setChecked(c_agr2->getK1());
-    ui->checkBox_calibCh2->setChecked(c_agr2->getK2());
-    ui->checkBox_calibCh3->setChecked(c_agr2->getK3());
-    ui->checkBox_calibCh4->setChecked(c_agr2->getK4());
+//    ui->checkBox_calibCh1->setChecked(c_agr2->getK1());
+//    ui->checkBox_calibCh2->setChecked(c_agr2->getK2());
+//    ui->checkBox_calibCh3->setChecked(c_agr2->getK3());
+//    ui->checkBox_calibCh4->setChecked(c_agr2->getK4());
 
     ui->doubleSpinBox_calibIncubeTime_1->setValue(c_agr2->getIncube_time());
     ui->doubleSpinBox_calibIncubeTime_2->setValue(c_agr2->getIncube_time_2());
@@ -174,10 +174,10 @@ void Agr2::calibrationData4Come(double value)
 
 void Agr2::on_pushButton_calib_clicked()
 {
-    bool a = ui->checkBox_calibCh1->isChecked();
-    bool b = ui->checkBox_calibCh2->isChecked();
-    bool c = ui->checkBox_calibCh3->isChecked();
-    bool d = ui->checkBox_calibCh4->isChecked();
+//    bool a = ui->checkBox_calibCh1->isChecked();
+//    bool b = ui->checkBox_calibCh2->isChecked();
+//    bool c = ui->checkBox_calibCh3->isChecked();
+//    bool d = ui->checkBox_calibCh4->isChecked();
 
     bool e = !ui->lineEdit_calibKPlazmaSerial->text().isEmpty();
     bool f = !ui->lineEdit_calibReagentSerial->text().isEmpty();
@@ -191,7 +191,7 @@ void Agr2::on_pushButton_calib_clicked()
         return;
     }
     //bool c = (ui->doubleSpinBox_testIncubeTime->value() != NULL) && (ui->doubleSpinBox_testWriteTime->value() != NULL);
-    if( !((a || b || c || d ) && e && f) ) {
+    if( !(e && f) ) {
         QMessageBox::information(this, "Внимание!", "Для того чтобы продолжить необходимо выбрать рабочие каналы и заполнить все поля с параметрами!");
         return;
     }
@@ -205,10 +205,10 @@ void Agr2::on_pushButton_calib_clicked()
     c_agr2->setWrite_time(ui->doubleSpinBox_calibWriteTime->value());
     c_agr2->setIncube_time_2(ui->doubleSpinBox_calibIncubeTime_2->value());
 
-    c_agr2->setK1(ui->checkBox_calibCh1->isChecked());
-    c_agr2->setK2(ui->checkBox_calibCh2->isChecked());
-    c_agr2->setK3(ui->checkBox_calibCh3->isChecked());
-    c_agr2->setK4(ui->checkBox_calibCh4->isChecked());
+//    c_agr2->setK1(ui->checkBox_calibCh1->isChecked());
+//    c_agr2->setK2(ui->checkBox_calibCh2->isChecked());
+//    c_agr2->setK3(ui->checkBox_calibCh3->isChecked());
+//    c_agr2->setK4(ui->checkBox_calibCh4->isChecked());
 
     c_agr2->save();
     emit calibration(StartCalibrationAgr2::getStart(c_agr2));
@@ -407,7 +407,8 @@ StartMeasurement *StartCalibrationAgr2::getStart(Calibration* c_agr2)
     start->setTimeIncube(1, c_agr2->getIncube_time());
     start->setTimeIncube(2, obj->getIncube_time_2());
     start->setModeID(CalibAgr2_ID);
-    //stKo2->cancel = false;
+    start->setBtp_time(5);
+    start->setOtp_time(5);
     return start;
 }
 
@@ -434,5 +435,7 @@ StartMeasurement *StartTestAgr2::getStart(Test* t_agr2)
     start->setTimeIncube(1, t_agr2->getIncubeTime());
     start->setTimeIncube(2, obj->getIncubeTime2());
     start->setModeID(TestAgr2_ID);
+    start->setBtp_time(5);
+    start->setOtp_time(5);
     return start;
 }

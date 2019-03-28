@@ -52,6 +52,12 @@ public:
     QWidget *getWgt() const;
     void setWgt(QWidget *value);
 
+    double getBtp_time() const;
+    void setBtp_time(double value);
+
+    double getOtp_time() const;
+    void setOtp_time(double value);
+
 public slots:
     void on_checkBox_ch1_stateChanged(int arg1);
     void on_checkBox_ch2_stateChanged(int arg1);
@@ -87,7 +93,7 @@ private:
     bool channel_1, channel_2, channel_3, channel_4;
     QString num_1, num_2, num_3, num_4;
     double time;                        //время записи
-    double time_incube, time_incube_2;  //время инкубации
+    double time_incube, time_incube_2, btp_time, otp_time;  //время инкубации
     Mode_ID modeID;
     QWidget *wgt;
 };

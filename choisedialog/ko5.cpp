@@ -9,7 +9,6 @@ Ko5::Ko5(QWidget *parent) :
 {
     ui->setupUi(this);
     open();
-    //connect(ui->page_2, &StartMeasurment::startMeasurment, this, &Ko5::measurement);
 }
 
 void Ko5::setTab(int i)
@@ -27,15 +26,15 @@ Ko5::~Ko5()
 
 void Ko5::on_pushButton_calib_clicked()
 {
-    bool a = ui->checkBox_calibCh1->isChecked();
-    bool b = ui->checkBox_calibCh2->isChecked();
-    bool c = ui->checkBox_calibCh3->isChecked();
-    bool d = ui->checkBox_calibCh4->isChecked();
+//    bool a = ui->checkBox_calibCh1->isChecked();
+//    bool b = ui->checkBox_calibCh2->isChecked();
+//    bool c = ui->checkBox_calibCh3->isChecked();
+//    bool d = ui->checkBox_calibCh4->isChecked();
 
     bool e = !ui->lineEdit_calibKPlazmaNum->text().isEmpty();
     bool f = !ui->lineEdit_calibReagentSerial->text().isEmpty();
 
-    if( !((a || b || c || d ) && e && f) ) {
+    if( !(e && f) ) {
         QMessageBox::information(this, "Внимание!", "Для того чтобы продолжить необходимо выбрать рабочие каналы и заполнить все поля с параметрами!");
         return;
     }
@@ -61,10 +60,10 @@ void Ko5::on_pushButton_calib_clicked()
     c_ko5->setK_protrombine_otn(ui->doubleSpinBox_calibOTN->value());
     c_ko5->setProtrombine_k_Kvik(ui->doubleSpinBox_calibKvik->value());
 
-    c_ko5->setK1(ui->checkBox_calibCh1->isChecked());
-    c_ko5->setK2(ui->checkBox_calibCh2->isChecked());
-    c_ko5->setK3(ui->checkBox_calibCh3->isChecked());
-    c_ko5->setK4(ui->checkBox_calibCh4->isChecked());
+//    c_ko5->setK1(ui->checkBox_calibCh1->isChecked());
+//    c_ko5->setK2(ui->checkBox_calibCh2->isChecked());
+//    c_ko5->setK3(ui->checkBox_calibCh3->isChecked());
+//    c_ko5->setK4(ui->checkBox_calibCh4->isChecked());
 
     c_ko5->setK_plazma_serial(ui->lineEdit_calibKPlazmaNum->text());
     c_ko5->setTromboplastin_date(ui->dateEdit_calibKPlazma->date());
@@ -206,10 +205,10 @@ void Ko5::open()
             ui->checkBox_testCh4->setChecked(false);
         }
 
-        ui->checkBox_calibCh1->setChecked(c_ko5->getK1());
-        ui->checkBox_calibCh2->setChecked(c_ko5->getK2());
-        ui->checkBox_calibCh3->setChecked(c_ko5->getK3());
-        ui->checkBox_calibCh4->setChecked(c_ko5->getK4());
+//        ui->checkBox_calibCh1->setChecked(c_ko5->getK1());
+//        ui->checkBox_calibCh2->setChecked(c_ko5->getK2());
+//        ui->checkBox_calibCh3->setChecked(c_ko5->getK3());
+//        ui->checkBox_calibCh4->setChecked(c_ko5->getK4());
 
         ui->lineEdit_calibKPlazmaNum->setText(c_ko5->getK_plazma_serial());
         ui->dateEdit_calibKPlazma->setDate(c_ko5->getTromboplastin_date());
@@ -226,15 +225,6 @@ void Ko5::close()
 {
     c_ko5->save();
     t_ko5->save();
-    //param.clear();
-    //param.replace(0, ui->label_calibrationData->text());
-//    param.replace(1, ui->lineEdit_1->text());
-//    //param.replace(2, ui->lineEdit_2->text());
-//    param.replace(3, ui->lineEdit_3->text());
-//    param.replace(4, ui->lineEdit_4->text());
-//    param.replace(5, ui->lineEdit_5->text());
-//    param.replace(6, ui->lineEdit_6->text());
-//    file.saveKo5(param);
 }
 
 void Ko5::calibrationData1Come(double t0)

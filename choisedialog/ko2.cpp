@@ -165,10 +165,10 @@ void Ko2::open()
     ui->doubleSpinBox_test2a4tv->setValue(t_ko2_1->getA4tv_kp());
 
     //окно калибровка
-    ui->checkBox_calibCh1->setChecked(c_ko2->getK1());
-    ui->checkBox_calibCh2->setChecked(c_ko2->getK2());
-    ui->checkBox_calibCh3->setChecked(c_ko2->getK3());
-    ui->checkBox_calibCh4->setChecked(c_ko2->getK4());
+//    ui->checkBox_calibCh1->setChecked(c_ko2->getK1());
+//    ui->checkBox_calibCh2->setChecked(c_ko2->getK2());
+//    ui->checkBox_calibCh3->setChecked(c_ko2->getK3());
+//    ui->checkBox_calibCh4->setChecked(c_ko2->getK4());
 
     ui->doubleSpinBox_calibIncube->setValue(c_ko2->getIncube_time());
     ui->doubleSpinBox_calibWriteTime->setValue(c_ko2->getWrite_time());
@@ -521,15 +521,15 @@ void Ko2::on_pushButton_test2_clicked()
 
 void Ko2::on_pushButton_calib_clicked()
 {
-    bool a = ui->checkBox_calibCh1->isChecked();
-    bool b = ui->checkBox_calibCh2->isChecked();
-    bool c = ui->checkBox_calibCh3->isChecked();
-    bool d = ui->checkBox_calibCh4->isChecked();
+//    bool a = ui->checkBox_calibCh1->isChecked();
+//    bool b = ui->checkBox_calibCh2->isChecked();
+//    bool c = ui->checkBox_calibCh3->isChecked();
+//    bool d = ui->checkBox_calibCh4->isChecked();
 
     bool e = !ui->lineEdit_calibKPlazmaSerial->text().isEmpty();
     bool f = !ui->lineEdit_calibReagentSerial->text().isEmpty();
 
-    if( !((a || b || c || d ) && e && f) ) {
+    if( !(e && f) ) {
         QMessageBox::information(this, "Внимание!", "Для того чтобы продолжить необходимо"
                                                     " выбрать рабочие каналы"
                                                     " и заполнить все поля с параметрами!");
@@ -555,10 +555,10 @@ void Ko2::on_pushButton_calib_clicked()
     c_ko2->setIncube_time(ui->doubleSpinBox_calibIncube->value());
     c_ko2->setWrite_time(ui->doubleSpinBox_calibWriteTime->value());
 
-    c_ko2->setK1(ui->checkBox_calibCh1->isChecked());
-    c_ko2->setK2(ui->checkBox_calibCh2->isChecked());
-    c_ko2->setK3(ui->checkBox_calibCh3->isChecked());
-    c_ko2->setK4(ui->checkBox_calibCh4->isChecked());
+//    c_ko2->setK1(ui->checkBox_calibCh1->isChecked());
+//    c_ko2->setK2(ui->checkBox_calibCh2->isChecked());
+//    c_ko2->setK3(ui->checkBox_calibCh3->isChecked());
+//    c_ko2->setK4(ui->checkBox_calibCh4->isChecked());
 
     c_ko2->save();
     emit calibration(StartCalibrationKo2::getStart(this));

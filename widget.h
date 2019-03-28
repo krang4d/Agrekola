@@ -39,18 +39,8 @@ public:
         return termoSensor;
     } //проверка тепловой готовности
 
-    inline void stopIncub() {
-        incub = false;
-    }
-
-    inline bool isIncub() {
-        return incub;
-    }
-
     void stopData(Channel_ID);
     bool isData(Channel_ID);
-
-    inline bool isWaitPulse() { return waitPulse; }
 
 signals:
     void onmixch1(bool);
@@ -127,8 +117,7 @@ private:
 
     volatile bool data1, data2, data3, data4;
     bool pulse1, pulse2, pulse3, pulse4;
-    bool ready1, ready2, ready3, ready4;
-    bool termoSensor, incub, waitPulse;
+    bool termoSensor, incub;
 
     QMap<double, double> map_y1, map_y2, map_y3, map_y4 ;
     SaveFiles saveFiles;
