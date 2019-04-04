@@ -3,7 +3,7 @@
 #include <QTime>
 #include <QMessageBox>
 
-useE154::useE154(QThread *parent) :
+useE154::useE154(QWidget *parent) :
     QThread(parent)
 {
     pModule = OnlyOneE154::Instance().getModule();

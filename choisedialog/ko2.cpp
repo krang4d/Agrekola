@@ -231,7 +231,6 @@ void Ko2::calibrationDataCome(int n , double data)
 
 QString Ko2::t_print()
 {
-    t_ko2->setDate(QDate::currentDate());
     return t_ko2->print();
 }
 
@@ -597,4 +596,24 @@ StartMeasurement* StartTestKo2::getStart(Ko2 *widget)
     start->setModeID(TestKo2_ID);
     //stKo2->cancel = false;
     return start;
+}
+
+void Ko2::setDate(QDate d, SaveTo b)
+{
+    if(b == Test_ID) {
+        t_ko2->setDate(d);
+    }
+    if(b == Calib_ID) {
+        c_ko2->setDate(d);
+    }
+}
+
+void Ko2::setTime(QTime t, SaveTo b)
+{
+    if(b == Test_ID) {
+        t_ko2->setTime(t);
+    }
+    if(b == Calib_ID) {
+        c_ko2->setTime(t);
+    }
 }

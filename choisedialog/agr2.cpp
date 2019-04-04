@@ -439,3 +439,23 @@ StartMeasurement *StartTestAgr2::getStart(Test* t_agr2)
     start->setOtp_time(5);
     return start;
 }
+
+void Agr2::setDate(QDate d, SaveTo b)
+{
+    if(b == Test_ID) {
+        t_agr2->setDate(d);
+    }
+    if(b == Calib_ID) {
+        c_agr2->setDate(d);
+    }
+}
+
+void Agr2::setTime(QTime t, SaveTo b)
+{
+    if(b == Test_ID) {
+        t_agr2->setTime(t);
+    }
+    if(b == Calib_ID) {
+        c_agr2->setTime(t);
+    }
+}

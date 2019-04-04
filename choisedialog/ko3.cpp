@@ -151,7 +151,7 @@ void Ko3::close()
 
 QString Ko3::t_print()
 {
-    t_ko3->setDate(QDate::currentDate());
+    //t_ko3->setDate(QDate::currentDate());
     return t_ko3->print();
 }
 
@@ -406,4 +406,25 @@ StartMeasurement* StartTestKo3::getStart(Test* t_ko3)
     start->setProbe(t_ko3->getSingle());
     start->setModeID(TestKo3_ID);
     return start;
+}
+
+
+void Ko3::setDate(QDate d, SaveTo b)
+{
+    if(b == Test_ID) {
+        t_ko3->setDate(d);
+    }
+    if(b == Calib_ID) {
+        c_ko3->setDate(d);
+    }
+}
+
+void Ko3::setTime(QTime t, SaveTo b)
+{
+    if(b == Test_ID) {
+        t_ko3->setTime(t);
+    }
+    if(b == Calib_ID) {
+        c_ko3->setTime(t);
+    }
 }

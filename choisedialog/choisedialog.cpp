@@ -12,7 +12,6 @@ ChoiseDialog::ChoiseDialog(QDialog *parent) :
     ui->setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
     setWindowFlags(Qt::Window | Qt::MSWindowsFixedSizeDialogHint);
-    CreateWidgetThread();
 
     agr1 = static_cast<Agr1 *>(ui->stackedWidget->widget(1));
     agr2 = static_cast<Agr2 *>(ui->stackedWidget->widget(2));
@@ -22,6 +21,16 @@ ChoiseDialog::ChoiseDialog(QDialog *parent) :
     ko3 = static_cast<Ko3 *>(ui->stackedWidget->widget(5));
     ko4 = static_cast<Ko4 *>(ui->stackedWidget->widget(6));
     ko5 = static_cast<Ko5 *>(ui->stackedWidget->widget(7));
+
+    print_dialog = new QMessageBox(this);
+    //test_dialog->setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
+    QPushButton *ok = new QPushButton;
+    QPushButton *cansel = new QPushButton;
+    ok->setText("Распечатать");
+    cansel->setText("Продолжить");
+    print_dialog->addButton(ok, QMessageBox::AcceptRole);
+    print_dialog->addButton(cansel, QMessageBox::RejectRole);
+    print_dialog->setIcon(QMessageBox::Information);
 
     connect(agr1, SIGNAL(measurement(StartMeasurement*)), SLOT(startMeasurement(StartMeasurement*)));
     connect(agr2, SIGNAL(measurement(StartMeasurement*)), SLOT(startMeasurement(StartMeasurement*)));
@@ -47,33 +56,41 @@ int ChoiseDialog::getTypeOfWidget() const
 
 void ChoiseDialog::CreateWidgetThread()
 {
-    agrekola = QSharedPointer<useE154>(new useE154, &ChoiseDialog::deleteLater);
-    widget = QSharedPointer<Widget>(new Widget(this), &ChoiseDialog::deleteLater);
+    agrekola = new useE154(this);
+    widget = new Widget(this);
 
     widget->setWindowFlags(Qt::Dialog);
 
-    QWidget::connect(widget.data(), SIGNAL(onmixch1(bool)), agrekola.data(), SLOT(onMixCh1(bool)));
-    QWidget::connect(widget.data(), SIGNAL(onmixch2(bool)), agrekola.data(), SLOT(onMixCh2(bool)));
-    QWidget::connect(widget.data(), SIGNAL(onmixch3(bool)), agrekola.data(), SLOT(onMixCh3(bool)));
-    QWidget::connect(widget.data(), SIGNAL(onmixch4(bool)), agrekola.data(), SLOT(onMixCh4(bool)));
-    QWidget::connect(widget.data(), SIGNAL(onmixpp(bool)), agrekola.data(), SLOT(onMixPP(bool)));
-    QWidget::connect(widget.data(), SIGNAL(onlaser(bool)), agrekola.data(), SLOT(onLaser(bool)));
-    QObject::connect(widget.data(), SIGNAL(stop()), agrekola.data(), SLOT(stopThread()));
-    QObject::connect(widget.data(), SIGNAL(stop()), widget.data(), SLOT(deleteLater()));
+    QWidget::connect(widget, SIGNAL(onmixch1(bool)), agrekola, SLOT(onMixCh1(bool)));
+    QWidget::connect(widget, SIGNAL(onmixch2(bool)), agrekola, SLOT(onMixCh2(bool)));
+    QWidget::connect(widget, SIGNAL(onmixch3(bool)), agrekola, SLOT(onMixCh3(bool)));
+    QWidget::connect(widget, SIGNAL(onmixch4(bool)), agrekola, SLOT(onMixCh4(bool)));
+    QWidget::connect(widget, SIGNAL(onmixpp(bool)), agrekola, SLOT(onMixPP(bool)));
+    QWidget::connect(widget, SIGNAL(onlaser(bool)), agrekola, SLOT(onLaser(bool)));
+    QObject::connect(widget, SIGNAL(stop()), agrekola, SLOT(stopThread()));
+    QObject::connect(widget, SIGNAL(stop()), widget, SLOT(deleteLater()));
+    QObject::connect(widget, &Widget::stop, [=](){ show(); });
 
-    QWidget::connect(agrekola.data(), SIGNAL(update_termo(bool)), widget.data(), SLOT(updataTermo(bool)));
-    QWidget::connect(agrekola.data(), SIGNAL(value_come(QVariantList)), widget.data(), SLOT(realtimeDataSlot(QVariantList)));
-    QWidget::connect(agrekola.data(), SIGNAL(finished()), agrekola.data(), SLOT(deleteLater()));
+    QWidget::connect(agrekola, SIGNAL(update_termo(bool)), widget, SLOT(updataTermo(bool)));
+    QWidget::connect(agrekola, SIGNAL(value_come(QVariantList)), widget, SLOT(realtimeDataSlot(QVariantList)));
+    QWidget::connect(agrekola, SIGNAL(finished()), agrekola, SLOT(deleteLater()));
 
-    QWidget::connect(widget.data(), SIGNAL(destroyed(QObject*)), agrekola.data(), SLOT(deleteLater()));
+    QWidget::connect(widget, SIGNAL(destroyed(QObject*)), agrekola, SLOT(deleteLater()));
     agrekola->start();
     //widget->setUserMessage(agrekola->GetInformation());
+}
+
+void ChoiseDialog::DeleteWidgetThread()
+{
+    agrekola->stopThread();
+    //if(widget) delete widget;
 }
 
 ChoiseDialog::~ChoiseDialog()
 {
     delete ui;
     qDebug() << "call ChoiseDialog::~ChoiseDialog()";
+    delete print_dialog;
     QThread::currentThread()->msleep(300);
 }
 
@@ -88,28 +105,35 @@ void ChoiseDialog::on_testButton_clicked()
 
 void ChoiseDialog::t_singeShotConntection(MetaObj *p, MetaObj *t1, MetaObj *t2, MetaObj *t3, MetaObj *t4, Ko_impl *ko)
 {
-    *p = connect(widget.data(), &Widget::end, [=]() {
-        widget->setUserMessage(ko->t_print());
+    *p = connect(widget, &Widget::end, [=]() {
+        //widget->setUserMessage(ko->t_print());
         QObject::disconnect(*p);
         delete p;
+        qDebug() << "Slot End";
+        ko->setDate(QDate::currentDate(), Ko_impl::Test_ID);
+        ko->setTime(QTime::currentTime(), Ko_impl::Test_ID);
+        print_dialog->setText(ko->t_print());
+        print_dialog->show();
+        DeleteWidgetThread();
+        this->show();
     });
-    *t1 = connect(widget.data(), &Widget::ret_value1, [=](double d){
+    *t1 = connect(widget, &Widget::ret_value1, [=](double d){
         ko->setT1(d);
         QObject::disconnect(*t1);
         delete t1;
     });
-    *t2 = connect(widget.data(), &Widget::ret_value2, [=](double d){
+    *t2 = connect(widget, &Widget::ret_value2, [=](double d){
         ko->setT2(d);
         QObject::disconnect(*t2);
         delete t2;
     });
-    *t3 = connect(widget.data(), &Widget::ret_value3, [=](double d){
+    *t3 = connect(widget, &Widget::ret_value3, [=](double d){
         ko->setT3(d);
         QObject::disconnect(*t3);
         delete t3;
     });
 
-    *t4 = connect(widget.data(), &Widget::ret_value4, [=](double d){
+    *t4 = connect(widget, &Widget::ret_value4, [=](double d){
         ko->setT4(d);
         QObject::disconnect(*t4);
         delete t4;
@@ -118,28 +142,35 @@ void ChoiseDialog::t_singeShotConntection(MetaObj *p, MetaObj *t1, MetaObj *t2, 
 
 void ChoiseDialog::c_singeShotConntection(MetaObj *p, MetaObj *t1, MetaObj *t2, MetaObj *t3, MetaObj *t4, Ko_impl *ko)
 {
-    *p = connect(widget.data(), &Widget::end, [=]() {
-        widget->setUserMessage(ko->c_print());
+    *p = connect(widget, &Widget::end, [=]() {
+        //widget->setUserMessage(ko->c_print());
         QObject::disconnect(*p);
         delete p;
+        qDebug() << "Slot End";
+        ko->setDate(QDate::currentDate(), Ko_impl::Calib_ID);
+        ko->setTime(QTime::currentTime(), Ko_impl::Calib_ID);
+        print_dialog->setText(ko->c_print());
+        print_dialog->show();
+        DeleteWidgetThread();
+        this->show();
     });
-    *t1 = connect(widget.data(), &Widget::ret_value1, [=](double d){
+    *t1 = connect(widget, &Widget::ret_value1, [=](double d){
         ko->calibrationData1Come(d);
         QObject::disconnect(*t1);
         delete t1;
     });
-    *t2 = connect(widget.data(), &Widget::ret_value2, [=](double d){
+    *t2 = connect(widget, &Widget::ret_value2, [=](double d){
         ko->calibrationData2Come(d);
         QObject::disconnect(*t2);
         delete t2;
     });
-    *t3 = connect(widget.data(), &Widget::ret_value3, [=](double d){
+    *t3 = connect(widget, &Widget::ret_value3, [=](double d){
         ko->calibrationData3Come(d);
         QObject::disconnect(*t3);
         delete t3;
     });
 
-    *t4 = connect(widget.data(), &Widget::ret_value4, [=](double d){
+    *t4 = connect(widget, &Widget::ret_value4, [=](double d){
         ko->calibrationData4Come(d);
         QObject::disconnect(*t4);
         delete t4;
@@ -148,23 +179,23 @@ void ChoiseDialog::c_singeShotConntection(MetaObj *p, MetaObj *t1, MetaObj *t2, 
 
 void ChoiseDialog::btp_singeShotConntection(MetaObj *btp1, MetaObj *btp2, MetaObj *btp3, MetaObj *btp4, Agr_impl *agr)
 {
-    *btp1 = connect(widget.data(), &Widget::btp_value1, [=](double value){
+    *btp1 = connect(widget, &Widget::btp_value1, [=](double value){
         agr->btp1Come(value);
         QObject::disconnect(*btp1);
         delete btp1;
     });
-    *btp2 = connect(widget.data(), &Widget::btp_value2, [=](double value){
+    *btp2 = connect(widget, &Widget::btp_value2, [=](double value){
         agr->btp2Come(value);
         QObject::disconnect(*btp2);
         delete btp2;
     });
-    *btp3 = connect(widget.data(), &Widget::btp_value3, [=](double value){
+    *btp3 = connect(widget, &Widget::btp_value3, [=](double value){
         agr->btp3Come(value);
         QObject::disconnect(*btp3);
         delete btp3;
     });
 
-    *btp4 = connect(widget.data(), &Widget::btp_value4, [=](double value){
+    *btp4 = connect(widget, &Widget::btp_value4, [=](double value){
         agr->btp4Come(value);
         QObject::disconnect(*btp4);
         delete btp4;
@@ -173,23 +204,23 @@ void ChoiseDialog::btp_singeShotConntection(MetaObj *btp1, MetaObj *btp2, MetaOb
 
 void ChoiseDialog::otp_singeShotConntection(MetaObj *otp1, MetaObj *otp2, MetaObj *otp3, MetaObj *otp4, Agr_impl *agr)
 {
-    *otp1 = connect(widget.data(), &Widget::ret_value1, [=](double value){
+    *otp1 = connect(widget, &Widget::ret_value1, [=](double value){
         agr->otp1Come(value);
         QObject::disconnect(*otp1);
         delete otp1;
     });
-    *otp2 = connect(widget.data(), &Widget::ret_value2, [=](double value){
+    *otp2 = connect(widget, &Widget::ret_value2, [=](double value){
         agr->otp2Come(value);
         QObject::disconnect(*otp2);
         delete otp2;
     });
-    *otp3 = connect(widget.data(), &Widget::ret_value3, [=](double value){
+    *otp3 = connect(widget, &Widget::ret_value3, [=](double value){
         agr->otp3Come(value);
         QObject::disconnect(*otp3);
         delete otp3;
     });
 
-    *otp4 = connect(widget.data(), &Widget::ret_value4, [=](double value){
+    *otp4 = connect(widget, &Widget::ret_value4, [=](double value){
         agr->otp4Come(value);
         QObject::disconnect(*otp4);
         delete otp4;
@@ -199,6 +230,7 @@ void ChoiseDialog::otp_singeShotConntection(MetaObj *otp1, MetaObj *otp2, MetaOb
 void ChoiseDialog::startMeasurement(StartMeasurement* sw)
 {
     Mode_ID mode = sw->getModeID();
+    CreateWidgetThread();
     widget->startWin = sw;
     this->hide();
     widget->show();
@@ -286,6 +318,7 @@ void ChoiseDialog::startMeasurement(StartMeasurement* sw)
 void ChoiseDialog::calibration(StartMeasurement* sw)
 {
     widget->startWin = sw;
+    CreateWidgetThread();
     Mode_ID mode = sw->getModeID();
 
     MetaObj *printConnection = new MetaObj;
@@ -390,7 +423,6 @@ void ChoiseDialog::on_ko3Button_clicked()
 {
     ui->stackedWidget->setCurrentIndex(5);
     ko3->setTab(1);
-
 }
 
 void ChoiseDialog::on_ko4Button_clicked()

@@ -132,7 +132,7 @@ void Ko1::close()
 QString Ko1::t_print()
 {
     //QMessageBox::information(this, "Распечатка", t_ko1->print());
-    t_ko1->setDate(QDate::currentDate());
+    //t_ko1->setDate(QDate::currentDate());
     return t_ko1->print();
 }
 
@@ -223,4 +223,24 @@ StartMeasurement* StartTestKo1::getStart(Test* t_ko1)
     start->setTimeIncube(1, t_ko1->getIncubeTime());
     //stKo2->cancel = false;
     return start;
+}
+
+void Ko1::setDate(QDate d, SaveTo b)
+{
+    if(b == Test_ID) {
+        t_ko1->setDate(d);
+    }
+    if(b == Calib_ID) {
+        c_ko1->setDate(d);
+    }
+}
+
+void Ko1::setTime(QTime t, SaveTo b)
+{
+    if(b == Test_ID) {
+        t_ko1->setTime(t);
+    }
+    if(b == Calib_ID) {
+        c_ko1->setTime(t);
+    }
 }

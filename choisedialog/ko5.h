@@ -40,6 +40,9 @@ public slots:
     void open();
     void close();
 
+    void setDate(QDate, SaveTo) override;
+    void setTime(QTime, SaveTo) override;
+
     QString t_print() override;
     void setT1(double value) override;
     void setT2(double value) override;

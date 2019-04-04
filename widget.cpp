@@ -104,10 +104,10 @@ bool Widget::eventFilter(QObject *watched, QEvent *event)
 {
     if(event->type() == QEvent::Close) {
         qDebug() << "Close Event is emited in the Widget!";
-        if(!parentWidget()) qDebug() <<"parent Widget do not set in constroctor";
-        parentWidget()->show();
-        setUserMessage("Выход");
-        //emit stop();
+//        if(!parentWidget()) qDebug() <<"parent Widget do not set in constroctor";
+//        parentWidget()->show();
+//        setUserMessage("Выход");
+        emit stop();
         return true; //QWidget::eventFilter(watched, event);
     }
 //    if(event->type() == QEvent::KeyPress) {

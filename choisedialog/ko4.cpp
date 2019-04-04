@@ -247,7 +247,7 @@ void Ko4::calibrationData4Come(double t0)
 
 QString Ko4::t_print()
 {
-    t_ko4->setDate(QDate::currentDate());
+    //t_ko4->setDate(QDate::currentDate());
     return t_ko4->print();
 }
 
@@ -636,4 +636,24 @@ StartMeasurement* StartTestKo4::getStart(Test* t_ko4)
     start->setProbe(t_ko4->getSingle());
     start->setModeID(TestKo4_ID);
     return start;
+}
+
+void Ko4::setDate(QDate d, SaveTo b)
+{
+    if(b == Test_ID) {
+        t_ko4->setDate(d);
+    }
+    if(b == Calib_ID) {
+        c_ko4->setDate(d);
+    }
+}
+
+void Ko4::setTime(QTime t, SaveTo b)
+{
+    if(b == Test_ID) {
+        t_ko4->setTime(t);
+    }
+    if(b == Calib_ID) {
+        c_ko4->setTime(t);
+    }
 }

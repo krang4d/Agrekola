@@ -34,6 +34,7 @@ public:
     explicit ChoiseDialog(QDialog *parent = 0);
     int getTypeOfWidget() const;
     void CreateWidgetThread();
+    void DeleteWidgetThread();
     ~ChoiseDialog();
 
     Agr1 *agr1;     //Определение параметров агрегации
@@ -44,8 +45,9 @@ public:
     Ko4 *ko4;       //Тромбин
     Ko5 *ko5;       //Протромбиновый комплекс
 
-    QSharedPointer<useE154> agrekola;
-    QSharedPointer<Widget> widget;
+    QMessageBox *print_dialog;
+    useE154 *agrekola;
+    Widget *widget;
 
 private slots:
     void on_exitButton_clicked();
