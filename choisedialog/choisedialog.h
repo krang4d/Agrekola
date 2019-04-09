@@ -45,7 +45,8 @@ public:
     Ko4 *ko4;       //Тромбин
     Ko5 *ko5;       //Протромбиновый комплекс
 
-    QMessageBox *print_dialog;
+    QMessageBox *end_dialog;
+    QPrintDialog *printDialog;
     useE154 *agrekola;
     Widget *widget;
 

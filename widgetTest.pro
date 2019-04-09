@@ -48,7 +48,8 @@ SOURCES +=  main.cpp\
     calibparam.cpp \
     ../XML/KoAgrXML/koagrxml.cpp \
     startmeasurement.cpp \
-    state.cpp
+    state.cpp \
+    choisedialog/printer.cpp
 
 HEADERS  += selectcalibrationagr1.h \
     selectinductor.h \
@@ -83,7 +84,8 @@ HEADERS  += selectcalibrationagr1.h \
     startmeasurement.h \
     state.h \
     choisedialog/agr_impl.h \
-    choisedialog/ko_impl.h
+    choisedialog/ko_impl.h \
+    choisedialog/printer.h
 
 FORMS    += selectcalibrationagr1.ui \
     selectinductor.ui \

@@ -156,6 +156,26 @@ void Ko1::setT4(double value)
     t_ko1->setT4(value);
 }
 
+void Ko1::setDate(QDate d, SaveTo b)
+{
+    if(b == Test_ID) {
+        t_ko1->setDate(d);
+    }
+    if(b == Calib_ID) {
+        c_ko1->setDate(d);
+    }
+}
+
+void Ko1::setTime(QTime t, SaveTo b)
+{
+    if(b == Test_ID) {
+        t_ko1->setTime(t);
+    }
+    if(b == Calib_ID) {
+        c_ko1->setTime(t);
+    }
+}
+
 void Ko1::on_pushButton_test_clicked()
 {
     bool a, b, c, d;
@@ -225,22 +245,3 @@ StartMeasurement* StartTestKo1::getStart(Test* t_ko1)
     return start;
 }
 
-void Ko1::setDate(QDate d, SaveTo b)
-{
-    if(b == Test_ID) {
-        t_ko1->setDate(d);
-    }
-    if(b == Calib_ID) {
-        c_ko1->setDate(d);
-    }
-}
-
-void Ko1::setTime(QTime t, SaveTo b)
-{
-    if(b == Test_ID) {
-        t_ko1->setTime(t);
-    }
-    if(b == Calib_ID) {
-        c_ko1->setTime(t);
-    }
-}

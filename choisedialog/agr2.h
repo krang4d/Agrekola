@@ -81,9 +81,6 @@ signals:
 
 private:
     Ui::Agr2 *ui;
-//    SaveFiles file;
-//    QStringList param;
-
     TestAgr2 *t_agr2;
     CalibrationAgr2 *c_agr2;
 };
