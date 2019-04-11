@@ -294,6 +294,10 @@ void useE154::SetChannel(Channel ch, int pos)
 
 bool useE154::GetStatusTD()
 {
-    pModule->TTL_IN(&TtlIN); if(TtlIN & (1<<0)) return TRUE; else return FALSE;
+    pModule->TTL_IN(&TtlIN);
+    return TtlIN & (1<<0);
+//    if(TtlIN & (1<<0))
+//        return TRUE;
+//    else return FALSE;
 }
 

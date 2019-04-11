@@ -115,4 +115,5 @@ RESOURCES += \
 DISTFILES += \
     libapi/Lusbapi.dll \
     rcfiles/pause.png \
-    rcfiles/play.png
+    rcfiles/play.png \
+    agrekola.qmodel

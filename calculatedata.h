@@ -18,8 +18,7 @@ public:
     CalcData(QMap<double, double>, QCustomPlot *p = NULL);
     virtual ~CalcData() {}
 
-    double calcKo(QMap<double, double>);
-    double calcAgr(QMap<double, double>);
+
 
     //factory method
     static CalcData* createCalc( Mode_ID );
@@ -37,6 +36,10 @@ public:
     double getDx();
 
 protected:
+    double calcKo(QMap<double, double>);
+    double calcAgr(QMap<double, double>);
+
+private:
     QMap<double, double> mdata;
     QCustomPlot *plot;
     //QStringList param;
