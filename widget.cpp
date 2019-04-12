@@ -8,9 +8,7 @@
 #include <QKeyEvent>
 #include <QtConcurrent>
 #include <functional>
-#include "agr1.h"
-#include "ko2.h"
-
+#include "useE154.h"
 //#define STOP_DX 0.1f
 //#define MIN -6.0f
 //#define MAX 6.0f
@@ -20,7 +18,7 @@ Widget::Widget(QWidget *parent) :
     ui(new Ui::Widget),
     data1(false), data2(false), data3(false), data4(false),
     pulse1(false), pulse2(false), pulse3(false), pulse4(false),
-    termoSensor(false), incub(false), single(true),
+    incub(false), single(true),
     pBar1(new ProgressTimerBar), pBar2(new ProgressTimerBar),
     pBar3(new ProgressTimerBar), pBar4(new ProgressTimerBar),
     START_DX(0.1), STOP_DX(0.1), MIN(-6.0), MAX(6.0),
@@ -34,6 +32,12 @@ Widget::Widget(QWidget *parent) :
     setupTimers();
     installEventFilter(this);
 
+    ILE154 *pModule = OnlyOneE154::Instance().getModule();
+    WORD ttl_in;
+    pModule->TTL_IN(&ttl_in);
+    termoSensor = ttl_in & (1<<0);
+    //if(termoSensor) setUserMessage("Дождитесь нагрева термостата");
+
     emit onmixch1(false);
     emit onmixch2(false);
     emit onmixch3(false);
@@ -46,33 +50,33 @@ void Widget::setupWidget()
     single = startWin->isSingle();
     if(single) {
         if (startWin->isChannel(Channel1_ID)) {
-            ui->groupBox_f1->setTitle(QString("Канал 1, Проба №%1").arg(startWin->getNum(1)));
+            ui->groupBox_f1->setTitle(QString("Канал 1, Пр.№%1").arg(startWin->getNum(1)));
             ui->groupBox_f1->show();
         }
         else ui->groupBox_f1->hide();
 
         if (startWin->isChannel(Channel2_ID)) {
 
-            ui->groupBox_f2->setTitle(QString("Канал 2, Проба №%1").arg(startWin->getNum(2)));
+            ui->groupBox_f2->setTitle(QString("Канал 2, Пр.№%1").arg(startWin->getNum(2)));
             ui->groupBox_f2->show();
         }
         else ui->groupBox_f2->hide();
 
         if (startWin->isChannel(Channel3_ID)) {
-            ui->groupBox_f3->setTitle(QString("Канал 3, Проба №%1").arg(startWin->getNum(3)));
+            ui->groupBox_f3->setTitle(QString("Канал 3, Пр.№%1").arg(startWin->getNum(3)));
             ui->groupBox_f3->show();
         }
         else ui->groupBox_f3->hide();
 
         if (startWin->isChannel(Channel4_ID)) {
-            ui->groupBox_f4->setTitle(QString("Канал 4, Проба №%1").arg(startWin->getNum(4)));
+            ui->groupBox_f4->setTitle(QString("Канал 4, Пр.№%1").arg(startWin->getNum(4)));
             ui->groupBox_f4->show();
         }
         else ui->groupBox_f4->hide();
     }
     else {
         if (startWin->isChannel(Channel1_ID)) {
-            ui->groupBox_f1->setTitle(QString("Канал 1-2, Проба №%1").arg(startWin->getNum(1)));
+            ui->groupBox_f1->setTitle(QString("Канал 1-2, Пр.№%1").arg(startWin->getNum(1)));
             ui->groupBox_f1->show();
             ui->groupBox_f2->hide();
         }
@@ -82,7 +86,7 @@ void Widget::setupWidget()
         }
 
         if (startWin->isChannel(Channel2_ID)) {
-            ui->groupBox_f3->setTitle(QString("Канал 2-4, Проба №%1").arg(startWin->getNum(3)));
+            ui->groupBox_f3->setTitle(QString("Канал 2-4, Пр.№%1").arg(startWin->getNum(3)));
             ui->groupBox_f3->show();
             ui->groupBox_f4->hide();
         }
@@ -552,15 +556,15 @@ void Widget::test()
 
 void Widget::updataTermo(bool td)
 {
+    termoSensor = td;
     if(!td) {
         ui->label_TD->setText(QString("Температура >37°C"));
         ui->label_TD->setStyleSheet("color: green");
-        termoSensor = !td;
+
     }
     else {
         ui->label_TD->setText(QString("Температура <37°C"));
         ui->label_TD->setStyleSheet("color: red");
-        termoSensor = td;
     }
 }
 
@@ -987,10 +991,12 @@ void Widget::setUserMessage(QString str, bool withtime, bool tofile)
 
 void Widget::on_pushButton_clicked()
 {
-    connect(state, SIGNAL(stateChanged()), this, SLOT(doScenario()));
-    ui->pushButton->setEnabled(false);
+    if( startWin->getModeID() == Test_ID) {
+        test();
+        return;
+    }
     if( termoSensor ) {
-        setUserMessage(QString("<span style='color:red'>Дождитесь нагрева термостата</span>"));
+        setUserMessage(QString("<span style='color:red'>Дождитесь нагрева термостата"));
         pBar1->setFormat("В ожидании");
         pBar1->setValue(0);
         pBar2->setFormat("В ожидании");
@@ -1000,9 +1006,10 @@ void Widget::on_pushButton_clicked()
         pBar3->setValue(0);
         pBar4->setFormat("В ожидании");
         pBar4->setValue(0);
+        return;
     }
     else {
-        setUserMessage("<span style='color:blue'>Термостат нагрет до 37ºC</span>");
+        setUserMessage("<span style='color:blue'>Термостат нагрет до 37ºC");
         pBar1->setFormat("Готов");
         pBar1->setValue(pBar1->getMaximum());
         pBar2->setFormat("Готов");
@@ -1011,13 +1018,8 @@ void Widget::on_pushButton_clicked()
         pBar3->setValue(pBar3->getMaximum());
         pBar4->setFormat("Готов");
         pBar4->setValue(pBar4->getMaximum());
+        connect(state, SIGNAL(stateChanged()), this, SLOT(doScenario()));
     }
-
-    if( startWin->getModeID() == Test_ID) {
-        test();
-        return;
-    }
-    ui->pushButton->setEnabled(false);
     doScenario();
 }
 

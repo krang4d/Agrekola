@@ -58,6 +58,7 @@ int ChoiseDialog::getTypeOfWidget() const
 void ChoiseDialog::CreateWidgetThread()
 {
     agrekola = new useE154(this);
+    agrekola->start();
     widget = new Widget(this);
 
     widget->setWindowFlags(Qt::Dialog);
@@ -77,7 +78,7 @@ void ChoiseDialog::CreateWidgetThread()
     QWidget::connect(agrekola, SIGNAL(finished()), agrekola, SLOT(deleteLater()));
 
     QWidget::connect(widget, SIGNAL(destroyed(QObject*)), agrekola, SLOT(deleteLater()));
-    agrekola->start();
+
     //widget->setUserMessage(agrekola->GetInformation());
 }
 

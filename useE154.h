@@ -52,7 +52,7 @@ public:
     QString GetUsbSpeed();
     QString GetInformation();
     void SetChannel(Channel ch, int pos);
-    bool GetStatusTD();
+    bool GetStatusTD();  //термостатирование
 
 protected:
     void initPorts();                           //инициализация всех выводов TTL

@@ -39,12 +39,13 @@ protected:
     double calcKo(QMap<double, double>);
     double calcAgr(QMap<double, double>);
 
-private:
     QMap<double, double> mdata;
     QCustomPlot *plot;
     //QStringList param;
     double dx;                    //скачек величиной 4-10% от среднего уровня сигнала базовое значение для определения времени свертывания
     double mix_t;                 //время в течение которго происходит перемешивание реагента с плазмой и успокоение жидкости
+private:
+
 };
 
 class CalcLevel : public CalcData
