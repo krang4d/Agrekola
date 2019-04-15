@@ -3,25 +3,31 @@
 
 #include <QObject>
 #include <globalvalue.h>
+#include <QMap>
 
 class State : public QObject
 {
     Q_OBJECT
-protected:
-    QVector<State_ID> state;
-    QMap<int, QString> state_map;
-    int index;
 
 public:
     explicit State(QObject *parent = 0);
     virtual ~State();
+
+    void insertState(State_ID, QString);
     State_ID current();
     int next();
     bool hasNext();
     void reset();
-    virtual QString getMessage();
+    QString getMessage();
+
 signals:
     void stateChanged();
+
+private:
+    //QVector<State_ID> state;
+    QMap<State_ID, QString> state_map;
+    QMap<State_ID, QString>::iterator it;
+    //int index;
 };
 
 class StateKo1 : public State
@@ -58,7 +64,6 @@ class StateAgr1 : public State
 {
 public:
     explicit StateAgr1();
-    QString getMessage() override;
 };
 
 class StateAgr2 : public State

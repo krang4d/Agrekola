@@ -8,7 +8,6 @@ class QTime;
 class Ko_impl
 {
 public:
-
     enum SaveTo {Test_ID, Calib_ID };
     virtual void open() = 0;
     virtual void close() = 0;

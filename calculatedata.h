@@ -89,11 +89,11 @@ class CalcKo2 : public CalcData
 {
 public:
     explicit CalcKo2();
-
+    explicit CalcKo2(WithoutCalibration);
     //параметры для определения АЧТВ
 private:
-    TestKo2 t_ko2;
-    CalibrationKo2 c_ko2;
+    TestKo2 *t_ko2;
+    CalibrationKo2 *c_ko2;
     double t0;                      // АЧТВ контрольной плазмы
 
     // CalcData interface

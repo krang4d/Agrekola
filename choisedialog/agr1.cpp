@@ -65,7 +65,7 @@ void Agr1::on_pushButton_calib_clicked()
 //    c_agr1->setK3(ui->checkBox_calibCh3->isChecked());
 //    c_agr1->setK4(ui->checkBox_calibCh4->isChecked());
     c_agr1->save();
-    emit calibration(StartCalibrationAgr1::getStart(c_agr1));
+    emit calibration(StartCalibrationAgr1::getStart(t_agr1, c_agr1));
 }
 
 void Agr1::on_pushButton_test_clicked()
@@ -125,7 +125,7 @@ void Agr1::on_pushButton_test_clicked()
 
     t_agr1->setSingle(ui->radioButton_testSingle->isChecked());
     t_agr1->save();
-    emit measurement(StartTestAgr1::getStart(t_agr1));
+    emit measurement(StartTestAgr1::getStart(t_agr1, c_agr1));
 }
 
 void Agr1::open()
@@ -339,9 +339,9 @@ void Agr1::otp4Come(double value)
     c_agr1->setOTP4(value);
 }
 
-StartMeasurement *StartCalibrationAgr1::getStart(Calibration *c_agr1)
+StartMeasurement *StartCalibrationAgr1::getStart(Test *t_agr1, Calibration *c_agr1)
 {
-    StartMeasurement *start = new StartMeasurement(0);
+    StartMeasurement *start = new StartMeasurement(t_agr1, c_agr1);
     start->setChannels(1, 1, 1, 1);
     start->setNum(1, "200% к/плазма");
     start->setNum(2, "100% к/плазма");
@@ -356,7 +356,7 @@ StartMeasurement *StartCalibrationAgr1::getStart(Calibration *c_agr1)
     return start;
 }
 
-StartMeasurement *StartTestAgr1::getStart(Test* t_agr1)
+StartMeasurement *StartTestAgr1::getStart(Test *t_agr1, Calibration *c_agr1)
 {
     //static_cast<CalibrationAgr1>(c_agr1).getIncube_time_2()
     TestAgr1* obj = nullptr;
@@ -367,7 +367,7 @@ StartMeasurement *StartTestAgr1::getStart(Test* t_agr1)
     else {
         throw Error_Agr1_Type_ID("c_agr1 get pointer to an object of type: false");
     }
-    StartMeasurement *start = new StartMeasurement(0);
+    StartMeasurement *start = new StartMeasurement(t_agr1, c_agr1);
     start->setChannels(t_agr1->getK1(), t_agr1->getK2(), t_agr1->getK3(), t_agr1->getK4());
     start->setNum(1, t_agr1->getNum1());
     start->setNum(2, t_agr1->getNum2());

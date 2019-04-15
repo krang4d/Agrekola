@@ -211,7 +211,7 @@ void Agr2::on_pushButton_calib_clicked()
 //    c_agr2->setK4(ui->checkBox_calibCh4->isChecked());
 
     c_agr2->save();
-    emit calibration(StartCalibrationAgr2::getStart(c_agr2));
+    emit calibration(StartCalibrationAgr2::getStart(t_agr2, c_agr2));
 }
 
 void Agr2::on_pushButton_test_clicked()
@@ -251,7 +251,7 @@ void Agr2::on_pushButton_test_clicked()
     t_agr2->setSingle(ui->radioButton_testSingle->isChecked());
 
     t_agr2->save();
-    emit measurement(StartTestAgr2::getStart(t_agr2));
+    emit measurement(StartTestAgr2::getStart(t_agr2, c_agr2));
 }
 
 void Agr2::on_radioButton_testSingle_toggled(bool checked)
@@ -385,7 +385,7 @@ void Agr2::on_lineEdit_testCh3_textChanged(const QString &arg1)
         ui->lineEdit_testCh4->setText(arg1);
 }
 
-StartMeasurement *StartCalibrationAgr2::getStart(Calibration* c_agr2)
+StartMeasurement *StartCalibrationAgr2::getStart(Test *t_agr2, Calibration *c_agr2)
 {
     CalibrationAgr2* obj = nullptr;
     if(typeid(*c_agr2) == typeid(CalibrationAgr2)) {
@@ -397,7 +397,7 @@ StartMeasurement *StartCalibrationAgr2::getStart(Calibration* c_agr2)
         throw Error_Agr2_Type_ID("c_agr2 get pointer to an object of type: false");
     }
 
-    StartMeasurement *start = new StartMeasurement(0);
+    StartMeasurement *start = new StartMeasurement(t_agr2, c_agr2);
     start->setChannels(c_agr2->getK1(), c_agr2->getK2(), c_agr2->getK3(), c_agr2->getK4());
     start->setNum(1, "Калибровка");
     start->setNum(2, "Калибровка");
@@ -412,7 +412,7 @@ StartMeasurement *StartCalibrationAgr2::getStart(Calibration* c_agr2)
     return start;
 }
 
-StartMeasurement *StartTestAgr2::getStart(Test* t_agr2)
+StartMeasurement *StartTestAgr2::getStart(Test *t_agr2, Calibration *c_agr2)
 {
     TestAgr2* obj = nullptr;
     if(typeid(*t_agr2) == typeid(TestAgr2)) {
@@ -424,7 +424,7 @@ StartMeasurement *StartTestAgr2::getStart(Test* t_agr2)
         throw Error_Agr2_Type_ID("t_agr2 get pointer to an object of type: false");
     }
 
-    StartMeasurement *start = new StartMeasurement(0);
+    StartMeasurement *start = new StartMeasurement(t_agr2, c_agr2);
     start->setChannels(t_agr2->getK1(), t_agr2->getK2(), t_agr2->getK3(), t_agr2->getK4());
     start->setNum(1, t_agr2->getNum1());
     start->setNum(2, t_agr2->getNum2());

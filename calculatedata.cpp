@@ -148,37 +148,41 @@ CalcData *CalcData::createCalc(Mode_ID  id)
         break;
     case TestAgr1_ID:
     case CalibAgr1_ID:
-        str = tr("Определение параметров агрегации, измерение (Agr1 1)");
+        str = tr("Определение параметров агрегации");
         p = new CalcAgr1();
         break;
     case TestAgr2_ID:
     case CalibAgr2_ID:
-        str = tr("Определение активности фактора Виллебранда, измерение (Agr2 2)");
+        str = tr("Определение активности фактора Виллебранда");
         p = new CalcAgr2();
         break;
     case TestKo1_ID:
     case CalibKo1_ID:
-        str = tr("Время свертывания, измерение (Ko1 3)");
+        str = tr("Время свертывания");
         p = new CalcKo1();
         break;
     case TestKo2_ID:
     case CalibKo2_ID:
-        str = tr("АЧТВ, измерение (Ko2 4)");
+        str = tr("АЧТВ");
         p = new CalcKo1();
+        break;
+    case TestKo2_1_ID:
+        str = tr("АЧТВ без калибровки");
+        p = new CalcKo2(WithoutCalibration());
         break;
     case TestKo3_ID:
     case CalibKo3_ID:
-        str = tr("Фибриноген, измерение (Ko3 5)");
+        str = tr("Фибриноген");
         p = new CalcKo3();
         break;
     case TestKo4_ID:
     case CalibKo4_ID:
-        str = tr("Тромбин, измерние (Ko4 6)");
+        str = tr("Тромбин");
         p = new CalcKo4();
         break;
     case TestKo5_ID:
     case CalibKo5_ID:
-        str = tr("Протромбиновый комплекс, измерение (Ko5 7)");
+        str = tr("Протромбиновый комплекс");
         p = new CalcKo5();
         break;
     default: p = NULL;
@@ -241,14 +245,23 @@ QString CalcKo1::info()
 
 CalcKo2::CalcKo2()
 {
-    t0 = (c_ko2.getA4tv_kp1() + c_ko2.getA4tv_kp2() + c_ko2.getA4tv_kp3() + c_ko2.getA4tv_kp4())/4;
+    c_ko2 = new CalibrationKo2(this);
+    t0 = (c_ko2->getA4tv_kp1() + c_ko2->getA4tv_kp2() + c_ko2->getA4tv_kp3() + c_ko2->getA4tv_kp4())/4;
+    //QMessageBox::information(nullptr, "CalcKo2", QString("АЧТВ = %1").arg(t0));
+    qDebug() << QString("АЧТВ = %1").arg(t0);
+}
+
+CalcKo2::CalcKo2(WithoutCalibration)
+{
+    t_ko2 = new TestKo2(WithoutCalibration(), this);
+    t0 = t_ko2->getA4tv_kp();
     //QMessageBox::information(nullptr, "CalcKo2", QString("АЧТВ = %1").arg(t0));
     qDebug() << QString("АЧТВ = %1").arg(t0);
 }
 
 double CalcKo2::calc(QMap<double, double> map)
 {
-    if(!t0) QMessageBox::information(0, "CalcKo2", "Деление наноль");
+    if(!t0) QMessageBox::information(0, "CalcKo2", "Деление на ноль");
     return CalcData::calcKo(map)/t0; // ОТН АЧТВ(1)
 }
 

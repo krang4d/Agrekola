@@ -14,7 +14,6 @@
 #include "ko5.h"
 #include "testkoagr.h"
 #include "widget.h"
-#include "mainwindow.h"
 #include "useE154.h"
 #include "viewplot.h"
 #include "globalvalue.h"
@@ -33,7 +32,7 @@ class ChoiseDialog : public QDialog
 public:
     explicit ChoiseDialog(QDialog *parent = 0);
     int getTypeOfWidget() const;
-    void CreateWidgetThread();
+    void CreateWidgetThread(StartMeasurement *sm);
     void DeleteWidgetThread();
     ~ChoiseDialog();
 

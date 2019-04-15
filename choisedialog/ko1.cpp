@@ -225,12 +225,12 @@ void Ko1::on_pushButton_test_clicked()
     t_ko1->save();
     c_ko1->save();
 
-    emit measurement(StartTestKo1::getStart(t_ko1));
+    emit measurement(StartTestKo1::getStart(t_ko1, c_ko1));
 }
 
-StartMeasurement* StartTestKo1::getStart(Test* t_ko1)
+StartMeasurement* StartTestKo1::getStart(TestKo1 *t_ko1, CalibrationKo1 *c_ko1)
 {
-    StartMeasurement* start = new StartMeasurement(0);
+    StartMeasurement* start = new StartMeasurement(t_ko1, c_ko1);
     start->setModeID(TestKo1_ID);                   //режим определение времени свертывания
     start->setProbe(t_ko1->getSingle());            //одиночные пробы
     start->setChannels(t_ko1->getK1(), t_ko1->getK2(), t_ko1->getK3(), t_ko1->getK4());

@@ -97,7 +97,7 @@ class StartCalibrationKo4 : public StartMeasurement
     Q_OBJECT
 public:
     StartCalibrationKo4() = delete;
-    static StartMeasurement* getStart(Calibration* t_ko4);
+    static StartMeasurement* getStart(TestKo4 *t_ko4, CalibrationKo4 *c_ko4);
 };
 
 class StartTestKo4 : public StartMeasurement
@@ -105,7 +105,7 @@ class StartTestKo4 : public StartMeasurement
     Q_OBJECT
 public:
     StartTestKo4() = delete;
-    static StartMeasurement* getStart(Test* c_ko4);
+    static StartMeasurement* getStart(TestKo4 *t_ko4, CalibrationKo4 *c_ko4);
 };
 
 #endif // KO4_H

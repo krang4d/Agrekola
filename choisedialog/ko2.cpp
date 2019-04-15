@@ -195,6 +195,26 @@ void Ko2::close()
     //file.saveKo2(param);
 }
 
+void Ko2::setDate(QDate d, SaveTo b)
+{
+    if(b == Test_ID) {
+        t_ko2->setDate(d);
+    }
+    if(b == Calib_ID) {
+        c_ko2->setDate(d);
+    }
+}
+
+void Ko2::setTime(QTime t, SaveTo b)
+{
+    if(b == Test_ID) {
+        t_ko2->setTime(t);
+    }
+    if(b == Calib_ID) {
+        c_ko2->setTime(t);
+    }
+}
+
 void Ko2::calibrationDataCome(int n , double data)
 {
     static int i = 0;
@@ -455,7 +475,7 @@ void Ko2::on_pushButton_test1_clicked()
     t_ko2->setSingle(ui->radioButton_test1Single->isChecked());
 
     t_ko2->save();
-    emit measurement(StartTestKo2::getStart(this));
+    emit measurement(StartTestKo2::getStart(t_ko2, c_ko2));
 }
 
 void Ko2::on_pushButton_test2_clicked()
@@ -515,7 +535,7 @@ void Ko2::on_pushButton_test2_clicked()
 
     t_ko2_1->save();
 
-    emit measurement(StartTestKo2::getStart(this));
+    emit measurement(StartTestKo2::getStart(t_ko2, c_ko2));
 }
 
 void Ko2::on_pushButton_calib_clicked()
@@ -560,15 +580,15 @@ void Ko2::on_pushButton_calib_clicked()
 //    c_ko2->setK4(ui->checkBox_calibCh4->isChecked());
 
     c_ko2->save();
-    emit calibration(StartCalibrationKo2::getStart(this));
+    emit calibration(StartCalibrationKo2::getStart(t_ko2, c_ko2));
 }
 
-StartMeasurement* StartCalibrationKo2::getStart(Ko2* widget)
+StartMeasurement* StartCalibrationKo2::getStart(TestKo2 *t_ko2, CalibrationKo2 *c_ko2)
 {
-    CalibrationKo2* c_ko2 = widget->c_ko2;
-    StartMeasurement* start = new StartMeasurement(0);
+    c_ko2->load();
+    StartMeasurement* start = new StartMeasurement(t_ko2, c_ko2);
     //start->setObj(widget);
-    start->setChannels(c_ko2->getK1(), c_ko2->getK2(), c_ko2->getK3(), c_ko2->getK4());
+    start->setChannels(true, true, true, true);
     start->setNum(1, "к/плазма");
     start->setNum(2, "к/плазма");
     start->setNum(3, "к/плазма");
@@ -580,11 +600,9 @@ StartMeasurement* StartCalibrationKo2::getStart(Ko2* widget)
     return start;
 }
 
-StartMeasurement* StartTestKo2::getStart(Ko2 *widget)
+StartMeasurement* StartTestKo2::getStart(TestKo2 *t_ko2, CalibrationKo2 *c_ko2)
 {
-    TestKo2* t_ko2 = widget->t_ko2;
-    CalibrationKo2* c_ko2 = widget->c_ko2;
-    StartMeasurement* start = new StartMeasurement(0);
+    StartMeasurement* start = new StartMeasurement(t_ko2, c_ko2);
     start->setChannels(t_ko2->getK1(), t_ko2->getK2(), t_ko2->getK3(), t_ko2->getK4());
     start->setNum(1, t_ko2->getNum1());
     start->setNum(2, t_ko2->getNum2());
@@ -596,24 +614,4 @@ StartMeasurement* StartTestKo2::getStart(Ko2 *widget)
     start->setModeID(TestKo2_ID);
     //stKo2->cancel = false;
     return start;
-}
-
-void Ko2::setDate(QDate d, SaveTo b)
-{
-    if(b == Test_ID) {
-        t_ko2->setDate(d);
-    }
-    if(b == Calib_ID) {
-        c_ko2->setDate(d);
-    }
-}
-
-void Ko2::setTime(QTime t, SaveTo b)
-{
-    if(b == Test_ID) {
-        t_ko2->setTime(t);
-    }
-    if(b == Calib_ID) {
-        c_ko2->setTime(t);
-    }
 }

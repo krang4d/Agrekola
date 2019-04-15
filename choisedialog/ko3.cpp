@@ -270,7 +270,7 @@ void Ko3::on_pushButton_test_clicked()
     t_ko3->setSingle(ui->radioButton_testSingle->isChecked());
 
     t_ko3->save();
-    emit measurement(StartTestKo3::getStart(t_ko3));
+    emit measurement(StartTestKo3::getStart(t_ko3, c_ko3));
 }
 
 void Ko3::on_pushButton_calib_clicked()
@@ -314,7 +314,7 @@ void Ko3::on_pushButton_calib_clicked()
 //    c_ko3->setK4(ui->checkBox_calibCh4->isChecked());
 
     c_ko3->save();
-    emit calibration(StartCalibrationKo3::getStart(c_ko3));
+    emit calibration(StartCalibrationKo3::getStart(t_ko3, c_ko3));
 }
 
 void Ko3::on_radioButton_testSingle_toggled(bool checked)
@@ -378,9 +378,9 @@ void Ko3::on_lineEdit_testCh3_textChanged(const QString &arg1)
         ui->lineEdit_testCh4->setText(arg1);
 }
 
-StartMeasurement* StartCalibrationKo3::getStart(Calibration* c_ko3)
+StartMeasurement* StartCalibrationKo3::getStart(TestKo3 *t_ko3, CalibrationKo3* c_ko3)
 {
-    StartMeasurement *start = new StartMeasurement(0);
+    StartMeasurement *start = new StartMeasurement(t_ko3, c_ko3);
     start->setChannels(c_ko3->getK1(), c_ko3->getK2(), c_ko3->getK3(), c_ko3->getK4());
     start->setNum(1, "к/плазма");
     start->setNum(2, "к/плазма");
@@ -393,9 +393,9 @@ StartMeasurement* StartCalibrationKo3::getStart(Calibration* c_ko3)
     return start;
 }
 
-StartMeasurement* StartTestKo3::getStart(Test* t_ko3)
+StartMeasurement* StartTestKo3::getStart(TestKo3 *t_ko3, CalibrationKo3 *c_ko3)
 {
-    StartMeasurement *start = new StartMeasurement(0);
+    StartMeasurement *start = new StartMeasurement(t_ko3, c_ko3);
     start->setChannels(t_ko3->getK1(), t_ko3->getK2(), t_ko3->getK3(), t_ko3->getK4());
     start->setNum(1, t_ko3->getNum1());
     start->setNum(2, t_ko3->getNum2());

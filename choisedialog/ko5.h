@@ -70,7 +70,7 @@ class StartTestKo5 : public StartMeasurement
     Q_OBJECT
 public:
     StartTestKo5() = delete;
-    static StartMeasurement* getStart(Test* t_ko5);
+    static StartMeasurement* getStart(TestKo5 *t_ko5, Calibration *c_ko5);
 };
 
 class StartCalibrationKo5 : public StartMeasurement
@@ -79,7 +79,7 @@ class StartCalibrationKo5 : public StartMeasurement
 
 public:
     StartCalibrationKo5() = delete;
-    static StartMeasurement* getStart(Calibration* c_ko5);
+    static StartMeasurement* getStart(TestKo5 *t_ko5, Calibration *c_ko5);
 };
 
 #endif // KO5_H

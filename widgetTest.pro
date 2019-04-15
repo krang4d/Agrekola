@@ -23,10 +23,8 @@ SOURCES +=  main.cpp\
     selectcalibrationagr1.cpp \
     selectinductor.cpp \
     testkoagr.cpp \
-    mainwindow.cpp \
     param.cpp \
     viewplot.cpp \
-    kalibragr2.cpp \
     choisedialog/agr1.cpp \
     choisedialog/agr2.cpp \
     choisedialog/choisedialog.cpp \
@@ -54,10 +52,8 @@ SOURCES +=  main.cpp\
 HEADERS  += selectcalibrationagr1.h \
     selectinductor.h \
     testkoagr.h \
-    mainwindow.h \
     param.h \
     viewplot.h \
-    kalibragr2.h \
     choisedialog/agr1.h \
     choisedialog/agr2.h \
     choisedialog/choisedialog.h \
@@ -90,10 +86,8 @@ HEADERS  += selectcalibrationagr1.h \
 FORMS    += selectcalibrationagr1.ui \
     selectinductor.ui \
     testkoagr.ui \
-    mainwindow.ui \
     param.ui \
     viewplot.ui \
-    kalibragr2.ui \
     choisedialog/agr1.ui \
     choisedialog/agr2.ui \
     choisedialog/choisedialog.ui \
@@ -106,8 +100,7 @@ FORMS    += selectcalibrationagr1.ui \
     progresstimerbar.ui \
     impulewaiter.ui \
     options.ui \
-    calibparam.ui \
-    startmeasurement.ui
+    calibparam.ui
 
 RESOURCES += \
     rcfile.qrc

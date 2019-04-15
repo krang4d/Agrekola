@@ -74,7 +74,7 @@ void Ko5::on_pushButton_calib_clicked()
     ui->doubleSpinBox_calibWriteTime->setValue(c_ko5->getWrite_time());
 
     c_ko5->save();
-    emit calibration(StartCalibrationKo5::getStart(c_ko5));
+    emit calibration(StartCalibrationKo5::getStart(t_ko5, c_ko5));
 }
 
 void Ko5::on_pushButton_test_clicked()
@@ -130,7 +130,7 @@ void Ko5::on_pushButton_test_clicked()
     t_ko5->setSingle(ui->radioButton_testSingle->isChecked());
 
     t_ko5->save();
-    emit measurement(StartTestKo5::getStart(t_ko5));
+    emit measurement(StartTestKo5::getStart(t_ko5, c_ko5));
 }
 
 void Ko5::calibrationDataCome(int n, double deta)
@@ -339,9 +339,9 @@ void Ko5::on_lineEdit_testCh3_textChanged(const QString &arg1)
         ui->lineEdit_testCh4->setText(arg1);
 }
 
-StartMeasurement *StartCalibrationKo5::getStart(Calibration* c_ko5)
+StartMeasurement *StartCalibrationKo5::getStart(TestKo5 *t_ko5, Calibration *c_ko5)
 {
-    StartMeasurement *start = new StartMeasurement(0);
+    StartMeasurement *start = new StartMeasurement(t_ko5, c_ko5);
     start->setChannels(c_ko5->getK1(), c_ko5->getK2(), c_ko5->getK3(), c_ko5->getK4());
     start->setNum(1, "Калибровка");
     start->setNum(2, "Калибровка");
@@ -353,9 +353,9 @@ StartMeasurement *StartCalibrationKo5::getStart(Calibration* c_ko5)
     return start;
 }
 
-StartMeasurement *StartTestKo5::getStart(Test* t_ko5)
+StartMeasurement *StartTestKo5::getStart(TestKo5 *t_ko5, Calibration *c_ko5)
 {
-    StartMeasurement *start = new StartMeasurement(0);
+    StartMeasurement *start = new StartMeasurement(t_ko5, c_ko5);
     start->setChannels(t_ko5->getK1(), t_ko5->getK2(), t_ko5->getK2(), t_ko5->getK4());
     start->setNum(1, t_ko5->getNum1());
     start->setNum(2, t_ko5->getNum2());

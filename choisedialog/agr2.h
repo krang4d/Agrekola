@@ -2,7 +2,6 @@
 #define AGR2_H
 
 #include <QWidget>
-#include "kalibragr2.h"
 #include "selectcalibrationagr1.h"
 #include "selectinductor.h"
 #include "savefiles.h"
@@ -90,7 +89,7 @@ class StartTestAgr2 : public StartMeasurement
     Q_OBJECT
 public:
     StartTestAgr2() = delete;
-    static StartMeasurement* getStart(Test *t_agr2);
+    static StartMeasurement* getStart(Test *t_agr2, Calibration *c_agr2);
 };
 
 class StartCalibrationAgr2 : public StartMeasurement
@@ -98,7 +97,7 @@ class StartCalibrationAgr2 : public StartMeasurement
     Q_OBJECT
 public:
     StartCalibrationAgr2() = delete;
-    static StartMeasurement *getStart(Calibration *c_agr2);
+    static StartMeasurement *getStart(Test *t_agr2, Calibration *c_agr2);
 };
 
 #endif // AGR2_H

@@ -55,14 +55,8 @@ int ChoiseDialog::getTypeOfWidget() const
     return ui->stackedWidget->currentIndex();
 }
 
-void ChoiseDialog::CreateWidgetThread()
+void ChoiseDialog::CreateWidgetThread(StartMeasurement *sm)
 {
-    agrekola = new useE154(this);
-    agrekola->start();
-    widget = new Widget(this);
-
-    widget->setWindowFlags(Qt::Dialog);
-
     QWidget::connect(widget, SIGNAL(onmixch1(bool)), agrekola, SLOT(onMixCh1(bool)));
     QWidget::connect(widget, SIGNAL(onmixch2(bool)), agrekola, SLOT(onMixCh2(bool)));
     QWidget::connect(widget, SIGNAL(onmixch3(bool)), agrekola, SLOT(onMixCh3(bool)));
@@ -79,7 +73,11 @@ void ChoiseDialog::CreateWidgetThread()
 
     QWidget::connect(widget, SIGNAL(destroyed(QObject*)), agrekola, SLOT(deleteLater()));
 
-    //widget->setUserMessage(agrekola->GetInformation());
+    agrekola = new useE154(this);
+    widget = new Widget(sm);
+    widget->setWindowFlags(Qt::Dialog);
+    agrekola->start();
+    widget->show();
 }
 
 void ChoiseDialog::DeleteWidgetThread()
@@ -99,7 +97,7 @@ ChoiseDialog::~ChoiseDialog()
 
 void ChoiseDialog::on_testButton_clicked()
 {
-    widget->startWin = new StartMeasurement; //Test
+    widget->startWin = new StartMeasurement(new TestKo1, new CalibrationKo1); //Test
     widget->startWin->setModeID(Test_ID);
     widget->state = StateBuilder::getState(Test_ID);
     widget->show();
@@ -243,13 +241,10 @@ void ChoiseDialog::otp_singeShotConntection(MetaObj *otp1, MetaObj *otp2, MetaOb
     });
 }
 
-void ChoiseDialog::startMeasurement(StartMeasurement* sw)
+void ChoiseDialog::startMeasurement(StartMeasurement* sm)
 {
-    Mode_ID mode = sw->getModeID();
-    CreateWidgetThread();
-    widget->startWin = sw;
     this->hide();
-    widget->show();
+    CreateWidgetThread(sm);
     //QPointer<MainWindow> mw = new MainWindow(this);
     //widget->centerWidget->single = sw->isSingle();
     MetaObj *printConnection = new MetaObj;
@@ -268,6 +263,7 @@ void ChoiseDialog::startMeasurement(StartMeasurement* sw)
     MetaObj *btp3Connection;
     MetaObj *btp4Connection;
 
+    Mode_ID mode = sm->getModeID();
     if ( mode == TestAgr1_ID || mode == TestAgr2_ID) {
         otp1Connection = new MetaObj;
         otp2Connection = new MetaObj;
@@ -331,11 +327,10 @@ void ChoiseDialog::startMeasurement(StartMeasurement* sw)
     }
 }
 
-void ChoiseDialog::calibration(StartMeasurement* sw)
+void ChoiseDialog::calibration(StartMeasurement* sm)
 {
-    widget->startWin = sw;
-    CreateWidgetThread();
-    Mode_ID mode = sw->getModeID();
+    CreateWidgetThread(sm);
+    Mode_ID mode = sm->getModeID();
 
     MetaObj *printConnection = new MetaObj;
     MetaObj *t1Connection = new MetaObj;

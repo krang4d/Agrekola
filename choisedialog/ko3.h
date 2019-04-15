@@ -72,7 +72,7 @@ class StartTestKo3 : public StartMeasurement
     Q_OBJECT
 public:
     StartTestKo3() = delete;
-    static StartMeasurement* getStart(Test* t_ko3);
+    static StartMeasurement* getStart(TestKo3 *t_ko3, CalibrationKo3 *c_ko3);
 };
 
 class StartCalibrationKo3 : public StartMeasurement
@@ -80,7 +80,7 @@ class StartCalibrationKo3 : public StartMeasurement
     Q_OBJECT
 public:
     StartCalibrationKo3() = delete;
-    static StartMeasurement* getStart(Calibration* c_ko3);
+    static StartMeasurement* getStart(TestKo3 *t_ko3, CalibrationKo3 *c_ko3);
 };
 
 #endif // KO3_H

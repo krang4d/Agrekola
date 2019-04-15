@@ -65,7 +65,7 @@ class StartTestKo1 : public StartMeasurement
     Q_OBJECT
 public:
     StartTestKo1() = delete;
-    static StartMeasurement* getStart(Test* t_ko1);
+    static StartMeasurement* getStart(TestKo1 *t_ko1, CalibrationKo1 *c_ko1);
 };
 
 #endif // KO1_H
