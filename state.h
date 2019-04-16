@@ -2,8 +2,10 @@
 #define STATE_H
 
 #include <QObject>
+#include <QDebug>
+#include <QList>
+#include <QPair>
 #include <globalvalue.h>
-#include <QMap>
 
 class State : public QObject
 {

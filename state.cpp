@@ -1,5 +1,4 @@
 #include "state.h"
-#include <QDebug>
 
 State::State(QObject *parent) : QObject(parent)
 {}
@@ -28,7 +27,7 @@ int State::next()
     }
     else {
        qDebug() << "Errore", "State::Index is out of date!";
-        //emit stateChanged();
+       //emit stateChanged();
        return -1;
     }
 }
@@ -113,11 +112,23 @@ StateKo5::StateKo5()
 StateAgr1::StateAgr1()
 {
     insertState(Incubation1_ID, "Инкубация");
+    insertState(SelectInductor_ID, "Выбор индуктора");
+}
+
+StateAgr2::StateAgr2()
+{
+    insertState(LaserON_ID,     "Включение лазеров");
+    insertState(MotorON_ID,     "Включение двигателей");
+    insertState(Incubation1_ID, "Инкубация");
     insertState(Btp_ID,         "Фиксация «100%» уровня");    //"Установите пробы с БТП в рабочие  каналы"
     insertState(Incubation1_ID, "Инкубация");
     insertState(Otp_ID,         "Фиксация «0%» уровня");      //"Установите пробы с ОТП в рабочие  каналы"
-    insertState(End_ID,         "Конец");
-
+    insertState(SelectInductor_ID, "Выбор индуктора");
+    insertState(Agr_ID, "Сбор данных");
+    insertState(LaserOFF_ID,    "Выключение лазеров");
+    insertState(MotorOFF_ID,    "Выключение двигателей");
+    insertState(Calc_ID, "Расчет");
+    insertState(End_ID,  "Конец");
 }
 
 StateCalAgr2::StateCalAgr2()
@@ -125,7 +136,7 @@ StateCalAgr2::StateCalAgr2()
     insertState(LaserON_ID,     "Включение лазеров");
     insertState(MotorON_ID,     "Включение двигателей");
     insertState(Incubation1_ID, "Инкубация");
-    insertState(Ko_ID,          "Сбор данных");
+    insertState(Agr_ID,          "Сбор данных");
     insertState(LaserOFF_ID,    "Выключение лазеров");
     insertState(MotorOFF_ID,    "Выключение двигателей");
     insertState(Calc_ID,        "Расчет");
@@ -212,11 +223,6 @@ StateCalAgr1::StateCalAgr1()
     insertState(Calc_ID,        "Расчет");
     insertState(Write_ID,       "Запись");
     insertState(End_ID,         "Конец");
-}
-
-StateAgr2::StateAgr2()
-{
-    insertState(Incubation1_ID, "Инкубация");
 }
 
 State *StateBuilder::getStateTestKo1()

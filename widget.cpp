@@ -656,6 +656,7 @@ bool Widget::isData(Channel_ID n)
 
 void Widget::startIncub(int num, double time_s, std::function<void(void)> timeout_fun)
 {
+    bool b = false;
     int time_ms = time_s * 1000;
     if(num == 1) {
         setUserMessage(QString("Инкубация %1 c").arg(time_s));
@@ -667,10 +668,30 @@ void Widget::startIncub(int num, double time_s, std::function<void(void)> timeou
             timeout_fun = call;
         }
 
-        if (startWin->isChannel(Channel1_ID)) pBar1->startProgress(QString("Инкубация %1 c %p%").arg(time_s), time_ms, timeout_fun);
-        if (startWin->isChannel(Channel2_ID)) pBar2->startProgress(QString("Инкубация %1 c %p%").arg(time_s), time_ms);
-        if (startWin->isChannel(Channel3_ID)) pBar3->startProgress(QString("Инкубация %1 c %p%").arg(time_s), time_ms);
-        if (startWin->isChannel(Channel4_ID)) pBar4->startProgress(QString("Инкубация %1 c %p%").arg(time_s), time_ms);
+        if (startWin->isChannel(Channel1_ID)) {
+            if(!b) {
+                b = true;
+                pBar1->startProgress(QString("Инкубация %1 c %p%").arg(time_s), time_ms, timeout_fun);
+            } else pBar1->startProgress(QString("Инкубация %1 c %p%").arg(time_s), time_ms);
+        }
+        if (startWin->isChannel(Channel2_ID)) {
+            if(!b) {
+                b = true;
+                pBar2->startProgress(QString("Инкубация %1 c %p%").arg(time_s), time_ms, timeout_fun);
+            } else pBar1->startProgress(QString("Инкубация %1 c %p%").arg(time_s), time_ms);
+        }
+        if (startWin->isChannel(Channel3_ID)) {
+            if(!b) {
+                b = true;
+                pBar3->startProgress(QString("Инкубация %1 c %p%").arg(time_s), time_ms, timeout_fun);
+            }
+        } else pBar3->startProgress(QString("Инкубация %1 c %p%").arg(time_s), time_ms);
+        if (startWin->isChannel(Channel4_ID)) {
+            if(!b) {
+                b = true;
+                pBar4->startProgress(QString("Инкубация %1 c %p%").arg(time_s), time_ms, timeout_fun);
+            } else pBar4->startProgress(QString("Инкубация %1 c %p%").arg(time_s), time_ms);
+        }
         emit status(QString("Инкубация %1 c").arg(time_s));
     }
     else {
@@ -1010,7 +1031,7 @@ void Widget::doScenario()
     static int i = 0;
     QString s =  state->getMessage();
     setUserMessage(s);
-    QPointer<SelectInductor> si = new SelectInductor;
+    QPointer<SelectInductor> si = new SelectInductor(this);
     QMessageBox::information(this, "", s);
     switch(state->current()) {
         case Btp_ID:
@@ -1242,10 +1263,10 @@ void Widget::doScenario()
             si->show();
             break;
         case End_ID:
-            emit stop();
+            hide();
             deleteLater();
+            emit stop();          
             emit end();
-            //ui->pushButton->setEnabled(true);
             break;
         default:
             qDebug() << QString("called default startMeasurment()");
