@@ -453,6 +453,9 @@ void Widget::onLazer(bool arg)
 
 void Widget::test()
 {
+    //Test
+    startWin->setModeID(Test_ID);
+    state = StateBuilder::getState(Test_ID);
     QPointer<QMessageBox> test_dialog = new QMessageBox(this);
     //test_dialog->setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
     QPushButton ok;
@@ -553,7 +556,8 @@ void Widget::test()
         setUserMessage(QString("Лазерные излучатели - <span style='color:red'>БРАК</span>"));
         //return;
     }
-    ui->pushButton->setEnabled(true);
+    emit stop();
+    deleteLater();
 }
 
 void Widget::updataTermo(bool td)
@@ -1006,240 +1010,246 @@ void Widget::doScenario()
     static int i = 0;
     QString s =  state->getMessage();
     setUserMessage(s);
+    QPointer<SelectInductor> si = new SelectInductor;
     QMessageBox::information(this, "", s);
     switch(state->current()) {
-    case Btp_ID:
-        if (startWin->isChannel(Channel1_ID)) {
-            i++;
-            getData(Channel1_ID, startWin->getBtp_time());
-            connect(this, &Widget::done1, [this]() {
-                i--;
-                disconnect(this, &Widget::done1, 0, 0);
-                emit btp_value1(calcData(Channel1_ID, Level_ID));
-                if (!i) { state->next(); qDebug() << "Btp done1"; }
-            });
-        }
+        case Btp_ID:
+            if (startWin->isChannel(Channel1_ID)) {
+                i++;
+                getData(Channel1_ID, startWin->getBtp_time());
+                connect(this, &Widget::done1, [this]() {
+                    i--;
+                    disconnect(this, &Widget::done1, 0, 0);
+                    emit btp_value1(calcData(Channel1_ID, Level_ID));
+                    if (!i) { state->next(); qDebug() << "Btp done1"; }
+                });
+            }
 
-        if (startWin->isChannel(Channel2_ID)) {
-            i++;
-            getData(Channel2_ID, startWin->getBtp_time());
-            connect(this, &Widget::done2, [this]() {
-                i--;
-                disconnect(this, &Widget::done2, 0, 0);
-                emit btp_value2(calcData(Channel2_ID, Level_ID));
-                if (!i) { state->next(); qDebug() << "Btp done2"; }
-            });
-        }
-        if (startWin->isChannel(Channel3_ID)) {
-            i++;
-            getData(Channel3_ID, startWin->getBtp_time());
-            connect(this, &Widget::done3, [this]() {
-                i--;
-                disconnect(this, &Widget::done3, 0, 0);
-                emit btp_value3(calcData(Channel3_ID, Level_ID));
-                if (!i) { state->next(); qDebug() << "Btp done3"; }
-            });
-        }
-        if (startWin->isChannel(Channel4_ID)) {
-            i++;
-            getData(Channel4_ID, startWin->getBtp_time());
-            connect(this, &Widget::done4, [this]() {
-                i--;
-                disconnect(this, &Widget::done4, 0, 0);
-                emit btp_value4(calcData(Channel4_ID, Level_ID));
-                if (!i) { state->next(); qDebug() << "Btp done4"; }
-            });
-        }
-        break;
-    case Otp_ID:
-        if (startWin->isChannel(Channel1_ID)) {
-            i++;
-            getData(Channel1_ID, startWin->getOtp_time());
-            connect(this, &Widget::done1, [this]() {
-                i--;
-                disconnect(this, &Widget::done1, 0, 0);
-                emit otp_value1(calcData(Channel1_ID, Level_ID));
-                if (!i) { state->next(); qDebug() << "Otp done1"; }
-            });
-        }
-        if (startWin->isChannel(Channel2_ID)) {
-            i++;
-            getData(Channel2_ID, startWin->getOtp_time());
-            connect(this, &Widget::done2, [this]() {
-                i--;
-                disconnect(this, &Widget::done2, 0, 0);
-                emit otp_value2(calcData(Channel2_ID, Level_ID));
-                if (!i) { state->next(); qDebug() << "Otp done2"; }
-            });
-        }
-        if (startWin->isChannel(Channel3_ID)) {
-            i++;
-            getData(Channel3_ID, startWin->getOtp_time());
-            connect(this, &Widget::done3, [this]() {
-                i--;
-                disconnect(this, &Widget::done3, 0, 0);
-                emit otp_value3(calcData(Channel3_ID, Level_ID));
-                if (!i) { state->next(); qDebug() << "Otp done3"; }
-            });
-        }
-        if (startWin->isChannel(Channel4_ID)) {
-            i++;
-            getData(Channel4_ID, startWin->getOtp_time());
-            connect(this, &Widget::done4, [this]() {
-                i--; 
-                disconnect(this, &Widget::done4, 0, 0);
-                emit otp_value4(calcData(Channel4_ID, startWin->getModeID()));
-                if (!i) { state->next(); qDebug() << "Otp done4"; }
-            });
-        }
-        break;
-    case MotorON_ID:
-        if(startWin->isChannel(Channel1_ID)) onMotor(Channel1_ID, true);
-        if(startWin->isChannel(Channel2_ID)) onMotor(Channel2_ID, true);
-        if(startWin->isChannel(Channel3_ID)) onMotor(Channel3_ID, true);
-        if(startWin->isChannel(Channel4_ID)) onMotor(Channel4_ID, true);
-        state->next();
-        break;
-    case MotorOFF_ID:
-        if(startWin->isChannel(Channel1_ID)) onMotor(Channel1_ID, false);
-        if(startWin->isChannel(Channel2_ID)) onMotor(Channel2_ID, false);
-        if(startWin->isChannel(Channel3_ID)) onMotor(Channel3_ID, false);
-        if(startWin->isChannel(Channel4_ID)) onMotor(Channel4_ID, false);
-        state->next();
-        break;
-    case LaserON_ID:
-        onlaser(true);
-        state->next();
-        break;
-    case LaserOFF_ID:
-        setUserMessage(state->getMessage());
-        QMessageBox::information(this, "LaserOFF_ID", state->getMessage());
-        onlaser(true);
-        state->next();
-        break;
-    case Ko_ID:
-        if (startWin->isChannel(Channel1_ID)) {
-            i++;
-            connect(this, &Widget::done1, [this]() {
-                i--;
-                disconnect(this, &Widget::done1, 0, 0);
-                if (!i) { state->next(); qDebug() << "done1"; }
-            });
-            //getData(Channel1_ID, startWin->getTimeWrite());
-            //emit ret_value1(calcData(Channel1_ID, startWin->getModeID()));
-        }
-        if (startWin->isChannel(Channel2_ID)) {
-            i++;
-            connect(this, &Widget::done2, [this]() {
-                i--;
-                disconnect(this, &Widget::done2, 0, 0);
-                if (!i) { state->next(); qDebug() << "done2"; }
-            });
-            //getData(Channel2_ID, startWin->getTimeWrite());
-            //emit ret_value1(calcData(Channel2_ID, startWin->getModeID()));
-        }
-        if (startWin->isChannel(Channel3_ID)) {
-            i++;
-            connect(this, &Widget::done3, [this]() {
-                i--;
-                disconnect(this, &Widget::done3, 0, 0);
-                if (!i) { state->next(); qDebug() << "done3"; }
-            });
-            //getData(Channel3_ID, startWin->getTimeWrite());
-            //emit ret_value1(calcData(Channel3_ID, startWin->getModeID()));
-        }
-        if (startWin->isChannel(Channel4_ID)) {
-            i++;
-            connect(this, &Widget::done4, [this]() {
-                i--;
-                disconnect(this, &Widget::done4, 0, 0);
-                if (!i) { state->next(); qDebug() << "done4"; }
-            });
-            //getData(Channel4_ID, startWin->getTimeWrite());
-            //emit ret_value4(calcData(Channel1_ID, startWin->getModeID()));
-        }
-        waitImpulse(new ImpuleWaiter);
-        break;
-    case Calc_ID:
-        if( startWin->isChannel(Channel1_ID) )
-            emit ret_value1(calcData(Channel1_ID, startWin->getModeID()));
-        if( startWin->isChannel(Channel2_ID) )
-            emit ret_value2(calcData(Channel2_ID, startWin->getModeID()));
-        if( startWin->isChannel(Channel3_ID) )
-            emit ret_value3(calcData(Channel3_ID, startWin->getModeID()));
-        if( startWin->isChannel(Channel4_ID) )
-            emit ret_value4(calcData(Channel4_ID, startWin->getModeID()));
-        state->next();
-        break;
-    case Write_ID:
-        if( startWin->isChannel(Channel1_ID) ) writeMapData(Channel1_ID);
-        if( startWin->isChannel(Channel2_ID) ) writeMapData(Channel2_ID);
-        if( startWin->isChannel(Channel3_ID) ) writeMapData(Channel3_ID);
-        if( startWin->isChannel(Channel4_ID) ) writeMapData(Channel4_ID);
-        state->next();
-        break;
-    case Avg_ID:
-        if (startWin->isChannel(Channel1_ID)) {
-            i++;
-            getData(Channel1_ID, startWin->getTimeWrite());
-            connect(this, &Widget::done1, [this]() {
-                i--;
-                disconnect(this, &Widget::done1, 0, 0);
-                if (!i) { state->next(); qDebug() << "done1"; }
-            });
+            if (startWin->isChannel(Channel2_ID)) {
+                i++;
+                getData(Channel2_ID, startWin->getBtp_time());
+                connect(this, &Widget::done2, [this]() {
+                    i--;
+                    disconnect(this, &Widget::done2, 0, 0);
+                    emit btp_value2(calcData(Channel2_ID, Level_ID));
+                    if (!i) { state->next(); qDebug() << "Btp done2"; }
+                });
+            }
+            if (startWin->isChannel(Channel3_ID)) {
+                i++;
+                getData(Channel3_ID, startWin->getBtp_time());
+                connect(this, &Widget::done3, [this]() {
+                    i--;
+                    disconnect(this, &Widget::done3, 0, 0);
+                    emit btp_value3(calcData(Channel3_ID, Level_ID));
+                    if (!i) { state->next(); qDebug() << "Btp done3"; }
+                });
+            }
+            if (startWin->isChannel(Channel4_ID)) {
+                i++;
+                getData(Channel4_ID, startWin->getBtp_time());
+                connect(this, &Widget::done4, [this]() {
+                    i--;
+                    disconnect(this, &Widget::done4, 0, 0);
+                    emit btp_value4(calcData(Channel4_ID, Level_ID));
+                    if (!i) { state->next(); qDebug() << "Btp done4"; }
+                });
+            }
+            break;
+        case Otp_ID:
+            if (startWin->isChannel(Channel1_ID)) {
+                i++;
+                getData(Channel1_ID, startWin->getOtp_time());
+                connect(this, &Widget::done1, [this]() {
+                    i--;
+                    disconnect(this, &Widget::done1, 0, 0);
+                    emit otp_value1(calcData(Channel1_ID, Level_ID));
+                    if (!i) { state->next(); qDebug() << "Otp done1"; }
+                });
+            }
+            if (startWin->isChannel(Channel2_ID)) {
+                i++;
+                getData(Channel2_ID, startWin->getOtp_time());
+                connect(this, &Widget::done2, [this]() {
+                    i--;
+                    disconnect(this, &Widget::done2, 0, 0);
+                    emit otp_value2(calcData(Channel2_ID, Level_ID));
+                    if (!i) { state->next(); qDebug() << "Otp done2"; }
+                });
+            }
+            if (startWin->isChannel(Channel3_ID)) {
+                i++;
+                getData(Channel3_ID, startWin->getOtp_time());
+                connect(this, &Widget::done3, [this]() {
+                    i--;
+                    disconnect(this, &Widget::done3, 0, 0);
+                    emit otp_value3(calcData(Channel3_ID, Level_ID));
+                    if (!i) { state->next(); qDebug() << "Otp done3"; }
+                });
+            }
+            if (startWin->isChannel(Channel4_ID)) {
+                i++;
+                getData(Channel4_ID, startWin->getOtp_time());
+                connect(this, &Widget::done4, [this]() {
+                    i--;
+                    disconnect(this, &Widget::done4, 0, 0);
+                    emit otp_value4(calcData(Channel4_ID, startWin->getModeID()));
+                    if (!i) { state->next(); qDebug() << "Otp done4"; }
+                });
+            }
+            break;
+        case MotorON_ID:
+            if(startWin->isChannel(Channel1_ID)) onMotor(Channel1_ID, true);
+            if(startWin->isChannel(Channel2_ID)) onMotor(Channel2_ID, true);
+            if(startWin->isChannel(Channel3_ID)) onMotor(Channel3_ID, true);
+            if(startWin->isChannel(Channel4_ID)) onMotor(Channel4_ID, true);
+            state->next();
+            break;
+        case MotorOFF_ID:
+            if(startWin->isChannel(Channel1_ID)) onMotor(Channel1_ID, false);
+            if(startWin->isChannel(Channel2_ID)) onMotor(Channel2_ID, false);
+            if(startWin->isChannel(Channel3_ID)) onMotor(Channel3_ID, false);
+            if(startWin->isChannel(Channel4_ID)) onMotor(Channel4_ID, false);
+            state->next();
+            break;
+        case LaserON_ID:
+            onlaser(true);
+            state->next();
+            break;
+        case LaserOFF_ID:
+            setUserMessage(state->getMessage());
+            QMessageBox::information(this, "LaserOFF_ID", state->getMessage());
+            onlaser(true);
+            state->next();
+            break;
+        case Ko_ID:
+            if (startWin->isChannel(Channel1_ID)) {
+                i++;
+                connect(this, &Widget::done1, [this]() {
+                    i--;
+                    disconnect(this, &Widget::done1, 0, 0);
+                    if (!i) { state->next(); qDebug() << "done1"; }
+                });
+                //getData(Channel1_ID, startWin->getTimeWrite());
+                //emit ret_value1(calcData(Channel1_ID, startWin->getModeID()));
+            }
+            if (startWin->isChannel(Channel2_ID)) {
+                i++;
+                connect(this, &Widget::done2, [this]() {
+                    i--;
+                    disconnect(this, &Widget::done2, 0, 0);
+                    if (!i) { state->next(); qDebug() << "done2"; }
+                });
+                //getData(Channel2_ID, startWin->getTimeWrite());
+                //emit ret_value1(calcData(Channel2_ID, startWin->getModeID()));
+            }
+            if (startWin->isChannel(Channel3_ID)) {
+                i++;
+                connect(this, &Widget::done3, [this]() {
+                    i--;
+                    disconnect(this, &Widget::done3, 0, 0);
+                    if (!i) { state->next(); qDebug() << "done3"; }
+                });
+                //getData(Channel3_ID, startWin->getTimeWrite());
+                //emit ret_value1(calcData(Channel3_ID, startWin->getModeID()));
+            }
+            if (startWin->isChannel(Channel4_ID)) {
+                i++;
+                connect(this, &Widget::done4, [this]() {
+                    i--;
+                    disconnect(this, &Widget::done4, 0, 0);
+                    if (!i) { state->next(); qDebug() << "done4"; }
+                });
+                //getData(Channel4_ID, startWin->getTimeWrite());
+                //emit ret_value4(calcData(Channel1_ID, startWin->getModeID()));
+            }
+            waitImpulse(new ImpuleWaiter);
+            break;
+        case Calc_ID:
+            if( startWin->isChannel(Channel1_ID) )
+                emit ret_value1(calcData(Channel1_ID, startWin->getModeID()));
+            if( startWin->isChannel(Channel2_ID) )
+                emit ret_value2(calcData(Channel2_ID, startWin->getModeID()));
+            if( startWin->isChannel(Channel3_ID) )
+                emit ret_value3(calcData(Channel3_ID, startWin->getModeID()));
+            if( startWin->isChannel(Channel4_ID) )
+                emit ret_value4(calcData(Channel4_ID, startWin->getModeID()));
+            state->next();
+            break;
+        case Write_ID:
+            if( startWin->isChannel(Channel1_ID) ) writeMapData(Channel1_ID);
+            if( startWin->isChannel(Channel2_ID) ) writeMapData(Channel2_ID);
+            if( startWin->isChannel(Channel3_ID) ) writeMapData(Channel3_ID);
+            if( startWin->isChannel(Channel4_ID) ) writeMapData(Channel4_ID);
+            state->next();
+            break;
+        case Avg_ID:
+            if (startWin->isChannel(Channel1_ID)) {
+                i++;
+                getData(Channel1_ID, startWin->getTimeWrite());
+                connect(this, &Widget::done1, [this]() {
+                    i--;
+                    disconnect(this, &Widget::done1, 0, 0);
+                    if (!i) { state->next(); qDebug() << "done1"; }
+                });
 
-        }
-        if (startWin->isChannel(Channel2_ID)) {
-            i++;
-            getData(Channel2_ID, startWin->getTimeWrite());
-            connect(this, &Widget::done2, [this]() {
-                i--;
-                disconnect(this, &Widget::done2, 0, 0);
-                if (!i) { state->next(); qDebug() << "done2"; }
+            }
+            if (startWin->isChannel(Channel2_ID)) {
+                i++;
+                getData(Channel2_ID, startWin->getTimeWrite());
+                connect(this, &Widget::done2, [this]() {
+                    i--;
+                    disconnect(this, &Widget::done2, 0, 0);
+                    if (!i) { state->next(); qDebug() << "done2"; }
+                });
+            }
+            if (startWin->isChannel(Channel3_ID)) {
+                i++;
+                getData(Channel3_ID, startWin->getTimeWrite());
+                connect(this, &Widget::done3, [this]() {
+                    i--;
+                    disconnect(this, &Widget::done3, 0, 0);
+                    if (!i) { state->next(); qDebug() << "done3"; }
+                });
+            }
+            if (startWin->isChannel(Channel4_ID)) {
+                i++;
+                getData(Channel4_ID, startWin->getTimeWrite());
+                connect(this, &Widget::done4, [this]() {
+                    i--;
+                    disconnect(this, &Widget::done4, 0, 0);
+                    if (!i) { state->next(); qDebug() << "done4"; }
+                });
+            }
+            break;
+        case Agr_ID:
+            waitImpulse(new ImpuleWaiter);
+            state->reset();
+            break;
+        case Incubation1_ID:
+            startIncub(1, startWin->getTimeIncube(1), [this]() {
+                setUserMessage(QString("<span style = 'color: blue'>Время инкубации истекло</span>"));
+                state->next();
             });
-        }
-        if (startWin->isChannel(Channel3_ID)) {
-            i++;
-            getData(Channel3_ID, startWin->getTimeWrite());
-            connect(this, &Widget::done3, [this]() {
-                i--;
-                disconnect(this, &Widget::done3, 0, 0);
-                if (!i) { state->next(); qDebug() << "done3"; }
+            break;
+        case Incubation2_ID:
+            startIncub(2, startWin->getTimeIncube(1), [this]() {
+                setUserMessage(QString("<span style = 'color: blue'>Время инкубации истекло</span>"));
+                state->next();
             });
-        }
-        if (startWin->isChannel(Channel4_ID)) {
-            i++;
-            getData(Channel4_ID, startWin->getTimeWrite());
-            connect(this, &Widget::done4, [this]() {
-                i--;
-                disconnect(this, &Widget::done4, 0, 0);
-                if (!i) { state->next(); qDebug() << "done4"; }
-            });
-        }
-        break;
-    case Agr_ID:
-        waitImpulse(new ImpuleWaiter);
-        state->reset();
-        break;
-    case Incubation1_ID:
-        startIncub(1, startWin->getTimeIncube(1), [this]() {
-            setUserMessage(QString("<span style = 'color: blue'>Время инкубации истекло</span>"));
-            state->next();
-        });
-        break;
-    case Incubation2_ID:
-        startIncub(2, startWin->getTimeIncube(1), [this]() {
-            setUserMessage(QString("<span style = 'color: blue'>Время инкубации истекло</span>"));
-            state->next();
-        });
-        break;
-    case End_ID:
-        emit end();
-        ui->pushButton->setEnabled(true);
-        break;
-    default:
-        qDebug() << QString("called default startMeasurment()");
-        QMessageBox::information(this, "Alert", "called default startMeasurment()");
-        break;
+            break;
+        case SelectInductor_ID:
+            si->show();
+            break;
+        case End_ID:
+            emit stop();
+            deleteLater();
+            emit end();
+            //ui->pushButton->setEnabled(true);
+            break;
+        default:
+            qDebug() << QString("called default startMeasurment()");
+            QMessageBox::information(this, "Alert", "called default startMeasurment()");
+            break;
     } //end switch
 }

@@ -40,6 +40,7 @@ enum State_ID{
     Write_ID,        //запись данных в файл
     Incubation1_ID, //инкубация 1
     Incubation2_ID,  //инкубация 2
+    SelectInductor_ID, //выбор индуктора
     End_ID          //вывод результатов
 };
 

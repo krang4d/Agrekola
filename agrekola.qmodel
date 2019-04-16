@@ -2027,7 +2027,7 @@
                           </qlist>
                          </stereotypes>
                          <name>ImpuleWaiter</name>
-                         <pos>x:1240;y:415</pos>
+                         <pos>x:1240;y:375</pos>
                          <rect>x:-40;y:-30;w:80;h:60</rect>
                          <visual-role>0</visual-role>
                         </DObject>
@@ -2076,7 +2076,7 @@
                           </qlist>
                          </stereotypes>
                          <name>ProgressTimerBar</name>
-                         <pos>x:1250;y:490</pos>
+                         <pos>x:1250;y:470</pos>
                          <rect>x:-50;y:-30;w:100;h:60</rect>
                          <visual-role>0</visual-role>
                         </DObject>
@@ -2986,7 +2986,7 @@
                           </qlist>
                          </stereotypes>
                          <name>Print</name>
-                         <pos>x:1240;y:570</pos>
+                         <pos>x:1240;y:550</pos>
                          <rect>x:-40;y:-30;w:80;h:60</rect>
                          <visual-role>0</visual-role>
                         </DObject>
@@ -3084,9 +3084,58 @@
                       </DAssociation>
                      </instance>
                     </item>
+                    <item>
+                     <instance type="DClass">
+                      <DClass>
+                       <base-DObject>
+                        <DObject>
+                         <base-DElement>
+                          <DElement>
+                           <uid>{c03adcc1-3c32-4f79-a507-3744accdbc3b}</uid>
+                          </DElement>
+                         </base-DElement>
+                         <object>{19895db7-e014-4e47-8cb7-2c4aebbbec79}</object>
+                         <stereotypes>
+                          <qlist>
+                           <item>form</item>
+                          </qlist>
+                         </stereotypes>
+                         <name>SelectInductor</name>
+                         <pos>x:1245;y:645</pos>
+                         <rect>x:-45;y:-30;w:90;h:60</rect>
+                         <visual-role>0</visual-role>
+                        </DObject>
+                       </base-DObject>
+                      </DClass>
+                     </instance>
+                    </item>
+                    <item>
+                     <instance type="DAssociation">
+                      <DAssociation>
+                       <base-DRelation>
+                        <DRelation>
+                         <base-DElement>
+                          <DElement>
+                           <uid>{10b3f43d-8d1b-4c73-8789-1cdb0c1e3f2d}</uid>
+                          </DElement>
+                         </base-DElement>
+                         <object>{8811f77a-cd6e-43eb-b8f9-ffb28f2d72d4}</object>
+                         <a>{223c3770-3f08-412a-bfb7-d2b28a635cda}</a>
+                         <b>{c03adcc1-3c32-4f79-a507-3744accdbc3b}</b>
+                        </DRelation>
+                       </base-DRelation>
+                       <a>
+                        <DAssociationEnd>
+                         <navigable>true</navigable>
+                         <kind>2</kind>
+                        </DAssociationEnd>
+                       </a>
+                      </DAssociation>
+                     </instance>
+                    </item>
                    </qlist>
                   </elements>
-                  <last-modified>1555317728352</last-modified>
+                  <last-modified>1555404910820</last-modified>
                   <toolbarid>General</toolbarid>
                  </MDiagram>
                 </base-MDiagram>
@@ -7323,6 +7372,34 @@
                         </target>
                        </handle>
                       </item>
+                      <item>
+                       <handle>
+                        <uid>{8811f77a-cd6e-43eb-b8f9-ffb28f2d72d4}</uid>
+                        <target>
+                         <instance type="MAssociation">
+                          <MAssociation>
+                           <base-MRelation>
+                            <MRelation>
+                             <base-MElement>
+                              <MElement>
+                               <uid>{8811f77a-cd6e-43eb-b8f9-ffb28f2d72d4}</uid>
+                              </MElement>
+                             </base-MElement>
+                             <a>{0c26bb9b-0ac8-4068-a2b8-1496f2f13864}</a>
+                             <b>{19895db7-e014-4e47-8cb7-2c4aebbbec79}</b>
+                            </MRelation>
+                           </base-MRelation>
+                           <a>
+                            <MAssociationEnd>
+                             <navigable>true</navigable>
+                             <kind>2</kind>
+                            </MAssociationEnd>
+                           </a>
+                          </MAssociation>
+                         </instance>
+                        </target>
+                       </handle>
+                      </item>
                      </qlist>
                     </handles>
                    </handles>
@@ -7333,63 +7410,63 @@
                  <qlist>
                   <item>
                    <MClassMember>
-                    <uid>{0b27ad19-dad2-4133-90c6-721dacffe33e}</uid>
+                    <uid>{2b9b0738-a59d-468b-9b3a-6e997c574eef}</uid>
                     <type>2</type>
                     <declaration>explicit Widget(QWidget *parent = 0)</declaration>
                    </MClassMember>
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{c4e92a2a-648d-4adc-806c-0c2b3c901489}</uid>
+                    <uid>{f7c770be-7b75-4e77-a484-f4f5259ff588}</uid>
                     <type>2</type>
                     <declaration>~Widget()</declaration>
                    </MClassMember>
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{660ca5c3-eb96-4111-b10d-85d6642a7e95}</uid>
+                    <uid>{a644e76a-f634-4a92-9668-95b81896e92f}</uid>
                     <type>2</type>
                     <declaration>void setupWidget()</declaration>
                    </MClassMember>
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{251bfbcf-86ad-412e-80c5-4924d9ab0cc5}</uid>
+                    <uid>{0e324a64-141c-4891-b54a-8a1e9ead8429}</uid>
                     <type>2</type>
                     <declaration>void setUserMessage(QString, bool withtime = true, bool tofile = true)</declaration>
                    </MClassMember>
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{ab21eb8b-3af8-4c6c-9369-1a21cfafcf18}</uid>
+                    <uid>{dd621b41-a566-4b21-aa99-6d2d3022c1d6}</uid>
                     <type>1</type>
                     <declaration>inline bool isSensorReady() {         return termoSensor</declaration>
                    </MClassMember>
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{0f9d7e22-cdb1-4a67-98bf-1bc69c65b529}</uid>
+                    <uid>{ba21bc51-0700-4a96-b96c-7d0d245876ce}</uid>
                     <type>1</type>
                     <declaration>}</declaration>
                    </MClassMember>
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{4d9b27a6-a6f4-4994-8643-c882c2df373b}</uid>
+                    <uid>{bc287666-0497-46cf-96a8-43171dd02d04}</uid>
                     <type>2</type>
                     <declaration>void stopData(Channel_ID)</declaration>
                    </MClassMember>
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{b75507f4-b550-49cd-8bf6-db76d3e8b064}</uid>
+                    <uid>{161cdfa1-4df8-4973-b66d-37a873f1f62d}</uid>
                     <type>2</type>
                     <declaration>bool isData(Channel_ID)</declaration>
                    </MClassMember>
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{a5d74d9f-4f72-4970-950b-b16c63bb1297}</uid>
+                    <uid>{b434a9bf-fd80-4ec7-84ab-253caccc25b4}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>void onmixch1(bool)</declaration>
@@ -7397,7 +7474,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{e7a2bbbe-dbf1-4892-9d2d-2a6eef965eb8}</uid>
+                    <uid>{2f00285e-6c0a-49a7-8e52-62ecf8ccf7fe}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>void onmixch2(bool)</declaration>
@@ -7405,7 +7482,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{f8bd0c3a-1b8d-42f8-add4-afef89410a4b}</uid>
+                    <uid>{f755c78f-8142-4693-b175-423d171e819f}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>void onmixch3(bool)</declaration>
@@ -7413,7 +7490,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{e0de78db-120c-4458-a730-03576f3d479c}</uid>
+                    <uid>{e00de685-b2a0-4143-8bf2-3bf04ad59c35}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>void onmixch4(bool)</declaration>
@@ -7421,7 +7498,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{ef62c572-8340-47d3-a6f7-46c08a7a25f4}</uid>
+                    <uid>{f99f8c50-0468-477d-a669-c6e3dc90ec8a}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>void onmixpp(bool)</declaration>
@@ -7429,7 +7506,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{f41a5bea-d465-42bb-bb83-1239f1300650}</uid>
+                    <uid>{98ce5ef7-2d04-4a6c-b264-02ea9a516247}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>void onlaser(bool)</declaration>
@@ -7437,7 +7514,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{17f6b6b3-76c2-4d8d-94c9-ddd2a3b422e7}</uid>
+                    <uid>{d99887c8-b0f9-4708-adab-76cf45918662}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>void status(QString)</declaration>
@@ -7445,7 +7522,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{e246b96d-2577-408a-9871-dbc58bf52463}</uid>
+                    <uid>{6185e183-57c8-4752-8d33-e0a153d93b19}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>void stop()</declaration>
@@ -7453,7 +7530,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{348fda4c-17f4-40b8-b6e1-c222865d7f10}</uid>
+                    <uid>{d683b4b1-7f82-4bde-9175-c3929c9351e6}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>void hasPulse1()</declaration>
@@ -7461,7 +7538,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{b9588a62-18e7-405a-bf8f-ffbc2100224c}</uid>
+                    <uid>{d4426525-7db3-4acc-a94e-35b04f12c6f2}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>void hasPulse2()</declaration>
@@ -7469,7 +7546,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{5d54384b-44b2-49f0-ba5d-857700000f2b}</uid>
+                    <uid>{5c412722-42f8-4e3b-80c2-6d1d285fb3f1}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>void hasPulse3()</declaration>
@@ -7477,7 +7554,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{673e97a7-dbf7-4448-8954-abfb86bab106}</uid>
+                    <uid>{1eab9161-ce09-493b-9ae4-4e48f1ad0120}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>void hasPulse4()</declaration>
@@ -7485,7 +7562,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{3d82dabb-33d7-4268-bc6c-dcbe001d6472}</uid>
+                    <uid>{bdac4723-f769-4320-a931-05f114e8bfe5}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>void ret_value1(double)</declaration>
@@ -7493,7 +7570,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{78d0346b-e912-4cf0-a2ac-0bfd9f78effd}</uid>
+                    <uid>{5e8cba89-0926-4a9f-aacb-f941ae1d3e5f}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>void ret_value2(double)</declaration>
@@ -7501,7 +7578,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{ffdfcf85-e1ac-4993-9928-48cb4dda1449}</uid>
+                    <uid>{f4026326-d1a8-47d7-b5be-33ac852ad88c}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>void ret_value3(double)</declaration>
@@ -7509,7 +7586,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{900ee650-bffa-4568-a142-32ae4ba02cae}</uid>
+                    <uid>{9cd461e2-1c0e-4d7f-8f64-e9a39b081d92}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>void ret_value4(double)</declaration>
@@ -7517,7 +7594,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{89a43d8d-503b-437e-8d9d-24896cd52ea6}</uid>
+                    <uid>{d55cc584-67e1-4004-b779-6b85afa0a028}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>void btp_value1(double)</declaration>
@@ -7525,7 +7602,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{22a0db59-76b8-44b0-ac46-a8aa968fab64}</uid>
+                    <uid>{0a1d7a3b-5c09-4e58-9d59-0cae2b74f2f8}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>void btp_value2(double)</declaration>
@@ -7533,7 +7610,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{ae918fe7-2caa-473d-8f06-4beb4d79576f}</uid>
+                    <uid>{efdc4fe9-6a87-4e11-ab1b-bfd92cc33a30}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>void btp_value3(double)</declaration>
@@ -7541,7 +7618,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{cb1d964a-d26b-4cb6-b81d-442934a95411}</uid>
+                    <uid>{77c3c7f9-5c86-4f8c-bdf3-72d2bbe683af}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>void btp_value4(double)</declaration>
@@ -7549,7 +7626,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{fce8b4b1-340a-496f-9aa8-d6a3046d3861}</uid>
+                    <uid>{8e609e83-afe0-411e-ba99-cde4af6b8b31}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>void otp_value1(double)</declaration>
@@ -7557,7 +7634,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{0d922edd-9bf7-43f1-8c0a-f6b6c8c451b8}</uid>
+                    <uid>{d2540da3-4733-4366-91e2-05b476a06f27}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>void otp_value2(double)</declaration>
@@ -7565,7 +7642,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{bb1ca329-d7d7-4ddd-ae5c-3cef89b65fcb}</uid>
+                    <uid>{9b6fb03c-04f3-415b-80f3-1fb8059ebc7c}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>void otp_value3(double)</declaration>
@@ -7573,7 +7650,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{6b94cff9-38b3-4291-a1ed-3fdda7b44d18}</uid>
+                    <uid>{bdf6fbc0-517a-4068-98c2-935e45703213}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>void otp_value4(double)</declaration>
@@ -7581,7 +7658,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{d0f8c6d6-d931-47b5-88ba-7ac42fee0a01}</uid>
+                    <uid>{4252dcd2-3a40-4e76-8ee0-f8ef66b9920b}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>void done1()</declaration>
@@ -7589,7 +7666,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{2a0cee53-1142-4907-9860-815a2e5d3285}</uid>
+                    <uid>{177982a1-879c-4bca-a920-bcfe05fbd98a}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>void done2()</declaration>
@@ -7597,7 +7674,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{56b923a6-d894-4a01-806b-810dc7e7798e}</uid>
+                    <uid>{d780976a-d796-417a-be90-489c91ae1224}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>void done3()</declaration>
@@ -7605,7 +7682,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{eb687377-d5c4-417c-a77c-ff3fb69621c0}</uid>
+                    <uid>{d49125af-fa90-4093-a1f7-bb73f6e38b75}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>void done4()</declaration>
@@ -7613,7 +7690,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{1b9e63c9-ef26-4eb2-8e21-f69a28c3af5d}</uid>
+                    <uid>{4f33b41a-cab9-4eef-baad-2e2832a48c4f}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>void done()</declaration>
@@ -7621,7 +7698,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{d4ca88d4-5af2-4166-8ff5-1e2fb824aad4}</uid>
+                    <uid>{5d5fe969-f95f-44ae-9dbd-a470d978ee8e}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>void incube_timeout()</declaration>
@@ -7629,7 +7706,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{3e231b98-4c6d-488a-a7f4-bc5f128e0ab6}</uid>
+                    <uid>{933a9551-4f72-4bc7-a504-0596fbc8ca5e}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>void end()</declaration>
@@ -7637,7 +7714,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{43777ac9-a9e3-4069-a45e-94e6ee2f54fa}</uid>
+                    <uid>{a065fe07-97ae-457e-9563-4de2ec51668f}</uid>
                     <visibility>7</visibility>
                     <type>2</type>
                     <declaration>void startIncub(int num, double time_s, std::function&lt;void(void)&gt; timeout_fun, QString message = &quot;Время инкубации истекло&quot;)</declaration>
@@ -7645,7 +7722,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{fa50192a-9a24-4b34-9924-9b7aadfa17a0}</uid>
+                    <uid>{87d46808-217e-4863-9b93-d2f4eee98c46}</uid>
                     <visibility>7</visibility>
                     <type>2</type>
                     <declaration>void getData(Channel_ID, double time_s)</declaration>
@@ -7653,7 +7730,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{ebda5ccf-ab10-4c4d-8d38-3b30c3e3b894}</uid>
+                    <uid>{13e40f7e-c94c-4fdf-ab01-bb5f2e15f8e7}</uid>
                     <visibility>7</visibility>
                     <type>2</type>
                     <declaration>double calcData(Channel_ID, Mode_ID)</declaration>
@@ -7661,7 +7738,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{cb9efdb8-c359-4b55-896b-90095782cefc}</uid>
+                    <uid>{c320e8f6-2391-43b7-b4ab-1bb55059c50d}</uid>
                     <visibility>7</visibility>
                     <type>2</type>
                     <declaration>void writeMapData(Channel_ID)</declaration>
@@ -7669,7 +7746,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{8e438271-1f84-49a3-85c7-d4adcd9b17d7}</uid>
+                    <uid>{c762876b-8c03-4fbc-90c1-29f2c796f880}</uid>
                     <visibility>7</visibility>
                     <type>2</type>
                     <declaration>void incubeTimeout_1()</declaration>
@@ -7677,7 +7754,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{5e1235d2-1821-4524-b6d5-4f0038cbedae}</uid>
+                    <uid>{dbd314b7-295a-4ae3-a7a2-3635bf4d31d7}</uid>
                     <visibility>7</visibility>
                     <type>2</type>
                     <declaration>void incubeTimeout_2()</declaration>
@@ -7685,7 +7762,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{766aded2-467a-46d6-ae5e-006da4db32f8}</uid>
+                    <uid>{cdebcdb4-5087-49f8-af3c-ad69a1189ca7}</uid>
                     <visibility>7</visibility>
                     <type>2</type>
                     <declaration>void waitImpulse(ImpuleWaiter *iw)</declaration>
@@ -7693,7 +7770,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{34e0eb66-712f-4ea6-b3a0-590389edcbdb}</uid>
+                    <uid>{291b21cd-abd5-4993-87ea-a87b11bf32e6}</uid>
                     <visibility>7</visibility>
                     <type>2</type>
                     <declaration>void onMotor(Channel_ID, bool arg)</declaration>
@@ -7701,7 +7778,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{72b472a7-62ce-499a-a5a3-77e908429f3c}</uid>
+                    <uid>{4ce5101a-34d1-4c73-a3f8-d935be36a9dc}</uid>
                     <visibility>7</visibility>
                     <type>2</type>
                     <declaration>void onLazer(bool arg)</declaration>
@@ -7709,7 +7786,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{7cd7fdab-5e0c-424e-a6a4-72e495e58b40}</uid>
+                    <uid>{3d719091-1160-43d0-956b-4136a9c3a855}</uid>
                     <visibility>7</visibility>
                     <type>2</type>
                     <declaration>void test()</declaration>
@@ -7717,7 +7794,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{4d42f7e7-5a4d-4bbe-83c3-bda79f8de81d}</uid>
+                    <uid>{e444f6ac-79c4-46a4-8603-9a7663125b62}</uid>
                     <visibility>5</visibility>
                     <type>2</type>
                     <declaration>void on_pushButton_clicked()</declaration>
@@ -7725,7 +7802,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{c4c29261-b2ae-4bf1-b007-d557319da29b}</uid>
+                    <uid>{05fd84d2-dd68-4893-a49a-db9b70e06f24}</uid>
                     <visibility>5</visibility>
                     <type>2</type>
                     <declaration>void realtimeDataSlot(QVariantList)</declaration>
@@ -7733,7 +7810,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{d6832b4a-8ee4-45db-9055-c789598eca8e}</uid>
+                    <uid>{0a088775-eab0-42ec-ab65-21ec6c138d9f}</uid>
                     <visibility>5</visibility>
                     <type>2</type>
                     <declaration>void updataTermo(bool)</declaration>
@@ -7741,7 +7818,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{d13edc8e-14a9-4637-a6be-16e8703f0e3f}</uid>
+                    <uid>{795d3e53-112d-4558-b099-8efb5fafdbb4}</uid>
                     <visibility>5</visibility>
                     <type>2</type>
                     <declaration>void updateTime()</declaration>
@@ -7749,7 +7826,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{dc0f7529-7230-499a-8b53-4fc97de3f77d}</uid>
+                    <uid>{d4f2bb36-c659-449c-8752-ef388cf0e1f5}</uid>
                     <visibility>5</visibility>
                     <type>2</type>
                     <declaration>void doScenario()</declaration>
@@ -7757,7 +7834,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{c6fc45c7-81f1-4a86-a050-4a3dfd1e32e0}</uid>
+                    <uid>{81220304-d798-4579-9b1a-16ecd66a6633}</uid>
                     <visibility>5</visibility>
                     <type>2</type>
                     <declaration>void setupRealtimeData(bool single)</declaration>
@@ -7765,7 +7842,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{9ed7a3da-3a06-4de4-8ca2-cabcbc22fabd}</uid>
+                    <uid>{e3b266f3-ce70-4e20-8bc1-d74f811ccbb6}</uid>
                     <visibility>5</visibility>
                     <type>2</type>
                     <declaration>void setupTimers()</declaration>
@@ -7773,7 +7850,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{20c50e4b-37b1-4140-a56f-f4e3d537a8f5}</uid>
+                    <uid>{50ee0eb7-b493-4279-bc30-a8f753d90b10}</uid>
                     <visibility>1</visibility>
                     <type>1</type>
                     <declaration>StartMeasurement *startWin</declaration>
@@ -7781,7 +7858,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{eb2dfd3c-e626-46a4-8ae0-0b1fbca84afd}</uid>
+                    <uid>{7f5baa9c-6602-4818-ac53-0ced7e263cfb}</uid>
                     <visibility>1</visibility>
                     <type>1</type>
                     <declaration>QCustomPlot *customPlot1, *customPlot2, *customPlot3, *customPlot4</declaration>
@@ -7789,7 +7866,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{512835d2-20cf-4e0e-b627-9c899fa64609}</uid>
+                    <uid>{e23a9ce8-0315-46ed-b886-7df9eecb3c47}</uid>
                     <visibility>1</visibility>
                     <type>1</type>
                     <declaration>ProgressTimerBar *pBar1, *pBar2, *pBar3, *pBar4</declaration>
@@ -7797,7 +7874,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{2f8810b4-1d69-4cc1-a51c-7429dc6a9e86}</uid>
+                    <uid>{24fa7a61-d5fa-4c1e-8a1b-98e5ef1d7333}</uid>
                     <visibility>1</visibility>
                     <type>1</type>
                     <declaration>Mode_ID current_mode_id</declaration>
@@ -7805,7 +7882,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{1d012365-b6e5-4c61-89cb-ff29338a0141}</uid>
+                    <uid>{ba63078b-3e30-4320-9e83-b6baaf7acff1}</uid>
                     <visibility>1</visibility>
                     <type>1</type>
                     <declaration>State *state</declaration>
@@ -7813,7 +7890,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{e6b6499e-3f78-489b-bd44-32ce995dc7b9}</uid>
+                    <uid>{20f83a6a-c991-46b1-bae4-cc5f2d6bbefc}</uid>
                     <visibility>1</visibility>
                     <type>1</type>
                     <declaration>bool single</declaration>
@@ -7821,7 +7898,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{98823508-02c0-464d-8b58-483c8d308209}</uid>
+                    <uid>{dd324f39-f978-4a1c-9a87-97fa5a151caf}</uid>
                     <visibility>3</visibility>
                     <type>1</type>
                     <declaration>Ui::Widget *ui</declaration>
@@ -7829,7 +7906,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{0b2ff115-805e-4ce4-98b2-6ca4f66e9464}</uid>
+                    <uid>{08f45666-008a-487a-9ebc-1532cc47270b}</uid>
                     <visibility>3</visibility>
                     <type>1</type>
                     <declaration>QTimer plotTimer, currentTimer</declaration>
@@ -7837,7 +7914,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{db63737d-5777-432b-93fb-a2479f5b9bf6}</uid>
+                    <uid>{0128d6b1-2998-4b19-8271-60b3d2a20b2c}</uid>
                     <visibility>3</visibility>
                     <type>1</type>
                     <declaration>QDateTime dt</declaration>
@@ -7845,7 +7922,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{30bccdcc-8030-44e1-95d7-305e738de0da}</uid>
+                    <uid>{7621dead-4267-4629-87ba-46900ef51252}</uid>
                     <visibility>3</visibility>
                     <type>1</type>
                     <declaration>volatile bool data1, data2, data3, data4</declaration>
@@ -7853,7 +7930,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{09930846-137f-4fe4-b1a7-5a1bd6e0221d}</uid>
+                    <uid>{0212c207-d031-4e20-afd5-8cececc62c2f}</uid>
                     <visibility>3</visibility>
                     <type>1</type>
                     <declaration>bool pulse1, pulse2, pulse3, pulse4</declaration>
@@ -7861,7 +7938,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{b7e5d85b-08b8-4f2d-b09f-a69a7ff58054}</uid>
+                    <uid>{676f77f7-35ac-4ae0-b688-f0bc7612dca6}</uid>
                     <visibility>3</visibility>
                     <type>1</type>
                     <declaration>bool termoSensor, incub</declaration>
@@ -7869,7 +7946,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{587c7716-e2bc-4224-9c58-fb2725d650a4}</uid>
+                    <uid>{062425c7-d818-4930-bf47-ea276dc98d8f}</uid>
                     <visibility>3</visibility>
                     <type>1</type>
                     <declaration>QMap&lt;double, double&gt; map_y1, map_y2, map_y3, map_y4</declaration>
@@ -7877,7 +7954,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{fae38bae-3240-4b94-b9bb-6bb8ba142e1e}</uid>
+                    <uid>{44ff7ca4-bce8-4863-abb3-dcdf1d44ba8d}</uid>
                     <visibility>3</visibility>
                     <type>1</type>
                     <declaration>SaveFiles saveFiles</declaration>
@@ -7885,7 +7962,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{ee53d6b2-21d0-4a83-a1e3-964eb417ee3f}</uid>
+                    <uid>{0c843371-2e24-4ffe-a5b8-74b90358fcc8}</uid>
                     <visibility>3</visibility>
                     <type>1</type>
                     <declaration>double START_DX</declaration>
@@ -7893,7 +7970,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{8579b58b-ecc9-488f-822f-681fc9b15cd9}</uid>
+                    <uid>{2d868875-9099-45d1-8170-45b32e524ff7}</uid>
                     <visibility>3</visibility>
                     <type>1</type>
                     <declaration>double STOP_DX</declaration>
@@ -7901,7 +7978,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{7792c82c-a710-4c70-8480-5ff38f8f156b}</uid>
+                    <uid>{217d73e0-2c86-4c06-9406-f693e79a3573}</uid>
                     <visibility>3</visibility>
                     <type>1</type>
                     <declaration>double MIN, MAX</declaration>
@@ -7909,7 +7986,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{4ef155f0-92a9-4ce1-9b3b-613bdce186fe}</uid>
+                    <uid>{7ce20cde-66a6-48ee-a123-719c858fdc00}</uid>
                     <visibility>3</visibility>
                     <type>1</type>
                     <declaration>friend class Options</declaration>
@@ -7917,7 +7994,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{bf9d497f-79a4-4ae7-82e0-7c9a35223781}</uid>
+                    <uid>{2670a62d-aa09-4fbd-8db3-92426ac845dc}</uid>
                     <visibility>2</visibility>
                     <type>2</type>
                     <properties>8</properties>
@@ -7926,7 +8003,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{716a0a6f-1a37-4d0f-96bb-044559f6cead}</uid>
+                    <uid>{c258e983-0f6f-4e52-b11c-9a2462149a96}</uid>
                     <visibility>2</visibility>
                     <type>2</type>
                     <properties>8</properties>
@@ -12730,6 +12807,32 @@
                  </MObject>
                 </base-MObject>
                </MPackage>
+              </instance>
+             </target>
+            </handle>
+           </item>
+           <item>
+            <handle>
+             <uid>{19895db7-e014-4e47-8cb7-2c4aebbbec79}</uid>
+             <target>
+              <instance type="MClass">
+               <MClass>
+                <base-MObject>
+                 <MObject>
+                  <base-MElement>
+                   <MElement>
+                    <uid>{19895db7-e014-4e47-8cb7-2c4aebbbec79}</uid>
+                    <stereotypes>
+                     <qlist>
+                      <item>form</item>
+                     </qlist>
+                    </stereotypes>
+                   </MElement>
+                  </base-MElement>
+                  <name>SelectInductor</name>
+                 </MObject>
+                </base-MObject>
+               </MClass>
               </instance>
              </target>
             </handle>

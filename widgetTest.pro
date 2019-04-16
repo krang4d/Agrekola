@@ -83,7 +83,7 @@ HEADERS  += selectcalibrationagr1.h \
     choisedialog/ko_impl.h \
     choisedialog/printer.h
 
-FORMS    += selectcalibrationagr1.ui \
+FORMS    += \
     selectinductor.ui \
     testkoagr.ui \
     param.ui \

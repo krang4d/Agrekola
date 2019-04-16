@@ -99,11 +99,10 @@ ChoiseDialog::~ChoiseDialog()
 
 void ChoiseDialog::on_testButton_clicked()
 {
-    widget->startWin = new StartMeasurement(new TestKo1, new CalibrationKo1); //Test
-    widget->startWin->setModeID(Test_ID);
-    widget->state = StateBuilder::getState(Test_ID);
+    CreateWidgetThread(new StartMeasurement(new TestKo1, new CalibrationKo1));
+    this->hide();
     widget->show();
-    hide();
+    widget->test();
 }
 
 void ChoiseDialog::t_singeShotConntection(MetaObj *p, MetaObj *t1, MetaObj *t2, MetaObj *t3, MetaObj *t4, Ko_impl *ko)

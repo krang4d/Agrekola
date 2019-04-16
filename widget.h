@@ -21,6 +21,7 @@
 #include "options.h"
 #include "state.h"
 #include "globalvalue.h"
+#include "selectinductor.h"
 
 namespace Ui {
 class Widget;
@@ -103,18 +104,17 @@ private slots:
     void setupRealtimeData(bool single);
     void setupTimers();
 
-public:
+private:
+    Ui::Widget *ui;
+    QTimer plotTimer, currentTimer;
+    QDateTime dt;
+
     StartMeasurement *startWin;
     QCustomPlot *customPlot1, *customPlot2, *customPlot3, *customPlot4;
     ProgressTimerBar *pBar1, *pBar2, *pBar3, *pBar4;
     Mode_ID current_mode_id;
     State *state;
     bool single;
-
-private:
-    Ui::Widget *ui;
-    QTimer plotTimer, currentTimer;
-    QDateTime dt;
 
     volatile bool data1, data2, data3, data4;
     bool pulse1, pulse2, pulse3, pulse4;
