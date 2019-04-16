@@ -57,6 +57,9 @@ int ChoiseDialog::getTypeOfWidget() const
 
 void ChoiseDialog::CreateWidgetThread(StartMeasurement *sm)
 {
+    agrekola = new useE154(this);
+    widget = new Widget(sm);
+
     QWidget::connect(widget, SIGNAL(onmixch1(bool)), agrekola, SLOT(onMixCh1(bool)));
     QWidget::connect(widget, SIGNAL(onmixch2(bool)), agrekola, SLOT(onMixCh2(bool)));
     QWidget::connect(widget, SIGNAL(onmixch3(bool)), agrekola, SLOT(onMixCh3(bool)));
@@ -73,8 +76,7 @@ void ChoiseDialog::CreateWidgetThread(StartMeasurement *sm)
 
     QWidget::connect(widget, SIGNAL(destroyed(QObject*)), agrekola, SLOT(deleteLater()));
 
-    agrekola = new useE154(this);
-    widget = new Widget(sm);
+
     widget->setWindowFlags(Qt::Dialog);
     agrekola->start();
     widget->show();

@@ -8,7 +8,6 @@
 class State : public QObject
 {
     Q_OBJECT
-
 public:
     explicit State(QObject *parent = 0);
     virtual ~State();
@@ -25,8 +24,8 @@ signals:
 
 private:
     //QVector<State_ID> state;
-    QMap<State_ID, QString> state_map;
-    QMap<State_ID, QString>::iterator it;
+    QList<QPair<State_ID, QString>> state_map;
+    QList<QPair<State_ID, QString>>::iterator it;
     //int index;
 };
 

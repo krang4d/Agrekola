@@ -18,7 +18,6 @@ Widget::Widget(StartMeasurement *sm, QWidget *parent) :
     ui(new Ui::Widget),
     START_DX(0.1), STOP_DX(0.1), MIN(-6.0), MAX(6.0)
 {
-
     ui->setupUi(this);
     pBar1 = new ProgressTimerBar;
     pBar2 = new ProgressTimerBar;

@@ -1,25 +1,22 @@
 #include "state.h"
-#include "QmessageBox"
+#include <QDebug>
 
 State::State(QObject *parent) : QObject(parent)
-{
-    it = state_map.begin();
-}
+{}
 
 State::~State()
-{
-
-}
+{}
 
 void State::insertState(State_ID id, QString msg)
 {
     //state.push_back(id);
-    state_map.insert(state_map.end(), id, msg);
+    state_map.append(QPair<State_ID, QString>(id, msg));
+    it = state_map.begin();
 }
 
 State_ID State::current()
 {
-    return it.key();
+    return (*it).first;
 }
 
 int State::next()
@@ -27,7 +24,7 @@ int State::next()
     if( hasNext() ) {
         ++it;
         emit stateChanged();
-        return it.key();
+        return (*it).first;
     }
     else {
        qDebug() << "Errore", "State::Index is out of date!";
@@ -48,7 +45,8 @@ void State::reset()
 
 QString State::getMessage()
 {
-    return state_map.value(it.key());
+    auto str = *it;
+    return str.second;
 }
 
 StateKo1::StateKo1()
@@ -124,12 +122,28 @@ StateAgr1::StateAgr1()
 
 StateCalAgr2::StateCalAgr2()
 {
-
+    insertState(LaserON_ID,     "Включение лазеров");
+    insertState(MotorON_ID,     "Включение двигателей");
+    insertState(Incubation1_ID, "Инкубация");
+    insertState(Ko_ID,          "Сбор данных");
+    insertState(LaserOFF_ID,    "Выключение лазеров");
+    insertState(MotorOFF_ID,    "Выключение двигателей");
+    insertState(Calc_ID,        "Расчет");
+    insertState(Write_ID,       "Запись");
+    insertState(End_ID,         "Конец");
 }
 
 StateCalKo1::StateCalKo1()
 {
-
+    insertState(LaserON_ID,     "Включение лазеров");
+    insertState(MotorON_ID,     "Включение двигателей");
+    insertState(Incubation1_ID, "Инкубация");
+    insertState(Ko_ID,          "Сбор данных");
+    insertState(LaserOFF_ID,    "Выключение лазеров");
+    insertState(MotorOFF_ID,    "Выключение двигателей");
+    insertState(Calc_ID,        "Расчет");
+    insertState(Write_ID,       "Запись");
+    insertState(End_ID,         "Конец");
 }
 
 StateCalKo2::StateCalKo2()
