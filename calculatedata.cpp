@@ -5,12 +5,12 @@ CalcData::CalcData()
 {
     dx = 0.04f;
     mix_t = 4.0f;
-    plot = NULL;
 }
 
-CalcData::CalcData(QMap<double, double> map, QCustomPlot *p)
-    : mdata(map), plot(p)
+CalcData::CalcData(QMap<double, double> map)
+    : mdata(map)
 {
+
 }
 
 double CalcData::calcKo(QMap<double, double> map)
@@ -47,17 +47,6 @@ double CalcData::calcKo(QMap<double, double> map)
         ++state;
     }
     if(state == map.end()) { qDebug() << "CalcData::CalcKo() is not found over voltage"; return 0; }
-    if(plot != NULL) {
-        static QCPGraph *g = plot->addGraph();
-        g->setName("AVG");
-        double endpoint =  (map.end()-1).key();
-        qDebug() << QString("endpoint %1").arg(endpoint);
-        QVector<double> key = {0, endpoint};
-        QVector<double> value = {avg, avg};
-        g->setData(key, value);
-    }
-    qDebug().noquote() << QString("sum = %1, ikey = %2, avg = %3")
-                          .arg(sum).arg(state.key()).arg(sum/num);
     return map.lastKey() - state.key(); //state.key() - map.begin().key();
 }
 
@@ -99,23 +88,23 @@ double CalcData::calcAgr(QMap<double, double> map)
         sum += it.value();
         ++it;
     }
-    if(plot != NULL) {
-        static QCPGraph *g  = plot->addGraph();
-        g->setName("DX");
-        g->setData(map_dx.keys().toVector(), map_dx.values().toVector());
-    }
+//    if(plot != NULL) {
+//        static QCPGraph *g  = plot->addGraph();
+//        g->setName("DX");
+//        g->setData(map_dx.keys().toVector(), map_dx.values().toVector());
+//    }
     double avg = sum/num;
     double over = avg*dx;
 
     double a = (max_dx+1).value() - max_dx.value();
     double b = (max_dx+1).key() - max_dx.key();
     double tgalfa = a/b;
-    if(plot != NULL) {
-        static QCPGraph *g = plot->addGraph();
-        QVector<double> key = { max_dx.key(), max_dx.key() + 1, max_dx.key() + 1 };
-        QVector<double> value = { max_dx.value(), max_dx.value() + tgalfa, max_dx.value() };
-        g->setData(key, value);
-    }
+//    if(plot != NULL) {
+//        static QCPGraph *g = plot->addGraph();
+//        QVector<double> key = { max_dx.key(), max_dx.key() + 1, max_dx.key() + 1 };
+//        QVector<double> value = { max_dx.value(), max_dx.value() + tgalfa, max_dx.value() };
+//        g->setData(key, value);
+//    }
     qDebug() << QString("Max DX -->%1, Acceleration -->%2, a%3, b%4 ").arg(max_dx.key()).arg(tgalfa).arg(a).arg(b);
     qDebug() << "Минимум --> " << min << "Максимум -->" << max;
 
@@ -130,10 +119,9 @@ double CalcData::calcAgr(QMap<double, double> map)
     qDebug().noquote() << QString("sum = %1, ikey = %2, avg = %3")
                           .arg(sum).arg(state.key()).arg(sum/num);
     return tgalfa;
-    return 1;
 }
 
-CalcData *CalcData::createCalc(Mode_ID  id)
+CalcData *CalcData::createCalc(Test *t, Calibration *c, Mode_ID  id)
 {
     QString str;
     CalcData *p;
@@ -146,44 +134,62 @@ CalcData *CalcData::createCalc(Mode_ID  id)
         str = tr("Измерение уровня");
         p = new CalcLevel();
         break;
-    case TestAgr1_ID:
-    case CalibAgr1_ID:
-        str = tr("Определение параметров агрегации");
-        p = new CalcAgr1();
-        break;
-    case TestAgr2_ID:
-    case CalibAgr2_ID:
-        str = tr("Определение активности фактора Виллебранда");
-        p = new CalcAgr2();
-        break;
     case TestKo1_ID:
     case CalibKo1_ID:
         str = tr("Время свертывания");
-        p = new CalcKo1();
+        if( TestKo1 *test = qobject_cast<TestKo1 *>(t))
+            if(CalibrationKo1 *calib = qobject_cast<CalibrationKo1 *>(c))
+                p = new CalcKo1(test, calib);
         break;
     case TestKo2_ID:
     case CalibKo2_ID:
         str = tr("АЧТВ");
-        p = new CalcKo1();
+        if( TestKo2 *test = qobject_cast<TestKo2 *>(t))
+            if(CalibrationKo2 *calib = qobject_cast<CalibrationKo2 *>(c))
+                p = new CalcKo2(test, calib);
         break;
-    case TestKo2_1_ID:
-        str = tr("АЧТВ без калибровки");
-        p = new CalcKo2(WithoutCalibration());
-        break;
+//    case TestKo2_1_ID:
+//        str = tr("АЧТВ без калибровки");
+//        p = new CalcKo2(WithoutCalibration());
+//        break;
     case TestKo3_ID:
     case CalibKo3_ID:
         str = tr("Фибриноген");
-        p = new CalcKo3();
+        if( TestKo3 *test = qobject_cast<TestKo3 *>(t))
+            if(CalibrationKo3 *calib = qobject_cast<CalibrationKo3 *>(c))
+                p = new CalcKo3(test, calib);
         break;
     case TestKo4_ID:
     case CalibKo4_ID:
         str = tr("Тромбин");
-        p = new CalcKo4();
+        str = tr("Фибриноген");
+        if( TestKo4 *test = qobject_cast<TestKo4 *>(t))
+            if(CalibrationKo4 *calib = qobject_cast<CalibrationKo4 *>(c))
+                p = new CalcKo4(test, calib);
         break;
     case TestKo5_ID:
     case CalibKo5_ID:
         str = tr("Протромбиновый комплекс");
-        p = new CalcKo5();
+        str = tr("Фибриноген");
+        if( TestKo5 *test = qobject_cast<TestKo5 *>(t))
+            if(CalibrationKo5 *calib = qobject_cast<CalibrationKo5 *>(c))
+                p = new CalcKo5(test, calib);
+        break;
+    case TestAgr1_ID:
+    case CalibAgr1_ID:
+        str = tr("Определение параметров агрегации");
+        str = tr("Фибриноген");
+        if( TestAgr1 *test = qobject_cast<TestAgr1 *>(t))
+            if(CalibrationAgr1 *calib = qobject_cast<CalibrationAgr1 *>(c))
+                p = new CalcAgr1(test, calib);
+        break;
+    case TestAgr2_ID:
+    case CalibAgr2_ID:
+        str = tr("Определение активности фактора Виллебранда");
+        str = tr("Фибриноген");
+        if( TestAgr2 *test = qobject_cast<TestAgr2 *>(t))
+            if(CalibrationAgr2 *calib = qobject_cast<CalibrationAgr2 *>(c))
+                p = new CalcAgr2(test, calib);
         break;
     default: p = NULL;
         break;
@@ -211,20 +217,9 @@ double CalcData::getDx()
     return dx;
 }
 
-CalcKo1::CalcKo1()
+CalcKo1::CalcKo1(TestKo1 *t, CalibrationKo1 *c) : CalcData(), t_ko1(t), c_ko1(c)
 {
-//    SaveFiles file;
-//    file.openKo1(param);
-//    qDebug() << "параметры CalcKo1";
-//    for(auto it = param.begin(); it < param.end(); it++) {
-//        qDebug() << *it;
-//    }
-}
-
-CalcKo1::CalcKo1(QCustomPlot *p)
-{
-    CalcKo1();
-    plot = p;
+    ///иницмализация параметров
 }
 
 double CalcKo1::calc(QMap<double, double> map)
@@ -238,14 +233,26 @@ QString CalcKo1::getParameters()
     return QString("Тест на \"%1\" не имеет параметров калибровки.").arg(info());
 }
 
+void CalcKo1::graph()
+{
+//    static QCPGraph *g = plot->addGraph();
+//    g->setName("AVG");
+//    double endpoint =  (map.end()-1).key();
+//    qDebug() << QString("endpoint %1").arg(endpoint);
+//    QVector<double> key = {0, endpoint};
+//    QVector<double> value = {avg, avg};
+//    g->setData(key, value);
+//    qDebug().noquote() << QString("sum = %1, ikey = %2, avg = %3")
+//                          .arg(sum).arg(state.key()).arg(sum/num);
+}
+
 QString CalcKo1::info()
 {
     return QString("Время свертывания (c)");
 }
 
-CalcKo2::CalcKo2()
+CalcKo2::CalcKo2(TestKo2 *t, CalibrationKo2 *c) : CalcData(), t_ko2(t), c_ko2(c)
 {
-    c_ko2 = new CalibrationKo2(this);
     t0 = (c_ko2->getA4tv_kp1() + c_ko2->getA4tv_kp2() + c_ko2->getA4tv_kp3() + c_ko2->getA4tv_kp4())/4;
     //QMessageBox::information(nullptr, "CalcKo2", QString("АЧТВ = %1").arg(t0));
     qDebug() << QString("АЧТВ = %1").arg(t0);
@@ -279,47 +286,18 @@ QString CalcKo2::getParameters()
 //{
 //}
 
-CalcKo3::CalcKo3()
+CalcKo3::CalcKo3(TestKo3 *t, CalibrationKo3 *c) : CalcData(), t_ko3(t), c_ko3(c)
 {
-    /*
-    SaveFiles file;
-    file.openKo3(param);
-    qDebug() << "параметры CalcKo3" << param.count();
-    QString d0, d1, d2, d3, d4;
-    auto it = param.end();
-    d0 = *(it-5);
-    d1 = *(it-4);
-    d2 = *(it-3);
-    d3 = *(it-2);
-    d4 = *(it-1);
-    c2 = d0.toDouble();
-    t1 = d1.toDouble();
-    t2 = d2.toDouble();
-    t3 = d3.toDouble();
-    t4 = d4.toDouble();
-    qDebug() << QString("Параметры калибровки Фириногена") << c2 << t1 << t2 << t3 << t4;
-
-    c1 = c2*200.0f/100.0f;              //(3)
-    c3 = c2*50.0f/100.0f;               //(4)
-    c4 = c2*25.0f/100.0f;               //(5)
-    */
-
     t1 = c_ko3.getFibrinogen_200_plazma();
     t2 = c_ko3.getTime_k_plazma();
     t3 = c_ko3.getTime_50_plazma();
     t4 = c_ko3.getTime_25_plazma();
-
     c2 = c_ko3.getFibrinogen_k_plazma();
     c1 = c2*200.0f/100.0f;              //(3)
     c3 = c2*50.0f/100.0f;               //(4)
     c4 = c2*25.0f/100.0f;               //(5)
-
-//    for(auto it = param.begin(); it < param.end(); it++) {
-//        qDebug() << *it;
-//    }
-//    QString p = param.last();
-//    c2 = p.toDouble();
-//    qDebug() << "по Клауссу =" << c2;
+    qDebug() << "Фибриноген по Клауссу =" << c2;
+    qDebug() << QString("Параметры калибровки Фириногена") << c2 << t1 << t2 << t3 << t4;
 }
 
 double CalcKo3::calc(QMap<double, double> map)
@@ -353,7 +331,7 @@ QString CalcKo3::getParameters()
             .arg(c2).arg(t1).arg(t2).arg(t3).arg(t4);
 }
 
-CalcKo4::CalcKo4()
+CalcKo4::CalcKo4(TestKo4 *t, CalibrationKo4 *c) : CalcData(), t_ko4(t), c_ko4(c)
 {
     t0 = (c_ko4.getTv1() + c_ko4.getTv2() + c_ko4.getTv3() + c_ko4.getTv4())/4;
     qDebug() << "Тромбин контрольной плазмы =" << t0;
@@ -375,23 +353,8 @@ QString CalcKo4::getParameters()
     return QString("Тромбмн контрольной плазмы t0 = %1").arg(t0);
 }
 
-CalcKo5::CalcKo5()
+CalcKo5::CalcKo5(TestKo5 *t, CalibrationKo5 *c) : CalcData(), t_ko5(t), c_ko5(c)
 {
-//    SaveFiles file;
-//    file.openKo5(param);
-//    qDebug() << "параметры CalcKo5";
-//    auto it = param.begin();
-//    for(; it < param.end(); it++) {
-//        qDebug() << *it;
-//    }
-
-//    QString d0 = *(it-7);
-//    QString d1 = *(it-4);
-//    QString d2 = *(it-3);
-//    QString d3 = *(it-2);
-//    QString d4 = *(it-1);
-
-
     a100 = c_ko5.getProtrombine_k_Kvik();
     t100 = c_ko5.getTime_k_Kvik();
     t50 = c_ko5.getTime_50_Kvik();
@@ -400,10 +363,7 @@ CalcKo5::CalcKo5()
     a25 = a100*25.0f/100.0f;           //(13)
     t12 = c_ko5.getTime_12_Kvik();
     a12 = a100*12.5f/100.0f;           //(14)
-    // <-- првоерка даты проведения калибровки
-    //QString p = param.last();
-    //a1 = p.toDouble();
-    //qDebug() << "ТВ контрольной плазмы =" << a1;
+    qDebug() << "ТВ контрольной плазмы =" << t100;
 }
 
 double CalcKo5::calc(QMap<double, double> map)
@@ -434,7 +394,7 @@ QString CalcKo5::getParameters()
     return QString("ТВ контрольной плазмы для каждого разведения:\nt1 (100%) = %1\nt2 (50%) = %2\nt3 (25%) = %3\nt4 (12.5%) = %4").arg(t100).arg(t50).arg(t25).arg(t12);
 }
 
-CalcAgr1::CalcAgr1()
+CalcAgr1::CalcAgr1(TestAgr1 *t, CalibrationAgr1 *c) : CalcData(), t_agr1(t), c_agr1(c)
 {
 //    SaveFiles file;
 //    QStringList bt, ot;
@@ -459,18 +419,20 @@ CalcAgr1::CalcAgr1()
 //        otp += s.toDouble();
 //    }
 //    otp /= ot.count();
+
+    btp = ( c_agr1.getBTP1() + c_agr1.getBTP2() + c_agr1.getBTP3() + c_agr1.getBTP4() ) / 4;
+    otp = ( c_agr1.getOTP1() + c_agr1.getOTP2() + c_agr1.getOTP3() + c_agr1.getOTP4() ) / 4;
 }
 
-CalcAgr1::CalcAgr1(QCustomPlot *p)
-{
-    plot = p;
-}
+//CalcAgr1::CalcAgr1(QCustomPlot *p) : CalcAgr1()
+//{
+//    plot = p;
+//}
 
 double CalcAgr1::calc(QMap<double, double> map)
 {
-//    double k = (btp - otp) / 100;
-//    return CalcData::calcAgr(map)*k;
-    return 1;
+    double k = (btp - otp) / 100;
+    return CalcData::calcAgr(map)*k;
 }
 
 QString CalcAgr1::info()
@@ -483,7 +445,7 @@ QString CalcAgr1::getParameters()
     return QString("Степень агрегации");
 }
 
-CalcAgr2::CalcAgr2()
+CalcAgr2::CalcAgr2(TestAgr2 *t, CalibrationAgr2 *c) : CalcData(), t_agr2(t), c_agr2(c)
 {
 //    SaveFiles file;
 //    file.openAgr2(param);
@@ -499,14 +461,13 @@ CalcAgr2::CalcAgr2()
     ck3 = c_agr2.getCk3();
     c4 = c_agr2.getC4();
     ck4 = c_agr2.getCk4();
+
+    btp = ( c_agr2.getBTP1() + c_agr2.getBTP2() + c_agr2.getBTP3() + c_agr2.getBTP4() ) / 4;
+    otp = ( c_agr2.getOTP1() + c_agr2.getOTP2() + c_agr2.getOTP3() + c_agr2.getOTP4() ) / 4;
 }
 
 double CalcAgr2::calc(QMap<double, double> map)
 {
-    // <-- проверка значений калибровки
-    btp = ( c_agr2.getBTP1() + c_agr2.getBTP2() + c_agr2.getBTP3() + c_agr2.getBTP4() ) / 4;
-    otp = ( c_agr2.getOTP1() + c_agr2.getOTP2() + c_agr2.getOTP3() + c_agr2.getOTP4() ) / 4;
-
     c1 = c2*200.0f/100.0f;          //(21)
     c3 = c2*50.0f/100.0f;           //(22)
     c4 = c2*25.0f/100.0f;           //(23)
@@ -533,7 +494,7 @@ QString CalcAgr2::getParameters()
     return QString("");
 }
 
-CalcLevel::CalcLevel() //: CalcData(NULL, NULL)
+CalcLevel::CalcLevel() : CalcData()
 {
 
 }

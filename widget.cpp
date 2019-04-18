@@ -830,7 +830,7 @@ void Widget::waitImpulse(ImpuleWaiter *iw)
 double Widget::calcData(Channel_ID c, Mode_ID mode)
 {
     double retval;
-    CalcData *p = CalcData::createCalc( mode );
+    CalcData *p = CalcData::createCalc(startWin->getTest(), startWin->getCalib(), mode);
     if(!p) { setUserMessage(QString("Ошибка при выделении памяти под класс CalcData")); return -1; }
     switch(c) {
     case Channel1_ID:
