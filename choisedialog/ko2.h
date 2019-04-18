@@ -19,8 +19,29 @@ public:
     void setTab(int);
     ~Ko2();
 
-private:
-    void calibrationDataCome(int n, double data);
+   // Ko_impl interface
+public slots:
+    void open();
+    void close();
+
+    void setDate(QDate, SaveTo) override;
+    void setTime(QTime, SaveTo) override;
+
+    QString t_print() override;
+    void setT1(double, int) override;
+    void setT2(double, int) override;
+    void setT3(double, int) override;
+    void setT4(double, int) override;
+    void setT1_2(double, int) override;
+    void setT3_4(double, int) override;
+
+    QString c_print() override;
+    void calibrationData1Come(double, int) override;
+    void calibrationData2Come(double, int) override;
+    void calibrationData3Come(double, int) override;
+    void calibrationData4Come(double, int) override;
+    void calibrationData1_2Come(double, int) override;
+    void calibrationData2_4Come(double, int) override;
 
 private slots:
     void on_pushButton_test1_clicked();
@@ -46,38 +67,18 @@ private slots:
 
     void on_tabWidget_currentChanged(int index);
 
-   // Ko_impl interface
-public slots:
-    void open();
-    void close();
-
-    void setDate(QDate, SaveTo) override;
-    void setTime(QTime, SaveTo) override;
-
-    QString t_print() override;
-    void setT1(double value) override;
-    void setT2(double value) override;
-    void setT3(double value) override;
-    void setT4(double value) override;
-
-    QString c_print() override;
-    void calibrationData1Come(double) override;
-    void calibrationData2Come(double) override;
-    void calibrationData3Come(double) override;
-    void calibrationData4Come(double) override;
-
 signals:
     void measurement(StartMeasurement*);
     void calibration(StartMeasurement*); 
-    void calibration_done();
+    //void calibration_done();
 
 private:
     Ui::Ko2 *ui;
     TestKo2 *t_ko2, *t_ko2_1, *t_ko2_2;
     CalibrationKo2 *c_ko2;
 
-    friend class StartTestKo2;
-    friend class StartCalibrationKo2;
+//    friend class StartTestKo2;
+//    friend class StartCalibrationKo2;
 };
 
 class StartTestKo2 : public StartMeasurement

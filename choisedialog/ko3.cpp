@@ -145,9 +145,6 @@ void Ko3::close()
 //    param.replace(3, ui->lineEdit_3->text());
 //    file.saveKo3(param);
 }
-////парные пробы при калибровке, два этапа калибровки
-//// 1 этап 1,2 канал - 200% 3,4 канал  - 100%
-//// 2 этап 1,2 канал - 50% 3,4 канал  - 25%
 
 QString Ko3::t_print()
 {
@@ -155,23 +152,35 @@ QString Ko3::t_print()
     return t_ko3->print();
 }
 
-void Ko3::setT1(double value)
+void Ko3::setT1(double value, int i)
 {
     t_ko3->setT1(value);
 }
 
-void Ko3::setT2(double value)
+void Ko3::setT2(double value, int i)
 {
     t_ko3->setT2(value);
 }
 
-void Ko3::setT3(double value)
+void Ko3::setT3(double value, int i)
 {
     t_ko3->setT3(value);
 }
 
-void Ko3::setT4(double value)
+void Ko3::setT4(double value, int i)
 {
+    t_ko3->setT4(value);
+}
+
+void Ko3::setT1_2(double value, int i)
+{
+    t_ko3->setT1(value);
+    t_ko3->setT2(value);
+}
+
+void Ko3::setT3_4(double value, int i)
+{
+    t_ko3->setT3(value);
     t_ko3->setT4(value);
 }
 
@@ -180,42 +189,94 @@ QString Ko3::c_print()
     return c_ko3->print();
 }
 
-void Ko3::calibrationData1Come(double t0)
+/// парные пробы при калибровке, два этапа калибровки
+/// 1 этап 1,2 канал - 200% 3,4 канал  - 100%
+/// 2 этап 1,2 канал - 50% 3,4 канал  - 25%
+
+void Ko3::calibrationData1_2Come(double t0, int i)
 {
-    //при разведении 200% контрольной нормальной плазмы
-    static QList<double> calData1List;
-    calData1List.push_back(t0);
-    double sum;
-    foreach (double val, calData1List) {
-        sum += val;
-        qDebug() << QString("calibrationData1Come %1").arg(val);
+    switch (i) {
+    case 1:
+        c_ko3->setFibrinogen_200_plazma(t0);
+        break;
+    case 2:
+        c_ko3->setFibrinogen_k_plazma(t0);
+        break;
+    default:
+        break;
     }
-    calibrationDataCome(1, sum);
 }
 
-void Ko3::calibrationData2Come(double t0)
+void Ko3::calibrationData2_4Come(double t0, int i)
 {
-    //при разведении 100% контрольной нормальной плазмы
-    static QList<double> calData2List;
-    calData2List.push_back(t0);
-    calibrationDataCome(2, t0);
+    switch (i) {
+    case 1:
+        c_ko3->setFibrinogen_50_plazma(t0);
+        break;
+    case 2:
+        c_ko3->setFibrinogen_25_plazma(t0);
+        break;
+    default:
+        break;
+    }
 }
 
-void Ko3::calibrationData3Come(double t0)
+void Ko3::setDate(QDate d, SaveTo b)
 {
-    //при разведении 50% контрольной нормальной плазмы
-    static QList<double> calData3List;
-    calData3List.push_back(t0);
-    calibrationDataCome(3, t0);
+    if(b == Test_ID) {
+        t_ko3->setDate(d);
+    }
+    if(b == Calib_ID) {
+        c_ko3->setDate(d);
+    }
 }
 
-void Ko3::calibrationData4Come(double t0)
+void Ko3::setTime(QTime t, SaveTo b)
 {
-    //при разведении 25% контрольной нормальной плазмы
-    static QList<double> calData4List;
-    calData4List.push_back(t0);
-    calibrationDataCome(4, t0);
+    if(b == Test_ID) {
+        t_ko3->setTime(t);
+    }
+    if(b == Calib_ID) {
+        c_ko3->setTime(t);
+    }
 }
+
+//void Ko3::calibrationData1Come(double t0)
+//{
+//    //при разведении 200% контрольной нормальной плазмы
+//    static QList<double> calData1List;
+//    calData1List.push_back(t0);
+//    double sum;
+//    foreach (double val, calData1List) {
+//        sum += val;
+//        qDebug() << QString("calibrationData1Come %1").arg(val);
+//    }
+//    calibrationDataCome(1, sum);
+//}
+
+//void Ko3::calibrationData2Come(double t0)
+//{
+//    //при разведении 100% контрольной нормальной плазмы
+//    static QList<double> calData2List;
+//    calData2List.push_back(t0);
+//    calibrationDataCome(2, t0);
+//}
+
+//void Ko3::calibrationData3Come(double t0)
+//{
+//    //при разведении 50% контрольной нормальной плазмы
+//    static QList<double> calData3List;
+//    calData3List.push_back(t0);
+//    calibrationDataCome(3, t0);
+//}
+
+//void Ko3::calibrationData4Come(double t0)
+//{
+//    //при разведении 25% контрольной нормальной плазмы
+//    static QList<double> calData4List;
+//    calData4List.push_back(t0);
+//    calibrationDataCome(4, t0);
+//}
 
 void Ko3::on_pushButton_test_clicked()
 {
@@ -406,25 +467,4 @@ StartMeasurement* StartTestKo3::getStart(TestKo3 *t_ko3, CalibrationKo3 *c_ko3)
     start->setProbe(t_ko3->getSingle());
     start->setModeID(TestKo3_ID);
     return start;
-}
-
-
-void Ko3::setDate(QDate d, SaveTo b)
-{
-    if(b == Test_ID) {
-        t_ko3->setDate(d);
-    }
-    if(b == Calib_ID) {
-        c_ko3->setDate(d);
-    }
-}
-
-void Ko3::setTime(QTime t, SaveTo b)
-{
-    if(b == Test_ID) {
-        t_ko3->setTime(t);
-    }
-    if(b == Calib_ID) {
-        c_ko3->setTime(t);
-    }
 }

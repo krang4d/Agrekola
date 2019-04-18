@@ -254,23 +254,35 @@ QString Agr1::t_print()
     return t_agr1->print();
 }
 
-void Agr1::setT1(double value)
+void Agr1::setT1(double value, int i)
 {
     t_agr1->setT1(value);
 }
 
-void Agr1::setT2(double value)
+void Agr1::setT2(double value, int i)
 {
     t_agr1->setT2(value);
 }
 
-void Agr1::setT3(double value)
+void Agr1::setT3(double value, int i)
 {
     t_agr1->setT3(value);
 }
 
-void Agr1::setT4(double value)
+void Agr1::setT4(double value, int i)
 {
+    t_agr1->setT4(value);
+}
+
+void Agr1::setT1_2(double value, int i)
+{
+    t_agr1->setT1(value);
+    t_agr1->setT2(value);
+}
+
+void Agr1::setT3_4(double value, int i)
+{
+    t_agr1->setT3(value);
     t_agr1->setT4(value);
 }
 
@@ -279,24 +291,52 @@ QString Agr1::c_print()
     return c_agr1->print();
 }
 
-void Agr1::calibrationData1Come(double value)
+void Agr1::calibrationData1Come(double value, int i)
 {
     c_agr1->setCkA1(value);
 }
 
-void Agr1::calibrationData2Come(double value)
+void Agr1::calibrationData2Come(double value, int i)
 {
     c_agr1->setCkA2(value);
 }
 
-void Agr1::calibrationData3Come(double value)
+void Agr1::calibrationData3Come(double value, int i)
 {
     c_agr1->setCkA3(value);
 }
 
-void Agr1::calibrationData4Come(double value)
+void Agr1::calibrationData4Come(double value, int i)
 {
     c_agr1->setCkA4(value);
+}
+
+void Agr1::calibrationData1_2Come(double value, int i)
+{
+    switch (i) {
+    case 1:
+        c_agr1->setCkA1(value);
+        break;
+    case 2:
+        c_agr1->setCkA2(value);
+        break;
+    default:
+        break;
+    }
+}
+
+void Agr1::calibrationData2_4Come(double value, int i)
+{
+    switch (i) {
+    case 1:
+        c_agr1->setCkA3(value);
+        break;
+    case 2:
+        c_agr1->setCkA4(value);
+        break;
+    default:
+        break;
+    }
 }
 
 void Agr1::btp1Come(double value)

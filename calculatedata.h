@@ -9,6 +9,7 @@
 #include <numeric>
 #include <savefiles.h>
 #include <qcustomplot.h>
+
 #include "globalvalue.h"
 
 class CalcData : public QObject
@@ -17,8 +18,6 @@ public:
     explicit CalcData();
     CalcData(QMap<double, double>, QCustomPlot *p = NULL);
     virtual ~CalcData() {}
-
-
 
     //factory method
     static CalcData* createCalc( Mode_ID );
@@ -44,6 +43,9 @@ protected:
     //QStringList param;
     double dx;                    //скачек величиной 4-10% от среднего уровня сигнала базовое значение для определения времени свертывания
     double mix_t;                 //время в течение которго происходит перемешивание реагента с плазмой и успокоение жидкости
+    Test *test;
+    Calibration *calibration;
+
 private:
 
 };
@@ -239,7 +241,7 @@ private:
     double otp;                     //обогащенная тромбоцитами плазма
     double c1;                      //активность фактора Виллебранда контр. плазмы (100%)
     double c2, c3, c4;              //активность фактора Виллебранда других разведений 200% 50%, 25%
-    double ck1, ck2, ck3, ck4;           //значение скорости агрегации
+    double ck1, ck2, ck3, ck4;      //значение скорости агрегации
     double tgalfa, tgalfa1;
     double tgalfa2, tgalfa3;        //угол наклона k-ого участка калибровочной кривой
     double lgcx;                    //искомая величиан ax = 10^lgcx

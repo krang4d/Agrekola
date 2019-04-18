@@ -82,7 +82,7 @@
                           </qlist>
                          </stereotypes>
                          <name>Ko1</name>
-                         <pos>x:580;y:-125</pos>
+                         <pos>x:560;y:-120</pos>
                          <rect>x:-95;y:-70;w:190;h:140</rect>
                          <visual-role>0</visual-role>
                          <stereotype-display>1</stereotype-display>
@@ -127,7 +127,7 @@
                           </qlist>
                          </stereotypes>
                          <name>Ko2</name>
-                         <pos>x:585;y:70</pos>
+                         <pos>x:570;y:70</pos>
                          <rect>x:-105;y:-70;w:210;h:140</rect>
                          <visual-role>0</visual-role>
                         </DObject>
@@ -223,7 +223,7 @@
                           </qlist>
                          </stereotypes>
                          <name>Ko3</name>
-                         <pos>x:580;y:265</pos>
+                         <pos>x:560;y:265</pos>
                          <rect>x:-95;y:-70;w:190;h:140</rect>
                          <visual-role>0</visual-role>
                         </DObject>
@@ -249,7 +249,7 @@
                           </qlist>
                          </stereotypes>
                          <name>Ko4</name>
-                         <pos>x:580;y:490</pos>
+                         <pos>x:560;y:485</pos>
                          <rect>x:-95;y:-105;w:190;h:210</rect>
                          <visual-role>0</visual-role>
                         </DObject>
@@ -275,7 +275,7 @@
                           </qlist>
                          </stereotypes>
                          <name>Ko5</name>
-                         <pos>x:580;y:710</pos>
+                         <pos>x:560;y:710</pos>
                          <rect>x:-95;y:-70;w:190;h:140</rect>
                          <visual-role>0</visual-role>
                         </DObject>
@@ -301,7 +301,7 @@
                           </qlist>
                          </stereotypes>
                          <name>Agr1</name>
-                         <pos>x:590;y:900</pos>
+                         <pos>x:565;y:900</pos>
                          <rect>x:-100;y:-70;w:200;h:140</rect>
                          <visual-role>0</visual-role>
                         </DObject>
@@ -327,7 +327,7 @@
                           </qlist>
                          </stereotypes>
                          <name>Agr2</name>
-                         <pos>x:580;y:1085</pos>
+                         <pos>x:565;y:1085</pos>
                          <rect>x:-100;y:-70;w:200;h:140</rect>
                          <visual-role>0</visual-role>
                         </DObject>
@@ -478,7 +478,7 @@
                           </qlist>
                          </stereotypes>
                          <name>Creator</name>
-                         <pos>x:-145;y:520</pos>
+                         <pos>x:-550;y:555</pos>
                          <rect>x:-145;y:-65;w:290;h:130</rect>
                          <visual-role>5</visual-role>
                          <visual-emphasized>true</visual-emphasized>
@@ -617,7 +617,7 @@
                          </base-DElement>
                          <object>{a575b133-0404-4454-a196-2dad58b9ee33}</object>
                          <name>TestKo4</name>
-                         <pos>x:-265;y:-105</pos>
+                         <pos>x:-265;y:-65</pos>
                          <rect>x:-40;y:-30;w:80;h:60</rect>
                          <visual-role>0</visual-role>
                         </DObject>
@@ -637,7 +637,7 @@
                          </base-DElement>
                          <object>{34dcc471-c5bf-4f7a-aba7-31b89eaf07fb}</object>
                          <name>TestKo5</name>
-                         <pos>x:-265;y:-15</pos>
+                         <pos>x:-265;y:70</pos>
                          <rect>x:-40;y:-30;w:80;h:60</rect>
                          <visual-role>0</visual-role>
                         </DObject>
@@ -657,7 +657,7 @@
                          </base-DElement>
                          <object>{208ccad7-cdac-4c88-adce-c67d399995b2}</object>
                          <name>TestAgr1</name>
-                         <pos>x:-265;y:70</pos>
+                         <pos>x:-260;y:160</pos>
                          <rect>x:-40;y:-30;w:80;h:60</rect>
                          <visual-role>0</visual-role>
                         </DObject>
@@ -677,7 +677,7 @@
                          </base-DElement>
                          <object>{30d285d3-7e64-4739-a5c9-34144c5913c9}</object>
                          <name>TestAgr2</name>
-                         <pos>x:-265;y:145</pos>
+                         <pos>x:-260;y:250</pos>
                          <rect>x:-40;y:-30;w:80;h:60</rect>
                          <visual-role>0</visual-role>
                         </DObject>
@@ -1310,7 +1310,7 @@
                          </base-DElement>
                          <object>{ec7b66e6-bf67-4a42-93f9-3b2e64d25c04}</object>
                          <name>testKo1.xml</name>
-                         <pos>x:-90;y:-435</pos>
+                         <pos>x:-100;y:-430</pos>
                          <rect>x:-50;y:-35;w:100;h:70</rect>
                          <visual-role>0</visual-role>
                         </DObject>
@@ -1347,9 +1347,9 @@
                           </DElement>
                          </base-DElement>
                          <object>{849d1b21-a36c-44fb-aabb-136a7e4b5c68}</object>
-                         <name>testKo2.xml</name>
-                         <pos>x:-90;y:-355</pos>
-                         <rect>x:-50;y:-35;w:100;h:70</rect>
+                         <name>testKo2_1.xml</name>
+                         <pos>x:-95;y:-350</pos>
+                         <rect>x:-55;y:-35;w:110;h:70</rect>
                          <visual-role>0</visual-role>
                         </DObject>
                        </base-DObject>
@@ -1385,10 +1385,11 @@
                           </DElement>
                          </base-DElement>
                          <object>{7de13df0-5825-49f3-8371-065038784f74}</object>
-                         <name>testKo2_1.xml</name>
-                         <pos>x:-85;y:-275</pos>
+                         <name>testKo2_2.xml</name>
+                         <pos>x:-95;y:-270</pos>
                          <rect>x:-55;y:-35;w:110;h:70</rect>
                          <visual-role>0</visual-role>
+                         <stereotype-display>3</stereotype-display>
                         </DObject>
                        </base-DObject>
                       </DPackage>
@@ -1424,7 +1425,7 @@
                          </base-DElement>
                          <object>{d3799eb4-febb-43e4-943d-5e2736c4428e}</object>
                          <name>testKo3.xml</name>
-                         <pos>x:-90;y:-180</pos>
+                         <pos>x:-100;y:-180</pos>
                          <rect>x:-50;y:-35;w:100;h:70</rect>
                          <visual-role>0</visual-role>
                         </DObject>
@@ -1462,7 +1463,7 @@
                          </base-DElement>
                          <object>{4dff12f8-9086-449a-ae54-a60d70683dce}</object>
                          <name>testKo4.xml</name>
-                         <pos>x:-90;y:-100</pos>
+                         <pos>x:-100;y:-95</pos>
                          <rect>x:-50;y:-35;w:100;h:70</rect>
                          <visual-role>0</visual-role>
                         </DObject>
@@ -1482,7 +1483,7 @@
                          </base-DElement>
                          <object>{ca84377a-b036-4e99-bf52-a7d8d1fe1c6e}</object>
                          <name>testKo5.xml</name>
-                         <pos>x:-90;y:-15</pos>
+                         <pos>x:-100;y:75</pos>
                          <rect>x:-50;y:-35;w:100;h:70</rect>
                          <visual-role>0</visual-role>
                         </DObject>
@@ -1502,7 +1503,7 @@
                          </base-DElement>
                          <object>{3ff9bdfb-7450-4619-a816-1d76da596a69}</object>
                          <name>testAgr1.xml</name>
-                         <pos>x:-90;y:70</pos>
+                         <pos>x:-100;y:160</pos>
                          <rect>x:-50;y:-35;w:100;h:70</rect>
                          <visual-role>0</visual-role>
                         </DObject>
@@ -1522,7 +1523,7 @@
                          </base-DElement>
                          <object>{6d542c1a-a5aa-44a1-8c9f-0005989e7179}</object>
                          <name>testAgr2.xml</name>
-                         <pos>x:-90;y:150</pos>
+                         <pos>x:-100;y:250</pos>
                          <rect>x:-50;y:-35;w:100;h:70</rect>
                          <visual-role>0</visual-role>
                         </DObject>
@@ -2464,8 +2465,8 @@
                         </DElement>
                        </base-DElement>
                        <text>Классы для работы с параметрами тестов и файлы для их храниннеия</text>
-                       <pos>x:-345;y:-145</pos>
-                       <rect>x:-325;y:-350;w:650;h:700</rect>
+                       <pos>x:-345;y:-75</pos>
+                       <rect>x:-325;y:-420;w:650;h:840</rect>
                       </DBoundary>
                      </instance>
                     </item>
@@ -2643,7 +2644,7 @@
                          </base-DElement>
                          <object>{b4b535c9-c1fb-44af-9d0c-58819c411399}</object>
                          <name>CalcKo4</name>
-                         <pos>x:775;y:1350</pos>
+                         <pos>x:775;y:1345</pos>
                          <rect>x:-40;y:-30;w:80;h:60</rect>
                          <visual-role>0</visual-role>
                         </DObject>
@@ -3274,16 +3275,135 @@
                           </DElement>
                          </base-DElement>
                          <object>{1df965f1-0f13-4201-847d-91ae057fe04c}</object>
+                         <stereotypes>
+                          <qlist>
+                           <item>entity</item>
+                          </qlist>
+                         </stereotypes>
                          <a>{f340afc2-dce8-4bcc-af9b-fac9675684e8}</a>
                          <b>{53ba5698-24c0-4b32-9156-1cd75fd661c3}</b>
+                         <name>get parameters</name>
                         </DRelation>
                        </base-DRelation>
                       </DDependency>
                      </instance>
                     </item>
+                    <item>
+                     <instance type="DPackage">
+                      <DPackage>
+                       <base-DObject>
+                        <DObject>
+                         <base-DElement>
+                          <DElement>
+                           <uid>{981c8bdc-4b18-41d8-8ddf-e2289d34bccc}</uid>
+                          </DElement>
+                         </base-DElement>
+                         <object>{6a8580df-cc1a-43ec-9070-2c60d35324f4}</object>
+                         <name>TestKo4_1</name>
+                         <pos>x:-100;y:-10</pos>
+                         <rect>x:-50;y:-35;w:100;h:70</rect>
+                         <visual-role>0</visual-role>
+                        </DObject>
+                       </base-DObject>
+                      </DPackage>
+                     </instance>
+                    </item>
+                    <item>
+                     <instance type="DDependency">
+                      <DDependency>
+                       <base-DRelation>
+                        <DRelation>
+                         <base-DElement>
+                          <DElement>
+                           <uid>{8fd24165-5f3b-4ec5-b936-768c51bd2439}</uid>
+                          </DElement>
+                         </base-DElement>
+                         <object>{b2b28e98-6008-4a87-b6ab-9a694ee738dc}</object>
+                         <a>{5aa2c9f9-e4a9-4053-8c4a-e9e975dfa2cf}</a>
+                         <b>{981c8bdc-4b18-41d8-8ddf-e2289d34bccc}</b>
+                        </DRelation>
+                       </base-DRelation>
+                      </DDependency>
+                     </instance>
+                    </item>
+                    <item>
+                     <instance type="DAnnotation">
+                      <DAnnotation>
+                       <base-DElement>
+                        <DElement>
+                         <uid>{33252cbe-32d6-423c-8884-281c5bcaa4cf}</uid>
+                        </DElement>
+                       </base-DElement>
+                       <text>параметры теста</text>
+                       <pos>x:-150;y:-355</pos>
+                       <rect>x:0;y:0;w:109;h:29</rect>
+                       <auto-sized>false</auto-sized>
+                      </DAnnotation>
+                     </instance>
+                    </item>
+                    <item>
+                     <instance type="DAnnotation">
+                      <DAnnotation>
+                       <base-DElement>
+                        <DElement>
+                         <uid>{e7c24931-cf58-4c5e-97f6-6627840985eb}</uid>
+                        </DElement>
+                       </base-DElement>
+                       <text>параметры теста
+без калибровки</text>
+                       <pos>x:-150;y:-275</pos>
+                       <rect>x:0;y:0;w:104;h:42</rect>
+                      </DAnnotation>
+                     </instance>
+                    </item>
+                    <item>
+                     <instance type="DAnnotation">
+                      <DAnnotation>
+                       <base-DElement>
+                        <DElement>
+                         <uid>{70d9d05d-66ce-4597-adce-0ea5d4671037}</uid>
+                        </DElement>
+                       </base-DElement>
+                       <text>калибровка с 
+активность 1 </text>
+                       <pos>x:240;y:1205</pos>
+                       <rect>x:0;y:0;w:87;h:42</rect>
+                      </DAnnotation>
+                     </instance>
+                    </item>
+                    <item>
+                     <instance type="DAnnotation">
+                      <DAnnotation>
+                       <base-DElement>
+                        <DElement>
+                         <uid>{f3162305-1e34-44da-aa17-29e40db54086}</uid>
+                        </DElement>
+                       </base-DElement>
+                       <text>калибровка с
+активностью 2</text>
+                       <pos>x:240;y:1300</pos>
+                       <rect>x:0;y:0;w:93;h:42</rect>
+                      </DAnnotation>
+                     </instance>
+                    </item>
+                    <item>
+                     <instance type="DAnnotation">
+                      <DAnnotation>
+                       <base-DElement>
+                        <DElement>
+                         <uid>{0e09032e-a998-4c5d-a3c8-e337dfde3452}</uid>
+                        </DElement>
+                       </base-DElement>
+                       <text>калибровка с
+активностью 3</text>
+                       <pos>x:245;y:1415</pos>
+                       <rect>x:0;y:0;w:93;h:42</rect>
+                      </DAnnotation>
+                     </instance>
+                    </item>
                    </qlist>
                   </elements>
-                  <last-modified>1555422739845</last-modified>
+                  <last-modified>1555573927679</last-modified>
                   <toolbarid>General</toolbarid>
                  </MDiagram>
                 </base-MDiagram>
@@ -3953,7 +4073,7 @@
                  <qlist>
                   <item>
                    <MClassMember>
-                    <uid>{de5e61e9-852b-4f85-bf91-17ef3d74ac74}</uid>
+                    <uid>{24c4026f-36f9-4d6a-b567-b5594d2256cc}</uid>
                     <visibility>3</visibility>
                     <type>1</type>
                     <declaration>Ui::Ko1 *ui</declaration>
@@ -3961,7 +4081,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{eaa228b6-00c2-4af2-acb0-bbff124c4eff}</uid>
+                    <uid>{ec67f92c-9f9a-4c72-9aa6-de6d018d9208}</uid>
                     <visibility>3</visibility>
                     <type>1</type>
                     <declaration>TestKo1 *t_ko1</declaration>
@@ -3969,7 +4089,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{fc41ea24-8df7-4461-9b21-c65d635eabb5}</uid>
+                    <uid>{f70be47e-63ea-4e86-9e09-179a0a7bd73e}</uid>
                     <visibility>3</visibility>
                     <type>1</type>
                     <declaration>CalibrationKo1 *c_ko1</declaration>
@@ -3977,7 +4097,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{020a16d9-856a-4a23-a105-4cd17fd8d402}</uid>
+                    <uid>{2e7fcddb-0ffb-40bf-ab05-bd29dc283417}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>measurment(StartMeasurment*)</declaration>
@@ -3985,7 +4105,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{ca134b1b-e5a2-4e72-bc24-bc5cf1c5aa98}</uid>
+                    <uid>{90c4eda8-f882-4577-a082-88d686e61060}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>calibration(StartMeasurment*)</declaration>
@@ -4159,7 +4279,7 @@
                  <qlist>
                   <item>
                    <MClassMember>
-                    <uid>{c128a889-cb7f-4f3e-b2c5-4eec584d856d}</uid>
+                    <uid>{5e2e832f-b6fa-4e95-84d4-84a828b228ba}</uid>
                     <visibility>3</visibility>
                     <type>1</type>
                     <declaration>Ui::Ko2 *ui</declaration>
@@ -4167,7 +4287,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{da0ca42e-6fb0-40e7-af83-588d2d9aeea4}</uid>
+                    <uid>{97096dd1-8e61-4d85-9763-bae153ba6312}</uid>
                     <visibility>3</visibility>
                     <type>1</type>
                     <declaration>TestKo2 *t_ko2, *t_ko2_1, *t_ko2_2</declaration>
@@ -4175,7 +4295,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{dc2fd9f9-2105-4707-bcb2-c64b69c920f3}</uid>
+                    <uid>{a5ff6332-88c7-40c1-834d-fd534f8290ee}</uid>
                     <visibility>3</visibility>
                     <type>1</type>
                     <declaration>CalibrationKo2 *c_ko2</declaration>
@@ -4183,7 +4303,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{e299410a-6dc3-4ac8-910c-45feff36cfad}</uid>
+                    <uid>{7157963c-085b-4636-b5e0-b53e1f198f97}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>measurment(StartMeasurment*)</declaration>
@@ -4191,7 +4311,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{9cf9a8b2-e8a0-473d-915c-bafa34234337}</uid>
+                    <uid>{0d853331-4ae1-44a2-9b15-c9e099db6d8b}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>calibration(StartMeasurment*)</declaration>
@@ -4544,7 +4664,7 @@
                  <qlist>
                   <item>
                    <MClassMember>
-                    <uid>{6e1077fe-39f9-4644-b506-0703dfdd1c54}</uid>
+                    <uid>{cfe1918a-1dff-4675-886c-cd39880df319}</uid>
                     <visibility>3</visibility>
                     <type>1</type>
                     <declaration>Ui::Ko5 *ui</declaration>
@@ -4552,7 +4672,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{d21f8ea9-e5b5-45df-9777-a1e0219ec8a4}</uid>
+                    <uid>{dbfe9f5d-692d-420b-8330-361bb10ce72e}</uid>
                     <visibility>3</visibility>
                     <type>1</type>
                     <declaration>TestKo5 *t_ko5</declaration>
@@ -4560,7 +4680,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{43cadacb-85bb-41ae-9bfb-246b2e780a09}</uid>
+                    <uid>{012213cd-aa60-4cd3-9916-1ce6e0f34e50}</uid>
                     <visibility>3</visibility>
                     <type>1</type>
                     <declaration>CalibrationKo5 *c_ko5</declaration>
@@ -4568,7 +4688,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{d091f344-6027-452c-8edc-b6ba22f9437e}</uid>
+                    <uid>{72e9531f-7d67-4745-88ba-9ef8a6d449ce}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>measurment(StartMeasurment*)</declaration>
@@ -4576,7 +4696,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{fcadb8a4-9492-47b4-b1c8-b6a4164ef9fb}</uid>
+                    <uid>{8973c2b8-66bf-41a0-bbcd-9f651d3c257b}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>calibration(StartMeasurment*)</declaration>
@@ -4885,7 +5005,7 @@
                  <qlist>
                   <item>
                    <MClassMember>
-                    <uid>{41039de4-e96e-4b4e-ad67-d4964fe4d35f}</uid>
+                    <uid>{d1dd54a9-5250-4e17-bfd7-7037a3e4eeb6}</uid>
                     <visibility>3</visibility>
                     <type>1</type>
                     <declaration>Ui::Ko4 *ui</declaration>
@@ -4893,7 +5013,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{8738eb32-fee3-419c-98c7-e44bf3f3a6f7}</uid>
+                    <uid>{a5e301ae-183f-4c7a-9c01-700c980c515d}</uid>
                     <visibility>3</visibility>
                     <type>1</type>
                     <declaration>TestKo4 *t_ko4</declaration>
@@ -4901,7 +5021,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{80231b08-276a-409f-b675-52a07d17d298}</uid>
+                    <uid>{29f0e8ea-bd13-4796-85fb-44ef35a4c3cd}</uid>
                     <visibility>3</visibility>
                     <type>1</type>
                     <declaration>TestKo4 *t_ko4_1</declaration>
@@ -4909,7 +5029,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{d8487354-f352-4ef4-81a4-a43dfbea9c5c}</uid>
+                    <uid>{0a3887d8-8eb6-47a2-a59f-30a031c55d6d}</uid>
                     <visibility>3</visibility>
                     <type>1</type>
                     <declaration>TestKo4 *t_ko4_2</declaration>
@@ -4917,7 +5037,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{b7d62a83-b729-4ee9-a1d9-914dc7211e74}</uid>
+                    <uid>{1ad00754-c768-46cd-a3c6-6ab683b5a6ae}</uid>
                     <visibility>3</visibility>
                     <type>1</type>
                     <declaration>CalibrationKo4 *c_ko4</declaration>
@@ -4925,7 +5045,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{15f93ec7-e679-49e5-8fec-c10bd924191e}</uid>
+                    <uid>{2a8e1636-f94a-4b6c-aae2-6d00250883e7}</uid>
                     <visibility>3</visibility>
                     <type>1</type>
                     <declaration>CalibrationKo4_1 *c_ko4_1</declaration>
@@ -4933,7 +5053,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{a1f17da3-4c8b-404d-ab06-7ae814931e0c}</uid>
+                    <uid>{85c3f97e-dabb-40cb-b4e1-1c145ad9e273}</uid>
                     <visibility>3</visibility>
                     <type>1</type>
                     <declaration>CalibrationKo4_2 *c_ko4_2</declaration>
@@ -4941,7 +5061,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{6e890554-1e0e-408d-bc18-4d6a23a899c1}</uid>
+                    <uid>{5ababb89-a388-4091-adca-e423471bbdd3}</uid>
                     <visibility>3</visibility>
                     <type>1</type>
                     <declaration>CalibrationKo4_3 *c_ko4_3</declaration>
@@ -4949,7 +5069,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{c0e68581-00bd-4d02-97f4-3d63548c0e24}</uid>
+                    <uid>{2c69c37b-0c4e-440b-a1f8-656c9da02a1e}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>measurment(StartMeasurment*)</declaration>
@@ -4957,7 +5077,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{04988afc-b06d-4449-bf06-6404a8c3037c}</uid>
+                    <uid>{c6474286-18e0-4e01-88b1-2793b939c760}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>calibration(StartMeasurment*)</declaration>
@@ -5131,7 +5251,7 @@
                  <qlist>
                   <item>
                    <MClassMember>
-                    <uid>{7a0fd85c-77be-4629-a778-3283fcd92c6b}</uid>
+                    <uid>{1de55303-9be4-4986-a00f-2529decfaf67}</uid>
                     <visibility>3</visibility>
                     <type>1</type>
                     <declaration>Ui::Ko5 *ui</declaration>
@@ -5139,7 +5259,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{26ec9a6a-bd93-408f-a075-edc8500bd452}</uid>
+                    <uid>{cfdc4a98-bdb1-467b-92ff-372a2b99a565}</uid>
                     <visibility>3</visibility>
                     <type>1</type>
                     <declaration>TestKo5 *t_ko5</declaration>
@@ -5147,7 +5267,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{6cfb9999-f075-4515-a122-529e9e212375}</uid>
+                    <uid>{89a7c668-79ad-40a9-beac-09f406b9e6ad}</uid>
                     <visibility>3</visibility>
                     <type>1</type>
                     <declaration>CalibrationKo5 *c_ko5</declaration>
@@ -5155,7 +5275,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{d0910294-287d-4a33-9b2b-0db5b9bf78f2}</uid>
+                    <uid>{3a92e6ad-d9cf-4269-90b8-0a97bcbd1b0e}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>measurment(StartMeasurment*)</declaration>
@@ -5163,7 +5283,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{73c0528a-1279-4f4b-b4db-20ae57f93541}</uid>
+                    <uid>{24401780-53bd-469b-9049-9244d6433666}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>calibration(StartMeasurment*)</declaration>
@@ -5359,7 +5479,7 @@
                  <qlist>
                   <item>
                    <MClassMember>
-                    <uid>{526a763f-bf71-4267-a156-310ef2795b40}</uid>
+                    <uid>{d99f0589-3724-4520-bd5c-91707d93b4a7}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>measurement(StartMeasurement*)</declaration>
@@ -5367,7 +5487,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{6b6a9974-1d2d-49fe-9dc2-7ebd29783dee}</uid>
+                    <uid>{e345528d-4cc2-4752-a6b2-fe49d3c29c61}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>calibration(StartMeasurement*)</declaration>
@@ -5375,7 +5495,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{106dfb22-bc8a-454a-9f6e-b05c133cdfb3}</uid>
+                    <uid>{c10bbe74-5aef-4190-828d-1d146b94a6c1}</uid>
                     <visibility>3</visibility>
                     <type>1</type>
                     <declaration>Ui::Agr1 *ui</declaration>
@@ -5383,7 +5503,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{6825121a-630e-404d-bdc7-a6ec2b309f73}</uid>
+                    <uid>{2126d05e-f076-4a68-8d06-c85b5a77e529}</uid>
                     <visibility>3</visibility>
                     <type>1</type>
                     <declaration>TestAgr1 *t_agr1</declaration>
@@ -5391,7 +5511,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{93a1cfea-512d-4466-b59f-36be9c835323}</uid>
+                    <uid>{013a3f4d-2302-429a-9d8e-e863032f67ff}</uid>
                     <visibility>3</visibility>
                     <type>1</type>
                     <declaration>CalibrationAgr1 *c_agr1</declaration>
@@ -5609,7 +5729,7 @@
                  <qlist>
                   <item>
                    <MClassMember>
-                    <uid>{45cc551a-4dc8-4bbe-a92d-7e5f3f603a07}</uid>
+                    <uid>{4804c426-87f2-47c5-aa7b-ef009ea6250c}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>measurement(StartMeasurement *)</declaration>
@@ -5617,7 +5737,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{24839d0f-ad47-4fd9-a1f2-2a6599fe64cb}</uid>
+                    <uid>{6953d1f5-7ea0-4db5-b0b1-2b4f80e60912}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>calibration(StartMeasurement *)</declaration>
@@ -5625,7 +5745,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{ed882809-ce65-45ed-a8f8-87badc8a247e}</uid>
+                    <uid>{ab9b858e-5e4f-4f64-abbb-14ed383a08dd}</uid>
                     <visibility>3</visibility>
                     <type>1</type>
                     <declaration>Ui::Agr2 *ui</declaration>
@@ -5633,7 +5753,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{45472ac5-1baf-43dd-887a-f4f25797842d}</uid>
+                    <uid>{48411b50-b9e0-49af-8f16-a9ae49d4f69d}</uid>
                     <visibility>3</visibility>
                     <type>1</type>
                     <declaration>TestAgr2 *t_agr2</declaration>
@@ -5641,7 +5761,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{765e75cc-6217-4141-8cd2-7b649b64ebbb}</uid>
+                    <uid>{471cd606-8d42-43ba-971b-07f5d5d2b23c}</uid>
                     <visibility>3</visibility>
                     <type>1</type>
                     <declaration>CalibrationAgr2 *c_agr2</declaration>
@@ -7575,7 +7695,7 @@
                  <qlist>
                   <item>
                    <MClassMember>
-                    <uid>{93dc977b-1c34-42d9-9b84-7893d3da4b2a}</uid>
+                    <uid>{d0516347-858e-44fd-87f0-e47c0094d3a8}</uid>
                     <type>2</type>
                     <properties>64</properties>
                     <declaration>QDomDocument createTest(QString name)</declaration>
@@ -7583,7 +7703,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{7bbff59d-a102-4647-93aa-645aa0b39020}</uid>
+                    <uid>{544ad933-d752-4ac3-a1cd-e8fa8be6dbcd}</uid>
                     <type>2</type>
                     <properties>64</properties>
                     <declaration>QDomDocument createCalibration(QString name)</declaration>
@@ -7591,7 +7711,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{299ea20a-799f-4fb5-bd67-64c38321ef1e}</uid>
+                    <uid>{8efbfea1-a229-4ff7-b92c-18ff1932cdf2}</uid>
                     <type>2</type>
                     <properties>64</properties>
                     <declaration>int writeFile(QString name, QDomDocument doc)</declaration>
@@ -7599,7 +7719,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{16ff10ca-a97b-4a78-aaea-c4d3c4e11b96}</uid>
+                    <uid>{0d555923-1a95-42de-9f7a-6aabd4d5fe10}</uid>
                     <type>2</type>
                     <properties>64</properties>
                     <declaration>int readFile(QString name, QDomDocument &amp;doc)</declaration>
@@ -7607,7 +7727,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{c4dacb64-1893-43ff-aa90-6d0e55af745c}</uid>
+                    <uid>{666aeb15-58aa-4a3d-b6af-0a2c917761ee}</uid>
                     <type>2</type>
                     <properties>64</properties>
                     <declaration>QDir getXMLDir()</declaration>
@@ -8381,6 +8501,28 @@
                              </base-MElement>
                              <a>{a575b133-0404-4454-a196-2dad58b9ee33}</a>
                              <b>{4dff12f8-9086-449a-ae54-a60d70683dce}</b>
+                            </MRelation>
+                           </base-MRelation>
+                          </MDependency>
+                         </instance>
+                        </target>
+                       </handle>
+                      </item>
+                      <item>
+                       <handle>
+                        <uid>{b2b28e98-6008-4a87-b6ab-9a694ee738dc}</uid>
+                        <target>
+                         <instance type="MDependency">
+                          <MDependency>
+                           <base-MRelation>
+                            <MRelation>
+                             <base-MElement>
+                              <MElement>
+                               <uid>{b2b28e98-6008-4a87-b6ab-9a694ee738dc}</uid>
+                              </MElement>
+                             </base-MElement>
+                             <a>{a575b133-0404-4454-a196-2dad58b9ee33}</a>
+                             <b>{6a8580df-cc1a-43ec-9070-2c60d35324f4}</b>
                             </MRelation>
                            </base-MRelation>
                           </MDependency>
@@ -9957,7 +10099,7 @@
                     <uid>{849d1b21-a36c-44fb-aabb-136a7e4b5c68}</uid>
                    </MElement>
                   </base-MElement>
-                  <name>testKo2.xml</name>
+                  <name>testKo2_1.xml</name>
                   <children>
                    <handles>
                     <handles>
@@ -10087,7 +10229,7 @@
                     <uid>{7de13df0-5825-49f3-8371-065038784f74}</uid>
                    </MElement>
                   </base-MElement>
-                  <name>testKo2_1.xml</name>
+                  <name>testKo2_2.xml</name>
                   <children>
                    <handles>
                     <handles>
@@ -10680,6 +10822,40 @@
                    </MElement>
                   </base-MElement>
                   <name>calibrationKo4_1.xml</name>
+                  <children>
+                   <handles>
+                    <handles>
+                     <qlist>
+                      <item>
+                       <handle>
+                        <uid>{af20ec33-6b5d-4f55-b1c0-a30c2f89dc2f}</uid>
+                        <target>
+                         <instance type="MCanvasDiagram">
+                          <MCanvasDiagram>
+                           <base-MDiagram>
+                            <MDiagram>
+                             <base-MObject>
+                              <MObject>
+                               <base-MElement>
+                                <MElement>
+                                 <uid>{af20ec33-6b5d-4f55-b1c0-a30c2f89dc2f}</uid>
+                                </MElement>
+                               </base-MElement>
+                               <name>calibrationKo4_1.xml</name>
+                              </MObject>
+                             </base-MObject>
+                             <toolbarid>General</toolbarid>
+                            </MDiagram>
+                           </base-MDiagram>
+                          </MCanvasDiagram>
+                         </instance>
+                        </target>
+                       </handle>
+                      </item>
+                     </qlist>
+                    </handles>
+                   </handles>
+                  </children>
                  </MObject>
                 </base-MObject>
                </MPackage>
@@ -11033,8 +11209,14 @@
                              <base-MElement>
                               <MElement>
                                <uid>{1df965f1-0f13-4201-847d-91ae057fe04c}</uid>
+                               <stereotypes>
+                                <qlist>
+                                 <item>entity</item>
+                                </qlist>
+                               </stereotypes>
                               </MElement>
                              </base-MElement>
+                             <name>get parameters</name>
                              <a>{9d638ac7-f54f-4d0d-8b6a-f6e4b39d94b7}</a>
                              <b>{f39505f1-058d-4218-9cd8-8a222aacc41f}</b>
                             </MRelation>
@@ -11947,6 +12129,27 @@
                  </MObject>
                 </base-MObject>
                </MClass>
+              </instance>
+             </target>
+            </handle>
+           </item>
+           <item>
+            <handle>
+             <uid>{6a8580df-cc1a-43ec-9070-2c60d35324f4}</uid>
+             <target>
+              <instance type="MPackage">
+               <MPackage>
+                <base-MObject>
+                 <MObject>
+                  <base-MElement>
+                   <MElement>
+                    <uid>{6a8580df-cc1a-43ec-9070-2c60d35324f4}</uid>
+                   </MElement>
+                  </base-MElement>
+                  <name>TestKo4_1</name>
+                 </MObject>
+                </base-MObject>
+               </MPackage>
               </instance>
              </target>
             </handle>

@@ -15,16 +15,22 @@ public:
     virtual void setTime(QTime, SaveTo) = 0;
 
     virtual QString t_print() = 0;
-    virtual void setT1(double) = 0;
-    virtual void setT2(double) = 0;
-    virtual void setT3(double) = 0;
-    virtual void setT4(double) = 0;
+    virtual void setT1(double, int = 0) = 0;
+    virtual void setT2(double, int = 0) = 0;
+    virtual void setT3(double, int = 0) = 0;
+    virtual void setT4(double, int = 0) = 0;
+
+    virtual void setT1_2(double, int = 0) = 0;
+    virtual void setT3_4(double, int = 0) = 0;
 
     virtual QString c_print() = 0;
-    virtual void calibrationData1Come(double) = 0;
-    virtual void calibrationData2Come(double) = 0;
-    virtual void calibrationData3Come(double) = 0;
-    virtual void calibrationData4Come(double) = 0;
+    virtual void calibrationData1Come(double, int = 0) = 0;
+    virtual void calibrationData2Come(double, int = 0) = 0;
+    virtual void calibrationData3Come(double, int = 0) = 0;
+    virtual void calibrationData4Come(double, int = 0) = 0;
+
+    virtual void calibrationData1_2Come(double, int = 0) = 0;
+    virtual void calibrationData2_4Come(double, int = 0) = 0;
 };
 
 #endif // KO_IMPL_H

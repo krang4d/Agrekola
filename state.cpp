@@ -6,11 +6,12 @@ State::State(QObject *parent) : QObject(parent)
 State::~State()
 {}
 
-void State::insertState(State_ID id, QString msg)
+void State::insertState(State_ID id, QString msg, int level)
 {
     //state.push_back(id);
     state_map.append(QPair<State_ID, QString>(id, msg));
     it = state_map.begin();
+    this->level = level;
 }
 
 State_ID State::current()
@@ -46,6 +47,11 @@ QString State::getMessage()
 {
     auto str = *it;
     return str.second;
+}
+
+int State::getLevel()
+{
+    return level;
 }
 
 StateKo1::StateKo1()
@@ -170,24 +176,25 @@ StateCalKo2::StateCalKo2()
     insertState(End_ID,         "Конец");
 }
 
-StateCalKo3::StateCalKo3()
+StateCalKo3::StateCalKo3()      //Фибриноген калибровка
 {
     insertState(LaserON_ID,     "Включение лазеров");
     insertState(MotorON_ID,     "Включение двигателей");
-    insertState(Incubation1_ID, "Инкубация");
-    insertState(Ko_ID,          "Сбор данных Канал 1,2 - 200%, Канал 3,4 - 100%");
-    insertState(Calc_ID,        "Расчет");
+
+    insertState(Ko_ID,          "Установите разведения 200% в каналы 1,2, 100% в каналыы 3,4");
+    insertState(Calc_ID,        "Расчет", 1);
     insertState(Write_ID,       "Запись");
-    insertState(Incubation1_ID, "Инкубация");
-    insertState(Ko_ID,          "Сбор данных Канал 1,2 - 50%, Канал 3,4 - 25%");
-    insertState(Calc_ID,        "Расчет");
+
+    insertState(Ko_ID,          "Установите разведения 50% в каналы 1,2, 25% в каналыы 3,4");
+    insertState(Calc_ID,        "Расчет", 2);
     insertState(Write_ID,       "Запись");
+
     insertState(LaserOFF_ID,    "Выключение лазеров");
     insertState(MotorOFF_ID,    "Выключение двигателей");
     insertState(End_ID,         "Конец");
 }
 
-StateCalKo4::StateCalKo4()
+StateCalKo4::StateCalKo4()      //Тромбин калибровка
 {
     insertState(LaserON_ID,     "Включение лазеров");
     insertState(MotorON_ID,     "Включение двигателей");

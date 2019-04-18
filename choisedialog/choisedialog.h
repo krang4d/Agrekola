@@ -62,13 +62,30 @@ private slots:
     void on_ko5Button_clicked();
     //void on_viewPlotsButton_clicked();
 
-    void t_singeShotConntection(MetaObj *p, MetaObj *t1,MetaObj *t2, MetaObj *t3, MetaObj *t4, Ko_impl *ko);
-    void c_singeShotConntection(MetaObj *p, MetaObj *t1, MetaObj *t2, MetaObj *t3, MetaObj *t4, Ko_impl *ko);
+    void t_singeShotConntection(MetaObj *p, MetaObj *t1,MetaObj *t2, MetaObj *t3, MetaObj *t4, Ko_impl *ko, bool single);
+    void c_singeShotConntection(MetaObj *p, MetaObj *t1, MetaObj *t2, MetaObj *t3, MetaObj *t4, Ko_impl *ko, bool single);
     void btp_singeShotConntection(MetaObj *btp1, MetaObj *btp2, MetaObj *btp3, MetaObj *btp4, Agr_impl *agr);
     void otp_singeShotConntection(MetaObj *otp1, MetaObj *otp2, MetaObj *otp3, MetaObj *otp4, Agr_impl *agr);
 
     void startMeasurement(StartMeasurement *);
     void calibration(StartMeasurement *);
+
+private:
+    MetaObj *printConnection;
+    MetaObj *t1Connection;
+    MetaObj *t2Connection;
+    MetaObj *t3Connection;
+    MetaObj *t4Connection;
+
+    MetaObj *otp1Connection;
+    MetaObj *otp2Connection;
+    MetaObj *otp3Connection;
+    MetaObj *otp4Connection;
+
+    MetaObj *btp1Connection;
+    MetaObj *btp2Connection;
+    MetaObj *btp3Connection;
+    MetaObj *btp4Connection;
 };
 
 #endif // CHOISEDIALOG_H

@@ -50,16 +50,20 @@ public slots:
     void setTime(QTime, SaveTo) override;
 
     virtual QString t_print() override;
-    virtual void setT1(double) override;
-    virtual void setT2(double) override;
-    virtual void setT3(double) override;
-    virtual void setT4(double) override;
+    virtual void setT1(double, int) override;
+    virtual void setT2(double, int) override;
+    virtual void setT3(double, int) override;
+    virtual void setT4(double, int) override;
+    void setT1_2(double, int) override;
+    void setT3_4(double, int) override;
 
     virtual QString c_print() override;
-    void calibrationData1Come(double) override;
-    void calibrationData2Come(double) override;
-    void calibrationData3Come(double) override;
-    void calibrationData4Come(double) override;
+    void calibrationData1Come(double, int) override;
+    void calibrationData2Come(double, int) override;
+    void calibrationData3Come(double, int) override;
+    void calibrationData4Come(double, int) override;
+    void calibrationData1_2Come(double, int) override;
+    void calibrationData2_4Come(double, int) override;
 
     void btp1Come(double) override;
     void btp2Come(double) override;

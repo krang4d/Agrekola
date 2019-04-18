@@ -136,23 +136,35 @@ QString Ko1::t_print()
     return t_ko1->print();
 }
 
-void Ko1::setT1(double value)
+void Ko1::setT1(double value, int i)
 {
     t_ko1->setT1(value);
 }
 
-void Ko1::setT2(double value)
+void Ko1::setT2(double value, int i)
 {
     t_ko1->setT2(value);
 }
 
-void Ko1::setT3(double value)
+void Ko1::setT3(double value, int i)
 {
     t_ko1->setT3(value);
 }
 
-void Ko1::setT4(double value)
+void Ko1::setT4(double value, int i)
 {
+    t_ko1->setT4(value);
+}
+
+void Ko1::setT1_2(double value, int i)
+{
+    t_ko1->setT1(value);
+    t_ko1->setT2(value);
+}
+
+void Ko1::setT3_4(double value, int i)
+{
+    t_ko1->setT3(value);
     t_ko1->setT4(value);
 }
 
@@ -244,4 +256,3 @@ StartMeasurement* StartTestKo1::getStart(TestKo1 *t_ko1, CalibrationKo1 *c_ko1)
     //stKo2->cancel = false;
     return start;
 }
-

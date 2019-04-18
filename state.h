@@ -7,6 +7,25 @@
 #include <QPair>
 #include <globalvalue.h>
 
+//Состония Widget
+enum State_ID{
+    MotorON_ID,     //вкл. моторов
+    MotorOFF_ID,    //выкл. моторов
+    LaserON_ID,     //вкл. лазеров
+    LaserOFF_ID,    //выкл. лазеров
+    Ko_ID,          //измерение в режиме коаг
+    Agr_ID,         //измерение в режиме агр
+    Avg_ID,         //определение среднего урвоня
+    Btp_ID,         //определение БТП урвоня
+    Otp_ID,         //определение ОТП урвоня
+    Calc_ID,        //расчет параметров
+    Write_ID,        //запись данных в файл
+    Incubation1_ID, //инкубация 1
+    Incubation2_ID,  //инкубация 2
+    SelectInductor_ID, //выбор индуктора
+    End_ID          //вывод результатов
+};
+
 class State : public QObject
 {
     Q_OBJECT
@@ -14,12 +33,13 @@ public:
     explicit State(QObject *parent = 0);
     virtual ~State();
 
-    void insertState(State_ID, QString);
+    void insertState(State_ID, QString, int level = 0);
     State_ID current();
     int next();
     bool hasNext();
     void reset();
     QString getMessage();
+    int getLevel();
 
 signals:
     void stateChanged();
@@ -28,6 +48,7 @@ private:
     //QVector<State_ID> state;
     QList<QPair<State_ID, QString>> state_map;
     QList<QPair<State_ID, QString>>::iterator it;
+    int level;
     //int index;
 };
 

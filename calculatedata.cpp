@@ -533,7 +533,7 @@ QString CalcAgr2::getParameters()
     return QString("");
 }
 
-CalcLevel::CalcLevel()
+CalcLevel::CalcLevel() //: CalcData(NULL, NULL)
 {
 
 }

@@ -227,24 +227,40 @@ void Ko5::close()
     t_ko5->save();
 }
 
-void Ko5::calibrationData1Come(double t0)
+void Ko5::calibrationData1Come(double t0, int i)
 {
-    calibrationDataCome(7, t0);
+    //calibrationDataCome(7, t0);
+    c_ko5->setTime_k_Kvik(t0);
 }
 
-void Ko5::calibrationData2Come(double t0)
+void Ko5::calibrationData2Come(double t0, int i)
 {
-    calibrationDataCome(8, t0);
+    //calibrationDataCome(8, t0);
+    c_ko5->setTime_50_Kvik(t0);
 }
 
-void Ko5::calibrationData3Come(double t0)
+void Ko5::calibrationData3Come(double t0, int i)
 {
-    calibrationDataCome(9, t0);
+    //calibrationDataCome(9, t0);
+    c_ko5->setTime_25_Kvik(t0);
 }
 
-void Ko5::calibrationData4Come(double t0)
+void Ko5::calibrationData4Come(double t0, int i)
 {
-    calibrationDataCome(10, t0);
+    //calibrationDataCome(10, t0);
+    c_ko5->setTime_12_Kvik(t0);
+}
+
+void Ko5::setT1_2(double t0, int i)
+{
+    c_ko5->setTime_k_Kvik(t0);
+    c_ko5->setTime_50_Kvik(t0);
+}
+
+void Ko5::setT3_4(double t0, int i)
+{
+    c_ko5->setTime_25_Kvik(t0);
+    c_ko5->setTime_12_Kvik(t0);
 }
 
 QString Ko5::t_print()
@@ -253,24 +269,52 @@ QString Ko5::t_print()
     return t_ko5->print();
 }
 
-void Ko5::setT1(double value)
+void Ko5::setT1(double value, int i)
 {
     t_ko5->setT1(value);
 }
 
-void Ko5::setT2(double value)
+void Ko5::setT2(double value, int i)
 {
     t_ko5->setT1(value);
 }
 
-void Ko5::setT3(double value)
+void Ko5::setT3(double value, int i)
 {
     t_ko5->setT1(value);
 }
 
-void Ko5::setT4(double value)
+void Ko5::setT4(double value, int i)
 {
     t_ko5->setT1(value);
+}
+
+void Ko5::calibrationData1_2Come(double t0, int i)
+{
+    switch (i) {
+    case 1:
+        c_ko5->setTime_k_Kvik(t0);
+        break;
+    case 2:
+        c_ko5->setTime_50_Kvik(t0);
+        break;
+    default:
+        break;
+    }
+}
+
+void Ko5::calibrationData2_4Come(double t0, int i)
+{
+    switch (i) {
+    case 1:
+        c_ko5->setTime_25_Kvik(t0);
+        break;
+    case 2:
+        c_ko5->setTime_12_Kvik(t0);
+        break;
+    default:
+        break;
+    }
 }
 
 QString Ko5::c_print()

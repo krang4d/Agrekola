@@ -45,19 +45,25 @@ public:
     double getOtp_time() const;
     void setOtp_time(double value);
 
+    Calibration *getCalib() const;
+    void setCalib(Calibration *value);
+
+    Test *getTest() const;
+    void setTest(Test *value);
+
 public slots:
-    inline void setCheckState2(int i) {
-        //QMessageBox::information(0, "StartMeasurment", QString("setCheckState2(%1)").arg(i));
-        if(i == 0)
-            channel_2 = false;
-        else channel_2 = true;
-    }
-    inline void setCheckState4(int i) {
-        if(i == 0)
-            channel_4 = false;
-        else channel_4 = true;
-    }
-    //  void on_pushButton_cancel_clicked();
+    //    inline void setCheckState2(int i) {
+    //        //QMessageBox::information(0, "StartMeasurment", QString("setCheckState2(%1)").arg(i));
+//        if(i == 0)
+//            channel_2 = false;
+//        else channel_2 = true;
+//    }
+//    inline void setCheckState4(int i) {
+//        if(i == 0)
+//            channel_4 = false;
+//        else channel_4 = true;
+//    }
+//    //  void on_pushButton_cancel_clicked();
 
 signals:
     startMeasurment(StartMeasurement*);

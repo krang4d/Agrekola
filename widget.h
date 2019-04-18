@@ -45,38 +45,50 @@ public:
     bool isData(Channel_ID);
 
 signals:
-    void onmixch1(bool);
-    void onmixch2(bool);
-    void onmixch3(bool);
-    void onmixch4(bool);
-    void onmixpp(bool);
-    void onlaser(bool);
+
+    //сигналы управления потоком E154
+    void onmixch1(bool);    ///вкл/выкл перемешивания канал 1
+    void onmixch2(bool);    ///вкл/выкл перемешивания канал 2
+    void onmixch3(bool);    ///вкл/выкл перемешивания канал 3
+    void onmixch4(bool);    ///вкл/выкл перемешивания канал 4
+    void onmixpp(bool);     ///вкл/выкл перемешивания канал рр
+    void onlaser(bool);     ///вкл/выкл лазеров
     void status(QString);
-    void stop();            //сигнал для остановки потока измерений
-    void hasPulse1();
-    void hasPulse2();
-    void hasPulse3();
-    void hasPulse4();
+    void stop();            ///сигнал для остановки потока измерений
 
-    void ret_value1(double);
-    void ret_value2(double);
-    void ret_value3(double);
-    void ret_value4(double);
+    //возвращаемые значения при одиночных пробах
+    void ret_value1(double, int);
+    void ret_value2(double, int);
+    void ret_value3(double, int);
+    void ret_value4(double, int);
 
+    //возвращаемые значения при парных пробах
+    void ret_value1_2(double, int);
+    void ret_value3_4(double, int);
+
+    //возвращаемые БТП значения
     void btp_value1(double);
     void btp_value2(double);
     void btp_value3(double);
     void btp_value4(double);
 
+    //возвращаемые ОТП значения
     void otp_value1(double);
     void otp_value2(double);
     void otp_value3(double);
     void otp_value4(double);
 
+    //сигналы для сбора данных в realTime
+    void hasPulse1();
+    void hasPulse2();
+    void hasPulse3();
+    void hasPulse4();
+
     void done1();
     void done2();
     void done3();
     void done4();
+
     void done();
     void incube_timeout();
     void end();

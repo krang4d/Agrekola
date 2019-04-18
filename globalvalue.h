@@ -25,25 +25,6 @@ enum Mode_ID {
     CalibKo5_ID,
 };
 
-//Состония Widget
-enum State_ID{
-    MotorON_ID,     //вкл. моторов
-    MotorOFF_ID,    //выкл. моторов
-    LaserON_ID,     //вкл. лазеров
-    LaserOFF_ID,    //выкл. лазеров
-    Ko_ID,          //измерение в режиме коаг
-    Agr_ID,         //измерение в режиме агр
-    Avg_ID,         //определение среднего урвоня
-    Btp_ID,         //определение БТП урвоня
-    Otp_ID,         //определение ОТП урвоня
-    Calc_ID,        //расчет параметров
-    Write_ID,        //запись данных в файл
-    Incubation1_ID, //инкубация 1
-    Incubation2_ID,  //инкубация 2
-    SelectInductor_ID, //выбор индуктора
-    End_ID          //вывод результатов
-};
-
 //Каналы
 enum Channel_ID {
     Channel1_ID     = 1,

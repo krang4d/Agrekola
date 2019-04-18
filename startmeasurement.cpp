@@ -215,6 +215,26 @@ void StartMeasurement::setOtp_time(double value)
     otp_time = value;
 }
 
+Calibration *StartMeasurement::getCalib() const
+{
+    return calib;
+}
+
+void StartMeasurement::setCalib(Calibration *value)
+{
+    calib = value;
+}
+
+Test *StartMeasurement::getTest() const
+{
+    return test;
+}
+
+void StartMeasurement::setTest(Test *value)
+{
+    test = value;
+}
+
 double StartMeasurement::getBtp_time() const
 {
     return btp_time;

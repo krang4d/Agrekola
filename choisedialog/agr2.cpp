@@ -136,42 +136,6 @@ void Agr2::close()
     c_agr2->setReagent_serial(ui->lineEdit_calibReagentSerial->text());
 }
 
-void Agr2::calibrationData1Come(double value)
-{
-    QDateTime dt = QDateTime::currentDateTime();
-    c_agr2->setDate(dt.date());
-    //c_agr2->setTime(dt.time());
-    c_agr2->setCk1(value);
-    //calibrationDataCome(7, t0);
-}
-
-void Agr2::calibrationData2Come(double value)
-{
-    QDateTime dt = QDateTime::currentDateTime();
-    c_agr2->setDate(dt.date());
-    //c_agr2->setTime(dt.time());
-    c_agr2->setCk2(value);
-    //calibrationDataCome(7, t0);
-}
-
-void Agr2::calibrationData3Come(double value)
-{
-    QDateTime dt = QDateTime::currentDateTime();
-    c_agr2->setDate(dt.date());
-    //c_agr2->setTime(dt.time());
-    c_agr2->setCk3(value);
-    //calibrationDataCome(7, t0);
-}
-
-void Agr2::calibrationData4Come(double value)
-{
-    QDateTime dt = QDateTime::currentDateTime();
-    c_agr2->setDate(dt.date());
-    //c_agr2->setTime(dt.time());
-    c_agr2->setCk4(value);
-    //calibrationDataCome(7, t0);
-}
-
 void Agr2::on_pushButton_calib_clicked()
 {
 //    bool a = ui->checkBox_calibCh1->isChecked();
@@ -282,29 +246,106 @@ QString Agr2::t_print()
     return t_agr2->print();
 }
 
-void Agr2::setT1(double value)
+void Agr2::setT1(double value, int i)
 {
     t_agr2->setT1(value);
 }
 
-void Agr2::setT2(double value)
+void Agr2::setT2(double value, int i)
 {
     t_agr2->setT2(value);
 }
 
-void Agr2::setT3(double value)
+void Agr2::setT3(double value, int i)
 {
     t_agr2->setT3(value);
 }
 
-void Agr2::setT4(double value)
+void Agr2::setT4(double value, int i)
 {
     t_agr2->setT4(value);
 }
 
+void Agr2::setT1_2(double value, int i)
+{
+    t_agr2->setT1(value);
+    t_agr2->setT2(value);
+}
+
+void Agr2::setT3_4(double value, int i)
+{
+    t_agr2->setT3(value);
+    t_agr2->setT4(value);
+}
+
+
 QString Agr2::c_print()
 {
     return c_agr2->print();
+}
+
+void Agr2::calibrationData1Come(double value, int i)
+{
+    QDateTime dt = QDateTime::currentDateTime();
+    c_agr2->setDate(dt.date());
+    //c_agr2->setTime(dt.time());
+    c_agr2->setCk1(value);
+    //calibrationDataCome(7, t0);
+}
+
+void Agr2::calibrationData2Come(double value, int i)
+{
+    QDateTime dt = QDateTime::currentDateTime();
+    c_agr2->setDate(dt.date());
+    //c_agr2->setTime(dt.time());
+    c_agr2->setCk2(value);
+    //calibrationDataCome(7, t0);
+}
+
+void Agr2::calibrationData3Come(double value, int i)
+{
+    QDateTime dt = QDateTime::currentDateTime();
+    c_agr2->setDate(dt.date());
+    //c_agr2->setTime(dt.time());
+    c_agr2->setCk3(value);
+    //calibrationDataCome(7, t0);
+}
+
+void Agr2::calibrationData4Come(double value, int i)
+{
+    QDateTime dt = QDateTime::currentDateTime();
+    c_agr2->setDate(dt.date());
+    //c_agr2->setTime(dt.time());
+    c_agr2->setCk4(value);
+    //calibrationDataCome(7, t0);
+}
+
+void Agr2::calibrationData1_2Come(double value, int i)
+{
+    switch (i) {
+    case 1:
+        c_agr2->setCk1(value);
+        break;
+    case 2:
+        c_agr2->setCk2(value);
+        break;
+    default:
+        break;
+    }
+}
+
+void Agr2::calibrationData2_4Come(double value, int i)
+{
+    switch (i) {
+    case 1:
+        c_agr2->setCk3(value);
+        break;
+    case 2:
+        c_agr2->setCk4(value);
+        break;
+    default:
+        break;
+    }
 }
 
 void Agr2::btp1Come(double value)

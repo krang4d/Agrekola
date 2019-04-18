@@ -1187,14 +1187,25 @@ void Widget::doScenario()
             waitImpulse(new ImpuleWaiter);
             break;
         case Calc_ID:
-            if( startWin->isChannel(Channel1_ID) )
-                emit ret_value1(calcData(Channel1_ID, startWin->getModeID()));
-            if( startWin->isChannel(Channel2_ID) )
-                emit ret_value2(calcData(Channel2_ID, startWin->getModeID()));
-            if( startWin->isChannel(Channel3_ID) )
-                emit ret_value3(calcData(Channel3_ID, startWin->getModeID()));
-            if( startWin->isChannel(Channel4_ID) )
-                emit ret_value4(calcData(Channel4_ID, startWin->getModeID()));
+            if(single) {
+                if( startWin->isChannel(Channel1_ID) )
+                    emit ret_value1(calcData(Channel1_ID, startWin->getModeID()), state->getLevel());
+                if( startWin->isChannel(Channel2_ID) )
+                    emit ret_value2(calcData(Channel2_ID, startWin->getModeID()), state->getLevel());
+                if( startWin->isChannel(Channel3_ID) )
+                    emit ret_value3(calcData(Channel3_ID, startWin->getModeID()), state->getLevel());
+                if( startWin->isChannel(Channel4_ID) )
+                    emit ret_value4(calcData(Channel4_ID, startWin->getModeID()), state->getLevel());
+            } else {
+                if( startWin->isChannel(Channel1_ID) ) {
+                    double v1 = calcData(Channel1_ID, startWin->getModeID());
+                    double v2 = calcData(Channel2_ID, startWin->getModeID());
+                    double v3 = calcData(Channel3_ID, startWin->getModeID());
+                    double v4 = calcData(Channel4_ID, startWin->getModeID());
+                    emit ret_value1_2( (v1+v2)/2, state->getLevel() );
+                    emit ret_value3_4( (v3+v4)/2, state->getLevel() );
+                }
+            }
             state->next();
             break;
         case Write_ID:

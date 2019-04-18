@@ -105,19 +105,26 @@ void ChoiseDialog::on_testButton_clicked()
     widget->test();
 }
 
-void ChoiseDialog::t_singeShotConntection(MetaObj *p, MetaObj *t1, MetaObj *t2, MetaObj *t3, MetaObj *t4, Ko_impl *ko)
+void ChoiseDialog::t_singeShotConntection(MetaObj *p, MetaObj *t1, MetaObj *t2, MetaObj *t3, MetaObj *t4, Ko_impl *ko, bool single)
 {
     *p = connect(widget, &Widget::end, [=]() {
         //widget->setUserMessage(ko->t_print());
         QObject::disconnect(*p);
         delete p;
+        QObject::disconnect(*t1);
+        delete t1;
+        QObject::disconnect(*t2);
+        delete t2;
+        QObject::disconnect(*t3);
+        delete t3;
+        QObject::disconnect(*t4);
+        delete t4;
         qDebug() << "Slot End";
         ko->setDate(QDate::currentDate(), Ko_impl::Test_ID);
         ko->setTime(QTime::currentTime(), Ko_impl::Test_ID);
         end_dialog->setText(ko->t_print());
         if( end_dialog->exec() == QDialog::Rejected ) {
             //createe print dialog
-
             QPrinter printer;
             QPointer<QPrintDialog> printDialog = QPointer<QPrintDialog>(new QPrintDialog(&printer));
             printDialog->setWindowTitle("Распечатка результата исследования");
@@ -132,35 +139,56 @@ void ChoiseDialog::t_singeShotConntection(MetaObj *p, MetaObj *t1, MetaObj *t2, 
         //DeleteWidgetThread();
         this->show();
     });
-    *t1 = connect(widget, &Widget::ret_value1, [=](double d){
-        ko->setT1(d);
-        QObject::disconnect(*t1);
-        delete t1;
-    });
-    *t2 = connect(widget, &Widget::ret_value2, [=](double d){
-        ko->setT2(d);
-        QObject::disconnect(*t2);
-        delete t2;
-    });
-    *t3 = connect(widget, &Widget::ret_value3, [=](double d){
-        ko->setT3(d);
-        QObject::disconnect(*t3);
-        delete t3;
-    });
+    if(single) {
+        *t1 = connect(widget, &Widget::ret_value1, [=](double d, int i){
+            ko->setT1(d, i);
+//            QObject::disconnect(*t1);
+//            delete t1;
+        });
+        *t2 = connect(widget, &Widget::ret_value2, [=](double d, int i){
+            ko->setT2(d, i);
+//            QObject::disconnect(*t2);
+//            delete t2;
+        });
+        *t3 = connect(widget, &Widget::ret_value3, [=](double d, int i){
+            ko->setT3(d, i);
+//            QObject::disconnect(*t3);
+//            delete t3;
+        });
 
-    *t4 = connect(widget, &Widget::ret_value4, [=](double d){
-        ko->setT4(d);
-        QObject::disconnect(*t4);
-        delete t4;
-    });
+        *t4 = connect(widget, &Widget::ret_value4, [=](double d, int i){
+            ko->setT4(d, i);
+//            QObject::disconnect(*t4);
+//            delete t4;
+        });
+    } else {
+        *t1 = connect(widget, &Widget::ret_value1_2, [=](double d, int i){
+            ko->setT1_2(d, i);
+//            QObject::disconnect(*t1);
+//            delete t1;
+        });
+        *t2 = connect(widget, &Widget::ret_value3_4, [=](double d, int i){
+            ko->setT3_4(d, i);
+//            QObject::disconnect(*t2);
+//            delete t2;
+        });
+    }
 }
 
-void ChoiseDialog::c_singeShotConntection(MetaObj *p, MetaObj *t1, MetaObj *t2, MetaObj *t3, MetaObj *t4, Ko_impl *ko)
+void ChoiseDialog::c_singeShotConntection(MetaObj *p, MetaObj *t1, MetaObj *t2, MetaObj *t3, MetaObj *t4, Ko_impl *ko, bool single)
 {
     *p = connect(widget, &Widget::end, [=]() {
         //widget->setUserMessage(ko->c_print());
         QObject::disconnect(*p);
         delete p;
+        QObject::disconnect(*t1);
+        delete t1;
+        QObject::disconnect(*t2);
+        delete t2;
+        QObject::disconnect(*t3);
+        delete t3;
+        QObject::disconnect(*t4);
+        delete t4;
         qDebug() << "Slot End";
         ko->setDate(QDate::currentDate(), Ko_impl::Calib_ID);
         ko->setTime(QTime::currentTime(), Ko_impl::Calib_ID);
@@ -169,27 +197,40 @@ void ChoiseDialog::c_singeShotConntection(MetaObj *p, MetaObj *t1, MetaObj *t2, 
         DeleteWidgetThread();
         this->show();
     });
-    *t1 = connect(widget, &Widget::ret_value1, [=](double d){
-        ko->calibrationData1Come(d);
-        QObject::disconnect(*t1);
-        delete t1;
-    });
-    *t2 = connect(widget, &Widget::ret_value2, [=](double d){
-        ko->calibrationData2Come(d);
-        QObject::disconnect(*t2);
-        delete t2;
-    });
-    *t3 = connect(widget, &Widget::ret_value3, [=](double d){
-        ko->calibrationData3Come(d);
-        QObject::disconnect(*t3);
-        delete t3;
-    });
+    if(single) {
+        *t1 = connect(widget, &Widget::ret_value1, [=](double d, int i){
+            ko->calibrationData1Come(d, i);
+//            QObject::disconnect(*t1);
+//            delete t1;
+        });
+        *t2 = connect(widget, &Widget::ret_value2, [=](double d, int i){
+            ko->calibrationData2Come(d, i);
+//            QObject::disconnect(*t2);
+//            delete t2;
+        });
+        *t3 = connect(widget, &Widget::ret_value3, [=](double d, int i){
+            ko->calibrationData3Come(d, i);
+            QObject::disconnect(*t3);
+            delete t3;
+        });
 
-    *t4 = connect(widget, &Widget::ret_value4, [=](double d){
-        ko->calibrationData4Come(d);
-        QObject::disconnect(*t4);
-        delete t4;
-    });
+        *t4 = connect(widget, &Widget::ret_value4, [=](double d, int i){
+            ko->calibrationData4Come(d, i);
+//            QObject::disconnect(*t4);
+//            delete t4;
+        });
+    } else {
+        *t1 = connect(widget, &Widget::ret_value1, [=](double d, int i){
+            ko->calibrationData1_2Come(d, i);
+//            QObject::disconnect(*t1);
+//            delete t1;
+        });
+        *t2 = connect(widget, &Widget::ret_value2, [=](double d, int i){
+            ko->calibrationData2Come(d, i);
+//            QObject::disconnect(*t2);
+//            delete t2;
+        });
+    }
 }
 
 void ChoiseDialog::btp_singeShotConntection(MetaObj *btp1, MetaObj *btp2, MetaObj *btp3, MetaObj *btp4, Agr_impl *agr)
@@ -219,23 +260,23 @@ void ChoiseDialog::btp_singeShotConntection(MetaObj *btp1, MetaObj *btp2, MetaOb
 
 void ChoiseDialog::otp_singeShotConntection(MetaObj *otp1, MetaObj *otp2, MetaObj *otp3, MetaObj *otp4, Agr_impl *agr)
 {
-    *otp1 = connect(widget, &Widget::ret_value1, [=](double value){
+    *otp1 = connect(widget, &Widget::ret_value1, [=](double value) {
         agr->otp1Come(value);
         QObject::disconnect(*otp1);
         delete otp1;
     });
-    *otp2 = connect(widget, &Widget::ret_value2, [=](double value){
+    *otp2 = connect(widget, &Widget::ret_value2, [=](double value) {
         agr->otp2Come(value);
         QObject::disconnect(*otp2);
         delete otp2;
     });
-    *otp3 = connect(widget, &Widget::ret_value3, [=](double value){
+    *otp3 = connect(widget, &Widget::ret_value3, [=](double value) {
         agr->otp3Come(value);
         QObject::disconnect(*otp3);
         delete otp3;
     });
 
-    *otp4 = connect(widget, &Widget::ret_value4, [=](double value){
+    *otp4 = connect(widget, &Widget::ret_value4, [=](double value) {
         agr->otp4Come(value);
         QObject::disconnect(*otp4);
         delete otp4;
@@ -246,26 +287,15 @@ void ChoiseDialog::startMeasurement(StartMeasurement* sm)
 {
     this->hide();
     CreateWidgetThread(sm);
-    //QPointer<MainWindow> mw = new MainWindow(this);
-    //widget->centerWidget->single = sw->isSingle();
-    MetaObj *printConnection = new MetaObj;
-    MetaObj *t1Connection = new MetaObj;
-    MetaObj *t2Connection = new MetaObj;
-    MetaObj *t3Connection = new MetaObj;
-    MetaObj *t4Connection = new MetaObj;
-
-    MetaObj *otp1Connection;
-    MetaObj *otp2Connection;
-    MetaObj *otp3Connection;
-    MetaObj *otp4Connection;
-
-    MetaObj *btp1Connection;
-    MetaObj *btp2Connection;
-    MetaObj *btp3Connection;
-    MetaObj *btp4Connection;
-
     Mode_ID mode = sm->getModeID();
-    if ( mode == TestAgr1_ID || mode == TestAgr2_ID) {
+
+    printConnection = new MetaObj;
+    t1Connection    = new MetaObj;
+    t2Connection    = new MetaObj;
+    t3Connection    = new MetaObj;
+    t4Connection    = new MetaObj;
+
+    if ( mode == CalibAgr1_ID || mode == CalibAgr2_ID) {
         otp1Connection = new MetaObj;
         otp2Connection = new MetaObj;
         otp3Connection = new MetaObj;
@@ -282,43 +312,43 @@ void ChoiseDialog::startMeasurement(StartMeasurement* sm)
         widget->setWindowTitle("Время свертывания, тест");
         widget->setUserMessage("Время свертывания, тест");
         widget->setUserMessage(tr("<div style='color: blue'>Установите в рабочие каналы кюветы с пробами и нажмите \"Старт\""));
-        t_singeShotConntection(printConnection, t1Connection, t2Connection, t3Connection, t4Connection, ko1);
+        t_singeShotConntection(printConnection, t1Connection, t2Connection, t3Connection, t4Connection, ko1, sm->isSingle());
         break;
     case TestKo2_ID:
         widget->setWindowTitle("АЧТВ, тест");
         widget->setUserMessage("АЧТВ, тест");
         widget->setUserMessage(tr("<div style='color: blue'>Установите в рабочие каналы кюветы с пробами и нажмите \"Старт\""));
-        t_singeShotConntection(printConnection, t1Connection, t2Connection, t3Connection, t4Connection, ko2);
+        t_singeShotConntection(printConnection, t1Connection, t2Connection, t3Connection, t4Connection, ko2, sm->isSingle());
         break;
     case TestKo3_ID:
         widget->setWindowTitle("Фибриноген, тест");
         widget->setUserMessage("Фибриноген, тест)");
         widget->setUserMessage(tr("<div style='color: blue'>Установите в рабочие каналы кюветы с пробами и нажмите \"Старт\""));
-        t_singeShotConntection(printConnection, t1Connection, t2Connection, t3Connection, t4Connection, ko3);
+        t_singeShotConntection(printConnection, t1Connection, t2Connection, t3Connection, t4Connection, ko3, sm->isSingle());
         break;
     case TestKo4_ID:
         widget->setWindowTitle("Тромбин, тест");
         widget->setUserMessage("Тромбин, тест");
         widget->setUserMessage(tr("<div style='color: blue'>Установите в рабочие каналы кюветы с пробами и нажмите \"Старт\""));
-        t_singeShotConntection(printConnection, t1Connection, t2Connection, t3Connection, t4Connection, ko4);
+        t_singeShotConntection(printConnection, t1Connection, t2Connection, t3Connection, t4Connection, ko4, sm->isSingle());
         break;
     case TestKo5_ID:
         widget->setWindowTitle("Протромбиновый комплекс, тест");
         widget->setUserMessage("Протромбиновый комплекс, тест");
         widget->setUserMessage(tr("<div style='color: blue'>Установите в рабочие каналы кюветы с пробами и нажмите \"Старт\""));
-        t_singeShotConntection(printConnection, t1Connection, t2Connection, t3Connection, t4Connection, ko5);
+        t_singeShotConntection(printConnection, t1Connection, t2Connection, t3Connection, t4Connection, ko5, sm->isSingle());
         break;
     case TestAgr1_ID:
         widget->setWindowTitle("<div style='color: blue'>Определение параметров агрегации, тест");
         widget->setUserMessage("<div style='color: blue'>Определение параметров агрегации, тест");
-        t_singeShotConntection(printConnection, t1Connection, t2Connection, t3Connection, t4Connection, agr1);
+        t_singeShotConntection(printConnection, t1Connection, t2Connection, t3Connection, t4Connection, agr1, sm->isSingle());
         btp_singeShotConntection( btp1Connection, btp2Connection, btp3Connection, btp4Connection, agr1);
         otp_singeShotConntection( otp1Connection, otp2Connection, otp3Connection, otp4Connection, agr1);
         break;
     case TestAgr2_ID:
         widget->setWindowTitle("Определение активности фактора Виллебранда, тест");
         widget->setUserMessage("Определение активности фактора Виллебранда, тест");
-        t_singeShotConntection(printConnection, t1Connection, t2Connection, t3Connection, t4Connection, agr2);
+        t_singeShotConntection(printConnection, t1Connection, t2Connection, t3Connection, t4Connection, agr2, sm->isSingle());
         btp_singeShotConntection( btp1Connection, btp2Connection, btp3Connection, btp4Connection, agr2);
         otp_singeShotConntection( otp1Connection, otp2Connection, otp3Connection, otp4Connection, agr2);
         //centerWidget->setUserMessage(tr("<div style='color: blue'>Установите в рабочие каналы кюветы с пробами и нажмите \"Старт\""));
@@ -333,20 +363,11 @@ void ChoiseDialog::calibration(StartMeasurement* sm)
     CreateWidgetThread(sm);
     Mode_ID mode = sm->getModeID();
 
-    MetaObj *printConnection = new MetaObj;
-    MetaObj *t1Connection = new MetaObj;
-    MetaObj *t2Connection = new MetaObj;
-    MetaObj *t3Connection = new MetaObj;
-    MetaObj *t4Connection = new MetaObj;
-    MetaObj *otp1Connection;
-    MetaObj *otp2Connection;
-    MetaObj *otp3Connection;
-    MetaObj *otp4Connection;
-
-    MetaObj *btp1Connection;
-    MetaObj *btp2Connection;
-    MetaObj *btp3Connection;
-    MetaObj *btp4Connection;
+    printConnection = new MetaObj;
+    t1Connection    = new MetaObj;
+    t2Connection    = new MetaObj;
+    t3Connection    = new MetaObj;
+    t4Connection    = new MetaObj;
 
     if ( mode == CalibAgr1_ID || mode == CalibAgr2_ID) {
         otp1Connection = new MetaObj;
@@ -365,37 +386,37 @@ void ChoiseDialog::calibration(StartMeasurement* sm)
         widget->setWindowTitle("АЧТВ, калибровка (Ko2)");
         widget->setUserMessage("АЧТВ, калибровка (Ko2)", 0);
         widget->setUserMessage(QString("<div style='color: blue'>Установите кюветы с контрольной нормальной плазмой и нажмите \"Старт\""), 0);
-        c_singeShotConntection(printConnection, t1Connection, t2Connection, t3Connection, t4Connection, ko2);
+        c_singeShotConntection(printConnection, t1Connection, t2Connection, t3Connection, t4Connection, ko2, sm->isSingle());
         break;
     case CalibKo3_ID:
         widget->setUserMessage("Фибриноген, калибровка (Ko3)", 0);
         widget->setUserMessage(QString("<div style='color: blue'>Установите кюветы с контрольной нормальной плазмой и ее разведением, после нажмите \"Старт\""), 0);
         widget->setUserMessage(QString("<div style='color: blue'>Первый этап разведения: Канал 1,2 - 200%, Канал 2,3 - 100%\n"
                                        "Второй этап разведения: Канал 1,2 - 50%, Канал 3,4 - 25%"), 0);
-        c_singeShotConntection(printConnection, t1Connection, t2Connection, t3Connection, t4Connection, ko3);
+        c_singeShotConntection(printConnection, t1Connection, t2Connection, t3Connection, t4Connection, ko3, sm->isSingle());
         break;
     case CalibKo4_ID:
         widget->setUserMessage("Тромбин, калибровка (Ko4)", 0);
         widget->setUserMessage(QString("<div style='color: blue'>Установите кюветы с контрольной нормальной плазмой и нажмите \"Старт\""), 0);
-        c_singeShotConntection(printConnection, t1Connection, t2Connection, t3Connection, t4Connection, ko4);
+        c_singeShotConntection(printConnection, t1Connection, t2Connection, t3Connection, t4Connection, ko4, sm->isSingle());
         break;
     case CalibKo5_ID:
         widget->setUserMessage(QString("Протромбиновый комплекс, калибровка (Ko5)"), 0);
         widget->setUserMessage(QString("<div style='color: blue'>Установите кюветы с контрольной нормальной плазмой и ее разведением, после нажмите \"Старт\""), 0);
         widget->setUserMessage(QString("<div style='color: blue'>Разведения: Канал 1 - 100%, Канал 2 - 50%, Канал 3 - 25%, Канал 4 - 12.5%"), 0);
-        c_singeShotConntection(printConnection, t1Connection, t2Connection, t3Connection, t4Connection, ko5);
+        c_singeShotConntection(printConnection, t1Connection, t2Connection, t3Connection, t4Connection, ko5, sm->isSingle());
         break;
     case CalibAgr1_ID:
         widget->setUserMessage(QString("Определение параметров агрегации, калибровка (Agr1 1)"), 0);
         widget->setUserMessage(QString("<div style='color: blue'>Установите кюветы с контрольной нормальной плазмой и нажмите \"Старт\""), 0);
-        c_singeShotConntection(printConnection, t1Connection, t2Connection, t3Connection, t4Connection, agr1);
+        c_singeShotConntection(printConnection, t1Connection, t2Connection, t3Connection, t4Connection, agr1, sm->isSingle());
         btp_singeShotConntection( btp1Connection, btp2Connection, btp3Connection, btp4Connection, agr1);
         otp_singeShotConntection( otp1Connection, otp2Connection, otp3Connection, otp4Connection, agr1);
         break;
     case CalibAgr2_ID:
         widget->setUserMessage(QString("<div style='color: blue'>Установите кюветы с контрольной нормальной плазмой и ее разведением, после нажмите \"Старт\""), 0);
         widget->setUserMessage(QString("<div style='color: blue'>Разведения: Канал 1 - 200%, Канал 2 - 100%, Канал 3 - 50%, Канал 4 - 25%"), 0);
-        c_singeShotConntection(printConnection, t1Connection, t2Connection, t3Connection, t4Connection, agr2);
+        c_singeShotConntection(printConnection, t1Connection, t2Connection, t3Connection, t4Connection, agr2, sm->isSingle());
         btp_singeShotConntection( btp1Connection, btp2Connection, btp3Connection, btp4Connection, agr2);
         otp_singeShotConntection( otp1Connection, otp2Connection, otp3Connection, otp4Connection, agr2);
         break;

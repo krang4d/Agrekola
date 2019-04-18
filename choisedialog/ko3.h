@@ -45,16 +45,20 @@ public slots:
     void setTime(QTime, SaveTo) override;
 
     QString t_print() override;
-    void setT1(double value) override;
-    void setT2(double value) override;
-    void setT3(double value) override;
-    void setT4(double value) override;
+    void setT1(double, int) override;
+    void setT2(double, int) override;
+    void setT3(double, int) override;
+    void setT4(double, int) override;
+    void setT1_2(double, int) override;
+    void setT3_4(double, int) override;
 
     QString c_print() override;
-    void calibrationData1Come(double) override;
-    void calibrationData2Come(double) override;
-    void calibrationData3Come(double) override;
-    void calibrationData4Come(double) override;
+    void calibrationData1Come(double, int) override {}
+    void calibrationData2Come(double, int) override {}
+    void calibrationData3Come(double, int) override {}
+    void calibrationData4Come(double, int) override {}
+    void calibrationData1_2Come(double, int) override;
+    void calibrationData2_4Come(double, int) override;
 
 signals:
     void measurement(StartMeasurement*);
