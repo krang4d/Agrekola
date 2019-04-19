@@ -41,7 +41,7 @@ void Agr1::on_pushButton_calib_clicked()
 
     //bool c = (ui->doubleSpinBox_testIncubeTime->value() != NULL) && (ui->doubleSpinBox_testWriteTime->value() != NULL);
     if( !e ) {
-        QMessageBox::information(this, "Внимание!", "Для того чтобы продолжить необходимо выбрать рабочие каналы и заполнить все поля с параметрами!");
+        QMessageBox::information(this, "Внимание!", "Для того чтобы продолжить необходимо заполнить все поля с параметрами!");
         return;
     }
 

@@ -3,9 +3,9 @@
 
 Agr2::Agr2(QWidget *parent) :
     QWidget(parent),
-    c_agr2(new CalibrationAgr2),
+    ui(new Ui::Agr2),
     t_agr2(new TestAgr2),
-    ui(new Ui::Agr2)
+    c_agr2(new CalibrationAgr2)
 {
     ui->setupUi(this);
     open();
@@ -136,48 +136,6 @@ void Agr2::close()
     c_agr2->setReagent_serial(ui->lineEdit_calibReagentSerial->text());
 }
 
-void Agr2::on_pushButton_calib_clicked()
-{
-//    bool a = ui->checkBox_calibCh1->isChecked();
-//    bool b = ui->checkBox_calibCh2->isChecked();
-//    bool c = ui->checkBox_calibCh3->isChecked();
-//    bool d = ui->checkBox_calibCh4->isChecked();
-
-    bool e = !ui->lineEdit_calibKPlazmaSerial->text().isEmpty();
-    bool f = !ui->lineEdit_calibReagentSerial->text().isEmpty();
-
-    QDate now = QDate::currentDate();
-    bool g = now <= ui->dateEdit_calibKPlazma->date();
-    bool i = now <= ui->dateEdit_calibReagent->date();
-
-    if(!(g && i) ) {
-        QMessageBox::information(this, "Внимание!", "Проверьте срок годности используемых реагентов!");
-        return;
-    }
-    //bool c = (ui->doubleSpinBox_testIncubeTime->value() != NULL) && (ui->doubleSpinBox_testWriteTime->value() != NULL);
-    if( !(e && f) ) {
-        QMessageBox::information(this, "Внимание!", "Для того чтобы продолжить необходимо выбрать рабочие каналы и заполнить все поля с параметрами!");
-        return;
-    }
-
-    c_agr2->setDate(QDate::currentDate());
-    c_agr2->setReagent_date(ui->dateEdit_calibReagent->date());
-    c_agr2->setReagent_serial(ui->lineEdit_calibReagentSerial->text());
-    c_agr2->setK_plazma_date(ui->dateEdit_calibKPlazma->date());
-    //c_agr2->setK_plazma_serial(ui->lineEdit_calibKPlazmaNum->text());
-    //c_agr2->setIncube_time(ui->doubleSpinBox_calibIncubeTime_1->value());
-    c_agr2->setWrite_time(ui->doubleSpinBox_calibWriteTime->value());
-    c_agr2->setIncube_time_2(ui->doubleSpinBox_calibIncubeTime_2->value());
-
-//    c_agr2->setK1(ui->checkBox_calibCh1->isChecked());
-//    c_agr2->setK2(ui->checkBox_calibCh2->isChecked());
-//    c_agr2->setK3(ui->checkBox_calibCh3->isChecked());
-//    c_agr2->setK4(ui->checkBox_calibCh4->isChecked());
-
-    c_agr2->save();
-    emit calibration(StartCalibrationAgr2::getStart(t_agr2, c_agr2));
-}
-
 void Agr2::on_pushButton_test_clicked()
 {
     bool a, b, c, d;
@@ -216,6 +174,48 @@ void Agr2::on_pushButton_test_clicked()
 
     t_agr2->save();
     emit measurement(StartTestAgr2::getStart(t_agr2, c_agr2));
+}
+
+void Agr2::on_pushButton_calib_clicked()
+{
+//    bool a = ui->checkBox_calibCh1->isChecked();
+//    bool b = ui->checkBox_calibCh2->isChecked();
+//    bool c = ui->checkBox_calibCh3->isChecked();
+//    bool d = ui->checkBox_calibCh4->isChecked();
+
+    bool e = !ui->lineEdit_calibKPlazmaSerial->text().isEmpty();
+    bool f = !ui->lineEdit_calibReagentSerial->text().isEmpty();
+
+    QDate now = QDate::currentDate();
+    bool g = now <= ui->dateEdit_calibKPlazma->date();
+    bool i = now <= ui->dateEdit_calibReagent->date();
+
+    if(!(g && i) ) {
+        QMessageBox::information(this, "Внимание!", "Проверьте срок годности используемых реагентов!");
+        return;
+    }
+    //bool c = (ui->doubleSpinBox_testIncubeTime->value() != NULL) && (ui->doubleSpinBox_testWriteTime->value() != NULL);
+    if( !(e && f) ) {
+        QMessageBox::information(this, "Внимание!", "Для того чтобы продолжить необходимо заполнить все поля с параметрами!");
+        return;
+    }
+
+    c_agr2->setDate(QDate::currentDate());
+    c_agr2->setReagent_date(ui->dateEdit_calibReagent->date());
+    c_agr2->setReagent_serial(ui->lineEdit_calibReagentSerial->text());
+    c_agr2->setK_plazma_date(ui->dateEdit_calibKPlazma->date());
+    //c_agr2->setK_plazma_serial(ui->lineEdit_calibKPlazmaNum->text());
+    //c_agr2->setIncube_time(ui->doubleSpinBox_calibIncubeTime_1->value());
+    c_agr2->setWrite_time(ui->doubleSpinBox_calibWriteTime->value());
+    c_agr2->setIncube_time_2(ui->doubleSpinBox_calibIncubeTime_2->value());
+
+//    c_agr2->setK1(ui->checkBox_calibCh1->isChecked());
+//    c_agr2->setK2(ui->checkBox_calibCh2->isChecked());
+//    c_agr2->setK3(ui->checkBox_calibCh3->isChecked());
+//    c_agr2->setK4(ui->checkBox_calibCh4->isChecked());
+
+    c_agr2->save();
+    emit calibration(StartCalibrationAgr2::getStart(t_agr2, c_agr2));
 }
 
 void Agr2::on_radioButton_testSingle_toggled(bool checked)
@@ -282,6 +282,26 @@ void Agr2::setT3_4(double value, int i)
 QString Agr2::c_print()
 {
     return c_agr2->print();
+}
+
+void Agr2::setDate(QDate d, SaveTo b)
+{
+    if(b == Test_ID) {
+        t_agr2->setDate(d);
+    }
+    if(b == Calib_ID) {
+        c_agr2->setDate(d);
+    }
+}
+
+void Agr2::setTime(QTime t, SaveTo b)
+{
+    if(b == Test_ID) {
+        t_agr2->setTime(t);
+    }
+    if(b == Calib_ID) {
+        c_agr2->setTime(t);
+    }
 }
 
 void Agr2::calibrationData1Come(double value, int i)
@@ -428,17 +448,18 @@ void Agr2::on_lineEdit_testCh3_textChanged(const QString &arg1)
 
 StartMeasurement *StartCalibrationAgr2::getStart(Test *t_agr2, Calibration *c_agr2)
 {
-    CalibrationAgr2* obj = nullptr;
-    if(typeid(*c_agr2) == typeid(CalibrationAgr2)) {
-        obj = dynamic_cast<CalibrationAgr2*>(c_agr2);
+    StartMeasurement *start = new StartMeasurement(t_agr2, c_agr2);
+    //if(typeid(*c_agr2) == typeid(CalibrationAgr2)) { <-- oldscool method
+    if( CalibrationAgr2* obj = qobject_cast<CalibrationAgr2*>(c_agr2) ) {
         qDebug() << QString("c_agr2 get pointer to an object of type: true, incube_time2 is %1")
                     .arg(obj->getIncube_time_2());
+        start->setTimeIncube(2, obj->getIncube_time_2());
     }
     else {
         throw Error_Agr2_Type_ID("c_agr2 get pointer to an object of type: false");
     }
 
-    StartMeasurement *start = new StartMeasurement(t_agr2, c_agr2);
+
     start->setChannels(c_agr2->getK1(), c_agr2->getK2(), c_agr2->getK3(), c_agr2->getK4());
     start->setNum(1, "Калибровка");
     start->setNum(2, "Калибровка");
@@ -446,7 +467,7 @@ StartMeasurement *StartCalibrationAgr2::getStart(Test *t_agr2, Calibration *c_ag
     start->setNum(4, "Калибровка");
     start->setTimeWrite(c_agr2->getWrite_time());
     start->setTimeIncube(1, c_agr2->getIncube_time());
-    start->setTimeIncube(2, obj->getIncube_time_2());
+
     start->setModeID(CalibAgr2_ID);
     start->setBtp_time(5);
     start->setOtp_time(5);
@@ -455,48 +476,28 @@ StartMeasurement *StartCalibrationAgr2::getStart(Test *t_agr2, Calibration *c_ag
 
 StartMeasurement *StartTestAgr2::getStart(Test *t_agr2, Calibration *c_agr2)
 {
-    TestAgr2* obj = nullptr;
-    if(typeid(*t_agr2) == typeid(TestAgr2)) {
-        obj = dynamic_cast<TestAgr2*>(t_agr2);
+    StartMeasurement *start = new StartMeasurement(t_agr2, c_agr2);
+    //if(typeid(*t_agr2) == typeid(TestAgr2)) <-- oldscool method
+    if( TestAgr2* obj = qobject_cast<TestAgr2*>(t_agr2) ) {
         qDebug() << QString("t_agr2 get pointer to an object of type: true, incube_time2 is %1")
                     .arg(obj->getIncubeTime2());
+        start->setTimeIncube(2, obj->getIncubeTime2());
     }
     else {
         throw Error_Agr2_Type_ID("t_agr2 get pointer to an object of type: false");
     }
 
-    StartMeasurement *start = new StartMeasurement(t_agr2, c_agr2);
     start->setChannels(t_agr2->getK1(), t_agr2->getK2(), t_agr2->getK3(), t_agr2->getK4());
     start->setNum(1, t_agr2->getNum1());
     start->setNum(2, t_agr2->getNum2());
     start->setNum(3, t_agr2->getNum3());
     start->setNum(4, t_agr2->getNum4());
+    start->setProbe(t_agr2->getSingle());
     start->setTimeWrite(t_agr2->getWriteTime());
-    start->setProbe(obj->getIncubeTime2());
     start->setTimeIncube(1, t_agr2->getIncubeTime());
-    start->setTimeIncube(2, obj->getIncubeTime2());
+
     start->setModeID(TestAgr2_ID);
     start->setBtp_time(5);
     start->setOtp_time(5);
     return start;
-}
-
-void Agr2::setDate(QDate d, SaveTo b)
-{
-    if(b == Test_ID) {
-        t_agr2->setDate(d);
-    }
-    if(b == Calib_ID) {
-        c_agr2->setDate(d);
-    }
-}
-
-void Agr2::setTime(QTime t, SaveTo b)
-{
-    if(b == Test_ID) {
-        t_agr2->setTime(t);
-    }
-    if(b == Calib_ID) {
-        c_agr2->setTime(t);
-    }
 }

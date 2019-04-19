@@ -194,7 +194,7 @@ void ChoiseDialog::c_singeShotConntection(MetaObj *p, MetaObj *t1, MetaObj *t2, 
         ko->setTime(QTime::currentTime(), Ko_impl::Calib_ID);
         end_dialog->setText(ko->c_print());
         end_dialog->show();
-        DeleteWidgetThread();
+        //DeleteWidgetThread();
         this->show();
     });
     if(single) {
@@ -237,49 +237,49 @@ void ChoiseDialog::btp_singeShotConntection(MetaObj *btp1, MetaObj *btp2, MetaOb
 {
     *btp1 = connect(widget, &Widget::btp_value1, [=](double value){
         agr->btp1Come(value);
-        QObject::disconnect(*btp1);
-        delete btp1;
+        //QObject::disconnect(*btp1);
+        //delete btp1;
     });
     *btp2 = connect(widget, &Widget::btp_value2, [=](double value){
         agr->btp2Come(value);
-        QObject::disconnect(*btp2);
-        delete btp2;
+        //QObject::disconnect(*btp2);
+        //delete btp2;
     });
     *btp3 = connect(widget, &Widget::btp_value3, [=](double value){
         agr->btp3Come(value);
-        QObject::disconnect(*btp3);
-        delete btp3;
+        //QObject::disconnect(*btp3);
+        //delete btp3;
     });
 
     *btp4 = connect(widget, &Widget::btp_value4, [=](double value){
         agr->btp4Come(value);
-        QObject::disconnect(*btp4);
-        delete btp4;
+        //QObject::disconnect(*btp4);
+        //delete btp4;
     });
 }
 
 void ChoiseDialog::otp_singeShotConntection(MetaObj *otp1, MetaObj *otp2, MetaObj *otp3, MetaObj *otp4, Agr_impl *agr)
 {
-    *otp1 = connect(widget, &Widget::ret_value1, [=](double value) {
+    *otp1 = connect(widget, &Widget::otp_value1, [=](double value) {
         agr->otp1Come(value);
-        QObject::disconnect(*otp1);
-        delete otp1;
+        //QObject::disconnect(*otp1);
+        //delete otp1;
     });
-    *otp2 = connect(widget, &Widget::ret_value2, [=](double value) {
+    *otp2 = connect(widget, &Widget::otp_value2, [=](double value) {
         agr->otp2Come(value);
-        QObject::disconnect(*otp2);
+        //QObject::disconnect(*otp2);
         delete otp2;
     });
-    *otp3 = connect(widget, &Widget::ret_value3, [=](double value) {
+    *otp3 = connect(widget, &Widget::otp_value3, [=](double value) {
         agr->otp3Come(value);
-        QObject::disconnect(*otp3);
-        delete otp3;
+        //QObject::disconnect(*otp3);
+        //delete otp3;
     });
 
-    *otp4 = connect(widget, &Widget::ret_value4, [=](double value) {
+    *otp4 = connect(widget, &Widget::otp_value4, [=](double value) {
         agr->otp4Come(value);
-        QObject::disconnect(*otp4);
-        delete otp4;
+        //QObject::disconnect(*otp4);
+        //delete otp4;
     });
 }
 
@@ -295,7 +295,7 @@ void ChoiseDialog::startMeasurement(StartMeasurement* sm)
     t3Connection    = new MetaObj;
     t4Connection    = new MetaObj;
 
-    if ( mode == CalibAgr1_ID || mode == CalibAgr2_ID) {
+    if ( mode == CalibAgr1_ID || mode == CalibAgr2_ID || mode == TestAgr1_ID || mode == TestAgr2_ID ) {
         otp1Connection = new MetaObj;
         otp2Connection = new MetaObj;
         otp3Connection = new MetaObj;
@@ -369,7 +369,7 @@ void ChoiseDialog::calibration(StartMeasurement* sm)
     t3Connection    = new MetaObj;
     t4Connection    = new MetaObj;
 
-    if ( mode == CalibAgr1_ID || mode == CalibAgr2_ID) {
+    if ( mode == CalibAgr1_ID || mode == CalibAgr2_ID || mode == TestAgr1_ID || mode == TestAgr2_ID) {
         otp1Connection = new MetaObj;
         otp2Connection = new MetaObj;
         otp3Connection = new MetaObj;

@@ -28,8 +28,8 @@ public:
     ~Agr2();
 
 private slots:
-    void on_pushButton_calib_clicked();
     void on_pushButton_test_clicked();
+    void on_pushButton_calib_clicked();
 
     void on_checkBox_testCh1_toggled(bool checked);
     void on_checkBox_testCh2_toggled(bool checked);
