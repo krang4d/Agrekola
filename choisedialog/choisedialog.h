@@ -17,6 +17,7 @@
 #include "useE154.h"
 #include "viewplot.h"
 #include "globalvalue.h"
+#include "enddialog.h"
 
 class MainWindow;
 typedef QMetaObject::Connection MetaObj;
@@ -44,8 +45,9 @@ public:
     Ko4     *ko4;       //Тромбин
     Ko5     *ko5;       //Протромбиновый комплекс
 
-    QMessageBox     *end_dialog;
-    QPrintDialog    *printDialog;
+//    QMessageBox     *end_dialog;
+//    QPrintDialog    *printDialog;
+    myDialog::EndDialog        *enddialog;
     useE154         *agrekola;
     Widget          *widget;
 

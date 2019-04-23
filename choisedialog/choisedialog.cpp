@@ -22,16 +22,17 @@ ChoiseDialog::ChoiseDialog(QDialog *parent) :
     ko4 = qobject_cast<Ko4 *>(ui->stackedWidget->widget(6));
     ko5 = qobject_cast<Ko5 *>(ui->stackedWidget->widget(7));
 
-    //create end dialog
-    end_dialog = new QMessageBox(this);
-    //test_dialog->setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
-    QPushButton *ok = new QPushButton;
-    QPushButton *cansel = new QPushButton;
-    ok->setText("Распечатать");
-    cansel->setText("Продолжить");
-    end_dialog->addButton(ok, QMessageBox::AcceptRole);
-    end_dialog->addButton(cansel, QMessageBox::RejectRole);
-    end_dialog->setIcon(QMessageBox::Information);
+//    //create end dialog
+//    end_dialog = new QMessageBox(this);
+//    //test_dialog->setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
+//    QPushButton *ok = new QPushButton;
+//    QPushButton *cansel = new QPushButton;
+//    ok->setText("Распечатать");
+//    cansel->setText("Продолжить");
+//    end_dialog->addButton(ok, QMessageBox::AcceptRole);
+//    end_dialog->addButton(cansel, QMessageBox::RejectRole);
+//    end_dialog->setIcon(QMessageBox::Information);
+    enddialog = new myDialog::EndDialog;
 
     connect(agr1, SIGNAL(measurement(StartMeasurement*)), SLOT(startMeasurement(StartMeasurement*)));
     connect(agr2, SIGNAL(measurement(StartMeasurement*)), SLOT(startMeasurement(StartMeasurement*)));
@@ -94,7 +95,7 @@ ChoiseDialog::~ChoiseDialog()
 
     qDebug() << "call ChoiseDialog::~ChoiseDialog()";
     delete ui;
-    delete end_dialog;
+    //delete enddialog;
 //    delete printConnection;
 //    delete t1Connection;
 //    delete t2Connection;
@@ -141,20 +142,22 @@ void ChoiseDialog::t_singeShotConntection(MetaObj *p, MetaObj *t1, MetaObj *t2, 
         qDebug() << "Slot End";
         ko->setDate(QDate::currentDate(), Ko_impl::Test_ID);
         ko->setTime(QTime::currentTime(), Ko_impl::Test_ID);
-        end_dialog->setText(ko->t_print());
-        if( end_dialog->exec() == QDialog::Rejected ) {
-            //createe print dialog
-            QPrinter printer;
-            QPointer<QPrintDialog> printDialog = QPointer<QPrintDialog>(new QPrintDialog(&printer));
-            printDialog->setWindowTitle("Распечатка результата исследования");
-            if (printDialog->exec() == QDialog::Accepted) {
-                // print ...
-                QPainter painter;
-                painter.begin(&printer);
-                painter.drawText(100, 100, 500, 500, Qt::AlignLeft|Qt::AlignTop, ko->t_print());
-                painter.end();
-            }
-        }
+//        end_dialog->setText(ko->t_print());
+//        if( end_dialog->exec() == QDialog::Rejected ) {
+//            //createe print dialog
+//            QPrinter printer;
+//            QPointer<QPrintDialog> printDialog = QPointer<QPrintDialog>(new QPrintDialog(&printer));
+//            printDialog->setWindowTitle("Распечатка результата исследования");
+//            if (printDialog->exec() == QDialog::Accepted) {
+//                // print ...
+//                QPainter painter;
+//                painter.begin(&printer);
+//                painter.drawText(100, 100, 500, 500, Qt::AlignLeft|Qt::AlignTop, ko->t_print());
+//                painter.end();
+//            }
+//        }
+        enddialog->setText(ko->t_print());
+        enddialog->show();
         //DeleteWidgetThread();
         this->show();
     });
@@ -211,8 +214,8 @@ void ChoiseDialog::c_singeShotConntection(MetaObj *p, MetaObj *t1, MetaObj *t2, 
         qDebug() << "Slot End";
         ko->setDate(QDate::currentDate(), Ko_impl::Calib_ID);
         ko->setTime(QTime::currentTime(), Ko_impl::Calib_ID);
-        end_dialog->setText(ko->c_print());
-        end_dialog->show();
+        enddialog->setText(ko->c_print());
+        enddialog->show();
         //DeleteWidgetThread();
         this->show();
     });

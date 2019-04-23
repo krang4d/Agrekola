@@ -2,23 +2,16 @@
 #include <QDebug>
 #include <QThread>
 #include "choisedialog.h"
-#include "calculatedata.h"
-#include "savefiles.h"
-#include "QMap"
+#include "enddialog.h"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     setlocale(LC_ALL, "Russian");
-//    QMap<double, double> map;
-//    SaveFiles file;
-//    file.openDataMap(map);
-
-//    CalcData *p = CalcData::createCalc(Ko1_ID);
-//    p->calc(map);
     qDebug() << "main thread ID: " << QThread::currentThreadId();
     ChoiseDialog *dlg_menu = new ChoiseDialog;
     dlg_menu->show();
-
+//    myDialog::EndDialog *end1 = new myDialog::EndDialog;
+//    end1->show();
     return a.exec();
 }
