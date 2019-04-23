@@ -58,6 +58,7 @@ protected:
     void initPorts();                           //инициализация всех выводов TTL
     void funThread();
     void initADC();
+    DoubleData AdcSynchroDouble();
 
 signals:
     void value_come(QVariantList);
@@ -68,7 +69,7 @@ public slots:
     double AdcSample(Channel ch);   //простое одноканальное измерение АЦП канала ch, n раз
     QVariantList AdcKADR();                 //покадровое измерение
     QString AdcSynchro();       //измерение в синхронном режиме возвращает строку данных
-    DoubleData AdcSynchroDouble();
+
 
     /*Методы управления портами*/
     void onMixCh1(bool);

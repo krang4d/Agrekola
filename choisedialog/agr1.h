@@ -27,7 +27,7 @@ public:
 
 private slots:
     void on_pushButton_test_clicked();
-    void on_pushButton_calib_clicked();
+    //void on_pushButton_calib_clicked();
 
     void on_radioButton_testSingle_toggled(bool checked);
 

@@ -92,7 +92,7 @@ class CalcKo2 : public CalcData
 {
 public:
     explicit CalcKo2(TestKo2*, CalibrationKo2*);
-    explicit CalcKo2(WithoutCalibration);
+    //explicit CalcKo2(WithoutCalibration);
     //параметры для определения АЧТВ
 private:
     TestKo2 *t_ko2;

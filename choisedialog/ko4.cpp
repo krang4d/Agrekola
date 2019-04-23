@@ -121,9 +121,9 @@ void Ko4::open(TestKo4 *t_ko4, CalibrationKo4 *c_ko4)
 
     ///состояние калибровки
     ui->groupBox_test1Calib->setTitle(QString("Последняя калибровка: %1\n").arg(c_ko4->getDate().toString("dd.MM.yyyy")));
-    QString str =
-              QString("Номер серия реагентов: %1\n").arg(c_ko4->getReagent_serial())
-            + QString("Срок годности реагентов: %1\n").arg(c_ko4->getReagent_date().toString("dd.MM.yyyy"));
+//    QString str =
+//              QString("Номер серия реагентов: %1\n").arg(c_ko4->getReagent_serial())
+//            + QString("Срок годности реагентов: %1\n").arg(c_ko4->getReagent_date().toString("dd.MM.yyyy"));
 
     ui->label_test1CalibrString->setText(c_ko4->print());
 
@@ -488,6 +488,10 @@ void Ko4::on_pushButton_test1_clicked()
         return;
     }
 
+    if(ui->radioButton_testActivity1->isChecked()) c_ko4 = c_ko4_1;
+    if(ui->radioButton_testActivity2->isChecked()) c_ko4 = c_ko4_2;
+    if(ui->radioButton_testActivity3->isChecked()) c_ko4 = c_ko4_3;
+
     bool f = c_ko4->getTv1() && c_ko4->getTv2() && c_ko4->getK3() && c_ko4->getTv4();
     if( !(!c_ko4->getDate().toString("dd.MM.yyyy").isEmpty() && f) ) {
         QMessageBox::information(this, "Внимание!", QString("Для того чтобы продолжить неоходимо провести калибровку."));
@@ -550,28 +554,28 @@ void Ko4::on_pushButton_test2_clicked()
         return;
     }
 
-    t_ko4_1->setK1(ui->checkBox_test2Ch1->isChecked());
-    t_ko4_1->setK2(ui->checkBox_test2Ch2->isChecked());
-    t_ko4_1->setK3(ui->checkBox_test2Ch3->isChecked());
-    t_ko4_1->setK4(ui->checkBox_test2Ch4->isChecked());
+    t_ko4->setK1(ui->checkBox_test2Ch1->isChecked());
+    t_ko4->setK2(ui->checkBox_test2Ch2->isChecked());
+    t_ko4->setK3(ui->checkBox_test2Ch3->isChecked());
+    t_ko4->setK4(ui->checkBox_test2Ch4->isChecked());
 
-    t_ko4_1->setNum1(ui->lineEdit_test2Ch1->text());
-    t_ko4_1->setNum2(ui->lineEdit_test2Ch2->text());
-    t_ko4_1->setNum3(ui->lineEdit_test2Ch3->text());
-    t_ko4_1->setNum4(ui->lineEdit_test2Ch4->text());
+    t_ko4->setNum1(ui->lineEdit_test2Ch1->text());
+    t_ko4->setNum2(ui->lineEdit_test2Ch2->text());
+    t_ko4->setNum3(ui->lineEdit_test2Ch3->text());
+    t_ko4->setNum4(ui->lineEdit_test2Ch4->text());
 
-    t_ko4_1->setSingle(ui->radioButton_test2Single->isChecked());
+    t_ko4->setSingle(ui->radioButton_test2Single->isChecked());
 
-    t_ko4_1->setReagent_serial(ui->lineEdit_test2ReagentSerial->text());
-    t_ko4_1->setReagent_date(ui->dateEdit_test2Reagent->date());
-    t_ko4_1->setActivity(ui->doubleSpinBox_test2Activity->value());
-    t_ko4_1->setTrombine_time(ui->doubleSpinBox_test2TrombineTime->value());
-    t_ko4_1->setIncube_time(ui->doubleSpinBox_test2IncubeTime->value());
-    t_ko4_1->setWrite_time(ui->doubleSpinBox_test2WriteTime->value());
-    t_ko4_1->setDate(QDate::currentDate());
+    t_ko4->setReagent_serial(ui->lineEdit_test2ReagentSerial->text());
+    t_ko4->setReagent_date(ui->dateEdit_test2Reagent->date());
+    t_ko4->setActivity(ui->doubleSpinBox_test2Activity->value());
+    t_ko4->setTrombine_time(ui->doubleSpinBox_test2TrombineTime->value());
+    t_ko4->setIncube_time(ui->doubleSpinBox_test2IncubeTime->value());
+    t_ko4->setWrite_time(ui->doubleSpinBox_test2WriteTime->value());
+    t_ko4->setDate(QDate::currentDate());
 
-    t_ko4_1->save();
-    emit calibration(StartTestKo4::getStart(t_ko4_1, c_ko4));
+    t_ko4->save();
+    emit calibration(StartTestKo4::getStart(t_ko4, c_ko4));
 }
 
 void Ko4::on_pushButton_calib_clicked()
@@ -622,7 +626,7 @@ void Ko4::on_radioButton_calibActivity1_toggled(bool checked)
     if(checked) {
         c_ko4 = c_ko4_1;
         t_ko4->save();
-        open(t_ko4, c_ko4_1);
+        open(t_ko4, c_ko4);
     }
     c_ko4->setActivity(1);
 }
@@ -637,7 +641,7 @@ void Ko4::on_radioButton_calibActivity2_toggled(bool checked)
     if(checked) {
         c_ko4 = c_ko4_2;
         t_ko4->save();
-        open(t_ko4, c_ko4_2);
+        open(t_ko4, c_ko4);
     }
     c_ko4->setActivity(2);
 }
@@ -652,7 +656,7 @@ void Ko4::on_radioButton_calibActivity3_toggled(bool checked)
     if(checked) {
         c_ko4 = c_ko4_3;
         t_ko4->save();
-        open(t_ko4, c_ko4_3);
+        open(t_ko4, c_ko4);
     }
     c_ko4->setActivity(3);
 }

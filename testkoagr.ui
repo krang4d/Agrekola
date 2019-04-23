@@ -6,46 +6,102 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>300</width>
-    <height>200</height>
+    <width>324</width>
+    <height>418</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Проверка аппаратуры</string>
+   <string>Проверка анализатора</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QPushButton" name="pushButton_onlaser">
+    <widget class="QPushButton" name="pushButton_onLaser">
      <property name="text">
       <string>Лазеры вкл.</string>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="QPushButton" name="pushButton_offlaser">
+    <widget class="QPushButton" name="pushButton_offLaser">
      <property name="text">
       <string>Лазеры выкл.</string>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="QPushButton" name="pushButton_onmotor">
+    <widget class="QPushButton" name="pushButton_onMix1">
      <property name="text">
-      <string>Двигатели вкл.</string>
+      <string>Канал 1 - Вкл. перемешивание </string>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="QPushButton" name="pushButton_offmotor">
+    <widget class="QPushButton" name="pushButton_offMix1">
      <property name="text">
-      <string>Двигатели выкл.</string>
+      <string>Канал 1 - Выкл. перемешивание</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="pushButton_onMix2">
+     <property name="text">
+      <string>Канал 2 - Вкл. перемешивание</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="pushButton_offMix2">
+     <property name="text">
+      <string>Канал 2 - Выкл. перемешивание</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="pushButton_onMix3">
+     <property name="text">
+      <string>Канал 3 - Вкл. перемешиваине</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="pushButton_offMix3">
+     <property name="text">
+      <string>Канал 3 - Выкл.перемешивание</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="pushButton_onMix4">
+     <property name="text">
+      <string>Канал 4 - Вкл. перемешивание</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="pushButton_offMix4">
+     <property name="text">
+      <string>Канал 4 - Выкл. перемешивание</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="pushButton_onMixPP">
+     <property name="text">
+      <string>Канал РР - Вкл. перемешивание</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="pushButton_offMixPP">
+     <property name="text">
+      <string>Канал РР - Выкл. перемешивание</string>
      </property>
     </widget>
    </item>
    <item>
     <widget class="QPushButton" name="pushButton_poll">
      <property name="text">
-      <string>Опрос</string>
+      <string>Опрос АЦП</string>
      </property>
     </widget>
    </item>
@@ -61,10 +117,10 @@
  <tabstops>
   <tabstop>pushButton_back</tabstop>
   <tabstop>pushButton_poll</tabstop>
-  <tabstop>pushButton_offmotor</tabstop>
-  <tabstop>pushButton_onmotor</tabstop>
-  <tabstop>pushButton_offlaser</tabstop>
-  <tabstop>pushButton_onlaser</tabstop>
+  <tabstop>pushButton_offMixPP</tabstop>
+  <tabstop>pushButton_onMixPP</tabstop>
+  <tabstop>pushButton_offLaser</tabstop>
+  <tabstop>pushButton_onLaser</tabstop>
  </tabstops>
  <resources/>
  <connections/>

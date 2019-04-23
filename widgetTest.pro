@@ -47,7 +47,8 @@ SOURCES +=  main.cpp\
     ../XML/KoAgrXML/koagrxml.cpp \
     startmeasurement.cpp \
     state.cpp \
-    choisedialog/printer.cpp
+    choisedialog/printer.cpp \
+    choisedialog/enddialog.cpp
 
 HEADERS  += selectcalibrationagr1.h \
     selectinductor.h \
@@ -81,7 +82,8 @@ HEADERS  += selectcalibrationagr1.h \
     state.h \
     choisedialog/agr_impl.h \
     choisedialog/ko_impl.h \
-    choisedialog/printer.h
+    choisedialog/printer.h \
+    choisedialog/enddialog.h
 
 FORMS    += \
     selectinductor.ui \
@@ -100,7 +102,8 @@ FORMS    += \
     progresstimerbar.ui \
     impulewaiter.ui \
     options.ui \
-    calibparam.ui
+    calibparam.ui \
+    choisedialog/enddialog.ui
 
 RESOURCES += \
     rcfile.qrc

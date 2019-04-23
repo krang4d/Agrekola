@@ -258,13 +258,13 @@ CalcKo2::CalcKo2(TestKo2 *t, CalibrationKo2 *c) : CalcData(), t_ko2(t), c_ko2(c)
     qDebug() << QString("АЧТВ = %1").arg(t0);
 }
 
-CalcKo2::CalcKo2(WithoutCalibration)
-{
-    t_ko2 = new TestKo2(WithoutCalibration(), this);
-    t0 = t_ko2->getA4tv_kp();
-    //QMessageBox::information(nullptr, "CalcKo2", QString("АЧТВ = %1").arg(t0));
-    qDebug() << QString("АЧТВ = %1").arg(t0);
-}
+//CalcKo2::CalcKo2(WithoutCalibration)
+//{
+//    t_ko2 = new TestKo2(WithoutCalibration(), this);
+//    t0 = t_ko2->getA4tv_kp();
+//    //QMessageBox::information(nullptr, "CalcKo2", QString("АЧТВ = %1").arg(t0));
+//    qDebug() << QString("АЧТВ = %1").arg(t0);
+//}
 
 double CalcKo2::calc(QMap<double, double> map)
 {

@@ -13,14 +13,14 @@ ChoiseDialog::ChoiseDialog(QDialog *parent) :
     setAttribute(Qt::WA_DeleteOnClose);
     setWindowFlags(Qt::Window | Qt::MSWindowsFixedSizeDialogHint);
 
-    agr1 = static_cast<Agr1 *>(ui->stackedWidget->widget(1));
-    agr2 = static_cast<Agr2 *>(ui->stackedWidget->widget(2));
+    agr1 = qobject_cast<Agr1 *>(ui->stackedWidget->widget(1));
+    agr2 = qobject_cast<Agr2 *>(ui->stackedWidget->widget(2));
 
-    ko1 = static_cast<Ko1 *>(ui->stackedWidget->widget(3));
-    ko2 = static_cast<Ko2 *>(ui->stackedWidget->widget(4));
-    ko3 = static_cast<Ko3 *>(ui->stackedWidget->widget(5));
-    ko4 = static_cast<Ko4 *>(ui->stackedWidget->widget(6));
-    ko5 = static_cast<Ko5 *>(ui->stackedWidget->widget(7));
+    ko1 = qobject_cast<Ko1 *>(ui->stackedWidget->widget(3));
+    ko2 = qobject_cast<Ko2 *>(ui->stackedWidget->widget(4));
+    ko3 = qobject_cast<Ko3 *>(ui->stackedWidget->widget(5));
+    ko4 = qobject_cast<Ko4 *>(ui->stackedWidget->widget(6));
+    ko5 = qobject_cast<Ko5 *>(ui->stackedWidget->widget(7));
 
     //create end dialog
     end_dialog = new QMessageBox(this);
@@ -91,18 +91,37 @@ void ChoiseDialog::DeleteWidgetThread()
 
 ChoiseDialog::~ChoiseDialog()
 {
-    delete ui;
+
     qDebug() << "call ChoiseDialog::~ChoiseDialog()";
+    delete ui;
     delete end_dialog;
+//    delete printConnection;
+//    delete t1Connection;
+//    delete t2Connection;
+//    delete t3Connection;
+//    delete t4Connection;
+
+//    delete otp1Connection;
+//    delete otp2Connection;
+//    delete otp3Connection;
+//    delete otp4Connection;
+
+//    delete btp1Connection;
+//    delete btp2Connection;
+//    delete btp3Connection;
+//    delete btp4Connection;
     QThread::currentThread()->msleep(300);
 }
 
 void ChoiseDialog::on_testButton_clicked()
 {
-    CreateWidgetThread(new StartMeasurement(new TestKo1, new CalibrationKo1));
-    this->hide();
-    widget->show();
-    widget->test();
+    TestKoAgr *test  = new TestKoAgr(new useE154, this);
+    test->exec();
+//    CreateWidgetThread(new StartMeasurement(new TestKo1, new CalibrationKo1));
+//    this->hide();
+//    widget->show();
+//    widget->test();
+
 }
 
 void ChoiseDialog::t_singeShotConntection(MetaObj *p, MetaObj *t1, MetaObj *t2, MetaObj *t3, MetaObj *t4, Ko_impl *ko, bool single)

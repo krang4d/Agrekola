@@ -25,48 +25,48 @@ Agr1::~Agr1()
     delete ui;
 }
 
-void Agr1::on_pushButton_calib_clicked()
-{
-//    bool a, b, c, d;
-//    if(ui->checkBox_calibCh1->isChecked()) a = true;
-//    else a = false;
-//    if(ui->checkBox_calibCh2->isChecked()) b = true;
-//    else b = false;
-//    if(ui->checkBox_calibCh3->isChecked()) c = true;
-//    else c = false;
-//    if(ui->checkBox_calibCh4->isChecked()) d = true;
-//    else d = false;
+//void Agr1::on_pushButton_calib_clicked()
+//{
+////    bool a, b, c, d;
+////    if(ui->checkBox_calibCh1->isChecked()) a = true;
+////    else a = false;
+////    if(ui->checkBox_calibCh2->isChecked()) b = true;
+////    else b = false;
+////    if(ui->checkBox_calibCh3->isChecked()) c = true;
+////    else c = false;
+////    if(ui->checkBox_calibCh4->isChecked()) d = true;
+////    else d = false;
 
-    bool e = !ui->lineEdit_calibTrombotsitSerial->text().isEmpty();
+//    bool e = !ui->lineEdit_calibTrombotsitSerial->text().isEmpty();
 
-    //bool c = (ui->doubleSpinBox_testIncubeTime->value() != NULL) && (ui->doubleSpinBox_testWriteTime->value() != NULL);
-    if( !e ) {
-        QMessageBox::information(this, "Внимание!", "Для того чтобы продолжить необходимо заполнить все поля с параметрами!");
-        return;
-    }
+//    //bool c = (ui->doubleSpinBox_testIncubeTime->value() != NULL) && (ui->doubleSpinBox_testWriteTime->value() != NULL);
+//    if( !e ) {
+//        QMessageBox::information(this, "Внимание!", "Для того чтобы продолжить необходимо заполнить все поля с параметрами!");
+//        return;
+//    }
 
-    QDate now = QDate::currentDate();
-    bool f = now <= ui->dateEdit_calibTrombotsit->date();
+//    QDate now = QDate::currentDate();
+//    bool f = now <= ui->dateEdit_calibTrombotsit->date();
 
-    if(!(f) ) {
-        QMessageBox::information(this, "Внимание!", "Проверьте срок годности используемых реагентов!");
-        return;
-    }
+//    if(!(f) ) {
+//        QMessageBox::information(this, "Внимание!", "Проверьте срок годности используемых реагентов!");
+//        return;
+//    }
 
-    c_agr1->setDate(QDate::currentDate());
-    c_agr1->setTrombotsit_date(ui->dateEdit_calibTrombotsit->date());
-    c_agr1->setTrombotsit_serial(ui->lineEdit_calibTrombotsitSerial->text());
-    c_agr1->setTrombotsit_concentration(ui->doubleSpinBox_calibTrombotsit->value());
-    c_agr1->setIncube_time(ui->doubleSpinBox_calibIncubeTime->value());
-    c_agr1->setWrite_time(ui->doubleSpinBox_calibWriteTime->value());
+//    c_agr1->setDate(QDate::currentDate());
+//    c_agr1->setTrombotsit_date(ui->dateEdit_calibTrombotsit->date());
+//    c_agr1->setTrombotsit_serial(ui->lineEdit_calibTrombotsitSerial->text());
+//    c_agr1->setTrombotsit_concentration(ui->doubleSpinBox_calibTrombotsit->value());
+//    c_agr1->setIncube_time(ui->doubleSpinBox_calibIncubeTime->value());
+//    c_agr1->setWrite_time(ui->doubleSpinBox_calibWriteTime->value());
 
-//    c_agr1->setK1(ui->checkBox_calibCh1->isChecked());
-//    c_agr1->setK2(ui->checkBox_calibCh2->isChecked());
-//    c_agr1->setK3(ui->checkBox_calibCh3->isChecked());
-//    c_agr1->setK4(ui->checkBox_calibCh4->isChecked());
-    c_agr1->save();
-    emit calibration(StartCalibrationAgr1::getStart(t_agr1, c_agr1));
-}
+////    c_agr1->setK1(ui->checkBox_calibCh1->isChecked());
+////    c_agr1->setK2(ui->checkBox_calibCh2->isChecked());
+////    c_agr1->setK3(ui->checkBox_calibCh3->isChecked());
+////    c_agr1->setK4(ui->checkBox_calibCh4->isChecked());
+//    c_agr1->save();
+//    emit calibration(StartCalibrationAgr1::getStart(t_agr1, c_agr1));
+//}
 
 void Agr1::on_pushButton_test_clicked()
 {  
@@ -175,11 +175,11 @@ void Agr1::open()
     ui->label_testCalibString->setText(str);
 //    ui->doubleSpinBox_calibIncubeTime_1->setValue(c_agr1->getIncube_time());
 //    ui->doubleSpinBox_calibIncubeTime_2->setValue(c_agr1->getIncube_time_2());
-    ui->doubleSpinBox_calibWriteTime->setValue(c_agr1->getWrite_time());
-    ui->doubleSpinBox_calibIncubeTime->setValue(c_agr1->getIncube_time());
-    ui->doubleSpinBox_calibTrombotsit->setValue(c_agr1->getTrombotsit_concentration());
-    ui->lineEdit_calibTrombotsitSerial->setText(c_agr1->getTrombotsit_serial());
-    ui->dateEdit_calibTrombotsit->setDate(c_agr1->getTrombotsit_date());
+//    ui->doubleSpinBox_calibWriteTime->setValue(c_agr1->getWrite_time());
+//    ui->doubleSpinBox_calibIncubeTime->setValue(c_agr1->getIncube_time());
+//    ui->doubleSpinBox_calibTrombotsit->setValue(c_agr1->getTrombotsit_concentration());
+//    ui->lineEdit_calibTrombotsitSerial->setText(c_agr1->getTrombotsit_serial());
+//    ui->dateEdit_calibTrombotsit->setDate(c_agr1->getTrombotsit_date());
 }
 
 void Agr1::close()
