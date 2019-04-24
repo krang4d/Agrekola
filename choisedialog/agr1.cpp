@@ -168,11 +168,11 @@ void Agr1::open()
     else {
         ui->checkBox_testCh4->setChecked(false);
     }
-    ui->groupBox_testCalib->setTitle(QString("Последняя калибровка: %1\n").arg(c_agr1->getDate().toString("dd.MM.yyyy")));
-    QString str = QString("Номер серия тромбоцитов %1\n").arg(c_agr1->getTrombotsit_serial())
-                + QString("Срок годности тромбоцитов %1\n").arg(c_agr1->getTrombotsit_date().toString("dd.MM.yyyy"))
-                + QString("Концентрация тромбоцитов в калибровочном растворе %1 (тромбоцитов/мкл)").arg(c_agr1->getTrombotsit_concentration());
-    ui->label_testCalibString->setText(str);
+//    ui->groupBox_testCalib->setTitle(QString("Последняя калибровка: %1\n").arg(c_agr1->getDate().toString("dd.MM.yyyy")));
+//    QString str = QString("Номер серия тромбоцитов %1\n").arg(c_agr1->getTrombotsit_serial())
+//                + QString("Срок годности тромбоцитов %1\n").arg(c_agr1->getTrombotsit_date().toString("dd.MM.yyyy"))
+//                + QString("Концентрация тромбоцитов в калибровочном растворе %1 (тромбоцитов/мкл)").arg(c_agr1->getTrombotsit_concentration());
+//    ui->label_testCalibString->setText(str);
 //    ui->doubleSpinBox_calibIncubeTime_1->setValue(c_agr1->getIncube_time());
 //    ui->doubleSpinBox_calibIncubeTime_2->setValue(c_agr1->getIncube_time_2());
 //    ui->doubleSpinBox_calibWriteTime->setValue(c_agr1->getWrite_time());
