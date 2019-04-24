@@ -32,7 +32,6 @@ ChoiseDialog::ChoiseDialog(QDialog *parent) :
 //    end_dialog->addButton(ok, QMessageBox::AcceptRole);
 //    end_dialog->addButton(cansel, QMessageBox::RejectRole);
 //    end_dialog->setIcon(QMessageBox::Information);
-    enddialog = new myDialog::EndDialog;
 
     connect(agr1, SIGNAL(measurement(StartMeasurement*)), SLOT(startMeasurement(StartMeasurement*)));
     connect(agr2, SIGNAL(measurement(StartMeasurement*)), SLOT(startMeasurement(StartMeasurement*)));
@@ -95,7 +94,6 @@ ChoiseDialog::~ChoiseDialog()
 
     qDebug() << "call ChoiseDialog::~ChoiseDialog()";
     delete ui;
-    //delete enddialog;
 //    delete printConnection;
 //    delete t1Connection;
 //    delete t2Connection;
@@ -156,7 +154,7 @@ void ChoiseDialog::t_singeShotConntection(MetaObj *p, MetaObj *t1, MetaObj *t2, 
 //                painter.end();
 //            }
 //        }
-        enddialog->setText(ko->t_print());
+        myDialog::EndDialog *enddialog = new myDialog::EndDialog(ko->t_print());
         enddialog->show();
         //DeleteWidgetThread();
         this->show();
@@ -214,7 +212,8 @@ void ChoiseDialog::c_singeShotConntection(MetaObj *p, MetaObj *t1, MetaObj *t2, 
         qDebug() << "Slot End";
         ko->setDate(QDate::currentDate(), Ko_impl::Calib_ID);
         ko->setTime(QTime::currentTime(), Ko_impl::Calib_ID);
-        enddialog->setText(ko->c_print());
+
+        myDialog::EndDialog *enddialog = new myDialog::EndDialog(ko->c_print());
         enddialog->show();
         //DeleteWidgetThread();
         this->show();

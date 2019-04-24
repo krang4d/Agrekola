@@ -2,9 +2,10 @@
 #include "ui_options.h"
 #include <QDoubleValidator>
 
-Options::Options(QWidget *parent) :
+Options::Options(ITools *tool, QDialog *parent) :
     QDialog(parent),
-    ui(new Ui::Options)
+    ui(new Ui::Options),
+    widget(tool)
 {
     ui->setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
@@ -13,15 +14,11 @@ Options::Options(QWidget *parent) :
     ui->lineEdit_StartDX->setInputMask("0.9");
     ui->lineEdit_MAX->setValidator(new QDoubleValidator(-5.1, 5.1, 2));
     ui->lineEdit_MIN->setValidator(new QDoubleValidator(-5.1, 5.1, 2));
-}
 
-void Options::setWidget(Widget *w)
-{
-    widget = w;
-    ui->lineEdit_StartDX->setText(QString("%1").arg(w->START_DX));
-    ui->lineEdit_StopDX->setText(QString("%1").arg(w->STOP_DX));
-    ui->lineEdit_MAX->setText(QString("%1").arg(w->MAX));
-    ui->lineEdit_MIN->setText(QString("%1").arg(w->MIN));
+    ui->lineEdit_StartDX->setText(QString("%1").arg(tool->getSTART_DX()));
+    ui->lineEdit_StopDX->setText(QString("%1").arg(tool->getSTOP_DX()));
+    ui->lineEdit_MAX->setText(QString("%1").arg(tool->getMAX()));
+    ui->lineEdit_MIN->setText(QString("%1").arg(tool->getMIN()));
 }
 
 Options::~Options()
@@ -31,23 +28,9 @@ Options::~Options()
 
 void Options::on_pushButton_Next_clicked()
 {
-    double max = ui->lineEdit_MAX->text().toDouble();
-    double min = ui->lineEdit_MIN->text().toDouble();
-    double start_dx = ui->lineEdit_StartDX->text().toDouble();
-    double stop_dx = ui->lineEdit_StopDX->text().toDouble();
-
-    widget->START_DX = start_dx;
-    widget->STOP_DX = stop_dx;
-    widget->MIN = min;
-    widget->MAX =max;
-    widget->customPlot1->yAxis->setRange(min, max);
-    widget->customPlot1->replot();
-    widget->customPlot2->yAxis->setRange(min, max);
-    widget->customPlot2->replot();
-    widget->customPlot3->yAxis->setRange(min, max);
-    widget->customPlot3->replot();
-    widget->customPlot4->yAxis->setRange(min, max);
-    widget->customPlot4->replot();
-    qDebug() << "Start_DX:" << widget->START_DX<< "Stop_DX: " << widget->STOP_DX << "MAX:" << widget->MAX << "MIN:" << widget->MIN;
+    widget->setSTART_DX(ui->lineEdit_StartDX->text().toDouble());
+    widget->setSTOP_DX(ui->lineEdit_StopDX->text().toDouble());
+    widget->setMIN(ui->lineEdit_MIN->text().toDouble());
+    widget->setMAX(ui->lineEdit_MAX->text().toDouble());
     close();
 }

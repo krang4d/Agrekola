@@ -47,9 +47,6 @@ public:
 
 //    QMessageBox     *end_dialog;
 //    QPrintDialog    *printDialog;
-    myDialog::EndDialog        *enddialog;
-    useE154         *agrekola;
-    Widget          *widget;
 
 private slots:
     void on_exitButton_clicked();
@@ -88,6 +85,9 @@ private:
     MetaObj *btp2Connection;
     MetaObj *btp3Connection;
     MetaObj *btp4Connection;
+
+    useE154 *agrekola;
+    Widget  *widget;
 };
 
 #endif // CHOISEDIALOG_H

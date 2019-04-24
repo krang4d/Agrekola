@@ -83,7 +83,8 @@ HEADERS  += selectcalibrationagr1.h \
     choisedialog/agr_impl.h \
     choisedialog/ko_impl.h \
     choisedialog/printer.h \
-    choisedialog/enddialog.h
+    choisedialog/enddialog.h \
+    itools.h
 
 FORMS    += \
     selectinductor.ui \

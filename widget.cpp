@@ -9,6 +9,7 @@
 #include <QtConcurrent>
 #include <functional>
 #include "useE154.h"
+
 //#define STOP_DX 0.1f
 //#define MIN -6.0f
 //#define MAX 6.0f
@@ -116,22 +117,15 @@ bool Widget::eventFilter(QObject *watched, QEvent *event)
         emit stop();
         return true; //QWidget::eventFilter(watched, event);
     }
-//    if(event->type() == QEvent::KeyPress) {
-//        qDebug() << "Event kayPress";
-//        QKeyEvent *kayEvent = static_cast<QKeyEvent *>(event);
-//        if(kayEvent->key() == Qt::Key_Enter) {
-//            bool b = ui->groupBox_Mix->isVisible();
-//            if(b) {
-//                ui->groupBox_Mix->setVisible(false);
-//                qDebug() << "setVisible(false)";
-//            }
-//            else {
-//                ui->groupBox_Mix->setVisible(true);
-//                qDebug() << "setVisible(true)";
-//            }
-//        }
-//        return QWidget::eventFilter(watched, event);
-//    }
+    if(event->type() == QEvent::KeyPress) {
+        qDebug() << "Event kayPress";
+        QKeyEvent *kayEvent = static_cast<QKeyEvent *>(event);
+        if(kayEvent->key() == Qt::Key_Enter) {
+            Options *tool = new Options(this);
+            tool->show();
+        }
+        return QWidget::eventFilter(watched, event);
+    }
     return QWidget::eventFilter(watched, event);
 }
 
@@ -974,6 +968,8 @@ void Widget::setupTimers()
                    .arg(dt.toString("dd.MM.yyyy")));
 }
 
+
+
 void Widget::setUserMessage(QString str, bool withtime, bool tofile)
 {
     if(withtime) {
@@ -1284,4 +1280,60 @@ void Widget::doScenario()
             QMessageBox::information(this, "Alert", "called default startMeasurment()");
             break;
     } //end switch
+}
+
+double Widget::getMAX() const
+{
+    return MAX;
+}
+
+void Widget::setMAX(double value)
+{
+    MAX = value;
+    customPlot1->yAxis->setRange(MIN, MAX);
+    customPlot1->replot();
+    customPlot2->yAxis->setRange(MIN, MAX);
+    customPlot2->replot();
+    customPlot3->yAxis->setRange(MIN, MAX);
+    customPlot3->replot();
+    customPlot4->yAxis->setRange(MIN, MAX);
+    customPlot4->replot();
+}
+
+double Widget::getMIN() const
+{
+    return MIN;
+}
+
+void Widget::setMIN(double value)
+{
+    MIN = value;
+    customPlot1->yAxis->setRange(MIN, MAX);
+    customPlot1->replot();
+    customPlot2->yAxis->setRange(MIN, MAX);
+    customPlot2->replot();
+    customPlot3->yAxis->setRange(MIN, MAX);
+    customPlot3->replot();
+    customPlot4->yAxis->setRange(MIN, MAX);
+    customPlot4->replot();
+}
+
+double Widget::getSTOP_DX() const
+{
+    return STOP_DX;
+}
+
+void Widget::setSTOP_DX(double value)
+{
+    STOP_DX = value;
+}
+
+double Widget::getSTART_DX() const
+{
+    return START_DX;
+}
+
+void Widget::setSTART_DX(double value)
+{
+    START_DX = value;
 }

@@ -22,12 +22,13 @@
 #include "state.h"
 #include "globalvalue.h"
 #include "selectinductor.h"
+#include "itools.h"
 
 namespace Ui {
 class Widget;
 }
 
-class Widget : public QWidget
+class Widget : public QWidget, public ITools
 {
     Q_OBJECT
 
@@ -44,8 +45,17 @@ public:
     void stopData(Channel_ID);
     bool isData(Channel_ID);
 
-signals:
+    // ITools interface
+    double getSTART_DX() const override;
+    void setSTART_DX(double value) override;
+    double getSTOP_DX() const override;
+    void setSTOP_DX(double value) override;
+    double getMIN() const override;
+    void setMIN(double value) override;
+    double getMAX() const override;
+    void setMAX(double value) override;
 
+signals:
     //сигналы управления потоком E154
     void onmixch1(bool);    ///вкл/выкл перемешивания канал 1
     void onmixch2(bool);    ///вкл/выкл перемешивания канал 2
@@ -108,7 +118,6 @@ public slots:
 
 private slots:
     void on_pushButton_clicked();
-
     void realtimeDataSlot(QVariantList);
     void updataTermo(bool);
     void updateTime();
@@ -139,8 +148,7 @@ private:
     double START_DX; //порог запуска
     double STOP_DX;  //порог остановки
     double MIN, MAX; //минимум и максимум на графике
-
-    friend class Options;
+    //friend class Options;
 
     // QWidget interface
 protected:

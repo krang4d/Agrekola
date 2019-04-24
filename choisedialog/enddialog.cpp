@@ -3,7 +3,7 @@
 
 using namespace myDialog;
 
-EndDialog::EndDialog(QWidget *parent) :
+EndDialog::EndDialog(const QString &str ,QWidget *parent) :
     QWidget(parent),
     ui(new Ui::EndDialog)
 {
@@ -21,16 +21,13 @@ EndDialog::EndDialog(QWidget *parent) :
 
     printer = new QPrinter;
     printDialog = new QPrintDialog(printer, this);
+
+    ui->label->setText(str);
 }
 
 EndDialog::~EndDialog()
 {
     delete ui;
-}
-
-void EndDialog::setText(const QString &str)
-{
-    ui->label->setText(str);
 }
 
 void EndDialog::on_pushButton_print_clicked()
