@@ -2,6 +2,7 @@
 #define ENDDIALOG_H
 
 #include <QWidget>
+#include <QDialog>
 #include <QPrintDialog>
 #include <QPainter>
 #include <qcustomplot.h>
@@ -10,7 +11,7 @@ namespace Ui {
 class EndDialog;
 }
 namespace myDialog {
-class EndDialog : public QWidget
+class EndDialog : public QDialog
 {
     Q_OBJECT
 

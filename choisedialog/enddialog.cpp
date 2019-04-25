@@ -4,7 +4,7 @@
 using namespace myDialog;
 
 EndDialog::EndDialog(const QString &str ,QWidget *parent) :
-    QWidget(parent),
+    QDialog(parent),
     ui(new Ui::EndDialog)
 {
     ui->setupUi(this);

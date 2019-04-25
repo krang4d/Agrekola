@@ -66,16 +66,16 @@ void ChoiseDialog::CreateWidgetThread(StartMeasurement *sm)
     QWidget::connect(widget, SIGNAL(onmixch4(bool)), agrekola, SLOT(onMixCh4(bool)));
     QWidget::connect(widget, SIGNAL(onmixpp(bool)), agrekola, SLOT(onMixPP(bool)));
     QWidget::connect(widget, SIGNAL(onlaser(bool)), agrekola, SLOT(onLaser(bool)));
-    QObject::connect(widget, SIGNAL(stop()), agrekola, SLOT(stopThread()));
-    QObject::connect(widget, SIGNAL(stop()), widget, SLOT(deleteLater()));
-    QObject::connect(widget, &Widget::stop, [=](){ show(); });
+
+    //QObject::connect(widget, SIGNAL(stop()), widget, SLOT(deleteLater()));
 
     QWidget::connect(agrekola, SIGNAL(update_termo(bool)), widget, SLOT(updataTermo(bool)));
     QWidget::connect(agrekola, SIGNAL(value_come(QVariantList)), widget, SLOT(realtimeDataSlot(QVariantList)));
-    QWidget::connect(agrekola, SIGNAL(finished()), agrekola, SLOT(deleteLater()));
 
-    QWidget::connect(widget, SIGNAL(destroyed(QObject*)), agrekola, SLOT(deleteLater()));
-
+    QObject::connect(widget, SIGNAL(stop()), agrekola, SLOT(stopThread()));
+    QObject::connect(widget, &Widget::stop, [=](){ show(); });
+    QWidget::connect(widget, SIGNAL(destroyed(QObject*)), agrekola, SLOT(stopThread()));
+    //QWidget::connect(agrekola, SIGNAL(finished()), agrekola, SLOT(deleteLater()));
 
     widget->setWindowFlags(Qt::Dialog);
     agrekola->start();
@@ -154,8 +154,8 @@ void ChoiseDialog::t_singeShotConntection(MetaObj *p, MetaObj *t1, MetaObj *t2, 
 //                painter.end();
 //            }
 //        }
-        myDialog::EndDialog *enddialog = new myDialog::EndDialog(ko->t_print());
-        enddialog->show();
+        myDialog::EndDialog *enddialog = new myDialog::EndDialog(ko->t_print(), this);
+        enddialog->exec();
         //DeleteWidgetThread();
         this->show();
     });
@@ -213,8 +213,8 @@ void ChoiseDialog::c_singeShotConntection(MetaObj *p, MetaObj *t1, MetaObj *t2, 
         ko->setDate(QDate::currentDate(), Ko_impl::Calib_ID);
         ko->setTime(QTime::currentTime(), Ko_impl::Calib_ID);
 
-        myDialog::EndDialog *enddialog = new myDialog::EndDialog(ko->c_print());
-        enddialog->show();
+        myDialog::EndDialog *enddialog = new myDialog::EndDialog(ko->c_print(), this);
+        enddialog->exec();
         //DeleteWidgetThread();
         this->show();
     });
