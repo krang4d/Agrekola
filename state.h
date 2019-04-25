@@ -40,6 +40,7 @@ public:
     void reset();
     QString getMessage();
     int getLevel();
+    void doState(State_ID st);
 
 signals:
     void stateChanged();
@@ -56,6 +57,7 @@ class StateKo1 : public State
 {
 public:
     explicit StateKo1();
+    void doScenario();
 };
 
 class StateKo2 : public State

@@ -84,7 +84,8 @@ HEADERS  += selectcalibrationagr1.h \
     choisedialog/ko_impl.h \
     choisedialog/printer.h \
     choisedialog/enddialog.h \
-    itools.h
+    itools.h \
+    iscenario.h
 
 FORMS    += \
     selectinductor.ui \

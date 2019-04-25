@@ -54,6 +54,45 @@ int State::getLevel()
     return level;
 }
 
+void State::doState(State_ID st)
+{
+    switch (st) {
+    case MotorON_ID:
+        break;
+    case MotorOFF_ID:
+        break;
+    case LaserON_ID:
+        break;
+    case LaserOFF_ID:
+        break;
+    case Ko_ID:
+        break;
+    case Agr_ID:
+        break;
+    case Avg_ID:
+        break;
+    case Btp_ID:
+        break;
+    case Otp_ID:
+        break;
+    case Calc_ID:
+        break;
+    case Write_ID:
+        break;
+    case Incubation1_ID:
+        break;
+    case Incubation2_ID:
+        break;
+    case SelectInductor_ID:
+        break;
+    case End_ID:
+        break;
+    default:
+        break;
+    next();
+    }
+}
+
 StateKo1::StateKo1()
 {
     insertState(Incubation1_ID, "Инкубация 1");
@@ -61,6 +100,11 @@ StateKo1::StateKo1()
     insertState(Calc_ID,        "Расчет");
     insertState(Write_ID,       "Запись");
     insertState(End_ID,         "Конец");
+}
+
+void StateKo1::doScenario()
+{
+
 }
 
 StateKo2::StateKo2()
@@ -135,19 +179,6 @@ StateAgr2::StateAgr2()
     insertState(MotorOFF_ID,    "Выключение двигателей");
     insertState(Calc_ID, "Расчет");
     insertState(End_ID,  "Конец");
-}
-
-StateCalAgr2::StateCalAgr2()
-{
-    insertState(LaserON_ID,     "Включение лазеров");
-    insertState(MotorON_ID,     "Включение двигателей");
-    insertState(Incubation1_ID, "Инкубация");
-    insertState(Agr_ID,          "Сбор данных");
-    insertState(LaserOFF_ID,    "Выключение лазеров");
-    insertState(MotorOFF_ID,    "Выключение двигателей");
-    insertState(Calc_ID,        "Расчет");
-    insertState(Write_ID,       "Запись");
-    insertState(End_ID,         "Конец");
 }
 
 StateCalKo1::StateCalKo1()
@@ -227,6 +258,19 @@ StateCalAgr1::StateCalAgr1()
     insertState(Incubation1_ID, "Инкубация");
     insertState(Otp_ID,         "Фиксация «0%» уровня");      //"Установите пробы с ОТП в рабочие  каналы"
     insertState(Agr_ID,         "Определение параметров агрегации");      //"Установите пробы с ОТП в рабочие  каналы"
+    insertState(Calc_ID,        "Расчет");
+    insertState(Write_ID,       "Запись");
+    insertState(End_ID,         "Конец");
+}
+
+StateCalAgr2::StateCalAgr2()
+{
+    insertState(LaserON_ID,     "Включение лазеров");
+    insertState(MotorON_ID,     "Включение двигателей");
+    insertState(Incubation1_ID, "Инкубация");
+    insertState(Agr_ID,          "Сбор данных");
+    insertState(LaserOFF_ID,    "Выключение лазеров");
+    insertState(MotorOFF_ID,    "Выключение двигателей");
     insertState(Calc_ID,        "Расчет");
     insertState(Write_ID,       "Запись");
     insertState(End_ID,         "Конец");

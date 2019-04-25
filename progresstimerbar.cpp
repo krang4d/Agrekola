@@ -8,6 +8,7 @@ ProgressTimerBar::ProgressTimerBar(QWidget *parent) :
     func(nullptr)
 {
     ui->setupUi(this);
+    //ui->progressBar->setInvertedAppearance(true);
     ui->progressBar->setValue(0);
     ui->progressBar->setFormat("В ожидании");
     ui->progressBar->setMaximum(0);
@@ -72,7 +73,7 @@ void ProgressTimerBar::updateProgress()
 {
     //ui->progressBar->setMaximum(progress_t-progressTimer.interval());
     if(ui->progressBar->value() < ui->progressBar->maximum()) {
-        ui->progressBar->setValue(ui->progressBar->value()+progressTimer.interval());
+        ui->progressBar->setValue((ui->progressBar->value()+progressTimer.interval()));
     }
     else {
         progressTimer.stop();

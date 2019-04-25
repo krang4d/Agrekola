@@ -3,10 +3,13 @@
 #include <QDebug>
 
 ImpuleWaiter::ImpuleWaiter(QWidget *parent) :
-    QWidget(parent),
+    QDialog(parent),
     ui(new Ui::ImpuleWaiter),
     count(0)
 {
+    setWindowFlags(Qt::Window | Qt::MSWindowsFixedSizeDialogHint);
+    setWindowModality(Qt::WindowModal);
+    setAttribute(Qt::WA_DeleteOnClose);
     ui->setupUi(this);
     ui->pushButton_1->setEnabled(false);
     ui->pushButton_2->setEnabled(false);
@@ -28,7 +31,8 @@ void ImpuleWaiter::startWait()
 {
     connect(&loop, SIGNAL(timeout()), SLOT(loopslot()));
     loop.start(300);
-    show();
+    //show();
+    exec();
 }
 
 void ImpuleWaiter::addWaiter(int n)

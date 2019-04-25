@@ -103,7 +103,7 @@ void Widget::setupWidget()
 
 Widget::~Widget()
 {
-    emit stop();
+    //emit stop();
     delete ui;
 }
 
@@ -438,13 +438,6 @@ void Widget::onMotor(Channel_ID c, bool arg)
     }
 }
 
-void Widget::onLazer(bool arg)
-{
-    if(arg) setUserMessage("Включение питания лазеров каждого из каналов");
-    else setUserMessage("Выключение питания лазеров каждого из каналов");
-    emit onlaser(arg);
-}
-
 void Widget::test()
 {
     //Test
@@ -672,14 +665,14 @@ void Widget::startIncub(int num, double time_s, std::function<void(void)> timeou
             if(!b) {
                 b = true;
                 pBar2->startProgress(QString("Инкубация %1 c %p%").arg(time_s), time_ms, timeout_fun);
-            } else pBar1->startProgress(QString("Инкубация %1 c %p%").arg(time_s), time_ms);
+            } else pBar2->startProgress(QString("Инкубация %1 c %p%").arg(time_s), time_ms);
         }
         if (startWin->isChannel(Channel3_ID)) {
             if(!b) {
                 b = true;
                 pBar3->startProgress(QString("Инкубация %1 c %p%").arg(time_s), time_ms, timeout_fun);
-            }
-        } else pBar3->startProgress(QString("Инкубация %1 c %p%").arg(time_s), time_ms);
+            } else pBar3->startProgress(QString("Инкубация %1 c %p%").arg(time_s), time_ms);
+        }
         if (startWin->isChannel(Channel4_ID)) {
             if(!b) {
                 b = true;
@@ -968,8 +961,6 @@ void Widget::setupTimers()
                    .arg(dt.toString("dd.MM.yyyy")));
 }
 
-
-
 void Widget::setUserMessage(QString str, bool withtime, bool tofile)
 {
     if(withtime) {
@@ -1023,114 +1014,32 @@ void Widget::on_pushButton_clicked()
 
 void Widget::doScenario()
 {
+    ui->pushButton->setEnabled(false);
     //static QPointer<ImpuleWaiter> iw;
     static int i = 0;
     QString s =  state->getMessage();
     setUserMessage(s);
     QPointer<SelectInductor> si = new SelectInductor(this);
-    QMessageBox::information(this, "", s);
+    ///QMessageBox::information(this, "", s);
     switch(state->current()) {
         case Btp_ID:
-            if (startWin->isChannel(Channel1_ID)) {
-                i++;
-                getData(Channel1_ID, startWin->getBtp_time());
-                connect(this, &Widget::done1, [this]() {
-                    i--;
-                    disconnect(this, &Widget::done1, 0, 0);
-                    emit btp_value1(calcData(Channel1_ID, Level_ID));
-                    if (!i) { state->next(); qDebug() << "Btp done1"; }
-                });
-            }
-
-            if (startWin->isChannel(Channel2_ID)) {
-                i++;
-                getData(Channel2_ID, startWin->getBtp_time());
-                connect(this, &Widget::done2, [this]() {
-                    i--;
-                    disconnect(this, &Widget::done2, 0, 0);
-                    emit btp_value2(calcData(Channel2_ID, Level_ID));
-                    if (!i) { state->next(); qDebug() << "Btp done2"; }
-                });
-            }
-            if (startWin->isChannel(Channel3_ID)) {
-                i++;
-                getData(Channel3_ID, startWin->getBtp_time());
-                connect(this, &Widget::done3, [this]() {
-                    i--;
-                    disconnect(this, &Widget::done3, 0, 0);
-                    emit btp_value3(calcData(Channel3_ID, Level_ID));
-                    if (!i) { state->next(); qDebug() << "Btp done3"; }
-                });
-            }
-            if (startWin->isChannel(Channel4_ID)) {
-                i++;
-                getData(Channel4_ID, startWin->getBtp_time());
-                connect(this, &Widget::done4, [this]() {
-                    i--;
-                    disconnect(this, &Widget::done4, 0, 0);
-                    emit btp_value4(calcData(Channel4_ID, Level_ID));
-                    if (!i) { state->next(); qDebug() << "Btp done4"; }
-                });
-            }
+            getBTP();
             break;
         case Otp_ID:
-            if (startWin->isChannel(Channel1_ID)) {
-                i++;
-                getData(Channel1_ID, startWin->getOtp_time());
-                connect(this, &Widget::done1, [this]() {
-                    i--;
-                    disconnect(this, &Widget::done1, 0, 0);
-                    emit otp_value1(calcData(Channel1_ID, Level_ID));
-                    if (!i) { state->next(); qDebug() << "Otp done1"; }
-                });
-            }
-            if (startWin->isChannel(Channel2_ID)) {
-                i++;
-                getData(Channel2_ID, startWin->getOtp_time());
-                connect(this, &Widget::done2, [this]() {
-                    i--;
-                    disconnect(this, &Widget::done2, 0, 0);
-                    emit otp_value2(calcData(Channel2_ID, Level_ID));
-                    if (!i) { state->next(); qDebug() << "Otp done2"; }
-                });
-            }
-            if (startWin->isChannel(Channel3_ID)) {
-                i++;
-                getData(Channel3_ID, startWin->getOtp_time());
-                connect(this, &Widget::done3, [this]() {
-                    i--;
-                    disconnect(this, &Widget::done3, 0, 0);
-                    emit otp_value3(calcData(Channel3_ID, Level_ID));
-                    if (!i) { state->next(); qDebug() << "Otp done3"; }
-                });
-            }
-            if (startWin->isChannel(Channel4_ID)) {
-                i++;
-                getData(Channel4_ID, startWin->getOtp_time());
-                connect(this, &Widget::done4, [this]() {
-                    i--;
-                    disconnect(this, &Widget::done4, 0, 0);
-                    emit otp_value4(calcData(Channel4_ID, startWin->getModeID()));
-                    if (!i) { state->next(); qDebug() << "Otp done4"; }
-                });
-            }
+            getOTP();
             break;
         case MotorON_ID:
-            if(startWin->isChannel(Channel1_ID)) onMotor(Channel1_ID, true);
-            if(startWin->isChannel(Channel2_ID)) onMotor(Channel2_ID, true);
-            if(startWin->isChannel(Channel3_ID)) onMotor(Channel3_ID, true);
-            if(startWin->isChannel(Channel4_ID)) onMotor(Channel4_ID, true);
+            onMixChls(true);
+            onMixPP(true);
             state->next();
             break;
         case MotorOFF_ID:
-            if(startWin->isChannel(Channel1_ID)) onMotor(Channel1_ID, false);
-            if(startWin->isChannel(Channel2_ID)) onMotor(Channel2_ID, false);
-            if(startWin->isChannel(Channel3_ID)) onMotor(Channel3_ID, false);
-            if(startWin->isChannel(Channel4_ID)) onMotor(Channel4_ID, false);
+            onMixChls(false);
+            onMixPP(false);
             state->next();
             break;
         case LaserON_ID:
-            onlaser(true);
+            onLazer(true);
             state->next();
             break;
         case LaserOFF_ID:
@@ -1180,7 +1089,7 @@ void Widget::doScenario()
                 //getData(Channel4_ID, startWin->getTimeWrite());
                 //emit ret_value4(calcData(Channel1_ID, startWin->getModeID()));
             }
-            waitImpulse(new ImpuleWaiter);
+            waitImpulse(new ImpuleWaiter(this));
             break;
         case Calc_ID:
             if(single) {
@@ -1252,7 +1161,7 @@ void Widget::doScenario()
             break;
         case Agr_ID:
             waitImpulse(new ImpuleWaiter);
-            state->reset();
+            state->next();
             break;
         case Incubation1_ID:
             startIncub(1, startWin->getTimeIncube(1), [this]() {
@@ -1336,4 +1245,154 @@ double Widget::getSTART_DX() const
 void Widget::setSTART_DX(double value)
 {
     START_DX = value;
+}
+
+
+void Widget::getBTP()
+{
+    static int i = 0;
+    if (startWin->isChannel(Channel1_ID)) {
+        i++;
+        getData(Channel1_ID, startWin->getBtp_time());
+        connect(this, &Widget::done1, [this]() {
+            i--;
+            disconnect(this, &Widget::done1, 0, 0);
+            emit btp_value1(calcData(Channel1_ID, Level_ID));
+            if (!i) { state->next(); qDebug() << "Btp done1"; }
+        });
+    }
+
+    if (startWin->isChannel(Channel2_ID)) {
+        i++;
+        getData(Channel2_ID, startWin->getBtp_time());
+        connect(this, &Widget::done2, [this]() {
+            i--;
+            disconnect(this, &Widget::done2, 0, 0);
+            emit btp_value2(calcData(Channel2_ID, Level_ID));
+            if (!i) { state->next(); qDebug() << "Btp done2"; }
+        });
+    }
+    if (startWin->isChannel(Channel3_ID)) {
+        i++;
+        getData(Channel3_ID, startWin->getBtp_time());
+        connect(this, &Widget::done3, [this]() {
+            i--;
+            disconnect(this, &Widget::done3, 0, 0);
+            emit btp_value3(calcData(Channel3_ID, Level_ID));
+            if (!i) { state->next(); qDebug() << "Btp done3"; }
+        });
+    }
+    if (startWin->isChannel(Channel4_ID)) {
+        i++;
+        getData(Channel4_ID, startWin->getBtp_time());
+        connect(this, &Widget::done4, [this]() {
+            i--;
+            disconnect(this, &Widget::done4, 0, 0);
+            emit btp_value4(calcData(Channel4_ID, Level_ID));
+            if (!i) { state->next(); qDebug() << "Btp done4"; }
+        });
+    }
+}
+
+void Widget::getOTP()
+{
+    static int i = 0;
+    if (startWin->isChannel(Channel1_ID)) {
+        i++;
+        getData(Channel1_ID, startWin->getOtp_time());
+        connect(this, &Widget::done1, [this]() {
+            i--;
+            disconnect(this, &Widget::done1, 0, 0);
+            emit otp_value1(calcData(Channel1_ID, Level_ID));
+            if (!i) { state->next(); qDebug() << "Otp done1"; }
+        });
+    }
+    if (startWin->isChannel(Channel2_ID)) {
+        i++;
+        getData(Channel2_ID, startWin->getOtp_time());
+        connect(this, &Widget::done2, [this]() {
+            i--;
+            disconnect(this, &Widget::done2, 0, 0);
+            emit otp_value2(calcData(Channel2_ID, Level_ID));
+            if (!i) { state->next(); qDebug() << "Otp done2"; }
+        });
+    }
+    if (startWin->isChannel(Channel3_ID)) {
+        i++;
+        getData(Channel3_ID, startWin->getOtp_time());
+        connect(this, &Widget::done3, [this]() {
+            i--;
+            disconnect(this, &Widget::done3, 0, 0);
+            emit otp_value3(calcData(Channel3_ID, Level_ID));
+            if (!i) { state->next(); qDebug() << "Otp done3"; }
+        });
+    }
+    if (startWin->isChannel(Channel4_ID)) {
+        i++;
+        getData(Channel4_ID, startWin->getOtp_time());
+        connect(this, &Widget::done4, [this]() {
+            i--;
+            disconnect(this, &Widget::done4, 0, 0);
+            emit otp_value4(calcData(Channel4_ID, startWin->getModeID()));
+            if (!i) { state->next(); qDebug() << "Otp done4"; }
+        });
+    }
+}
+
+void Widget::onMixChls(bool b)
+{
+    if(startWin->isChannel(Channel1_ID))
+        onMotor(Channel1_ID, b);
+    if(startWin->isChannel(Channel2_ID))
+        onMotor(Channel2_ID, b);
+    if(startWin->isChannel(Channel3_ID))
+        onMotor(Channel3_ID, b);
+    if(startWin->isChannel(Channel4_ID))
+        onMotor(Channel4_ID, b);
+}
+
+void Widget::onMixPP(bool b)
+{
+    onMotor(ChannelPP_ID, b);
+}
+
+void Widget::onLazer(bool b)
+{
+    if(b) setUserMessage("Включение питания лазеров каждого из каналов");
+    else setUserMessage("Выключение питания лазеров каждого из каналов");
+    emit onlaser(b);
+}
+
+void Widget::incubation1()
+{
+
+}
+
+void Widget::incubation2()
+{
+}
+
+void Widget::selectInductor()
+{
+}
+
+void Widget::finish()
+{
+
+}
+
+void Widget::agr()
+{
+}
+
+void Widget::ko()
+{
+}
+
+void Widget::calc()
+{
+}
+
+void Widget::write()
+{
 }

@@ -23,19 +23,20 @@
 #include "globalvalue.h"
 #include "selectinductor.h"
 #include "itools.h"
+#include "iscenario.h"
 
 namespace Ui {
 class Widget;
 }
 
-class Widget : public QWidget, public ITools
+class Widget : public QWidget, public ITools, public IScenario
 {
     Q_OBJECT
 
 public:
     explicit Widget(StartMeasurement *sm, QWidget *parent = 0);
     ~Widget();
-    void setupWidget();
+
     void setUserMessage(QString, bool withtime = true, bool tofile = true);
 
     inline bool isSensorReady() {
@@ -54,6 +55,45 @@ public:
     void setMIN(double value) override;
     double getMAX() const override;
     void setMAX(double value) override;
+
+    // IScenario interface
+    void getBTP() override;
+    void getOTP() override;
+    void onMixChls(bool) override;
+    void onMixPP(bool) override;
+    void onLazer(bool) override;
+    void incubation1() override;
+    void incubation2() override;
+    void selectInductor() override;
+    void finish() override;
+    void agr() override;
+    void ko() override;
+    void calc() override;
+    void write() override;
+
+private:
+    void setupRealtimeData(bool single);
+    void setupTimers();
+    void setupWidget();
+
+public slots:
+    void startIncub(int num, double time_s, std::function<void(void)> timeout_fun = NULL);
+    void getData(Channel_ID, double time_s);
+    double calcData(Channel_ID, Mode_ID);
+    void writeMapData(Channel_ID);
+    void incubeTimeout_1();
+    void incubeTimeout_2();
+    void waitImpulse(ImpuleWaiter *iw);
+    void onMotor(Channel_ID, bool arg);
+    void test();
+
+private slots:
+    void on_pushButton_clicked();
+    void realtimeDataSlot(QVariantList);
+    void updataTermo(bool);
+    void updateTime();
+    void doScenario();
+
 
 signals:
     //сигналы управления потоком E154
@@ -102,28 +142,6 @@ signals:
     void done();
     void incube_timeout();
     void end();
-
-public slots:
-    void startIncub(int num, double time_s, std::function<void(void)> timeout_fun = NULL);
-    void getData(Channel_ID, double time_s);
-    double calcData(Channel_ID, Mode_ID);
-    void writeMapData(Channel_ID);
-    void incubeTimeout_1();
-    void incubeTimeout_2();
-    void waitImpulse(ImpuleWaiter *iw);
-
-    void onMotor(Channel_ID, bool arg);
-    void onLazer(bool arg);
-    void test();
-
-private slots:
-    void on_pushButton_clicked();
-    void realtimeDataSlot(QVariantList);
-    void updataTermo(bool);
-    void updateTime();
-    void doScenario();
-    void setupRealtimeData(bool single);
-    void setupTimers();
 
 private:
     Ui::Widget *ui;

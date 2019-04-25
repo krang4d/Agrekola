@@ -2,13 +2,14 @@
 #define IMPULEWAITER_H
 
 #include <QWidget>
+#include <QDialog>
 #include <QTimer>
 
 namespace Ui {
 class ImpuleWaiter;
 }
 
-class ImpuleWaiter : public QWidget
+class ImpuleWaiter : public QDialog
 {
     Q_OBJECT
 
