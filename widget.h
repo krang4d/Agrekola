@@ -62,12 +62,12 @@ public:
     void onMixChls(bool) override;
     void onMixPP(bool) override;
     void onLazer(bool) override;
-    void incubation1() override;
-    void incubation2() override;
-    void selectInductor() override;
+    void incubation1(State*) override;
+    void incubation2(State*) override;
+    void selectInductor(State*) override;
     void finish() override;
     void agr() override;
-    void ko() override;
+    void ko(State*) override;
     void calc() override;
     void write() override;
 

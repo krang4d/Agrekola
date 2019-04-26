@@ -7,6 +7,7 @@ SelectInductor::SelectInductor(QWidget *parent) :
     ui(new Ui::SelectInductor)
 {
     ui->setupUi(this);
+    setAttribute(Qt::WA_DeleteOnClose);
 }
 
 SelectInductor::~SelectInductor()
@@ -23,13 +24,11 @@ void SelectInductor::on_radioButton_other_toggled(bool checked)
 
 void SelectInductor::on_pushButton_ok_clicked()
 {
-    QMessageBox msg;
     if(ui->radioButton_other->isChecked() && (ui->lineEdit_other->text().isEmpty())){
-            QMessageBox msg;
-            msg.setIcon(QMessageBox::Information);
-            msg.setText(tr("Внимание!"));
-            msg.setInformativeText(tr("Пожалуйста введите название индуктора."));
-            msg.exec();
+        QMessageBox::information(this ,"Внимание!", "Пожалуйста введите название индуктора.");
     }
-    else {msg.setText("OK"); msg.exec();}
+    else {
+        accept();
+        //msg.setText("OK"); msg.exec();
+    }
 }
