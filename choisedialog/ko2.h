@@ -76,6 +76,7 @@ private:
     Ui::Ko2 *ui;
     TestKo2 *t_ko2, *t_ko2_1, *t_ko2_2;
     CalibrationKo2 *c_ko2;
+    Ko_impl::Mode_ID mode;
 
 //    friend class StartTestKo2;
 //    friend class StartCalibrationKo2;

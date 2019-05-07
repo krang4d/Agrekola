@@ -408,6 +408,7 @@ void Ko2::on_lineEdit_test2Ch3_textChanged(const QString &arg1)
 
 void Ko2::on_pushButton_test1_clicked()
 {
+    mode = Ko_impl::TestKo2_ID;
     bool a, b, c, d;
     if(ui->checkBox_test1Ch1->isChecked()) {
         if(!ui->lineEdit_test1Ch1->text().isEmpty()) a = true;
@@ -465,6 +466,7 @@ void Ko2::on_pushButton_test1_clicked()
 
 void Ko2::on_pushButton_test2_clicked()
 {
+    mode = Ko_impl::TestKo2_ID;
     bool a, b, c, d;
     if(ui->checkBox_test2Ch1->isChecked()) {
         if(!ui->lineEdit_test2Ch1->text().isEmpty()) a = true;
@@ -535,6 +537,7 @@ void Ko2::on_pushButton_calib_clicked()
 //    bool c = ui->checkBox_calibCh3->isChecked();
 //    bool d = ui->checkBox_calibCh4->isChecked();
 
+    mode = Ko_impl::CalibKo2_ID;
     bool e = !ui->lineEdit_calibKPlazmaSerial->text().isEmpty();
     bool f = !ui->lineEdit_calibReagentSerial->text().isEmpty();
 

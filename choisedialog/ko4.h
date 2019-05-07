@@ -95,6 +95,7 @@ private:
     CalibrationKo4_1 *c_ko4_1;  //параметры калибровка с активностью тромбина 1
     CalibrationKo4_2 *c_ko4_2;  //параметры калибровка с активностью тромбина 2
     CalibrationKo4_3 *c_ko4_3;  //параметры калибровка с активностью тромбина 3
+    Ko_impl::Mode_ID mode;
 };
 
 class StartCalibrationKo4 : public StartMeasurement

@@ -70,6 +70,7 @@ Agr1::~Agr1()
 
 void Agr1::on_pushButton_test_clicked()
 {  
+    mode = Ko_impl::TestAgr1_ID;
     bool a, b, c, d;
     if(ui->checkBox_testCh1->isChecked()) {
         if(!ui->lineEdit_testCh1->text().isEmpty()) a = true;
@@ -339,42 +340,42 @@ void Agr1::calibrationData2_4Come(double value, int i)
     }
 }
 
-void Agr1::btp1Come(double value)
+void Agr1::btp1Come(double value, SaveTo save)
 {
     c_agr1->setBTP1(value);
 }
 
-void Agr1::btp2Come(double value)
+void Agr1::btp2Come(double value, SaveTo save)
 {
     c_agr1->setBTP2(value);
 }
 
-void Agr1::btp3Come(double value)
+void Agr1::btp3Come(double value, SaveTo save)
 {
     c_agr1->setBTP3(value);
 }
 
-void Agr1::btp4Come(double value)
+void Agr1::btp4Come(double value, SaveTo save)
 {
     c_agr1->setBTP4(value);
 }
 
-void Agr1::otp1Come(double value)
+void Agr1::otp1Come(double value, SaveTo save)
 {
     c_agr1->setOTP1(value);
 }
 
-void Agr1::otp2Come(double value)
+void Agr1::otp2Come(double value, SaveTo save)
 {
     c_agr1->setOTP2(value);
 }
 
-void Agr1::otp3Come(double value)
+void Agr1::otp3Come(double value, SaveTo save)
 {
     c_agr1->setOTP3(value);
 }
 
-void Agr1::otp4Come(double value)
+void Agr1::otp4Come(double value, SaveTo save)
 {
     c_agr1->setOTP4(value);
 }

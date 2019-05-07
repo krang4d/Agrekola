@@ -63,15 +63,15 @@ public slots:
     void calibrationData1_2Come(double, int) override;
     void calibrationData2_4Come(double, int) override;
 
-    void btp1Come(double) override;
-    void btp2Come(double) override;
-    void btp3Come(double) override;
-    void btp4Come(double) override;
+    void btp1Come(double, SaveTo) override;
+    void btp2Come(double, SaveTo) override;
+    void btp3Come(double, SaveTo) override;
+    void btp4Come(double, SaveTo) override;
 
-    void otp1Come(double) override;
-    void otp2Come(double) override;
-    void otp3Come(double) override;
-    void otp4Come(double) override;
+    void otp1Come(double, SaveTo) override;
+    void otp2Come(double, SaveTo) override;
+    void otp3Come(double, SaveTo) override;
+    void otp4Come(double, SaveTo) override;
 
 signals:
     void measurement(StartMeasurement*);
@@ -81,6 +81,7 @@ private:
     Ui::Agr1 *ui;
     TestAgr1 *t_agr1;
     CalibrationAgr1 *c_agr1;
+    Ko_impl::Mode_ID mode;
 };
 
 class StartCalibrationAgr1 : public StartMeasurement

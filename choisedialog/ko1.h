@@ -55,6 +55,13 @@ public slots:
     void calibrationData1_2Come(double, int) override {}
     void calibrationData2_4Come(double, int) override {}
 
+//    Mode_ID getModeID() const override;
+//    bool isSingle() override;
+//    bool isChannel(Channel_ID) override;
+//    QString getNum(const int ch) override;
+//    double getTimeWrite() override;
+//    double getTimeIncube(int) override;
+
 signals:
     void measurement(StartMeasurement*);
 
@@ -62,6 +69,7 @@ private:
     Ui::Ko1 *ui;
     TestKo1 *t_ko1;
     CalibrationKo1 *c_ko1;
+    Ko_impl::Mode_ID mode;
 };
 
 class StartTestKo1 : public StartMeasurement

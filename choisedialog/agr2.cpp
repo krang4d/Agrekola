@@ -138,6 +138,7 @@ void Agr2::close()
 
 void Agr2::on_pushButton_test_clicked()
 {
+    mode = Ko_impl::TestAgr2_ID;
     bool a, b, c, d;
     if(ui->checkBox_testCh1->isChecked() && !ui->lineEdit_testCh1->text().isEmpty()) a = true;
     else a = false;
@@ -183,6 +184,7 @@ void Agr2::on_pushButton_calib_clicked()
 //    bool c = ui->checkBox_calibCh3->isChecked();
 //    bool d = ui->checkBox_calibCh4->isChecked();
 
+    mode = Ko_impl::CalibAgr2_ID;
     bool e = !ui->lineEdit_calibKPlazmaSerial->text().isEmpty();
     bool f = !ui->lineEdit_calibReagentSerial->text().isEmpty();
 
@@ -368,44 +370,51 @@ void Agr2::calibrationData2_4Come(double value, int i)
     }
 }
 
-void Agr2::btp1Come(double value)
+void Agr2::btp1Come(double value, SaveTo save)
 {
     c_agr2->setBTP1(value);
 }
 
-void Agr2::btp2Come(double value)
+void Agr2::btp2Come(double value, SaveTo save)
 {
     c_agr2->setBTP2(value);
 }
 
-void Agr2::btp3Come(double value)
+void Agr2::btp3Come(double value, SaveTo save)
 {
     c_agr2->setBTP3(value);
 }
 
-void Agr2::btp4Come(double value)
+void Agr2::btp4Come(double value, SaveTo save)
 {
     c_agr2->setBTP4(value);
 }
 
-void Agr2::otp1Come(double value)
+void Agr2::otp1Come(double value, SaveTo save)
 {
     c_agr2->setOTP1(value);
 }
 
-void Agr2::otp2Come(double value)
+void Agr2::otp2Come(double value, SaveTo save)
 {
     c_agr2->setOTP2(value);
 }
 
-void Agr2::otp3Come(double value)
+void Agr2::otp3Come(double value, SaveTo save)
 {
     c_agr2->setOTP3(value);
 }
 
-void Agr2::otp4Come(double value)
+void Agr2::otp4Come(double value, SaveTo save)
 {
-    c_agr2->setOTP4(value);
+    switch(save) {
+    case Ko_impl::Test_ID:
+        //t_agr2->set
+        break;
+    case Ko_impl::Calib_ID:
+        c_agr2->setOTP4(value);
+        break;
+    }
 }
 
 void Agr2::on_checkBox_testCh1_toggled(bool checked)
