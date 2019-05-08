@@ -27,12 +27,15 @@ Widget::Widget(StartMeasurement *sm, QWidget *parent) :
 
     startWin = sm;
     state = StateBuilder::getState(sm->getModeID(), this);
-
     //setAttribute(Qt::WA_DeleteOnClose);
     setWindowTitle("Программа сбора данных с АЦП(E-154) по 4 каналам");
 
+    //настройка таймера для часов
+    QTimer *timer = new QTimer(this);
+    connect(timer, &QTimer::timeout, this, &Widget::updateTime);
+    timer->start(500);
+
     setupWidget();
-    setupTimers();
     installEventFilter(this);
 
     ILE154 *pModule = OnlyOneE154::Instance().getModule();
@@ -41,6 +44,8 @@ Widget::Widget(StartMeasurement *sm, QWidget *parent) :
     termoSensor = ttl_in & (1<<0);
     //if(termoSensor) setUserMessage("Дождитесь нагрева термостата");
 
+    setUserMessage(QString("Начало работы программы    Дата %1")
+                   .arg(QDateTime::currentDateTime().toString("dd.MM.yyyy")));
     emit onmixch1(false);
     emit onmixch2(false);
     emit onmixch3(false);
@@ -50,8 +55,7 @@ Widget::Widget(StartMeasurement *sm, QWidget *parent) :
 
 void Widget::setupWidget()
 {
-    single = startWin->isSingle();
-    if(single) {
+    if(startWin->isSingle()) {
         if (startWin->isChannel(Channel1_ID)) {
             ui->groupBox_f1->setTitle(QString("Канал 1, Пр.№%1").arg(startWin->getNum(1)));
             ui->groupBox_f1->show();
@@ -98,7 +102,7 @@ void Widget::setupWidget()
             ui->groupBox_f4->hide();
         }
     }
-    setupRealtimeData(single);
+    setupRealtimeData();
 }
 
 Widget::~Widget()
@@ -129,8 +133,8 @@ bool Widget::eventFilter(QObject *watched, QEvent *event)
     return QWidget::eventFilter(watched, event);
 }
 
-void Widget::setupRealtimeData(bool single) {
-    if(single) {
+void Widget::setupRealtimeData() {
+//    if(single) {
         customPlot1 = ui->frame_1;
         ui->groupBox_f1->layout()->addWidget(pBar1);
         customPlot2 = ui->frame_2;
@@ -147,7 +151,7 @@ void Widget::setupRealtimeData(bool single) {
         customPlot1->graph(0)->setPen(QPen(QColor(10, 110, 40)));
         customPlot1->xAxis->setTicker(timeTicker);
         customPlot1->axisRect()->setupFullAxesBox();
-        customPlot1->xAxis->setLabel("сек");
+        customPlot1->xAxis->setLabel("Время, с");
         customPlot1->yAxis2->setLabel("Вольт");
         customPlot1->yAxis->setRange(MIN, MAX);
 
@@ -159,7 +163,7 @@ void Widget::setupRealtimeData(bool single) {
         customPlot2->graph(0)->setPen(QPen(QColor(255, 110, 40)));
         customPlot2->xAxis->setTicker(timeTicker);
         customPlot2->axisRect()->setupFullAxesBox();
-        customPlot2->xAxis->setLabel("сек");
+        customPlot2->xAxis->setLabel("Время, с");
         customPlot2->yAxis2->setLabel("Вольт");
         customPlot2->yAxis->setRange(MIN, MAX);
 
@@ -170,7 +174,7 @@ void Widget::setupRealtimeData(bool single) {
         customPlot3->graph(0)->setPen(QPen(QColor(255, 110, 200)));
         customPlot3->xAxis->setTicker(timeTicker);
         customPlot3->axisRect()->setupFullAxesBox();
-        customPlot3->xAxis->setLabel("сек");
+        customPlot3->xAxis->setLabel("Время, с");
         customPlot3->yAxis2->setLabel("Вольт");
         customPlot3->yAxis->setRange(MIN, MAX);
 
@@ -181,56 +185,50 @@ void Widget::setupRealtimeData(bool single) {
         customPlot4->graph(0)->setPen(QPen(QColor(255, 200, 40)));
         customPlot4->xAxis->setTicker(timeTicker);
         customPlot4->axisRect()->setupFullAxesBox();
-        customPlot4->xAxis->setLabel("сек");
+        customPlot4->xAxis->setLabel("Время, с");
         customPlot4->yAxis2->setLabel("Вольт");
         customPlot4->yAxis->setRange(MIN, MAX);
 
         connect(customPlot4->xAxis, SIGNAL(rangeChanged(QCPRange)), customPlot4->xAxis2, SLOT(setRange(QCPRange)));
         connect(customPlot4->yAxis, SIGNAL(rangeChanged(QCPRange)), customPlot4->yAxis2, SLOT(setRange(QCPRange)));
+//    }
+//    else {
+//        customPlot1 = ui->frame_1;
+//        ui->groupBox_f1->layout()->addWidget(pBar1);
+//        ui->groupBox_f1->layout()->addWidget(pBar2);
+//        customPlot2 = ui->frame_2;
+//        customPlot3 = ui->frame_3;
+//        ui->groupBox_f3->layout()->addWidget(pBar3);
+//        ui->groupBox_f3->layout()->addWidget(pBar4);
+//        customPlot4 = ui->frame_4;
+//        QSharedPointer<QCPAxisTickerTime> timeTicker(new QCPAxisTickerTime);
+//        timeTicker->setTimeFormat("%m:%s");
 
-//        // setup a timer that repeatedly calls MainWindow::realtimeDataSlot:
-//        disconnect(&plotTimer, SIGNAL(timeout()), this, SLOT(realtimeDataSlotDuo()));
-//        plotTimer.stop();
-//        connect(&plotTimer, SIGNAL(timeout()), this, SLOT(realtimeDataSlotSingle()));
-//        plotTimer.start(0); // Interval 0 means to refresh as fast as possible
-    }
-    else {
-        customPlot1 = ui->frame_1;
-        ui->groupBox_f1->layout()->addWidget(pBar1);
-        ui->groupBox_f1->layout()->addWidget(pBar2);
-        customPlot2 = ui->frame_2;
-        customPlot3 = ui->frame_3;
-        ui->groupBox_f3->layout()->addWidget(pBar3);
-        ui->groupBox_f3->layout()->addWidget(pBar4);
-        customPlot4 = ui->frame_4;
-        QSharedPointer<QCPAxisTickerTime> timeTicker(new QCPAxisTickerTime);
-        timeTicker->setTimeFormat("%m:%s");
+//        customPlot1->addGraph();
+//        customPlot1->graph(0)->setPen(QPen(QColor(10, 110, 40)));
+//        customPlot1->graph(1)->setPen(QPen(QColor(255, 110, 40)));
+//        customPlot1->xAxis->setTicker(timeTicker);
+//        customPlot1->axisRect()->setupFullAxesBox();
+//        customPlot1->xAxis->setLabel("Время, с");
+//        customPlot1->yAxis2->setLabel("Вольт");
+//        customPlot1->yAxis->setRange(MIN, MAX);
 
-        customPlot1->addGraph();
-        customPlot1->graph(0)->setPen(QPen(QColor(10, 110, 40)));
-        customPlot1->graph(1)->setPen(QPen(QColor(255, 110, 40)));
-        customPlot1->xAxis->setTicker(timeTicker);
-        customPlot1->axisRect()->setupFullAxesBox();
-        customPlot1->xAxis->setLabel("сек");
-        customPlot1->yAxis2->setLabel("Вольт");
-        customPlot1->yAxis->setRange(MIN, MAX);
+//        // make left and bottom axes transfer their ranges to right and top axes:
+//        connect(customPlot1->xAxis, SIGNAL(rangeChanged(QCPRange)), customPlot1->xAxis2, SLOT(setRange(QCPRange)));
+//        connect(customPlot1->yAxis, SIGNAL(rangeChanged(QCPRange)), customPlot1->yAxis2, SLOT(setRange(QCPRange)));
 
-        // make left and bottom axes transfer their ranges to right and top axes:
-        connect(customPlot1->xAxis, SIGNAL(rangeChanged(QCPRange)), customPlot1->xAxis2, SLOT(setRange(QCPRange)));
-        connect(customPlot1->yAxis, SIGNAL(rangeChanged(QCPRange)), customPlot1->yAxis2, SLOT(setRange(QCPRange)));
+//        customPlot3->addGraph();
+//        customPlot3->graph(0)->setPen(QPen(QColor(255, 10, 200)));
+//        customPlot3->graph(1)->setPen(QPen(QColor(10, 100, 200)));
+//        customPlot3->xAxis->setTicker(timeTicker);
+//        customPlot3->axisRect()->setupFullAxesBox();
+//        customPlot3->xAxis->setLabel("Время, с");
+//        customPlot3->yAxis2->setLabel("Вольт");
+//        customPlot3->yAxis->setRange(MIN, MAX);
 
-        customPlot3->addGraph();
-        customPlot3->graph(0)->setPen(QPen(QColor(255, 10, 200)));
-        customPlot3->graph(1)->setPen(QPen(QColor(10, 100, 200)));
-        customPlot3->xAxis->setTicker(timeTicker);
-        customPlot3->axisRect()->setupFullAxesBox();
-        customPlot3->xAxis->setLabel("сек");
-        customPlot3->yAxis2->setLabel("Вольт");
-        customPlot3->yAxis->setRange(MIN, MAX);
-
-        connect(customPlot3->xAxis, SIGNAL(rangeChanged(QCPRange)), customPlot3->xAxis2, SLOT(setRange(QCPRange)));
-        connect(customPlot3->yAxis, SIGNAL(rangeChanged(QCPRange)), customPlot3->yAxis2, SLOT(setRange(QCPRange)));
-    }
+//        connect(customPlot3->xAxis, SIGNAL(rangeChanged(QCPRange)), customPlot3->xAxis2, SLOT(setRange(QCPRange)));
+//        connect(customPlot3->yAxis, SIGNAL(rangeChanged(QCPRange)), customPlot3->yAxis2, SLOT(setRange(QCPRange)));
+//    }
 }
 
 void Widget::realtimeDataSlot(QVariantList a) {
@@ -304,6 +302,7 @@ void Widget::realtimeDataSlot(QVariantList a) {
                 setUserMessage("Канал 1: Образование сгустка");
                 data1 = false; //stopData(Channel1_ID);
                 pBar1->Wait();
+                qDebug() << "pBAr1 time = " << pBar1->getTime_ms();
                 emit done1();
             }
         }
@@ -328,6 +327,7 @@ void Widget::realtimeDataSlot(QVariantList a) {
                 setUserMessage("Канал 2: Образование сгустка");
                 data2 = false; //stopData(Channel2_ID);
                 pBar2->Wait();
+                qDebug() << "pBAr2 time = " << pBar2->getTime_ms();
                 emit done2();
             }
         }
@@ -352,6 +352,7 @@ void Widget::realtimeDataSlot(QVariantList a) {
                 setUserMessage("Канал 3: Образование сгустка");
                 data3 = false; //stopData(Channel3_ID);
                 pBar3->Wait();
+                qDebug() << "pBAr3 time = " << pBar3->getTime_ms();
                 emit done3();
             }
         }
@@ -376,6 +377,7 @@ void Widget::realtimeDataSlot(QVariantList a) {
                 setUserMessage("Канал 4: Образование сгустка");
                 data4 =false; //stopData(Channel4_ID);
                 pBar4->Wait();
+                qDebug() << "pBAr4 time = " << pBar4->getTime_ms();
                 emit done4();
             }
         }
@@ -561,12 +563,17 @@ void Widget::updataTermo(bool td)
 
 void Widget::getData(Channel_ID c, double time_s)
 {
+    map_y1.clear();
+    map_y2.clear();
+    map_y3.clear();
+    map_y4.clear();
     QString str = QString("Канал %1: Измерение %2 (c)").arg(c).arg(time_s);
     setUserMessage(str);
     emit status(str);
     std::function<void (Channel_ID)> stop = [this](Channel_ID c) {
         stopData(c);
     };
+
     switch (c) {
     case Channel1_ID:
         pBar1->startProgress(QString("%1 %p%").arg(str), time_s * 1000, std::bind(stop, c));
@@ -877,7 +884,6 @@ double Widget::calcData(Channel_ID c, Mode_ID mode)
 
 void Widget::writeMapData(Channel_ID c)
 {
-    ProgressTimerBar *pBar;
 //    CalcData *p = CalcData::createCalc( startWin->getModeID() );
 //    if(p == NULL) { qDebug() << "CalcData is NULL"; return; }
     setUserMessage(QString("Канал %1: Запись данных").arg(c));
@@ -897,43 +903,45 @@ void Widget::writeMapData(Channel_ID c)
         }
     };
     strList << QString("N\t");
-    QString filename;
     switch (c) {
     case Channel1_ID:
-        pBar = pBar1;
         strList << QString("V1#%1\t").arg(startWin->getNum(1));
         func(map_y1);
-        map_y1.clear();
-        filename = saveFiles.writeData(strList, pBar);
-        setUserMessage(QString("Канал %1: %2").arg(c).arg(filename), true, true);
         break;
     case Channel2_ID:
-        pBar = pBar2;
         strList << QString("V2#%1\t").arg(startWin->getNum(2));
         func(map_y2);
-        map_y2.clear();
-        filename = saveFiles.writeData(strList, pBar);
-        setUserMessage(QString("Канал %1: %2").arg(c).arg(filename), true, true);
         break;
     case Channel3_ID:
-        pBar = pBar3;
         strList << QString("V3#%1\t").arg(startWin->getNum(3));
         func(map_y3);
-        map_y3.clear();
-        filename = saveFiles.writeData(strList, pBar);
-        setUserMessage(QString("Канал %1: %2").arg(c).arg(filename), true, true);
         break;
     case Channel4_ID:
-        pBar = pBar4;
         strList << QString("V4#%1\t").arg(startWin->getNum(4));
         func(map_y4);
-        map_y4.clear();
-        filename = saveFiles.writeData(strList, pBar);
-        setUserMessage(QString("Канал %1: %2").arg(c).arg(filename), true, true);
         break;
     default:
         break;
     }
+
+    SaveData *save_file = new SaveData;
+    //save_file->moveToThread(&save_thread);
+    //connect(&save_thread, &QThread::finished, save_file, &QObject::deleteLater);
+    //connect(this, &Widget::save_data, save_file, &SaveData::writeData);
+//    connect(save_file, &SaveData::resultReady, [=](const QString &filename) {
+//
+//    });
+    //save_thread.start();
+    //save_file->writeData(strList);
+    //emit save_data(strList);
+    QFuture<QString> future = QtConcurrent::run(save_file, &SaveData::writeData, strList);
+    //QFutureWatcher<int> watcher;
+    //watcher.setFuture(future);
+    QString filename = future.result();
+    setUserMessage(QString("Канал %1: %2").arg(c).arg(filename), true, true);
+//    connect(&watcher, &QFutureWatcher, [](){ future.result();});
+//    qDebug() << "Widget thread ID" << QThread::currentThreadId();
+
 }
 
 void Widget::showEvent(QShowEvent *event)
@@ -944,19 +952,13 @@ void Widget::showEvent(QShowEvent *event)
 void Widget::updateTime()
 {
     //обновление времени на часах
-    dt = QDateTime::currentDateTime();
-    ui->label_time->setText("Время: " + dt.toString("hh:mm:ss"));
-    ui->label_date->setText("Дата: " + dt.toString("dd.MM.yyyy"));
+    ui->label_time->setText("Время: " + QDateTime::currentDateTime().toString("hh:mm:ss"));
+    ui->label_date->setText("Дата: " + QDateTime::currentDateTime().toString("dd.MM.yyyy"));
 }
 
 void Widget::setupTimers()
 {
-    //настройка таймера для часов
-    connect(&currentTimer, QTimer::timeout, this, Widget::updateTime);
-    currentTimer.start(300);
-    dt = QDateTime::currentDateTime();
-    setUserMessage(QString("Начало работы программы    Дата %1")
-                   .arg(dt.toString("dd.MM.yyyy")));
+
 }
 
 void Widget::setUserMessage(QString str, bool withtime, bool tofile)
@@ -964,7 +966,7 @@ void Widget::setUserMessage(QString str, bool withtime, bool tofile)
     if(withtime) {
         QString msg = QString(tr("%1, Время %2"))
                 .arg(str)
-                .arg(dt.toString("hh:mm:ss.zzz"));
+                .arg(QDateTime::currentDateTime().toString("hh:mm:ss.zzz"));
         ui->textEdit->append(msg);
         if(tofile) saveFiles.writeUserMsg(msg);
     }
@@ -1215,8 +1217,11 @@ void Widget::incubation2(State *next)
 void Widget::selectInductor(State *next)
 {
     SelectInductor *si = new SelectInductor(this);
-    connect(si, &SelectInductor::finished, [=](){ next->next(); });
-    si->show();
+    connect(si, &SelectInductor::finished, [=](){
+        next->next();
+        si->deleteLater();
+    });
+        si->show();
     //next->next();
 }
 
@@ -1225,7 +1230,11 @@ void Widget::finish()
     hide();
     deleteLater();
     emit stop();
-    emit end();
+    emit end(map_y1, map_y2, map_y3, map_y4);
+//    map_y1.clear();
+//    map_y2.clear();
+//    map_y3.clear();
+//    map_y4.clear();
 }
 
 void Widget::agr()
@@ -1281,7 +1290,7 @@ void Widget::ko(State *next)
 
 void Widget::calc()
 {
-    if(single) {
+    if(startWin->isSingle()) {
         if( startWin->isChannel(Channel1_ID) )
             emit ret_value1(calcData(Channel1_ID, startWin->getModeID()), state->getLevel());
         if( startWin->isChannel(Channel2_ID) )

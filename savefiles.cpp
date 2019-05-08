@@ -7,7 +7,7 @@ QMutex mut;
 SaveFiles::SaveFiles(QObject *parent) : QObject(parent)
 {
     setupFiles();
-    qDebug() << "SaveFiles::SaveFiles() setting path:" << settingDir.path() << "data path: " << dataDir.path() << "user path" << OnlyOneFile::Instance().file_user.fileName();
+    qDebug() << "SaveFiles::SaveFiles() setting path:" << settingDir.path() << "data path: " << dataDir.path() << "user path" << OnlyOneFile::getFileName();
 }
 
 SaveFiles::~SaveFiles()
@@ -17,59 +17,66 @@ SaveFiles::~SaveFiles()
 //      file_user.close();
 }
 
-QString SaveFiles::writeData(QStringList dt, ProgressTimerBar* pb)
-{
-    QDir dir;
-    QString path = QDir::homePath();
-    dir.cd(path); //переходим в папку home
-    if(!dir.cd("Agrekola4k"))
-    {
-        if(dir.mkdir("Agrekola4k")) dir.cd("Agrekola4k");
-        QDir::setCurrent(dir.path());
-        qDebug() << "mkdir(Agrekola4k)";
-    }
-    else QDir::setCurrent(dir.path());
+//QString SaveFiles::writeData(QStringList dt, ProgressTimerBar* pb)
+//{
+//    QDir dir;
+//    QString path = QDir::homePath();
+//    QFile file_data;
+//    QTextStream stream_data;
+//    dir.cd(path); //переходим в папку home
+//    if(!dir.cd("Agrekola4k"))
+//    {
+//        if(dir.mkdir("Agrekola4k")) dir.cd("Agrekola4k");
+//        QDir::setCurrent(dir.path());
+//        qDebug() << "mkdir(Agrekola4k)";
+//    }
+//    else QDir::setCurrent(dir.path());
 
-    if(!dir.cd("data"))
-    {
-        if(dir.mkdir("data")) dir.cd("data");
-        QDir::setCurrent(dir.path());
-        qDebug() << "mkdir(data)";
-    }
-    else QDir::setCurrent(dir.path());
-    //создаем файл данных
-    //имя файла формируется из текущей даты + число запуска программы в этот день
-    QDateTime d = QDateTime::currentDateTime();
-    static int i(0);
-    for(;;)
-    {
-        QString name = QString("data_%1_%2.txt").arg(d.toString("yyyyMMdd")).arg(i);
-        if(!QFile::exists(name)) {
-            OnlyOneFile::Instance().file_data.setFileName(name);
-            if(!OnlyOneFile::Instance().file_data.open(QIODevice::ReadWrite | QIODevice::Append | QIODevice::Text)) qWarning() << "data file is't opened";
-            OnlyOneFile::Instance().stream_data.setDevice(&OnlyOneFile::Instance().file_data);
-            break;
-        }
-        i++;
-    }
-    int n = 0;
-    pb->setFormat(QString("Запись данных %p%"));
-    pb->setMaximum(dt.count());
-    foreach (QString var, dt) {
-        OnlyOneFile::Instance().stream_data << var;
-        n++;
-        if(n == dt.count()) {
-            pb->setValue(n);
-            pb->Wait();
-        }
-            //emit value_changed(n);
-    }
+//    if(!dir.cd("data"))
+//    {
+//        if(dir.mkdir("data")) dir.cd("data");
+//        QDir::setCurrent(dir.path());
+//        qDebug() << "mkdir(data)";
+//    }
+//    else QDir::setCurrent(dir.path());
+//    //создаем файл данных
+//    //имя файла формируется из текущей даты + число запуска программы в этот день
+//    QDateTime d = QDateTime::currentDateTime();
+//    static int i(0);
+//    for(;;)
+//    {
+//        QString name = QString("data_%1_%2.txt").arg(d.toString("yyyyMMdd")).arg(i);
+//        if(!QFile::exists(name)) {
+//            file_data.setFileName(name);
+//            if(!file_data.open(QIODevice::ReadWrite | QIODevice::Append | QIODevice::Text))
+//              qWarning() << "data file is't opened";
+//            stream_data.setDevice(&file_data);
+////            OnlyOneFile::Instance().file_data.setFileName(name);
+////            if(!OnlyOneFile::Instance().file_data.open(QIODevice::ReadWrite | QIODevice::Append | QIODevice::Text)) qWarning() << "data file is't opened";
+////            OnlyOneFile::Instance().stream_data.setDevice(&OnlyOneFile::Instance().file_data);
+//            break;
+//        }
+//        i++;
+//    }
+//    int n = 0;
+//    pb->setFormat(QString("Запись данных %p%"));
+//    pb->setMaximum(dt.count());
+//    foreach (QString var, dt) {
+//        //OnlyOneFile::Instance().
+//        stream_data << var;
+//        n++;
+//        if(n == dt.count()) {
+//            pb->setValue(n);
+//            pb->Wait();
+//        }
+//            //emit value_changed(n);
+//    }
 
-    QString str = QString("Данные записаны в файл %1/%2").arg(QDir::currentPath()).arg(OnlyOneFile::Instance().file_data.fileName());
-    OnlyOneFile::Instance().stream_data.flush();
-    OnlyOneFile::Instance().file_data.close();
-    return str;
-}
+//    QString str = QString("Данные записаны в файл %1/%2").arg(QDir::currentPath()).arg(file_data.fileName());
+//    stream_data.flush();
+//    file_data.close();
+//    return str;
+//}
 
 void SaveFiles::openDataMap(QMap<double, double> &map)
 {
@@ -390,3 +397,57 @@ void SaveFiles::saveBTP0(QStringList &param)
     saveParams("BTP0.ini", param);
 }
 
+
+QString SaveData::writeData(QStringList data)
+{
+    QString name;
+    QDir dir;
+    QString path = QDir::homePath();
+    QFile file_data;
+    QTextStream stream_data;
+    dir.cd(path); //переходим в папку home
+    if(!dir.cd("Agrekola4k"))
+    {
+        if(dir.mkdir("Agrekola4k")) dir.cd("Agrekola4k");
+        QDir::setCurrent(dir.path());
+        qDebug() << "mkdir(Agrekola4k)";
+    }
+    else QDir::setCurrent(dir.path());
+
+    if(!dir.cd("data"))
+    {
+        if(dir.mkdir("data")) dir.cd("data");
+        QDir::setCurrent(dir.path());
+        qDebug() << "mkdir(data)";
+    }
+    else QDir::setCurrent(dir.path());
+    //создаем файл данных
+    //имя файла формируется из текущей даты + число запуска программы в этот день
+    QDateTime d = QDateTime::currentDateTime();
+    static int i(0);
+    for(;;)
+    {
+        QString name = QString("data_%1_%2.txt").arg(d.toString("yyyyMMdd")).arg(i);
+        if(!QFile::exists(name)) {
+            file_data.setFileName(name);
+            if(!file_data.open(QIODevice::ReadWrite | QIODevice::Append | QIODevice::Text))
+              qWarning() << "data file is't opened";
+            stream_data.setDevice(&file_data);
+//            OnlyOneFile::Instance().file_data.setFileName(name);
+//            if(!OnlyOneFile::Instance().file_data.open(QIODevice::ReadWrite | QIODevice::Append | QIODevice::Text)) qWarning() << "data file is't opened";
+//            OnlyOneFile::Instance().stream_data.setDevice(&OnlyOneFile::Instance().file_data);
+            break;
+        }
+        i++;
+    }
+    foreach (QString var, data) {
+        stream_data << var;
+        //emit value_changed(n);
+    }
+    name = QString("Данные записаны в файл %1/%2").arg(QDir::currentPath()).arg(file_data.fileName());
+    qDebug() << name << "ID: " << QThread::currentThreadId();
+    stream_data.flush();
+    file_data.close();
+    emit resultReady(name);
+    return name;
+}

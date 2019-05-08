@@ -28,6 +28,7 @@ public:
     int getMaximum();
     void setFormat(QString format);
     void Wait();
+    int getTime_ms();
 
     inline Ui::State_ID getState() {
         return state;
@@ -50,6 +51,7 @@ private:
     std::function<void (void)> func;
     QTimer progressTimer;
     Ui::State_ID state;
+    int time;
 };
 
 #endif // PROGRESSTIMERBAR_H

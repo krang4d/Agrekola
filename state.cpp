@@ -234,6 +234,9 @@ StateAgr1::StateAgr1(IScenario *o ) : State(o)
     insertState(LaserON_ID,     "Включение лазеров");
     insertState(MotorON_ID,     "Включение двигателей");
     insertState(Incubation1_ID, "Инкубация");
+    insertState(Btp_ID,         "Фиксация «100%» уровня");    //"Установите пробы с БТП в рабочие  каналы"
+    insertState(Incubation1_ID, "Инкубация");
+    insertState(Otp_ID,         "Фиксация «0%» уровня");      //"Установите пробы с ОТП в рабочие  каналы"
     insertState(SelectInductor_ID, "Выбор индуктора");
     insertState(LaserOFF_ID,    "Выключение лазеров");
     insertState(MotorOFF_ID,    "Выключение двигателей");

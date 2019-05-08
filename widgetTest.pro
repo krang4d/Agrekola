@@ -104,8 +104,7 @@ FORMS    += \
     progresstimerbar.ui \
     impulewaiter.ui \
     options.ui \
-    calibparam.ui \
-    choisedialog/enddialog.ui
+    calibparam.ui
 
 RESOURCES += \
     rcfile.qrc

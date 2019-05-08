@@ -13,6 +13,17 @@
 #include <QRegExp>
 #include <QStringList>
 #include <progresstimerbar.h>
+#include "globalvalue.h"
+
+class SaveData : public QObject
+{
+    Q_OBJECT
+public slots:
+    QString writeData(QStringList);
+
+signals:
+    void resultReady(const QString &);
+};
 
 class SaveFiles : public QObject
 {
@@ -20,7 +31,7 @@ class SaveFiles : public QObject
 public:
     explicit SaveFiles(QObject *parent = 0);
     ~SaveFiles();
-    static QString writeData(QStringList, ProgressTimerBar * = nullptr);
+    //static QString writeData(QStringList, ProgressTimerBar * = nullptr);
     void openDataMap(QMap<double, double> &map);
     static QString openData(QWidget*, QList<double>&, QList<double>&, QList<double>&, QList<double>&, QList<double>&, QStringList&);
     void writeUserMsg(QString);
@@ -63,13 +74,16 @@ protected:
 
 class OnlyOneFile
 {
+    QFile file_user;
 public:
-    QFile file_user, file_data;
-    QTextStream stream_user, stream_data;
+    QTextStream stream_user;
     static OnlyOneFile& Instance()
     {
             static OnlyOneFile theSingleInstance;
             return theSingleInstance;
+    }
+    static QString getFileName() {
+        return Instance().file_user.fileName();
     }
 
 private:

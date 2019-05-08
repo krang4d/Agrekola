@@ -14,6 +14,7 @@ ProgressTimerBar::ProgressTimerBar(QWidget *parent) :
     ui->progressBar->setMaximum(0);
     ui->progressBar->setMinimum(0);
     state = Ui::Ready_ID;
+    time = 0;
     //таймер для отображения процесса сбора данных
     connect(&progressTimer, SIGNAL(timeout()), SLOT(updateProgress()));
 }
@@ -29,6 +30,7 @@ void ProgressTimerBar::startProgress(QString format, int time_ms)
     ui->progressBar->setVisible(true);
     ui->progressBar->setValue(0);
     ui->progressBar->setMaximum(time_ms);
+    time = 0;
     progressTimer.start(TIMER_PERIOD_MS);
     setState(Ui::Busy_ID);
     show();
@@ -66,11 +68,18 @@ void ProgressTimerBar::Wait()
 {
     ui->progressBar->setMaximum(0);
     ui->progressBar->setMinimum(0);
+    progressTimer.stop();
     setState(Ui::Ready_ID);
+}
+
+int ProgressTimerBar::getTime_ms()
+{
+    return time;
 }
 
 void ProgressTimerBar::updateProgress()
 {
+    time += TIMER_PERIOD_MS;
     //ui->progressBar->setMaximum(progress_t-progressTimer.interval());
     if(ui->progressBar->value() < ui->progressBar->maximum()) {
         ui->progressBar->setValue((ui->progressBar->value()+progressTimer.interval()));

@@ -37,8 +37,6 @@ public:
     explicit Widget(StartMeasurement *sm, QWidget *parent = 0);
     ~Widget();
 
-    void setUserMessage(QString, bool withtime = true, bool tofile = true);
-
     inline bool isSensorReady() {
         return termoSensor;
     } //проверка тепловой готовности
@@ -72,11 +70,12 @@ public:
     void write() override;
 
 private:
-    void setupRealtimeData(bool single);
+    void setupRealtimeData();
     void setupTimers();
     void setupWidget();
 
 public slots:
+    void setUserMessage(QString, bool withtime = true, bool tofile = true);
     void startIncub(int num, double time_s, std::function<void(void)> timeout_fun = NULL);
     void getData(Channel_ID, double time_s);
     double calcData(Channel_ID, Mode_ID);
@@ -94,17 +93,17 @@ private slots:
     void updateTime();
     void doScenario();
 
-
 signals:
     //сигналы управления потоком E154
-    void onmixch1(bool);    ///вкл/выкл перемешивания канал 1
-    void onmixch2(bool);    ///вкл/выкл перемешивания канал 2
-    void onmixch3(bool);    ///вкл/выкл перемешивания канал 3
-    void onmixch4(bool);    ///вкл/выкл перемешивания канал 4
-    void onmixpp(bool);     ///вкл/выкл перемешивания канал рр
-    void onlaser(bool);     ///вкл/выкл лазеров
-    void status(QString);
-    void stop();            ///сигнал для остановки потока измерений
+    void onmixch1(bool);                ///вкл/выкл перемешивания канал 1
+    void onmixch2(bool);                ///вкл/выкл перемешивания канал 2
+    void onmixch3(bool);                ///вкл/выкл перемешивания канал 3
+    void onmixch4(bool);                ///вкл/выкл перемешивания канал 4
+    void onmixpp(bool);                 ///вкл/выкл перемешивания канал рр
+    void onlaser(bool);                 ///вкл/выкл лазеров
+    void status(const QString&);
+    void stop();                        ///сигнал для остановки потока измерений
+    void save_data(QStringList);        ///сигнал для записи массива данных
 
     //возвращаемые значения при одиночных пробах
     void ret_value1(double, int);
@@ -141,19 +140,17 @@ signals:
 
     void done();
     void incube_timeout();
-    void end();
+    void end(QMap<double, double>,QMap<double, double>,QMap<double, double>,QMap<double, double>);
 
 private:
     Ui::Widget *ui;
-    QTimer plotTimer, currentTimer;
-    QDateTime dt;
+    QThread save_thread;
 
     StartMeasurement *startWin;
     QCustomPlot *customPlot1, *customPlot2, *customPlot3, *customPlot4;
     ProgressTimerBar *pBar1, *pBar2, *pBar3, *pBar4;
     Mode_ID current_mode_id;
     State *state;
-    bool single;
 
     volatile bool data1, data2, data3, data4;
     bool pulse1, pulse2, pulse3, pulse4;
@@ -166,9 +163,7 @@ private:
     double START_DX; //порог запуска
     double STOP_DX;  //порог остановки
     double MIN, MAX; //минимум и максимум на графике
-    //friend class Options;
 
-    // QWidget interface
 protected:
     void showEvent(QShowEvent *event) override;
     bool eventFilter(QObject *watched, QEvent *event) override;

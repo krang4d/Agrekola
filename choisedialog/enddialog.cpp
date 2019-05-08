@@ -21,43 +21,41 @@ EndDialog::EndDialog(const QString &str, QMap<double, double> y1, QMap<double, d
     pushButton_next->setText("Продолжить");
     connect(pushButton_next, &QPushButton::clicked, this, &EndDialog::on_pushButton_next_clicked);
 
-    plot1 = new QCustomPlot(this);
-    plot2 = new QCustomPlot(this);
-    plot3 = new QCustomPlot(this);
-    plot4 = new QCustomPlot(this);
-
     gridLayout->addWidget(label, 0, 0, 1, 2, Qt::AlignCenter);
-    gridLayout->addWidget(plot1, 1, 0, 1, 2);
-    gridLayout->addWidget(plot2, 2, 0, 1, 2);
-    gridLayout->addWidget(plot3, 3, 0, 1, 2);
-    gridLayout->addWidget(plot4, 4, 0, 1, 2);
 
-    gridLayout->addWidget(pushButton_print, 5, 0);
-    gridLayout->addWidget(pushButton_next, 5, 1);
+    plot1 = NULL;
+    plot2 = NULL;
+    plot3 = NULL;
+    plot4 = NULL;
 
-
-    this->setLayout(gridLayout);
-    //plot1 = ui->frame_1;
-    // set title of plot:
-    plot1->plotLayout()->insertRow(0);
-    plot1->plotLayout()->addElement(0, 0, new QCPTextElement(plot1, "Канал 1", QFont("sans", 10, QFont::Bold)));
-    plot1->hide();
-    //plot2 = ui->frame_2;
-    plot2->plotLayout()->insertRow(0);
-    plot2->plotLayout()->addElement(0, 0, new QCPTextElement(plot2, "Канал 2", QFont("sans", 10, QFont::Bold)));
-    plot2->hide();
-    //plot3 = ui->frame_3;
-    plot3->plotLayout()->insertRow(0);
-    plot3->plotLayout()->addElement(0, 0, new QCPTextElement(plot3, "Канал 3", QFont("sans", 10, QFont::Bold)));
-    plot3->hide();
-    //plot4 = ui->frame_4;
-    plot4->plotLayout()->insertRow(0);
-    plot4->plotLayout()->addElement(0, 0, new QCPTextElement(plot4, "Канал 4", QFont("sans", 10, QFont::Bold)));
-    plot4->hide();
-//    ui->frame_1->hide();
-//    ui->frame_2->hide();
-//    ui->frame_3->hide();
-//    ui->frame_4->hide();
+    if(!y1.isEmpty()) {
+        plot1 = new QCustomPlot(this);
+        plot1->plotLayout()->insertRow(0);
+        plot1->plotLayout()->addElement(0, 0, new QCPTextElement(plot1, "Канал 1", QFont("sans", 10, QFont::Bold)));
+        plot1->hide();
+        graph(y1, plot1);
+    }
+    if(!y2.isEmpty()) {
+        plot2 = new QCustomPlot(this);
+        plot2->plotLayout()->insertRow(0);
+        plot2->plotLayout()->addElement(0, 0, new QCPTextElement(plot2, "Канал 2", QFont("sans", 10, QFont::Bold)));
+        plot2->hide();
+        graph(y2, plot2);
+    }
+    if(!y3.isEmpty()) {
+        plot3 = new QCustomPlot(this);
+        plot3->plotLayout()->insertRow(0);
+        plot3->plotLayout()->addElement(0, 0, new QCPTextElement(plot3, "Канал 3", QFont("sans", 10, QFont::Bold)));
+        plot3->hide();
+        graph(y3, plot3);
+    }
+    if(!y4.isEmpty()) {
+        plot4 = new QCustomPlot(this);
+        plot4->plotLayout()->insertRow(0);
+        plot4->plotLayout()->addElement(0, 0, new QCPTextElement(plot4, "Канал 4", QFont("sans", 10, QFont::Bold)));
+        plot4->hide();
+        graph(y4, plot4);
+    }
 
     printer = new QPrinter(QPrinter::HighResolution);
     printer->setPageSize(QPrinter::A4);
@@ -65,10 +63,25 @@ EndDialog::EndDialog(const QString &str, QMap<double, double> y1, QMap<double, d
 
     label->setText(str);
 
-    graph(y1, plot1);
-    graph(y2, plot2);
-    graph(y3, plot3);
-    graph(y4, plot4);
+    QVector<QCustomPlot*> plots;
+    if (plot1 != NULL) plots.append(plot1);
+    if (plot2 != NULL) plots.append(plot2);
+    if (plot3 != NULL) plots.append(plot3);
+    if (plot4 != NULL) plots.append(plot4);
+
+    int i = 0;
+    if(plots.length() > 1) {
+        for(auto it = plots.begin(); it!= plots.end(); it++ ) {
+            if(i == 0) gridLayout->addWidget(plots.at(i), 1, 0);
+            if(i == 1) gridLayout->addWidget(plots.at(i), 1, 1);
+            if(i == 2) gridLayout->addWidget(plots.at(i), 2, 0);
+            if(i == 3) gridLayout->addWidget(plots.at(i), 2, 1);
+            i++;
+        }
+    } else gridLayout->addWidget(plots.at(i), 1, 0, 1, 2);
+    gridLayout->addWidget(pushButton_print, 3, 0);
+    gridLayout->addWidget(pushButton_next, 3, 1);
+    this->setLayout(gridLayout);
 }
 
 //EndDialog::EndDialog(const QString &str, QMap<double, double> y1, QMap<double, double> y2, QMap<double, double> y3, QMap<double, double> y4, QWidget *parent)
@@ -98,24 +111,15 @@ void EndDialog::graph(QMap<double, double> map, QCustomPlot *plot)
     double min_x = *std::min_element(x.begin(), x.end()); qDebug() << "min_x :" << min_x;
     double max_y = *std::max_element(y.begin(), y.end()); qDebug() << "max_y :" << max_y;
     double min_y = *std::min_element(y.begin(), y.end()); qDebug() << "min_y :" << min_y;
-//    // generate some data:
-//    QVector<double> x(101), y(101); // initialize with entries 0..100
-//    for (int i=0; i<101; ++i)
-//    {
-//      x[i] = i/50.0 - 1; // x goes from -1 to 1
-//      y[i] = x[i]*x[i];  // let's plot a quadratic function
-//    }
     // create graph and assign data to it:
     plot->addGraph();
     plot->graph(0)->setData(x, y);
     // give the axes some labels:
-    plot->xAxis->setLabel("x");
-    plot->yAxis->setLabel("y");
+    plot->xAxis->setLabel("Время, с");
+    plot->yAxis->setLabel("Вольт");
     // set axes ranges, so we see all data:
-    plot->xAxis->setRange(min_x, max_x);
-    if(max_y > 0)
-        plot->yAxis->setRange(0, max_y + 0.2);
-    else plot->yAxis->setRange(0, max_y - 0.2);
+    plot->xAxis->setRange(min_x, max_x+0.2);
+    plot->yAxis->setRange(min_y - 0.2, max_y + 0.2);
     plot->show();
 }
 

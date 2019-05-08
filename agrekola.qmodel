@@ -57,7 +57,7 @@
                          <pos>x:225;y:340</pos>
                          <rect>x:-125;y:-135;w:250;h:270</rect>
                          <visual-role>6</visual-role>
-                         <visual-emphasized>true</visual-emphasized>
+                         <visual-role2>4</visual-role2>
                          <stereotype-display>1</stereotype-display>
                         </DObject>
                        </base-DObject>
@@ -105,6 +105,15 @@
                          <object>{2e6c3f45-027d-4491-ac3f-1b8a51c3229b}</object>
                          <a>{f4bac94d-4f52-4f98-a681-0003e4932b8e}</a>
                          <b>{d31ffade-aeae-4911-8260-99012a2672e6}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:285;y:-85</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
                         </DRelation>
                        </base-DRelation>
                       </DInheritance>
@@ -153,7 +162,7 @@
                           </qlist>
                          </stereotypes>
                          <name>void measurement(StartMeasurement*)</name>
-                         <pos>x:905;y:-120</pos>
+                         <pos>x:935;y:-130</pos>
                          <rect>x:-105;y:-20;w:210;h:40</rect>
                          <visual-role>0</visual-role>
                         </DObject>
@@ -175,6 +184,15 @@
                          <object>{6057ea17-4fc3-41b6-b034-13c2785f5231}</object>
                          <a>{69617e51-5a37-40bb-9111-27d9727ec18b}</a>
                          <b>{d31ffade-aeae-4911-8260-99012a2672e6}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:330;y:95</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
                         </DRelation>
                        </base-DRelation>
                       </DInheritance>
@@ -197,7 +215,7 @@
                           </qlist>
                          </stereotypes>
                          <name>void calibration(StartMeasurement*); </name>
-                         <pos>x:900;y:-70</pos>
+                         <pos>x:1170;y:-130</pos>
                          <rect>x:-100;y:-20;w:200;h:40</rect>
                          <visual-role>0</visual-role>
                         </DObject>
@@ -223,7 +241,7 @@
                           </qlist>
                          </stereotypes>
                          <name>Ko3</name>
-                         <pos>x:560;y:265</pos>
+                         <pos>x:560;y:260</pos>
                          <rect>x:-95;y:-70;w:190;h:140</rect>
                          <visual-role>0</visual-role>
                         </DObject>
@@ -327,7 +345,7 @@
                           </qlist>
                          </stereotypes>
                          <name>Agr2</name>
-                         <pos>x:565;y:1080</pos>
+                         <pos>x:565;y:1135</pos>
                          <rect>x:-100;y:-70;w:200;h:140</rect>
                          <visual-role>0</visual-role>
                         </DObject>
@@ -349,6 +367,15 @@
                          <object>{87484381-fd8e-46f4-8821-f247725122cd}</object>
                          <a>{40cb0367-1acc-488d-8f67-565c66eda623}</a>
                          <b>{d31ffade-aeae-4911-8260-99012a2672e6}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:410;y:300</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
                         </DRelation>
                        </base-DRelation>
                       </DInheritance>
@@ -392,6 +419,15 @@
                          <object>{79148d22-62f6-43ef-a29f-d3fd084560bc}</object>
                          <a>{62857870-fc31-4bff-8d8a-f82c33e1cf7f}</a>
                          <b>{d31ffade-aeae-4911-8260-99012a2672e6}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:410;y:415</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
                         </DRelation>
                        </base-DRelation>
                       </DInheritance>
@@ -410,6 +446,15 @@
                          <object>{3a200b0b-326e-44cd-b54f-2782608a9699}</object>
                          <a>{5c90a07e-53ac-43f4-81b0-bf776d0e5b36}</a>
                          <b>{d31ffade-aeae-4911-8260-99012a2672e6}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:410;y:565</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
                         </DRelation>
                        </base-DRelation>
                       </DInheritance>
@@ -452,7 +497,7 @@
                          </base-DElement>
                          <object>{f39505f1-058d-4218-9cd8-8a222aacc41f}</object>
                          <name>StartMeasurement</name>
-                         <pos>x:870;y:140</pos>
+                         <pos>x:915;y:100</pos>
                          <rect>x:-55;y:-40;w:110;h:80</rect>
                          <visual-role>0</visual-role>
                         </DObject>
@@ -505,7 +550,7 @@
                           </qlist>
                          </stereotypes>
                          <name>Test</name>
-                         <pos>x:-555;y:-175</pos>
+                         <pos>x:-555;y:-290</pos>
                          <rect>x:-100;y:-155;w:200;h:310</rect>
                          <visual-role>6</visual-role>
                          <visual-emphasized>true</visual-emphasized>
@@ -557,7 +602,7 @@
                          </base-DElement>
                          <object>{d69014e0-e2f1-4a5f-83f8-73c0d8d5887f}</object>
                          <name>TestKo1</name>
-                         <pos>x:-265;y:-415</pos>
+                         <pos>x:-265;y:-410</pos>
                          <rect>x:-40;y:-30;w:80;h:60</rect>
                          <visual-role>0</visual-role>
                         </DObject>
@@ -577,7 +622,7 @@
                          </base-DElement>
                          <object>{cc16cf62-0b36-4b4e-b41d-38ec6479739b}</object>
                          <name>TestKo2</name>
-                         <pos>x:-265;y:-310</pos>
+                         <pos>x:-265;y:-305</pos>
                          <rect>x:-40;y:-30;w:80;h:60</rect>
                          <visual-role>0</visual-role>
                         </DObject>
@@ -597,7 +642,7 @@
                          </base-DElement>
                          <object>{7846d545-0ee1-47ea-a14b-093317271a9e}</object>
                          <name>TestKo3</name>
-                         <pos>x:-265;y:-180</pos>
+                         <pos>x:-265;y:-175</pos>
                          <rect>x:-40;y:-30;w:80;h:60</rect>
                          <visual-role>0</visual-role>
                         </DObject>
@@ -617,7 +662,7 @@
                          </base-DElement>
                          <object>{a575b133-0404-4454-a196-2dad58b9ee33}</object>
                          <name>TestKo4</name>
-                         <pos>x:-265;y:-65</pos>
+                         <pos>x:-265;y:-60</pos>
                          <rect>x:-40;y:-30;w:80;h:60</rect>
                          <visual-role>0</visual-role>
                         </DObject>
@@ -637,7 +682,7 @@
                          </base-DElement>
                          <object>{34dcc471-c5bf-4f7a-aba7-31b89eaf07fb}</object>
                          <name>TestKo5</name>
-                         <pos>x:-265;y:70</pos>
+                         <pos>x:-265;y:75</pos>
                          <rect>x:-40;y:-30;w:80;h:60</rect>
                          <visual-role>0</visual-role>
                         </DObject>
@@ -657,7 +702,7 @@
                          </base-DElement>
                          <object>{208ccad7-cdac-4c88-adce-c67d399995b2}</object>
                          <name>TestAgr1</name>
-                         <pos>x:-265;y:160</pos>
+                         <pos>x:-265;y:165</pos>
                          <rect>x:-40;y:-30;w:80;h:60</rect>
                          <visual-role>0</visual-role>
                         </DObject>
@@ -677,7 +722,7 @@
                          </base-DElement>
                          <object>{30d285d3-7e64-4739-a5c9-34144c5913c9}</object>
                          <name>TestAgr2</name>
-                         <pos>x:-265;y:250</pos>
+                         <pos>x:-265;y:255</pos>
                          <rect>x:-40;y:-30;w:80;h:60</rect>
                          <visual-role>0</visual-role>
                         </DObject>
@@ -916,6 +961,15 @@
                          <object>{702a8b4c-8ef3-47b0-befc-06956636baeb}</object>
                          <a>{d2011714-afc9-4497-ad5c-3a1d03143fd6}</a>
                          <b>{f92b85cd-e1fe-4ff1-9593-234958656970}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:-560;y:1080</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
                         </DRelation>
                        </base-DRelation>
                       </DInheritance>
@@ -934,6 +988,15 @@
                          <object>{22e0374b-07ed-45fc-9ac5-40197d404ed3}</object>
                          <a>{a767f92d-84f2-45dd-b342-71a006aefb1c}</a>
                          <b>{f92b85cd-e1fe-4ff1-9593-234958656970}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:-400;y:1215</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
                         </DRelation>
                        </base-DRelation>
                       </DInheritance>
@@ -952,6 +1015,15 @@
                          <object>{8e2e5dbd-fd03-469c-b46b-70a4ac4b4024}</object>
                          <a>{6d4fde57-dbaf-46a2-9c56-711b54c3d9f8}</a>
                          <b>{f92b85cd-e1fe-4ff1-9593-234958656970}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:-400;y:1270</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
                         </DRelation>
                        </base-DRelation>
                       </DInheritance>
@@ -970,6 +1042,15 @@
                          <object>{2fee53f9-2a4a-45a6-9d94-1f59fa153322}</object>
                          <a>{915a4afc-f0b4-467a-82fb-8b0707539e3d}</a>
                          <b>{f92b85cd-e1fe-4ff1-9593-234958656970}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:-380;y:1315</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
                         </DRelation>
                        </base-DRelation>
                       </DInheritance>
@@ -988,6 +1069,15 @@
                          <object>{4273ba79-df63-4bec-b7c1-45f50b003c4a}</object>
                          <a>{78869b23-27b1-4390-85c9-7b6ec2fd00a4}</a>
                          <b>{f92b85cd-e1fe-4ff1-9593-234958656970}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:-385;y:1360</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
                         </DRelation>
                        </base-DRelation>
                       </DInheritance>
@@ -1006,6 +1096,15 @@
                          <object>{d16c8669-32bf-4a6f-b7bc-6030ba2f56fa}</object>
                          <a>{0cf47a64-f4ee-4eff-8c72-8c612acd18f3}</a>
                          <b>{f92b85cd-e1fe-4ff1-9593-234958656970}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:-530;y:1475</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
                         </DRelation>
                        </base-DRelation>
                       </DInheritance>
@@ -1024,6 +1123,15 @@
                          <object>{5042f918-ed3d-4c2b-af24-5799345a65b6}</object>
                          <a>{7d415045-8f89-41a2-9d2d-5745ec17a95a}</a>
                          <b>{f92b85cd-e1fe-4ff1-9593-234958656970}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:-590;y:1510</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
                         </DRelation>
                        </base-DRelation>
                       </DInheritance>
@@ -1042,6 +1150,15 @@
                          <object>{031c0e48-6845-4df9-8802-4e369820aaad}</object>
                          <a>{251aa94d-3c07-4f26-8322-85da5dca5d60}</a>
                          <b>{cb3859de-310d-4869-b726-b27052d1e095}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:-385;y:-365</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
                         </DRelation>
                        </base-DRelation>
                       </DInheritance>
@@ -1078,6 +1195,15 @@
                          <object>{86e9f814-9744-4f9a-8ada-909b44fb9106}</object>
                          <a>{98f3788f-3cec-4388-8792-1704bd3cf883}</a>
                          <b>{cb3859de-310d-4869-b726-b27052d1e095}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:-360;y:-215</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
                         </DRelation>
                        </base-DRelation>
                       </DInheritance>
@@ -1096,6 +1222,15 @@
                          <object>{4a567f45-2296-4938-ad8d-b3ffeb6b3547}</object>
                          <a>{5aa2c9f9-e4a9-4053-8c4a-e9e975dfa2cf}</a>
                          <b>{cb3859de-310d-4869-b726-b27052d1e095}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:-365;y:-145</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
                         </DRelation>
                        </base-DRelation>
                       </DInheritance>
@@ -1114,6 +1249,15 @@
                          <object>{a2cf3802-19fa-4279-a6d6-565f371fc919}</object>
                          <a>{3ae0ec01-e4e8-4aca-9573-c2a413bea979}</a>
                          <b>{cb3859de-310d-4869-b726-b27052d1e095}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:-530;y:25</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
                         </DRelation>
                        </base-DRelation>
                       </DInheritance>
@@ -1132,6 +1276,15 @@
                          <object>{0796a00c-4ba3-4969-9e31-4f8585487e04}</object>
                          <a>{3e53308a-2df4-4917-86b7-a1fbf17b6526}</a>
                          <b>{cb3859de-310d-4869-b726-b27052d1e095}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:-585;y:60</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
                         </DRelation>
                        </base-DRelation>
                       </DInheritance>
@@ -1150,6 +1303,15 @@
                          <object>{19d65bd1-441c-4240-bfe4-5108a8695b94}</object>
                          <a>{ee954d11-c57e-41dd-947f-186977ff3c11}</a>
                          <b>{cb3859de-310d-4869-b726-b27052d1e095}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:-630;y:85</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
                         </DRelation>
                        </base-DRelation>
                       </DInheritance>
@@ -1200,7 +1362,7 @@
                          <pos>x:230;y:610</pos>
                          <rect>x:-100;y:-85;w:200;h:170</rect>
                          <visual-role>6</visual-role>
-                         <visual-emphasized>true</visual-emphasized>
+                         <visual-role2>4</visual-role2>
                          <stereotype-display>1</stereotype-display>
                         </DObject>
                        </base-DObject>
@@ -1239,6 +1401,15 @@
                          <object>{1c1b4aaa-2799-454b-a4a5-6c4f8cd7c0f7}</object>
                          <a>{71dbd3ca-f59a-4879-86df-7b6b35f79888}</a>
                          <b>{78fe44c7-f46e-4977-9960-dd26f66b308d}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:295;y:760</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
                         </DRelation>
                        </base-DRelation>
                       </DInheritance>
@@ -1257,6 +1428,15 @@
                          <object>{66b5bf18-b3cc-4c8e-b873-9529abe2afc1}</object>
                          <a>{d798dd58-fb1e-4852-9769-c26d390d7e0c}</a>
                          <b>{78fe44c7-f46e-4977-9960-dd26f66b308d}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:255;y:770</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
                         </DRelation>
                        </base-DRelation>
                       </DInheritance>
@@ -1274,7 +1454,7 @@
                          </base-DElement>
                          <object>{ec7b66e6-bf67-4a42-93f9-3b2e64d25c04}</object>
                          <name>testKo1.xml</name>
-                         <pos>x:-100;y:-430</pos>
+                         <pos>x:-100;y:-425</pos>
                          <rect>x:-50;y:-35;w:100;h:70</rect>
                          <visual-role>0</visual-role>
                         </DObject>
@@ -1295,6 +1475,15 @@
                          <object>{e60cad53-5f39-497a-95f9-f9601e4e8c35}</object>
                          <a>{251aa94d-3c07-4f26-8322-85da5dca5d60}</a>
                          <b>{32e0f681-711d-4468-a6dd-20f232151bb3}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:-195;y:-415</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
                         </DRelation>
                        </base-DRelation>
                       </DDependency>
@@ -1312,7 +1501,7 @@
                          </base-DElement>
                          <object>{849d1b21-a36c-44fb-aabb-136a7e4b5c68}</object>
                          <name>testKo2_1.xml</name>
-                         <pos>x:-95;y:-350</pos>
+                         <pos>x:-95;y:-345</pos>
                          <rect>x:-55;y:-35;w:110;h:70</rect>
                          <visual-role>0</visual-role>
                         </DObject>
@@ -1333,6 +1522,15 @@
                          <object>{055cbf62-28a7-4fcc-bd31-f4bf1fbfecdd}</object>
                          <a>{7f04a989-fc0f-43ed-8e66-9b2629a99e96}</a>
                          <b>{da8671ad-f0d1-4bd8-856a-80b47a16ff57}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:-190;y:-320</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
                         </DRelation>
                        </base-DRelation>
                       </DDependency>
@@ -1350,7 +1548,7 @@
                          </base-DElement>
                          <object>{7de13df0-5825-49f3-8371-065038784f74}</object>
                          <name>testKo2_2.xml</name>
-                         <pos>x:-95;y:-270</pos>
+                         <pos>x:-95;y:-265</pos>
                          <rect>x:-55;y:-35;w:110;h:70</rect>
                          <visual-role>0</visual-role>
                          <stereotype-display>3</stereotype-display>
@@ -1372,6 +1570,15 @@
                          <object>{79e26cf5-4454-4869-b864-9b29ccbbe130}</object>
                          <a>{7f04a989-fc0f-43ed-8e66-9b2629a99e96}</a>
                          <b>{c2b2641c-ec3e-47b0-a81a-e011c1fcfa58}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:-190;y:-285</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
                         </DRelation>
                        </base-DRelation>
                       </DDependency>
@@ -1389,7 +1596,7 @@
                          </base-DElement>
                          <object>{d3799eb4-febb-43e4-943d-5e2736c4428e}</object>
                          <name>testKo3.xml</name>
-                         <pos>x:-100;y:-180</pos>
+                         <pos>x:-100;y:-175</pos>
                          <rect>x:-50;y:-35;w:100;h:70</rect>
                          <visual-role>0</visual-role>
                         </DObject>
@@ -1427,7 +1634,7 @@
                          </base-DElement>
                          <object>{4dff12f8-9086-449a-ae54-a60d70683dce}</object>
                          <name>testKo4.xml</name>
-                         <pos>x:-100;y:-95</pos>
+                         <pos>x:-100;y:-90</pos>
                          <rect>x:-50;y:-35;w:100;h:70</rect>
                          <visual-role>0</visual-role>
                         </DObject>
@@ -1447,7 +1654,7 @@
                          </base-DElement>
                          <object>{ca84377a-b036-4e99-bf52-a7d8d1fe1c6e}</object>
                          <name>testKo5.xml</name>
-                         <pos>x:-100;y:75</pos>
+                         <pos>x:-100;y:80</pos>
                          <rect>x:-50;y:-35;w:100;h:70</rect>
                          <visual-role>0</visual-role>
                         </DObject>
@@ -1467,7 +1674,7 @@
                          </base-DElement>
                          <object>{3ff9bdfb-7450-4619-a816-1d76da596a69}</object>
                          <name>testAgr1.xml</name>
-                         <pos>x:-100;y:160</pos>
+                         <pos>x:-100;y:165</pos>
                          <rect>x:-50;y:-35;w:100;h:70</rect>
                          <visual-role>0</visual-role>
                         </DObject>
@@ -1487,7 +1694,7 @@
                          </base-DElement>
                          <object>{6d542c1a-a5aa-44a1-8c9f-0005989e7179}</object>
                          <name>testAgr2.xml</name>
-                         <pos>x:-100;y:250</pos>
+                         <pos>x:-100;y:255</pos>
                          <rect>x:-50;y:-35;w:100;h:70</rect>
                          <visual-role>0</visual-role>
                         </DObject>
@@ -1648,6 +1855,15 @@
                          <object>{18e4ce87-f04b-4d54-a468-e32c82b1af8f}</object>
                          <a>{5aa2c9f9-e4a9-4053-8c4a-e9e975dfa2cf}</a>
                          <b>{ceb661ea-f183-482c-807e-5aaf16c63cc6}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:-190;y:-70</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
                         </DRelation>
                        </base-DRelation>
                       </DDependency>
@@ -1720,6 +1936,15 @@
                          <object>{62c9babc-9011-423c-9ca8-3247d7b7ba62}</object>
                          <a>{d2011714-afc9-4497-ad5c-3a1d03143fd6}</a>
                          <b>{0f979737-51cb-4eb2-b9a1-6aaebb7e78e5}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:-145;y:935</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
                         </DRelation>
                        </base-DRelation>
                       </DDependency>
@@ -1738,6 +1963,15 @@
                          <object>{82f3ea49-f2cd-4a0c-87bf-56478e084426}</object>
                          <a>{a767f92d-84f2-45dd-b342-71a006aefb1c}</a>
                          <b>{bd5f3f6b-c384-4d20-934b-63f04974469b}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:-135;y:1030</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
                         </DRelation>
                        </base-DRelation>
                       </DDependency>
@@ -1776,6 +2010,15 @@
                          <object>{c6ba1bcb-a702-4b23-bb24-a150ce2e1a6a}</object>
                          <a>{6d4fde57-dbaf-46a2-9c56-711b54c3d9f8}</a>
                          <b>{93a4f374-3af3-4ab7-9314-3d6016c75297}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:-135;y:1120</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
                         </DRelation>
                        </base-DRelation>
                       </DDependency>
@@ -1794,6 +2037,15 @@
                          <object>{13875661-ef59-4335-b869-b4a4606092e2}</object>
                          <a>{78869b23-27b1-4390-85c9-7b6ec2fd00a4}</a>
                          <b>{69824422-f6ff-4391-b671-d5b46680fadb}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:-165;y:1460</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
                         </DRelation>
                        </base-DRelation>
                       </DDependency>
@@ -1812,6 +2064,15 @@
                          <object>{3ce13ee1-a4c5-4bf4-b250-950753feeb43}</object>
                          <a>{0cf47a64-f4ee-4eff-8c72-8c612acd18f3}</a>
                          <b>{7d73eb02-7822-473f-90e9-6b1373dc960a}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:-160;y:1545</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
                         </DRelation>
                        </base-DRelation>
                       </DDependency>
@@ -1850,6 +2111,15 @@
                          <object>{741aaf1b-595c-493d-a545-b6c2dcd417d4}</object>
                          <a>{7d415045-8f89-41a2-9d2d-5745ec17a95a}</a>
                          <b>{9a60e718-6ed2-43a7-996c-a5f26e1e545e}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:-165;y:1620</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
                         </DRelation>
                        </base-DRelation>
                       </DDependency>
@@ -1888,6 +2158,15 @@
                          <object>{56b958cd-fe83-4c8b-9fe6-a823f5b5f8ec}</object>
                          <a>{915a4afc-f0b4-467a-82fb-8b0707539e3d}</a>
                          <b>{5eeb3480-8470-42e8-8a77-2dcc1b556fc8}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:-135;y:1195</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
                         </DRelation>
                        </base-DRelation>
                       </DDependency>
@@ -1964,7 +2243,7 @@
                           </qlist>
                          </stereotypes>
                          <name>ImpuleWaiter</name>
-                         <pos>x:1085;y:85</pos>
+                         <pos>x:1030;y:90</pos>
                          <rect>x:-40;y:-30;w:80;h:60</rect>
                          <visual-role>0</visual-role>
                         </DObject>
@@ -1985,6 +2264,15 @@
                          <object>{5c92c88f-03a6-428c-a500-4848fde6a7e3}</object>
                          <a>{223c3770-3f08-412a-bfb7-d2b28a635cda}</a>
                          <b>{f0cc670a-cdfb-4bd4-b97a-17a0320ceb21}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:1060;y:275</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
                         </DRelation>
                        </base-DRelation>
                        <a>
@@ -2013,7 +2301,7 @@
                           </qlist>
                          </stereotypes>
                          <name>ProgressTimerBar</name>
-                         <pos>x:1265;y:85</pos>
+                         <pos>x:1140;y:90</pos>
                          <rect>x:-50;y:-30;w:100;h:60</rect>
                          <visual-role>0</visual-role>
                         </DObject>
@@ -2034,6 +2322,20 @@
                          <object>{0149a653-d761-411b-a469-e750c48162c0}</object>
                          <a>{223c3770-3f08-412a-bfb7-d2b28a635cda}</a>
                          <b>{04994fca-b222-4280-9dd9-a4e439f39090}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:1080;y:275</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:1115;y:120</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
                         </DRelation>
                        </base-DRelation>
                        <a>
@@ -2058,6 +2360,15 @@
                          <object>{64ae496e-e001-4168-abbf-ec50fdc9dd7f}</object>
                          <a>{adf5564e-0960-4efc-93b6-4251545ced81}</a>
                          <b>{f4bac94d-4f52-4f98-a681-0003e4932b8e}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:790;y:90</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
                         </DRelation>
                        </base-DRelation>
                        <a>
@@ -2082,6 +2393,15 @@
                          <object>{7eee6454-8109-4ba7-a792-0e1188dc14d0}</object>
                          <a>{adf5564e-0960-4efc-93b6-4251545ced81}</a>
                          <b>{69617e51-5a37-40bb-9111-27d9727ec18b}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:760;y:230</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
                         </DRelation>
                        </base-DRelation>
                        <a>
@@ -2106,6 +2426,15 @@
                          <object>{9de3c51a-2365-48d3-8bc0-ac271341c05f}</object>
                          <a>{adf5564e-0960-4efc-93b6-4251545ced81}</a>
                          <b>{40cb0367-1acc-488d-8f67-565c66eda623}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:705;y:270</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
                         </DRelation>
                        </base-DRelation>
                        <a>
@@ -2130,6 +2459,15 @@
                          <object>{f838111a-6112-492b-8fd6-108cbcedf8ca}</object>
                          <a>{adf5564e-0960-4efc-93b6-4251545ced81}</a>
                          <b>{62857870-fc31-4bff-8d8a-f82c33e1cf7f}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:725;y:460</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
                         </DRelation>
                        </base-DRelation>
                        <a>
@@ -2154,6 +2492,15 @@
                          <object>{08e0ba89-cd33-4ecb-bb61-d2d8bcec6a41}</object>
                          <a>{adf5564e-0960-4efc-93b6-4251545ced81}</a>
                          <b>{5c90a07e-53ac-43f4-81b0-bf776d0e5b36}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:730;y:620</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
                         </DRelation>
                        </base-DRelation>
                        <a>
@@ -2178,6 +2525,15 @@
                          <object>{4fc52d19-0b10-497e-8481-f7a477ce9017}</object>
                          <a>{adf5564e-0960-4efc-93b6-4251545ced81}</a>
                          <b>{71dbd3ca-f59a-4879-86df-7b6b35f79888}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:740;y:760</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
                         </DRelation>
                        </base-DRelation>
                        <a>
@@ -2202,6 +2558,15 @@
                          <object>{bd5f3b85-e736-4ec3-acef-f329bc539b60}</object>
                          <a>{adf5564e-0960-4efc-93b6-4251545ced81}</a>
                          <b>{d798dd58-fb1e-4852-9769-c26d390d7e0c}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:735;y:1035</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
                         </DRelation>
                        </base-DRelation>
                        <a>
@@ -2250,6 +2615,15 @@
                          <object>{fe3cde0c-892e-4d0f-be58-452376bdc88f}</object>
                          <a>{adf5564e-0960-4efc-93b6-4251545ced81}</a>
                          <b>{5660480b-dc5a-4271-af46-ebbdf7d7bdd7}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:975;y:470</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
                         </DRelation>
                        </base-DRelation>
                        <a>
@@ -2274,6 +2648,15 @@
                          <object>{7a1d1bb3-ae2c-4c1c-9ee9-0ef8e3f87273}</object>
                          <a>{223c3770-3f08-412a-bfb7-d2b28a635cda}</a>
                          <b>{5660480b-dc5a-4271-af46-ebbdf7d7bdd7}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:1085;y:540</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
                         </DRelation>
                        </base-DRelation>
                        <direction>2</direction>
@@ -2293,6 +2676,15 @@
                          <object>{05509147-b764-480f-aa1e-3e2f47acf92f}</object>
                          <a>{f4bac94d-4f52-4f98-a681-0003e4932b8e}</a>
                          <b>{53ba5698-24c0-4b32-9156-1cd75fd661c3}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:780;y:-35</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
                         </DRelation>
                        </base-DRelation>
                       </DDependency>
@@ -2429,7 +2821,7 @@
                         </DElement>
                        </base-DElement>
                        <text>Классы для работы с параметрами тестов и файлы для их храниннеия</text>
-                       <pos>x:-345;y:-75</pos>
+                       <pos>x:-345;y:-70</pos>
                        <rect>x:-325;y:-420;w:650;h:840</rect>
                       </DBoundary>
                      </instance>
@@ -2451,7 +2843,7 @@
                           </qlist>
                          </stereotypes>
                          <name>CalcData</name>
-                         <pos>x:1475;y:690</pos>
+                         <pos>x:1510;y:740</pos>
                          <rect>x:-160;y:-140;w:320;h:280</rect>
                          <visual-role>9</visual-role>
                          <visual-emphasized>true</visual-emphasized>
@@ -2515,6 +2907,15 @@
                          <object>{5536a26c-5f4f-4a82-8574-26f0753116e3}</object>
                          <a>{a8fc1146-ab29-4ff5-b7c2-51134e63e229}</a>
                          <b>{f340afc2-dce8-4bcc-af9b-fac9675684e8}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:1400;y:1000</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
                         </DRelation>
                        </base-DRelation>
                       </DInheritance>
@@ -2532,30 +2933,12 @@
                          </base-DElement>
                          <object>{4a42e3c3-38d1-467b-b7a5-5397084988b0}</object>
                          <name>CalcKo2</name>
-                         <pos>x:1370;y:1150</pos>
+                         <pos>x:1385;y:1150</pos>
                          <rect>x:-40;y:-30;w:80;h:60</rect>
                          <visual-role>0</visual-role>
                         </DObject>
                        </base-DObject>
                       </DClass>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DInheritance">
-                      <DInheritance>
-                       <base-DRelation>
-                        <DRelation>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{83265800-aa7f-40ed-b2d9-96f8c0734960}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{634b4d68-8401-4c07-8a42-9ed1599c8145}</object>
-                         <a>{8491d825-e016-41f9-8838-6659b685b7e9}</a>
-                         <b>{f340afc2-dce8-4bcc-af9b-fac9675684e8}</b>
-                        </DRelation>
-                       </base-DRelation>
-                      </DInheritance>
                      </instance>
                     </item>
                     <item>
@@ -2570,7 +2953,7 @@
                          </base-DElement>
                          <object>{52d19b83-bcb2-4ec6-bc2b-a0ad781f6e8e}</object>
                          <name>CalcKo3</name>
-                         <pos>x:1470;y:1150</pos>
+                         <pos>x:1490;y:1150</pos>
                          <rect>x:-40;y:-30;w:80;h:60</rect>
                          <visual-role>0</visual-role>
                         </DObject>
@@ -2591,6 +2974,15 @@
                          <object>{5b701314-4e46-49f9-80c9-f058e6120913}</object>
                          <a>{5cab0193-d01e-4143-8756-261a6d2ea4fb}</a>
                          <b>{f340afc2-dce8-4bcc-af9b-fac9675684e8}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:1495;y:995</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
                         </DRelation>
                        </base-DRelation>
                       </DInheritance>
@@ -2608,7 +3000,7 @@
                          </base-DElement>
                          <object>{b4b535c9-c1fb-44af-9d0c-58819c411399}</object>
                          <name>CalcKo4</name>
-                         <pos>x:1580;y:1150</pos>
+                         <pos>x:1590;y:1150</pos>
                          <rect>x:-40;y:-30;w:80;h:60</rect>
                          <visual-role>0</visual-role>
                         </DObject>
@@ -2629,6 +3021,15 @@
                          <object>{06d8cf7f-7e2a-4162-a2f1-e908d3653bb8}</object>
                          <a>{7e1468de-37fe-4890-9486-af50727e2544}</a>
                          <b>{f340afc2-dce8-4bcc-af9b-fac9675684e8}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:1585;y:1000</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
                         </DRelation>
                        </base-DRelation>
                       </DInheritance>
@@ -2667,6 +3068,15 @@
                          <object>{581c2fd1-801a-4c72-a100-7fa238e4db4f}</object>
                          <a>{687a423e-bf01-427c-b904-573439e3d190}</a>
                          <b>{f340afc2-dce8-4bcc-af9b-fac9675684e8}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:1630;y:1000</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
                         </DRelation>
                        </base-DRelation>
                       </DInheritance>
@@ -2725,6 +3135,15 @@
                          <object>{6febe848-44aa-48d0-ab28-4465dcb7d101}</object>
                          <a>{1304b642-06d5-4e88-862d-886b0468746a}</a>
                          <b>{f340afc2-dce8-4bcc-af9b-fac9675684e8}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:1775;y:855</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
                         </DRelation>
                        </base-DRelation>
                       </DInheritance>
@@ -2743,6 +3162,15 @@
                          <object>{6a1e0180-db20-4009-8add-f65cfed6619e}</object>
                          <a>{94d849f1-8094-4863-a34a-d3bc3b34abe8}</a>
                          <b>{f340afc2-dce8-4bcc-af9b-fac9675684e8}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:1800;y:795</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
                         </DRelation>
                        </base-DRelation>
                       </DInheritance>
@@ -2761,6 +3189,15 @@
                          <object>{b1cee10c-b16e-45ec-927e-a7d29a593fc3}</object>
                          <a>{223c3770-3f08-412a-bfb7-d2b28a635cda}</a>
                          <b>{f340afc2-dce8-4bcc-af9b-fac9675684e8}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:1290;y:760</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
                         </DRelation>
                        </base-DRelation>
                       </DDependency>
@@ -2823,6 +3260,15 @@
                          <object>{5b9d5354-188f-4efc-b961-8666a0b99c80}</object>
                          <a>{223c3770-3f08-412a-bfb7-d2b28a635cda}</a>
                          <b>{53ba5698-24c0-4b32-9156-1cd75fd661c3}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:930;y:295</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
                         </DRelation>
                        </base-DRelation>
                        <a>
@@ -2850,37 +3296,13 @@
                            <item>Dialog</item>
                           </qlist>
                          </stereotypes>
-                         <name>Print</name>
-                         <pos>x:1170;y:85</pos>
-                         <rect>x:-40;y:-30;w:80;h:60</rect>
+                         <name>myDialog::EndDialog</name>
+                         <pos>x:880;y:830</pos>
+                         <rect>x:-60;y:-30;w:120;h:60</rect>
                          <visual-role>0</visual-role>
                         </DObject>
                        </base-DObject>
                       </DClass>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DAssociation">
-                      <DAssociation>
-                       <base-DRelation>
-                        <DRelation>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{56755b43-0a8c-4c2e-8ad3-0a9a6d4ab14d}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{60ed3663-a0c3-4327-944d-e96f1e2b6451}</object>
-                         <a>{223c3770-3f08-412a-bfb7-d2b28a635cda}</a>
-                         <b>{2dd1816b-6b66-4660-a990-60f9a231eeaf}</b>
-                        </DRelation>
-                       </base-DRelation>
-                       <a>
-                        <DAssociationEnd>
-                         <navigable>true</navigable>
-                         <kind>2</kind>
-                        </DAssociationEnd>
-                       </a>
-                      </DAssociation>
                      </instance>
                     </item>
                     <item>
@@ -2896,6 +3318,15 @@
                          <object>{115a993d-d1a7-4ce2-bdac-4291b62e99b2}</object>
                          <a>{0f170f1e-9fd8-4a6f-bf1c-0f55f22b9280}</a>
                          <b>{f340afc2-dce8-4bcc-af9b-fac9675684e8}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:1295;y:820</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
                         </DRelation>
                        </base-DRelation>
                       </DInheritance>
@@ -2918,36 +3349,12 @@
                           </qlist>
                          </stereotypes>
                          <name>SelectInductor</name>
-                         <pos>x:1370;y:85</pos>
+                         <pos>x:1260;y:90</pos>
                          <rect>x:-45;y:-30;w:90;h:60</rect>
                          <visual-role>0</visual-role>
                         </DObject>
                        </base-DObject>
                       </DClass>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DAssociation">
-                      <DAssociation>
-                       <base-DRelation>
-                        <DRelation>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{10b3f43d-8d1b-4c73-8789-1cdb0c1e3f2d}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{8811f77a-cd6e-43eb-b8f9-ffb28f2d72d4}</object>
-                         <a>{223c3770-3f08-412a-bfb7-d2b28a635cda}</a>
-                         <b>{c03adcc1-3c32-4f79-a507-3744accdbc3b}</b>
-                        </DRelation>
-                       </base-DRelation>
-                       <a>
-                        <DAssociationEnd>
-                         <navigable>true</navigable>
-                         <kind>2</kind>
-                        </DAssociationEnd>
-                       </a>
-                      </DAssociation>
                      </instance>
                     </item>
                     <item>
@@ -2963,6 +3370,20 @@
                          <object>{335c46ae-2aff-4a34-a549-69d9f4608c9b}</object>
                          <a>{251aa94d-3c07-4f26-8322-85da5dca5d60}</a>
                          <b>{aa4cb06f-3e42-4cbf-b23c-d130a0920e8f}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:-380;y:-230</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:-500;y:145</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
                         </DRelation>
                        </base-DRelation>
                       </DDependency>
@@ -2981,6 +3402,15 @@
                          <object>{f276cc7f-525d-4ee6-b236-73a279719978}</object>
                          <a>{7f04a989-fc0f-43ed-8e66-9b2629a99e96}</a>
                          <b>{aa4cb06f-3e42-4cbf-b23c-d130a0920e8f}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:-480;y:210</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
                         </DRelation>
                        </base-DRelation>
                       </DDependency>
@@ -2999,6 +3429,20 @@
                          <object>{bd032607-4ce5-4aaf-8010-0769ffb1f54f}</object>
                          <a>{98f3788f-3cec-4388-8792-1704bd3cf883}</a>
                          <b>{aa4cb06f-3e42-4cbf-b23c-d130a0920e8f}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:-430;y:220</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:-460;y:295</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
                         </DRelation>
                        </base-DRelation>
                       </DDependency>
@@ -3017,6 +3461,20 @@
                          <object>{b93c47d5-3d3f-495c-914e-76384a403345}</object>
                          <a>{3ae0ec01-e4e8-4aca-9573-c2a413bea979}</a>
                          <b>{aa4cb06f-3e42-4cbf-b23c-d130a0920e8f}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:-410;y:285</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:-440;y:400</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
                         </DRelation>
                        </base-DRelation>
                       </DDependency>
@@ -3035,6 +3493,15 @@
                          <object>{742edc5b-9bc2-47bb-8696-f1a7ff4b526b}</object>
                          <a>{3e53308a-2df4-4917-86b7-a1fbf17b6526}</a>
                          <b>{aa4cb06f-3e42-4cbf-b23c-d130a0920e8f}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:-425;y:440</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
                         </DRelation>
                        </base-DRelation>
                       </DDependency>
@@ -3053,6 +3520,20 @@
                          <object>{3b0aab3f-6a1c-4ba4-8925-3c636ce695e5}</object>
                          <a>{ee954d11-c57e-41dd-947f-186977ff3c11}</a>
                          <b>{aa4cb06f-3e42-4cbf-b23c-d130a0920e8f}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:-405;y:445</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:-410;y:475</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
                         </DRelation>
                        </base-DRelation>
                       </DDependency>
@@ -3071,6 +3552,15 @@
                          <object>{d8307634-a472-43e5-84bd-11ef7b2493b5}</object>
                          <a>{d2011714-afc9-4497-ad5c-3a1d03143fd6}</a>
                          <b>{aa4cb06f-3e42-4cbf-b23c-d130a0920e8f}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:-405;y:835</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
                         </DRelation>
                        </base-DRelation>
                       </DDependency>
@@ -3089,6 +3579,15 @@
                          <object>{fac64f27-ea25-4657-9961-1c1a98023fdf}</object>
                          <a>{a767f92d-84f2-45dd-b342-71a006aefb1c}</a>
                          <b>{aa4cb06f-3e42-4cbf-b23c-d130a0920e8f}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:-420;y:825</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
                         </DRelation>
                        </base-DRelation>
                       </DDependency>
@@ -3107,6 +3606,15 @@
                          <object>{77ee4246-afb0-4ce9-b1c6-1a1a07d34827}</object>
                          <a>{6d4fde57-dbaf-46a2-9c56-711b54c3d9f8}</a>
                          <b>{aa4cb06f-3e42-4cbf-b23c-d130a0920e8f}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:-440;y:830</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
                         </DRelation>
                        </base-DRelation>
                       </DDependency>
@@ -3125,6 +3633,15 @@
                          <object>{1e091c4e-71c8-442d-ad43-0dc636ea9232}</object>
                          <a>{915a4afc-f0b4-467a-82fb-8b0707539e3d}</a>
                          <b>{aa4cb06f-3e42-4cbf-b23c-d130a0920e8f}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:-455;y:825</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
                         </DRelation>
                        </base-DRelation>
                       </DDependency>
@@ -3143,6 +3660,15 @@
                          <object>{1def4d2b-69dd-4f8d-8e3c-275d2ff00bc4}</object>
                          <a>{78869b23-27b1-4390-85c9-7b6ec2fd00a4}</a>
                          <b>{aa4cb06f-3e42-4cbf-b23c-d130a0920e8f}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:-475;y:820</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
                         </DRelation>
                        </base-DRelation>
                       </DDependency>
@@ -3161,6 +3687,15 @@
                          <object>{8212e101-a939-425f-8fa8-8c579d7ff43a}</object>
                          <a>{0cf47a64-f4ee-4eff-8c72-8c612acd18f3}</a>
                          <b>{aa4cb06f-3e42-4cbf-b23c-d130a0920e8f}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:-495;y:825</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
                         </DRelation>
                        </base-DRelation>
                       </DDependency>
@@ -3179,6 +3714,15 @@
                          <object>{d03f2dd5-96c6-4d17-8ed4-65a7a904c19a}</object>
                          <a>{7d415045-8f89-41a2-9d2d-5745ec17a95a}</a>
                          <b>{aa4cb06f-3e42-4cbf-b23c-d130a0920e8f}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:-515;y:825</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
                         </DRelation>
                        </base-DRelation>
                       </DDependency>
@@ -3196,7 +3740,7 @@
                          </base-DElement>
                          <object>{497b2e78-3ea5-4e63-9226-bc2952d54496}</object>
                          <name>State</name>
-                         <pos>x:1705;y:515</pos>
+                         <pos>x:1800;y:560</pos>
                          <rect>x:-40;y:-30;w:80;h:60</rect>
                          <visual-role>0</visual-role>
                         </DObject>
@@ -3217,6 +3761,15 @@
                          <object>{96939a48-09e4-4243-a1ac-a48d324fd30e}</object>
                          <a>{223c3770-3f08-412a-bfb7-d2b28a635cda}</a>
                          <b>{556ca4ea-3fa1-438f-b6ca-1b2a5dd5825b}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:1330;y:460</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
                         </DRelation>
                        </base-DRelation>
                        <a>
@@ -3240,7 +3793,7 @@
                          </base-DElement>
                          <object>{6a8580df-cc1a-43ec-9070-2c60d35324f4}</object>
                          <name>TestKo4_1</name>
-                         <pos>x:-100;y:-10</pos>
+                         <pos>x:-100;y:-5</pos>
                          <rect>x:-50;y:-35;w:100;h:70</rect>
                          <visual-role>0</visual-role>
                         </DObject>
@@ -3261,6 +3814,15 @@
                          <object>{b2b28e98-6008-4a87-b6ab-9a694ee738dc}</object>
                          <a>{5aa2c9f9-e4a9-4053-8c4a-e9e975dfa2cf}</a>
                          <b>{981c8bdc-4b18-41d8-8ddf-e2289d34bccc}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:-200;y:-35</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
                         </DRelation>
                        </base-DRelation>
                       </DDependency>
@@ -3275,7 +3837,7 @@
                         </DElement>
                        </base-DElement>
                        <text>параметры теста</text>
-                       <pos>x:-150;y:-355</pos>
+                       <pos>x:-150;y:-350</pos>
                        <rect>x:0;y:0;w:109;h:29</rect>
                        <auto-sized>false</auto-sized>
                       </DAnnotation>
@@ -3291,7 +3853,7 @@
                        </base-DElement>
                        <text>параметры теста
 без калибровки</text>
-                       <pos>x:-150;y:-275</pos>
+                       <pos>x:-150;y:-270</pos>
                        <rect>x:0;y:0;w:104;h:42</rect>
                       </DAnnotation>
                      </instance>
@@ -3358,7 +3920,7 @@
                           <qlist>
                            <item>
                             <DRelation--IntermediatePoint>
-                             <pos>x:5;y:1330</pos>
+                             <pos>x:-10;y:1275</pos>
                             </DRelation--IntermediatePoint>
                            </item>
                           </qlist>
@@ -3385,7 +3947,12 @@
                           <qlist>
                            <item>
                             <DRelation--IntermediatePoint>
-                             <pos>x:5;y:1330</pos>
+                             <pos>x:20;y:1385</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:-15;y:1370</pos>
                             </DRelation--IntermediatePoint>
                            </item>
                           </qlist>
@@ -3412,7 +3979,7 @@
                           </qlist>
                          </stereotypes>
                          <name>TestKoAgr</name>
-                         <pos>x:965;y:650</pos>
+                         <pos>x:940;y:650</pos>
                          <rect>x:-40;y:-30;w:80;h:60</rect>
                          <visual-role>0</visual-role>
                         </DObject>
@@ -3433,6 +4000,15 @@
                          <object>{0055e4c8-1bec-44dd-8df8-2d7a36a96845}</object>
                          <a>{adf5564e-0960-4efc-93b6-4251545ced81}</a>
                          <b>{b89cdc6a-cf0c-4cbb-8c39-1371041135ed}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:940;y:555</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
                         </DRelation>
                        </base-DRelation>
                        <a>
@@ -3459,56 +4035,8 @@
                          <b>{5660480b-dc5a-4271-af46-ebbdf7d7bdd7}</b>
                         </DRelation>
                        </base-DRelation>
+                       <direction>2</direction>
                       </DDependency>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DClass">
-                      <DClass>
-                       <base-DObject>
-                        <DObject>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{6a3e0183-5cea-4a26-993a-ccf9beff2971}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{cd796a1b-81bd-4252-9481-9c8ea16a10af}</object>
-                         <stereotypes>
-                          <qlist>
-                           <item>Dialog</item>
-                          </qlist>
-                         </stereotypes>
-                         <name>EndDialog</name>
-                         <pos>x:845;y:770</pos>
-                         <rect>x:-40;y:-30;w:80;h:60</rect>
-                         <visual-role>0</visual-role>
-                        </DObject>
-                       </base-DObject>
-                      </DClass>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DAssociation">
-                      <DAssociation>
-                       <base-DRelation>
-                        <DRelation>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{2d351d5f-4178-4ea1-81ee-00ebe22b8672}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{19a569df-559b-40b6-bdf1-3f0ba6398aec}</object>
-                         <a>{adf5564e-0960-4efc-93b6-4251545ced81}</a>
-                         <b>{6a3e0183-5cea-4a26-993a-ccf9beff2971}</b>
-                        </DRelation>
-                       </base-DRelation>
-                       <a>
-                        <DAssociationEnd>
-                         <navigable>true</navigable>
-                         <kind>2</kind>
-                        </DAssociationEnd>
-                       </a>
-                      </DAssociation>
                      </instance>
                     </item>
                     <item>
@@ -3528,7 +4056,7 @@
                           </qlist>
                          </stereotypes>
                          <name>IScenario</name>
-                         <pos>x:1770;y:340</pos>
+                         <pos>x:1850;y:335</pos>
                          <rect>x:-105;y:-120;w:210;h:240</rect>
                          <visual-role>0</visual-role>
                          <visual-role2>4</visual-role2>
@@ -3552,6 +4080,15 @@
                          <object>{dcdfe913-f6e2-49c0-8bc2-df06c76207fc}</object>
                          <a>{556ca4ea-3fa1-438f-b6ca-1b2a5dd5825b}</a>
                          <b>{e803f68b-05a1-4a61-9f6e-1a01e6b1447f}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:1800;y:490</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
                         </DRelation>
                        </base-DRelation>
                       </DDependency>
@@ -3570,6 +4107,15 @@
                          <object>{6ecdb6fe-f89d-4f87-b989-d4ecbe33bb47}</object>
                          <a>{223c3770-3f08-412a-bfb7-d2b28a635cda}</a>
                          <b>{e803f68b-05a1-4a61-9f6e-1a01e6b1447f}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:1370;y:400</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
                         </DRelation>
                        </base-DRelation>
                       </DInheritance>
@@ -3616,6 +4162,15 @@
                          <object>{bd13b374-05a2-4ccb-a29b-061ebb7f1c7c}</object>
                          <a>{223c3770-3f08-412a-bfb7-d2b28a635cda}</a>
                          <b>{b48de69c-0aa9-43e4-9ed0-88ff7aa1cec7}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:1480;y:5</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
                         </DRelation>
                        </base-DRelation>
                       </DInheritance>
@@ -3633,7 +4188,7 @@
                          </base-DElement>
                          <object>{0b246cd2-2066-482c-a25f-92387954f34f}</object>
                          <name>Options</name>
-                         <pos>x:1620;y:150</pos>
+                         <pos>x:1640;y:185</pos>
                          <rect>x:-40;y:-30;w:80;h:60</rect>
                          <visual-role>0</visual-role>
                         </DObject>
@@ -3654,6 +4209,15 @@
                          <object>{bd17f029-7c3e-4c3b-8cde-51494aa4a6e3}</object>
                          <a>{df380df0-6e81-4f15-9591-227902c18102}</a>
                          <b>{b48de69c-0aa9-43e4-9ed0-88ff7aa1cec7}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:1640;y:105</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
                         </DRelation>
                        </base-DRelation>
                       </DDependency>
@@ -3672,6 +4236,15 @@
                          <object>{a76ec718-0ee1-4569-977c-049e614d3bae}</object>
                          <a>{223c3770-3f08-412a-bfb7-d2b28a635cda}</a>
                          <b>{df380df0-6e81-4f15-9591-227902c18102}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:1335;y:360</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
                         </DRelation>
                        </base-DRelation>
                        <a>
@@ -3683,9 +4256,93 @@
                       </DAssociation>
                      </instance>
                     </item>
+                    <item>
+                     <instance type="DAssociation">
+                      <DAssociation>
+                       <base-DRelation>
+                        <DRelation>
+                         <base-DElement>
+                          <DElement>
+                           <uid>{7b58c81e-89db-4520-b4bc-b2525457a448}</uid>
+                          </DElement>
+                         </base-DElement>
+                         <object>{dbfb05a3-de73-4877-a2fa-c64d3067b749}</object>
+                         <a>{adf5564e-0960-4efc-93b6-4251545ced81}</a>
+                         <b>{2dd1816b-6b66-4660-a990-60f9a231eeaf}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:885;y:695</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
+                        </DRelation>
+                       </base-DRelation>
+                       <a>
+                        <DAssociationEnd>
+                         <navigable>true</navigable>
+                         <kind>2</kind>
+                        </DAssociationEnd>
+                       </a>
+                      </DAssociation>
+                     </instance>
+                    </item>
+                    <item>
+                     <instance type="DAssociation">
+                      <DAssociation>
+                       <base-DRelation>
+                        <DRelation>
+                         <base-DElement>
+                          <DElement>
+                           <uid>{dbc59f23-2e57-4076-a705-c02eeb3330a8}</uid>
+                          </DElement>
+                         </base-DElement>
+                         <object>{5f37f11f-e195-4577-bc78-23c83bd14b5c}</object>
+                         <a>{223c3770-3f08-412a-bfb7-d2b28a635cda}</a>
+                         <b>{c03adcc1-3c32-4f79-a507-3744accdbc3b}</b>
+                        </DRelation>
+                       </base-DRelation>
+                       <a>
+                        <DAssociationEnd>
+                         <navigable>true</navigable>
+                         <kind>2</kind>
+                        </DAssociationEnd>
+                       </a>
+                      </DAssociation>
+                     </instance>
+                    </item>
+                    <item>
+                     <instance type="DInheritance">
+                      <DInheritance>
+                       <base-DRelation>
+                        <DRelation>
+                         <base-DElement>
+                          <DElement>
+                           <uid>{5bc64bf1-39e0-4ab2-a38a-1d4b100d6beb}</uid>
+                          </DElement>
+                         </base-DElement>
+                         <object>{198f57f7-a671-48f1-83bf-aa1d558e05c5}</object>
+                         <a>{8491d825-e016-41f9-8838-6659b685b7e9}</a>
+                         <b>{f340afc2-dce8-4bcc-af9b-fac9675684e8}</b>
+                         <points>
+                          <qlist>
+                           <item>
+                            <DRelation--IntermediatePoint>
+                             <pos>x:1450;y:1000</pos>
+                            </DRelation--IntermediatePoint>
+                           </item>
+                          </qlist>
+                         </points>
+                        </DRelation>
+                       </base-DRelation>
+                      </DInheritance>
+                     </instance>
+                    </item>
                    </qlist>
                   </elements>
-                  <last-modified>1556264596232</last-modified>
+                  <last-modified>1556519784271</last-modified>
                   <toolbarid>General</toolbarid>
                  </MDiagram>
                 </base-MDiagram>
@@ -4027,7 +4684,7 @@
                  <qlist>
                   <item>
                    <MClassMember>
-                    <uid>{fb6fc785-01f1-4a83-a19d-c573a3c1e7fd}</uid>
+                    <uid>{746c9953-b851-4b7a-9ae1-2bf2d01e5771}</uid>
                     <visibility>1</visibility>
                     <type>1</type>
                     <declaration>enum SaveTo {Test_ID, Calib_ID }</declaration>
@@ -4035,7 +4692,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{4d2ec844-3f83-48ea-b409-712aec0e7006}</uid>
+                    <uid>{3cbdcf1b-c946-4713-a128-1027d44d4f4c}</uid>
                     <visibility>1</visibility>
                     <type>2</type>
                     <properties>3</properties>
@@ -4044,7 +4701,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{3291f4b7-c9c3-404c-85ff-bd1b5744ba91}</uid>
+                    <uid>{c0caf8c4-f941-45ed-9b29-a4983a07608b}</uid>
                     <visibility>1</visibility>
                     <type>2</type>
                     <properties>3</properties>
@@ -4053,7 +4710,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{f793cc83-3974-4d44-b650-39f89782c034}</uid>
+                    <uid>{d8ea0d94-16a7-4f13-848d-2effc9f8fb02}</uid>
                     <visibility>1</visibility>
                     <type>2</type>
                     <properties>3</properties>
@@ -4062,7 +4719,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{2eb9c705-b150-45b7-b8ea-ab683e91b602}</uid>
+                    <uid>{856e5029-ee9c-434f-931c-0feeedec8173}</uid>
                     <visibility>1</visibility>
                     <type>2</type>
                     <properties>3</properties>
@@ -4071,7 +4728,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{4d69e228-9bab-4bf1-9eea-d03609fcfb4f}</uid>
+                    <uid>{b4c23820-73f7-4a0c-81bd-8f4ff9be48c6}</uid>
                     <visibility>1</visibility>
                     <type>2</type>
                     <properties>3</properties>
@@ -4080,7 +4737,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{ba59d112-2bf3-48d1-ab42-fe0c33cf5e89}</uid>
+                    <uid>{0444b76f-db72-44cc-b03f-c9d8ce688fa6}</uid>
                     <visibility>1</visibility>
                     <type>2</type>
                     <properties>3</properties>
@@ -4089,7 +4746,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{e9e188d2-aa63-4270-8c77-86055bebb3d2}</uid>
+                    <uid>{5e590366-52d9-4342-ab57-740a4ef1820b}</uid>
                     <visibility>1</visibility>
                     <type>2</type>
                     <properties>3</properties>
@@ -4098,7 +4755,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{e541ac46-174f-4297-a448-de57672fe132}</uid>
+                    <uid>{ecd80438-b896-40bd-a5a0-3c5c01e7a4f3}</uid>
                     <visibility>1</visibility>
                     <type>2</type>
                     <properties>3</properties>
@@ -4107,7 +4764,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{dfd5ba75-dd17-4dcb-844f-c62924aa526f}</uid>
+                    <uid>{5cd51913-d880-4595-bba6-bc7dad30d414}</uid>
                     <visibility>1</visibility>
                     <type>2</type>
                     <properties>3</properties>
@@ -4116,7 +4773,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{531cbe0f-fe4b-4c2c-8a54-f4b4fc63d242}</uid>
+                    <uid>{1e88b0a8-f2c2-4eee-bc66-489f2c3d65d3}</uid>
                     <visibility>1</visibility>
                     <type>2</type>
                     <properties>3</properties>
@@ -4125,7 +4782,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{ecabcd56-b2b1-43dd-8eb7-107f2678eb0b}</uid>
+                    <uid>{ce80f52d-a256-4eff-a4cf-a3d99039d157}</uid>
                     <visibility>1</visibility>
                     <type>2</type>
                     <properties>3</properties>
@@ -4134,7 +4791,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{33d4075a-857e-4675-a114-e29037f97b9e}</uid>
+                    <uid>{caf955d8-0f4d-4bf6-9985-669f6a1e8d79}</uid>
                     <visibility>1</visibility>
                     <type>2</type>
                     <properties>3</properties>
@@ -4143,7 +4800,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{41e38686-fde9-4d86-a3e5-1e5d9f2a6b34}</uid>
+                    <uid>{18e96b51-a63f-4db8-9cc9-5775f6e8742b}</uid>
                     <visibility>1</visibility>
                     <type>2</type>
                     <properties>3</properties>
@@ -4152,7 +4809,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{ba7041b8-4265-4559-9bac-10900ba192dd}</uid>
+                    <uid>{cf4a7988-6c13-47a8-9549-170648cf1c07}</uid>
                     <visibility>1</visibility>
                     <type>2</type>
                     <properties>3</properties>
@@ -4946,7 +5603,7 @@
                  <qlist>
                   <item>
                    <MClassMember>
-                    <uid>{cfe1918a-1dff-4675-886c-cd39880df319}</uid>
+                    <uid>{af111b65-a22d-4c8a-bfc9-aba8667471b8}</uid>
                     <visibility>3</visibility>
                     <type>1</type>
                     <declaration>Ui::Ko5 *ui</declaration>
@@ -4954,7 +5611,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{dbfe9f5d-692d-420b-8330-361bb10ce72e}</uid>
+                    <uid>{9b927671-9142-4042-94ac-0f29ff4a3fe5}</uid>
                     <visibility>3</visibility>
                     <type>1</type>
                     <declaration>TestKo5 *t_ko5</declaration>
@@ -4962,7 +5619,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{012213cd-aa60-4cd3-9916-1ce6e0f34e50}</uid>
+                    <uid>{1f218d32-de58-46a0-835f-0f18399385af}</uid>
                     <visibility>3</visibility>
                     <type>1</type>
                     <declaration>CalibrationKo5 *c_ko5</declaration>
@@ -4970,7 +5627,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{72e9531f-7d67-4745-88ba-9ef8a6d449ce}</uid>
+                    <uid>{2d523694-6a8a-4317-ab48-6a8514af8a56}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>measurment(StartMeasurment*)</declaration>
@@ -4978,7 +5635,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{8973c2b8-66bf-41a0-bbcd-9f651d3c257b}</uid>
+                    <uid>{4aa80f2c-94f1-4c91-ae8e-ceb8d866d55d}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>calibration(StartMeasurment*)</declaration>
@@ -6119,7 +6776,7 @@
                  <qlist>
                   <item>
                    <MClassMember>
-                    <uid>{80d1f754-8311-4c1f-bcf6-e52fdc4082e5}</uid>
+                    <uid>{440dd737-53a8-4517-b518-7d2c28439c9d}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>measurement(StartMeasurement *)</declaration>
@@ -6127,7 +6784,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{05a63377-da64-437d-b4db-1d7532cd95ad}</uid>
+                    <uid>{9b4b11b5-8cf6-43e8-a65a-f1ae338db9ff}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>calibration(StartMeasurement *)</declaration>
@@ -6135,7 +6792,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{34e210bd-e4ee-461f-936b-e4f53852b4aa}</uid>
+                    <uid>{10490664-be21-4277-90ab-fdd64b3b6afd}</uid>
                     <visibility>3</visibility>
                     <type>1</type>
                     <declaration>Ui::Agr2 *ui</declaration>
@@ -6143,7 +6800,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{e6d11ed0-96ae-4327-ab9b-c6a1c9a5690c}</uid>
+                    <uid>{c6d1736c-bdf5-487e-a59b-505b404bca19}</uid>
                     <visibility>3</visibility>
                     <type>1</type>
                     <declaration>TestAgr2 *t_agr2</declaration>
@@ -6151,7 +6808,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{ce631a68-964f-40f0-ad10-e02e723391e6}</uid>
+                    <uid>{d54ebfb0-c39f-4b26-aaf9-5888a2b662d0}</uid>
                     <visibility>3</visibility>
                     <type>1</type>
                     <declaration>CalibrationAgr2 *c_agr2</declaration>
@@ -6522,6 +7179,34 @@
                         </target>
                        </handle>
                       </item>
+                      <item>
+                       <handle>
+                        <uid>{dbfb05a3-de73-4877-a2fa-c64d3067b749}</uid>
+                        <target>
+                         <instance type="MAssociation">
+                          <MAssociation>
+                           <base-MRelation>
+                            <MRelation>
+                             <base-MElement>
+                              <MElement>
+                               <uid>{dbfb05a3-de73-4877-a2fa-c64d3067b749}</uid>
+                              </MElement>
+                             </base-MElement>
+                             <a>{9acf0243-ff16-4916-a6db-9a900ed2aa27}</a>
+                             <b>{b64f939f-7c3e-4307-98df-03b792cc296d}</b>
+                            </MRelation>
+                           </base-MRelation>
+                           <a>
+                            <MAssociationEnd>
+                             <navigable>true</navigable>
+                             <kind>2</kind>
+                            </MAssociationEnd>
+                           </a>
+                          </MAssociation>
+                         </instance>
+                        </target>
+                       </handle>
+                      </item>
                      </qlist>
                     </handles>
                    </handles>
@@ -6532,14 +7217,14 @@
                  <qlist>
                   <item>
                    <MClassMember>
-                    <uid>{d6832553-4a9a-424e-b4f2-7cd2b80a08bc}</uid>
+                    <uid>{0b28aae9-b96b-4eea-871b-9470c6e822fe}</uid>
                     <type>1</type>
                     <declaration>Ui::ChoiseDialog *ui</declaration>
                    </MClassMember>
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{c67de052-e18c-4591-ba8c-630ffe8e475d}</uid>
+                    <uid>{3ce315ac-49ac-4a78-a5a3-8fcdf07f770e}</uid>
                     <visibility>1</visibility>
                     <type>2</type>
                     <declaration>explicit ChoiseDialog(QDialog *parent = 0)</declaration>
@@ -6547,7 +7232,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{46e26f75-38ab-4458-a8e8-dd9fe129a5f8}</uid>
+                    <uid>{6988f522-a97b-44e6-aee7-859719444168}</uid>
                     <visibility>1</visibility>
                     <type>2</type>
                     <properties>4</properties>
@@ -6556,7 +7241,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{6d4b86e0-3203-4662-93b9-cdf4ad1e0ddb}</uid>
+                    <uid>{65bc4dc6-6dc5-47e0-a822-636ef32caf29}</uid>
                     <visibility>1</visibility>
                     <type>2</type>
                     <declaration>void CreateWidgetThread()</declaration>
@@ -6564,7 +7249,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{5423b5eb-324d-483b-b95d-97fa98ea0476}</uid>
+                    <uid>{9a2c2194-af5b-4af1-9a6b-ac44eec85fdf}</uid>
                     <visibility>1</visibility>
                     <type>2</type>
                     <declaration>void DeleteWidgetThread()</declaration>
@@ -6572,7 +7257,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{823e201b-2d43-4aba-bd44-8194f4673a2b}</uid>
+                    <uid>{7be173d6-586b-488c-ab7b-3fd03dd230ef}</uid>
                     <visibility>1</visibility>
                     <type>2</type>
                     <declaration>~ChoiseDialog()</declaration>
@@ -6580,7 +7265,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{403ef343-42a5-4692-ab32-00d9adaaaace}</uid>
+                    <uid>{dc3f8699-ea35-4340-bf60-3245ee109468}</uid>
                     <visibility>1</visibility>
                     <type>1</type>
                     <declaration>Agr1 *agr1</declaration>
@@ -6588,7 +7273,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{047e7744-d182-4cef-95db-24d89a263f9f}</uid>
+                    <uid>{6daf8a0a-32fe-434e-b744-3df36a9b08db}</uid>
                     <visibility>1</visibility>
                     <type>1</type>
                     <declaration>Agr2 *agr2</declaration>
@@ -6596,7 +7281,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{fca73bfc-0075-4fdd-86b0-bbcc70c1e7eb}</uid>
+                    <uid>{e0a45bd1-f847-43f2-8f74-018ba8f1e711}</uid>
                     <visibility>1</visibility>
                     <type>1</type>
                     <declaration>Ko1 *ko1</declaration>
@@ -6604,7 +7289,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{28edab0f-d040-45bf-84c1-67bb28bf54e9}</uid>
+                    <uid>{59f900de-54d0-4f45-bb6e-7351faa2e8a9}</uid>
                     <visibility>1</visibility>
                     <type>1</type>
                     <declaration>Ko2 *ko2</declaration>
@@ -6612,7 +7297,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{69319ded-9474-4fcb-9239-6383991b490e}</uid>
+                    <uid>{0048eea2-55b5-4693-93c8-ad39fd169c6e}</uid>
                     <visibility>1</visibility>
                     <type>1</type>
                     <declaration>Ko3 *ko3</declaration>
@@ -6620,7 +7305,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{2dd8315a-c255-4a49-a1ac-ffd34acedbb6}</uid>
+                    <uid>{a560fbef-3e02-44e6-80ea-3dc65c98eddd}</uid>
                     <visibility>1</visibility>
                     <type>1</type>
                     <declaration>Ko4 *ko4</declaration>
@@ -6628,7 +7313,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{46e8164a-56e1-4ddb-80e0-89e201e8da14}</uid>
+                    <uid>{362abe96-e3a8-43c8-8f9e-71171d5b70cf}</uid>
                     <visibility>1</visibility>
                     <type>1</type>
                     <declaration>Ko5 *ko5</declaration>
@@ -6636,7 +7321,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{a0b16a98-d577-420f-9f98-d9bad34a50cf}</uid>
+                    <uid>{42d6aa29-557b-442c-8bf1-a07099f80b31}</uid>
                     <visibility>1</visibility>
                     <type>1</type>
                     <declaration>QMessageBox *end_dialog</declaration>
@@ -6644,7 +7329,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{68a1fdc7-03fa-4b2c-8c2b-05109381b69a}</uid>
+                    <uid>{f4beb33b-6291-49ae-bb68-159872a3e8eb}</uid>
                     <visibility>1</visibility>
                     <type>1</type>
                     <declaration>QPrintDialog *printDialog</declaration>
@@ -6652,7 +7337,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{cad869ed-89de-4852-a2d4-d91cdfd4640f}</uid>
+                    <uid>{c69a040e-3d76-4d47-bcd3-b8d5e315b3fc}</uid>
                     <visibility>1</visibility>
                     <type>1</type>
                     <declaration>useE154 *agrekola</declaration>
@@ -6660,7 +7345,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{b90e1f65-e56e-48f7-b9fb-c2ad8d09a99b}</uid>
+                    <uid>{18cfcded-aa65-4933-afbb-9e9935564c33}</uid>
                     <visibility>1</visibility>
                     <type>1</type>
                     <declaration>Widget *widget</declaration>
@@ -6668,7 +7353,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{022650b9-f96d-4341-8f5c-b282e914e2e9}</uid>
+                    <uid>{6ceccde7-dda2-40e9-9ef4-ad73cd42bf7a}</uid>
                     <visibility>5</visibility>
                     <type>2</type>
                     <declaration>void on_exitButton_clicked()</declaration>
@@ -6676,7 +7361,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{947c7b36-fdb3-4057-9bb9-f8b91b285b18}</uid>
+                    <uid>{8cbdcd03-d2bb-409a-9fb4-e451b80da332}</uid>
                     <visibility>5</visibility>
                     <type>2</type>
                     <declaration>void on_testButton_clicked()</declaration>
@@ -6684,7 +7369,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{61af9e7f-8036-4c9c-84e7-72a4bc6153aa}</uid>
+                    <uid>{64f13a3d-a5ce-4e75-8e16-b3b40333880a}</uid>
                     <visibility>5</visibility>
                     <type>2</type>
                     <declaration>void on_agr1Button_clicked()</declaration>
@@ -6692,7 +7377,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{3260d4ef-946e-437c-88e4-847b02ea8ba9}</uid>
+                    <uid>{a2f71373-f1bf-4018-b5b3-0f5793036db8}</uid>
                     <visibility>5</visibility>
                     <type>2</type>
                     <declaration>void on_agr2Button_clicked()</declaration>
@@ -6700,7 +7385,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{c29e013e-2385-4c52-99c2-2064f24497cb}</uid>
+                    <uid>{a2e4cb07-9048-44d9-9cb7-ca7fca3b9312}</uid>
                     <visibility>5</visibility>
                     <type>2</type>
                     <declaration>void on_ko1Button_clicked()</declaration>
@@ -6708,7 +7393,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{543f606f-4a07-4991-8623-8d339849e5e1}</uid>
+                    <uid>{5fa1d1a0-6d43-4d4c-8751-fa8b65b725b0}</uid>
                     <visibility>5</visibility>
                     <type>2</type>
                     <declaration>void on_ko2Button_clicked()</declaration>
@@ -6716,7 +7401,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{0aac35ce-2b1d-44c1-88cb-fc0b471eed4c}</uid>
+                    <uid>{44c98660-48be-49c8-94c0-6bbec971fe76}</uid>
                     <visibility>5</visibility>
                     <type>2</type>
                     <declaration>void on_ko3Button_clicked()</declaration>
@@ -6724,7 +7409,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{5ab21298-5508-49d9-a4c8-78511f813342}</uid>
+                    <uid>{fbd43b3e-921f-4757-b041-d6debb66ff08}</uid>
                     <visibility>5</visibility>
                     <type>2</type>
                     <declaration>void on_ko4Button_clicked()</declaration>
@@ -6732,7 +7417,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{1360df6e-b9dd-4baa-9dc9-c750e1c04df4}</uid>
+                    <uid>{c7344a98-ecce-4105-980e-777f686b7a63}</uid>
                     <visibility>5</visibility>
                     <type>2</type>
                     <declaration>void on_ko5Button_clicked()</declaration>
@@ -6740,7 +7425,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{832c7791-c44c-4767-8734-a6fc9e822703}</uid>
+                    <uid>{dc944972-98eb-4c66-b701-b6e492af28db}</uid>
                     <visibility>5</visibility>
                     <type>2</type>
                     <declaration>void t_singeShotConntection(MetaObj *p, MetaObj *t1,MetaObj *t2, MetaObj *t3, MetaObj *t4, Ko_impl *ko)</declaration>
@@ -6748,7 +7433,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{69f4ce97-782e-4ea6-924d-fec6a263b645}</uid>
+                    <uid>{71d21644-06c0-428b-a6d8-90eb34ea1926}</uid>
                     <visibility>5</visibility>
                     <type>2</type>
                     <declaration>void c_singeShotConntection(MetaObj *p, MetaObj *t1, MetaObj *t2, MetaObj *t3, MetaObj *t4, Ko_impl *ko)</declaration>
@@ -6756,7 +7441,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{3961f5eb-011d-46c8-8247-cea570001628}</uid>
+                    <uid>{7ae51930-614b-4da5-a7a1-e4d7aacb4590}</uid>
                     <visibility>5</visibility>
                     <type>2</type>
                     <declaration>void btp_singeShotConntection(MetaObj *btp1, MetaObj *btp2, MetaObj *btp3, MetaObj *btp4, Agr_impl *agr)</declaration>
@@ -6764,7 +7449,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{d59d55bf-1ea9-42ae-9038-3b2bcf20069e}</uid>
+                    <uid>{81250d0c-5595-407e-b83b-0f3564ac58dd}</uid>
                     <visibility>5</visibility>
                     <type>2</type>
                     <declaration>void otp_singeShotConntection(MetaObj *otp1, MetaObj *otp2, MetaObj *otp3, MetaObj *otp4, Agr_impl *agr)</declaration>
@@ -6772,7 +7457,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{638daf9c-3362-4307-9e67-a6b0bb6a496e}</uid>
+                    <uid>{a99c029d-d229-45ac-b88e-5eef45ac165b}</uid>
                     <visibility>5</visibility>
                     <type>2</type>
                     <declaration>void startMeasurement(StartMeasurement *)</declaration>
@@ -6780,7 +7465,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{2d31c613-10f7-47e8-a341-4f4d0637323b}</uid>
+                    <uid>{dc703542-886d-4a52-b097-d90b4f7d7c1d}</uid>
                     <visibility>5</visibility>
                     <type>2</type>
                     <declaration>void calibration(StartMeasurement *)</declaration>
@@ -7150,6 +7835,34 @@
                         </target>
                        </handle>
                       </item>
+                      <item>
+                       <handle>
+                        <uid>{5f37f11f-e195-4577-bc78-23c83bd14b5c}</uid>
+                        <target>
+                         <instance type="MAssociation">
+                          <MAssociation>
+                           <base-MRelation>
+                            <MRelation>
+                             <base-MElement>
+                              <MElement>
+                               <uid>{5f37f11f-e195-4577-bc78-23c83bd14b5c}</uid>
+                              </MElement>
+                             </base-MElement>
+                             <a>{0c26bb9b-0ac8-4068-a2b8-1496f2f13864}</a>
+                             <b>{19895db7-e014-4e47-8cb7-2c4aebbbec79}</b>
+                            </MRelation>
+                           </base-MRelation>
+                           <a>
+                            <MAssociationEnd>
+                             <navigable>true</navigable>
+                             <kind>2</kind>
+                            </MAssociationEnd>
+                           </a>
+                          </MAssociation>
+                         </instance>
+                        </target>
+                       </handle>
+                      </item>
                      </qlist>
                     </handles>
                    </handles>
@@ -7160,63 +7873,63 @@
                  <qlist>
                   <item>
                    <MClassMember>
-                    <uid>{acbe03f7-8902-41ef-bc5c-3cc45052c361}</uid>
+                    <uid>{63f280ce-e16a-406b-9423-d4f6e44e1ce3}</uid>
                     <type>2</type>
                     <declaration>explicit Widget(QWidget *parent = 0)</declaration>
                    </MClassMember>
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{e6a8c4dc-3ce8-4a02-a36c-c328dc1fa793}</uid>
+                    <uid>{ff3c9d76-1583-4477-ad59-f1447705efa2}</uid>
                     <type>2</type>
                     <declaration>~Widget()</declaration>
                    </MClassMember>
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{ecf041e8-fc97-4690-b607-e25186306ea4}</uid>
+                    <uid>{4d043ab9-01b8-41f3-afcb-85192429010a}</uid>
                     <type>2</type>
                     <declaration>void setupWidget()</declaration>
                    </MClassMember>
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{cf5ba963-c6c0-43eb-855e-da7d98a2ec76}</uid>
+                    <uid>{7d82e55f-c695-4a29-973c-8d62bb97cfb4}</uid>
                     <type>2</type>
                     <declaration>void setUserMessage(QString, bool withtime = true, bool tofile = true)</declaration>
                    </MClassMember>
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{728e5548-bc20-4768-a692-edca3389952c}</uid>
+                    <uid>{c97813d5-3933-4242-bba0-7136aafae38c}</uid>
                     <type>1</type>
                     <declaration>inline bool isSensorReady() {         return termoSensor</declaration>
                    </MClassMember>
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{abf6b7cc-fe9d-4ae6-9136-907818a36012}</uid>
+                    <uid>{3cd6337c-b637-4ace-b238-dde53f7076b6}</uid>
                     <type>1</type>
                     <declaration>}</declaration>
                    </MClassMember>
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{ffd15730-b04b-4c80-b99e-1509544405f6}</uid>
+                    <uid>{26306790-e91d-40a7-882e-d5fdf55ba704}</uid>
                     <type>2</type>
                     <declaration>void stopData(Channel_ID)</declaration>
                    </MClassMember>
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{c7011441-f2ec-499b-a603-393fb3d279ae}</uid>
+                    <uid>{1670c445-3bbe-42d1-8098-9e495f1ae161}</uid>
                     <type>2</type>
                     <declaration>bool isData(Channel_ID)</declaration>
                    </MClassMember>
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{9319d8ff-c898-43f5-a97e-b8ced6ff119a}</uid>
+                    <uid>{5b1af16d-c04c-4976-baad-f808f169be6f}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>void onmixch1(bool)</declaration>
@@ -7224,7 +7937,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{ab6626e6-b6e7-49b4-b224-54008704a0bc}</uid>
+                    <uid>{6a17f290-6172-47a4-a0ec-5727b60f0d73}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>void onmixch2(bool)</declaration>
@@ -7232,7 +7945,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{4f7a5508-3f52-4c55-b6ff-74f4368294f7}</uid>
+                    <uid>{55386cc1-3aed-4231-b36c-667a725ddb90}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>void onmixch3(bool)</declaration>
@@ -7240,7 +7953,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{eee0ad75-428e-44d1-ac73-9bd6958d7666}</uid>
+                    <uid>{dab5190e-343e-41c0-99b9-86bce99f45bd}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>void onmixch4(bool)</declaration>
@@ -7248,7 +7961,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{73620e15-d7a0-4f77-9b06-38d0cf975d22}</uid>
+                    <uid>{71dfd99f-e7d5-4fbd-b251-40833bd98e69}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>void onmixpp(bool)</declaration>
@@ -7256,7 +7969,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{ccb0821a-4501-47db-b44b-bfc4655e406c}</uid>
+                    <uid>{01476bae-966c-43a0-b56f-9a6df6442bc6}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>void onlaser(bool)</declaration>
@@ -7264,7 +7977,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{993da755-fc9f-4a63-8f78-6a59f1881934}</uid>
+                    <uid>{f8552cd2-4ff0-4768-bdf5-d464055e4201}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>void status(QString)</declaration>
@@ -7272,7 +7985,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{c1716b21-c5ca-49e8-ba89-a5e1f4c8cd45}</uid>
+                    <uid>{87307c92-45ca-4a37-9a3f-28dcf05c8f43}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>void stop()</declaration>
@@ -7280,7 +7993,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{f1001f47-fbae-4d9a-9ca8-03fc37956ece}</uid>
+                    <uid>{389998bb-8d05-492c-990f-d39892a193d4}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>void hasPulse1()</declaration>
@@ -7288,7 +8001,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{8470ce1c-9244-4706-909f-ab8e6445e4c3}</uid>
+                    <uid>{d9d9ce7d-bd54-4d33-a80f-ba40eb437092}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>void hasPulse2()</declaration>
@@ -7296,7 +8009,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{ba8fbe43-67d5-4cbe-8359-b291cac5a8ec}</uid>
+                    <uid>{f128f9b0-351d-4e0f-93b5-9bd91764d9e6}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>void hasPulse3()</declaration>
@@ -7304,7 +8017,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{f904dbb7-95a5-417a-bcd9-8d3a47ccfb18}</uid>
+                    <uid>{aa0b7bb0-ea64-4ad6-84d6-1d31773d67b5}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>void hasPulse4()</declaration>
@@ -7312,7 +8025,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{93d1083d-4cc1-428e-91b2-125451b8fec7}</uid>
+                    <uid>{0e0b7cb0-2d2c-4b93-82c8-afcd00d739e6}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>void ret_value1(double)</declaration>
@@ -7320,7 +8033,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{6d5244de-ea4d-4ef7-824a-e50cb2c8b341}</uid>
+                    <uid>{0ebcb013-8b09-446e-9839-74aa9c1be4ea}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>void ret_value2(double)</declaration>
@@ -7328,7 +8041,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{fc833e07-6a21-4eab-a9a0-ef1b353b818c}</uid>
+                    <uid>{631502bc-8605-4bcd-9670-0b7bf4e7794b}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>void ret_value3(double)</declaration>
@@ -7336,7 +8049,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{38c895c8-2e1a-4381-b063-b3a97742560b}</uid>
+                    <uid>{d40862a8-a4da-4e28-b0f5-3b40feb30818}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>void ret_value4(double)</declaration>
@@ -7344,7 +8057,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{4a63ea9b-8223-4571-b5a9-c401c323da89}</uid>
+                    <uid>{3f959472-cb31-4aef-b723-8dff14e6d36c}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>void btp_value1(double)</declaration>
@@ -7352,7 +8065,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{e4be6f90-322f-4751-9ae4-13f1e92c71ac}</uid>
+                    <uid>{fdc2f51f-a37e-4a66-a34b-bdbac929475e}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>void btp_value2(double)</declaration>
@@ -7360,7 +8073,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{a05ee0f2-de4a-4162-b162-60e34efc9465}</uid>
+                    <uid>{4407fbd5-2066-4b9d-a572-3ed2eb3a0cc8}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>void btp_value3(double)</declaration>
@@ -7368,7 +8081,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{92595a45-4e7f-44a9-a1e7-dea7f5aced3a}</uid>
+                    <uid>{a1136a29-8060-4631-974b-2e35e8444b88}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>void btp_value4(double)</declaration>
@@ -7376,7 +8089,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{38b5ef75-fdab-4011-9086-3caa5c442f0c}</uid>
+                    <uid>{71f05316-cd50-4879-b129-7dd681f904bf}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>void otp_value1(double)</declaration>
@@ -7384,7 +8097,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{e0b8aad9-d49e-4310-bce4-05904d79f3af}</uid>
+                    <uid>{5ffd0c7b-bd59-4a96-b6d0-0ec2115e50d5}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>void otp_value2(double)</declaration>
@@ -7392,7 +8105,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{452db00b-4e69-4267-896b-5b4d9a42a8f1}</uid>
+                    <uid>{90443375-ce27-4c40-9851-4849d9e15fd8}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>void otp_value3(double)</declaration>
@@ -7400,7 +8113,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{e4357c93-0215-45db-9655-bdb5b803f790}</uid>
+                    <uid>{908e15cd-adb1-4eb2-8f9c-7700ed5f22ff}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>void otp_value4(double)</declaration>
@@ -7408,7 +8121,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{15e26159-e0e4-4025-a3c1-6b2dbbc34149}</uid>
+                    <uid>{930b0369-5923-4cda-ac8b-5748344c4f47}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>void done1()</declaration>
@@ -7416,7 +8129,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{1555658e-212d-44ee-ac6b-9118b3759ef8}</uid>
+                    <uid>{023a087f-3755-418e-8936-2fe47d3c8593}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>void done2()</declaration>
@@ -7424,7 +8137,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{85da7f4f-20fb-44b1-a6e8-9e69dc1285af}</uid>
+                    <uid>{9f398ae1-895d-447b-9c38-71c84aeae02a}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>void done3()</declaration>
@@ -7432,7 +8145,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{428373ed-76a7-48d3-8b3e-046cc93c9ecd}</uid>
+                    <uid>{0b9af0e9-c7bb-49f3-a4bc-c4483dc44776}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>void done4()</declaration>
@@ -7440,7 +8153,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{4c09a505-2985-4420-a5e9-388f4ccf7589}</uid>
+                    <uid>{ae8f4558-98b4-4e19-a60f-1f00687d1b4d}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>void done()</declaration>
@@ -7448,7 +8161,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{97f69fd2-4e81-437b-92f5-5cecf8a3cceb}</uid>
+                    <uid>{962c253c-c550-4107-aa39-20065fbf8aff}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>void incube_timeout()</declaration>
@@ -7456,7 +8169,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{2fc84d41-27ad-49b2-9780-779f7e49652f}</uid>
+                    <uid>{e79c7045-96d9-4bc8-9b7d-ad43b9545406}</uid>
                     <visibility>4</visibility>
                     <type>2</type>
                     <declaration>void end()</declaration>
@@ -7464,7 +8177,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{bdaae89b-bede-409a-8601-4dc6685e2823}</uid>
+                    <uid>{859d802f-7d5b-48a1-9ec7-c209a16b1973}</uid>
                     <visibility>7</visibility>
                     <type>2</type>
                     <declaration>void startIncub(int num, double time_s, std::function&lt;void(void)&gt; timeout_fun, QString message = &quot;Время инкубации истекло&quot;)</declaration>
@@ -7472,7 +8185,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{db7b8bf9-a10d-4fa0-b447-2b44a4528f53}</uid>
+                    <uid>{ca8e9993-784e-43cf-ba83-e9fc7606ce51}</uid>
                     <visibility>7</visibility>
                     <type>2</type>
                     <declaration>void getData(Channel_ID, double time_s)</declaration>
@@ -7480,7 +8193,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{b256964b-4196-42ad-9f8a-e54c3b0e6f7b}</uid>
+                    <uid>{74a35d47-7da9-45bd-aea1-0d89c9be6acf}</uid>
                     <visibility>7</visibility>
                     <type>2</type>
                     <declaration>double calcData(Channel_ID, Mode_ID)</declaration>
@@ -7488,7 +8201,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{793ee59c-d7c1-4990-8ed7-ab58b8d3d102}</uid>
+                    <uid>{d4b93e13-47bf-4e88-9679-30f0a930c5ea}</uid>
                     <visibility>7</visibility>
                     <type>2</type>
                     <declaration>void writeMapData(Channel_ID)</declaration>
@@ -7496,7 +8209,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{122e76ea-8571-499d-91c5-29c74f8c606e}</uid>
+                    <uid>{42a706c1-a7e7-4205-a51f-0fe9a95f3b6c}</uid>
                     <visibility>7</visibility>
                     <type>2</type>
                     <declaration>void incubeTimeout_1()</declaration>
@@ -7504,7 +8217,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{281bae05-8aa5-485d-9294-3213d208be67}</uid>
+                    <uid>{38c55286-25a7-48d1-ab17-a23b883be0c9}</uid>
                     <visibility>7</visibility>
                     <type>2</type>
                     <declaration>void incubeTimeout_2()</declaration>
@@ -7512,7 +8225,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{06a7af89-1fc8-4ba0-b034-ac4723bc3dc4}</uid>
+                    <uid>{070d3dd0-e83b-4c23-aa3c-9f4586c6a718}</uid>
                     <visibility>7</visibility>
                     <type>2</type>
                     <declaration>void waitImpulse(ImpuleWaiter *iw)</declaration>
@@ -7520,7 +8233,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{391120c0-8cbd-4bf0-be2f-59d1b72ee81c}</uid>
+                    <uid>{e48fa547-1eda-4541-b5a0-9ec8812cd554}</uid>
                     <visibility>7</visibility>
                     <type>2</type>
                     <declaration>void onMotor(Channel_ID, bool arg)</declaration>
@@ -7528,7 +8241,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{51ae0ac4-c075-46d6-b417-5a80a8d1efc5}</uid>
+                    <uid>{c26f8080-8f2b-4c71-b4e2-cc161c59586c}</uid>
                     <visibility>7</visibility>
                     <type>2</type>
                     <declaration>void onLazer(bool arg)</declaration>
@@ -7536,7 +8249,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{b6490625-17a1-467f-adea-4503764381e9}</uid>
+                    <uid>{f08e8952-292e-4395-b47f-0d05df49a4ff}</uid>
                     <visibility>7</visibility>
                     <type>2</type>
                     <declaration>void test()</declaration>
@@ -7544,7 +8257,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{c5eeb878-0cdc-449f-98ee-0b3b837150ee}</uid>
+                    <uid>{aa847980-4bec-4991-a71c-5f6b27da809c}</uid>
                     <visibility>5</visibility>
                     <type>2</type>
                     <declaration>void on_pushButton_clicked()</declaration>
@@ -7552,7 +8265,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{fb7712e3-63d2-42dd-8116-b6197fcda538}</uid>
+                    <uid>{67f02f57-aa34-4e03-8c6c-26e7f18fa1f0}</uid>
                     <visibility>5</visibility>
                     <type>2</type>
                     <declaration>void realtimeDataSlot(QVariantList)</declaration>
@@ -7560,7 +8273,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{953ee3bb-e2a5-4bd9-8af6-eb2835586125}</uid>
+                    <uid>{a46b7032-debf-442e-9fe6-a68f127cce22}</uid>
                     <visibility>5</visibility>
                     <type>2</type>
                     <declaration>void updataTermo(bool)</declaration>
@@ -7568,7 +8281,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{a69ff43c-acf7-4455-893b-a8d05c15b540}</uid>
+                    <uid>{7f5702b5-1f8e-4ee5-ae63-4eef121585aa}</uid>
                     <visibility>5</visibility>
                     <type>2</type>
                     <declaration>void updateTime()</declaration>
@@ -7576,7 +8289,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{44973f08-f8ee-42e4-8134-4008300a98e7}</uid>
+                    <uid>{0f824bed-4368-4baf-a495-8dbc8774283b}</uid>
                     <visibility>5</visibility>
                     <type>2</type>
                     <declaration>void doScenario()</declaration>
@@ -7584,7 +8297,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{a8b75fd8-05cd-4075-85e6-d835a2ce3d2a}</uid>
+                    <uid>{d09599e0-5c65-4b92-abac-4b6b80bd5912}</uid>
                     <visibility>5</visibility>
                     <type>2</type>
                     <declaration>void setupRealtimeData(bool single)</declaration>
@@ -7592,7 +8305,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{d8220a3e-8dcc-4ef0-aced-b8446730de68}</uid>
+                    <uid>{207a3751-7b9f-457d-a926-c9045b861f49}</uid>
                     <visibility>5</visibility>
                     <type>2</type>
                     <declaration>void setupTimers()</declaration>
@@ -7600,7 +8313,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{996d59bd-1ca1-495a-94c3-14431dc25b7a}</uid>
+                    <uid>{246b47dd-7393-4040-a225-b257381137db}</uid>
                     <visibility>1</visibility>
                     <type>1</type>
                     <declaration>StartMeasurement *startWin</declaration>
@@ -7608,7 +8321,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{80c0080b-0447-4f46-9de7-bbc77270e946}</uid>
+                    <uid>{c3a372bf-353f-46c9-bf5a-af390da8f2da}</uid>
                     <visibility>1</visibility>
                     <type>1</type>
                     <declaration>QCustomPlot *customPlot1, *customPlot2, *customPlot3, *customPlot4</declaration>
@@ -7616,7 +8329,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{706639f0-5745-4c00-bf4e-92eabca968b9}</uid>
+                    <uid>{ae3e1fa7-f887-44d4-bca0-fe4637c3bc54}</uid>
                     <visibility>1</visibility>
                     <type>1</type>
                     <declaration>ProgressTimerBar *pBar1, *pBar2, *pBar3, *pBar4</declaration>
@@ -7624,7 +8337,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{48c2e60f-5293-418f-9a83-e6e6988561e7}</uid>
+                    <uid>{8921c1a4-3af7-4db4-818e-e0195b422d35}</uid>
                     <visibility>1</visibility>
                     <type>1</type>
                     <declaration>Mode_ID current_mode_id</declaration>
@@ -7632,7 +8345,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{b2bdae04-6fa5-4464-abbe-8b22989f6c96}</uid>
+                    <uid>{ae4f457b-a350-4567-b7ad-f6cd912ccfcc}</uid>
                     <visibility>1</visibility>
                     <type>1</type>
                     <declaration>State *state</declaration>
@@ -7640,7 +8353,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{d6a5071b-887b-4cca-b8c3-ef7866f65133}</uid>
+                    <uid>{ba1e2933-596f-476e-bb68-31fb475b6d00}</uid>
                     <visibility>1</visibility>
                     <type>1</type>
                     <declaration>bool single</declaration>
@@ -7648,7 +8361,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{70fe67e2-395c-4e95-a927-f203815c054e}</uid>
+                    <uid>{ed16fa8b-12a7-4316-b330-bd23aebb719e}</uid>
                     <visibility>3</visibility>
                     <type>1</type>
                     <declaration>Ui::Widget *ui</declaration>
@@ -7656,7 +8369,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{7e796b79-b360-492a-8fb2-7d647e48d211}</uid>
+                    <uid>{7be0116a-bcde-4991-828f-403624c17822}</uid>
                     <visibility>3</visibility>
                     <type>1</type>
                     <declaration>QTimer plotTimer, currentTimer</declaration>
@@ -7664,7 +8377,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{008b8484-ca59-4512-ac7c-ba96a81ac01d}</uid>
+                    <uid>{e5cde4ea-3e2b-49da-835d-b9850ce8414c}</uid>
                     <visibility>3</visibility>
                     <type>1</type>
                     <declaration>QDateTime dt</declaration>
@@ -7672,7 +8385,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{f667083c-384c-4713-bb80-0f0094e057aa}</uid>
+                    <uid>{8a108bfa-a669-4e96-96cf-fcd68b5ac128}</uid>
                     <visibility>3</visibility>
                     <type>1</type>
                     <declaration>volatile bool data1, data2, data3, data4</declaration>
@@ -7680,7 +8393,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{a476aae0-4857-4d61-a447-0b81b9f0c5fe}</uid>
+                    <uid>{5ff74fec-c975-439a-be12-e28cabd33dd2}</uid>
                     <visibility>3</visibility>
                     <type>1</type>
                     <declaration>bool pulse1, pulse2, pulse3, pulse4</declaration>
@@ -7688,7 +8401,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{aea01332-479b-4b5b-8d50-7af6723fdb25}</uid>
+                    <uid>{28333460-0265-46e0-b9b6-ba0eba8e26f3}</uid>
                     <visibility>3</visibility>
                     <type>1</type>
                     <declaration>bool termoSensor, incub</declaration>
@@ -7696,7 +8409,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{b48b3ade-818d-4510-81a2-b55b34160750}</uid>
+                    <uid>{ffd918b2-2771-4760-9bc5-49cc17cef11a}</uid>
                     <visibility>3</visibility>
                     <type>1</type>
                     <declaration>QMap&lt;double, double&gt; map_y1, map_y2, map_y3, map_y4</declaration>
@@ -7704,7 +8417,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{9c804741-f098-4a2e-a237-70eb40fac6e7}</uid>
+                    <uid>{e1bdca74-20ce-45c6-b9ba-8ee4ac1aefca}</uid>
                     <visibility>3</visibility>
                     <type>1</type>
                     <declaration>SaveFiles saveFiles</declaration>
@@ -7712,7 +8425,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{7137c500-8052-46db-98f6-ceff3b1bc5b2}</uid>
+                    <uid>{082f5ef7-ebd8-44d9-8351-d7ea67054634}</uid>
                     <visibility>3</visibility>
                     <type>1</type>
                     <declaration>double START_DX</declaration>
@@ -7720,7 +8433,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{4b12a4e6-ee0a-440a-b792-881db213a74b}</uid>
+                    <uid>{46c701f0-8f0a-41f3-a820-335166c7a6b6}</uid>
                     <visibility>3</visibility>
                     <type>1</type>
                     <declaration>double STOP_DX</declaration>
@@ -7728,7 +8441,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{ec3193ae-fcc8-48db-9677-2a252464a249}</uid>
+                    <uid>{daf4c782-43b1-4f03-8abf-fd94c7ac3df0}</uid>
                     <visibility>3</visibility>
                     <type>1</type>
                     <declaration>double MIN, MAX</declaration>
@@ -7736,7 +8449,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{d984988a-36ee-45a3-8ad4-0f9b0342b94e}</uid>
+                    <uid>{97cb990a-0fb1-4cd4-835e-71d4f5c6c3d7}</uid>
                     <visibility>3</visibility>
                     <type>1</type>
                     <declaration>friend class Options</declaration>
@@ -7744,7 +8457,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{d13df362-1820-4e3a-8e91-44730d67f41a}</uid>
+                    <uid>{dba5c7a0-9d78-4755-b521-f1983ee8f180}</uid>
                     <visibility>2</visibility>
                     <type>2</type>
                     <properties>8</properties>
@@ -7753,7 +8466,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{6c69e913-f700-435c-b331-83ec11333c91}</uid>
+                    <uid>{ce6f0e03-0794-430f-a047-bb13cd21776c}</uid>
                     <visibility>2</visibility>
                     <type>2</type>
                     <properties>8</properties>
@@ -8251,7 +8964,7 @@
                  <qlist>
                   <item>
                    <MClassMember>
-                    <uid>{bcd76849-32a1-4d1a-8341-f0b47fd9e2cd}</uid>
+                    <uid>{bbbb2a15-9416-47d4-8ed3-f226a0fb72f7}</uid>
                     <visibility>1</visibility>
                     <type>1</type>
                     <declaration>Test*</declaration>
@@ -8259,7 +8972,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{5230cb57-016f-4072-84d1-c16bdff37b29}</uid>
+                    <uid>{0365c2aa-2167-4c2f-ac23-775e3eb9aa33}</uid>
                     <visibility>1</visibility>
                     <type>1</type>
                     <declaration>Calibration*</declaration>
@@ -8424,7 +9137,7 @@
                  <qlist>
                   <item>
                    <MClassMember>
-                    <uid>{3b50f4d7-82ca-40d4-b2c9-2d54f25e2e0c}</uid>
+                    <uid>{894698c1-9eac-4612-9e34-717cec6c9fd9}</uid>
                     <visibility>1</visibility>
                     <type>2</type>
                     <properties>3</properties>
@@ -8433,7 +9146,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{418c07de-f5ae-4240-a453-8c377dee910c}</uid>
+                    <uid>{13af4c66-af7f-400d-99e9-d2604e427d0e}</uid>
                     <visibility>1</visibility>
                     <type>2</type>
                     <properties>1</properties>
@@ -8442,7 +9155,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{4bf0b337-1bb3-41d5-aa9e-c4b867f0dfc8}</uid>
+                    <uid>{d2ff8485-46f3-4e9c-abe0-72f07e127c60}</uid>
                     <visibility>1</visibility>
                     <type>2</type>
                     <properties>1</properties>
@@ -8451,7 +9164,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{719b942c-7df7-4a7a-86b8-90e133d19e88}</uid>
+                    <uid>{563883dd-0d1e-43b3-a19c-5d53ea98cfbf}</uid>
                     <visibility>1</visibility>
                     <type>2</type>
                     <properties>1</properties>
@@ -8460,7 +9173,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{192f7bd3-b276-45af-a6e7-c6eb10f2a493}</uid>
+                    <uid>{6c859382-5e5d-4259-9cce-64f933769439}</uid>
                     <visibility>1</visibility>
                     <type>2</type>
                     <properties>1</properties>
@@ -8469,7 +9182,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{6e6affc1-8b36-460a-9f18-aa1664173b1a}</uid>
+                    <uid>{28534c83-9646-45b6-b77c-1443076fbfe5}</uid>
                     <visibility>2</visibility>
                     <type>2</type>
                     <properties>4</properties>
@@ -8478,7 +9191,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{d1ea9575-c875-44a7-9ab2-f7730e51c03a}</uid>
+                    <uid>{ba3fae4f-e545-4963-809f-69ecdfca2ea1}</uid>
                     <visibility>2</visibility>
                     <type>2</type>
                     <properties>4</properties>
@@ -8487,7 +9200,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{cd86343f-ca68-42b7-96db-009f56479c07}</uid>
+                    <uid>{0101a970-b3f4-4110-9aa1-a334ea06357b}</uid>
                     <visibility>2</visibility>
                     <type>1</type>
                     <declaration>QDomDocument document</declaration>
@@ -8495,7 +9208,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{4a74a90b-c897-4a98-bd39-9d1e7630800b}</uid>
+                    <uid>{e6b30d66-cbed-46df-a320-e13d3add1ebb}</uid>
                     <visibility>2</visibility>
                     <type>1</type>
                     <declaration>QString name</declaration>
@@ -8503,7 +9216,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{88815b93-a589-4010-aa60-07673a2905ca}</uid>
+                    <uid>{57b02653-8384-475c-a0ae-9c6fefac40cc}</uid>
                     <visibility>2</visibility>
                     <type>1</type>
                     <declaration>QDir dir</declaration>
@@ -8511,7 +9224,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{13feaef3-b719-49ee-82bd-75c6ae8bca66}</uid>
+                    <uid>{4d27cbfb-6692-4059-b124-f01d849e53c3}</uid>
                     <visibility>2</visibility>
                     <type>1</type>
                     <declaration>QDate date</declaration>
@@ -8519,7 +9232,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{9bf749c4-83ae-464e-b3e9-0c21c0093726}</uid>
+                    <uid>{14cdd027-c0d7-449a-945e-f790096c993b}</uid>
                     <visibility>2</visibility>
                     <type>1</type>
                     <declaration>QTime time</declaration>
@@ -8527,7 +9240,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{849ac669-6e2b-46a3-9160-9e8ebae63e4a}</uid>
+                    <uid>{6b6d5c04-76ad-482f-b82d-61b5cc195155}</uid>
                     <visibility>2</visibility>
                     <type>1</type>
                     <declaration>int k1, k2, k3, k4, single</declaration>
@@ -8535,7 +9248,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{611d4c25-016a-4292-8832-23b905f02620}</uid>
+                    <uid>{062c4aec-a239-4f58-82d2-8916b5b9b1fc}</uid>
                     <visibility>2</visibility>
                     <type>1</type>
                     <declaration>QString num1, num2, num3, num4</declaration>
@@ -8543,7 +9256,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{6b02398f-ec02-45c4-9392-49259b75b0ca}</uid>
+                    <uid>{e4f7b174-8242-40f5-b2e5-9593bbe6349f}</uid>
                     <visibility>2</visibility>
                     <type>1</type>
                     <declaration>Calibration *c_ko</declaration>
@@ -8551,7 +9264,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{6163b3e4-3488-499a-8913-63bef6005d03}</uid>
+                    <uid>{43e4064d-7da0-48d8-929f-647f74e1d42e}</uid>
                     <visibility>3</visibility>
                     <type>1</type>
                     <declaration>double t1, t2, t3, t4</declaration>
@@ -8559,7 +9272,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{860967b0-2de5-4058-9368-34d76e7620ed}</uid>
+                    <uid>{66d612e6-9566-401d-be10-b477e0b2cd4e}</uid>
                     <visibility>1</visibility>
                     <type>2</type>
                     <declaration>seters()</declaration>
@@ -8567,7 +9280,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{8bfee426-8f26-42f7-9d76-9c65e1d60b98}</uid>
+                    <uid>{6e9abf5a-ddb2-4e87-a07c-ece57e57b5e0}</uid>
                     <visibility>1</visibility>
                     <type>2</type>
                     <declaration>geters()</declaration>
@@ -10473,7 +11186,7 @@
                  <qlist>
                   <item>
                    <MClassMember>
-                    <uid>{f9e3d6c9-83ff-4ac2-a4b9-f04969772bb2}</uid>
+                    <uid>{f572f863-1996-4cca-8a8c-1d96a7b8d369}</uid>
                     <visibility>1</visibility>
                     <type>2</type>
                     <properties>3</properties>
@@ -10482,7 +11195,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{d4e0101e-cede-46aa-a7b0-40245b29080a}</uid>
+                    <uid>{c90f02b1-68a1-4e0e-a7f6-82a96080b06f}</uid>
                     <visibility>1</visibility>
                     <type>2</type>
                     <properties>3</properties>
@@ -10491,7 +11204,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{dfe81cc3-a438-4188-8101-5c135d390f97}</uid>
+                    <uid>{d9a467c6-0611-4375-9166-6e8b5e4cd2bd}</uid>
                     <visibility>1</visibility>
                     <type>2</type>
                     <properties>3</properties>
@@ -10500,7 +11213,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{74733ad5-6dd0-49b6-91f9-9bf94e26c1ab}</uid>
+                    <uid>{2a5ca714-e551-480b-ae9f-b89146d1ba93}</uid>
                     <visibility>1</visibility>
                     <type>2</type>
                     <properties>3</properties>
@@ -10509,7 +11222,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{2a36ef76-2e04-4198-b5a6-c184bd8fc142}</uid>
+                    <uid>{9d968261-61e8-46a0-8182-0d159d430653}</uid>
                     <visibility>1</visibility>
                     <type>2</type>
                     <properties>3</properties>
@@ -10518,7 +11231,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{d8e6d208-76e8-412f-b670-e4a8f01f3a3a}</uid>
+                    <uid>{f277c9cf-2808-4ecd-b5a1-c968a4f3b502}</uid>
                     <visibility>1</visibility>
                     <type>2</type>
                     <properties>3</properties>
@@ -10527,7 +11240,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{4c293dc1-7338-414e-8383-f4a69ac45246}</uid>
+                    <uid>{59452db1-47c1-4d27-997d-7d607c9e2a47}</uid>
                     <visibility>1</visibility>
                     <type>2</type>
                     <properties>3</properties>
@@ -10536,7 +11249,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{da60c209-1d9f-4968-8f3a-81ca6fda9262}</uid>
+                    <uid>{ca2d8e7e-d027-4a5c-a67b-461cad2305df}</uid>
                     <visibility>1</visibility>
                     <type>2</type>
                     <properties>3</properties>
@@ -11882,7 +12595,7 @@
                  <qlist>
                   <item>
                    <MClassMember>
-                    <uid>{0bbcb649-2bda-4b02-aa25-aaed8d2976b3}</uid>
+                    <uid>{851ea46c-78fa-4768-934e-cf842127e138}</uid>
                     <visibility>1</visibility>
                     <type>2</type>
                     <declaration>CalcData(QMap&lt;double, double&gt;, QCustomPlot *p = NULL)</declaration>
@@ -11890,7 +12603,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{f8f59823-5442-48b0-892a-5f782b8bc77a}</uid>
+                    <uid>{a73b9359-1fd0-4dc0-984f-bf8e724c4a16}</uid>
                     <visibility>1</visibility>
                     <type>2</type>
                     <properties>64</properties>
@@ -11899,7 +12612,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{2494b98e-05c7-42ba-8b0c-bf632e6f17b5}</uid>
+                    <uid>{236fee62-46ba-4104-9a2d-3c8d091d726e}</uid>
                     <visibility>1</visibility>
                     <type>2</type>
                     <properties>3</properties>
@@ -11908,7 +12621,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{4a08fec0-6459-406c-a3a9-72335aa23111}</uid>
+                    <uid>{8b26555d-366c-4c65-8b83-484554ae0f3e}</uid>
                     <visibility>1</visibility>
                     <type>2</type>
                     <properties>3</properties>
@@ -11917,7 +12630,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{5a406b78-4236-4f23-867d-9d24ae88910e}</uid>
+                    <uid>{00bf7c1e-0486-4030-9421-70e7ae864243}</uid>
                     <visibility>1</visibility>
                     <type>2</type>
                     <properties>3</properties>
@@ -11926,7 +12639,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{5bf71a5d-cf11-4b0d-85f4-fff3f0d370ed}</uid>
+                    <uid>{937dd898-71f6-415f-90ff-274524daa464}</uid>
                     <visibility>1</visibility>
                     <type>2</type>
                     <properties>3</properties>
@@ -11935,7 +12648,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{c74c3772-ddb2-46f9-b33d-72b5e190a1b5}</uid>
+                    <uid>{e958c4f6-2a9b-41ff-a4b7-504769581745}</uid>
                     <visibility>1</visibility>
                     <type>2</type>
                     <declaration>void setMix_t(double sec)</declaration>
@@ -11943,7 +12656,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{b5a0332d-15fd-41d9-b49f-019a9c8d5687}</uid>
+                    <uid>{5f056c75-f7e8-44a8-8994-df5ad93b4f00}</uid>
                     <visibility>1</visibility>
                     <type>2</type>
                     <declaration>double getMix_t()</declaration>
@@ -11951,7 +12664,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{c244a099-ce61-40c7-84b7-280e1927a758}</uid>
+                    <uid>{2b2d3a47-b89d-4ec9-8d9c-a8a3a08384e1}</uid>
                     <visibility>1</visibility>
                     <type>2</type>
                     <declaration>void setDx(double dx)</declaration>
@@ -11959,7 +12672,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{f9317677-c61b-4773-9498-301459e607da}</uid>
+                    <uid>{17d2d932-c03a-4ccb-8854-827f500f45c4}</uid>
                     <visibility>1</visibility>
                     <type>2</type>
                     <declaration>double getDx()</declaration>
@@ -11967,7 +12680,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{04f1a018-d6cc-49c7-956d-183ec92db898}</uid>
+                    <uid>{4177c5ef-b3c1-47b5-b7db-9e3ef7132e7c}</uid>
                     <visibility>2</visibility>
                     <type>2</type>
                     <declaration>double calcKo(QMap&lt;double, double&gt;)</declaration>
@@ -11975,7 +12688,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{c6cbb4e8-12bc-4c6e-80dd-e124bb39c9e3}</uid>
+                    <uid>{d300fe6a-1600-46e4-87a1-75633a566351}</uid>
                     <visibility>2</visibility>
                     <type>2</type>
                     <declaration>double calcAgr(QMap&lt;double, double&gt;)</declaration>
@@ -11983,7 +12696,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{6d8db05f-2f53-4685-b4c4-b471276860d5}</uid>
+                    <uid>{5635bfc2-1776-4812-91e1-e139dc76a74c}</uid>
                     <visibility>3</visibility>
                     <type>1</type>
                     <declaration>QMap&lt;double, double&gt; mdata</declaration>
@@ -11991,7 +12704,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{ca3d6fbe-b0d7-4545-9477-49c065be4c3d}</uid>
+                    <uid>{c7c72f0c-6cd8-41a6-b080-c1451012e5f1}</uid>
                     <visibility>3</visibility>
                     <type>1</type>
                     <declaration>QCustomPlot *plot</declaration>
@@ -11999,7 +12712,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{564774a3-e046-4285-a762-c3cbaecdff87}</uid>
+                    <uid>{13009839-8f69-4f58-9182-93bbd9e8a8b4}</uid>
                     <visibility>3</visibility>
                     <type>1</type>
                     <declaration>double dx</declaration>
@@ -12007,7 +12720,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{98e59685-b89a-49ce-a801-8aeed77bc21f}</uid>
+                    <uid>{0b59a04b-9586-4673-999e-f64bd97c9ca9}</uid>
                     <visibility>3</visibility>
                     <type>1</type>
                     <declaration>double mix_t</declaration>
@@ -12266,6 +12979,28 @@
                              <base-MElement>
                               <MElement>
                                <uid>{634b4d68-8401-4c07-8a42-9ed1599c8145}</uid>
+                              </MElement>
+                             </base-MElement>
+                             <a>{4a42e3c3-38d1-467b-b7a5-5397084988b0}</a>
+                             <b>{9d638ac7-f54f-4d0d-8b6a-f6e4b39d94b7}</b>
+                            </MRelation>
+                           </base-MRelation>
+                          </MInheritance>
+                         </instance>
+                        </target>
+                       </handle>
+                      </item>
+                      <item>
+                       <handle>
+                        <uid>{198f57f7-a671-48f1-83bf-aa1d558e05c5}</uid>
+                        <target>
+                         <instance type="MInheritance">
+                          <MInheritance>
+                           <base-MRelation>
+                            <MRelation>
+                             <base-MElement>
+                              <MElement>
+                               <uid>{198f57f7-a671-48f1-83bf-aa1d558e05c5}</uid>
                               </MElement>
                              </base-MElement>
                              <a>{4a42e3c3-38d1-467b-b7a5-5397084988b0}</a>
@@ -12667,7 +13402,7 @@
                     </stereotypes>
                    </MElement>
                   </base-MElement>
-                  <name>Print</name>
+                  <name>myDialog::EndDialog</name>
                   <relations>
                    <handles>
                     <handles>
@@ -12751,6 +13486,42 @@
                    </MElement>
                   </base-MElement>
                   <name>SelectInductor</name>
+                  <relations>
+                   <handles>
+                    <handles>
+                     <qlist>
+                      <item>
+                       <handle>
+                        <uid>{1e9ac46f-2a1c-48c4-a473-5b82c7b9f044}</uid>
+                        <target>
+                         <instance type="MAssociation">
+                          <MAssociation>
+                           <base-MRelation>
+                            <MRelation>
+                             <base-MElement>
+                              <MElement>
+                               <uid>{1e9ac46f-2a1c-48c4-a473-5b82c7b9f044}</uid>
+                              </MElement>
+                             </base-MElement>
+                             <a>{19895db7-e014-4e47-8cb7-2c4aebbbec79}</a>
+                             <b>{0c26bb9b-0ac8-4068-a2b8-1496f2f13864}</b>
+                            </MRelation>
+                           </base-MRelation>
+                           <a>
+                            <MAssociationEnd>
+                             <navigable>true</navigable>
+                             <kind>2</kind>
+                            </MAssociationEnd>
+                           </a>
+                          </MAssociation>
+                         </instance>
+                        </target>
+                       </handle>
+                      </item>
+                     </qlist>
+                    </handles>
+                   </handles>
+                  </relations>
                  </MObject>
                 </base-MObject>
                </MClass>
@@ -12870,6 +13641,7 @@
                              <b>{fb5a5c82-e9ce-49fa-97cd-333957b4aa16}</b>
                             </MRelation>
                            </base-MRelation>
+                           <direction>2</direction>
                           </MDependency>
                          </instance>
                         </target>
@@ -12937,7 +13709,7 @@
                  <qlist>
                   <item>
                    <MClassMember>
-                    <uid>{1cc389b0-40a8-4ffb-9786-dd3a0af30f6f}</uid>
+                    <uid>{8c97c649-ef7f-4075-aff8-aa280bf67eb6}</uid>
                     <type>2</type>
                     <properties>8</properties>
                     <declaration>void getBTP()</declaration>
@@ -12945,7 +13717,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{f189d3f0-0b94-4c38-b75d-deae31b331e8}</uid>
+                    <uid>{22851c69-d2fb-40df-8ab7-7a557db6aed5}</uid>
                     <type>2</type>
                     <properties>8</properties>
                     <declaration>void getOTP()</declaration>
@@ -12953,7 +13725,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{bbf83a80-ec46-41f5-a373-f54dfd52f942}</uid>
+                    <uid>{b75d0e08-7448-442f-a84c-2b2ca3c058d1}</uid>
                     <type>2</type>
                     <properties>8</properties>
                     <declaration>void onMixChls(bool)</declaration>
@@ -12961,7 +13733,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{eee4a3fb-e0b2-49f9-afbf-9ca3aa067dfb}</uid>
+                    <uid>{44c9a2da-ceef-420c-80d3-ee4ce8afef27}</uid>
                     <type>2</type>
                     <properties>8</properties>
                     <declaration>void onMixPP(bool)</declaration>
@@ -12969,7 +13741,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{0b94c91c-bbb1-456c-95a3-9fe13bd4985f}</uid>
+                    <uid>{52325aa8-5e43-4445-b90d-d37fc7ec7fc5}</uid>
                     <type>2</type>
                     <properties>8</properties>
                     <declaration>void onLazer(bool)</declaration>
@@ -12977,7 +13749,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{441e835c-0f29-4380-b94a-ebe4e27d19b8}</uid>
+                    <uid>{6c5663e4-ad2a-4041-89b6-c385230346d1}</uid>
                     <type>2</type>
                     <properties>8</properties>
                     <declaration>void incubation1(State *next)</declaration>
@@ -12985,7 +13757,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{da27706d-865a-4129-9f5c-7cf331bb6721}</uid>
+                    <uid>{a044c11f-f7c0-4df6-872a-076544201d1d}</uid>
                     <type>2</type>
                     <properties>8</properties>
                     <declaration>void incubation2(State *next)</declaration>
@@ -12993,7 +13765,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{e6312334-4b6c-4717-b326-531d421dcfea}</uid>
+                    <uid>{b2c712a8-dfd0-4f60-ac7d-4e5c4c49c04d}</uid>
                     <type>2</type>
                     <properties>8</properties>
                     <declaration>void selectInductor()</declaration>
@@ -13001,7 +13773,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{be538a3c-8028-4091-a5c8-faa37fcf9589}</uid>
+                    <uid>{62e088b7-3369-4ff4-b719-b1c83def22d6}</uid>
                     <type>2</type>
                     <properties>8</properties>
                     <declaration>void finish()</declaration>
@@ -13009,7 +13781,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{4f63d85e-b1ee-41da-8359-4618dc109005}</uid>
+                    <uid>{0a28e602-a51e-419e-8457-dbae4ad4a404}</uid>
                     <type>2</type>
                     <properties>8</properties>
                     <declaration>void agr()</declaration>
@@ -13017,7 +13789,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{34a9c411-e68f-41d6-ba68-bf1f7ec43217}</uid>
+                    <uid>{79615dda-b077-440d-98cc-c5b16a2ac203}</uid>
                     <type>2</type>
                     <properties>8</properties>
                     <declaration>void ko(State *next)</declaration>
@@ -13025,7 +13797,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{343bcd67-b5b1-4ec2-a04f-5409119675b4}</uid>
+                    <uid>{d7533144-e776-4ce1-8209-fe08310aca09}</uid>
                     <type>2</type>
                     <properties>8</properties>
                     <declaration>void calc()</declaration>
@@ -13033,7 +13805,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{03010a79-3445-4f3a-9765-0c180388942d}</uid>
+                    <uid>{7757b5b0-40a5-41ee-b340-545b181caa7b}</uid>
                     <type>2</type>
                     <properties>8</properties>
                     <declaration>void write()</declaration>
