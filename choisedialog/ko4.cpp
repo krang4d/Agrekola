@@ -672,7 +672,7 @@ void Ko4::on_radioButton_testActivity3_toggled(bool checked)
 StartMeasurement* StartCalibrationKo4::getStart(TestKo4 *t_ko4, CalibrationKo4 *c_ko4)
 {
     StartMeasurement* start = new StartMeasurement(t_ko4, c_ko4);
-    start->setChannels(c_ko4->getK1(), c_ko4->getK2(), c_ko4->getK3(), c_ko4->getK4());
+    start->setChannels(true, true, true, true);
     start->setNum(1, "к/плазма");
     start->setNum(2, "к/плазма");
     start->setNum(3, "к/плазма");

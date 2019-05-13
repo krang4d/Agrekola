@@ -83,7 +83,9 @@ void ChoiseDialog::CreateWidgetThread(StartMeasurement *sm)
 void ChoiseDialog::DeleteWidgetThread()
 {
     agrekola->stopThread();
-    widget->deleteLater();
+    delete widget;
+    delete agrekola;
+
     //if(widget) delete widget;
 }
 
@@ -316,31 +318,31 @@ void ChoiseDialog::startMeasurement(StartMeasurement* sm)
     case TestKo1_ID:
         widget->setWindowTitle("Время свертывания, тест");
         widget->setUserMessage("Время свертывания, тест");
-        widget->setUserMessage(tr("<div style='color: blue'>Установите в рабочие каналы кюветы с пробами и нажмите \"Старт\""));
+        widget->setUserMessage(tr("<div style='color: blue'>Для продолжения нажмите \"Старт\""));
         t_shotConntection(printConnection, t1Connection, t2Connection, t3Connection, t4Connection, ko1, sm->isSingle());
         break;
     case TestKo2_ID:
         widget->setWindowTitle("АЧТВ, тест");
         widget->setUserMessage("АЧТВ, тест");
-        widget->setUserMessage(tr("<div style='color: blue'>Установите в рабочие каналы кюветы с пробами и нажмите \"Старт\""));
+        widget->setUserMessage(tr("<div style='color: blue'>Для продолжения нажмите \"Старт\""));
         t_shotConntection(printConnection, t1Connection, t2Connection, t3Connection, t4Connection, ko2, sm->isSingle());
         break;
     case TestKo3_ID:
         widget->setWindowTitle("Фибриноген, тест");
         widget->setUserMessage("Фибриноген, тест)");
-        widget->setUserMessage(tr("<div style='color: blue'>Установите в рабочие каналы кюветы с пробами и нажмите \"Старт\""));
+        widget->setUserMessage(tr("<div style='color: blue'>Для продолжения нажмите \"Старт\""));
         t_shotConntection(printConnection, t1Connection, t2Connection, t3Connection, t4Connection, ko3, sm->isSingle());
         break;
     case TestKo4_ID:
         widget->setWindowTitle("Тромбин, тест");
         widget->setUserMessage("Тромбин, тест");
-        widget->setUserMessage(tr("<div style='color: blue'>Установите в рабочие каналы кюветы с пробами и нажмите \"Старт\""));
+        widget->setUserMessage(tr("<div style='color: blue'>Для продолжения нажмите \"Старт\""));
         t_shotConntection(printConnection, t1Connection, t2Connection, t3Connection, t4Connection, ko4, sm->isSingle());
         break;
     case TestKo5_ID:
         widget->setWindowTitle("Протромбиновый комплекс, тест");
         widget->setUserMessage("Протромбиновый комплекс, тест");
-        widget->setUserMessage(tr("<div style='color: blue'>Установите в рабочие каналы кюветы с пробами и нажмите \"Старт\""));
+        widget->setUserMessage(tr("<div style='color: blue'>Для продолжения нажмите \"Старт\""));
         t_shotConntection(printConnection, t1Connection, t2Connection, t3Connection, t4Connection, ko5, sm->isSingle());
         break;
     case TestAgr1_ID:
@@ -356,7 +358,6 @@ void ChoiseDialog::startMeasurement(StartMeasurement* sm)
         t_shotConntection(printConnection, t1Connection, t2Connection, t3Connection, t4Connection, agr2, sm->isSingle());
         btp_shotConntection( btp1Connection, btp2Connection, btp3Connection, btp4Connection, agr2, Ko_impl::Test_ID);
         otp_shotConntection( otp1Connection, otp2Connection, otp3Connection, otp4Connection, agr2, Ko_impl::Test_ID);
-        //centerWidget->setUserMessage(tr("<div style='color: blue'>Установите в рабочие каналы кюветы с пробами и нажмите \"Старт\""));
         break;
     default:
         break;
@@ -386,33 +387,41 @@ void ChoiseDialog::calibration(StartMeasurement* sm)
         btp4Connection = new MetaObj;
     }
 
+    this->hide();
+    widget->show();
+
+    QString msg;
     switch (mode) {
     case CalibKo2_ID:
-        widget->setWindowTitle("АЧТВ, калибровка (Ko2)");
-        widget->setUserMessage("АЧТВ, калибровка (Ko2)", 0);
-        widget->setUserMessage(QString("<div style='color: blue'>Установите кюветы с контрольной нормальной плазмой и нажмите \"Старт\""), 0);
+        widget->setWindowTitle("АЧТВ, калибровка");
+        widget->setUserMessage("АЧТВ, калибровка", 0);
+        widget->setUserMessage(QString("<div style='color: blue'>Для продолжения нажмите \"Старт\""), 0);
         c_shotConntection(printConnection, t1Connection, t2Connection, t3Connection, t4Connection, ko2, sm->isSingle());
         break;
     case CalibKo3_ID:
-        widget->setUserMessage("Фибриноген, калибровка (Ko3)", 0);
-        widget->setUserMessage(QString("<div style='color: blue'>Установите кюветы с контрольной нормальной плазмой и ее разведением, после нажмите \"Старт\""), 0);
-        widget->setUserMessage(QString("<div style='color: blue'>Первый этап разведения: Канал 1,2 - 200%, Канал 2,3 - 100%\n"
-                                       "Второй этап разведения: Канал 1,2 - 50%, Канал 3,4 - 25%"), 0);
+        widget->setWindowTitle("<div style='color: blue'>Фибриноген, калибровка");
+        widget->setUserMessage("Фибриноген, калибровка", 0);
+        msg = QString("Подготовьте кюветы с контрольной нормальной плазмой\n"
+                      "и ее разведением: 200%, 100%, 50%, 25%.\n");
+        QMessageBox::information(widget, "Фибриноген, калибровка", msg);
+        widget->setUserMessage("<div style='color: blue'>Для продолжения нажмите \"Старт\"", 0);
+//        widget->setUserMessage(QString("<div style='color: blue'>Первый этап разведения: Канал 1,2 - 200%, Канал 3,4 - 100%\n"
+//                                       "Второй этап разведения: Канал 1,2 - 50%, Канал 3,4 - 25%"), 0);
         c_shotConntection(printConnection, t1Connection, t2Connection, t3Connection, t4Connection, ko3, sm->isSingle());
         break;
     case CalibKo4_ID:
-        widget->setUserMessage("Тромбин, калибровка (Ko4)", 0);
+        widget->setUserMessage("Тромбин, калибровка", 0);
         widget->setUserMessage(QString("<div style='color: blue'>Установите кюветы с контрольной нормальной плазмой и нажмите \"Старт\""), 0);
         c_shotConntection(printConnection, t1Connection, t2Connection, t3Connection, t4Connection, ko4, sm->isSingle());
         break;
     case CalibKo5_ID:
-        widget->setUserMessage(QString("Протромбиновый комплекс, калибровка (Ko5)"), 0);
+        widget->setUserMessage(QString("Протромбиновый комплекс, калибровка"), 0);
         widget->setUserMessage(QString("<div style='color: blue'>Установите кюветы с контрольной нормальной плазмой и ее разведением, после нажмите \"Старт\""), 0);
         widget->setUserMessage(QString("<div style='color: blue'>Разведения: Канал 1 - 100%, Канал 2 - 50%, Канал 3 - 25%, Канал 4 - 12.5%"), 0);
         c_shotConntection(printConnection, t1Connection, t2Connection, t3Connection, t4Connection, ko5, sm->isSingle());
         break;
     case CalibAgr1_ID:
-        widget->setUserMessage(QString("Определение параметров агрегации, калибровка (Agr1 1)"), 0);
+        widget->setUserMessage(QString("Определение параметров агрегации, калибровка"), 0);
         widget->setUserMessage(QString("<div style='color: blue'>Установите кюветы с контрольной нормальной плазмой и нажмите \"Старт\""), 0);
         c_shotConntection(printConnection, t1Connection, t2Connection, t3Connection, t4Connection, agr1, sm->isSingle());
         btp_shotConntection( btp1Connection, btp2Connection, btp3Connection, btp4Connection, agr1, Ko_impl::Calib_ID);
@@ -428,8 +437,6 @@ void ChoiseDialog::calibration(StartMeasurement* sm)
     default:
         break;
     }
-    this->hide();
-    widget->show();
 }
 
 void ChoiseDialog::on_agr1Button_clicked()

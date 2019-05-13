@@ -29,6 +29,7 @@ void Ko2::on_tabWidget_currentChanged(int index)
         t_ko2 = t_ko2_1;
     if(index == 2)
         t_ko2 = t_ko2_2;
+    open();
 }
 
 Ko2::~Ko2()
@@ -65,8 +66,7 @@ void Ko2::open()
     }
     sum/=i;
 
-    ui->groupBox_test1Calib->setTitle(QString("Последняя калибровка: %1\n")
-                                        .arg(c_ko2->getDate().toString("dd.MM.yyyy")));
+    ui->groupBox_test1Calib->setTitle(QString("Последняя калибровка:"));
 //    QString str = QString("Реагенты: %1 (до %2)\n").arg(c_ko2->getReagent_serial())
 //                            .arg(c_ko2->getReagent_date().toString("dd.MM.yyyy"))
 //                + QString("Плазма «К»: %1 (до %2)\n")

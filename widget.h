@@ -156,7 +156,7 @@ private:
     bool pulse1, pulse2, pulse3, pulse4;
     bool termoSensor, incub;
 
-    QMap<double, double> map_y1, map_y2, map_y3, map_y4 ;
+    QMap<double, double> map_y1, map_y2, map_y3, map_y4;
     SaveFiles saveFiles;
 
     //опциональные параметры

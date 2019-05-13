@@ -132,3 +132,9 @@ void ImpuleWaiter::has_pulse_4()
     ui->pushButton_4->setText("Запущен");
     count--;
 }
+
+
+void ImpuleWaiter::closeEvent(QCloseEvent *event)
+{
+    parentWidget()->close();
+}

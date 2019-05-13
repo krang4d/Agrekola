@@ -443,7 +443,7 @@ void Ko3::on_lineEdit_testCh3_textChanged(const QString &arg1)
 StartMeasurement* StartCalibrationKo3::getStart(TestKo3 *t_ko3, CalibrationKo3* c_ko3)
 {
     StartMeasurement *start = new StartMeasurement(t_ko3, c_ko3);
-    start->setChannels(c_ko3->getK1(), c_ko3->getK2(), c_ko3->getK3(), c_ko3->getK4());
+    start->setChannels(true, true, true, true);
     start->setNum(1, "к/плазма");
     start->setNum(2, "к/плазма");
     start->setNum(3, "к/плазма");

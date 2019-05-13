@@ -44,6 +44,10 @@ private:
     Ui::ImpuleWaiter *ui;
     QTimer loop;
     int count;
+
+    // QWidget interface
+protected:
+    void closeEvent(QCloseEvent *event) override;
 };
 
 #endif // IMPULEWAITER_H

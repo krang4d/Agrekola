@@ -163,8 +163,8 @@ StateKo1::StateKo1(IScenario *o) : State(o)
 {
     insertState(LaserON_ID,     "Включение лазеров");
     insertState(MotorON_ID,     "Включение двигателей");
-    insertState(Incubation1_ID, "Инкубация");
-    insertState(Ko_ID,          "Измерение");
+    insertState(Incubation1_ID, "Установите в рабочие каналы кюветы с пробами.");
+    insertState(Ko_ID,          "Определение времени светртывани");
     insertState(Calc_ID,        "Расчет");
     insertState(Write_ID,       "Запись");
     insertState(LaserOFF_ID,     "Включение лазеров");
@@ -181,8 +181,8 @@ StateKo2::StateKo2(IScenario *o) : State(o)
 {
     insertState(LaserON_ID,     "Включение лазеров");
     insertState(MotorON_ID,     "Включение двигателей");
-    insertState(Incubation1_ID, "Инкубация");
-    insertState(Ko_ID,          "Сбор данных");
+    insertState(Incubation1_ID, "Установите в рабочие каналы кюветы с пробами.");
+    insertState(Ko_ID,          "Определение времени светртывани");
     insertState(LaserOFF_ID,    "Выключение лазеров");
     insertState(MotorOFF_ID,    "Выключение двигателей");
     insertState(Calc_ID,        "Расчет");
@@ -194,8 +194,8 @@ StateKo3::StateKo3(IScenario *o) : State(o)
 {
     insertState(LaserON_ID,     "Включение лазеров");
     insertState(MotorON_ID,     "Включение двигателей");
-    insertState(Incubation1_ID, "Инкубация");
-    insertState(Ko_ID,          "Сбор данных");
+    insertState(Incubation1_ID, "Установите в рабочие каналы кюветы с пробами.");
+    insertState(Ko_ID,          "Определение времени светртывани");
     insertState(LaserOFF_ID,    "Выключение лазеров");
     insertState(MotorOFF_ID,    "Выключение двигателей");
     insertState(Calc_ID,        "Расчет");
@@ -207,8 +207,8 @@ StateKo4::StateKo4(IScenario *o) : State(o)
 {
     insertState(LaserON_ID,     "Включение лазеров");
     insertState(MotorON_ID,     "Включение двигателей");
-    insertState(Incubation1_ID, "Инкубация");
-    insertState(Ko_ID,          "Сбор данных");
+    insertState(Incubation1_ID, "Установите в рабочие каналы кюветы с пробами.");
+    insertState(Ko_ID,          "Определение времени светртывани");
     insertState(LaserOFF_ID,    "Выключение лазеров");
     insertState(MotorOFF_ID,    "Выключение двигателей");
     insertState(Calc_ID,        "Расчет");
@@ -220,8 +220,8 @@ StateKo5::StateKo5(IScenario *o) : State(o)
 {
     insertState(LaserON_ID,     "Включение лазеров");
     insertState(MotorON_ID,     "Включение двигателей");
-    insertState(Incubation1_ID, "Инкубация");
-    insertState(Ko_ID,          "Сбор данных");
+    insertState(Incubation1_ID, "Установите в рабочие каналы кюветы с пробами.");
+    insertState(Ko_ID,          "Определение времени светртывани");
     insertState(LaserOFF_ID,    "Выключение лазеров");
     insertState(MotorOFF_ID,    "Выключение двигателей");
     insertState(Calc_ID,        "Расчет");
@@ -233,11 +233,17 @@ StateAgr1::StateAgr1(IScenario *o ) : State(o)
 {
     insertState(LaserON_ID,     "Включение лазеров");
     insertState(MotorON_ID,     "Включение двигателей");
-    insertState(Incubation1_ID, "Инкубация");
-    insertState(Btp_ID,         "Фиксация «100%» уровня");    //"Установите пробы с БТП в рабочие  каналы"
-    insertState(Incubation1_ID, "Инкубация");
-    insertState(Otp_ID,         "Фиксация «0%» уровня");      //"Установите пробы с ОТП в рабочие  каналы"
+
+    insertState(Incubation1_ID, "Установите пробы с БТП в рабочие  каналы.");
+    insertState(Btp_ID,         "Фиксация «100%» уровня");
+
+    insertState(Incubation1_ID, "Установите пробы с ОТП в рабочие  каналы.");
+    insertState(Otp_ID,         "Фиксация «0%» уровня");
+
     insertState(SelectInductor_ID, "Выбор индуктора");
+    insertState(Ko_ID,          "Сбор данных");
+
+
     insertState(LaserOFF_ID,    "Выключение лазеров");
     insertState(MotorOFF_ID,    "Выключение двигателей");
     insertState(End_ID,         "Конец");
@@ -247,12 +253,16 @@ StateAgr2::StateAgr2(IScenario *o) : State(o)
 {
     insertState(LaserON_ID,     "Включение лазеров");
     insertState(MotorON_ID,     "Включение двигателей");
-    insertState(Incubation1_ID, "Инкубация");
-    insertState(Btp_ID,         "Фиксация «100%» уровня");    //"Установите пробы с БТП в рабочие  каналы"
-    insertState(Incubation1_ID, "Инкубация");
-    insertState(Otp_ID,         "Фиксация «0%» уровня");      //"Установите пробы с ОТП в рабочие  каналы"
-    insertState(SelectInductor_ID, "Выбор индуктора");
-    insertState(Agr_ID, "Сбор данных");
+
+    insertState(Incubation1_ID, "Установите пробы с БТП в рабочие  каналы.");
+    insertState(Btp_ID,         "Фиксация «100%» уровня");
+
+    insertState(Incubation1_ID, "Установите пробы с ОТП в рабочие  каналы.");
+    insertState(Otp_ID,         "Фиксация «0%» уровня");
+
+    insertState(SelectInductor_ID,  "Выбор индуктора");
+    insertState(Ko_ID,              "Сбор данных");
+
     insertState(LaserOFF_ID,    "Выключение лазеров");
     insertState(MotorOFF_ID,    "Выключение двигателей");
     insertState(Calc_ID, "Расчет");
@@ -263,6 +273,7 @@ StateCalKo1::StateCalKo1(IScenario *o) : State(o)
 {
     insertState(LaserON_ID,     "Включение лазеров");
     insertState(MotorON_ID,     "Включение двигателей");
+
     insertState(Incubation1_ID, "Инкубация");
     insertState(Ko_ID,          "Сбор данных");
     insertState(LaserOFF_ID,    "Выключение лазеров");
@@ -276,7 +287,7 @@ StateCalKo2::StateCalKo2(IScenario *o) : State(o)
 {
     insertState(LaserON_ID,     "Включение лазеров");
     insertState(MotorON_ID,     "Включение двигателей");
-    insertState(Incubation1_ID, "Инкубация");
+    insertState(Incubation1_ID, "Установите кюветы с контрольной нормальной плазмой и нажмите.");
     insertState(Ko_ID,          "Сбор данных");
     insertState(LaserOFF_ID,    "Выключение лазеров");
     insertState(MotorOFF_ID,    "Выключение двигателей");
@@ -290,11 +301,13 @@ StateCalKo3::StateCalKo3(IScenario *o) : State(o)      //Фибриноген к
     insertState(LaserON_ID,     "Включение лазеров");
     insertState(MotorON_ID,     "Включение двигателей");
 
-    insertState(Ko_ID,          "Установите разведения 200% в каналы 1,2, 100% в каналыы 3,4");
+    insertState(Incubation1_ID, "Установите разведения 200% в каналы 1,2, 100% в каналыы 3,4");
+    insertState(Ko_ID,          "Измерение Этап 1");
     insertState(Calc_ID,        "Расчет", 1);
     insertState(Write_ID,       "Запись");
 
-    insertState(Ko_ID,          "Установите разведения 50% в каналы 1,2, 25% в каналыы 3,4");
+    insertState(Incubation1_ID, "Установите разведения 50% в каналы 1,2, 25% в каналыы 3,4");
+    insertState(Ko_ID,          "Измерение Этап 2");
     insertState(Calc_ID,        "Расчет", 2);
     insertState(Write_ID,       "Запись");
 
@@ -331,12 +344,22 @@ StateCalKo5::StateCalKo5(IScenario *o) : State(o)
 
 StateCalAgr1::StateCalAgr1(IScenario *o) : State(o)
 {
-    insertState(Incubation1_ID, "Инкубация");
-    insertState(Btp_ID,         "Фиксация «100%» уровня");    //"Установите пробы с БТП в рабочие  каналы"
-    insertState(Incubation1_ID, "Инкубация");
-    insertState(Otp_ID,         "Фиксация «0%» уровня");      //"Установите пробы с ОТП в рабочие  каналы"
-    insertState(Agr_ID,         "Определение параметров агрегации");      //"Установите пробы с ОТП в рабочие  каналы"
-    insertState(Calc_ID,        "Расчет");
+    insertState(LaserON_ID,     "Включение лазеров");
+    insertState(MotorON_ID,     "Включение двигателей");
+
+    insertState(Incubation1_ID, "Установите пробы с БТП в рабочие  каналы");
+    insertState(Btp_ID,         "Фиксация «100%» уровня");
+
+    insertState(Incubation1_ID, "Установите пробы с ОТП в рабочие  каналы");
+    insertState(Otp_ID,         "Фиксация «0%» уровня");
+
+    insertState(Incubation1_ID, "Установите пробы с БТП в рабочие  каналы");
+    insertState(Agr_ID,         "Определение скорости агрегации");
+
+    insertState(LaserOFF_ID,    "Выключение лазеров");
+    insertState(MotorOFF_ID,    "Выключение двигателей");
+
+    insertState(Calc_ID,        "Расчет параметров агрегации");
     insertState(Write_ID,       "Запись");
     insertState(End_ID,         "Конец");
 }
@@ -345,11 +368,20 @@ StateCalAgr2::StateCalAgr2(IScenario *o) : State(o)
 {
     insertState(LaserON_ID,     "Включение лазеров");
     insertState(MotorON_ID,     "Включение двигателей");
-    insertState(Incubation1_ID, "Инкубация");
-    insertState(Agr_ID,          "Сбор данных");
+
+    insertState(Incubation1_ID, "Установите пробы с БТП в рабочие  каналы");
+    insertState(Btp_ID,         "Фиксация «100%» уровня");
+
+    insertState(Incubation1_ID, "Установите пробы с ОТП в рабочие  каналы");
+    insertState(Otp_ID,         "Фиксация «0%» уровня");
+
+    insertState(Incubation1_ID, "Установите пробы с БТП в рабочие  каналы");
+    insertState(Agr_ID,         "Определение скорости агрегации");
+
     insertState(LaserOFF_ID,    "Выключение лазеров");
     insertState(MotorOFF_ID,    "Выключение двигателей");
-    insertState(Calc_ID,        "Расчет");
+
+    insertState(Calc_ID,        "Расчет параметров агрегации");
     insertState(Write_ID,       "Запись");
     insertState(End_ID,         "Конец");
 }

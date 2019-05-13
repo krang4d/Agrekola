@@ -27,7 +27,7 @@ Widget::Widget(StartMeasurement *sm, QWidget *parent) :
 
     startWin = sm;
     state = StateBuilder::getState(sm->getModeID(), this);
-    //setAttribute(Qt::WA_DeleteOnClose);
+    setAttribute(Qt::WA_DeleteOnClose);
     setWindowTitle("Программа сбора данных с АЦП(E-154) по 4 каналам");
 
     //настройка таймера для часов
@@ -55,7 +55,7 @@ Widget::Widget(StartMeasurement *sm, QWidget *parent) :
 
 void Widget::setupWidget()
 {
-    if(startWin->isSingle()) {
+//    if(startWin->isSingle()) {
         if (startWin->isChannel(Channel1_ID)) {
             ui->groupBox_f1->setTitle(QString("Канал 1, Пр.№%1").arg(startWin->getNum(1)));
             ui->groupBox_f1->show();
@@ -80,28 +80,28 @@ void Widget::setupWidget()
             ui->groupBox_f4->show();
         }
         else ui->groupBox_f4->hide();
-    }
-    else {
-        if (startWin->isChannel(Channel1_ID)) {
-            ui->groupBox_f1->setTitle(QString("Канал 1-2, Пр.№%1").arg(startWin->getNum(1)));
-            ui->groupBox_f1->show();
-            ui->groupBox_f2->hide();
-        }
-        else {
-            ui->groupBox_f1->hide();
-            ui->groupBox_f2->hide();
-        }
+//    }
+//    else {
+//        if (startWin->isChannel(Channel1_ID)) {
+//            ui->groupBox_f1->setTitle(QString("Канал 1-2, Пр.№%1").arg(startWin->getNum(1)));
+//            ui->groupBox_f1->show();
+//            ui->groupBox_f2->hide();
+//        }
+//        else {
+//            ui->groupBox_f1->hide();
+//            ui->groupBox_f2->hide();
+//        }
 
-        if (startWin->isChannel(Channel2_ID)) {
-            ui->groupBox_f3->setTitle(QString("Канал 2-4, Пр.№%1").arg(startWin->getNum(3)));
-            ui->groupBox_f3->show();
-            ui->groupBox_f4->hide();
-        }
-        else {
-            ui->groupBox_f3->hide();
-            ui->groupBox_f4->hide();
-        }
-    }
+//        if (startWin->isChannel(Channel2_ID)) {
+//            ui->groupBox_f3->setTitle(QString("Канал 2-4, Пр.№%1").arg(startWin->getNum(3)));
+//            ui->groupBox_f3->show();
+//            ui->groupBox_f4->hide();
+//        }
+//        else {
+//            ui->groupBox_f3->hide();
+//            ui->groupBox_f4->hide();
+//        }
+//    }
     setupRealtimeData();
 }
 
@@ -145,6 +145,7 @@ void Widget::setupRealtimeData() {
         ui->groupBox_f4->layout()->addWidget(pBar4);
 
         QSharedPointer<QCPAxisTickerTime> timeTicker(new QCPAxisTickerTime);
+
         timeTicker->setTimeFormat("%m:%s");
 
         customPlot1->addGraph();
@@ -1200,8 +1201,10 @@ void Widget::onLazer(bool b)
 
 void Widget::incubation1(State *next)
 {
+    setUserMessage(QString("<span style = 'color: blue'>%1</span>").arg(next->getMessage()));
+    QMessageBox::information(this, "Инкубация", next->getMessage());
     startIncub(1, startWin->getTimeIncube(1), [=]() {
-        setUserMessage(QString("<span style = 'color: blue'>Время инкубации истекло</span>"));
+        //setUserMessage(QString("<span style = 'color: blue'>Время инкубации истекло</span>"));
         next->next();
     });
 }
@@ -1209,7 +1212,7 @@ void Widget::incubation1(State *next)
 void Widget::incubation2(State *next)
 {
     startIncub(2, startWin->getTimeIncube(1), [=]() {
-        setUserMessage(QString("<span style = 'color: blue'>Время инкубации истекло</span>"));
+        //setUserMessage(QString("<span style = 'color: blue'>Время инкубации истекло</span>"));
         next->next();
     });
 }
@@ -1227,14 +1230,13 @@ void Widget::selectInductor(State *next)
 
 void Widget::finish()
 {
-    hide();
-    deleteLater();
     emit stop();
     emit end(map_y1, map_y2, map_y3, map_y4);
-//    map_y1.clear();
-//    map_y2.clear();
-//    map_y3.clear();
-//    map_y4.clear();
+    map_y1.clear();
+    map_y2.clear();
+    map_y3.clear();
+    map_y4.clear();
+    close();
 }
 
 void Widget::agr()
@@ -1252,8 +1254,6 @@ void Widget::ko(State *next)
             disconnect(this, &Widget::done1, 0, 0);
             if (!i) { next->next(); qDebug() << "done1"; }
         });
-        //getData(Channel1_ID, startWin->getTimeWrite());
-        //emit ret_value1(calcData(Channel1_ID, startWin->getModeID()));
     }
     if (startWin->isChannel(Channel2_ID)) {
         i++;
@@ -1262,8 +1262,6 @@ void Widget::ko(State *next)
             disconnect(this, &Widget::done2, 0, 0);
             if (!i) { next->next(); qDebug() << "done2"; }
         });
-        //getData(Channel2_ID, startWin->getTimeWrite());
-        //emit ret_value1(calcData(Channel2_ID, startWin->getModeID()));
     }
     if (startWin->isChannel(Channel3_ID)) {
         i++;
@@ -1272,8 +1270,6 @@ void Widget::ko(State *next)
             disconnect(this, &Widget::done3, 0, 0);
             if (!i) { next->next(); qDebug() << "done3"; }
         });
-        //getData(Channel3_ID, startWin->getTimeWrite());
-        //emit ret_value1(calcData(Channel3_ID, startWin->getModeID()));
     }
     if (startWin->isChannel(Channel4_ID)) {
         i++;
@@ -1282,8 +1278,6 @@ void Widget::ko(State *next)
             disconnect(this, &Widget::done4, 0, 0);
             if (!i) { next->next(); qDebug() << "done4"; }
         });
-        //getData(Channel4_ID, startWin->getTimeWrite());
-        //emit ret_value4(calcData(Channel1_ID, startWin->getModeID()));
     }
     waitImpulse(new ImpuleWaiter(this));
 }
