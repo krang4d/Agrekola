@@ -2911,7 +2911,7 @@
                           <qlist>
                            <item>
                             <DRelation--IntermediatePoint>
-                             <pos>x:1400;y:1000</pos>
+                             <pos>x:1375;y:995</pos>
                             </DRelation--IntermediatePoint>
                            </item>
                           </qlist>
@@ -3072,7 +3072,7 @@
                           <qlist>
                            <item>
                             <DRelation--IntermediatePoint>
-                             <pos>x:1630;y:1000</pos>
+                             <pos>x:1645;y:990</pos>
                             </DRelation--IntermediatePoint>
                            </item>
                           </qlist>
@@ -3220,7 +3220,7 @@
                           </qlist>
                          </stereotypes>
                          <name>TLoadDll</name>
-                         <pos>x:1095;y:875</pos>
+                         <pos>x:1090;y:830</pos>
                          <rect>x:-120;y:-75;w:240;h:150</rect>
                          <visual-role>0</visual-role>
                         </DObject>
@@ -4111,7 +4111,7 @@
                           <qlist>
                            <item>
                             <DRelation--IntermediatePoint>
-                             <pos>x:1370;y:400</pos>
+                             <pos>x:1605;y:360</pos>
                             </DRelation--IntermediatePoint>
                            </item>
                           </qlist>
@@ -4166,7 +4166,7 @@
                           <qlist>
                            <item>
                             <DRelation--IntermediatePoint>
-                             <pos>x:1480;y:5</pos>
+                             <pos>x:1495;y:55</pos>
                             </DRelation--IntermediatePoint>
                            </item>
                           </qlist>
@@ -4342,7 +4342,7 @@
                     </item>
                    </qlist>
                   </elements>
-                  <last-modified>1557747608757</last-modified>
+                  <last-modified>1557841672580</last-modified>
                   <toolbarid>General</toolbarid>
                  </MDiagram>
                 </base-MDiagram>
@@ -13333,21 +13333,21 @@
                  <qlist>
                   <item>
                    <MClassMember>
-                    <uid>{a4fbb10e-d2b5-4cb3-9f80-ce9262b27d97}</uid>
+                    <uid>{1dc9772b-36a7-4578-8efd-e0a5afb4dadd}</uid>
                     <type>1</type>
                     <declaration>QLibrary *hDll</declaration>
                    </MClassMember>
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{4b7f026b-83b3-4164-9954-631e1e613874}</uid>
+                    <uid>{127882f1-af8b-4348-9a1e-7a0c102525ab}</uid>
                     <type>1</type>
                     <declaration>const char *name</declaration>
                    </MClassMember>
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{e35bf469-40d1-45f5-afdb-c8fdaa06b2fd}</uid>
+                    <uid>{5989c429-50a0-4aac-b24a-27bd8334ac82}</uid>
                     <visibility>1</visibility>
                     <type>2</type>
                     <declaration>LPVOID WINAPI CallCreateLInstance(void)</declaration>
@@ -13355,7 +13355,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{9ec80af8-cd5b-48e5-b2e9-a8244cde5f40}</uid>
+                    <uid>{27ff6242-8866-47fc-b291-da303d540096}</uid>
                     <visibility>1</visibility>
                     <type>2</type>
                     <declaration>LPVOID WINAPI CallGetDllVersion(void)</declaration>
@@ -13363,7 +13363,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{ee7cc589-14fe-43cf-be4d-c0138250f9a6}</uid>
+                    <uid>{14d79839-bc8c-45b5-89c6-272da0404c18}</uid>
                     <visibility>1</visibility>
                     <type>2</type>
                     <declaration>QLibrary* GetDllHinstance(void)</declaration>
@@ -13371,7 +13371,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{08e50131-5c7d-4bad-9729-bdb3160c123d}</uid>
+                    <uid>{10ab2121-18cb-4466-8351-fe852bd324dc}</uid>
                     <visibility>1</visibility>
                     <type>2</type>
                     <declaration>HINSTANCE WINAPI GetDllHinstance(void)</declaration>

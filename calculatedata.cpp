@@ -15,6 +15,7 @@ CalcData::CalcData(QMap<double, double> map)
 
 double CalcData::calcKo(QMap<double, double> map)
 {
+/* старый алгоритм
     if(map.isEmpty()) { qDebug() << "error from CalcData::caalcKo(): the map is empty!"; return 0; }
     QMap<double, double>::const_iterator it = map.begin();
     QMap<double, double>::const_iterator state = map.end();
@@ -48,6 +49,10 @@ double CalcData::calcKo(QMap<double, double> map)
     }
     if(state == map.end()) { qDebug() << "CalcData::CalcKo() is not found over voltage"; return 0; }
     return map.lastKey() - state.key(); //state.key() - map.begin().key();
+*/
+    qDebug() << "CalcData::calcKo map.firstkey()" << map.firstKey();
+    qDebug() << "CalcData::calcKo map.lastkey()" <<  map.lastKey();
+    return map.lastKey() - map.firstKey();
 }
 
 double CalcData::calcAgr(QMap<double, double> map)

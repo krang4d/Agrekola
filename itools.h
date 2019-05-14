@@ -16,6 +16,9 @@ public:
 
     virtual double getMAX() const = 0;
     virtual void setMAX(double value) = 0;
+
+    virtual double getMIX() const = 0;
+    virtual void setMIX(double value) = 0;
 };
 
 #endif // ITOOLS_H

@@ -42,7 +42,7 @@ public:
     } //проверка тепловой готовности
 
     void stopData(Channel_ID);
-    bool isData(Channel_ID);
+    //bool isData(Channel_ID);
 
     // ITools interface
     double getSTART_DX() const override;
@@ -53,6 +53,8 @@ public:
     void setMIN(double value) override;
     double getMAX() const override;
     void setMAX(double value) override;
+    double getMIX() const override;
+    void setMIX(double value) override;
 
     // IScenario interface
     void getBTP() override;
@@ -70,8 +72,6 @@ public:
     void write() override;
 
 private:
-    void setupRealtimeData();
-    void setupTimers();
     void setupWidget();
 
 public slots:
@@ -149,7 +149,7 @@ private:
     StartMeasurement *startWin;
     QCustomPlot *customPlot1, *customPlot2, *customPlot3, *customPlot4;
     ProgressTimerBar *pBar1, *pBar2, *pBar3, *pBar4;
-    Mode_ID current_mode_id;
+    //Mode_ID current_mode_id;
     State *state;
 
     volatile bool data1, data2, data3, data4;
@@ -160,9 +160,10 @@ private:
     SaveFiles saveFiles;
 
     //опциональные параметры
-    double START_DX; //порог запуска
-    double STOP_DX;  //порог остановки
-    double MIN, MAX; //минимум и максимум на графике
+    double START_DX; //порог запуска доля от единицы
+    double STOP_DX;  //порог остановки доля от единицы
+    double MIN, MAX; //минимум и максимум на графике вольт
+    double MIX_TIME_MS; //время перемешвания мс
 
 protected:
     void showEvent(QShowEvent *event) override;

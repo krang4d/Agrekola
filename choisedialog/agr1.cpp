@@ -340,44 +340,116 @@ void Agr1::calibrationData2_4Come(double value, int i)
     }
 }
 
-void Agr1::btp1Come(double value, SaveTo save)
+void Agr1::btp1Come(double d, SaveTo b)
 {
-    c_agr1->setBTP1(value);
+    switch (b) {
+    case Ko_impl::Test_ID:
+        t_agr1->setBtp1(d);
+        break;
+    case Ko_impl::Calib_ID:
+        c_agr1->setBTP1(d);
+        break;
+    default:
+        break;
+    }
 }
 
-void Agr1::btp2Come(double value, SaveTo save)
+void Agr1::btp2Come(double d, SaveTo b)
 {
-    c_agr1->setBTP2(value);
+    switch (b) {
+    case Ko_impl::Test_ID:
+        t_agr1->setBtp2(d);
+        break;
+    case Ko_impl::Calib_ID:
+        c_agr1->setBTP2(d);
+        break;
+    default:
+        break;
+    }
 }
 
-void Agr1::btp3Come(double value, SaveTo save)
+void Agr1::btp3Come(double d, SaveTo b)
 {
-    c_agr1->setBTP3(value);
+    switch (b) {
+    case Ko_impl::Test_ID:
+        t_agr1->setBtp3(d);
+        break;
+    case Ko_impl::Calib_ID:
+        c_agr1->setBTP3(d);
+        break;
+    default:
+        break;
+    }
 }
 
-void Agr1::btp4Come(double value, SaveTo save)
+void Agr1::btp4Come(double d, SaveTo b)
 {
-    c_agr1->setBTP4(value);
+    switch (b) {
+    case Ko_impl::Test_ID:
+        t_agr1->setBtp4(d);
+        break;
+    case Ko_impl::Calib_ID:
+        c_agr1->setBTP4(d);
+        break;
+    default:
+        break;
+    }
 }
 
-void Agr1::otp1Come(double value, SaveTo save)
+void Agr1::otp1Come(double d, SaveTo b)
 {
-    c_agr1->setOTP1(value);
+    switch (b) {
+    case Ko_impl::Test_ID:
+        t_agr1->setOtp1(d);
+        break;
+    case Ko_impl::Calib_ID:
+        c_agr1->setOTP2(d);
+        break;
+    default:
+        break;
+    }
 }
 
-void Agr1::otp2Come(double value, SaveTo save)
+void Agr1::otp2Come(double d, SaveTo b)
 {
-    c_agr1->setOTP2(value);
+    switch (b) {
+    case Ko_impl::Test_ID:
+        t_agr1->setOtp2(d);
+        break;
+    case Ko_impl::Calib_ID:
+        c_agr1->setOTP2(d);
+        break;
+    default:
+        break;
+    }
 }
 
-void Agr1::otp3Come(double value, SaveTo save)
+void Agr1::otp3Come(double d, SaveTo b)
 {
-    c_agr1->setOTP3(value);
+    switch (b) {
+    case Ko_impl::Test_ID:
+        t_agr1->setOtp3(d);
+        break;
+    case Ko_impl::Calib_ID:
+        c_agr1->setOTP3(d);
+        break;
+    default:
+        break;
+    }
 }
 
-void Agr1::otp4Come(double value, SaveTo save)
+void Agr1::otp4Come(double d, SaveTo b)
 {
-    c_agr1->setOTP4(value);
+    switch (b) {
+    case Ko_impl::Test_ID:
+        t_agr1->setOtp4(d);
+        break;
+    case Ko_impl::Calib_ID:
+        c_agr1->setOTP4(d);
+        break;
+    default:
+        break;
+    }
 }
 
 StartMeasurement *StartCalibrationAgr1::getStart(Test *t_agr1, Calibration *c_agr1)

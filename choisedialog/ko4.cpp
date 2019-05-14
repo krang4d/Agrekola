@@ -120,7 +120,7 @@ void Ko4::open(TestKo4 *t_ko4, CalibrationKo4 *c_ko4)
     }
 
     ///состояние калибровки
-    ui->groupBox_test1Calib->setTitle(QString("Последняя калибровка: %1\n").arg(c_ko4->getDate().toString("dd.MM.yyyy")));
+    ui->groupBox_test1Calib->setTitle(QString("Последняя калибровка:\n"));// .arg(c_ko4->getDate().toString("dd.MM.yyyy")));
 //    QString str =
 //              QString("Номер серия реагентов: %1\n").arg(c_ko4->getReagent_serial())
 //            + QString("Срок годности реагентов: %1\n").arg(c_ko4->getReagent_date().toString("dd.MM.yyyy"));
@@ -606,7 +606,7 @@ void Ko4::on_pushButton_calib_clicked()
         return;
     }
 
-    c_ko4->setDate(QDate::currentDate());
+    //c_ko4->setDate(QDate::currentDate());
     c_ko4->setReagent_date(ui->dateEdit_calibReagent->date());
     c_ko4->setReagent_serial(ui->lineEdit_calibReagentSerial->text().toUtf8());
     c_ko4->setK_plazma_date(ui->dateEdit_calibKPlazma->date());

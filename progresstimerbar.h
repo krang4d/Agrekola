@@ -6,7 +6,7 @@
 #include <QString>
 #include <functional>
 
-#define TIMER_PERIOD_MS 100
+#define TIMER_PERIOD_MS 10
 
 //typedef void (*Function)(void);
 
