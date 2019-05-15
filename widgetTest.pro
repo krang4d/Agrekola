@@ -20,7 +20,6 @@ INCLUDEPATH += ./choisedialog \
                ./QCustomPlot
 
 SOURCES +=  main.cpp\
-    selectcalibrationagr1.cpp \
     selectinductor.cpp \
     testkoagr.cpp \
     param.cpp \
@@ -50,7 +49,7 @@ SOURCES +=  main.cpp\
     choisedialog/printer.cpp \
     choisedialog/enddialog.cpp
 
-HEADERS  += selectcalibrationagr1.h \
+HEADERS  += \
     selectinductor.h \
     testkoagr.h \
     param.h \

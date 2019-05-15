@@ -76,7 +76,7 @@ private:
 
 public slots:
     void setUserMessage(QString, bool withtime = true, bool tofile = true);
-    void startIncub(int num, double time_s, std::function<void(void)> timeout_fun = NULL);
+    void startIncub(int num, double time_s, std::function<void(void)> timeout_fun = nullptr);
     void getData(Channel_ID, double time_s);
     double calcData(Channel_ID, Mode_ID);
     void writeMapData(Channel_ID);

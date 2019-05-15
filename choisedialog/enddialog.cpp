@@ -23,38 +23,36 @@ EndDialog::EndDialog(const QString &str, QMap<double, double> y1, QMap<double, d
 
     gridLayout->addWidget(label, 0, 0, 1, 2, Qt::AlignCenter);
 
-    plot1 = NULL;
-    plot2 = NULL;
-    plot3 = NULL;
-    plot4 = NULL;
-
     if(!y1.isEmpty()) {
-        plot1 = new QCustomPlot(this);
-        plot1->plotLayout()->insertRow(0);
-        plot1->plotLayout()->addElement(0, 0, new QCPTextElement(plot1, "Канал 1", QFont("sans", 10, QFont::Bold)));
-        plot1->hide();
-        graph(y1, plot1);
+        QCustomPlot *plot = new QCustomPlot(this);
+        plot->plotLayout()->insertRow(0);
+        plot->plotLayout()->addElement(0, 0, new QCPTextElement(plot, "Канал 1", QFont("sans", 10, QFont::Bold)));
+        graph(y1, plot);
+        plots.append(plot);
     }
+
     if(!y2.isEmpty()) {
-        plot2 = new QCustomPlot(this);
-        plot2->plotLayout()->insertRow(0);
-        plot2->plotLayout()->addElement(0, 0, new QCPTextElement(plot2, "Канал 2", QFont("sans", 10, QFont::Bold)));
-        plot2->hide();
-        graph(y2, plot2);
+        QCustomPlot *plot = new QCustomPlot(this);
+        plot->plotLayout()->insertRow(0);
+        plot->plotLayout()->addElement(0, 0, new QCPTextElement(plot, "Канал 2", QFont("sans", 10, QFont::Bold)));
+        graph(y2, plot);
+        plots.append(plot);
     }
+
     if(!y3.isEmpty()) {
-        plot3 = new QCustomPlot(this);
-        plot3->plotLayout()->insertRow(0);
-        plot3->plotLayout()->addElement(0, 0, new QCPTextElement(plot3, "Канал 3", QFont("sans", 10, QFont::Bold)));
-        plot3->hide();
-        graph(y3, plot3);
+        QCustomPlot *plot = new QCustomPlot(this);
+        plot->plotLayout()->insertRow(0);
+        plot->plotLayout()->addElement(0, 0, new QCPTextElement(plot, "Канал 3", QFont("sans", 10, QFont::Bold)));
+        graph(y3, plot);
+        plots.append(plot);
     }
+
     if(!y4.isEmpty()) {
-        plot4 = new QCustomPlot(this);
-        plot4->plotLayout()->insertRow(0);
-        plot4->plotLayout()->addElement(0, 0, new QCPTextElement(plot4, "Канал 4", QFont("sans", 10, QFont::Bold)));
-        plot4->hide();
-        graph(y4, plot4);
+        QCustomPlot *plot = new QCustomPlot(this);
+        plot->plotLayout()->insertRow(0);
+        plot->plotLayout()->addElement(0, 0, new QCPTextElement(plot, "Канал 4", QFont("sans", 10, QFont::Bold)));
+        graph(y4, plot);
+        plots.append(plot);
     }
 
     printer = new QPrinter(QPrinter::HighResolution);
@@ -62,12 +60,6 @@ EndDialog::EndDialog(const QString &str, QMap<double, double> y1, QMap<double, d
     printDialog = new QPrintDialog(printer, this);
 
     label->setText(str);
-
-    QVector<QCustomPlot*> plots;
-    if (plot1 != NULL) plots.append(plot1);
-    if (plot2 != NULL) plots.append(plot2);
-    if (plot3 != NULL) plots.append(plot3);
-    if (plot4 != NULL) plots.append(plot4);
 
     int i = 0;
     if(plots.length() > 1) {

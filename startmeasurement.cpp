@@ -1,5 +1,5 @@
 #include "startmeasurement.h"
-#include "ui_startmeasurement.h"
+//#include "ui_startmeasurement.h"
 
 #include <QMessageBox>
 #include <QString>
