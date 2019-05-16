@@ -53,7 +53,17 @@ void Ko1::on_checkBox_testCh4_toggled(bool checked)
 
 void Ko1::on_radioButton_testSingle_toggled(bool checked)
 {
-    if(ui->radioButton_testDouble->isChecked()) {
+    if(checked) {
+        ui->checkBox_testCh2->setEnabled(true);
+        ui->checkBox_testCh4->setEnabled(true);
+        ui->lineEdit_testCh2->setEnabled(ui->checkBox_testCh2->isChecked());
+        ui->lineEdit_testCh4->setEnabled(ui->checkBox_testCh4->isChecked());
+    }
+}
+
+void Ko1::on_radioButton_testDouble_toggled(bool checked)
+{
+    if(checked) {
         ui->checkBox_testCh2->setEnabled(false);
         ui->checkBox_testCh4->setEnabled(false);
         ui->lineEdit_testCh2->setEnabled(false);
@@ -65,12 +75,6 @@ void Ko1::on_radioButton_testSingle_toggled(bool checked)
         else ui->checkBox_testCh2->setChecked(false);
         if(ui->checkBox_testCh3->isChecked()) ui->checkBox_testCh4->setChecked(true);
         else ui->checkBox_testCh4->setChecked(false);
-    }
-    if(ui->radioButton_testSingle->isChecked()) {
-        ui->checkBox_testCh2->setEnabled(true);
-        ui->checkBox_testCh4->setEnabled(true);
-        ui->lineEdit_testCh2->setEnabled(ui->checkBox_testCh2->isChecked());
-        ui->lineEdit_testCh4->setEnabled(ui->checkBox_testCh4->isChecked());
     }
 }
 
@@ -204,7 +208,7 @@ void Ko1::on_pushButton_test_clicked()
     else b = true;
     if(ui->checkBox_testCh3->isChecked()) {
         if(!ui->lineEdit_testCh3->text().isEmpty()) c = true;
-        else b = false;
+        else c = false;
     }
     else c = true;
     if(ui->checkBox_testCh4->isChecked()) {
@@ -212,8 +216,9 @@ void Ko1::on_pushButton_test_clicked()
         else d = false;
     }
     else d = true;
-    //bool c = (ui->doubleSpinBox_testIncubeTime->value() != NULL) && (ui->doubleSpinBox_testWriteTime->value() != NULL);
+
     bool e = ui->checkBox_testCh1->isChecked() || ui->checkBox_testCh2->isChecked() || ui->checkBox_testCh3->isChecked() || ui->checkBox_testCh4->isChecked();
+
     if( !(a && b && c && d && e )) {
         QMessageBox::information(this, "Внимание!", "Для того чтобы продолжить необходимо выбрать рабочие каналы и заполнить все поля с параметрами!");
         return;
@@ -233,76 +238,12 @@ void Ko1::on_pushButton_test_clicked()
 
     c_ko1->setIncube_time(ui->doubleSpinBox_testIncubeTime->value());
     c_ko1->setWrite_time(ui->doubleSpinBox_testWriteTime->value());
-    ///c_ko1->setDate(QDate::currentDate());
 
     t_ko1->save();
     c_ko1->save();
 
     emit measurement(StartTestKo1::getStart(t_ko1, c_ko1));
 }
-
-//Mode_ID Ko1::getModeID() const
-//{
-//    return mode;
-//}
-
-//bool Ko1::isSingle()
-//{
-//    return t_ko1->getSingle();
-//}
-
-//bool Ko1::isChannel(Channel_ID ch)
-//{
-//    switch (ch) {
-//    case ChannelAll_ID:
-//        return t_ko1->getK1() || t_ko1->getK2() ||t_ko1->getK3() || t_ko1->getK4();
-//        break;
-//    case Channel1_ID:
-//        return t_ko1->getK1();
-//        break;
-//    case Channel2_ID:
-//        return t_ko1->getK2();
-//        break;
-//    case Channel3_ID:
-//        return t_ko1->getK3();
-//        break;
-//    case Channel4_ID:
-//        return t_ko1->getK4();
-//        break;
-//    default:
-//        return t_ko1->getK1() || t_ko1->getK2() ||t_ko1->getK3() || t_ko1->getK4();
-//    }
-//}
-
-//QString Ko1::getNum(const int ch)
-//{
-//    switch ( ch ) {
-//    case 1:
-//        return t_ko1->getNum1();
-//        break;
-//    case 2:
-//        return t_ko1->getNum2();
-//        break;
-//    case 3:
-//        return t_ko1->getNum3();
-//        break;
-//    case 4:
-//        return t_ko1->getNum4();
-//        break;
-//    default:
-//        return 0;
-//    }
-//}
-
-//double Ko1::getTimeWrite()
-//{
-//    return c_ko1->getWrite_time();
-//}
-
-//double Ko1::getTimeIncube(int)
-//{
-//    return c_ko1->getIncube_time();
-//}
 
 StartMeasurement* StartTestKo1::getStart(TestKo1 *t_ko1, CalibrationKo1 *c_ko1)
 {
@@ -315,8 +256,8 @@ StartMeasurement* StartTestKo1::getStart(TestKo1 *t_ko1, CalibrationKo1 *c_ko1)
     start->setNum(3, t_ko1->getNum3());
     start->setNum(4, t_ko1->getNum4());
 
-    start->setTimeWrite(t_ko1->getWriteTime());
-    start->setTimeIncube(1, t_ko1->getIncubeTime());
+    start->setTimeWrite(c_ko1->getWrite_time());
+    start->setTimeIncube(1, c_ko1->getIncube_time());
     //stKo2->cancel = false;
     return start;
 }

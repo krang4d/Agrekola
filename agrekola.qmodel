@@ -517,14 +517,9 @@
                           </DElement>
                          </base-DElement>
                          <object>{f28defe7-de80-40d6-b48c-2e41c7ac5fe4}</object>
-                         <stereotypes>
-                          <qlist>
-                           <item>static</item>
-                          </qlist>
-                         </stereotypes>
                          <name>Creator</name>
-                         <pos>x:-550;y:555</pos>
-                         <rect>x:-145;y:-65;w:290;h:130</rect>
+                         <pos>x:-560;y:630</pos>
+                         <rect>x:-130;y:-60;w:260;h:120</rect>
                          <visual-role>5</visual-role>
                          <visual-emphasized>true</visual-emphasized>
                         </DObject>
@@ -544,14 +539,9 @@
                           </DElement>
                          </base-DElement>
                          <object>{cc34e634-5cfc-4612-a358-af65cf429f41}</object>
-                         <stereotypes>
-                          <qlist>
-                           <item>interface</item>
-                          </qlist>
-                         </stereotypes>
                          <name>Test</name>
                          <pos>x:-555;y:-290</pos>
-                         <rect>x:-100;y:-155;w:200;h:310</rect>
+                         <rect>x:-100;y:-150;w:200;h:300</rect>
                          <visual-role>6</visual-role>
                          <visual-emphasized>true</visual-emphasized>
                          <stereotype-display>1</stereotype-display>
@@ -572,11 +562,6 @@
                           </DElement>
                          </base-DElement>
                          <object>{c05fc24d-2f36-4868-b203-e096ad2d7775}</object>
-                         <stereotypes>
-                          <qlist>
-                           <item>interface</item>
-                          </qlist>
-                         </stereotypes>
                          <name>Calibration</name>
                          <pos>x:-560;y:1285</pos>
                          <rect>x:-105;y:-120;w:210;h:240</rect>
@@ -965,7 +950,7 @@
                           <qlist>
                            <item>
                             <DRelation--IntermediatePoint>
-                             <pos>x:-560;y:1080</pos>
+                             <pos>x:-490;y:1090</pos>
                             </DRelation--IntermediatePoint>
                            </item>
                           </qlist>
@@ -1253,7 +1238,7 @@
                           <qlist>
                            <item>
                             <DRelation--IntermediatePoint>
-                             <pos>x:-530;y:25</pos>
+                             <pos>x:-380;y:10</pos>
                             </DRelation--IntermediatePoint>
                            </item>
                           </qlist>
@@ -1280,7 +1265,7 @@
                           <qlist>
                            <item>
                             <DRelation--IntermediatePoint>
-                             <pos>x:-585;y:60</pos>
+                             <pos>x:-430;y:45</pos>
                             </DRelation--IntermediatePoint>
                            </item>
                           </qlist>
@@ -1307,7 +1292,7 @@
                           <qlist>
                            <item>
                             <DRelation--IntermediatePoint>
-                             <pos>x:-630;y:85</pos>
+                             <pos>x:-525;y:80</pos>
                             </DRelation--IntermediatePoint>
                            </item>
                           </qlist>
@@ -3358,377 +3343,6 @@
                      </instance>
                     </item>
                     <item>
-                     <instance type="DDependency">
-                      <DDependency>
-                       <base-DRelation>
-                        <DRelation>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{2eae0178-38aa-46b9-8b2e-5a90e7bfaa00}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{335c46ae-2aff-4a34-a549-69d9f4608c9b}</object>
-                         <a>{251aa94d-3c07-4f26-8322-85da5dca5d60}</a>
-                         <b>{aa4cb06f-3e42-4cbf-b23c-d130a0920e8f}</b>
-                         <points>
-                          <qlist>
-                           <item>
-                            <DRelation--IntermediatePoint>
-                             <pos>x:-380;y:-230</pos>
-                            </DRelation--IntermediatePoint>
-                           </item>
-                           <item>
-                            <DRelation--IntermediatePoint>
-                             <pos>x:-500;y:145</pos>
-                            </DRelation--IntermediatePoint>
-                           </item>
-                          </qlist>
-                         </points>
-                        </DRelation>
-                       </base-DRelation>
-                      </DDependency>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DDependency">
-                      <DDependency>
-                       <base-DRelation>
-                        <DRelation>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{747c7a48-3bdb-44b7-adc2-7d7e573443a5}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{f276cc7f-525d-4ee6-b236-73a279719978}</object>
-                         <a>{7f04a989-fc0f-43ed-8e66-9b2629a99e96}</a>
-                         <b>{aa4cb06f-3e42-4cbf-b23c-d130a0920e8f}</b>
-                         <points>
-                          <qlist>
-                           <item>
-                            <DRelation--IntermediatePoint>
-                             <pos>x:-480;y:210</pos>
-                            </DRelation--IntermediatePoint>
-                           </item>
-                          </qlist>
-                         </points>
-                        </DRelation>
-                       </base-DRelation>
-                      </DDependency>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DDependency">
-                      <DDependency>
-                       <base-DRelation>
-                        <DRelation>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{8608915e-4a91-4fca-877c-59dd441a25eb}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{bd032607-4ce5-4aaf-8010-0769ffb1f54f}</object>
-                         <a>{98f3788f-3cec-4388-8792-1704bd3cf883}</a>
-                         <b>{aa4cb06f-3e42-4cbf-b23c-d130a0920e8f}</b>
-                         <points>
-                          <qlist>
-                           <item>
-                            <DRelation--IntermediatePoint>
-                             <pos>x:-430;y:220</pos>
-                            </DRelation--IntermediatePoint>
-                           </item>
-                           <item>
-                            <DRelation--IntermediatePoint>
-                             <pos>x:-460;y:295</pos>
-                            </DRelation--IntermediatePoint>
-                           </item>
-                          </qlist>
-                         </points>
-                        </DRelation>
-                       </base-DRelation>
-                      </DDependency>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DDependency">
-                      <DDependency>
-                       <base-DRelation>
-                        <DRelation>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{284ef165-21cc-47f0-b003-0a8b3bf18c99}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{b93c47d5-3d3f-495c-914e-76384a403345}</object>
-                         <a>{3ae0ec01-e4e8-4aca-9573-c2a413bea979}</a>
-                         <b>{aa4cb06f-3e42-4cbf-b23c-d130a0920e8f}</b>
-                         <points>
-                          <qlist>
-                           <item>
-                            <DRelation--IntermediatePoint>
-                             <pos>x:-410;y:285</pos>
-                            </DRelation--IntermediatePoint>
-                           </item>
-                           <item>
-                            <DRelation--IntermediatePoint>
-                             <pos>x:-440;y:400</pos>
-                            </DRelation--IntermediatePoint>
-                           </item>
-                          </qlist>
-                         </points>
-                        </DRelation>
-                       </base-DRelation>
-                      </DDependency>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DDependency">
-                      <DDependency>
-                       <base-DRelation>
-                        <DRelation>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{ce835e42-8933-4309-8868-3baaa5bf70d2}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{742edc5b-9bc2-47bb-8696-f1a7ff4b526b}</object>
-                         <a>{3e53308a-2df4-4917-86b7-a1fbf17b6526}</a>
-                         <b>{aa4cb06f-3e42-4cbf-b23c-d130a0920e8f}</b>
-                         <points>
-                          <qlist>
-                           <item>
-                            <DRelation--IntermediatePoint>
-                             <pos>x:-425;y:440</pos>
-                            </DRelation--IntermediatePoint>
-                           </item>
-                          </qlist>
-                         </points>
-                        </DRelation>
-                       </base-DRelation>
-                      </DDependency>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DDependency">
-                      <DDependency>
-                       <base-DRelation>
-                        <DRelation>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{57dab812-9f7c-40df-a473-49cccf2a3321}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{3b0aab3f-6a1c-4ba4-8925-3c636ce695e5}</object>
-                         <a>{ee954d11-c57e-41dd-947f-186977ff3c11}</a>
-                         <b>{aa4cb06f-3e42-4cbf-b23c-d130a0920e8f}</b>
-                         <points>
-                          <qlist>
-                           <item>
-                            <DRelation--IntermediatePoint>
-                             <pos>x:-405;y:445</pos>
-                            </DRelation--IntermediatePoint>
-                           </item>
-                           <item>
-                            <DRelation--IntermediatePoint>
-                             <pos>x:-410;y:475</pos>
-                            </DRelation--IntermediatePoint>
-                           </item>
-                          </qlist>
-                         </points>
-                        </DRelation>
-                       </base-DRelation>
-                      </DDependency>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DDependency">
-                      <DDependency>
-                       <base-DRelation>
-                        <DRelation>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{0c4cd2d8-fd70-4bc6-9031-3984f90e5cb3}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{d8307634-a472-43e5-84bd-11ef7b2493b5}</object>
-                         <a>{d2011714-afc9-4497-ad5c-3a1d03143fd6}</a>
-                         <b>{aa4cb06f-3e42-4cbf-b23c-d130a0920e8f}</b>
-                         <points>
-                          <qlist>
-                           <item>
-                            <DRelation--IntermediatePoint>
-                             <pos>x:-505;y:820</pos>
-                            </DRelation--IntermediatePoint>
-                           </item>
-                          </qlist>
-                         </points>
-                        </DRelation>
-                       </base-DRelation>
-                      </DDependency>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DDependency">
-                      <DDependency>
-                       <base-DRelation>
-                        <DRelation>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{d27fc1af-9a5e-402e-808e-64ba49961d1c}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{fac64f27-ea25-4657-9961-1c1a98023fdf}</object>
-                         <a>{a767f92d-84f2-45dd-b342-71a006aefb1c}</a>
-                         <b>{aa4cb06f-3e42-4cbf-b23c-d130a0920e8f}</b>
-                         <points>
-                          <qlist>
-                           <item>
-                            <DRelation--IntermediatePoint>
-                             <pos>x:-525;y:820</pos>
-                            </DRelation--IntermediatePoint>
-                           </item>
-                          </qlist>
-                         </points>
-                        </DRelation>
-                       </base-DRelation>
-                      </DDependency>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DDependency">
-                      <DDependency>
-                       <base-DRelation>
-                        <DRelation>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{0c64eaad-d1be-45ae-99ee-085c711c6b89}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{77ee4246-afb0-4ce9-b1c6-1a1a07d34827}</object>
-                         <a>{6d4fde57-dbaf-46a2-9c56-711b54c3d9f8}</a>
-                         <b>{aa4cb06f-3e42-4cbf-b23c-d130a0920e8f}</b>
-                         <points>
-                          <qlist>
-                           <item>
-                            <DRelation--IntermediatePoint>
-                             <pos>x:-545;y:820</pos>
-                            </DRelation--IntermediatePoint>
-                           </item>
-                          </qlist>
-                         </points>
-                        </DRelation>
-                       </base-DRelation>
-                      </DDependency>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DDependency">
-                      <DDependency>
-                       <base-DRelation>
-                        <DRelation>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{9c44bad4-81d1-4ceb-b231-53ac5755cfa8}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{1e091c4e-71c8-442d-ad43-0dc636ea9232}</object>
-                         <a>{915a4afc-f0b4-467a-82fb-8b0707539e3d}</a>
-                         <b>{aa4cb06f-3e42-4cbf-b23c-d130a0920e8f}</b>
-                         <points>
-                          <qlist>
-                           <item>
-                            <DRelation--IntermediatePoint>
-                             <pos>x:-565;y:820</pos>
-                            </DRelation--IntermediatePoint>
-                           </item>
-                          </qlist>
-                         </points>
-                        </DRelation>
-                       </base-DRelation>
-                      </DDependency>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DDependency">
-                      <DDependency>
-                       <base-DRelation>
-                        <DRelation>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{e2257c4f-2087-495c-b044-4ce24ea5949d}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{1def4d2b-69dd-4f8d-8e3c-275d2ff00bc4}</object>
-                         <a>{78869b23-27b1-4390-85c9-7b6ec2fd00a4}</a>
-                         <b>{aa4cb06f-3e42-4cbf-b23c-d130a0920e8f}</b>
-                         <points>
-                          <qlist>
-                           <item>
-                            <DRelation--IntermediatePoint>
-                             <pos>x:-585;y:820</pos>
-                            </DRelation--IntermediatePoint>
-                           </item>
-                          </qlist>
-                         </points>
-                        </DRelation>
-                       </base-DRelation>
-                      </DDependency>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DDependency">
-                      <DDependency>
-                       <base-DRelation>
-                        <DRelation>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{8f5670d2-5c87-4c8a-bd21-06bf950b5712}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{8212e101-a939-425f-8fa8-8c579d7ff43a}</object>
-                         <a>{0cf47a64-f4ee-4eff-8c72-8c612acd18f3}</a>
-                         <b>{aa4cb06f-3e42-4cbf-b23c-d130a0920e8f}</b>
-                         <points>
-                          <qlist>
-                           <item>
-                            <DRelation--IntermediatePoint>
-                             <pos>x:-605;y:825</pos>
-                            </DRelation--IntermediatePoint>
-                           </item>
-                          </qlist>
-                         </points>
-                        </DRelation>
-                       </base-DRelation>
-                      </DDependency>
-                     </instance>
-                    </item>
-                    <item>
-                     <instance type="DDependency">
-                      <DDependency>
-                       <base-DRelation>
-                        <DRelation>
-                         <base-DElement>
-                          <DElement>
-                           <uid>{6d5fb6cf-367f-4899-a880-33dadf8789cd}</uid>
-                          </DElement>
-                         </base-DElement>
-                         <object>{d03f2dd5-96c6-4d17-8ed4-65a7a904c19a}</object>
-                         <a>{7d415045-8f89-41a2-9d2d-5745ec17a95a}</a>
-                         <b>{aa4cb06f-3e42-4cbf-b23c-d130a0920e8f}</b>
-                         <points>
-                          <qlist>
-                           <item>
-                            <DRelation--IntermediatePoint>
-                             <pos>x:-625;y:825</pos>
-                            </DRelation--IntermediatePoint>
-                           </item>
-                          </qlist>
-                         </points>
-                        </DRelation>
-                       </base-DRelation>
-                      </DDependency>
-                     </instance>
-                    </item>
-                    <item>
                      <instance type="DClass">
                       <DClass>
                        <base-DObject>
@@ -4340,9 +3954,45 @@
                       </DInheritance>
                      </instance>
                     </item>
+                    <item>
+                     <instance type="DInheritance">
+                      <DInheritance>
+                       <base-DRelation>
+                        <DRelation>
+                         <base-DElement>
+                          <DElement>
+                           <uid>{4653d797-1571-4752-8dd2-4a8747374a7b}</uid>
+                          </DElement>
+                         </base-DElement>
+                         <object>{7eaa69ed-fa10-4a2a-9a53-d0175bbbce1b}</object>
+                         <a>{cb3859de-310d-4869-b726-b27052d1e095}</a>
+                         <b>{aa4cb06f-3e42-4cbf-b23c-d130a0920e8f}</b>
+                        </DRelation>
+                       </base-DRelation>
+                      </DInheritance>
+                     </instance>
+                    </item>
+                    <item>
+                     <instance type="DInheritance">
+                      <DInheritance>
+                       <base-DRelation>
+                        <DRelation>
+                         <base-DElement>
+                          <DElement>
+                           <uid>{45c3ab5f-f283-4826-bde2-cf52a4569a0f}</uid>
+                          </DElement>
+                         </base-DElement>
+                         <object>{0888caa3-9e0c-42b6-ab73-77679a1570c2}</object>
+                         <a>{f92b85cd-e1fe-4ff1-9593-234958656970}</a>
+                         <b>{aa4cb06f-3e42-4cbf-b23c-d130a0920e8f}</b>
+                        </DRelation>
+                       </base-DRelation>
+                      </DInheritance>
+                     </instance>
+                    </item>
                    </qlist>
                   </elements>
-                  <last-modified>1557841672580</last-modified>
+                  <last-modified>1557900785532</last-modified>
                   <toolbarid>General</toolbarid>
                  </MDiagram>
                 </base-MDiagram>
@@ -8996,11 +8646,6 @@
                   <base-MElement>
                    <MElement>
                     <uid>{f28defe7-de80-40d6-b48c-2e41c7ac5fe4}</uid>
-                    <stereotypes>
-                     <qlist>
-                      <item>static</item>
-                     </qlist>
-                    </stereotypes>
                    </MElement>
                   </base-MElement>
                   <name>Creator</name>
@@ -9010,41 +8655,36 @@
                  <qlist>
                   <item>
                    <MClassMember>
-                    <uid>{d0516347-858e-44fd-87f0-e47c0094d3a8}</uid>
+                    <uid>{6755ea38-7c84-4466-bb69-1da13bd06472}</uid>
                     <type>2</type>
-                    <properties>64</properties>
                     <declaration>QDomDocument createTest(QString name)</declaration>
                    </MClassMember>
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{544ad933-d752-4ac3-a1cd-e8fa8be6dbcd}</uid>
+                    <uid>{5022e369-54b9-4965-8f30-8551b8c08d1d}</uid>
                     <type>2</type>
-                    <properties>64</properties>
                     <declaration>QDomDocument createCalibration(QString name)</declaration>
                    </MClassMember>
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{8efbfea1-a229-4ff7-b92c-18ff1932cdf2}</uid>
+                    <uid>{67aa1a5c-f090-42ff-b255-fb97832c81fa}</uid>
                     <type>2</type>
-                    <properties>64</properties>
                     <declaration>int writeFile(QString name, QDomDocument doc)</declaration>
                    </MClassMember>
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{0d555923-1a95-42de-9f7a-6aabd4d5fe10}</uid>
+                    <uid>{715de784-584e-469f-b717-bb17ad24b3ef}</uid>
                     <type>2</type>
-                    <properties>64</properties>
                     <declaration>int readFile(QString name, QDomDocument &amp;doc)</declaration>
                    </MClassMember>
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{666aeb15-58aa-4a3d-b6af-0a2c917761ee}</uid>
+                    <uid>{3b1bde53-0817-4ff9-a352-e0d2ec15ca23}</uid>
                     <type>2</type>
-                    <properties>64</properties>
                     <declaration>QDir getXMLDir()</declaration>
                    </MClassMember>
                   </item>
@@ -9066,11 +8706,6 @@
                   <base-MElement>
                    <MElement>
                     <uid>{cc34e634-5cfc-4612-a358-af65cf429f41}</uid>
-                    <stereotypes>
-                     <qlist>
-                      <item>interface</item>
-                     </qlist>
-                    </stereotypes>
                    </MElement>
                   </base-MElement>
                   <name>Test</name>
@@ -9127,6 +8762,28 @@
                         </target>
                        </handle>
                       </item>
+                      <item>
+                       <handle>
+                        <uid>{7eaa69ed-fa10-4a2a-9a53-d0175bbbce1b}</uid>
+                        <target>
+                         <instance type="MInheritance">
+                          <MInheritance>
+                           <base-MRelation>
+                            <MRelation>
+                             <base-MElement>
+                              <MElement>
+                               <uid>{7eaa69ed-fa10-4a2a-9a53-d0175bbbce1b}</uid>
+                              </MElement>
+                             </base-MElement>
+                             <a>{cc34e634-5cfc-4612-a358-af65cf429f41}</a>
+                             <b>{f28defe7-de80-40d6-b48c-2e41c7ac5fe4}</b>
+                            </MRelation>
+                           </base-MRelation>
+                          </MInheritance>
+                         </instance>
+                        </target>
+                       </handle>
+                      </item>
                      </qlist>
                     </handles>
                    </handles>
@@ -9137,7 +8794,7 @@
                  <qlist>
                   <item>
                    <MClassMember>
-                    <uid>{894698c1-9eac-4612-9e34-717cec6c9fd9}</uid>
+                    <uid>{63152b16-15cd-4ae5-a444-66336edc66fc}</uid>
                     <visibility>1</visibility>
                     <type>2</type>
                     <properties>3</properties>
@@ -9146,7 +8803,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{13af4c66-af7f-400d-99e9-d2604e427d0e}</uid>
+                    <uid>{b3098ebd-4aa3-42ae-840e-3229bfb2a563}</uid>
                     <visibility>1</visibility>
                     <type>2</type>
                     <properties>1</properties>
@@ -9155,7 +8812,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{d2ff8485-46f3-4e9c-abe0-72f07e127c60}</uid>
+                    <uid>{f87e4173-1b98-4f62-8dfc-6ecbb3e5f207}</uid>
                     <visibility>1</visibility>
                     <type>2</type>
                     <properties>1</properties>
@@ -9164,7 +8821,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{563883dd-0d1e-43b3-a19c-5d53ea98cfbf}</uid>
+                    <uid>{066ddecb-f515-4175-ae72-be1787f773e3}</uid>
                     <visibility>1</visibility>
                     <type>2</type>
                     <properties>1</properties>
@@ -9173,7 +8830,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{6c859382-5e5d-4259-9cce-64f933769439}</uid>
+                    <uid>{f79d8b19-4ca2-450a-8af1-7e5cf4e7aea7}</uid>
                     <visibility>1</visibility>
                     <type>2</type>
                     <properties>1</properties>
@@ -9182,7 +8839,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{28534c83-9646-45b6-b77c-1443076fbfe5}</uid>
+                    <uid>{f2454dfa-8641-43e3-b54b-7ab946b20909}</uid>
                     <visibility>2</visibility>
                     <type>2</type>
                     <properties>4</properties>
@@ -9191,7 +8848,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{ba3fae4f-e545-4963-809f-69ecdfca2ea1}</uid>
+                    <uid>{a9bf32fa-8107-47d5-814c-560a61297ba0}</uid>
                     <visibility>2</visibility>
                     <type>2</type>
                     <properties>4</properties>
@@ -9200,7 +8857,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{0101a970-b3f4-4110-9aa1-a334ea06357b}</uid>
+                    <uid>{8f85f469-5941-47d7-bf7b-1eba1dbdec90}</uid>
                     <visibility>2</visibility>
                     <type>1</type>
                     <declaration>QDomDocument document</declaration>
@@ -9208,7 +8865,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{e6b30d66-cbed-46df-a320-e13d3add1ebb}</uid>
+                    <uid>{6c7efb72-2ee9-49cb-aac9-590118df31ed}</uid>
                     <visibility>2</visibility>
                     <type>1</type>
                     <declaration>QString name</declaration>
@@ -9216,7 +8873,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{57b02653-8384-475c-a0ae-9c6fefac40cc}</uid>
+                    <uid>{225877d8-379c-412a-a9d7-9e384b05cb36}</uid>
                     <visibility>2</visibility>
                     <type>1</type>
                     <declaration>QDir dir</declaration>
@@ -9224,7 +8881,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{4d27cbfb-6692-4059-b124-f01d849e53c3}</uid>
+                    <uid>{0697ea25-a46f-4258-8392-c465774745dd}</uid>
                     <visibility>2</visibility>
                     <type>1</type>
                     <declaration>QDate date</declaration>
@@ -9232,7 +8889,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{14cdd027-c0d7-449a-945e-f790096c993b}</uid>
+                    <uid>{5f410a0d-2809-40a5-a4a1-c4e30c08e34a}</uid>
                     <visibility>2</visibility>
                     <type>1</type>
                     <declaration>QTime time</declaration>
@@ -9240,7 +8897,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{6b6d5c04-76ad-482f-b82d-61b5cc195155}</uid>
+                    <uid>{fe6bf0fd-0dcf-4b72-8897-1922a2019f29}</uid>
                     <visibility>2</visibility>
                     <type>1</type>
                     <declaration>int k1, k2, k3, k4, single</declaration>
@@ -9248,7 +8905,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{062c4aec-a239-4f58-82d2-8916b5b9b1fc}</uid>
+                    <uid>{b88f1b92-ac95-425f-a3d5-da7f60526f03}</uid>
                     <visibility>2</visibility>
                     <type>1</type>
                     <declaration>QString num1, num2, num3, num4</declaration>
@@ -9256,7 +8913,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{e4f7b174-8242-40f5-b2e5-9593bbe6349f}</uid>
+                    <uid>{8e1cfd8f-2cc8-4356-a41e-e58fdb8f14a5}</uid>
                     <visibility>2</visibility>
                     <type>1</type>
                     <declaration>Calibration *c_ko</declaration>
@@ -9264,7 +8921,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{43e4064d-7da0-48d8-929f-647f74e1d42e}</uid>
+                    <uid>{c35883ee-1b53-414b-b9dc-7679ad24601f}</uid>
                     <visibility>3</visibility>
                     <type>1</type>
                     <declaration>double t1, t2, t3, t4</declaration>
@@ -9272,7 +8929,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{66d612e6-9566-401d-be10-b477e0b2cd4e}</uid>
+                    <uid>{38ce4f29-de14-412c-8541-31ecd0afd5bf}</uid>
                     <visibility>1</visibility>
                     <type>2</type>
                     <declaration>seters()</declaration>
@@ -9280,7 +8937,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{6e9abf5a-ddb2-4e87-a07c-ece57e57b5e0}</uid>
+                    <uid>{75ce1744-5338-48ca-992e-66b3473202a3}</uid>
                     <visibility>1</visibility>
                     <type>2</type>
                     <declaration>geters()</declaration>
@@ -9304,11 +8961,6 @@
                   <base-MElement>
                    <MElement>
                     <uid>{c05fc24d-2f36-4868-b203-e096ad2d7775}</uid>
-                    <stereotypes>
-                     <qlist>
-                      <item>interface</item>
-                     </qlist>
-                    </stereotypes>
                    </MElement>
                   </base-MElement>
                   <name>Calibration</name>
@@ -9338,6 +8990,28 @@
                         </target>
                        </handle>
                       </item>
+                      <item>
+                       <handle>
+                        <uid>{0888caa3-9e0c-42b6-ab73-77679a1570c2}</uid>
+                        <target>
+                         <instance type="MInheritance">
+                          <MInheritance>
+                           <base-MRelation>
+                            <MRelation>
+                             <base-MElement>
+                              <MElement>
+                               <uid>{0888caa3-9e0c-42b6-ab73-77679a1570c2}</uid>
+                              </MElement>
+                             </base-MElement>
+                             <a>{c05fc24d-2f36-4868-b203-e096ad2d7775}</a>
+                             <b>{f28defe7-de80-40d6-b48c-2e41c7ac5fe4}</b>
+                            </MRelation>
+                           </base-MRelation>
+                          </MInheritance>
+                         </instance>
+                        </target>
+                       </handle>
+                      </item>
                      </qlist>
                     </handles>
                    </handles>
@@ -9348,7 +9022,7 @@
                  <qlist>
                   <item>
                    <MClassMember>
-                    <uid>{21f59eb8-7bb5-4774-91c1-704fadaa9f56}</uid>
+                    <uid>{cbf3b276-ccee-49d6-b83a-896aae07a25f}</uid>
                     <visibility>1</visibility>
                     <type>2</type>
                     <properties>1</properties>
@@ -9357,7 +9031,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{a49b4308-5b21-482d-980e-23838c9b0374}</uid>
+                    <uid>{a1443485-c002-41ba-8ded-20987872f34f}</uid>
                     <visibility>1</visibility>
                     <type>2</type>
                     <properties>1</properties>
@@ -9366,7 +9040,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{1ef1224d-eccb-4e74-8e51-46b8cda1867c}</uid>
+                    <uid>{87a51ace-37b4-4346-b187-f69146fcd074}</uid>
                     <visibility>1</visibility>
                     <type>2</type>
                     <properties>3</properties>
@@ -9375,7 +9049,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{908d0cda-1a20-48e3-9743-703eaa68ff7c}</uid>
+                    <uid>{0e9f595e-4891-4982-a902-78a13fec7bf6}</uid>
                     <visibility>2</visibility>
                     <type>2</type>
                     <properties>4</properties>
@@ -9384,7 +9058,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{afcb02a3-9b02-4127-b041-9770ec5b17f0}</uid>
+                    <uid>{8605a6cd-2c19-4c89-910d-6e89907b4718}</uid>
                     <visibility>2</visibility>
                     <type>2</type>
                     <properties>4</properties>
@@ -9393,7 +9067,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{656df931-ba5e-49e9-9cb6-b35022888a02}</uid>
+                    <uid>{d3a2e301-27ce-41e9-80f1-ca84f218e2a6}</uid>
                     <visibility>2</visibility>
                     <type>1</type>
                     <declaration>QDomDocument document</declaration>
@@ -9401,7 +9075,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{5db0bb28-4c4e-4345-a283-f50217831e62}</uid>
+                    <uid>{0a8319f0-f81f-4930-be30-6322399c08c8}</uid>
                     <visibility>2</visibility>
                     <type>1</type>
                     <declaration>QString name</declaration>
@@ -9409,7 +9083,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{2ea7d0a2-e1df-49e6-89fd-ace43272636d}</uid>
+                    <uid>{1d3a3d24-b049-4726-bcd8-498cf7f5c449}</uid>
                     <visibility>2</visibility>
                     <type>1</type>
                     <declaration>QDir dir</declaration>
@@ -9417,7 +9091,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{61399f3e-e9ae-41a4-abf3-347d9563dec6}</uid>
+                    <uid>{cae82022-09ff-434e-bfca-7255b42b2fb2}</uid>
                     <visibility>3</visibility>
                     <type>1</type>
                     <declaration>QDate date</declaration>
@@ -9425,7 +9099,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{5fad7664-72c9-4fac-8059-5f7bd2df93b9}</uid>
+                    <uid>{8579acea-eab7-41a6-9b3c-4e7c60e58541}</uid>
                     <visibility>3</visibility>
                     <type>1</type>
                     <declaration>QTime time</declaration>
@@ -9433,7 +9107,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{198fd595-4485-4ae7-b712-4fa8074bbd48}</uid>
+                    <uid>{ebcdbfcf-ea5b-4f40-a7d4-70bdad9de610}</uid>
                     <visibility>3</visibility>
                     <type>1</type>
                     <declaration>double write_time, incube_time</declaration>
@@ -9441,7 +9115,7 @@
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{7fb1207e-dd45-4b72-adce-5f247931a69b}</uid>
+                    <uid>{d017b6b8-2764-464c-8b16-ee6838459903}</uid>
                     <visibility>3</visibility>
                     <type>1</type>
                     <declaration>bool k1, k2, k3, k4</declaration>

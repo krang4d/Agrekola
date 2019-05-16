@@ -45,7 +45,6 @@ public:
     int getLevel();
 
     void doState();
-    void doScenario();
 
 signals:
     void stateChanged();

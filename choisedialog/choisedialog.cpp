@@ -67,7 +67,7 @@ void ChoiseDialog::CreateWidgetThread(StartMeasurement *sm)
     QWidget::connect(widget, SIGNAL(onmixpp(bool)), agrekola, SLOT(onMixPP(bool)));
     QWidget::connect(widget, SIGNAL(onlaser(bool)), agrekola, SLOT(onLaser(bool)));
     QObject::connect(widget, SIGNAL(stop()), agrekola, SLOT(stopThread()));
-    QObject::connect(widget, &Widget::stop, [=](){ show(); });
+    //QObject::connect(widget, &Widget::stop, [=](){ show(); });
     //QWidget::connect(widget, SIGNAL(destroyed(QObject*)), agrekola, SLOT(stopThread()));
 
     QWidget::connect(agrekola, SIGNAL(update_termo(bool)), widget, SLOT(updataTermo(bool)));
@@ -82,16 +82,17 @@ void ChoiseDialog::CreateWidgetThread(StartMeasurement *sm)
 
 void ChoiseDialog::DeleteWidgetThread()
 {
-    agrekola->stopThread();
-    delete widget;
-    delete agrekola;
-
+    if(agrekola) {
+        agrekola->stopThread();
+        agrekola->deleteLater();
+    }
+    if(widget)
+        widget->deleteLater();
     //if(widget) delete widget;
 }
 
 ChoiseDialog::~ChoiseDialog()
 {
-
     qDebug() << "call ChoiseDialog::~ChoiseDialog()";
     delete ui;
 //    delete printConnection;

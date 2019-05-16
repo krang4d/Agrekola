@@ -91,8 +91,8 @@ void ProgressTimerBar::updateProgress()
         setState(Ui::Ready_ID);
         emit done();
         if(func) {
-            func();
-            qDebug() << "Выплнение func";
+            qDebug() << "progress bar is stopped and to start the func()";
+            func();            
         }
         //hide();
     }
@@ -106,8 +106,8 @@ void ProgressTimerBar::stopProgress()
     setState(Ui::Ready_ID);
     emit done();
     if(func) {
-        func();
-        qDebug() << "Выплнение func";
+        qDebug() << "progress bar is stopped and to start the funk()";
+        func();      
     }
     //hide();
 }

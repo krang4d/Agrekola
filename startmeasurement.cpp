@@ -9,8 +9,6 @@ StartMeasurement::StartMeasurement(Test *t, Calibration *c, QDialog *parent) :
     QDialog(parent)
 {
     setModal(true);
-    setModeID(Test_ID);
-    cancel = true;
     single = true;
     channel_1 = false;
     channel_2 = false;
@@ -31,9 +29,9 @@ StartMeasurement::~StartMeasurement()
 bool StartMeasurement::isChannel(Channel_ID ch)
 {
     switch (ch) {
-    case ChannelAll_ID:
-        return channel_1 || channel_2 ||channel_3 || channel_4;
-        break;
+//    case ChannelAll_ID:
+//        return channel_1 || channel_2 ||channel_3 || channel_4;
+//        break;
     case Channel1_ID:
         return channel_1;
         break;
@@ -53,28 +51,20 @@ bool StartMeasurement::isChannel(Channel_ID ch)
 
 void StartMeasurement::setChannels(bool ch1, bool ch2, bool ch3, bool ch4)
 {
-    num = 0;
-    if(ch1) num++;
-    if(ch2) num++;
-    if(ch3) num++;
-    if(ch4) num++;
+//    num = 0;
+//    if(ch1) num++;
+//    if(ch2) num++;
+//    if(ch3) num++;
+//    if(ch4) num++;
     channel_1 = ch1;
     channel_2 = ch2;
     channel_3 = ch3;
     channel_4 = ch4;
-    if( ch1 || ch2 || ch3 || ch4 ) {
-        cancel = false;
-    }else cancel = true;
 }
 
 void StartMeasurement::setProbe(bool is_single)
 {
     single = is_single;
-}
-
-bool StartMeasurement::isCancel()
-{
-    return cancel;
 }
 
 bool StartMeasurement::isSingle()
@@ -146,64 +136,64 @@ double StartMeasurement::setTimeIncube(int incube_number, double time_s)
     else time_incube_2 = time_s;
 }
 
-QString StartMeasurement::getStringStatus()
-{
-    QString msg;
-    if(isSingle()) {
-        if (isChannel(Channel1_ID)) {
-            msg += QString("№1 %1 ").arg(getNum(1));
-        }
-        else {
-            msg += QString(" ");
-        }
-
-        if (isChannel(Channel2_ID)) {
-            msg += QString("№2 %1 ").arg(getNum(2));
-        }
-        else {
-            msg += QString(" ");
-        }
-
-        if (isChannel(Channel3_ID)) {
-            msg += QString("№3 %1 ").arg(getNum(3));
-        }
-        else {
-            msg += QString(" ");
-        }
-
-        if (isChannel(Channel4_ID)) {
-            msg += QString("№4 %1 ").arg(getNum(4));
-        }
-        else {
-            msg += QString(" ");
-        }
-//        //---->> магические числа для времени инкубации 2
-//        if(getMode() == 1 && getMode() == 2) {
-//            msg = QString("Начало сбора данных, одиночные пробы (t = %1c, %2)")
-//                    .arg(startWin->getTime()).arg(msg);
+//QString StartMeasurement::getStringStatus()
+//{
+//    QString msg;
+//    if(isSingle()) {
+//        if (isChannel(Channel1_ID)) {
+//            msg += QString("№1 %1 ").arg(getNum(1));
 //        }
-        msg = QString("Одиночные пробы %2, Время записи %1c")
-                .arg(getTimeWrite()).arg(msg);
-    }
-    else {
-        if (isChannel(Channel1_ID)) {
-            msg += QString("№1, 2: %1 ").arg(getNum(1));
-        }
-        else {
-            msg += QString(" ");
-        }
+//        else {
+//            msg += QString(" ");
+//        }
 
-        if (isChannel(Channel3_ID)) {
-            msg += QString("№3, 4: %1 ").arg(getNum(3));
-        }
-        else {
-            msg += QString(" ");
-        }
-        msg = QString("Парные пробы %2, Время записи %1c")
-                .arg(getTimeWrite()).arg(msg);
-    }
-    return msg;
-}
+//        if (isChannel(Channel2_ID)) {
+//            msg += QString("№2 %1 ").arg(getNum(2));
+//        }
+//        else {
+//            msg += QString(" ");
+//        }
+
+//        if (isChannel(Channel3_ID)) {
+//            msg += QString("№3 %1 ").arg(getNum(3));
+//        }
+//        else {
+//            msg += QString(" ");
+//        }
+
+//        if (isChannel(Channel4_ID)) {
+//            msg += QString("№4 %1 ").arg(getNum(4));
+//        }
+//        else {
+//            msg += QString(" ");
+//        }
+////        //---->> магические числа для времени инкубации 2
+////        if(getMode() == 1 && getMode() == 2) {
+////            msg = QString("Начало сбора данных, одиночные пробы (t = %1c, %2)")
+////                    .arg(startWin->getTime()).arg(msg);
+////        }
+//        msg = QString("Одиночные пробы %2, Время записи %1c")
+//                .arg(getTimeWrite()).arg(msg);
+//    }
+//    else {
+//        if (isChannel(Channel1_ID)) {
+//            msg += QString("№1, 2: %1 ").arg(getNum(1));
+//        }
+//        else {
+//            msg += QString(" ");
+//        }
+
+//        if (isChannel(Channel3_ID)) {
+//            msg += QString("№3, 4: %1 ").arg(getNum(3));
+//        }
+//        else {
+//            msg += QString(" ");
+//        }
+//        msg = QString("Парные пробы %2, Время записи %1c")
+//                .arg(getTimeWrite()).arg(msg);
+//    }
+//    return msg;
+//}
 
 double StartMeasurement::getOtp_time() const
 {

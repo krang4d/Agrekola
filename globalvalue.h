@@ -7,7 +7,7 @@
 //Тип исследовани
 enum Mode_ID {
     Level_ID = 0,   //Определение средненго значения
-    Test_ID,        //Проверка
+//    Test_ID,        //Проверка
     TestAgr1_ID,    //Определение параметров агрегации
     TestAgr2_ID,    //Определение активности фактора Виллебранда
     TestKo1_ID,     //Время свертывания
@@ -21,7 +21,7 @@ enum Mode_ID {
     CalibKo2_ID,
     CalibKo3_ID,
     CalibKo4_ID,
-    CalibKo5_ID,
+    CalibKo5_ID
 };
 
 //Каналы
@@ -30,8 +30,7 @@ enum Channel_ID {
     Channel2_ID     = 2,
     Channel3_ID     = 3,
     Channel4_ID     = 4,
-    ChannelPP_ID    = 5,
-    ChannelAll_ID   = 0
+    ChannelPP_ID    = 5
 };
 
 #endif // GLOBALVALUE_H
