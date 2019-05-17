@@ -495,22 +495,22 @@ void Widget::getData(Channel_ID c, double time_s)
     switch (c) {
     case Channel1_ID:
         map_y1.clear();
-        pBar1->startProgress(QString("%1 %p%").arg(str), time_s * 1000, std::bind(stop, c));
+        pBar1->startProgress(QString("%1 %p%").arg(str), static_cast<int>(round(time_s*1000)), std::bind(stop, c));
         data1 = true;
         break;
     case Channel2_ID:
         map_y2.clear();
-        pBar2->startProgress(QString("%1 %p%").arg(str), time_s * 1000, std::bind(stop, c));
+        pBar2->startProgress(QString("%1 %p%").arg(str), static_cast<int>(round(time_s*1000)), std::bind(stop, c));
         data2 = true;
         break;
     case Channel3_ID:
         map_y3.clear();
-        pBar3->startProgress(QString("%1 %p%").arg(str), time_s * 1000, std::bind(stop, c));
+        pBar3->startProgress(QString("%1 %p%").arg(str), static_cast<int>(round(time_s*1000)), std::bind(stop, c));
         data3 = true;
         break;
     case Channel4_ID:
         map_y4.clear();
-        pBar4->startProgress(QString("%1 %p%").arg(str), time_s * 1000, std::bind(stop, c));
+        pBar4->startProgress(QString("%1 %p%").arg(str), static_cast<int>(round(time_s*1000)), std::bind(stop, c));
         data4 = true;
         break;
     default:
@@ -553,7 +553,7 @@ void Widget::stopData(Channel_ID c)
 void Widget::startIncub(int num, double time_s, std::function<void(void)> timeout_fun)
 {
     bool b = false;
-    int time_ms = time_s * 1000;
+    int time_ms = static_cast<int>(round(time_s * 1000));
     if(num == 1) {
         setUserMessage(QString("Инкубация %1 c").arg(time_s));
         //int time_ms = startWin->getTimeIncube(1) * 1000;
@@ -594,7 +594,7 @@ void Widget::startIncub(int num, double time_s, std::function<void(void)> timeou
         QPointer<QMessageBox> imessageBox = new QMessageBox(this);
         imessageBox->setText(QString("<div style='color: blue'>Время инкубации истекло, добавьте разведения плазмы в рабочие каналы и нажмите кнопку \"ОК\"" ));
         connect(imessageBox.data(), &QMessageBox::buttonClicked, this, &Widget::incubeTimeout_1);
-        int time_ms = startWin->getTimeIncube(1) * 1000;
+        int time_ms = static_cast<int>(startWin->getTimeIncube(1)*1000);
         pBar1->startProgress(QString("Инкубация 1 %p%"), time_ms, [imessageBox, this]() {
             pBar1->Wait();
             pBar2->Wait();
@@ -614,7 +614,7 @@ void Widget::startIncub(int num, double time_s, std::function<void(void)> timeou
 void Widget::incubeTimeout_1()
 {
     std::function<void(Widget*)> func = &Widget::incubeTimeout_2;
-    int time_ms = startWin->getTimeIncube(2) * 1000;
+    int time_ms = static_cast<int>(startWin->getTimeIncube(2) * 1000);
     //pBar1->setFormat("Инкубация 0");
     pBar1->startProgress(QString("Инкубация 2 %p%"), time_ms, std::bind(func, this));
     pBar2->startProgress(QString("Инкубация 2 %p%"), time_ms);
@@ -1002,7 +1002,7 @@ void Widget::getBTP()
         getData(Channel1_ID, startWin->getBtp_time());
         connect(this, &Widget::done1, [this]() {
             i--;
-            disconnect(this, &Widget::done1, 0, 0);
+            disconnect(this, &Widget::done1, nullptr, nullptr);
             emit btp_value1(calcData(Channel1_ID, Level_ID));
             if (!i) { state->next(); qDebug() << "Btp done1"; }
         });
@@ -1013,7 +1013,7 @@ void Widget::getBTP()
         getData(Channel2_ID, startWin->getBtp_time());
         connect(this, &Widget::done2, [this]() {
             i--;
-            disconnect(this, &Widget::done2, 0, 0);
+            disconnect(this, &Widget::done2, nullptr, nullptr);
             emit btp_value2(calcData(Channel2_ID, Level_ID));
             if (!i) { state->next(); qDebug() << "Btp done2"; }
         });
@@ -1023,7 +1023,7 @@ void Widget::getBTP()
         getData(Channel3_ID, startWin->getBtp_time());
         connect(this, &Widget::done3, [this]() {
             i--;
-            disconnect(this, &Widget::done3, 0, 0);
+            disconnect(this, &Widget::done3, nullptr, nullptr);
             emit btp_value3(calcData(Channel3_ID, Level_ID));
             if (!i) { state->next(); qDebug() << "Btp done3"; }
         });
@@ -1033,7 +1033,7 @@ void Widget::getBTP()
         getData(Channel4_ID, startWin->getBtp_time());
         connect(this, &Widget::done4, [this]() {
             i--;
-            disconnect(this, &Widget::done4, 0, 0);
+            disconnect(this, &Widget::done4, nullptr, nullptr);
             emit btp_value4(calcData(Channel4_ID, Level_ID));
             if (!i) { state->next(); qDebug() << "Btp done4"; }
         });
@@ -1048,7 +1048,7 @@ void Widget::getOTP()
         getData(Channel1_ID, startWin->getOtp_time());
         connect(this, &Widget::done1, [this]() {
             i--;
-            disconnect(this, &Widget::done1, 0, 0);
+            disconnect(this, &Widget::done1, nullptr, nullptr);
             emit otp_value1(calcData(Channel1_ID, Level_ID));
             if (!i) { state->next(); qDebug() << "Otp done1"; }
         });
@@ -1058,7 +1058,7 @@ void Widget::getOTP()
         getData(Channel2_ID, startWin->getOtp_time());
         connect(this, &Widget::done2, [this]() {
             i--;
-            disconnect(this, &Widget::done2, 0, 0);
+            disconnect(this, &Widget::done2, nullptr, nullptr);
             emit otp_value2(calcData(Channel2_ID, Level_ID));
             if (!i) { state->next(); qDebug() << "Otp done2"; }
         });
@@ -1068,7 +1068,7 @@ void Widget::getOTP()
         getData(Channel3_ID, startWin->getOtp_time());
         connect(this, &Widget::done3, [this]() {
             i--;
-            disconnect(this, &Widget::done3, 0, 0);
+            disconnect(this, &Widget::done3, nullptr, nullptr);
             emit otp_value3(calcData(Channel3_ID, Level_ID));
             if (!i) { state->next(); qDebug() << "Otp done3"; }
         });
@@ -1078,7 +1078,7 @@ void Widget::getOTP()
         getData(Channel4_ID, startWin->getOtp_time());
         connect(this, &Widget::done4, [this]() {
             i--;
-            disconnect(this, &Widget::done4, 0, 0);
+            disconnect(this, &Widget::done4, nullptr, nullptr);
             emit otp_value4(calcData(Channel4_ID, startWin->getModeID()));
             if (!i) { state->next(); qDebug() << "Otp done4"; }
         });
@@ -1156,7 +1156,7 @@ void Widget::ko(State *state)
         i++;
         connect(this, &Widget::done1, [=]() {
             i--;
-            disconnect(this, &Widget::done1, 0, 0);
+            disconnect(this, &Widget::done1, nullptr, nullptr);
             if (!i) { state->next(); qDebug() << "done1"; }
         });
     }
@@ -1164,7 +1164,7 @@ void Widget::ko(State *state)
         i++;
         connect(this, &Widget::done2, [=]() {
             i--;
-            disconnect(this, &Widget::done2, 0, 0);
+            disconnect(this, &Widget::done2, nullptr, nullptr);
             if (!i) { state->next(); qDebug() << "done2"; }
         });
     }
@@ -1172,7 +1172,7 @@ void Widget::ko(State *state)
         i++;
         connect(this, &Widget::done3, [=]() {
             i--;
-            disconnect(this, &Widget::done3, 0, 0);
+            disconnect(this, &Widget::done3, nullptr, nullptr);
             if (!i) { state->next(); qDebug() << "done3"; }
         });
     }
@@ -1180,7 +1180,7 @@ void Widget::ko(State *state)
         i++;
         connect(this, &Widget::done4, [=]() {
             i--;
-            disconnect(this, &Widget::done4, 0, 0);
+            disconnect(this, &Widget::done4, nullptr, nullptr);
             if (!i) { state->next(); qDebug() << "done4"; }
         });
     }

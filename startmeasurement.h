@@ -65,7 +65,7 @@ public slots:
 //    //  void on_pushButton_cancel_clicked();
 
 signals:
-    startMeasurment(StartMeasurement*);
+    void startMeasurment(StartMeasurement*);
 
 private:
     bool single;       //пробы одиночные?

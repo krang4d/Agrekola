@@ -694,7 +694,6 @@ StartMeasurement* StartTestKo4::getStart(TestKo4 *t_ko4, CalibrationKo4 *c_ko4)
     start->setTimeWrite(c_ko4->getWrite_time());
     start->setTimeIncube(1, c_ko4->getIncube_time());
     start->setProbe(t_ko4->getSingle());
-
     start->setModeID(TestKo4_ID);
     return start;
 }

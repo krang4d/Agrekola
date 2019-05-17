@@ -487,21 +487,9 @@ StartMeasurement *StartTestAgr2::getStart(TestAgr2 *t_agr2, CalibrationAgr2 *c_a
 {
     StartMeasurement *start = new StartMeasurement(t_agr2, c_agr2);
     //if(typeid(*t_agr2) == typeid(TestAgr2)) <-- oldscool method
-//<<<<<<< HEAD
-//    if( CalibrationAgr2* obj = qobject_cast<CalibrationAgr2*>(c_agr2) ) {
-//        qDebug() << QString("t_agr2 get pointer to an object of type: true, incube_time2 is %1")
-//                    .arg(obj->getIncube_time_2());
-//        start->setTimeIncube(2, obj->getIncube_time_2());
-//    }
-//    else {
-//        throw Error_Agr2_Type_ID("t_agr2 get pointer to an object of type: false");
-//    }
-//=======
 //    if( TestAgr2* obj = qobject_cast<TestAgr2*>(t_agr2) ) {
 //        qDebug() << QString("t_agr2 get pointer to an object of type: true, incube_time2 is %1")
 //                    .arg(obj->getIncubeTime2());
-//>>>>>>> do_IStartWin_worked
-
 //    }
 //    else {
 //        throw Error_Agr2_Type_ID("t_agr2 get pointer to an object of type: false");

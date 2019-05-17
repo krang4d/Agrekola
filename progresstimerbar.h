@@ -20,7 +20,7 @@ class ProgressTimerBar : public QWidget
     Q_OBJECT
 
 public:
-    explicit ProgressTimerBar(QWidget *parent = 0);
+    explicit ProgressTimerBar(QWidget *parent = nullptr);
     ~ProgressTimerBar();
     void startProgress(QString format, int time_ms);
     void startProgress(QString format, int time_ms, std::function<void (void)> f);
@@ -39,7 +39,7 @@ public:
     }
 
 signals:
-    done();
+    void done();
 
 public slots:
     void updateProgress();

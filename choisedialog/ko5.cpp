@@ -431,7 +431,6 @@ StartMeasurement *StartTestKo5::getStart(TestKo5 *t_ko5, Calibration *c_ko5)
     start->setProbe(t_ko5->getSingle());
     start->setTimeWrite(c_ko5->getWrite_time());
     start->setTimeIncube(1, c_ko5->getIncube_time());
-
     start->setModeID(TestKo5_ID);
     return start;
 }

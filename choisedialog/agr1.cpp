@@ -4,9 +4,9 @@
 
 Agr1::Agr1(QWidget *parent) :
     QWidget(parent),
-    c_agr1(new CalibrationAgr1),
+    ui(new Ui::Agr1),
     t_agr1(new TestAgr1),
-    ui(new Ui::Agr1)
+    c_agr1(new CalibrationAgr1)
 {
     ui->setupUi(this);
     open();
@@ -488,9 +488,6 @@ StartMeasurement *StartTestAgr1::getStart(TestAgr1 *t_agr1, CalibrationAgr1 *c_a
     start->setNum(4, t_agr1->getNum4());
     start->setTimeWrite(c_agr1->getWrite_time());
     start->setTimeIncube(1, c_agr1->getIncube_time());
-//<<<<<<< HEAD
-//    start->setTimeIncube(2, static_cast<CalibrationAgr1*>(c_agr1)->getIncube_time_2());
-//=======
     start->setTimeIncube(2, c_agr1->getIncube_time_2());
     start->setProbe(t_agr1->getSingle());
     start->setModeID(TestAgr1_ID);
