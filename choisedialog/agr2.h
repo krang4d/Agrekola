@@ -2,7 +2,7 @@
 #define AGR2_H
 
 #include <QWidget>
-#include "selectcalibrationagr1.h"
+//#include "selectcalibrationagr1.h"
 #include "selectinductor.h"
 #include "savefiles.h"
 #include "startmeasurement.h"
