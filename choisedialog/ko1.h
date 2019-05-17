@@ -6,6 +6,7 @@
 #include "startmeasurement.h"
 #include "globalvalue.h"
 #include "ko_impl.h"
+//#include "istartwin.h"
 
 namespace Ui {
 class Ko1;
@@ -33,6 +34,8 @@ private slots:
     void on_lineEdit_testCh3_textChanged(const QString &arg1);
 
     // Ko_impl interface
+    void on_radioButton_testDouble_toggled(bool checked);
+
 public slots:
     void open();
     void close();

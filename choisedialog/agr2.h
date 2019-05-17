@@ -94,7 +94,7 @@ class StartTestAgr2 : public StartMeasurement
     Q_OBJECT
 public:
     StartTestAgr2() = delete;
-    static StartMeasurement* getStart(Test *t_agr2, Calibration *c_agr2);
+    static StartMeasurement* getStart(TestAgr2 *t_agr2, CalibrationAgr2 *c_agr2);
 };
 
 class StartCalibrationAgr2 : public StartMeasurement
@@ -102,7 +102,7 @@ class StartCalibrationAgr2 : public StartMeasurement
     Q_OBJECT
 public:
     StartCalibrationAgr2() = delete;
-    static StartMeasurement *getStart(Test *t_agr2, Calibration *c_agr2);
+    static StartMeasurement *getStart(TestAgr2 *t_agr2, CalibrationAgr2 *c_agr2);
 };
 
 #endif // AGR2_H

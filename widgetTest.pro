@@ -84,7 +84,8 @@ HEADERS  += \
     choisedialog/printer.h \
     choisedialog/enddialog.h \
     itools.h \
-    iscenario.h
+    iscenario.h \
+    choisedialog/istartwin.h
 
 FORMS    += \
     selectinductor.ui \

@@ -131,12 +131,12 @@ CalcData *CalcData::createCalc(Test *t, Calibration *c, Mode_ID  id)
     QString str;
     CalcData *p;
     switch (id) {
-    case Test_ID:
-        str = tr("Тест (Test 0)");
-        p = new CalcLevel();
-        break;
+//    case Test_ID:
+//        str = tr("Тест (Test 0)");
+//        p = new CalcLevel();
+//        break;
     case Level_ID:
-        str = tr("Измерение уровня");
+        str = tr("Измерение уровня сигнала");
         p = new CalcLevel();
         break;
     case TestKo1_ID:

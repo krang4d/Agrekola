@@ -89,7 +89,7 @@ class StartCalibrationAgr1 : public StartMeasurement
     Q_OBJECT
 public:
     StartCalibrationAgr1() = delete;
-    static StartMeasurement *getStart(Test *t_agr1, Calibration *c_agr1);
+    static StartMeasurement *getStart(TestAgr1 *t_agr1, CalibrationAgr1 *c_agr1);
 //    static StartMeasurement *getBTP();
 //    static StartMeasurement *getOTP();
 };
@@ -99,7 +99,7 @@ class StartTestAgr1 : public StartMeasurement
     Q_OBJECT
 public:
     StartTestAgr1() = delete;
-    static StartMeasurement* getStart(Test *t_agr1, Calibration *c_agr1);
+    static StartMeasurement* getStart(TestAgr1 *t_agr1, CalibrationAgr1 *c_agr1);
 };
 
 #endif // AGR1_H

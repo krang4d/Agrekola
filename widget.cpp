@@ -202,16 +202,16 @@ void Widget::realtimeDataSlot(QVariantList a) {
     customPlot4->graph(0)->addData(key, a[3].toDouble());
 
     // make key axis range scroll with the data (at a constant range size of 8):
-    customPlot1->xAxis->setRange(key, 16, Qt::AlignRight);
+    customPlot1->xAxis->setRange(key, 10, Qt::AlignRight);
     customPlot1->replot();
 
-    customPlot2->xAxis->setRange(key, 16, Qt::AlignRight);
+    customPlot2->xAxis->setRange(key, 10, Qt::AlignRight);
     customPlot2->replot();
 
-    customPlot3->xAxis->setRange(key, 16, Qt::AlignRight);
+    customPlot3->xAxis->setRange(key, 10, Qt::AlignRight);
     customPlot3->replot();
 
-    customPlot4->xAxis->setRange(key, 16, Qt::AlignRight);
+    customPlot4->xAxis->setRange(key, 10, Qt::AlignRight);
     customPlot4->replot();
 
     static double stop_dy1 = 0; //установившееся значение (после перемешивания) в канале 1
@@ -350,15 +350,15 @@ void Widget::onMotor(Channel_ID c, bool arg)
         else setUserMessage("Канал РР: Выключение двигателя магнитной мешалки");
         emit onmixpp(arg);
         break;
-    case ChannelAll_ID:
-        if(arg) setUserMessage("Канал 1,2,3,4,PP: Включение двигателя магнитной мешалки");
-        else setUserMessage("Канал 1,2,3,4,PP: Выключение двигателя магнитной мешалки");
-        emit onmixch1(arg);
-        emit onmixch2(arg);
-        emit onmixch3(arg);
-        emit onmixch4(arg);
-        emit onmixpp(arg);
-        break;
+//    case ChannelAll_ID:
+//        if(arg) setUserMessage("Канал 1,2,3,4,PP: Включение двигателя магнитной мешалки");
+//        else setUserMessage("Канал 1,2,3,4,PP: Выключение двигателя магнитной мешалки");
+//        emit onmixch1(arg);
+//        emit onmixch2(arg);
+//        emit onmixch3(arg);
+//        emit onmixch4(arg);
+//        emit onmixpp(arg);
+//        break;
     }
 }
 
@@ -879,10 +879,6 @@ void Widget::setUserMessage(QString str, bool withtime, bool tofile)
 
 void Widget::on_pushButton_clicked()
 {
-    if( startWin->getModeID() == Test_ID) {
-        test();
-        return;
-    }
     if( termoSensor ) {
         setUserMessage(QString("<span style='color:red'>Дождитесь нагрева термостата"));
         pBar1->setFormat("В ожидании");
@@ -922,15 +918,13 @@ void Widget::on_pushButton_clicked()
 void Widget::doScenario()
 {
 
-    //static QPointer<ImpuleWaiter> iw;
-//    QString s =  state->getMessage();
-//    setUserMessage(s);
-    if(!state) qDebug() << "Widget::doScenario() is empty!";
+//  static QPointer<ImpuleWaiter> iw;
+//  QString s =  state->getMessage();
+//  setUserMessage(s);
+    if(!state) { qDebug() << "Widget::doScenario() is empty!"; return;}
     state->doState();
-    //state->doScenario();
 
     ///QMessageBox::information(this, "", s);
-
 }
 
 double Widget::getMAX() const
@@ -1148,7 +1142,6 @@ void Widget::finish()
 {
     emit stop();
     emit end(map_y1, map_y2, map_y3, map_y4);
-    close();
 }
 
 void Widget::agr()
@@ -1156,7 +1149,7 @@ void Widget::agr()
 
 }
 
-void Widget::ko(State *next)
+void Widget::ko(State *state)
 {
     static int i = 0;
     if (startWin->isChannel(Channel1_ID)) {
@@ -1164,7 +1157,7 @@ void Widget::ko(State *next)
         connect(this, &Widget::done1, [=]() {
             i--;
             disconnect(this, &Widget::done1, 0, 0);
-            if (!i) { next->next(); qDebug() << "done1"; }
+            if (!i) { state->next(); qDebug() << "done1"; }
         });
     }
     if (startWin->isChannel(Channel2_ID)) {
@@ -1172,7 +1165,7 @@ void Widget::ko(State *next)
         connect(this, &Widget::done2, [=]() {
             i--;
             disconnect(this, &Widget::done2, 0, 0);
-            if (!i) { next->next(); qDebug() << "done2"; }
+            if (!i) { state->next(); qDebug() << "done2"; }
         });
     }
     if (startWin->isChannel(Channel3_ID)) {
@@ -1180,7 +1173,7 @@ void Widget::ko(State *next)
         connect(this, &Widget::done3, [=]() {
             i--;
             disconnect(this, &Widget::done3, 0, 0);
-            if (!i) { next->next(); qDebug() << "done3"; }
+            if (!i) { state->next(); qDebug() << "done3"; }
         });
     }
     if (startWin->isChannel(Channel4_ID)) {
@@ -1188,7 +1181,7 @@ void Widget::ko(State *next)
         connect(this, &Widget::done4, [=]() {
             i--;
             disconnect(this, &Widget::done4, 0, 0);
-            if (!i) { next->next(); qDebug() << "done4"; }
+            if (!i) { state->next(); qDebug() << "done4"; }
         });
     }
     waitImpulse(new ImpuleWaiter(this));

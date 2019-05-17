@@ -452,7 +452,7 @@ void Agr1::otp4Come(double d, SaveTo b)
     }
 }
 
-StartMeasurement *StartCalibrationAgr1::getStart(Test *t_agr1, Calibration *c_agr1)
+StartMeasurement *StartCalibrationAgr1::getStart(TestAgr1 *t_agr1, CalibrationAgr1 *c_agr1)
 {
     StartMeasurement *start = new StartMeasurement(t_agr1, c_agr1);
     start->setChannels(1, 1, 1, 1);
@@ -462,24 +462,24 @@ StartMeasurement *StartCalibrationAgr1::getStart(Test *t_agr1, Calibration *c_ag
     start->setNum(4, "25% к/плазма");
     start->setTimeWrite(c_agr1->getWrite_time());
     start->setTimeIncube(1, c_agr1->getIncube_time());
-    start->setTimeIncube(2, static_cast<CalibrationAgr1*>(c_agr1)->getIncube_time_2());
+    start->setTimeIncube(2, c_agr1->getIncube_time_2());
     start->setModeID(CalibAgr1_ID);
     start->setBtp_time(5);
     start->setOtp_time(5);
     return start;
 }
 
-StartMeasurement *StartTestAgr1::getStart(Test *t_agr1, Calibration *c_agr1)
+StartMeasurement *StartTestAgr1::getStart(TestAgr1 *t_agr1, CalibrationAgr1 *c_agr1)
 {
     //static_cast<CalibrationAgr1>(c_agr1).getIncube_time_2()
-    TestAgr1* obj = nullptr;
-    if(typeid(*t_agr1) == typeid(TestAgr1)) {
-        obj = dynamic_cast<TestAgr1*>(t_agr1);
-        qDebug() << QString("c_agr1 get pointer to an object of type: true, incube_time2 is %1").arg(obj->getIncubeTime2());
-    }
-    else {
-        throw Error_Agr1_Type_ID("c_agr1 get pointer to an object of type: false");
-    }
+//    TestAgr1* obj = nullptr;
+//    if(typeid(*t_agr1) == typeid(TestAgr1)) {
+//        obj = dynamic_cast<TestAgr1*>(t_agr1);
+//        qDebug() << QString("c_agr1 get pointer to an object of type: true, incube_time2 is %1").arg(obj->getIncubeTime2());
+//    }
+//    else {
+//        throw Error_Agr1_Type_ID("c_agr1 get pointer to an object of type: false");
+//    }
     StartMeasurement *start = new StartMeasurement(t_agr1, c_agr1);
     start->setChannels(t_agr1->getK1(), t_agr1->getK2(), t_agr1->getK3(), t_agr1->getK4());
     start->setNum(1, t_agr1->getNum1());
@@ -488,7 +488,10 @@ StartMeasurement *StartTestAgr1::getStart(Test *t_agr1, Calibration *c_agr1)
     start->setNum(4, t_agr1->getNum4());
     start->setTimeWrite(c_agr1->getWrite_time());
     start->setTimeIncube(1, c_agr1->getIncube_time());
-    start->setTimeIncube(2, static_cast<CalibrationAgr1*>(c_agr1)->getIncube_time_2());
+//<<<<<<< HEAD
+//    start->setTimeIncube(2, static_cast<CalibrationAgr1*>(c_agr1)->getIncube_time_2());
+//=======
+    start->setTimeIncube(2, c_agr1->getIncube_time_2());
     start->setProbe(t_agr1->getSingle());
     start->setModeID(TestAgr1_ID);
     start->setBtp_time(5);

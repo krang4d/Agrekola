@@ -445,7 +445,7 @@ QString SaveData::writeData(QStringList data)
         //emit value_changed(n);
     }
     name = QString("Данные записаны в файл %1/%2").arg(QDir::currentPath()).arg(file_data.fileName());
-    qDebug() << name << "ID: " << QThread::currentThreadId();
+    qDebug() << QString("Data have been write to file %1/%2").arg(QDir::currentPath()).arg(file_data.fileName()) << "ID: " << QThread::currentThreadId();
     stream_data.flush();
     file_data.close();
     emit resultReady(name);

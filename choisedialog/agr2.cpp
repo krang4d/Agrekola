@@ -455,27 +455,27 @@ void Agr2::on_lineEdit_testCh3_textChanged(const QString &arg1)
         ui->lineEdit_testCh4->setText(arg1);
 }
 
-StartMeasurement *StartCalibrationAgr2::getStart(Test *t_agr2, Calibration *c_agr2)
+StartMeasurement *StartCalibrationAgr2::getStart(TestAgr2 *t_agr2, CalibrationAgr2 *c_agr2)
 {
     StartMeasurement *start = new StartMeasurement(t_agr2, c_agr2);
-    //if(typeid(*c_agr2) == typeid(CalibrationAgr2)) { <-- oldscool method
-    if( CalibrationAgr2* obj = qobject_cast<CalibrationAgr2*>(c_agr2) ) {
-        qDebug() << QString("c_agr2 get pointer to an object of type: true, incube_time2 is %1")
-                    .arg(obj->getIncube_time_2());
-        start->setTimeIncube(2, obj->getIncube_time_2());
-    }
-    else {
-        throw Error_Agr2_Type_ID("c_agr2 get pointer to an object of type: false");
-    }
+//    if(typeid(*c_agr2) == typeid(CalibrationAgr2)) <-- oldscool method
+//        if( CalibrationAgr2* obj = qobject_cast<CalibrationAgr2*>(c_agr2) ) {
+//        qDebug() << QString("c_agr2 get pointer to an object of type: true, incube_time2 is %1")
+//                    .arg(obj->getIncube_time_2());
+    //        start->setTimeIncube(2, obj->getIncube_time_2());
+    //    }
+    //    else {
+    //        throw Error_Agr2_Type_ID("c_agr2 get pointer to an object of type: false");
+    //    }
 
-
-    start->setChannels(c_agr2->getK1(), c_agr2->getK2(), c_agr2->getK3(), c_agr2->getK4());
+    start->setChannels(true, true, true, true);
     start->setNum(1, "Калибровка");
     start->setNum(2, "Калибровка");
     start->setNum(3, "Калибровка");
     start->setNum(4, "Калибровка");
     start->setTimeWrite(c_agr2->getWrite_time());
     start->setTimeIncube(1, c_agr2->getIncube_time());
+    start->setTimeIncube(2, c_agr2->getIncube_time_2());
 
     start->setModeID(CalibAgr2_ID);
     start->setBtp_time(5);
@@ -483,19 +483,29 @@ StartMeasurement *StartCalibrationAgr2::getStart(Test *t_agr2, Calibration *c_ag
     return start;
 }
 
-StartMeasurement *StartTestAgr2::getStart(Test *t_agr2, Calibration *c_agr2)
+StartMeasurement *StartTestAgr2::getStart(TestAgr2 *t_agr2, CalibrationAgr2 *c_agr2)
 {
     StartMeasurement *start = new StartMeasurement(t_agr2, c_agr2);
     //if(typeid(*t_agr2) == typeid(TestAgr2)) <-- oldscool method
-    if( CalibrationAgr2* obj = qobject_cast<CalibrationAgr2*>(c_agr2) ) {
-        qDebug() << QString("t_agr2 get pointer to an object of type: true, incube_time2 is %1")
-                    .arg(obj->getIncube_time_2());
-        start->setTimeIncube(2, obj->getIncube_time_2());
-    }
-    else {
-        throw Error_Agr2_Type_ID("t_agr2 get pointer to an object of type: false");
-    }
+//<<<<<<< HEAD
+//    if( CalibrationAgr2* obj = qobject_cast<CalibrationAgr2*>(c_agr2) ) {
+//        qDebug() << QString("t_agr2 get pointer to an object of type: true, incube_time2 is %1")
+//                    .arg(obj->getIncube_time_2());
+//        start->setTimeIncube(2, obj->getIncube_time_2());
+//    }
+//    else {
+//        throw Error_Agr2_Type_ID("t_agr2 get pointer to an object of type: false");
+//    }
+//=======
+//    if( TestAgr2* obj = qobject_cast<TestAgr2*>(t_agr2) ) {
+//        qDebug() << QString("t_agr2 get pointer to an object of type: true, incube_time2 is %1")
+//                    .arg(obj->getIncubeTime2());
+//>>>>>>> do_IStartWin_worked
 
+//    }
+//    else {
+//        throw Error_Agr2_Type_ID("t_agr2 get pointer to an object of type: false");
+//    }
     start->setChannels(t_agr2->getK1(), t_agr2->getK2(), t_agr2->getK3(), t_agr2->getK4());
     start->setNum(1, t_agr2->getNum1());
     start->setNum(2, t_agr2->getNum2());
@@ -504,7 +514,7 @@ StartMeasurement *StartTestAgr2::getStart(Test *t_agr2, Calibration *c_agr2)
     start->setProbe(t_agr2->getSingle());
     start->setTimeWrite(c_agr2->getWrite_time());
     start->setTimeIncube(1, c_agr2->getIncube_time());
-
+    start->setTimeIncube(2, c_agr2->getIncube_time_2());
     start->setModeID(TestAgr2_ID);
     start->setBtp_time(5);
     start->setOtp_time(5);

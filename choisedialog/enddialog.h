@@ -29,9 +29,10 @@ private slots:
 private:
     //Ui::EndDialog   *ui;
     QPushButton *pushButton_print, *pushButton_next;
-    QCustomPlot     *plot1, *plot2, *plot3, *plot4;
+    //QCustomPlot     *plot1, *plot2, *plot3, *plot4;
     QPrintDialog    *printDialog;
     QPrinter        *printer;
+    QVector<QCustomPlot*> plots;
 };
 }
 #endif // ENDDIALOG_H

@@ -152,13 +152,6 @@ void State::doState()
     } //end switch
 }
 
-void State::doScenario()
-{
-    while(hasNext()){
-        doState();
-    }
-}
-
 StateKo1::StateKo1(IScenario *o) : State(o)
 {
     insertState(LaserON_ID,     "Включение лазеров");

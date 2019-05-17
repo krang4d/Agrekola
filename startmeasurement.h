@@ -16,9 +16,8 @@ public:
     StartMeasurement(Test *t, Calibration *c, QDialog *parent = 0);
     ~StartMeasurement();
 
-    bool isCancel();
     bool isSingle();
-    bool isChannel(Channel_ID = ChannelAll_ID);
+    bool isChannel(Channel_ID);
     void setChannels(bool ch1, bool ch2, bool ch3, bool ch4);
 
     Mode_ID getModeID() const;
@@ -35,9 +34,9 @@ public:
     double getTimeIncube(int = 1);
     double setTimeIncube(int incube_number, double time_s);
 
-    QString getStringStatus();
+//    QString getStringStatus();
 
-    int num;
+//    int num;
 
     double getBtp_time() const;
     void setBtp_time(double value);
@@ -69,7 +68,6 @@ signals:
     startMeasurment(StartMeasurement*);
 
 private:
-    bool cancel;
     bool single;       //пробы одиночные?
     bool channel_1, channel_2, channel_3, channel_4;
     QString num_1, num_2, num_3, num_4;
