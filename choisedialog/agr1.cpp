@@ -486,9 +486,9 @@ StartMeasurement *StartTestAgr1::getStart(Test *t_agr1, Calibration *c_agr1)
     start->setNum(2, t_agr1->getNum2());
     start->setNum(3, t_agr1->getNum3());
     start->setNum(4, t_agr1->getNum4());
-    start->setTimeWrite(t_agr1->getWriteTime());
-    start->setTimeIncube(1, t_agr1->getIncubeTime());
-    start->setTimeIncube(2, obj->getIncubeTime2());
+    start->setTimeWrite(c_agr1->getWrite_time());
+    start->setTimeIncube(1, c_agr1->getIncube_time());
+    start->setTimeIncube(2, static_cast<CalibrationAgr1*>(c_agr1)->getIncube_time_2());
     start->setProbe(t_agr1->getSingle());
     start->setModeID(TestAgr1_ID);
     start->setBtp_time(5);

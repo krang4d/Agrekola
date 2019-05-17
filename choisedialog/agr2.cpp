@@ -487,10 +487,10 @@ StartMeasurement *StartTestAgr2::getStart(Test *t_agr2, Calibration *c_agr2)
 {
     StartMeasurement *start = new StartMeasurement(t_agr2, c_agr2);
     //if(typeid(*t_agr2) == typeid(TestAgr2)) <-- oldscool method
-    if( TestAgr2* obj = qobject_cast<TestAgr2*>(t_agr2) ) {
+    if( CalibrationAgr2* obj = qobject_cast<CalibrationAgr2*>(c_agr2) ) {
         qDebug() << QString("t_agr2 get pointer to an object of type: true, incube_time2 is %1")
-                    .arg(obj->getIncubeTime2());
-        start->setTimeIncube(2, obj->getIncubeTime2());
+                    .arg(obj->getIncube_time_2());
+        start->setTimeIncube(2, obj->getIncube_time_2());
     }
     else {
         throw Error_Agr2_Type_ID("t_agr2 get pointer to an object of type: false");
@@ -502,8 +502,8 @@ StartMeasurement *StartTestAgr2::getStart(Test *t_agr2, Calibration *c_agr2)
     start->setNum(3, t_agr2->getNum3());
     start->setNum(4, t_agr2->getNum4());
     start->setProbe(t_agr2->getSingle());
-    start->setTimeWrite(t_agr2->getWriteTime());
-    start->setTimeIncube(1, t_agr2->getIncubeTime());
+    start->setTimeWrite(c_agr2->getWrite_time());
+    start->setTimeIncube(1, c_agr2->getIncube_time());
 
     start->setModeID(TestAgr2_ID);
     start->setBtp_time(5);

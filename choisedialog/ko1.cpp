@@ -315,8 +315,8 @@ StartMeasurement* StartTestKo1::getStart(TestKo1 *t_ko1, CalibrationKo1 *c_ko1)
     start->setNum(3, t_ko1->getNum3());
     start->setNum(4, t_ko1->getNum4());
 
-    start->setTimeWrite(t_ko1->getWriteTime());
-    start->setTimeIncube(1, t_ko1->getIncubeTime());
+    start->setTimeWrite(c_ko1->getWrite_time());
+    start->setTimeIncube(1, c_ko1->getIncube_time());
     //stKo2->cancel = false;
     return start;
 }

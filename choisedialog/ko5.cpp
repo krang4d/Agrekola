@@ -407,8 +407,8 @@ StartMeasurement *StartTestKo5::getStart(TestKo5 *t_ko5, Calibration *c_ko5)
     start->setNum(2, t_ko5->getNum2());
     start->setNum(3, t_ko5->getNum3());
     start->setNum(4, t_ko5->getNum4());
-    start->setTimeWrite(t_ko5->getWriteTime());
-    start->setTimeIncube(1, t_ko5->getIncubeTime());
+    start->setTimeWrite(c_ko5->getWrite_time());
+    start->setTimeIncube(1, c_ko5->getIncube_time());
     start->setProbe(t_ko5->getSingle());
     start->setModeID(TestKo5_ID);
     return start;
