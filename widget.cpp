@@ -1141,6 +1141,10 @@ void Widget::selectInductor(State *next)
 void Widget::finish()
 {
     emit stop();
+    if(!startWin->isChannel(Channel1_ID)) map_y1.clear();
+    if(!startWin->isChannel(Channel2_ID)) map_y2.clear();
+    if(!startWin->isChannel(Channel3_ID)) map_y3.clear();
+    if(!startWin->isChannel(Channel4_ID)) map_y4.clear();
     emit end(map_y1, map_y2, map_y3, map_y4);
 }
 

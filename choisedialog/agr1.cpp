@@ -70,7 +70,7 @@ Agr1::~Agr1()
 
 void Agr1::on_pushButton_test_clicked()
 {  
-    mode = Ko_impl::TestAgr1_ID;
+    mode = TestAgr1_ID;
     bool a, b, c, d;
     if(ui->checkBox_testCh1->isChecked()) {
         if(!ui->lineEdit_testCh1->text().isEmpty()) a = true;
@@ -103,13 +103,13 @@ void Agr1::on_pushButton_test_clicked()
         return;
     }
 
-    bool f = c_agr1->getCkA1() || c_agr1->getCkA2() || c_agr1->getCkA3() || c_agr1->getCkA4();
-    if( !(!c_agr1->getDate().toString("dd.MM.yyyy").isEmpty() && e) ) {
-        //QString str = QString("%1").arg(c_ko2.getDate().toString("dd/MM/yyyy"));
-        QMessageBox::information(this, "Внимание!", QString("Для того чтобы продолжить неоходимо провести калибровку."));
-        return;
-    }
-    //bool c = (ui->doubleSpinBox_testIncubeTime->value() != NULL) && (ui->doubleSpinBox_testWriteTime->value() != NULL);
+//  bool f = c_agr1->getCkA1() || c_agr1->getCkA2() || c_agr1->getCkA3() || c_agr1->getCkA4();
+//    if( !(!c_agr1->getDate().toString("dd.MM.yyyy").isEmpty() && e) ) {
+//        //QString str = QString("%1").arg(c_ko2.getDate().toString("dd/MM/yyyy"));
+//        QMessageBox::information(this, "Внимание!", QString("Для того чтобы продолжить неоходимо провести калибровку."));
+//        return;
+//    }
+//  bool c = (ui->doubleSpinBox_testIncubeTime->value() != NULL) && (ui->doubleSpinBox_testWriteTime->value() != NULL);
     if ( !(a || b || c || d) ) {
         QMessageBox::information(this, "Внимание!", "Для того чтобы продолжить необходимо выбрать рабочие каналы и заполнить все поля с параметрами.");
         return;

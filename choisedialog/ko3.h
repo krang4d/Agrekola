@@ -69,7 +69,7 @@ private:
     Ui::Ko3 *ui;
     TestKo3 *t_ko3;
     CalibrationKo3 *c_ko3;
-    Ko_impl::Mode_ID mode;
+    Mode_ID mode;
 };
 
 class StartTestKo3 : public StartMeasurement

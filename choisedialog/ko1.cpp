@@ -194,7 +194,7 @@ void Ko1::setTime(QTime t, SaveTo b)
 
 void Ko1::on_pushButton_test_clicked()
 {
-    mode = Ko_impl::TestKo1_ID;
+    mode = TestKo1_ID;
     bool a, b, c, d;
     if(ui->checkBox_testCh1->isChecked()) {
         if(!ui->lineEdit_testCh1->text().isEmpty()) a = true;

@@ -280,7 +280,7 @@ void Ko3::setTime(QTime t, SaveTo b)
 
 void Ko3::on_pushButton_test_clicked()
 {
-    mode = Ko_impl::TestKo3_ID;
+    mode = TestKo3_ID;
     bool a, b, c, d;
     if(ui->checkBox_testCh1->isChecked()) {
         if(!ui->lineEdit_testCh1->text().isEmpty()) a = true;
@@ -342,7 +342,7 @@ void Ko3::on_pushButton_calib_clicked()
 //    bool c = ui->checkBox_calibCh3->isChecked();
 //    bool d = ui->checkBox_calibCh4->isChecked();
 
-    mode = Ko_impl::CalibKo3_ID;
+    mode = CalibKo3_ID;
     bool e = !ui->lineEdit_calibKPlazmaSerial->text().isEmpty();
     bool f = !ui->lineEdit_calibReagentSerial->text().isEmpty();
 
