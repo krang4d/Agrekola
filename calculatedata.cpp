@@ -293,17 +293,17 @@ QString CalcKo2::getParameters()
 
 CalcKo3::CalcKo3(TestKo3 *t, CalibrationKo3 *c) : CalcData(), t_ko3(t), c_ko3(c)
 {
-    t1 = c_ko3.getTime_200_plazma();
-    t2 = c_ko3.getTime_k_plazma();
-    t3 = c_ko3.getTime_50_plazma();
-    t4 = c_ko3.getTime_25_plazma();
-    c2 = c_ko3.getFibrinogen_k_plazma();
+    t1 = c_ko3->getTime_200_plazma();
+    t2 = c_ko3->getTime_k_plazma();
+    t3 = c_ko3->getTime_50_plazma();
+    t4 = c_ko3->getTime_25_plazma();
+    c2 = c_ko3->getFibrinogen_k_plazma();
     c1 = c2*200.0f/100.0f;              //(3)
-    c_ko3.setFibrinogen_200_plazma(c1);
+    c_ko3->setFibrinogen_200_plazma(c1);
     c3 = c2*50.0f/100.0f;               //(4)
-    c_ko3.setFibrinogen_50_plazma(c3);
+    c_ko3->setFibrinogen_50_plazma(c3);
     c4 = c2*25.0f/100.0f;               //(5)
-    c_ko3.setFibrinogen_25_plazma(c4);
+    c_ko3->setFibrinogen_25_plazma(c4);
     qDebug() << "Фибриноген по Клауссу =" << c2;
     qDebug() << QString("Параметры калибровки Фириногена") << c2 << t1 << t2 << t3 << t4;
 }
@@ -341,7 +341,7 @@ QString CalcKo3::getParameters()
 
 CalcKo4::CalcKo4(TestKo4 *t, CalibrationKo4 *c) : CalcData(), t_ko4(t), c_ko4(c)
 {
-    t0 = (c_ko4.getTv1() + c_ko4.getTv2() + c_ko4.getTv3() + c_ko4.getTv4())/4;
+    t0 = (c_ko4->getTv1() + c_ko4->getTv2() + c_ko4->getTv3() + c_ko4->getTv4())/4;
     qDebug() << "Тромбин контрольной плазмы =" << t0;
 }
 
@@ -363,13 +363,13 @@ QString CalcKo4::getParameters()
 
 CalcKo5::CalcKo5(TestKo5 *t, CalibrationKo5 *c) : CalcData(), t_ko5(t), c_ko5(c)
 {
-    a100 = c_ko5.getProtrombine_k_Kvik();
-    t100 = c_ko5.getTime_k_Kvik();
-    t50 = c_ko5.getTime_50_Kvik();
+    a100 = c_ko5->getProtrombine_k_Kvik();
+    t100 = c_ko5->getTime_k_Kvik();
+    t50 = c_ko5->getTime_50_Kvik();
     a50 = a100*50.0f/100.0f;           //(12)
-    t25 = c_ko5.getTime_25_Kvik();
+    t25 = c_ko5->getTime_25_Kvik();
     a25 = a100*25.0f/100.0f;           //(13)
-    t12 = c_ko5.getTime_12_Kvik();
+    t12 = c_ko5->getTime_12_Kvik();
     a12 = a100*12.5f/100.0f;           //(14)
     qDebug() << "ТВ контрольной плазмы =" << t100;
 }
@@ -428,8 +428,8 @@ CalcAgr1::CalcAgr1(TestAgr1 *t, CalibrationAgr1 *c) : CalcData(), t_agr1(t), c_a
 //    }
 //    otp /= ot.count();
 
-    btp = ( c_agr1.getBTP1() + c_agr1.getBTP2() + c_agr1.getBTP3() + c_agr1.getBTP4() ) / 4;
-    otp = ( c_agr1.getOTP1() + c_agr1.getOTP2() + c_agr1.getOTP3() + c_agr1.getOTP4() ) / 4;
+    btp = ( c_agr1->getBTP1() + c_agr1->getBTP2() + c_agr1->getBTP3() + c_agr1->getBTP4() ) / 4;
+    otp = ( c_agr1->getOTP1() + c_agr1->getOTP2() + c_agr1->getOTP3() + c_agr1->getOTP4() ) / 4;
 }
 
 //CalcAgr1::CalcAgr1(QCustomPlot *p) : CalcAgr1()
@@ -461,17 +461,17 @@ CalcAgr2::CalcAgr2(TestAgr2 *t, CalibrationAgr2 *c) : CalcData(), t_agr2(t), c_a
 //    for(auto it = param.begin(); it < param.end(); it++) {
 //        qDebug() << *it;
 //    }
-    c1 = c_agr2.getC1();
-    ck1 = c_agr2.getCk1();
-    c2 = c_agr2.getC2();
-    ck2 = c_agr2.getCk2();
-    c3 = c_agr2.getC3();
-    ck3 = c_agr2.getCk3();
-    c4 = c_agr2.getC4();
-    ck4 = c_agr2.getCk4();
+    c1 = c_agr2->getC1();
+    ck1 = c_agr2->getCk1();
+    c2 = c_agr2->getC2();
+    ck2 = c_agr2->getCk2();
+    c3 = c_agr2->getC3();
+    ck3 = c_agr2->getCk3();
+    c4 = c_agr2->getC4();
+    ck4 = c_agr2->getCk4();
 
-    btp = ( c_agr2.getBTP1() + c_agr2.getBTP2() + c_agr2.getBTP3() + c_agr2.getBTP4() ) / 4;
-    otp = ( c_agr2.getOTP1() + c_agr2.getOTP2() + c_agr2.getOTP3() + c_agr2.getOTP4() ) / 4;
+    btp = ( c_agr2->getBTP1() + c_agr2->getBTP2() + c_agr2->getBTP3() + c_agr2->getBTP4() ) / 4;
+    otp = ( c_agr2->getOTP1() + c_agr2->getOTP2() + c_agr2->getOTP3() + c_agr2->getOTP4() ) / 4;
 }
 
 double CalcAgr2::calc(QMap<double, double> map)

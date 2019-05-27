@@ -168,7 +168,8 @@ void ChoiseDialog::t_shotConntection(MetaObj *p, MetaObj *t1, MetaObj *t2, MetaO
 //            QObject::disconnect(*t4);
 //            delete t4;
         });
-    } else {
+    }
+    else {
         *t1 = connect(widget, &Widget::ret_value1_2, [=](double d, int i){
             ko->setT1_2(d, i);
 //            QObject::disconnect(*t1);

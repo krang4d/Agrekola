@@ -117,8 +117,8 @@ public:
     explicit CalcKo3(TestKo3*, CalibrationKo3*);
     //параметры для определения Фибриногена
 private:
-    TestKo3 t_ko3;
-    CalibrationKo3 c_ko3;
+    TestKo3 *t_ko3;
+    CalibrationKo3 *c_ko3;
     const int k = 4;                //часло калибровочных точек
     double c2;                      //Содержание фибриногена по Клауссу (100%)
     double c1, c3, c4;              //Концентрация фибриногена других разведений 200%, 50%, 25%
@@ -145,8 +145,8 @@ public:
 
     //параметры для определения Тромбина
 private:
-    TestKo4 t_ko4;
-    CalibrationKo4 c_ko4;
+    TestKo4 *t_ko4;
+    CalibrationKo4 *c_ko4;
     double t0;                      // Тромбин контрольной плазмы
 
     // CalcData interface
@@ -174,8 +174,8 @@ public:
 
     //параметры для определения Протромбинового комплекса
 private:
-    TestKo5 t_ko5;
-    CalibrationKo5 c_ko5;
+    TestKo5 *t_ko5;
+    CalibrationKo5 *c_ko5;
     //константы (паспортные данные)
     const int k = 4;                //часло калибровочных точек
     //протромбиновое отношение плазмы калибратора
@@ -212,8 +212,8 @@ public:
 
     //параметры для определения Агрегации
 private:
-    TestAgr1 t_agr1;
-    CalibrationAgr1 c_agr1;
+    TestAgr1 *t_agr1;
+    CalibrationAgr1 *c_agr1;
     double btp;                     //богатая тромбоцитами плазма
     double otp;                     //обогащенная тромбоцитами плазма
 
@@ -235,8 +235,8 @@ public:
 
     //параметры для определения ф-ра Виллебранда
 private:
-    TestAgr2 t_agr2;
-    CalibrationAgr2 c_agr2;
+    TestAgr2 *t_agr2;
+    CalibrationAgr2 *c_agr2;
     const int kt = 3;               //часло калибровочных точек
     double btp;                     //богатая тромбоцитами плазма
     double otp;                     //обогащенная тромбоцитами плазма
