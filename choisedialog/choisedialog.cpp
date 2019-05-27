@@ -227,13 +227,14 @@ void ChoiseDialog::c_shotConntection(MetaObj *p, MetaObj *t1, MetaObj *t2, MetaO
 //            QObject::disconnect(*t4);
 //            delete t4;
         });
-    } else {
-        *t1 = connect(widget, &Widget::ret_value1, [=](double d, int i){
+    }
+    else {
+        *t1 = connect(widget, &Widget::ret_value1_2, [=](double d, int i){
             ko->calibrationData1_2Come(d, i);
 //            QObject::disconnect(*t1);
 //            delete t1;
         });
-        *t2 = connect(widget, &Widget::ret_value2, [=](double d, int i){
+        *t2 = connect(widget, &Widget::ret_value3_4, [=](double d, int i){
             ko->calibrationData2Come(d, i);
 //            QObject::disconnect(*t2);
 //            delete t2;
@@ -303,7 +304,7 @@ void ChoiseDialog::startMeasurement(StartMeasurement* sm)
     t3Connection    = new MetaObj;
     t4Connection    = new MetaObj;
 
-    if ( mode == CalibAgr1_ID || mode == CalibAgr2_ID || mode == TestAgr1_ID || mode == TestAgr2_ID ) {
+    if ( mode == mode == TestAgr1_ID || mode == TestAgr2_ID ) {
         otp1Connection = new MetaObj;
         otp2Connection = new MetaObj;
         otp3Connection = new MetaObj;
@@ -376,7 +377,7 @@ void ChoiseDialog::calibration(StartMeasurement* sm)
     t3Connection    = new MetaObj;
     t4Connection    = new MetaObj;
 
-    if ( mode == CalibAgr1_ID || mode == CalibAgr2_ID || mode == TestAgr1_ID || mode == TestAgr2_ID) {
+    if ( mode == CalibAgr1_ID || mode == CalibAgr2_ID ) {
         otp1Connection = new MetaObj;
         otp2Connection = new MetaObj;
         otp3Connection = new MetaObj;
