@@ -19,8 +19,7 @@ public:
     void setTab(int);
     ~Ko3();
 
-private:
-    void calibrationDataCome(int n, double data);
+//    void calibrationDataCome(int n, double data);
 
 private slots:
     void on_pushButton_test_clicked();

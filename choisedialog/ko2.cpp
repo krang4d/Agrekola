@@ -53,7 +53,6 @@ void Ko2::on_tabWidget_currentChanged(int index)
                            c_ko2->getA4tv_kp3()+
                            c_ko2->getA4tv_kp4())/4);
         qDebug() << "A4tv_kp is " << t_ko2->getA4tv_kp();
-
     }
     if(index == 2) {
         t_ko2 = t_ko2_2;
