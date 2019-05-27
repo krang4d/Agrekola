@@ -4,19 +4,25 @@ State::State(IScenario *o, QObject *parent) : QObject(parent), scena(o)
 {}
 
 State::~State()
-{}
+{
+    foreach (auto var, state_list) {
+        delete var;
+    }
+}
 
 void State::insertState(State_ID id, QString msg, int level)
 {
     //state.push_back(id);
-    state_list.append(QPair<State_ID, QString>(id, msg));
+//    state_list.append(QPair<State_ID, QString>(id, msg));
+//    it = state_list.begin();
+//    this->level = level;
+    state_list.append(new DateBuffer(id, msg, level));
     it = state_list.begin();
-    this->level = level;
 }
 
 State_ID State::current()
 {
-    return it->first;
+    return (*it)->getPair().first;
 }
 
 void State::next()
@@ -43,18 +49,18 @@ void State::reset()
 
 QString State::getMessage()
 {
-    return it->second;
+    return (*it)->getPair().second;
 }
 
 int State::getLevel()
 {
-    return level;
+    return (*it)->getLevel();
 }
 
 void State::doState()
 {
-    qDebug() << QString("State IS: %1" ).arg(it->first);
-    switch(it->first) {
+    qDebug() << QString("State IS: %1" ).arg((*it)->getPair().first);
+    switch((*it)->getPair().first) {
         case Btp_ID:
             scena->getBTP();
             break;
@@ -294,12 +300,12 @@ StateCalKo3::StateCalKo3(IScenario *o) : State(o)      //Фибриноген к
     insertState(LaserON_ID,     "Включение лазеров");
     insertState(MotorON_ID,     "Включение двигателей");
 
-    insertState(Incubation1_ID, "Установите разведения 200% в каналы 1,2, 100% в каналыы 3,4");
+    insertState(Incubation1_ID, "Установите разведения 200% в каналы 1,2, 100% в каналы 3,4");
     insertState(Ko_ID,          "Измерение Этап 1");
     insertState(Calc_ID,        "Расчет", 1);
     insertState(Write_ID,       "Запись");
 
-    insertState(Incubation1_ID, "Установите разведения 50% в каналы 1,2, 25% в каналыы 3,4");
+    insertState(Incubation1_ID, "Установите разведения 50% в каналы 1,2, 25% в каналы 3,4");
     insertState(Ko_ID,          "Измерение Этап 2");
     insertState(Calc_ID,        "Расчет", 2);
     insertState(Write_ID,       "Запись");
@@ -500,4 +506,27 @@ State* StateBuilder::getState(Mode_ID mode, IScenario *o)
         break;
     }
     return state;
+}
+
+DateBuffer::DateBuffer(State_ID state, QString str, int i)
+{
+    pair = QPair<State_ID, QString>(state, str);
+    level = i;
+}
+
+//void DateBuffer::insertState(State_ID id, QString msg, int level)
+//{
+//    //state.push_back(id);
+//    pair = QPair<State_ID, QString>(id, msg);
+//    this->level = level;
+//}
+
+QPair<State_ID, QString> DateBuffer::getPair()
+{
+    return pair;
+}
+
+int DateBuffer::getLevel()
+{
+    return level;
 }
