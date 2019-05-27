@@ -138,7 +138,7 @@ void Agr2::close()
 
 void Agr2::on_pushButton_test_clicked()
 {
-    mode = Ko_impl::TestAgr2_ID;
+    mode = TestAgr2_ID;
     bool a, b, c, d;
     if(ui->checkBox_testCh1->isChecked() && !ui->lineEdit_testCh1->text().isEmpty()) a = true;
     else a = false;
@@ -184,7 +184,7 @@ void Agr2::on_pushButton_calib_clicked()
 //    bool c = ui->checkBox_calibCh3->isChecked();
 //    bool d = ui->checkBox_calibCh4->isChecked();
 
-    mode = Ko_impl::CalibAgr2_ID;
+    mode = CalibAgr2_ID;
     bool e = !ui->lineEdit_calibKPlazmaSerial->text().isEmpty();
     bool f = !ui->lineEdit_calibReagentSerial->text().isEmpty();
 

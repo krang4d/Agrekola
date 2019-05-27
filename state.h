@@ -28,6 +28,19 @@ enum State_ID{
     End_ID          //вывод результатов
 };
 
+class DateBuffer
+{
+public:
+    explicit DateBuffer(State_ID, QString , int);
+    //void insertState(State_ID, QString, int level = 0);
+    QPair<State_ID, QString> getPair();
+    int getLevel();
+
+protected:
+    QPair<State_ID, QString> pair;
+    int level;
+};
+
 class State : public QObject
 {
     Q_OBJECT
@@ -52,9 +65,8 @@ signals:
 private:
     //QVector<State_ID> state;
     IScenario *scena;
-    QList<QPair<State_ID, QString>> state_list;
-    QList<QPair<State_ID, QString>>::iterator it;
-    int level;
+    QList<DateBuffer *> state_list;
+    QList<DateBuffer *>::iterator it;
 
     //int index;
 };

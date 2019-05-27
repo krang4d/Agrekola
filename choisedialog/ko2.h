@@ -66,6 +66,7 @@ private slots:
     void on_lineEdit_test2Ch3_textChanged(const QString &arg1);
 
     void on_tabWidget_currentChanged(int index);
+    void on_doubleSpinBox_test2a4tv_valueChanged(double arg1);
 
 signals:
     void measurement(StartMeasurement*);
@@ -76,7 +77,7 @@ private:
     Ui::Ko2 *ui;
     TestKo2 *t_ko2, *t_ko2_1, *t_ko2_2;
     CalibrationKo2 *c_ko2;
-    Ko_impl::Mode_ID mode;
+    Mode_ID mode;
 
 //    friend class StartTestKo2;
 //    friend class StartCalibrationKo2;

@@ -25,40 +25,40 @@ Ko3::~Ko3()
     delete ui;
 }
 
-void Ko3::calibrationDataCome(int n, double data)
-{
-    //один параметр контрольной нормальной плазмы
-    static int i = 0;
-    QDate dt = QDate::currentDate();
-    c_ko3->setDate(dt);
-    switch (n) {
-    case 1:
-        c_ko3->setFibrinogen_200_plazma(data);
-        break;
-    case 2:
-        c_ko3->setFibrinogen_k_plazma(data);
-        break;
-    case 3:
-        c_ko3->setFibrinogen_50_plazma(data);
-        break;
-    case 4:
-        c_ko3->setFibrinogen_25_plazma(data);
-        break;
-    default:
-        break;
-    } i++;
-    if(i == 4) {
-        i = 0;
-        emit calibration_done();
-    }
-    c_ko3->save();
+//void Ko3::calibrationDataCome(int n, double data)
+//{
+//    //один параметр контрольной нормальной плазмы
+//    static int i = 0;
+//    QDate dt = QDate::currentDate();
+//    c_ko3->setDate(dt);
+//    switch (n) {
+//    case 1:
+//        c_ko3->setFibrinogen_200_plazma(data);
+//        break;
+//    case 2:
+//        c_ko3->setFibrinogen_k_plazma(data);
+//        break;
+//    case 3:
+//        c_ko3->setFibrinogen_50_plazma(data);
+//        break;
+//    case 4:
+//        c_ko3->setFibrinogen_25_plazma(data);
+//        break;
+//    default:
+//        break;
+//    } i++;
+//    if(i == 4) {
+//        i = 0;
+//        emit calibration_done();
+//    }
+//    c_ko3->save();
 
-    //ui->label_calibrationData->setText(dt.toString("dd.MM.yyyy ") + dt.toString("hh:mm:ss"));
-//    if(param.count() <= n)
-//        param.push_back(QString("%1").arg(deta));
-//    else param.replace(n, QString("%1").arg(deta));
-//    file.saveKo2(param);
-}
+//    //ui->label_calibrationData->setText(dt.toString("dd.MM.yyyy ") + dt.toString("hh:mm:ss"));
+////    if(param.count() <= n)
+////        param.push_back(QString("%1").arg(deta));
+////    else param.replace(n, QString("%1").arg(deta));
+////    file.saveKo2(param);
+//}
 
 void Ko3::open()
 {
@@ -197,10 +197,12 @@ void Ko3::calibrationData1_2Come(double t0, int i)
 {
     switch (i) {
     case 1:
-        c_ko3->setFibrinogen_200_plazma(t0);
+        c_ko3->setTime_200_plazma(t0);
+        qDebug() << "calibrationData1_2Come 1";
         break;
     case 2:
-        c_ko3->setFibrinogen_k_plazma(t0);
+        c_ko3->setTime_50_plazma(t0);
+        qDebug() << "calibrationData1_2Come 2";
         break;
     default:
         break;
@@ -211,10 +213,12 @@ void Ko3::calibrationData2_4Come(double t0, int i)
 {
     switch (i) {
     case 1:
-        c_ko3->setFibrinogen_50_plazma(t0);
+        c_ko3->setTime_k_plazma(t0);
+        qDebug() << "calibrationData2_4Come 1";
         break;
     case 2:
         c_ko3->setFibrinogen_25_plazma(t0);
+        qDebug() << "calibrationData2_4Come 2";
         break;
     default:
         break;
@@ -280,7 +284,7 @@ void Ko3::setTime(QTime t, SaveTo b)
 
 void Ko3::on_pushButton_test_clicked()
 {
-    mode = Ko_impl::TestKo3_ID;
+    mode = TestKo3_ID;
     bool a, b, c, d;
     if(ui->checkBox_testCh1->isChecked()) {
         if(!ui->lineEdit_testCh1->text().isEmpty()) a = true;
@@ -342,7 +346,7 @@ void Ko3::on_pushButton_calib_clicked()
 //    bool c = ui->checkBox_calibCh3->isChecked();
 //    bool d = ui->checkBox_calibCh4->isChecked();
 
-    mode = Ko_impl::CalibKo3_ID;
+    mode = CalibKo3_ID;
     bool e = !ui->lineEdit_calibKPlazmaSerial->text().isEmpty();
     bool f = !ui->lineEdit_calibReagentSerial->text().isEmpty();
 

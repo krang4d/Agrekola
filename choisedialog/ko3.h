@@ -19,8 +19,7 @@ public:
     void setTab(int);
     ~Ko3();
 
-private:
-    void calibrationDataCome(int n, double data);
+//    void calibrationDataCome(int n, double data);
 
 private slots:
     void on_pushButton_test_clicked();
@@ -69,7 +68,7 @@ private:
     Ui::Ko3 *ui;
     TestKo3 *t_ko3;
     CalibrationKo3 *c_ko3;
-    Ko_impl::Mode_ID mode;
+    Mode_ID mode;
 };
 
 class StartTestKo3 : public StartMeasurement

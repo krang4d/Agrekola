@@ -86,7 +86,7 @@ private:
     Ui::Agr2 *ui;
     TestAgr2 *t_agr2;
     CalibrationAgr2 *c_agr2;
-    Ko_impl::Mode_ID mode;
+    Mode_ID mode;
 };
 
 class StartTestAgr2 : public StartMeasurement

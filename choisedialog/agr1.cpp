@@ -70,7 +70,7 @@ Agr1::~Agr1()
 
 void Agr1::on_pushButton_test_clicked()
 {  
-    mode = Ko_impl::TestAgr1_ID;
+    mode = TestAgr1_ID;
     bool a, b, c, d;
     if(ui->checkBox_testCh1->isChecked()) {
         if(!ui->lineEdit_testCh1->text().isEmpty()) a = true;

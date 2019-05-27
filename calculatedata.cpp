@@ -293,14 +293,17 @@ QString CalcKo2::getParameters()
 
 CalcKo3::CalcKo3(TestKo3 *t, CalibrationKo3 *c) : CalcData(), t_ko3(t), c_ko3(c)
 {
-    t1 = c_ko3.getFibrinogen_200_plazma();
+    t1 = c_ko3.getTime_200_plazma();
     t2 = c_ko3.getTime_k_plazma();
     t3 = c_ko3.getTime_50_plazma();
     t4 = c_ko3.getTime_25_plazma();
     c2 = c_ko3.getFibrinogen_k_plazma();
     c1 = c2*200.0f/100.0f;              //(3)
+    c_ko3.setFibrinogen_200_plazma(c1);
     c3 = c2*50.0f/100.0f;               //(4)
+    c_ko3.setFibrinogen_50_plazma(c3);
     c4 = c2*25.0f/100.0f;               //(5)
+    c_ko3.setFibrinogen_25_plazma(c4);
     qDebug() << "Фибриноген по Клауссу =" << c2;
     qDebug() << QString("Параметры калибровки Фириногена") << c2 << t1 << t2 << t3 << t4;
 }
