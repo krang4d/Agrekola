@@ -42,10 +42,10 @@ public:
     void setDx(double dx);
     double getDx();
 
-protected:
     double calcKo(QMap<double, double>);
     double calcAgr(QMap<double, double>);
 
+protected:
     QMap<double, double> mdata;
     //QStringList param;
     double dx;                    //скачек величиной 4-10% от среднего уровня сигнала базовое значение для определения времени свертывания

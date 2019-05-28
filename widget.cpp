@@ -723,66 +723,53 @@ void Widget::waitImpulse(ImpuleWaiter *iw)
     iw->startWait();
 }
 
-double Widget::calcData(Channel_ID c, Mode_ID mode)
+double Widget::calcData(CalcData *p, Channel_ID c)
 {
     double retval;
-    CalcData *p = CalcData::createCalc(startWin->getTest(), startWin->getCalib(), mode);
     if(!p) { setUserMessage(QString("Ошибка при выделении памяти под класс CalcData")); return -1; }
+    QString kanal;
+    QMap<double, double> map;
     switch(c) {
     case Channel1_ID:
-        if(!map_y1.isEmpty()) {
-            retval = p->calc(map_y1);
-            setUserMessage(QString("<div style='color: green'>Канал 1: %2 %1")
-                           .arg(retval)
-                           .arg(p->info()));
-            //emit ret_value1(retval);
-        }
-        else {
-            setUserMessage(QString("Канал 1: Массив данных не заполнен!"));
-            return -1;
-        }
+        kanal = "Канал 1";
+        map = map_y1;
         break;
     case Channel2_ID:
-        if(!map_y2.isEmpty()) {
-            retval = p->calc(map_y2);
-            setUserMessage(QString("<div style='color: green'>Канал 2: %2 %1")
-                           .arg(retval)
-                           .arg(p->info()));
-            //emit ret_value2(retval);
-        }
-        else {
-            setUserMessage(QString("Канал 2: Массив данных не заполнен!"));
-            return -1;
-        }
+        kanal = "Канал 2";
+        map = map_y2;
         break;
     case Channel3_ID:
-        if(!map_y3.isEmpty()) {
-            retval = p->calc(map_y3);
-            setUserMessage(QString("<div style='color: green'>Канал 3: %2 %1")
-                           .arg(retval)
-                           .arg(p->info()));
-            //emit ret_value3(retval);
-        }
-        else {
-            setUserMessage(QString("Канал 3: Массив данных не заполнен!"));
-            return -1;
-        }
+        kanal = "Канал 3";
+        map = map_y3;
         break;
     case Channel4_ID:
-        if(!map_y4.isEmpty()) {
-            retval = p->calc(map_y4);
-            setUserMessage(QString("<div style='color: green'>Канал 4: %2 %1")
-                           .arg(retval)
-                           .arg(p->info()));
-            //emit ret_value4(retval);
-        }
-        else {
-            setUserMessage(QString("Канал 4: Массив данных не заполнен!"));
-            return -1;
-        }
+        kanal = "Канал 4";
+        map = map_y4;
         break;
     }
-    delete p;
+
+    if(!map.isEmpty()) {
+        if(!isCalib()) {
+            retval = p->calc(map);
+            setUserMessage(QString("<div style='color: green'>%1: %2 %3")
+                           .arg(kanal)
+                           .arg(p->info())
+                           .arg(retval));
+        }
+        else {
+            if (isKo()) retval = p->calcKo(map);
+            else retval = p->calcAgr(map);
+            setUserMessage(QString("<div style='color: green'>%1: калибровка %2")
+                           .arg(kanal)
+                           .arg(retval));
+        }
+        //emit ret_value1(retval);
+    }
+    else {
+        setUserMessage(QString("Канал 1: Массив данных не заполнен!"));
+        return -1;
+    }
+    //delete p;
     return retval;
 }
 
@@ -1003,7 +990,9 @@ void Widget::getBTP()
         connect(this, &Widget::done1, [this]() {
             i--;
             disconnect(this, &Widget::done1, nullptr, nullptr);
-            emit btp_value1(calcData(Channel1_ID, Level_ID));
+            auto p = new CalcLevel();
+            emit btp_value1(calcData(p, Channel1_ID));
+            delete p;
             if (!i) { state->next(); qDebug() << "Btp done1"; }
         });
     }
@@ -1014,7 +1003,9 @@ void Widget::getBTP()
         connect(this, &Widget::done2, [this]() {
             i--;
             disconnect(this, &Widget::done2, nullptr, nullptr);
-            emit btp_value2(calcData(Channel2_ID, Level_ID));
+            auto p = new CalcLevel();
+            emit btp_value2(calcData(p, Channel2_ID));
+            delete p;
             if (!i) { state->next(); qDebug() << "Btp done2"; }
         });
     }
@@ -1024,7 +1015,9 @@ void Widget::getBTP()
         connect(this, &Widget::done3, [this]() {
             i--;
             disconnect(this, &Widget::done3, nullptr, nullptr);
-            emit btp_value3(calcData(Channel3_ID, Level_ID));
+            auto p = new CalcLevel();
+            emit btp_value3(calcData(p, Channel3_ID));
+            delete p;
             if (!i) { state->next(); qDebug() << "Btp done3"; }
         });
     }
@@ -1034,10 +1027,13 @@ void Widget::getBTP()
         connect(this, &Widget::done4, [this]() {
             i--;
             disconnect(this, &Widget::done4, nullptr, nullptr);
-            emit btp_value4(calcData(Channel4_ID, Level_ID));
+            auto p = new CalcLevel();
+            emit btp_value4(calcData(p, Channel4_ID));
+            delete p;
             if (!i) { state->next(); qDebug() << "Btp done4"; }
         });
     }
+
 }
 
 void Widget::getOTP()
@@ -1049,7 +1045,9 @@ void Widget::getOTP()
         connect(this, &Widget::done1, [this]() {
             i--;
             disconnect(this, &Widget::done1, nullptr, nullptr);
-            emit otp_value1(calcData(Channel1_ID, Level_ID));
+            auto p = new CalcLevel();
+            emit otp_value1(calcData(p, Channel1_ID));
+            delete p;
             if (!i) { state->next(); qDebug() << "Otp done1"; }
         });
     }
@@ -1059,7 +1057,9 @@ void Widget::getOTP()
         connect(this, &Widget::done2, [this]() {
             i--;
             disconnect(this, &Widget::done2, nullptr, nullptr);
-            emit otp_value2(calcData(Channel2_ID, Level_ID));
+            auto p = new CalcLevel();
+            emit otp_value2(calcData(p, Channel2_ID));
+            delete p;
             if (!i) { state->next(); qDebug() << "Otp done2"; }
         });
     }
@@ -1069,7 +1069,9 @@ void Widget::getOTP()
         connect(this, &Widget::done3, [this]() {
             i--;
             disconnect(this, &Widget::done3, nullptr, nullptr);
-            emit otp_value3(calcData(Channel3_ID, Level_ID));
+            auto p = new CalcLevel();
+            emit otp_value3(calcData(p, Channel3_ID));
+            delete p;
             if (!i) { state->next(); qDebug() << "Otp done3"; }
         });
     }
@@ -1079,7 +1081,9 @@ void Widget::getOTP()
         connect(this, &Widget::done4, [this]() {
             i--;
             disconnect(this, &Widget::done4, nullptr, nullptr);
-            emit otp_value4(calcData(Channel4_ID, startWin->getModeID()));
+            auto p = new CalcLevel();
+            emit otp_value4(calcData(p, Channel4_ID));
+            delete p;
             if (!i) { state->next(); qDebug() << "Otp done4"; }
         });
     }
@@ -1193,25 +1197,27 @@ void Widget::ko(State *state)
 
 void Widget::calc()
 {
+    CalcData* p = CalcData::createCalc(startWin->getTest(), startWin->getCalib(), startWin->getModeID());
     if(startWin->isSingle()) {
         if( startWin->isChannel(Channel1_ID) )
-            emit ret_value1(calcData(Channel1_ID, startWin->getModeID()), state->getLevel());
+            emit ret_value1(calcData(p, Channel1_ID), state->getLevel());
         if( startWin->isChannel(Channel2_ID) )
-            emit ret_value2(calcData(Channel2_ID, startWin->getModeID()), state->getLevel());
+            emit ret_value2(calcData(p, Channel2_ID), state->getLevel());
         if( startWin->isChannel(Channel3_ID) )
-            emit ret_value3(calcData(Channel3_ID, startWin->getModeID()), state->getLevel());
+            emit ret_value3(calcData(p, Channel3_ID), state->getLevel());
         if( startWin->isChannel(Channel4_ID) )
-            emit ret_value4(calcData(Channel4_ID, startWin->getModeID()), state->getLevel());
+            emit ret_value4(calcData(p, Channel4_ID), state->getLevel());
     } else {
         if( startWin->isChannel(Channel1_ID) ) {
-            double v1 = calcData(Channel1_ID, startWin->getModeID());
-            double v2 = calcData(Channel2_ID, startWin->getModeID());
-            double v3 = calcData(Channel3_ID, startWin->getModeID());
-            double v4 = calcData(Channel4_ID, startWin->getModeID());
+            double v1 = calcData(p, Channel1_ID);
+            double v2 = calcData(p, Channel2_ID);
+            double v3 = calcData(p, Channel3_ID);
+            double v4 = calcData(p, Channel4_ID);
             emit ret_value1_2( (v1+v2)/2, state->getLevel() );
             emit ret_value3_4( (v3+v4)/2, state->getLevel() );
         }
     }
+    delete p;
 }
 
 void Widget::write()

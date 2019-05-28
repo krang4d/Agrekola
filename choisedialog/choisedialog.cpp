@@ -236,7 +236,7 @@ void ChoiseDialog::c_shotConntection(MetaObj *p, MetaObj *t1, MetaObj *t2, MetaO
 //            delete t1;
         });
         *t2 = connect(widget, &Widget::ret_value3_4, [=](double d, int i){
-            ko->calibrationData2Come(d, i);
+            ko->calibrationData2_4Come(d, i);
 //            QObject::disconnect(*t2);
 //            delete t2;
         });

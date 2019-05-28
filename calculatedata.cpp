@@ -158,6 +158,11 @@ CalcData *CalcData::createCalc(Test *t, Calibration *c, Mode_ID  id)
 //        p = new CalcKo2(WithoutCalibration());
 //        break;
     case TestKo3_ID:
+//        str = tr("Фибриноген");
+//        if( TestKo3 *test = qobject_cast<TestKo3 *>(t))
+//            if(CalibrationKo3 *calib = qobject_cast<CalibrationKo3 *>(c))
+//                p = new CalcKo3(test, calib);
+//        break;
     case CalibKo3_ID:
         str = tr("Фибриноген");
         if( TestKo3 *test = qobject_cast<TestKo3 *>(t))

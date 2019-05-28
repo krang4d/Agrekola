@@ -44,6 +44,15 @@ public:
     void stopData(Channel_ID);
     //bool isData(Channel_ID);
 
+    inline bool isCalib() {
+        auto x = startWin->getModeID();
+        return x == CalibKo2_ID || x == CalibKo3_ID || x == CalibKo4_ID || x == CalibKo5_ID || x == CalibAgr2_ID;
+    }
+    inline bool isKo() {
+        auto x = startWin->getModeID();
+        return x == CalibAgr2_ID ? false : true;
+    }
+
     // ITools interface
     double getSTART_DX() const override;
     void setSTART_DX(double value) override;
@@ -78,7 +87,7 @@ public slots:
     void setUserMessage(QString, bool withtime = true, bool tofile = true);
     void startIncub(int num, double time_s, std::function<void(void)> timeout_fun = nullptr);
     void getData(Channel_ID, double time_s);
-    double calcData(Channel_ID, Mode_ID);
+    double calcData(CalcData *p, Channel_ID);
     void writeMapData(Channel_ID);
     void incubeTimeout_1();
     void incubeTimeout_2();

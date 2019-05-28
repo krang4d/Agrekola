@@ -155,33 +155,39 @@ QString Ko3::t_print()
 void Ko3::setT1(double value, int i)
 {
     t_ko3->setT1(value);
+    t_ko3->save();
 }
 
 void Ko3::setT2(double value, int i)
 {
     t_ko3->setT2(value);
+    t_ko3->save();
 }
 
 void Ko3::setT3(double value, int i)
 {
     t_ko3->setT3(value);
+    t_ko3->save();
 }
 
 void Ko3::setT4(double value, int i)
 {
     t_ko3->setT4(value);
+    t_ko3->save();
 }
 
 void Ko3::setT1_2(double value, int i)
 {
     t_ko3->setT1(value);
     t_ko3->setT2(value);
+    t_ko3->save();
 }
 
 void Ko3::setT3_4(double value, int i)
 {
     t_ko3->setT3(value);
     t_ko3->setT4(value);
+    t_ko3->save();
 }
 
 QString Ko3::c_print()
@@ -207,6 +213,7 @@ void Ko3::calibrationData1_2Come(double t0, int i)
     default:
         break;
     }
+    c_ko3->save();
 }
 
 void Ko3::calibrationData2_4Come(double t0, int i)
@@ -217,12 +224,13 @@ void Ko3::calibrationData2_4Come(double t0, int i)
         qDebug() << "calibrationData2_4Come 1";
         break;
     case 2:
-        c_ko3->setFibrinogen_25_plazma(t0);
+        c_ko3->setTime_25_plazma(t0);
         qDebug() << "calibrationData2_4Come 2";
         break;
     default:
         break;
     }
+    c_ko3->save();
 }
 
 void Ko3::setDate(QDate d, SaveTo b)
@@ -233,6 +241,7 @@ void Ko3::setDate(QDate d, SaveTo b)
     if(b == Calib_ID) {
         c_ko3->setDate(d);
     }
+    c_ko3->save();
 }
 
 void Ko3::setTime(QTime t, SaveTo b)
@@ -243,6 +252,7 @@ void Ko3::setTime(QTime t, SaveTo b)
     if(b == Calib_ID) {
         c_ko3->setTime(t);
     }
+    c_ko3->save();
 }
 
 //void Ko3::calibrationData1Come(double t0)
