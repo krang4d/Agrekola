@@ -76,7 +76,7 @@ signals:
 private:
     Ui::Ko2 *ui;
     TestKo2 *t_ko2, *t_ko2_1, *t_ko2_2;
-    CalibrationKo2 *c_ko2;
+    CalibrationKo2 *c_ko2, *c_ko2_1, *c_ko2_2;
     Mode_ID mode;
 
 //    friend class StartTestKo2;

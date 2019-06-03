@@ -8,7 +8,8 @@ Ko2::Ko2(QWidget *parent) :
     ui(new Ui::Ko2),
     t_ko2_1(new TestKo2(this)),
     t_ko2_2(new TestKo2(WithoutCalibration(), this)),
-    c_ko2(new CalibrationKo2)
+    c_ko2_1(new CalibrationKo2_1),
+    c_ko2_2(new CalibrationKo2_2)
 {
     ui->setupUi(this);
     t_ko2 = t_ko2_1;
@@ -28,25 +29,7 @@ void Ko2::on_tabWidget_currentChanged(int index)
     qDebug() << "index changed: " << index;
     if(index == 1) {
         t_ko2 = t_ko2_1;
-//        int i = 0;
-//        double sum = 0;
-//        if(c_ko2->getK1()) {
-//            i++;
-//            sum+= c_ko2->getA4tv_kp1();
-//        }
-//        if(c_ko2->getK2()) {
-//            i++;
-//            sum+= c_ko2->getA4tv_kp2();
-//        }
-//        if(c_ko2->getK3()) {
-//            i++;
-//            sum+= c_ko2->getA4tv_kp3();
-//        }
-//        if(c_ko2->getK4()) {
-//            i++;
-//            sum+= c_ko2->getA4tv_kp4();
-//        }
-//        t_ko2->setA4tv_kp(sum/=i);
+        c_ko2 = c_ko2_1;
         t_ko2->setA4tv_kp((c_ko2->getA4tv_kp1() +
                            c_ko2->getA4tv_kp2() +
                            c_ko2->getA4tv_kp3() +
@@ -55,6 +38,7 @@ void Ko2::on_tabWidget_currentChanged(int index)
     }
     if(index == 2) {
         t_ko2 = t_ko2_2;
+        c_ko2 = c_ko2_2;
         qDebug() << "A4tv_kp is " << t_ko2->getA4tv_kp();
     }
     open();
@@ -72,7 +56,8 @@ Ko2::~Ko2()
     close();
     delete t_ko2_1;
     delete t_ko2_2;
-    delete c_ko2;
+    delete c_ko2_1;
+    delete c_ko2_2;
     delete ui;
 }
 
@@ -93,7 +78,7 @@ void Ko2::open()
 //                + QString("АЧТВ к/плазмы 4го канала: %1 с\n").arg(c_ko2->getA4tv_kp4())
 //                + QString("АЧТВ к/плазмы: %1").arg(sum);
 
-    ui->label_test1CalibString->setText(c_ko2->print());
+    ui->label_test1CalibString->setText(c_ko2_1->print());
 
     if( t_ko2_1->getSingle() ) {
         ui->radioButton_test1Single->setChecked(true);
@@ -173,32 +158,29 @@ void Ko2::open()
     else {
         ui->checkBox_test2Ch4->setChecked(false);
     }
-    ui->dateEdit_test2Reagent->setDate(t_ko2_2->getReagent_date());
-    ui->lineEdit_test2ReagentSerial->setText(t_ko2_2->getReagent_serial());
-    ui->doubleSpinBox_test2IncubeTime->setValue(t_ko2_2->getIncube_time());
-    ui->doubleSpinBox_test2WriteTime->setValue(t_ko2_2->getWrite_time());
-    ui->doubleSpinBox_test2a4tv->setValue(t_ko2_2->getA4tv_kp());
+    ui->dateEdit_test2Reagent->setDate(c_ko2_2->getReagent_date());
+    ui->lineEdit_test2ReagentSerial->setText(c_ko2_2->getReagent_serial());
+    ui->doubleSpinBox_test2IncubeTime->setValue(c_ko2_2->getIncube_time());
+    ui->doubleSpinBox_test2WriteTime->setValue(c_ko2_2->getWrite_time());
+    ui->doubleSpinBox_test2a4tv->setValue(c_ko2_2->getA4tv_kp1());
 
-//    окно калибровка
-//    ui->checkBox_calibCh1->setChecked(c_ko2->getK1());
-//    ui->checkBox_calibCh2->setChecked(c_ko2->getK2());
-//    ui->checkBox_calibCh3->setChecked(c_ko2->getK3());
-//    ui->checkBox_calibCh4->setChecked(c_ko2->getK4());
+//  окно калибровка
+    ui->doubleSpinBox_calibIncube->setValue(c_ko2_1->getIncube_time());
+    ui->doubleSpinBox_calibWriteTime->setValue(c_ko2_1->getWrite_time());
 
-    ui->doubleSpinBox_calibIncube->setValue(c_ko2->getIncube_time());
-    ui->doubleSpinBox_calibWriteTime->setValue(c_ko2->getWrite_time());
-
-    ui->lineEdit_calibKPlazmaSerial->setText(c_ko2->getK_plazma_serial());
-    ui->dateEdit_calibPlazma->setDate(c_ko2->getK_plazma_date());
-    ui->lineEdit_calibReagentSerial->setText(c_ko2->getReagent_serial());
-    ui->dateEdit_calibReagent->setDate(c_ko2->getReagent_date());
-    ui->doubleSpinBox_caliba4tv->setValue(c_ko2->getK_plazma_a4tv());
+    ui->lineEdit_calibKPlazmaSerial->setText(c_ko2_1->getK_plazma_serial());
+    ui->dateEdit_calibPlazma->setDate(c_ko2_1->getK_plazma_date());
+    ui->lineEdit_calibReagentSerial->setText(c_ko2_1->getReagent_serial());
+    ui->dateEdit_calibReagent->setDate(c_ko2_1->getReagent_date());
+    ui->doubleSpinBox_caliba4tv->setValue(c_ko2_1->getK_plazma_a4tv());
 }
 
 void Ko2::close()
 {
     t_ko2_1->save();
     t_ko2_2->save();
+    c_ko2_1->save();
+    c_ko2_2->save();
 }
 
 void Ko2::setDate(QDate d, SaveTo b)
@@ -527,34 +509,25 @@ void Ko2::on_pushButton_test2_clicked()
     t_ko2->setNum4(ui->lineEdit_test2Ch4->text());
 
     t_ko2->setSingle(ui->radioButton_test2Single->isChecked());
-    t_ko2->setA4tv_kp(ui->doubleSpinBox_test2a4tv->value());
 
-//    c_ko2->setIncube_time(ui->doubleSpinBox_test2IncubeTime->value());
-//    c_ko2->setWrite_time(ui->doubleSpinBox_test2WriteTime->value());
+    double t0 = ui->doubleSpinBox_test2a4tv->value();
+    c_ko2->setA4tv_kp1(t0);
+    c_ko2->setA4tv_kp2(t0);
+    c_ko2->setA4tv_kp3(t0);
+    c_ko2->setA4tv_kp4(t0);
 
-//    c_ko2->setA4tv_kp1(ui->doubleSpinBox_test2a4tv->value());
-//    c_ko2->setA4tv_kp2(ui->doubleSpinBox_test2a4tv->value());
-//    c_ko2->setA4tv_kp3(ui->doubleSpinBox_test2a4tv->value());
-//    c_ko2->setA4tv_kp4(ui->doubleSpinBox_test2a4tv->value());
+    t_ko2->setA4tv_kp(t0);
 
-//    c_ko2->setReagent_date(ui->dateEdit_test2Reagent->date());
-//    c_ko2->setReagent_serial(ui->lineEdit_test2ReagentSerial->text());
+    c_ko2->setIncube_time(ui->doubleSpinBox_test2IncubeTime->value());
+    c_ko2->setWrite_time(ui->doubleSpinBox_test2WriteTime->value());
+
+    c_ko2->setReagent_date(ui->dateEdit_test2Reagent->date());
+    c_ko2->setReagent_serial(ui->lineEdit_test2ReagentSerial->text());
 
     t_ko2->save();
-//    c_ko2->save();
+    c_ko2->save();
 
-    StartMeasurement* start = new StartMeasurement(t_ko2, nullptr);
-    start->setChannels(t_ko2->getK1(), t_ko2->getK2(), t_ko2->getK3(), t_ko2->getK4());
-    start->setNum(1, t_ko2->getNum1());
-    start->setNum(2, t_ko2->getNum2());
-    start->setNum(3, t_ko2->getNum3());
-    start->setNum(4, t_ko2->getNum4());
-    start->setTimeWrite(ui->doubleSpinBox_test2WriteTime->value());
-    start->setTimeIncube(1, ui->doubleSpinBox_test2IncubeTime->value());
-    start->setProbe(t_ko2->getSingle());          //одиночные или парные пробы
-    start->setModeID(TestKo2_ID);
-
-    emit measurement(start);//StartTestKo2::getStart(t_ko2, c_ko2));
+    emit measurement(StartTestKo2::getStart(t_ko2, c_ko2));
 }
 
 void Ko2::on_pushButton_calib_clicked()

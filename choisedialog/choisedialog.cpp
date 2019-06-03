@@ -128,15 +128,15 @@ void ChoiseDialog::t_shotConntection(MetaObj *p, MetaObj *t1, MetaObj *t2, MetaO
 {
     *p = connect(widget, &Widget::end, [=](QMap<double, double> y1,QMap<double, double> y2,QMap<double, double> y3,QMap<double, double> y4) {
         widget->setUserMessage(ko->t_print());
-        QObject::disconnect(*p);
+        disconnect(*p);
         delete p;
-        QObject::disconnect(*t1);
+        disconnect(*t1);
         delete t1;
-        QObject::disconnect(*t2);
+        disconnect(*t2);
         delete t2;
-        QObject::disconnect(*t3);
+        disconnect(*t3);
         delete t3;
-        QObject::disconnect(*t4);
+        disconnect(*t4);
         delete t4;
         qDebug() << "Slot End";
         ko->setDate(QDate::currentDate(), Ko_impl::Test_ID);
@@ -187,15 +187,15 @@ void ChoiseDialog::c_shotConntection(MetaObj *p, MetaObj *t1, MetaObj *t2, MetaO
 {
     *p = connect(widget, &Widget::end, [=](QMap<double, double> y1,QMap<double, double> y2,QMap<double, double> y3,QMap<double, double> y4) {
         //widget->setUserMessage(ko->c_print());
-        QObject::disconnect(*p);
+        disconnect(*p);
         delete p;
-        QObject::disconnect(*t1);
+        disconnect(*t1);
         delete t1;
-        QObject::disconnect(*t2);
+        disconnect(*t2);
         delete t2;
-        QObject::disconnect(*t3);
+        disconnect(*t3);
         delete t3;
-        QObject::disconnect(*t4);
+        disconnect(*t4);
         delete t4;
         qDebug() << "Slot End";
         ko->setDate(QDate::currentDate(), Ko_impl::Calib_ID);
