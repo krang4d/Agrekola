@@ -72,10 +72,10 @@ void Ko3::open()
 //    } else
 //        param = QStringList({0, 0, 0, 0, 0, 0, 0, 0}); //8 параметров
 /* Новый метод загрузки параметров из XML */
-    ui->groupBox_testCalib->setTitle(QString("Последняя калибровка: %1\n").arg(c_ko3->getDate().toString("dd.MM.yyyy")));
-    QString str =
-              QString("Номер серия реагентов: %1\n").arg(c_ko3->getReagent_serial())
-            + QString("Срок годности реагентов: %1\n").arg(c_ko3->getReagent_date().toString("dd.MM.yyyy"));
+    ui->groupBox_testCalib->setTitle(QString("Последняя калибровка:\n")); //.arg(c_ko3->getDate().toString("dd.MM.yyyy")));
+//    QString str =
+//              QString("Номер серия реагентов: %1\n").arg(c_ko3->getReagent_serial())
+//            + QString("Срок годности реагентов: %1\n").arg(c_ko3->getReagent_date().toString("dd.MM.yyyy"));
 
     ui->label_testCalibString->setText(c_ko3->print());
 
@@ -482,4 +482,9 @@ StartMeasurement* StartTestKo3::getStart(TestKo3 *t_ko3, CalibrationKo3 *c_ko3)
     start->setTimeIncube(1, c_ko3->getIncube_time());
     start->setModeID(TestKo3_ID);
     return start;
+}
+
+void Ko3::on_tabWidget_currentChanged(int index)
+{
+    open();
 }

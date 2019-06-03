@@ -25,7 +25,6 @@ void Ko2::setTab(int i)
 
 void Ko2::on_tabWidget_currentChanged(int index)
 {
-
     qDebug() << "index changed: " << index;
     if(index == 1) {
         t_ko2 = t_ko2_1;
@@ -48,9 +47,9 @@ void Ko2::on_tabWidget_currentChanged(int index)
 //            sum+= c_ko2->getA4tv_kp4();
 //        }
 //        t_ko2->setA4tv_kp(sum/=i);
-        t_ko2->setA4tv_kp((c_ko2->getA4tv_kp1()+
-                           c_ko2->getA4tv_kp2()+
-                           c_ko2->getA4tv_kp3()+
+        t_ko2->setA4tv_kp((c_ko2->getA4tv_kp1() +
+                           c_ko2->getA4tv_kp2() +
+                           c_ko2->getA4tv_kp3() +
                            c_ko2->getA4tv_kp4())/4);
         qDebug() << "A4tv_kp is " << t_ko2->getA4tv_kp();
     }
@@ -64,6 +63,7 @@ void Ko2::on_tabWidget_currentChanged(int index)
 void Ko2::on_doubleSpinBox_test2a4tv_valueChanged(double arg1)
 {
     t_ko2->setA4tv_kp(arg1);
+    t_ko2->save();
     qDebug() << "A4tv_kp is " << t_ko2->getA4tv_kp();
 }
 

@@ -27,7 +27,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="tabWidgetPage1">
       <attribute name="title">
@@ -138,7 +138,7 @@
           </widget>
          </item>
          <item row="0" column="1">
-          <widget class="QDoubleSpinBox" name="doubleSpinBox_calibActivity"/>
+          <widget class="QDoubleSpinBox" name="doubleSpinBox_calibTrombine"/>
          </item>
         </layout>
        </item>
@@ -609,7 +609,7 @@
           </widget>
          </item>
          <item row="5" column="1">
-          <widget class="QDoubleSpinBox" name="doubleSpinBox_test2Activity"/>
+          <widget class="QDoubleSpinBox" name="doubleSpinBox_test2Trombine"/>
          </item>
          <item row="1" column="1">
           <widget class="QDoubleSpinBox" name="doubleSpinBox_test2WriteTime">

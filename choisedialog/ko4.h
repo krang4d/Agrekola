@@ -24,6 +24,8 @@ private:
     void open(TestKo4* t_ko4, CalibrationKo4 *c_ko4);
 
 private slots:
+    void on_tabWidget_currentChanged(int index);
+
     void on_pushButton_test1_clicked();
     void on_pushButton_test2_clicked();
     void on_pushButton_calib_clicked();
@@ -52,7 +54,6 @@ private slots:
     void on_radioButton_testActivity2_toggled(bool checked);
     void on_radioButton_testActivity3_toggled(bool checked);
 
-    void on_tabWidget_currentChanged(int index);
     void on_radioButton_test1Double_toggled(bool checked);
     void on_radioButton_test2Double_toggled(bool checked);
 
@@ -95,6 +96,7 @@ private:
     CalibrationKo4_1 *c_ko4_1;  //параметры калибровка с активностью тромбина 1
     CalibrationKo4_2 *c_ko4_2;  //параметры калибровка с активностью тромбина 2
     CalibrationKo4_3 *c_ko4_3;  //параметры калибровка с активностью тромбина 3
+    CalibrationKo4_4 *c_ko4_4;  //параметры  для теста без калибровки
     Mode_ID mode;
 };
 

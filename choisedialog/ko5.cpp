@@ -3,9 +3,10 @@
 
 Ko5::Ko5(QWidget *parent) :
     QWidget(parent),
+    ui(new Ui::Ko5),
     t_ko5(new TestKo5),
-    c_ko5(new CalibrationKo5),
-    ui(new Ui::Ko5)
+    c_ko5(new CalibrationKo5)
+
 {
     ui->setupUi(this);
     open();
@@ -409,7 +410,7 @@ void Ko5::on_lineEdit_testCh3_textChanged(const QString &arg1)
 StartMeasurement *StartCalibrationKo5::getStart(TestKo5 *t_ko5, Calibration *c_ko5)
 {
     StartMeasurement *start = new StartMeasurement(t_ko5, c_ko5);
-    start->setChannels(c_ko5->getK1(), c_ko5->getK2(), c_ko5->getK3(), c_ko5->getK4());
+    start->setChannels(true, true, true, true);
     start->setNum(1, "Калибровка");
     start->setNum(2, "Калибровка");
     start->setNum(3, "Калибровка");
