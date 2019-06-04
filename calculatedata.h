@@ -97,7 +97,7 @@ public:
 private:
     TestKo2 *t_ko2;
     CalibrationKo2 *c_ko2;
-    double t0;                      // АЧТВ контрольной плазмы
+    double t0, tx;                      // АЧТВ контрольной плазмы
 
     // CalcData interface
 public:

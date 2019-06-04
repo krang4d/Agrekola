@@ -50,7 +50,6 @@ void Ko5::on_pushButton_calib_clicked()
         return;
     }
 
-    c_ko5->setDate(QDate::currentDate());
     c_ko5->setReagent_date(ui->dateEdit_calibReagent->date());
     c_ko5->setReagent_serial(ui->lineEdit_calibReagentSerial->text());
     c_ko5->setK_plazma_date(ui->dateEdit_calibKPlazma->date());
@@ -417,6 +416,7 @@ StartMeasurement *StartCalibrationKo5::getStart(TestKo5 *t_ko5, Calibration *c_k
     start->setNum(4, "Калибровка");
     start->setTimeWrite(c_ko5->getWrite_time());
     start->setTimeIncube(1, c_ko5->getIncube_time());
+    start->setProbe(false);
     start->setModeID(CalibKo5_ID);
     return start;
 }

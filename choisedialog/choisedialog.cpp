@@ -45,8 +45,8 @@ ChoiseDialog::ChoiseDialog(QDialog *parent) :
     connect(agr2, SIGNAL(calibration(StartMeasurement*)), SLOT(calibration(StartMeasurement*)));
     connect(ko2, SIGNAL(calibration(StartMeasurement*)), SLOT(calibration(StartMeasurement*)));
     connect(ko3, SIGNAL(calibration(StartMeasurement*)), SLOT(calibration(StartMeasurement*)));
-    connect(ko5, SIGNAL(calibration(StartMeasurement*)), SLOT(calibration(StartMeasurement*)));
     connect(ko4, SIGNAL(calibration(StartMeasurement*)), SLOT(calibration(StartMeasurement*)));
+    connect(ko5, SIGNAL(calibration(StartMeasurement*)), SLOT(calibration(StartMeasurement*)));
     qDebug() << "ChoiseDialog thread ID: " << QThread::currentThreadId();
 }
 
@@ -128,16 +128,6 @@ void ChoiseDialog::t_shotConntection(MetaObj *p, MetaObj *t1, MetaObj *t2, MetaO
 {
     *p = connect(widget, &Widget::end, [=](QMap<double, double> y1,QMap<double, double> y2,QMap<double, double> y3,QMap<double, double> y4) {
         widget->setUserMessage(ko->t_print());
-        disconnect(*p);
-        delete p;
-        disconnect(*t1);
-        delete t1;
-        disconnect(*t2);
-        delete t2;
-        disconnect(*t3);
-        delete t3;
-        disconnect(*t4);
-        delete t4;
         qDebug() << "Slot End";
         ko->setDate(QDate::currentDate(), Ko_impl::Test_ID);
         ko->setTime(QTime::currentTime(), Ko_impl::Test_ID);
@@ -145,6 +135,23 @@ void ChoiseDialog::t_shotConntection(MetaObj *p, MetaObj *t1, MetaObj *t2, MetaO
         enddialog->exec();
         //DeleteWidgetThread();
         this->show();
+        disconnect(*p);
+        delete p;
+        if(single) {
+            disconnect(*t1);
+            delete t1;
+            disconnect(*t2);
+            delete t2;
+            disconnect(*t3);
+            delete t3;
+            disconnect(*t4);
+            delete t4;
+        } else {
+            disconnect(*t1);
+            delete t1;
+            disconnect(*t2);
+            delete t2;
+        }
     });
     if(single) {
         *t1 = connect(widget, &Widget::ret_value1, [=](double d, int i){
@@ -187,24 +194,30 @@ void ChoiseDialog::c_shotConntection(MetaObj *p, MetaObj *t1, MetaObj *t2, MetaO
 {
     *p = connect(widget, &Widget::end, [=](QMap<double, double> y1,QMap<double, double> y2,QMap<double, double> y3,QMap<double, double> y4) {
         //widget->setUserMessage(ko->c_print());
-        disconnect(*p);
-        delete p;
-        disconnect(*t1);
-        delete t1;
-        disconnect(*t2);
-        delete t2;
-        disconnect(*t3);
-        delete t3;
-        disconnect(*t4);
-        delete t4;
         qDebug() << "Slot End";
         ko->setDate(QDate::currentDate(), Ko_impl::Calib_ID);
         ko->setTime(QTime::currentTime(), Ko_impl::Calib_ID);
-
         myDialog::EndDialog *enddialog = new myDialog::EndDialog(ko->c_print(), y1, y2, y3, y4, this);
         enddialog->exec();
         //DeleteWidgetThread();
         this->show();
+        disconnect(*p);
+        this->show();
+        if(single) {
+            disconnect(*t1);
+            delete t1;
+            disconnect(*t2);
+            delete t2;
+            disconnect(*t3);
+            delete t3;
+            disconnect(*t4);
+            delete t4;
+        } else {
+            disconnect(*t1);
+            delete t1;
+            disconnect(*t2);
+            delete t2;
+        }
     });
     if(single) {
         *t1 = connect(widget, &Widget::ret_value1, [=](double d, int i){

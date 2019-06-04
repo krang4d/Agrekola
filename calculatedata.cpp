@@ -265,7 +265,7 @@ CalcKo2::CalcKo2(TestKo2 *t, CalibrationKo2 *c) : CalcData(), t_ko2(t), c_ko2(c)
 {
     t0 = (c_ko2->getA4tv_kp1() + c_ko2->getA4tv_kp2() + c_ko2->getA4tv_kp3() + c_ko2->getA4tv_kp4())/4;
     //QMessageBox::information(nullptr, "CalcKo2", QString("АЧТВ = %1").arg(t0));
-    qDebug() << QString("АЧТВ = %1").arg(t0);
+    //qDebug() << QString("АЧТВ = %1").arg(t0);
 }
 
 //CalcKo2::CalcKo2(WithoutCalibration)
@@ -279,7 +279,8 @@ CalcKo2::CalcKo2(TestKo2 *t, CalibrationKo2 *c) : CalcData(), t_ko2(t), c_ko2(c)
 double CalcKo2::calc(QMap<double, double> map)
 {
     if(!t0) QMessageBox::information(0, "CalcKo2", "Деление на ноль");
-    return CalcData::calcKo(map)/t0; // ОТН АЧТВ(1)
+    tx = CalcData::calcKo(map);
+    return  tx; // ОТН =  tx/t0 АЧТВ(1)
 }
 
 QString CalcKo2::info()
@@ -289,7 +290,7 @@ QString CalcKo2::info()
 
 QString CalcKo2::getParameters()
 {
-    return QString("АЧТВ контрольной плазмы: t0 = %1 (c)").arg(t0);
+    return QString("АЧТВ к/плазмы: t0 = %1 (c), tx = %2, ОТН = %2").arg(t0).arg(tx).arg(tx/t0);
 }
 
 //void CalcKo2::getCalibrationDeta(double &c1, double &c2, double &c3, double &c4)
@@ -352,7 +353,7 @@ CalcKo4::CalcKo4(TestKo4 *t, CalibrationKo4 *c) : CalcData(), t_ko4(t), c_ko4(c)
 
 double CalcKo4::calc(QMap<double, double> map)
 {
-
+    t0 = (c_ko4->getTv1() + c_ko4->getTv2() + c_ko4->getTv3() + c_ko4->getTv4())/4;
     return CalcData::calcKo(map)/t0;    //ОТН Тромбин(2)
 }
 

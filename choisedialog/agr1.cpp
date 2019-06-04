@@ -455,15 +455,16 @@ void Agr1::otp4Come(double d, SaveTo b)
 StartMeasurement *StartCalibrationAgr1::getStart(TestAgr1 *t_agr1, CalibrationAgr1 *c_agr1)
 {
     StartMeasurement *start = new StartMeasurement(t_agr1, c_agr1);
-    start->setChannels(1, 1, 1, 1);
-    start->setNum(1, "200% к/плазма");
-    start->setNum(2, "100% к/плазма");
-    start->setNum(3, "50% к/плазма");
-    start->setNum(4, "25% к/плазма");
+    start->setChannels(true, true, true, true);
+    start->setNum(1, "к/плазма");
+    start->setNum(2, "к/плазма");
+    start->setNum(3, "к/плазма");
+    start->setNum(4, "к/плазма");
     start->setTimeWrite(c_agr1->getWrite_time());
     start->setTimeIncube(1, c_agr1->getIncube_time());
     start->setTimeIncube(2, c_agr1->getIncube_time_2());
     start->setModeID(CalibAgr1_ID);
+    start->setProbe(false);
     start->setBtp_time(5);
     start->setOtp_time(5);
     return start;
