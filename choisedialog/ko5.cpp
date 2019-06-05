@@ -27,11 +27,6 @@ Ko5::~Ko5()
 
 void Ko5::on_pushButton_calib_clicked()
 {
-//    bool a = ui->checkBox_calibCh1->isChecked();
-//    bool b = ui->checkBox_calibCh2->isChecked();
-//    bool c = ui->checkBox_calibCh3->isChecked();
-//    bool d = ui->checkBox_calibCh4->isChecked();
-
     mode = CalibKo5_ID;
     bool e = !ui->lineEdit_calibKPlazmaNum->text().isEmpty();
     bool f = !ui->lineEdit_calibReagentSerial->text().isEmpty();
@@ -52,27 +47,16 @@ void Ko5::on_pushButton_calib_clicked()
 
     c_ko5->setReagent_date(ui->dateEdit_calibReagent->date());
     c_ko5->setReagent_serial(ui->lineEdit_calibReagentSerial->text());
+
     c_ko5->setK_plazma_date(ui->dateEdit_calibKPlazma->date());
     c_ko5->setK_plazma_serial(ui->lineEdit_calibKPlazmaNum->text());
+
     c_ko5->setIncube_time(ui->doubleSpinBox_calibIncubeTime->value());
     c_ko5->setWrite_time(ui->doubleSpinBox_calibWriteTime->value());
 
-    c_ko5->setK_protrombine_index(ui->doubleSpinBox_calibMICh->value());
+    c_ko5->setK_protrombine_index(ui->doubleSpinBox_calibIndex->value());
     c_ko5->setK_protrombine_otn(ui->doubleSpinBox_calibOTN->value());
     c_ko5->setProtrombine_k_Kvik(ui->doubleSpinBox_calibKvik->value());
-
-//    c_ko5->setK1(ui->checkBox_calibCh1->isChecked());
-//    c_ko5->setK2(ui->checkBox_calibCh2->isChecked());
-//    c_ko5->setK3(ui->checkBox_calibCh3->isChecked());
-//    c_ko5->setK4(ui->checkBox_calibCh4->isChecked());
-
-    c_ko5->setK_plazma_serial(ui->lineEdit_calibKPlazmaNum->text());
-    c_ko5->setTromboplastin_date(ui->dateEdit_calibKPlazma->date());
-    c_ko5->setReagent_serial(ui->lineEdit_calibReagentSerial->text());
-    c_ko5->setReagent_date(ui->dateEdit_calibReagent->date());
-
-    ui->doubleSpinBox_calibIncubeTime->setValue(c_ko5->getIncube_time());
-    ui->doubleSpinBox_calibWriteTime->setValue(c_ko5->getWrite_time());
 
     c_ko5->save();
     emit calibration(StartCalibrationKo5::getStart(t_ko5, c_ko5));
@@ -148,79 +132,60 @@ void Ko5::calibrationDataCome(int n, double deta)
 
 void Ko5::open()
 {
-/* Старый метод загрузки параметов из TXT*/
-//    file.openKo5(param);
-//    if( !param.isEmpty() && param.count() >= 11 ) {
-//        ui->label_calibrationData->setText(param.at(0));
-//        ui->lineEdit_1->setText(param.at(1));
-//        ui->lineEdit_2->setText(param.at(2));
-//        ui->lineEdit_3->setText(param.at(3));
-//        ui->lineEdit_4->setText(param.at(4));
-//        ui->lineEdit_5->setText(param.at(5));
-//        ui->lineEdit_6->setText(param.at(6));
-//    } else
-//        param = QStringList({0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}); //11 параметров
-        /* Новый метод загрузки параметров из XML */
-        ui->groupBox_testCalib->setTitle(QString("Последняя калибровка: %1\n").arg(c_ko5->getDate().toString("dd.MM.yyyy")));
-        QString str;
-                  QString("Номер серия реагентов %1\n").arg(c_ko5->getReagent_serial())
-                + QString("Срок годности реагентов %1\n").arg(c_ko5->getReagent_date().toString("dd.MM.yyyy"));
+    /* Новый метод загрузки параметров из XML */
+    //Загрузка параметров для Теста
+    ui->groupBox_testCalib->setTitle(QString("Последняя калибровка: "));
+    ui->label_testCalibString->setText(c_ko5->print());
 
-        ui->label_testCalibString->setText(c_ko5->print());
+    if( t_ko5->getSingle() ) {
+        ui->radioButton_testSingle->setChecked(true);
+    }
+    else {
+        ui->radioButton_testDouble->setChecked(true);
+    }
 
-        if( t_ko5->getSingle() ) {
-            ui->radioButton_testSingle->setChecked(true);
-        }
-        else {
-            ui->radioButton_testDouble->setChecked(true);
-        }
+    if( t_ko5->getK1() ) {
+        ui->checkBox_testCh1->setChecked(true);
+        ui->lineEdit_testCh1->setText(t_ko5->getNum1());
+    }
+    else {
+        ui->checkBox_testCh1->setChecked(false);
+    }
 
-        if( t_ko5->getK1() ) {
-            ui->checkBox_testCh1->setChecked(true);
-            ui->lineEdit_testCh1->setText(t_ko5->getNum1());
-        }
-        else {
-            ui->checkBox_testCh1->setChecked(false);
-        }
+    if( t_ko5->getK2() ) {
+        ui->checkBox_testCh2->setChecked(true);
+        ui->lineEdit_testCh2->setText(t_ko5->getNum2());
+    }
+    else {
+        ui->checkBox_testCh2->setChecked(false);
+    }
 
-        if( t_ko5->getK2() ) {
-            ui->checkBox_testCh2->setChecked(true);
-            ui->lineEdit_testCh2->setText(t_ko5->getNum2());
-        }
-        else {
-            ui->checkBox_testCh2->setChecked(false);
-        }
+    if( t_ko5->getK3() ) {
+        ui->checkBox_testCh3->setChecked(true);
+        ui->lineEdit_testCh3->setText(t_ko5->getNum3());
+    }
+    else {
+        ui->checkBox_testCh3->setChecked(false);
+    }
 
-        if( t_ko5->getK3() ) {
-            ui->checkBox_testCh3->setChecked(true);
-            ui->lineEdit_testCh3->setText(t_ko5->getNum3());
-        }
-        else {
-            ui->checkBox_testCh3->setChecked(false);
-        }
+    if( t_ko5->getK4() ) {
+        ui->checkBox_testCh4->setChecked(true);
+        ui->lineEdit_testCh4->setText(t_ko5->getNum4());
+    }
+    else {
+        ui->checkBox_testCh4->setChecked(false);
+    }
 
-        if( t_ko5->getK4() ) {
-            ui->checkBox_testCh4->setChecked(true);
-            ui->lineEdit_testCh4->setText(t_ko5->getNum4());
-        }
-        else {
-            ui->checkBox_testCh4->setChecked(false);
-        }
-
-//        ui->checkBox_calibCh1->setChecked(c_ko5->getK1());
-//        ui->checkBox_calibCh2->setChecked(c_ko5->getK2());
-//        ui->checkBox_calibCh3->setChecked(c_ko5->getK3());
-//        ui->checkBox_calibCh4->setChecked(c_ko5->getK4());
-
-        ui->lineEdit_calibKPlazmaNum->setText(c_ko5->getK_plazma_serial());
-        ui->dateEdit_calibKPlazma->setDate(c_ko5->getTromboplastin_date());
-        ui->lineEdit_calibReagentSerial->setText(c_ko5->getReagent_serial());
-        ui->dateEdit_calibReagent->setDate(c_ko5->getReagent_date());
-        ui->doubleSpinBox_calibKvik->setValue(c_ko5->getProtrombine_k_Kvik());
-        ui->doubleSpinBox_calibOTN->setValue(c_ko5->getK_protrombine_otn());
-        ui->doubleSpinBox_calibMICh->setValue(c_ko5->getK_protrombine_index());
-        ui->doubleSpinBox_calibIncubeTime->setValue(c_ko5->getIncube_time());
-        ui->doubleSpinBox_calibWriteTime->setValue(c_ko5->getWrite_time());
+    //Загрузка параметров для калибровки
+    ui->lineEdit_calibKPlazmaNum->setText(c_ko5->getK_plazma_serial());
+    ui->dateEdit_calibKPlazma->setDate(c_ko5->getK_plazma_date());
+    ui->lineEdit_calibReagentSerial->setText(c_ko5->getReagent_serial());
+    ui->dateEdit_calibReagent->setDate(c_ko5->getReagent_date());
+    ui->doubleSpinBox_calibKvik->setValue(c_ko5->getProtrombine_k_Kvik());
+    ui->doubleSpinBox_calibOTN->setValue(c_ko5->getK_protrombine_otn());
+    ui->doubleSpinBox_calibIndex->setValue(c_ko5->getK_protrombine_index());
+    ui->doubleSpinBox_calibIncubeTime->setValue(c_ko5->getIncube_time());
+    ui->doubleSpinBox_calibWriteTime->setValue(c_ko5->getWrite_time());
 }
 
 void Ko5::close()
@@ -234,9 +199,11 @@ void Ko5::setDate(QDate d, SaveTo b)
 {
     if(b == Test_ID) {
         t_ko5->setDate(d);
+        t_ko5->save();
     }
     if(b == Calib_ID) {
         c_ko5->setDate(d);
+        c_ko5->save();
     }
 }
 
@@ -244,9 +211,11 @@ void Ko5::setTime(QTime t, SaveTo b)
 {
     if(b == Test_ID) {
         t_ko5->setTime(t);
+        t_ko5->save();
     }
     if(b == Calib_ID) {
         c_ko5->setTime(t);
+        c_ko5->save();
     }
 }
 
@@ -254,62 +223,74 @@ void Ko5::calibrationData1Come(double t0, int i)
 {
     //calibrationDataCome(7, t0);
     c_ko5->setTime_k_Kvik(t0);
+    c_ko5->save();
 }
 
 void Ko5::calibrationData2Come(double t0, int i)
 {
     //calibrationDataCome(8, t0);
     c_ko5->setTime_50_Kvik(t0);
+    c_ko5->save();
 }
 
 void Ko5::calibrationData3Come(double t0, int i)
 {
     //calibrationDataCome(9, t0);
     c_ko5->setTime_25_Kvik(t0);
+    c_ko5->save();
 }
 
 void Ko5::calibrationData4Come(double t0, int i)
 {
     //calibrationDataCome(10, t0);
     c_ko5->setTime_12_Kvik(t0);
+    c_ko5->save();
 }
 
 void Ko5::setT1_2(double t0, int i)
 {
     c_ko5->setTime_k_Kvik(t0);
     c_ko5->setTime_50_Kvik(t0);
+    c_ko5->save();
 }
 
 void Ko5::setT3_4(double t0, int i)
 {
     c_ko5->setTime_25_Kvik(t0);
     c_ko5->setTime_12_Kvik(t0);
+    c_ko5->save();
 }
 
 QString Ko5::t_print()
 {
     //t_ko5->setDate(QDate::currentDate());
+    c_ko5->save();
     return t_ko5->print();
+
 }
 
 void Ko5::setT1(double value, int i)
 {
     t_ko5->setT1(value);
+    c_ko5->save();
 }
 
 void Ko5::setT2(double value, int i)
 {
     t_ko5->setT1(value);
+    c_ko5->save();
 }
 
 void Ko5::setT3(double value, int i)
 {
     t_ko5->setT1(value);
+    t_ko5->save();
 }
 
 void Ko5::setT4(double value, int i)
 {
     t_ko5->setT1(value);
+    t_ko5->save();
 }
 
 void Ko5::calibrationData1_2Come(double t0, int i)
@@ -319,18 +300,19 @@ void Ko5::calibrationData1_2Come(double t0, int i)
         c_ko5->setTime_k_Kvik(t0);
         break;
     case 2:
-        c_ko5->setTime_50_Kvik(t0);
+        c_ko5->setTime_25_Kvik(t0);
         break;
     default:
         break;
     }
+    c_ko5->save();
 }
 
 void Ko5::calibrationData2_4Come(double t0, int i)
 {
     switch (i) {
     case 1:
-        c_ko5->setTime_25_Kvik(t0);
+        c_ko5->setTime_50_Kvik(t0);
         break;
     case 2:
         c_ko5->setTime_12_Kvik(t0);
@@ -338,6 +320,7 @@ void Ko5::calibrationData2_4Come(double t0, int i)
     default:
         break;
     }
+    c_ko5->save();
 }
 
 QString Ko5::c_print()
@@ -434,4 +417,13 @@ StartMeasurement *StartTestKo5::getStart(TestKo5 *t_ko5, Calibration *c_ko5)
     start->setTimeIncube(1, c_ko5->getIncube_time());
     start->setModeID(TestKo5_ID);
     return start;
+}
+
+void Ko5::on_tabWidget_currentChanged(int index)
+{
+    switch (index) {
+    default:
+        open();
+        break;
+    }
 }

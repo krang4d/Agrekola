@@ -332,12 +332,19 @@ StateCalKo5::StateCalKo5(IScenario *o) : State(o)
 {
     insertState(LaserON_ID,     "Включение лазеров");
     insertState(MotorON_ID,     "Включение двигателей");
-    insertState(Incubation1_ID, "Инкубация");
+
+    insertState(Incubation1_ID, "Установите разведения 100% в каналы 1,2, 50% в каналы 3,4");
     insertState(Ko_ID,          "Сбор данных");
+    insertState(Calc_ID,        "Расчет", 1);
+    insertState(Write_ID,       "Запись");
+
+    insertState(Incubation1_ID, "Установите разведения 25% в каналы 1,2, 12.5% в каналы 3,4");
+    insertState(Ko_ID,          "Сбор данных");
+    insertState(Calc_ID,        "Расчет", 2);
+    insertState(Write_ID,       "Запись");
+
     insertState(LaserOFF_ID,    "Выключение лазеров");
     insertState(MotorOFF_ID,    "Выключение двигателей");
-    insertState(Calc_ID,        "Расчет");
-    insertState(Write_ID,       "Запись");
     insertState(End_ID,         "Конец");
 }
 

@@ -8922,35 +8922,35 @@
                  <qlist>
                   <item>
                    <MClassMember>
-                    <uid>{c0bb9f68-fdb7-4959-82b5-c2ac59af7984}</uid>
+                    <uid>{07818d12-d8e3-4c8a-a12b-0f30bb2ee5f1}</uid>
                     <type>2</type>
                     <declaration>QDomDocument createTest(QString name)</declaration>
                    </MClassMember>
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{0975079f-d460-4d63-8b8d-1c616c6e3c1c}</uid>
+                    <uid>{b80b78bf-5572-4fdc-9aa7-2a76e6ef2e9f}</uid>
                     <type>2</type>
                     <declaration>QDomDocument createCalibration(QString name)</declaration>
                    </MClassMember>
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{f7112628-e88f-4ede-9b9c-853a48f9e406}</uid>
+                    <uid>{bf751e0e-5885-4aa1-acbd-31e1ee6a9c7d}</uid>
                     <type>2</type>
                     <declaration>int writeFile(QString name, QDomDocument doc)</declaration>
                    </MClassMember>
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{38a3ca84-d8aa-4bf3-916f-3fcb7e85d75f}</uid>
+                    <uid>{21c65529-e04d-4c39-8fbc-8ab3b2807af2}</uid>
                     <type>2</type>
                     <declaration>int readFile(QString name, QDomDocument &amp;doc)</declaration>
                    </MClassMember>
                   </item>
                   <item>
                    <MClassMember>
-                    <uid>{ab828ff6-8f7e-410e-ab31-3946f823dbcc}</uid>
+                    <uid>{50c6c06f-aadb-4738-b49e-3eba4f2e7a0f}</uid>
                     <type>2</type>
                     <declaration>QDir getXMLDir()</declaration>
                    </MClassMember>

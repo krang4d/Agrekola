@@ -36,6 +36,8 @@ private slots:
     void on_lineEdit_testCh3_textChanged(const QString &arg1);
 
     // Ko_impl interface
+    void on_tabWidget_currentChanged(int index);
+
 public slots:
     void open();
     void close();
