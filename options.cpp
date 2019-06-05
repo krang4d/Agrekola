@@ -11,10 +11,15 @@ Options::Options(ITools *tool, QDialog *parent) :
     setAttribute(Qt::WA_DeleteOnClose);
     setWindowFlags(Qt::Window);
     setWindowTitle(tr("Настройки"));
-    ui->lineEdit_StartDX->setInputMask("0.9");
-    ui->lineEdit_MAX->setValidator(new QDoubleValidator(-5.1, 5.1, 2));
-    ui->lineEdit_MIN->setValidator(new QDoubleValidator(-5.1, 5.1, 2));
-    ui->lineEdit_MIX->setValidator(new QDoubleValidator(0, 100, 1));
+    ui->lineEdit_StartDX->setInputMask("0.999");
+    ui->lineEdit_StopDX->setInputMask("0.999");
+    ui->lineEdit_MAX->setInputMask("0.9");
+    ui->lineEdit_MIN->setInputMask("-0.9");
+//    ui->lineEdit_MAX->setInputMask("6.0");
+//    ui->lineEdit_MIN->setInputMask("-6.0");
+//    ui->lineEdit_MAX->setValidator(new QDoubleValidator(-5.1, 5.1, 2));
+//    ui->lineEdit_MIN->setValidator(new QDoubleValidator(-5.1, 5.1, 2));
+//    ui->lineEdit_MIX->setValidator(new QDoubleValidator(0, 100, 1));
 
 
     ui->lineEdit_StartDX->setText(QString("%1").arg(tool->getSTART_DX()));
