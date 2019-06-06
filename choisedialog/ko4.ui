@@ -15,16 +15,6 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_4">
    <item>
-    <widget class="QLabel" name="label_ko4">
-     <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;Тромбин&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
       <number>2</number>
@@ -55,6 +45,9 @@
          </item>
          <item row="1" column="1">
           <widget class="QDateEdit" name="dateEdit_calibReagent">
+           <property name="calendarPopup">
+            <bool>true</bool>
+           </property>
            <property name="date">
             <date>
              <year>2019</year>
@@ -87,6 +80,9 @@
          </item>
          <item row="3" column="1">
           <widget class="QDateEdit" name="dateEdit_calibKPlazma">
+           <property name="calendarPopup">
+            <bool>true</bool>
+           </property>
            <property name="date">
             <date>
              <year>2019</year>
@@ -138,7 +134,14 @@
           </widget>
          </item>
          <item row="0" column="1">
-          <widget class="QDoubleSpinBox" name="doubleSpinBox_calibTrombine"/>
+          <widget class="QDoubleSpinBox" name="doubleSpinBox_calibTrombine">
+           <property name="singleStep">
+            <double>0.100000000000000</double>
+           </property>
+           <property name="value">
+            <double>1.000000000000000</double>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
@@ -157,7 +160,13 @@
             <number>1</number>
            </property>
            <property name="minimum">
-            <double>1.000000000000000</double>
+            <double>3.000000000000000</double>
+           </property>
+           <property name="maximum">
+            <double>300.000000000000000</double>
+           </property>
+           <property name="singleStep">
+            <double>0.100000000000000</double>
            </property>
           </widget>
          </item>
@@ -175,6 +184,12 @@
            </property>
            <property name="minimum">
             <double>5.000000000000000</double>
+           </property>
+           <property name="maximum">
+            <double>500.000000000000000</double>
+           </property>
+           <property name="singleStep">
+            <double>0.100000000000000</double>
            </property>
           </widget>
          </item>
@@ -401,7 +416,17 @@
       <attribute name="title">
        <string>Тест без калибровки</string>
       </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_9">
+      <layout class="QVBoxLayout" name="verticalLayout_24">
+       <item>
+        <widget class="QLabel" name="label_ko4">
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;Тромбин&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
        <item>
         <widget class="QGroupBox" name="groupBox_test2Probe">
          <property name="sizePolicy">
@@ -519,48 +544,18 @@
         </layout>
        </item>
        <item>
-        <layout class="QFormLayout" name="formLayout_test2">
+        <layout class="QFormLayout" name="formLayout_3">
          <item row="0" column="0">
-          <widget class="QLabel" name="label_test2_0">
-           <property name="text">
-            <string>Время инкубации (с)</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="QDoubleSpinBox" name="doubleSpinBox_test2IncubeTime">
-           <property name="decimals">
-            <number>1</number>
-           </property>
-           <property name="minimum">
-            <double>1.000000000000000</double>
-           </property>
-           <property name="maximum">
-            <double>300.000000000000000</double>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
-          <widget class="QLabel" name="label_test2_1">
-           <property name="text">
-            <string>Время записи (с)</string>
-           </property>
-           <property name="buddy">
-            <cstring>lineEdit_time</cstring>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="0">
           <widget class="QLabel" name="label_test2_3">
            <property name="text">
             <string>Номер серии реагентов</string>
            </property>
           </widget>
          </item>
-         <item row="2" column="1">
+         <item row="0" column="1">
           <widget class="QLineEdit" name="lineEdit_test2ReagentSerial"/>
          </item>
-         <item row="3" column="0">
+         <item row="1" column="0">
           <widget class="QLabel" name="label_test2_4">
            <property name="minimumSize">
             <size>
@@ -573,8 +568,11 @@
            </property>
           </widget>
          </item>
-         <item row="3" column="1">
+         <item row="1" column="1">
           <widget class="QDateEdit" name="dateEdit_test2Reagent">
+           <property name="calendarPopup">
+            <bool>true</bool>
+           </property>
            <property name="date">
             <date>
              <year>2019</year>
@@ -584,7 +582,24 @@
            </property>
           </widget>
          </item>
-         <item row="4" column="0">
+         <item row="2" column="0">
+          <widget class="QLabel" name="label_test2_6">
+           <property name="text">
+            <string>Исползуемая активность [МЕ/мл]</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QDoubleSpinBox" name="doubleSpinBox_test2Trombine">
+           <property name="singleStep">
+            <double>0.100000000000000</double>
+           </property>
+           <property name="value">
+            <double>1.000000000000000</double>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0">
           <widget class="QLabel" name="label_test2_5">
            <property name="minimumSize">
             <size>
@@ -597,30 +612,68 @@
            </property>
           </widget>
          </item>
-         <item row="4" column="1">
+         <item row="3" column="1">
           <widget class="QDoubleSpinBox" name="doubleSpinBox_test2TrombineTime">
            <property name="decimals">
             <number>1</number>
            </property>
+           <property name="minimum">
+            <double>0.100000000000000</double>
+           </property>
+           <property name="singleStep">
+            <double>0.100000000000000</double>
+           </property>
+           <property name="value">
+            <double>1.000000000000000</double>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="0">
+          <widget class="QLabel" name="label_test2_0">
+           <property name="text">
+            <string>Время инкубации (с)</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="1">
+          <widget class="QDoubleSpinBox" name="doubleSpinBox_test2IncubeTime">
+           <property name="decimals">
+            <number>1</number>
+           </property>
+           <property name="minimum">
+            <double>3.000000000000000</double>
+           </property>
+           <property name="maximum">
+            <double>300.000000000000000</double>
+           </property>
+           <property name="singleStep">
+            <double>0.100000000000000</double>
+           </property>
           </widget>
          </item>
          <item row="5" column="0">
-          <widget class="QLabel" name="label_test2_6">
+          <widget class="QLabel" name="label_test2_1">
            <property name="text">
-            <string>Исползуемая активность [МЕ/мл]</string>
+            <string>Время записи (с)</string>
+           </property>
+           <property name="buddy">
+            <cstring>lineEdit_time</cstring>
            </property>
           </widget>
          </item>
          <item row="5" column="1">
-          <widget class="QDoubleSpinBox" name="doubleSpinBox_test2Trombine"/>
-         </item>
-         <item row="1" column="1">
           <widget class="QDoubleSpinBox" name="doubleSpinBox_test2WriteTime">
            <property name="decimals">
             <number>1</number>
            </property>
            <property name="minimum">
             <double>5.000000000000000</double>
+           </property>
+           <property name="maximum">
+            <double>500.000000000000000</double>
+           </property>
+           <property name="singleStep">
+            <double>0.100000000000000</double>
            </property>
           </widget>
          </item>

@@ -36,7 +36,7 @@
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <property name="elideMode">
       <enum>Qt::ElideLeft</enum>
@@ -53,15 +53,104 @@
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
-        <layout class="QFormLayout" name="formLayout_calib">
+        <layout class="QFormLayout" name="formLayout_2">
          <item row="0" column="0">
+          <widget class="QLabel" name="label_calib1">
+           <property name="text">
+            <string>Номер серии реагентов</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="lineEdit_calibReagentSerial"/>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="label_calib2">
+           <property name="text">
+            <string>Срок годности реагентов</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QDateEdit" name="dateEdit_calibReagent">
+           <property name="calendarPopup">
+            <bool>true</bool>
+           </property>
+           <property name="date">
+            <date>
+             <year>2019</year>
+             <month>1</month>
+             <day>1</day>
+            </date>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="label_calib3">
+           <property name="text">
+            <string>Номер серии к/плазмы</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QLineEdit" name="lineEdit_calibKPlazmaSerial">
+           <property name="enabled">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="label_calib4">
+           <property name="text">
+            <string>Срок годности к/ плазмы</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <widget class="QDateEdit" name="dateEdit_calibPlazma">
+           <property name="calendarPopup">
+            <bool>true</bool>
+           </property>
+           <property name="date">
+            <date>
+             <year>2019</year>
+             <month>1</month>
+             <day>1</day>
+            </date>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="0">
+          <widget class="QLabel" name="label_calib5">
+           <property name="text">
+            <string>АЧТВ к/плазмы</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="1">
+          <widget class="QDoubleSpinBox" name="doubleSpinBox_caliba4tv">
+           <property name="minimum">
+            <double>0.100000000000000</double>
+           </property>
+           <property name="maximum">
+            <double>100.000000000000000</double>
+           </property>
+           <property name="singleStep">
+            <double>0.100000000000000</double>
+           </property>
+           <property name="value">
+            <double>1.000000000000000</double>
+           </property>
+          </widget>
+         </item>
+         <item row="5" column="0">
           <widget class="QLabel" name="label_calib0">
            <property name="text">
             <string>Время инкубации (с)</string>
            </property>
           </widget>
          </item>
-         <item row="0" column="1">
+         <item row="5" column="1">
           <widget class="QDoubleSpinBox" name="doubleSpinBox_calibIncube">
            <property name="prefix">
             <string/>
@@ -75,65 +164,11 @@
            <property name="minimum">
             <double>1.000000000000000</double>
            </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
-          <widget class="QLabel" name="label_calib1">
-           <property name="text">
-            <string>Номер серии реагентов</string>
+           <property name="maximum">
+            <double>300.000000000000000</double>
            </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
-          <widget class="QLineEdit" name="lineEdit_calibReagentSerial"/>
-         </item>
-         <item row="2" column="0">
-          <widget class="QLabel" name="label_calib2">
-           <property name="text">
-            <string>Срок годности реагентов</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="1">
-          <widget class="QDateEdit" name="dateEdit_calibReagent">
-           <property name="date">
-            <date>
-             <year>2019</year>
-             <month>1</month>
-             <day>1</day>
-            </date>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="0">
-          <widget class="QLabel" name="label_calib3">
-           <property name="text">
-            <string>Номер серии к/плазмы</string>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="1">
-          <widget class="QLineEdit" name="lineEdit_calibKPlazmaSerial">
-           <property name="enabled">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="4" column="0">
-          <widget class="QLabel" name="label_calib4">
-           <property name="text">
-            <string>Срок годности к/ плазмы</string>
-           </property>
-          </widget>
-         </item>
-         <item row="4" column="1">
-          <widget class="QDateEdit" name="dateEdit_calibPlazma">
-           <property name="date">
-            <date>
-             <year>2019</year>
-             <month>1</month>
-             <day>1</day>
-            </date>
+           <property name="value">
+            <double>100.000000000000000</double>
            </property>
           </widget>
          </item>
@@ -149,23 +184,19 @@
            <property name="suffix">
             <string/>
            </property>
+           <property name="decimals">
+            <number>1</number>
+           </property>
            <property name="minimum">
-            <double>5.000000000000000</double>
+            <double>3.000000000000000</double>
            </property>
            <property name="maximum">
-            <double>100.000000000000000</double>
+            <double>300.000000000000000</double>
+           </property>
+           <property name="value">
+            <double>5.000000000000000</double>
            </property>
           </widget>
-         </item>
-         <item row="5" column="0">
-          <widget class="QLabel" name="label_calib5">
-           <property name="text">
-            <string>АЧТВ к/плазмы</string>
-           </property>
-          </widget>
-         </item>
-         <item row="5" column="1">
-          <widget class="QDoubleSpinBox" name="doubleSpinBox_caliba4tv"/>
          </item>
         </layout>
        </item>
@@ -492,6 +523,9 @@
          </item>
          <item row="1" column="1">
           <widget class="QDateEdit" name="dateEdit_test2Reagent">
+           <property name="calendarPopup">
+            <bool>true</bool>
+           </property>
            <property name="date">
             <date>
              <year>2019</year>
@@ -511,7 +545,19 @@
          <item row="2" column="1">
           <widget class="QDoubleSpinBox" name="doubleSpinBox_test2a4tv">
            <property name="decimals">
-            <number>1</number>
+            <number>2</number>
+           </property>
+           <property name="minimum">
+            <double>0.000000000000000</double>
+           </property>
+           <property name="maximum">
+            <double>99.989999999999995</double>
+           </property>
+           <property name="singleStep">
+            <double>0.100000000000000</double>
+           </property>
+           <property name="value">
+            <double>1.000000000000000</double>
            </property>
           </widget>
          </item>
@@ -528,10 +574,16 @@
             <number>1</number>
            </property>
            <property name="minimum">
-            <double>1.000000000000000</double>
+            <double>3.000000000000000</double>
            </property>
            <property name="maximum">
             <double>300.000000000000000</double>
+           </property>
+           <property name="singleStep">
+            <double>0.100000000000000</double>
+           </property>
+           <property name="value">
+            <double>3.000000000000000</double>
            </property>
           </widget>
          </item>
@@ -548,6 +600,15 @@
             <number>1</number>
            </property>
            <property name="minimum">
+            <double>5.000000000000000</double>
+           </property>
+           <property name="maximum">
+            <double>500.000000000000000</double>
+           </property>
+           <property name="singleStep">
+            <double>0.100000000000000</double>
+           </property>
+           <property name="value">
             <double>5.000000000000000</double>
            </property>
           </widget>

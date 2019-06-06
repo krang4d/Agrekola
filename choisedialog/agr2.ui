@@ -35,39 +35,25 @@
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
-        <layout class="QFormLayout" name="formLayout_calib">
+        <layout class="QFormLayout" name="formLayout">
          <item row="0" column="0">
-          <widget class="QLabel" name="label_calib_1">
-           <property name="text">
-            <string>Время инкубации №1 (с)</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
-          <widget class="QLabel" name="label_calib_2">
-           <property name="text">
-            <string>Время инкубации №2  (с)</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="0">
           <widget class="QLabel" name="label_calib_3">
            <property name="text">
             <string>Номер серии реагентов</string>
            </property>
           </widget>
          </item>
-         <item row="2" column="1">
+         <item row="0" column="1">
           <widget class="QLineEdit" name="lineEdit_calibReagentSerial"/>
          </item>
-         <item row="3" column="0">
+         <item row="1" column="0">
           <widget class="QLabel" name="label_calib_4">
            <property name="text">
             <string>Срок годности реагентов</string>
            </property>
           </widget>
          </item>
-         <item row="3" column="1">
+         <item row="1" column="1">
           <widget class="QDateEdit" name="dateEdit_calibReagent">
            <property name="date">
             <date>
@@ -78,24 +64,24 @@
            </property>
           </widget>
          </item>
-         <item row="4" column="0">
+         <item row="2" column="0">
           <widget class="QLabel" name="label_calib_5">
            <property name="text">
             <string>Номер серии к/плазмы</string>
            </property>
           </widget>
          </item>
-         <item row="4" column="1">
+         <item row="2" column="1">
           <widget class="QLineEdit" name="lineEdit_calibKPlazmaSerial"/>
          </item>
-         <item row="5" column="0">
+         <item row="3" column="0">
           <widget class="QLabel" name="label_calib_6">
            <property name="text">
             <string>Срок годности к/плазмы</string>
            </property>
           </widget>
          </item>
-         <item row="5" column="1">
+         <item row="3" column="1">
           <widget class="QDateEdit" name="dateEdit_calibKPlazma">
            <property name="date">
             <date>
@@ -106,7 +92,7 @@
            </property>
           </widget>
          </item>
-         <item row="6" column="0">
+         <item row="4" column="0">
           <widget class="QLabel" name="label_calib_7">
            <property name="text">
             <string>Активность фактора Виллебранда
@@ -114,30 +100,66 @@
            </property>
           </widget>
          </item>
-         <item row="7" column="0">
-          <widget class="QLabel" name="label_calib_8">
-           <property name="text">
-            <string>Время записи агрегатограмм (с)</string>
+         <item row="4" column="1">
+          <widget class="QDoubleSpinBox" name="doubleSpinBox_calibVillebrand">
+           <property name="singleStep">
+            <double>0.100000000000000</double>
+           </property>
+           <property name="value">
+            <double>1.000000000000000</double>
            </property>
           </widget>
          </item>
-         <item row="0" column="1">
+         <item row="5" column="0">
+          <widget class="QLabel" name="label_calib_1">
+           <property name="text">
+            <string>Время инкубации №1 (с)</string>
+           </property>
+          </widget>
+         </item>
+         <item row="5" column="1">
           <widget class="QDoubleSpinBox" name="doubleSpinBox_calibIncubeTime_1">
            <property name="decimals">
             <number>1</number>
            </property>
            <property name="minimum">
-            <double>1.000000000000000</double>
+            <double>3.000000000000000</double>
+           </property>
+           <property name="maximum">
+            <double>300.000000000000000</double>
+           </property>
+           <property name="singleStep">
+            <double>0.100000000000000</double>
            </property>
           </widget>
          </item>
-         <item row="1" column="1">
+         <item row="6" column="0">
+          <widget class="QLabel" name="label_calib_2">
+           <property name="text">
+            <string>Время инкубации №2  (с)</string>
+           </property>
+          </widget>
+         </item>
+         <item row="6" column="1">
           <widget class="QDoubleSpinBox" name="doubleSpinBox_calibIncubeTime_2">
            <property name="decimals">
             <number>1</number>
            </property>
            <property name="minimum">
-            <double>1.000000000000000</double>
+            <double>3.000000000000000</double>
+           </property>
+           <property name="maximum">
+            <double>300.000000000000000</double>
+           </property>
+           <property name="singleStep">
+            <double>0.100000000000000</double>
+           </property>
+          </widget>
+         </item>
+         <item row="7" column="0">
+          <widget class="QLabel" name="label_calib_8">
+           <property name="text">
+            <string>Время записи агрегатограмм (с)</string>
            </property>
           </widget>
          </item>
@@ -150,12 +172,12 @@
             <double>5.000000000000000</double>
            </property>
            <property name="maximum">
-            <double>180.000000000000000</double>
+            <double>500.000000000000000</double>
+           </property>
+           <property name="singleStep">
+            <double>0.100000000000000</double>
            </property>
           </widget>
-         </item>
-         <item row="6" column="1">
-          <widget class="QDoubleSpinBox" name="doubleSpinBox_calibVillebrand"/>
          </item>
         </layout>
        </item>
