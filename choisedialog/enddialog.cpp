@@ -11,6 +11,7 @@ EndDialog::EndDialog(const QString &str, QMap<double, double> y1, QMap<double, d
     setAttribute(Qt::WA_DeleteOnClose);
     setWindowModality(Qt::WindowModal);
     setWindowTitle("Результаты");
+    setGeometry(parent->geometry());
     QGridLayout *gridLayout = new QGridLayout(this);
     QLabel *label = new QLabel(this);
     pushButton_print = new QPushButton(this);
@@ -99,6 +100,11 @@ void EndDialog::graph(QMap<double, double> map, QCustomPlot *plot)
     }
     QVector<double> y = map.values().toVector();
     QVector<double> x = map.keys().toVector();
+    double delta = x.first();
+    for( auto &it : x ) {
+        it -= delta;
+    }
+
     double max_x = *std::max_element(x.begin(), x.end()); qDebug() << "max_x :" << max_x;
     double min_x = *std::min_element(x.begin(), x.end()); qDebug() << "min_x :" << min_x;
     double max_y = *std::max_element(y.begin(), y.end()); qDebug() << "max_y :" << max_y;
@@ -110,8 +116,8 @@ void EndDialog::graph(QMap<double, double> map, QCustomPlot *plot)
     plot->xAxis->setLabel("Время, с");
     plot->yAxis->setLabel("Вольт");
     // set axes ranges, so we see all data:
-    plot->xAxis->setRange(min_x, max_x+0.2);
-    plot->yAxis->setRange(min_y - 0.2, max_y + 0.2);
+    plot->xAxis->setRange(min_x, max_x+0.1);
+    plot->yAxis->setRange(min_y - 0.1, max_y + 0.1);
     plot->show();
 }
 
