@@ -277,19 +277,19 @@ void Ko5::setT1(double value, int i)
 
 void Ko5::setT2(double value, int i)
 {
-    t_ko5->setT1(value);
+    t_ko5->setT2(value);
     c_ko5->save();
 }
 
 void Ko5::setT3(double value, int i)
 {
-    t_ko5->setT1(value);
+    t_ko5->setT3(value);
     t_ko5->save();
 }
 
 void Ko5::setT4(double value, int i)
 {
-    t_ko5->setT1(value);
+    t_ko5->setT4(value);
     t_ko5->save();
 }
 

@@ -10,6 +10,7 @@
 #include <savefiles.h>
 #include <qcustomplot.h>
 
+#include  "../XML/KoAgrXML/koagrxml.h"
 #include "globalvalue.h"
 
 //template< class T, class C, class Calc >
@@ -31,7 +32,7 @@ public:
     static CalcData* createCalc( Test *t, Calibration *c, Mode_ID );
 
     //virtual void getCalibrationDeta(double &c1, double &c2,double &c3, double &c4);
-    virtual double calc(QMap<double, double>) = 0;
+    virtual double calc(QMap<double, double>, Channel_ID = Channel1_ID) = 0;
     virtual QString info() = 0;
     virtual Mode_ID getModeID() = 0;
     virtual QString getParameters() = 0;
@@ -60,7 +61,7 @@ public:
     // CalcData interface
 public:
     QString info() override;
-    double calc(QMap<double, double>) override;
+    double calc(QMap<double, double>, Channel_ID) override;
     QString getParameters() override;
     Mode_ID getModeID() override
     {
@@ -79,7 +80,7 @@ private:
     // CalcData interface
 public:
     QString info() override;
-    double calc(QMap<double, double>) override;
+    double calc(QMap<double, double>, Channel_ID) override;
     QString getParameters() override;
     Mode_ID getModeID() override
     {
@@ -101,7 +102,7 @@ private:
 
     // CalcData interface
 public:
-    double calc(QMap<double, double>) override;
+    double calc(QMap<double, double>, Channel_ID) override;
     QString info() override;
    // void getCalibrationDeta(double &c1, double &c2, double &c3, double &c4) override;
     QString getParameters() override;
@@ -129,7 +130,7 @@ private:
 
     // CalcData interface
 public:
-    double calc(QMap<double, double>) override;
+    double calc(QMap<double, double>, Channel_ID) override;
     QString info() override;
     QString getParameters() override;
     Mode_ID getModeID() override
@@ -151,7 +152,7 @@ private:
 
     // CalcData interface
 public:
-    double calc(QMap<double, double>) override;
+    double calc(QMap<double, double>, Channel_ID) override;
     QString info() override;
     QString getParameters() override;
     Mode_ID getModeID() override
@@ -164,11 +165,11 @@ class CalcKo5 : public CalcData
 {
 public:
     explicit CalcKo5(TestKo5*, CalibrationKo5*);
-    double getIndex() {
+    inline double getIndex() {
         return pix;
     }
 
-    double getOtn() {
+    inline double getOtn() {
         return pox;
     }
 
@@ -176,26 +177,26 @@ public:
 private:
     TestKo5 *t_ko5;
     CalibrationKo5 *c_ko5;
-    //константы (паспортные данные)
+    ///константы (паспортные данные)
     const int k = 4;                //часло калибровочных точек
-    //протромбиновое отношение плазмы калибратора
+    ///протромбиновое отношение плазмы калибратора
     double a100;                    //протромбин по Квику (100%) контрольнной плазмы
     double po1;                     //протромбиновое отношение плазмы калибратора
     double pi1;                     //протромбиновый индекс плазмы калибратора
-    //калибровочные параметры
-    double t100, t50, t25, t12;          //время свертывания для каждого разведения, t100 - контр. плазма (протромбиновое время)
-    //искомые величины
-    double a50, a25, a12;              //разведение 50% 25%, 12.5%
+    ///калибровочные параметры
+    double t100, t50, t25, t12;     //время свертывания для каждого разведения, t100 - контр. плазма (протромбиновое время)
+    ///искомые величины
+    double a50, a25, a12;           //разведение 50%, 25%, 12.5%
     double tgalfa, tgalfa1, tgalfa2;
     double tgalfa3, tgalfa4;        //угол наклона k-ого участка калибровочной кривой
     double lgax;                    //искомая величиан ax = 10^lgax
-    double ax;
+    double ax;                      //протромбин по Квику в исследуемой плазме
     double pox;                     //протромбиновое отношене ОТН
     double pix;                     //протромбиновый индекс ИНД
 
     // CalcData interface
 public:
-    double calc(QMap<double, double>) override;
+    double calc(QMap<double, double>, Channel_ID) override;
     QString info() override;
     QString getParameters() override;
     Mode_ID getModeID() override
@@ -219,7 +220,7 @@ private:
 
     // CalcData interface
 public:
-    double calc(QMap<double, double>) override;
+    double calc(QMap<double, double>, Channel_ID) override;
     QString info() override;
     QString getParameters() override;
     Mode_ID getModeID() override
@@ -249,7 +250,7 @@ private:
 
     // CalcData interface
 public:
-    double calc(QMap<double, double>) override;
+    double calc(QMap<double, double>, Channel_ID) override;
     QString info() override;
     QString getParameters() override;
     Mode_ID getModeID() override

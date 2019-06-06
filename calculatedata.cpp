@@ -232,7 +232,7 @@ CalcKo1::CalcKo1(TestKo1 *t, CalibrationKo1 *c) : CalcData(), t_ko1(t), c_ko1(c)
     ///иницмализация параметров
 }
 
-double CalcKo1::calc(QMap<double, double> map)
+double CalcKo1::calc(QMap<double, double> map, Channel_ID)
 {
     //qDebug() << "CalcKo1::calc() " << k;
     return CalcData::calcKo(map);
@@ -276,7 +276,7 @@ CalcKo2::CalcKo2(TestKo2 *t, CalibrationKo2 *c) : CalcData(), t_ko2(t), c_ko2(c)
 //    qDebug() << QString("АЧТВ = %1").arg(t0);
 //}
 
-double CalcKo2::calc(QMap<double, double> map)
+double CalcKo2::calc(QMap<double, double> map, Channel_ID)
 {
     if(!t0) QMessageBox::information(0, "CalcKo2", "Деление на ноль");
     tx = CalcData::calcKo(map);
@@ -314,7 +314,7 @@ CalcKo3::CalcKo3(TestKo3 *t, CalibrationKo3 *c) : CalcData(), t_ko3(t), c_ko3(c)
     qDebug() << QString("Параметры калибровки Фириногена") << c2 << t1 << t2 << t3 << t4;
 }
 
-double CalcKo3::calc(QMap<double, double> map)
+double CalcKo3::calc(QMap<double, double> map, Channel_ID)
 {
     // <-- проверка значений калибровки
     if( t2/t1 <1 || t3/t2 <1 || t4/t3 <1) {
@@ -351,7 +351,7 @@ CalcKo4::CalcKo4(TestKo4 *t, CalibrationKo4 *c) : CalcData(), t_ko4(t), c_ko4(c)
     qDebug() << "Тромбин контрольной плазмы =" << t0;
 }
 
-double CalcKo4::calc(QMap<double, double> map)
+double CalcKo4::calc(QMap<double, double> map, Channel_ID)
 {
     t0 = (c_ko4->getTv1() + c_ko4->getTv2() + c_ko4->getTv3() + c_ko4->getTv4())/4;
     return CalcData::calcKo(map)/t0;    //ОТН Тромбин(2)
@@ -369,6 +369,8 @@ QString CalcKo4::getParameters()
 
 CalcKo5::CalcKo5(TestKo5 *t, CalibrationKo5 *c) : CalcData(), t_ko5(t), c_ko5(c)
 {
+    pix = c_ko5->getK_protrombine_otn();
+    po1 = c_ko5->getK_protrombine_index();
     a100 = c_ko5->getProtrombine_k_Kvik();
     t100 = c_ko5->getTime_k_Kvik();
     t50 = c_ko5->getTime_50_Kvik();
@@ -377,30 +379,39 @@ CalcKo5::CalcKo5(TestKo5 *t, CalibrationKo5 *c) : CalcData(), t_ko5(t), c_ko5(c)
     a25 = a100*25.0f/100.0f;           //(13)
     t12 = c_ko5->getTime_12_Kvik();
     a12 = a100*12.5f/100.0f;           //(14)
-    qDebug() << "ТВ контрольной плазмы =" << t100;
-}
 
-double CalcKo5::calc(QMap<double, double> map)
-{
-    // <-- проверка значений калибровки
-    double tx = CalcData::calcKo(map);
     tgalfa1 = (t50-t100)/std::log10(a100/a50);                  //(16)
     tgalfa2 = (t25-t50)/std::log10(a50/a25);                    //(17)
     tgalfa3 = (t25-t100)/std::log10(a100/a25);                  //(18)
     tgalfa4 = (t12-t50)/std::log10(a50/a12);                    //(19)
-    tgalfa = (tgalfa1 + tgalfa2 + tgalfa3 + tgalfa4) / k;     //(15)
+    tgalfa = (tgalfa1 + tgalfa2 + tgalfa3 + tgalfa4) / k;       //(15)
+    qDebug() << "ТВ контрольной плазмы =" << t100;
+}
 
+double CalcKo5::calc(QMap<double, double> map, Channel_ID ch)
+{
+    // <-- проверка значений калибровки
+    double tx = CalcData::calcKo(map);
+    lgax = (t100 - tx + std::log10(a100) * tgalfa) / tgalfa;    //(20)
 
-    lgax = (t100 - tx + std::log10(a100) * tgalfa) / tgalfa;   //(20)
-    ax = qPow(10, lgax);
+    ax = std::pow(10, lgax);
+    ax = round(ax * 100) / 100;
+
     pox = ( tx/t100 ) * po1;
+    pox = round(pox * 100) / 100;
+
     pix = ( t100/tx ) * pi1;
-    return ax;
+    pix = round(pix * 100) / 100;
+
+    t_ko5->setKvik(ax, ch);
+    t_ko5->setIndex(pix, ch);
+    t_ko5->setOtn(pox, ch);
+    return tx;
 }
 
 QString CalcKo5::info()
 {
-    return QString("Протромбиновый комплекс");
+    return QString("Время свертывания = ");
 }
 
 QString CalcKo5::getParameters()
@@ -443,7 +454,7 @@ CalcAgr1::CalcAgr1(TestAgr1 *t, CalibrationAgr1 *c) : CalcData(), t_agr1(t), c_a
 //    plot = p;
 //}
 
-double CalcAgr1::calc(QMap<double, double> map)
+double CalcAgr1::calc(QMap<double, double> map, Channel_ID)
 {
     double k = (btp - otp) / 100;
     return CalcData::calcAgr(map)*k;
@@ -480,7 +491,7 @@ CalcAgr2::CalcAgr2(TestAgr2 *t, CalibrationAgr2 *c) : CalcData(), t_agr2(t), c_a
     otp = ( c_agr2->getOTP1() + c_agr2->getOTP2() + c_agr2->getOTP3() + c_agr2->getOTP4() ) / 4;
 }
 
-double CalcAgr2::calc(QMap<double, double> map)
+double CalcAgr2::calc(QMap<double, double> map, Channel_ID)
 {
     c1 = c2*200.0f/100.0f;          //(21)
     c3 = c2*50.0f/100.0f;           //(22)
@@ -518,7 +529,7 @@ QString CalcLevel::info()
     return QString("среднее Значение");
 }
 
-double CalcLevel::calc(QMap<double, double> map)
+double CalcLevel::calc(QMap<double, double> map, Channel_ID)
 {
     if(map.isEmpty()) { qDebug() << "error from CalcData::caalcKo(): the map is empty!"; return 0; }
     QMap<double, double>::const_iterator it = map.begin();

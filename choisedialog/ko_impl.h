@@ -1,9 +1,12 @@
 #ifndef KO_IMPL_H
 #define KO_IMPL_H
 
+#include  "../XML/KoAgrXML/koagrxml.h"
+
 class QString;
 class QDate;
 class QTime;
+
 
 class Ko_impl
 {

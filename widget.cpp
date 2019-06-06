@@ -726,7 +726,6 @@ void Widget::waitImpulse(ImpuleWaiter *iw)
 double Widget::calcData(CalcData *p, Channel_ID c)
 {
     double retval;
-    if(!p) { setUserMessage(QString("Ошибка при выделении памяти под класс CalcData")); return -1; }
     QString kanal;
     QMap<double, double> map;
     switch(c) {
@@ -750,7 +749,7 @@ double Widget::calcData(CalcData *p, Channel_ID c)
 
     if(!map.isEmpty()) {
         if(!isCalib()) {
-            retval = p->calc(map);
+            retval = p->calc(map, c);
             setUserMessage(QString("<div style='color: green'>%1: %2 %3")
                            .arg(kanal)
                            .arg(p->info())
@@ -766,7 +765,7 @@ double Widget::calcData(CalcData *p, Channel_ID c)
         //emit ret_value1(retval);
     }
     else {
-        setUserMessage(QString("Канал 1: Массив данных не заполнен!"));
+        setUserMessage(QString("Канал %1: Массив данных не заполнен!").arg(c));
         return -1;
     }
     //delete p;
@@ -1198,6 +1197,7 @@ void Widget::ko(State *state)
 void Widget::calc()
 {
     CalcData* p = CalcData::createCalc(startWin->getTest(), startWin->getCalib(), startWin->getModeID());
+    if(!p) { setUserMessage(QString("Ошибка при выделении памяти под класс CalcData")); return; }
     if(startWin->isSingle()) {
         if( startWin->isChannel(Channel1_ID) )
             emit ret_value1(calcData(p, Channel1_ID), state->getLevel());
@@ -1208,14 +1208,18 @@ void Widget::calc()
         if( startWin->isChannel(Channel4_ID) )
             emit ret_value4(calcData(p, Channel4_ID), state->getLevel());
     } else {
-        if( startWin->isChannel(Channel1_ID) ) {
-            double v1 = calcData(p, Channel1_ID);
-            double v2 = calcData(p, Channel2_ID);
-            double v3 = calcData(p, Channel3_ID);
-            double v4 = calcData(p, Channel4_ID);
-            emit ret_value1_2( (v1+v2)/2, state->getLevel() );
-            emit ret_value3_4( (v3+v4)/2, state->getLevel() );
+        if( startWin->isChannel(Channel1_ID) )
+            if( startWin->isChannel(Channel2_ID) ) {
+                double v1 = calcData(p, Channel1_ID);
+                double v2 = calcData(p, Channel2_ID);
+                emit ret_value1_2( (v1+v2)/2, state->getLevel() );
         }
+        if( startWin->isChannel(Channel3_ID) )
+            if( startWin->isChannel(Channel4_ID) ) {
+                double v3 = calcData(p, Channel3_ID);
+                double v4 = calcData(p, Channel4_ID);
+                emit ret_value3_4( (v3+v4)/2, state->getLevel() );
+            }
     }
     delete p;
 }

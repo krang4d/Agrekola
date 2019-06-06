@@ -7,6 +7,7 @@
 #include <QMessageBox>
 #include "savefiles.h"
 #include "globalvalue.h"
+#include  "../XML/KoAgrXML/koagrxml.h"
 
 class StartMeasurement : public QDialog
 {

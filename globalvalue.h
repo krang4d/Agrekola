@@ -1,7 +1,7 @@
 #ifndef GLOBALVALUE_H
 #define GLOBALVALUE_H
 
-#include  "../XML/KoAgrXML/koagrxml.h"
+//#include  "../XML/KoAgrXML/koagrxml.h"
 #include "savefiles.h"
 
 //Тип исследовани
