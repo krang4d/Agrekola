@@ -71,8 +71,8 @@ void ChoiseDialog::CreateWidgetThread(StartMeasurement *sm)
     //QWidget::connect(widget, SIGNAL(destroyed(QObject*)), agrekola, SLOT(stopThread()));
 
     QWidget::connect(agrekola, SIGNAL(update_termo(bool)), widget, SLOT(updataTermo(bool)));
-    QWidget::connect(agrekola, SIGNAL(value_come(QVariantList)), widget, SLOT(realtimeDataSlot(QVariantList)));
-
+    //QWidget::connect(agrekola, SIGNAL(value_come(QVariantList)), widget, SLOT(realtimeDataSlot(QVariantList)));
+    QWidget::connect(agrekola, SIGNAL(value_come(QVariantList)), widget, SIGNAL(value_come(QVariantList)));
     QWidget::connect(agrekola, SIGNAL(finished()), this, SLOT(DeleteWidgetThread()));
 
     widget->setWindowFlags(Qt::Dialog);

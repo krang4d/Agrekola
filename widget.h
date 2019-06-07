@@ -111,6 +111,7 @@ public slots:
 private slots:
     void on_pushButton_clicked();
     void realtimeDataSlot(QVariantList);
+    void fix_point(QVariantList);
     void updataTermo(bool);
     void updateTime();
     void doScenario();
@@ -161,12 +162,14 @@ signals:
     void done4();
 
     void done();
+    void value_come(QVariantList);
     void incube_timeout();
     void end(QMap<double, double>,QMap<double, double>,QMap<double, double>,QMap<double, double>);
 
 private:
     Ui::Widget *ui;
     QThread save_thread;
+    QVariantList fixed_point;
 
     StartMeasurement *startWin;
     QCustomPlot *customPlot1, *customPlot2, *customPlot3, *customPlot4;

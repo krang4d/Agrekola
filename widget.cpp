@@ -19,6 +19,11 @@ Widget::Widget(StartMeasurement *sm, QWidget *parent) :
     setAttribute(Qt::WA_DeleteOnClose);
     installEventFilter(this);
     setWindowTitle("Программа сбора данных с АЦП(E-154) по 4 каналам");
+    fixed_point.push_back(0);
+    fixed_point.push_back(0);
+    fixed_point.push_back(0);
+    fixed_point.push_back(0);
+    connect(this, SIGNAL(value_come(QVariantList)), this, SLOT(realtimeDataSlot(QVariantList)));
 
     START_DX1 = sm->getTest()->getStart_dx(0);
     START_DX2 = sm->getTest()->getStart_dx(1);
@@ -185,35 +190,35 @@ void Widget::realtimeDataSlot(QVariantList a) {
     static double lastPointV2 = a[1].toDouble();
     static double lastPointV3 = a[2].toDouble();
     static double lastPointV4 = a[3].toDouble();
-    double dx1 = std::abs(a[0].toDouble() - lastPointV1);
-    double dx2 = std::abs(a[1].toDouble() - lastPointV2);
-    double dx3 = std::abs(a[2].toDouble() - lastPointV3);
-    double dx4 = std::abs(a[3].toDouble() - lastPointV4);
+    double dx1 = std::abs(fixed_point[0].toDouble() - a[0].toDouble()); //std::abs(a[0].toDouble() - lastPointV1);
+    double dx2 = std::abs(fixed_point[1].toDouble() - a[1].toDouble()); //std::abs(a[1].toDouble() - lastPointV2);
+    double dx3 = std::abs(fixed_point[2].toDouble() - a[2].toDouble()); //std::abs(a[2].toDouble() - lastPointV3);
+    double dx4 = std::abs(fixed_point[3].toDouble() - a[3].toDouble()); //std::abs(a[3].toDouble() - lastPointV4);
 
     //определение порога и запуск канала 1
     //std::abs(map_y1.last() - stop_dy1) >= std::abs(stop_dy1*STOP_DX1
-    if( dx1 >= std::abs(lastPointV1 * START_DX1) || pulse1 ) {
+    if( dx1 >= std::abs(fixed_point[0].toDouble() * START_DX1) || pulse1 ) {
         pulse1 = false;
         emit hasPulse1();
     }
     lastPointV1 = a[0].toDouble();
 
     //определение порога и запуск канала 2
-    if( dx2 >= std::abs(lastPointV2 * START_DX2) || pulse2 ) {
+    if( dx2 >= std::abs(fixed_point[1].toDouble() * START_DX2) || pulse2 ) {
         pulse2 = false;
         emit hasPulse2();
     }
     lastPointV2 = a[1].toDouble();
 
     //определение порога и запуск канала 3
-    if( dx3 >= std::abs(lastPointV3 * START_DX3) || pulse3 ) {
+    if( dx3 >= std::abs(fixed_point[2].toDouble() * START_DX3) || pulse3 ) {
         pulse3 = false;
         emit hasPulse3();
     }
     lastPointV3 = a[2].toDouble();
 
     //определение порога и запуск канала 4
-    if( dx4 >= std::abs(lastPointV4 * START_DX4) || pulse4 ) {
+    if( dx4 >= std::abs(fixed_point[3].toDouble() * START_DX4) || pulse4 ) {
         pulse4 = false;
         emit hasPulse4();
     }
@@ -344,6 +349,15 @@ void Widget::realtimeDataSlot(QVariantList a) {
         lastFpsKey = key;
         frameCount = 0;
     }
+}
+
+void Widget::fix_point(QVariantList p)
+{
+    fixed_point = p;
+    qDebug() << "fix the point 1" << p[0].toDouble();
+    qDebug() << "fix the point 2" << p[1].toDouble();
+    qDebug() << "fix the point 3" << p[2].toDouble();
+    qDebug() << "fix the point 4" << p[3].toDouble();
 }
 
 void Widget::onMotor(Channel_ID c, bool arg)
@@ -1205,8 +1219,10 @@ void Widget::onLazer(bool b)
 void Widget::incubation1(State *next)
 {
     setUserMessage(QString("<span style = 'color: blue'>%1</span>").arg(next->getMessage()));
+    QMetaObject::Connection obj = connect(this, SIGNAL(value_come(QVariantList)), this, SLOT(fix_point(QVariantList)));
     QMessageBox::information(this, "Инкубация", next->getMessage());
     startIncub(1, startWin->getTimeIncube(1), [=]() {
+        disconnect(obj);
         //setUserMessage(QString("<span style = 'color: blue'>Время инкубации истекло</span>"));
         next->next();
     });
