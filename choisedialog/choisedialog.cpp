@@ -58,7 +58,7 @@ int ChoiseDialog::getTypeOfWidget() const
 void ChoiseDialog::CreateWidgetThread(StartMeasurement *sm)
 {
     agrekola = new useE154(this);
-    widget = new Widget(sm);
+    widget = new Widget(sm, this);
 
     QWidget::connect(widget, SIGNAL(onmixch1(bool)), agrekola, SLOT(onMixCh1(bool)));
     QWidget::connect(widget, SIGNAL(onmixch2(bool)), agrekola, SLOT(onMixCh2(bool)));
@@ -73,7 +73,7 @@ void ChoiseDialog::CreateWidgetThread(StartMeasurement *sm)
     QWidget::connect(agrekola, SIGNAL(update_termo(bool)), widget, SLOT(updataTermo(bool)));
     QWidget::connect(agrekola, SIGNAL(value_come(QVariantList)), widget, SLOT(realtimeDataSlot(QVariantList)));
 
-    QWidget::connect(agrekola, SIGNAL(finished()), agrekola, SLOT(deleteLater()));
+    QWidget::connect(agrekola, SIGNAL(finished()), this, SLOT(DeleteWidgetThread()));
 
     widget->setWindowFlags(Qt::Dialog);
     agrekola->start();
@@ -86,8 +86,9 @@ void ChoiseDialog::DeleteWidgetThread()
         agrekola->stopThread();
         agrekola->deleteLater();
     }
-    if(widget)
-        widget->deleteLater();
+//    if(widget)
+//        widget->deleteLater();
+        //delete widget;
     //if(widget) delete widget;
 }
 

@@ -32,10 +32,8 @@ class ChoiseDialog : public QDialog
     Ui::ChoiseDialog *ui;
 public:
     explicit ChoiseDialog(QDialog *parent = 0);
-    int getTypeOfWidget() const;
-    void CreateWidgetThread(StartMeasurement *sm);
-    void DeleteWidgetThread();
     ~ChoiseDialog();
+    int getTypeOfWidget() const;
 
     Agr1    *agr1;      //Определение параметров агрегации
     Agr2    *agr2;      //Определение активности фактора Виллебранда
@@ -49,6 +47,9 @@ public:
 //    QPrintDialog    *printDialog;
 
 private slots:
+    void CreateWidgetThread(StartMeasurement *sm);
+    void DeleteWidgetThread();
+
     void on_exitButton_clicked();
     void on_testButton_clicked();
 

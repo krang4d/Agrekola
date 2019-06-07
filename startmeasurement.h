@@ -14,7 +14,7 @@ class StartMeasurement : public QDialog
     Q_OBJECT
 
 public:
-    StartMeasurement(Test *t, Calibration *c, QDialog *parent = 0);
+    StartMeasurement(Test *t, Calibration *c, QDialog *parent = nullptr);
     ~StartMeasurement();
 
     bool isSingle();

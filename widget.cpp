@@ -13,25 +13,40 @@
 Widget::Widget(StartMeasurement *sm, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Widget),
-    START_DX(0.1), STOP_DX(0.1), MIN(-6.0), MAX(6.0), MIX_TIME_MS(1)
+    data1(false), data2(false), data3(false), data4(false)
 {
     ui->setupUi(this);
-    pBar1 = new ProgressTimerBar;
-    pBar2 = new ProgressTimerBar;
-    pBar3 = new ProgressTimerBar;
-    pBar4 = new ProgressTimerBar;
-    startWin = sm;
-    state = StateBuilder::getState(sm->getModeID(), this);
-
     setAttribute(Qt::WA_DeleteOnClose);
     installEventFilter(this);
     setWindowTitle("Программа сбора данных с АЦП(E-154) по 4 каналам");
+
+    START_DX1 = sm->getTest()->getStart_dx(0);
+    START_DX2 = sm->getTest()->getStart_dx(1);
+    START_DX3 = sm->getTest()->getStart_dx(2);
+    START_DX4 = sm->getTest()->getStart_dx(3);
+
+    STOP_DX1 = sm->getTest()->getStop_dx(0);
+    STOP_DX2 = sm->getTest()->getStop_dx(1);
+    STOP_DX3 = sm->getTest()->getStop_dx(2);
+    STOP_DX4 = sm->getTest()->getStop_dx(3);
+
+    MIN = sm->getTest()->getMin();
+    MAX = sm->getTest()->getMax();
+    MIX_TIME_MS = 4.0;
+
+    pBar1 = new ProgressTimerBar(this);
+    pBar2 = new ProgressTimerBar(this);
+    pBar3 = new ProgressTimerBar(this);
+    pBar4 = new ProgressTimerBar(this);
+    startWin = sm;
+    state = StateBuilder::getState(sm->getModeID(), this);
 
     //настройка таймера для часов
     QTimer *timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &Widget::updateTime);
     timer->start(500);
 
+    //считываем состояние температурной готовности
     ILE154 *pModule = OnlyOneE154::Instance().getModule();
     WORD ttl_in;
     pModule->TTL_IN(&ttl_in);
@@ -86,7 +101,6 @@ void Widget::setupWidget()
     customPlot2->yAxis->setRange(MIN, MAX);
 
     if (startWin->isChannel(Channel2_ID)) {
-
         ui->groupBox_f2->setTitle(QString("Канал 2, Пр.№%1").arg(startWin->getNum(2)));
         ui->groupBox_f2->show();
     } else ui->groupBox_f2->hide();
@@ -134,6 +148,8 @@ void Widget::setupWidget()
 Widget::~Widget()
 {
     //emit stop();
+    delete state;
+    delete startWin;
     delete ui;
 }
 
@@ -141,9 +157,9 @@ bool Widget::eventFilter(QObject *watched, QEvent *event)
 {
     if(event->type() == QEvent::Close) {
         qDebug() << "Close Event is emited in the Widget!";
-//        if(!parentWidget()) qDebug() <<"parent Widget do not set in constroctor";
-//        parentWidget()->show();
-//        setUserMessage("Выход");
+        if(!parentWidget()) qDebug() <<"parent Widget do not set in constroctor";
+            parentWidget()->show();
+        setUserMessage("Конец работы программы");
         emit stop();
         return true; //QWidget::eventFilter(watched, event);
     }
@@ -175,22 +191,22 @@ void Widget::realtimeDataSlot(QVariantList a) {
     double dx4 = std::abs(a[3].toDouble() - lastPointV4);
 
     lastPointV1 = a[0].toDouble();
-    if(dx1 > START_DX || pulse1) {
+    if(dx1 > START_DX1 || pulse1) {
         pulse1 = false;
         emit hasPulse1();
     }
     lastPointV2 = a[1].toDouble();
-    if(dx2 > START_DX || pulse2) {
+    if(dx2 > START_DX2 || pulse2) {
         pulse2 = false;
         emit hasPulse2();
     }
     lastPointV3 = a[2].toDouble();
-    if(dx3 > START_DX || pulse3) {
+    if(dx3 > START_DX3 || pulse3) {
         pulse3 = false;
         emit hasPulse3();
     }
     lastPointV4 = a[3].toDouble();
-    if(dx4 > START_DX || pulse4) {
+    if(dx4 > START_DX4 || pulse4) {
         pulse4 = false;
         emit hasPulse4();
     }
@@ -222,7 +238,7 @@ void Widget::realtimeDataSlot(QVariantList a) {
                 //qDebug() << "STOP_DX1 = " << stop_dy1;
         }
         else {
-            if(std::abs(map_y1.last() - stop_dy1) >= std::abs(stop_dy1*STOP_DX))
+            if(std::abs(map_y1.last() - stop_dy1) >= std::abs(stop_dy1*STOP_DX1))
             {
                 //qDebug() << "Signal to stop data1 " << std::abs(map_y1.last() - stop_dy1) << ">=" << std::abs(stop_dy1*STOP_DX);
                 setUserMessage("Канал 1: Образование сгустка");
@@ -245,7 +261,7 @@ void Widget::realtimeDataSlot(QVariantList a) {
                 //qDebug() << "STOP_DX2 = " << stop_dy2;
         }
         else {
-            if(std::abs(map_y2.last() - stop_dy2) >= std::abs(stop_dy2*STOP_DX))
+            if(std::abs(map_y2.last() - stop_dy2) >= std::abs(stop_dy2*STOP_DX2))
             {
                 //qDebug() << "Signal to stop data2 " << std::abs(map_y2.last() - stop_dy2) << ">=" << std::abs(stop_dy2*STOP_DX);
                 setUserMessage("Канал 2: Образование сгустка");
@@ -268,7 +284,7 @@ void Widget::realtimeDataSlot(QVariantList a) {
                 //qDebug() << "STOP_DX3 = " << stop_dy3;
         }
         else {
-            if(std::abs(map_y3.last() - stop_dy3) >= std::abs(stop_dy3*STOP_DX))
+            if(std::abs(map_y3.last() - stop_dy3) >= std::abs(stop_dy3*STOP_DX3))
             {
                 //qDebug() << "Signal to stop data3 " << std::abs(map_y3.last() - stop_dy3) << ">=" << std::abs(stop_dy3*STOP_DX);
                 setUserMessage("Канал 3: Образование сгустка");
@@ -291,7 +307,7 @@ void Widget::realtimeDataSlot(QVariantList a) {
                 //qDebug() << "STOP_DX4 = " << stop_dy4;
         }
         else {
-            if(std::abs(map_y4.last() - stop_dy4) >= std::abs(stop_dy4*STOP_DX))
+            if(std::abs(map_y4.last() - stop_dy4) >= std::abs(stop_dy4*STOP_DX4))
             {
                 //qDebug() << "Signal to stop data4 " << std::abs(map_y4.last() - stop_dy4) << ">=" << std::abs(stop_dy4*STOP_DX);
                 setUserMessage("Канал 4: Образование сгустка");
@@ -729,6 +745,8 @@ double Widget::calcData(CalcData *p, Channel_ID c)
     QString kanal;
     QMap<double, double> map;
     switch(c) {
+    case ChannelPP_ID:
+        break;
     case Channel1_ID:
         kanal = "Канал 1";
         map = map_y1;
@@ -834,11 +852,6 @@ void Widget::writeMapData(Channel_ID c)
 
 }
 
-void Widget::showEvent(QShowEvent *event)
-{
-    event->accept();
-}
-
 void Widget::updateTime()
 {
     //обновление времени на часах
@@ -907,7 +920,7 @@ void Widget::doScenario()
 //  static QPointer<ImpuleWaiter> iw;
 //  QString s =  state->getMessage();
 //  setUserMessage(s);
-    if(!state) { qDebug() << "Widget::doScenario() is empty!"; return;}
+    if(!state) { qDebug() << "Widget::doScenario() is empty!"; return; }
     state->doState();
 
     ///QMessageBox::information(this, "", s);
@@ -921,6 +934,7 @@ double Widget::getMAX() const
 void Widget::setMAX(double value)
 {
     MAX = value;
+    startWin->getTest()->setMax(value);
     customPlot1->yAxis->setRange(MIN, MAX);
     customPlot1->replot();
     customPlot2->yAxis->setRange(MIN, MAX);
@@ -936,19 +950,10 @@ double Widget::getMIN() const
     return MIN;
 }
 
-double Widget::getMIX() const
-{
-    return MIX_TIME_MS;
-}
-
-void Widget::setMIX(double value)
-{
-    MIX_TIME_MS = value;
-}
-
 void Widget::setMIN(double value)
 {
     MIN = value;
+    startWin->getTest()->setMin(value);
     customPlot1->yAxis->setRange(MIN, MAX);
     customPlot1->replot();
     customPlot2->yAxis->setRange(MIN, MAX);
@@ -959,26 +964,103 @@ void Widget::setMIN(double value)
     customPlot4->replot();
 }
 
-double Widget::getSTOP_DX() const
+double Widget::getMIX() const
 {
-    return STOP_DX;
+    return MIX_TIME_MS;
 }
 
-void Widget::setSTOP_DX(double value)
+void Widget::setMIX(double value)
 {
-    STOP_DX = value;
+    MIX_TIME_MS = value;
 }
 
-double Widget::getSTART_DX() const
+double Widget::getSTOP_DX1() const
 {
-    return START_DX;
+    return STOP_DX1;
 }
 
-void Widget::setSTART_DX(double value)
+void Widget::setSTOP_DX1(double value)
 {
-    START_DX = value;
+    STOP_DX1 = value;
+    startWin->getTest()->setStop_dx(0, value);
 }
 
+double Widget::getSTOP_DX2() const
+{
+    return STOP_DX2;
+}
+
+void Widget::setSTOP_DX2(double value)
+{
+    STOP_DX2 = value;
+    startWin->getTest()->setStop_dx(1, value);
+}
+
+double Widget::getSTOP_DX3() const
+{
+    return STOP_DX3;
+}
+
+void Widget::setSTOP_DX3(double value)
+{
+    STOP_DX3 = value;
+    startWin->getTest()->setStop_dx(2, value);
+}
+
+double Widget::getSTOP_DX4() const
+{
+    return STOP_DX4;
+}
+
+void Widget::setSTOP_DX4(double value)
+{
+    STOP_DX4 = value;
+    startWin->getTest()->setStop_dx(3, value);
+}
+
+double Widget::getSTART_DX1() const
+{
+    return START_DX1;
+}
+
+void Widget::setSTART_DX1(double value)
+{
+    START_DX1 = value;
+    startWin->getTest()->setStart_dx(0, value);
+}
+
+double Widget::getSTART_DX2() const
+{
+    return START_DX2;
+}
+
+void Widget::setSTART_DX2(double value)
+{
+    START_DX2 = value;
+    startWin->getTest()->setStart_dx(1, value);
+}
+
+double Widget::getSTART_DX3() const
+{
+    return START_DX3;
+}
+
+void Widget::setSTART_DX3(double value)
+{
+    START_DX3 = value;
+    startWin->getTest()->setStart_dx(2, value);
+}
+
+double Widget::getSTART_DX4() const
+{
+    return START_DX4;
+}
+
+void Widget::setSTART_DX4(double value)
+{
+    START_DX4 = value;
+    startWin->getTest()->setStart_dx(3, value);
+}
 
 void Widget::getBTP()
 {

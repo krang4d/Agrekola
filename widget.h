@@ -34,7 +34,7 @@ class Widget : public QWidget, public ITools, public IScenario
     Q_OBJECT
 
 public:
-    explicit Widget(StartMeasurement *sm, QWidget *parent = 0);
+    explicit Widget(StartMeasurement *sm, QWidget *parent = nullptr);
     ~Widget();
 
     inline bool isSensorReady() {
@@ -54,16 +54,29 @@ public:
     }
 
     // ITools interface
-    double getSTART_DX() const override;
-    void setSTART_DX(double value) override;
-    double getSTOP_DX() const override;
-    void setSTOP_DX(double value) override;
     double getMIN() const override;
     void setMIN(double value) override;
     double getMAX() const override;
     void setMAX(double value) override;
     double getMIX() const override;
     void setMIX(double value) override;
+
+    double getSTART_DX1() const override;
+    void setSTART_DX1(double value) override;
+    double getSTART_DX2() const override;
+    void setSTART_DX2(double value) override;
+    double getSTART_DX3() const override;
+    void setSTART_DX3(double value) override;
+    double getSTART_DX4() const override;
+    void setSTART_DX4(double value) override;
+    double getSTOP_DX1() const override;
+    void setSTOP_DX1(double value) override;
+    double getSTOP_DX2() const override;
+    void setSTOP_DX2(double value) override;
+    double getSTOP_DX3() const override;
+    void setSTOP_DX3(double value) override;
+    double getSTOP_DX4() const override;
+    void setSTOP_DX4(double value) override;
 
     // IScenario interface
     void getBTP() override;
@@ -169,13 +182,12 @@ private:
     SaveFiles saveFiles;
 
     //опциональные параметры
-    double START_DX; //порог запуска доля от единицы
-    double STOP_DX;  //порог остановки доля от единицы
+    double START_DX1, START_DX2, START_DX3, START_DX4; //порог запуска доля от единицы
+    double STOP_DX1, STOP_DX2, STOP_DX3, STOP_DX4;  //порог остановки доля от единицы
     double MIN, MAX; //минимум и максимум на графике вольт
     double MIX_TIME_MS; //время перемешвания мс
 
 protected:
-    void showEvent(QShowEvent *event) override;
     bool eventFilter(QObject *watched, QEvent *event) override;
 };
 #endif // WIDGET_H

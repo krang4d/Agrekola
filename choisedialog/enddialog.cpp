@@ -1,13 +1,10 @@
 #include "enddialog.h"
-//#include "ui_enddialog.h"
 
 using namespace myDialog;
 
 EndDialog::EndDialog(const QString &str, QMap<double, double> y1, QMap<double, double> y2, QMap<double, double> y3, QMap<double, double> y4, QWidget *parent) :
     QDialog(parent)
-    //ui(new Ui::EndDialog)
 {
-    //ui->setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
     setWindowModality(Qt::WindowModal);
     setWindowTitle("Результаты");
