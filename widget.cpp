@@ -40,6 +40,7 @@ Widget::Widget(StartMeasurement *sm, QWidget *parent) :
     pBar4 = new ProgressTimerBar(this);
     startWin = sm;
     state = StateBuilder::getState(sm->getModeID(), this);
+    tool = new Options(this);
 
     //настройка таймера для часов
     QTimer *timer = new QTimer(this);
@@ -167,8 +168,7 @@ bool Widget::eventFilter(QObject *watched, QEvent *event)
         qDebug() << "Event kayPress";
         QKeyEvent *kayEvent = static_cast<QKeyEvent *>(event);
         if(kayEvent->key() == Qt::Key_Enter) {
-            Options *tool = new Options(this);
-            tool->show();
+            tool->exec();
         }
         return QWidget::eventFilter(watched, event);
     }
@@ -190,26 +190,34 @@ void Widget::realtimeDataSlot(QVariantList a) {
     double dx3 = std::abs(a[2].toDouble() - lastPointV3);
     double dx4 = std::abs(a[3].toDouble() - lastPointV4);
 
-    lastPointV1 = a[0].toDouble();
-    if(dx1 > START_DX1 || pulse1) {
+    //определение порога и запуск канала 1
+    //std::abs(map_y1.last() - stop_dy1) >= std::abs(stop_dy1*STOP_DX1
+    if( dx1 >= std::abs(lastPointV1 * START_DX1) || pulse1 ) {
         pulse1 = false;
         emit hasPulse1();
     }
-    lastPointV2 = a[1].toDouble();
-    if(dx2 > START_DX2 || pulse2) {
+    lastPointV1 = a[0].toDouble();
+
+    //определение порога и запуск канала 2
+    if( dx2 >= std::abs(lastPointV2 * START_DX2) || pulse2 ) {
         pulse2 = false;
         emit hasPulse2();
     }
-    lastPointV3 = a[2].toDouble();
-    if(dx3 > START_DX3 || pulse3) {
+    lastPointV2 = a[1].toDouble();
+
+    //определение порога и запуск канала 3
+    if( dx3 >= std::abs(lastPointV3 * START_DX3) || pulse3 ) {
         pulse3 = false;
         emit hasPulse3();
     }
-    lastPointV4 = a[3].toDouble();
-    if(dx4 > START_DX4 || pulse4) {
+    lastPointV3 = a[2].toDouble();
+
+    //определение порога и запуск канала 4
+    if( dx4 >= std::abs(lastPointV4 * START_DX4) || pulse4 ) {
         pulse4 = false;
         emit hasPulse4();
     }
+    lastPointV4 = a[3].toDouble();
 
     //добавление точек на графики
     customPlot1->graph(0)->addData(key, a[0].toDouble());

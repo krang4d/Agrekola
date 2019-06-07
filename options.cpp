@@ -9,7 +9,8 @@ Options::Options(ITools *tool, QDialog *parent) :
 {
     ui->setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
-    setWindowFlags(Qt::Window);
+    setWindowModality(Qt::WindowModal);
+    setWindowFlags(Qt::Window | Qt::MSWindowsFixedSizeDialogHint);
     setWindowTitle(tr("Настройки"));
 //    ui->lineEdit_StartDX->setInputMask("0.999");
 //    ui->lineEdit_StopDX->setInputMask("0.999");

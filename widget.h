@@ -173,6 +173,7 @@ private:
     ProgressTimerBar *pBar1, *pBar2, *pBar3, *pBar4;
     //Mode_ID current_mode_id;
     State *state;
+    Options *tool;
 
     volatile bool data1, data2, data3, data4;
     bool pulse1, pulse2, pulse3, pulse4;
