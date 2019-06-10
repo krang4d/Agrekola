@@ -121,36 +121,13 @@
           </widget>
          </item>
          <item row="4" column="0">
-          <widget class="QLabel" name="label_calib5">
-           <property name="text">
-            <string>АЧТВ к/плазмы</string>
-           </property>
-          </widget>
-         </item>
-         <item row="4" column="1">
-          <widget class="QDoubleSpinBox" name="doubleSpinBox_caliba4tv">
-           <property name="minimum">
-            <double>0.100000000000000</double>
-           </property>
-           <property name="maximum">
-            <double>100.000000000000000</double>
-           </property>
-           <property name="singleStep">
-            <double>0.100000000000000</double>
-           </property>
-           <property name="value">
-            <double>1.000000000000000</double>
-           </property>
-          </widget>
-         </item>
-         <item row="5" column="0">
           <widget class="QLabel" name="label_calib0">
            <property name="text">
             <string>Время инкубации (с)</string>
            </property>
           </widget>
          </item>
-         <item row="5" column="1">
+         <item row="4" column="1">
           <widget class="QDoubleSpinBox" name="doubleSpinBox_calibIncube">
            <property name="prefix">
             <string/>
@@ -172,14 +149,14 @@
            </property>
           </widget>
          </item>
-         <item row="6" column="0">
+         <item row="5" column="0">
           <widget class="QLabel" name="label_calib6">
            <property name="text">
             <string>Время записи (с)</string>
            </property>
           </widget>
          </item>
-         <item row="6" column="1">
+         <item row="5" column="1">
           <widget class="QDoubleSpinBox" name="doubleSpinBox_calibWriteTime">
            <property name="suffix">
             <string/>
