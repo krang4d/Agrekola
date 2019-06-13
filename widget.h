@@ -35,7 +35,7 @@ class Widget : public QWidget, public ITools, public IScenario
 
 public:
     explicit Widget(StartMeasurement *sm, QWidget *parent = nullptr);
-    ~Widget();
+    ~Widget() override;
 
     inline bool isSensorReady() {
         return termoSensor;

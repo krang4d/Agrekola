@@ -36,7 +36,7 @@
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <property name="elideMode">
       <enum>Qt::ElideLeft</enum>
@@ -608,7 +608,7 @@
        <item>
         <widget class="QPushButton" name="pushButton_test2">
          <property name="text">
-          <string>Продолить</string>
+          <string>Продолжить</string>
          </property>
         </widget>
        </item>

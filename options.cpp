@@ -8,7 +8,7 @@ Options::Options(ITools *tool, QDialog *parent) :
     widget(tool)
 {
     ui->setupUi(this);
-    setAttribute(Qt::WA_DeleteOnClose);
+    //setAttribute(Qt::WA_DeleteOnClose);
     setWindowModality(Qt::WindowModal);
     setWindowFlags(Qt::Window | Qt::MSWindowsFixedSizeDialogHint);
     setWindowTitle(tr("Настройки"));
@@ -70,6 +70,7 @@ void Options::on_pushButton_Next_clicked()
 
 void Options::closeEvent(QCloseEvent *event)
 {
-    deleteLater();
+    //deleteLater();
+    this->hide();
     event->ignore();
 }

@@ -16,11 +16,11 @@ class TestKoAgr : public QDialog
     Q_OBJECT
 
 public:
-    explicit TestKoAgr(useE154 *e, QWidget *parent = 0);
+    explicit TestKoAgr(IuseE154 *e, QWidget *parent = 0);
     ~TestKoAgr();
+    void setup();
 
 private slots:
-    void on_pushButton_back_clicked();
     void on_pushButton_onLaser_clicked();
     void on_pushButton_offLaser_clicked();
     void on_pushButton_onMix1_clicked();
@@ -34,10 +34,11 @@ private slots:
     void on_pushButton_onMixPP_clicked();
     void on_pushButton_offMixPP_clicked();
     void on_pushButton_poll_clicked();
+    void on_pushButton_back_clicked();
 
 private:
     Ui::TestKoAgr *ui;
-    useE154 *e154;
+    IuseE154 *e154;
 };
 
 #endif // TESTKOAGR_H

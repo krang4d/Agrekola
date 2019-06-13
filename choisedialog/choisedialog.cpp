@@ -116,7 +116,8 @@ ChoiseDialog::~ChoiseDialog()
 
 void ChoiseDialog::on_testButton_clicked()
 {
-    TestKoAgr *test  = new TestKoAgr(new useE154, this);
+    QPointer<useE154> use_e154 = QPointer<useE154>(new useE154);
+    TestKoAgr *test  = new TestKoAgr(use_e154.data(), this);
     test->exec();
 //    CreateWidgetThread(new StartMeasurement(new TestKo1, new CalibrationKo1));
 //    this->hide();

@@ -231,7 +231,7 @@
        <item>
         <widget class="QPushButton" name="pushButton_calib">
          <property name="text">
-          <string>Продолжмть</string>
+          <string>Продолжить</string>
          </property>
          <property name="shortcut">
           <string>Ctrl+Return</string>

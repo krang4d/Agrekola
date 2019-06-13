@@ -9,7 +9,6 @@
 #include "LoadDll.h"
 #include "Lusbapi.h"
 
-
 #define MaxVirtualSoltsQuantity 127
 
 struct Error_E154
@@ -25,7 +24,21 @@ struct DoubleData
     int size;
 };
 
-class useE154 : public QThread
+class IuseE154
+{
+public:
+    virtual QVariantList AdcKADR() = 0; //покадровое измерение
+    virtual QString GetInformation() = 0;
+    /*Методы управления портами*/
+    virtual void onMixCh1(bool) = 0;
+    virtual void onMixCh2(bool) = 0;
+    virtual void onMixCh3(bool) = 0;
+    virtual void onMixCh4(bool) = 0;
+    virtual void onMixPP(bool) = 0;
+    virtual void onLaser(bool) = 0;
+};
+
+class useE154 : public QThread, public IuseE154
 {
      Q_OBJECT
      void run() Q_DECL_OVERRIDE {
@@ -50,7 +63,6 @@ public:
 
     QString GetUserMessages() const;
     QString GetUsbSpeed();
-    QString GetInformation();
     void SetChannel(Channel ch, int pos);
     bool GetStatusTD();  //термостатирование
 
@@ -67,20 +79,22 @@ signals:
 public slots:
     /*Методы по сбору данных */
     double AdcSample(Channel ch);   //простое одноканальное измерение АЦП канала ch, n раз
-    QVariantList AdcKADR();                 //покадровое измерение
+
     QString AdcSynchro();       //измерение в синхронном режиме возвращает строку данных
-
-
-    /*Методы управления портами*/
-    void onMixCh1(bool);
-    void onMixCh2(bool);
-    void onMixCh3(bool);
-    void onMixCh4(bool);
-    void onMixPP(bool);
-    void onLaser(bool);
 
     /*Метод остановки потока*/
     void stopThread();
+
+    // IuseE154 iterface
+    QVariantList AdcKADR() override;                 //покадровое измерение
+    QString GetInformation();
+    /*Методы управления портами*/
+    void onMixCh1(bool) override;
+    void onMixCh2(bool) override;
+    void onMixCh3(bool) override;
+    void onMixCh4(bool) override;
+    void onMixPP(bool) override;
+    void onLaser(bool) override;
 
 private:
 

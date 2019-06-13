@@ -1,28 +1,32 @@
 #include "testkoagr.h"
 #include "ui_testkoagr.h"
 
-TestKoAgr::TestKoAgr(useE154 *e, QWidget *parent) :
+TestKoAgr::TestKoAgr(IuseE154 *e, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::TestKoAgr),
     e154(e)
 {
     ui->setupUi(this);
-
     setAttribute(Qt::WA_DeleteOnClose);
     setWindowFlags(Qt::Window | Qt::MSWindowsFixedSizeDialogHint);
+    setup();
+}
 
+TestKoAgr::~TestKoAgr()
+{
+    setup();
+    //delete e154;
+    delete ui;
+}
+
+void TestKoAgr::setup()
+{
     e154->onLaser(false);
     e154->onMixCh1(false);
     e154->onMixCh2(false);
     e154->onMixCh3(false);
     e154->onMixCh4(false);
     e154->onMixPP(false);
-}
-
-TestKoAgr::~TestKoAgr()
-{
-    delete e154;
-    delete ui;
 }
 
 void TestKoAgr::on_pushButton_onLaser_clicked()

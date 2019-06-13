@@ -15,7 +15,7 @@ class Options : public QDialog
 
 public:
     explicit Options(ITools *, QDialog *parent = nullptr);
-    ~Options();
+    ~Options() override;
 
 private slots:
     void on_pushButton_Next_clicked();

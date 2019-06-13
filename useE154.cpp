@@ -300,4 +300,3 @@ bool useE154::GetStatusTD()
 //        return TRUE;
 //    else return FALSE;
 }
-

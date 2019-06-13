@@ -117,7 +117,7 @@ void Widget::setupWidget()
     customPlot3 = ui->frame_3;
     ui->groupBox_f3->layout()->addWidget(pBar3);
     customPlot3->addGraph();
-    customPlot3->graph(0)->setPen(QPen(QColor(255, 110, 200)));
+    customPlot3->graph(0)->setPen(QPen(QColor(255, 10, 200)));
     customPlot3->xAxis->setTicker(timeTicker);
     customPlot3->axisRect()->setupFullAxesBox();
     customPlot3->xAxis->setLabel("Время, с");
@@ -135,7 +135,7 @@ void Widget::setupWidget()
     customPlot4 = ui->frame_4;
     ui->groupBox_f4->layout()->addWidget(pBar4);
     customPlot4->addGraph();
-    customPlot4->graph(0)->setPen(QPen(QColor(255, 200, 40)));
+    customPlot4->graph(0)->setPen(QPen(QColor(0, 100, 200)));
     customPlot4->xAxis->setTicker(timeTicker);
     customPlot4->axisRect()->setupFullAxesBox();
     customPlot4->xAxis->setLabel("Время, с");
@@ -156,6 +156,7 @@ Widget::~Widget()
     //emit stop();
     delete state;
     delete startWin;
+    delete tool;
     delete ui;
 }
 
@@ -173,7 +174,8 @@ bool Widget::eventFilter(QObject *watched, QEvent *event)
         qDebug() << "Event kayPress";
         QKeyEvent *kayEvent = static_cast<QKeyEvent *>(event);
         if(kayEvent->key() == Qt::Key_Enter) {
-            tool->exec();
+            tool->show();
+            tool->activateWindow();
         }
         return QWidget::eventFilter(watched, event);
     }
@@ -511,12 +513,12 @@ void Widget::updataTermo(bool td)
 {
     termoSensor = td;
     if(!td) {
-        ui->label_TD->setText(QString("Температура >37°C"));
+        ui->label_TD->setText(QString("Температура 37°C"));
         ui->label_TD->setStyleSheet("color: green");
 
     }
     else {
-        ui->label_TD->setText(QString("Температура <37°C"));
+        ui->label_TD->setText(QString("Температура 37°C"));
         ui->label_TD->setStyleSheet("color: red");
     }
 }
