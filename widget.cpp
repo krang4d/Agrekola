@@ -16,6 +16,7 @@ Widget::Widget(StartMeasurement *sm, QWidget *parent) :
     data1(false), data2(false), data3(false), data4(false)
 {
     ui->setupUi(this);
+    time = QTime::currentTime();
     setAttribute(Qt::WA_DeleteOnClose);
     installEventFilter(this);
     setWindowTitle("Программа сбора данных с АЦП(E-154) по 4 каналам");
@@ -71,6 +72,7 @@ void Widget::setupWidget()
     emit onmixch2(false);
     emit onmixch3(false);
     emit onmixch4(false);
+    emit onmixpp(false);
     emit onlaser(false);
 
     QSharedPointer<QCPAxisTickerTime> timeTicker(new QCPAxisTickerTime);
@@ -154,6 +156,13 @@ void Widget::setupWidget()
 Widget::~Widget()
 {
     //emit stop();
+    emit onmixch1(false);
+    emit onmixch2(false);
+    emit onmixch3(false);
+    emit onmixch4(false);
+    emit onmixpp(false);
+    emit onlaser(false);
+
     delete state;
     delete startWin;
     delete tool;
@@ -184,14 +193,13 @@ bool Widget::eventFilter(QObject *watched, QEvent *event)
 
 void Widget::realtimeDataSlot(QVariantList a) {
     //qDebug() << "ThreadID: " << QThread::currentThreadId() << "a0 = " << a[0];
-    static QTime time(QTime::currentTime());
     // calculate two new data points:
     double key = time.elapsed()/1000.0; // time elapsed since start of widget, in seconds
-    static double lastPointKey = 0;
-    static double lastPointV1 = a[0].toDouble();
-    static double lastPointV2 = a[1].toDouble();
-    static double lastPointV3 = a[2].toDouble();
-    static double lastPointV4 = a[3].toDouble();
+    //static double lastPointKey = 0;
+    //static double lastPointV1 = a[0].toDouble();
+    //static double lastPointV2 = a[1].toDouble();
+    //static double lastPointV3 = a[2].toDouble();
+    //static double lastPointV4 = a[3].toDouble();
     double dx1 = std::abs(fixed_point[0].toDouble() - a[0].toDouble()); //std::abs(a[0].toDouble() - lastPointV1);
     double dx2 = std::abs(fixed_point[1].toDouble() - a[1].toDouble()); //std::abs(a[1].toDouble() - lastPointV2);
     double dx3 = std::abs(fixed_point[2].toDouble() - a[2].toDouble()); //std::abs(a[2].toDouble() - lastPointV3);
@@ -203,28 +211,28 @@ void Widget::realtimeDataSlot(QVariantList a) {
         pulse1 = false;
         emit hasPulse1();
     }
-    lastPointV1 = a[0].toDouble();
+    //lastPointV1 = a[0].toDouble();
 
     //определение порога и запуск канала 2
     if( dx2 >= std::abs(fixed_point[1].toDouble() * START_DX2) || pulse2 ) {
         pulse2 = false;
         emit hasPulse2();
     }
-    lastPointV2 = a[1].toDouble();
+    //lastPointV2 = a[1].toDouble();
 
     //определение порога и запуск канала 3
     if( dx3 >= std::abs(fixed_point[2].toDouble() * START_DX3) || pulse3 ) {
         pulse3 = false;
         emit hasPulse3();
     }
-    lastPointV3 = a[2].toDouble();
+    //lastPointV3 = a[2].toDouble();
 
     //определение порога и запуск канала 4
     if( dx4 >= std::abs(fixed_point[3].toDouble() * START_DX4) || pulse4 ) {
         pulse4 = false;
         emit hasPulse4();
     }
-    lastPointV4 = a[3].toDouble();
+    //lastPointV4 = a[3].toDouble();
 
     //добавление точек на графики
     customPlot1->graph(0)->addData(key, a[0].toDouble());
@@ -337,20 +345,20 @@ void Widget::realtimeDataSlot(QVariantList a) {
         stop_dy4 = 0;
     }
     // calculate frames per second:
-    lastPointKey = key;
-    static double lastFpsKey;
-    static int frameCount;
-    ++frameCount;
-    if (key-lastFpsKey > 2) {// average fps over 2 seconds
-        ui->label_fps->setText(QString("%1 FPS, Total Data points: %2")
-                        .arg(frameCount/(key-lastFpsKey), 0, 'f', 0)
-                        .arg(customPlot1->graph(0)->data()->size()
-                             +customPlot2->graph(0)->data()->size()
-                             +customPlot3->graph(0)->data()->size()
-                             +customPlot4->graph(0)->data()->size()));
-        lastFpsKey = key;
-        frameCount = 0;
-    }
+//    lastPointKey = key;
+//    static double lastFpsKey;
+//    static int frameCount;
+//    ++frameCount;
+//    if (key-lastFpsKey > 2) {// average fps over 2 seconds
+//        ui->label_fps->setText(QString("%1 FPS, Total Data points: %2")
+//                        .arg(frameCount/(key-lastFpsKey), 0, 'f', 0)
+//                        .arg(customPlot1->graph(0)->data()->size()
+//                             +customPlot2->graph(0)->data()->size()
+//                             +customPlot3->graph(0)->data()->size()
+//                             +customPlot4->graph(0)->data()->size()));
+//        lastFpsKey = key;
+//        frameCount = 0;
+//    }
 }
 
 void Widget::fix_point(QVariantList p)
@@ -879,8 +887,9 @@ void Widget::writeMapData(Channel_ID c)
 void Widget::updateTime()
 {
     //обновление времени на часах
-    ui->label_time->setText("Время: " + QDateTime::currentDateTime().toString("hh:mm:ss"));
-    ui->label_date->setText("Дата: " + QDateTime::currentDateTime().toString("dd.MM.yyyy"));
+    QDateTime time = QDateTime::currentDateTime();
+    ui->label_time->setText("Время: " + time.toString("hh:mm:ss"));
+    ui->label_date->setText("Дата: " + time.toString("dd.MM.yyyy"));
 }
 
 void Widget::setUserMessage(QString str, bool withtime, bool tofile)

@@ -171,6 +171,7 @@ private:
     QThread save_thread;
     QVariantList fixed_point;
 
+    QTime time;
     StartMeasurement *startWin;
     QCustomPlot *customPlot1, *customPlot2, *customPlot3, *customPlot4;
     ProgressTimerBar *pBar1, *pBar2, *pBar3, *pBar4;

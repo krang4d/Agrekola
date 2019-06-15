@@ -10,7 +10,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport concurrent
 
 TARGET   =  widgetTest
 TEMPLATE =  app
-VERSION = 1.0.0.3
+VERSION = 1.0.0.4
 
 INCLUDEPATH += libapi
 #QMAKE_POST_LINK = copy /Y libapi\\Lusbapi.dll $(DESTDIR)
